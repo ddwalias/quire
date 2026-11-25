@@ -15,6 +15,24 @@ namespace Quire.Controls.Worksheet;
 
 public partial class WorksheetControlContent
 {
+    public Point GridPosition
+    {
+        get
+        {
+            throw new NotImplementedException();
+        }
+
+        set => throw new NotImplementedException();
+    }
+
+    public Point InsertionPointForResize
+    {
+        get
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public Point GetItemGridPosition(IWhiteboardItem item)
     {
         throw new NotImplementedException();
@@ -209,6 +227,13 @@ public partial class WorksheetControlContent
     public Point GetItemLocation(IWhiteboardItem item) => _model.GetItemWorksheetLocation(item);
 
     public Rect GetItemRect(IWhiteboardItem item) => WorksheetItemManager.GetItemRect(item);
+
+    public IEnumerable<IWhiteboardItem> RecursivelyEnumerateDescendantItemssBypassWhiteboard() =>
+        global::Quire.Controls.Whiteboard.WhiteboardViewModel.RecursivelyEnumerateDescendantsIgnoringTypes(WhiteboardItems);
+
+    private void ItemsAdded(IEnumerable<IWhiteboardItem> items)
+    {
+    }
 
     public Point GetItemLocation(IWorksheetPageBreak pageBreak) => _model.GetItemWorksheetLocation(pageBreak);
 
@@ -620,6 +645,74 @@ public partial class WorksheetControlContent
         public bool Execute()
         {
             return global::Quire.Undo.CommandBuffer.Execute(this);
+        }
+
+        public abstract bool Do();
+
+        public abstract void Undo();
+
+        public abstract void Redo();
+    }
+
+    internal partial class MoveItemsCommand
+    {
+        public bool AssertOnRestrictedItemLocations
+        {
+            get => _assertOnRestrictedItemLocations;
+            set => _assertOnRestrictedItemLocations = value;
+        }
+    }
+
+    internal partial class ResizeItemCommand
+    {
+        public override bool Do()
+        {
+            DoRedo(true);
+            return true;
+        }
+
+        public override void Undo()
+        {
+            WorksheetContent.FireActivated();
+            if (_resizedItem is IResizableElementWithDataStore resizable)
+            {
+                resizable.RestoreResizeData(_oldData);
+                return;
+            }
+
+            WorksheetItemManager.SetSize(_resizedItem, _oldSize, _dragMode);
+        }
+
+        public override void Redo()
+        {
+            WorksheetContent.FireActivated();
+            DoRedo(false);
+        }
+
+        private void DoRedo(bool doAction)
+        {
+            var resizable = _resizedItem as IResizableElementWithDataStore;
+            Size newSize = _newSize;
+            if (resizable != null)
+            {
+                if (doAction)
+                {
+                    _oldData = resizable.StoreResizeData(_oldSize, _newSize);
+                }
+                else
+                {
+                    newSize = resizable.CoerceNewSize(_newSize, _oldData);
+                }
+            }
+
+            WorksheetItemManager.SetSize(_resizedItem, newSize, _dragMode);
+        }
+    }
+
+    internal partial class ResizeItemCommandWithSizeEffects
+    {
+        public override void Redo()
+        {
         }
     }
 }

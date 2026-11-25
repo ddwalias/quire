@@ -34,10 +34,6 @@ public partial class WorksheetControlContent : global::Quire.Controls.Worksheet.
     [global::Quire.Mirror.MirrorStub]
     private global::System.Func<global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem>, bool> _copyWhiteboardItems;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point GridPosition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point InsertionPointForResize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Controls.Core.Whiteboard.IWhiteboardControl, global::System.Windows.Rect> RequestScrollTo;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Controls.Core.Whiteboard.IWhiteboardControl, global::System.Windows.Size, global::System.Windows.Size> ChildTriggeredResize;
@@ -66,8 +62,6 @@ public partial class WorksheetControlContent : global::Quire.Controls.Worksheet.
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Point GetNavigationStartLocation(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> RecursivelyEnumerateDescendantItemssBypassWhiteboard() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void HandleDirectionalMove(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool CheckPotentialMove(global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> itemsAtNewLocationsRaw, bool preventRestrictedItemLocations) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -75,8 +69,6 @@ public partial class WorksheetControlContent : global::Quire.Controls.Worksheet.
     private void HandleItemsCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ItemsRemoved(global::System.Collections.Generic.IList<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ItemsAdded(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleSelectedItemsChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -87,14 +79,7 @@ public partial class WorksheetControlContent : global::Quire.Controls.Worksheet.
     {
         [global::Quire.Mirror.MirrorStub]
         protected readonly global::Quire.Controls.Worksheet.IWorksheetContent _worksheetContent;
-        [global::Quire.Mirror.MirrorStub]
-        public abstract bool Do();
-        [global::Quire.Mirror.MirrorStub]
-        public abstract void Undo();
-        [global::Quire.Mirror.MirrorStub]
-        public abstract void Redo();
     }
-
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlContent+DeleteSelectedItemsCommand, Ptc.Controls.Worksheet")]
     internal partial class DeleteSelectedItemsCommand : global::Quire.Controls.Worksheet.WorksheetControlContent.WorksheetContentCommand
@@ -126,8 +111,6 @@ public partial class WorksheetControlContent : global::Quire.Controls.Worksheet.
         private global::Quire.Controls.Core.IWhiteboardItem _activeItem;
         [global::Quire.Mirror.MirrorStub]
         private bool _assertOnRestrictedItemLocations;
-        [global::Quire.Mirror.MirrorStub]
-        public bool AssertOnRestrictedItemLocations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
         public MoveItemsCommand(global::Quire.Controls.Worksheet.IWorksheetContent content, global::System.Windows.Vector offset, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToMove) : base(default(global::Quire.Controls.Worksheet.IWorksheetContent), default(string)) { }
         [global::Quire.Mirror.MirrorStub]
@@ -191,14 +174,6 @@ public partial class WorksheetControlContent : global::Quire.Controls.Worksheet.
         private global::Quire.Controls.Core.IResizeData _oldData;
         [global::Quire.Mirror.MirrorStub]
         public ResizeItemCommand(global::Quire.Controls.Worksheet.IWorksheetContent worksheetContent, global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Size oldSize, global::System.Windows.Size newSize, global::Quire.Controls.Core.DragMode dragMode) : base(default(global::Quire.Controls.Worksheet.IWorksheetContent), default(string)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void DoRedo(bool doAction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlContent+ResizeItemCommandWithSizeEffects, Ptc.Controls.Worksheet")]
@@ -206,7 +181,5 @@ public partial class WorksheetControlContent : global::Quire.Controls.Worksheet.
     {
         [global::Quire.Mirror.MirrorStub]
         public ResizeItemCommandWithSizeEffects(global::Quire.Controls.Worksheet.IWorksheetContent content, global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Size oldSize, global::System.Windows.Size newSize) : base(default(global::Quire.Controls.Worksheet.IWorksheetContent), default(global::Quire.Controls.Core.IWhiteboardItem), default(global::System.Windows.Size), default(global::System.Windows.Size), default(global::Quire.Controls.Core.DragMode)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override void Redo() => base.Redo();
     }
 }
