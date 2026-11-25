@@ -771,8 +771,7 @@ private static void RequestNavigateHandler(object sender, System.Windows.Navigat
         }
     }
 
-    private void TryPostChangeHyperlinkInsertion(global::System.Collections.Generic.ICollection<global::System.Windows.Controls.TextChange> changes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
+    // Compile-order device: these fields precede the ordinal 52 closure.
     private string _copyLinkText;
 
     private ITextStyleChangedHandler _textStyleChangedHandler;
@@ -782,6 +781,36 @@ private static void RequestNavigateHandler(object sender, System.Windows.Navigat
     public static readonly global::System.Windows.Input.RoutedUICommand OpenFileCommand;
 
     private static global::Quire.Wpf.IMessageBoxManager _messageBoxMngr;
+
+    private void TryPostChangeHyperlinkInsertion(global::System.Collections.Generic.ICollection<global::System.Windows.Controls.TextChange> changes)
+    {
+        // Nested guards preserve the shared Release IL exit used by the captured action.
+        if (!_keyDownData.HasValue)
+        {
+            return;
+        }
+
+        PreviewKeyDownData? keyDownData = _keyDownData;
+        _keyDownData = null;
+        if (!FunctionalityService.Instance.IsFunctionalityEnabled(EnumFunctionalityKey.ModifyHyperlinkCommand) || DebugTools.DevAssert(Selection.IsEmpty, null).Failed)
+        {
+            return;
+        }
+
+        TextPointer linkSearchPos = GetPotentialLinkEndPosition(changes, keyDownData.Value.PressedKey, keyDownData.Value.ChangeInsertionPoint);
+        if (linkSearchPos != null && GetHyperlinkFromTextPointer(linkSearchPos) == null)
+        {
+            TextPointer pointerWordStart = RichTextBase.GetTextBoundary(LogicalDirection.Backward, out string partialText, TextFromRunsStops.FindWord, new DocumentTextRange(Document.ContentStart, linkSearchPos));
+            if (partialText.IsNotEmpty() && UrlUtils.TryCreateKnownUri(partialText, out Uri newUri))
+            {
+                Action action = () =>
+                {
+                    EditLinkUndoableCommand(new HyperlinkEditState(LinkEditOperation.Insert, partialText, userChangedText: false, newUri), new DocumentTextRange(pointerWordStart, linkSearchPos), skipOneInsertionPosition: true);
+                };
+                Dispatcher.BeginInvoke((Delegate)action, Array.Empty<object>());
+            }
+        }
+    }
 
     private global::System.Windows.Documents.TextPointer GetPotentialLinkEndPosition(global::System.Collections.Generic.ICollection<global::System.Windows.Controls.TextChange> changes, global::System.Windows.Input.Key key, int insertionPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 

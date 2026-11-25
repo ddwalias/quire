@@ -49,8 +49,8 @@ Derived from `Ptc.Controls.Text.RichTextWithEmbeddedItem.il` and its root method
 | IL method index | Member | Closure ordinal N | Offset N − index |
 |---:|---|---:|---:|
 | 17 | `CanModifyHyperlink` | 20 | 3 |
-| 42 | `GetPotentialLinkEndPosition` display class | 52 | 10 |
-| 42 | `GetPotentialLinkEndPosition` | 53 | 11 |
+| 41 | `TryPostChangeHyperlinkInsertion` display class | 52 | 11 |
+| 42 | `GetPotentialLinkEndPosition` display class | 53 | 11 |
 | 54 | `.ctor` | 86 | 32 |
 | 58 | `OnPreviewTabForward` | 90 | 32 |
 | 64 | `ExecuteChangeFontColor` display class | 96 | 32 |
@@ -115,4 +115,11 @@ Derived from `Ptc.Controls.Text.RichTextWithEmbeddedItem.il` and its root method
 - Reordered the direct declarations into Mathcad IL method order, including unmarked placeholders, and implemented `CanModifyHyperlink`; closure `<CanModifyHyperlink>b__20_0` now matches ordinal 20.
 - Kept `_savedActiveItem` after the closure anchors. Placing it before the color-command closures shifted subsequent ordinals by one; this position preserves the anchors listed above.
 - Release IL report: `.mirror-cache/release-il-61d293b4ba80/release-il.json` — PASS, 715 checked, zero failures; 52 generated stubs, 41 no-pair members, 22 unchanged/unmatched.
+- Release build succeeded; MirrorGen `emit` left `Controls.Text.RichTextWithEmbeddedItem.g.cs` byte-identical.
+
+
+## RichTextWithEmbeddedItem slice 2
+
+- Implemented `TryPostChangeHyperlinkInsertion`; closure `<TryPostChangeHyperlinkInsertion>b__0` matches ordinal 52. The nested guards retain the shared exit block required by the reference Release IL.
+- Release IL report: `.mirror-cache/release-il-49e0c48e699c/release-il.json` — PASS, 718 checked, zero failures; 51 generated stubs, 41 no-pair members, 22 unchanged/unmatched.
 - Release build succeeded; MirrorGen `emit` left `Controls.Text.RichTextWithEmbeddedItem.g.cs` byte-identical.
