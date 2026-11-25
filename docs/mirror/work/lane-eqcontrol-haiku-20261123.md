@@ -567,3 +567,11 @@
 - Still open: the five larger subscribed handlers (`FocusWhenAble` 52, `HandleNavigatorStateChanged` 88, `HandleScopeChanged` 107, `HandleTypeoverChanged` 39, `HandleWarningOccured` 21); `BindEditingCommands`, `BindCommands`, `UnBindEditingCommands`; `BuildAndExecCutCmd` and `BuildAndExecPasteCmd`.
 - Unchanged: the `VisualMathNode` constructor unmatched (`MathFormat` null); `EquationSExpression` setter; `ScreenBounds` stub; `GetColumnCells` parked; NthRoot and Derivative indexer setters.
 - Gate (project-level): PASS; 3764 checked, zero failures (`.mirror-cache/release-il-fe0a43c2a62f/release-il.json`).
+
+## Batch 82
+
+- Owner: haiku-equationcontrol-20261123; branch feature/haiku-equationcontrol-20261123 (base main e769dd8fb).
+- Members: `HandleTypeoverChanged` (39 IL) implemented in `Mirrored/Controls.EquationControl.cs`; stub pair removed from `Generated/Mirror/Controls.EquationControl.g.cs`.
+- Release IL: PASS, 3765 checked, zero failures (`gate_b82b`).
+- Remaining mismatches / blockers: `HandleWarningOccured` (21 IL) is left as a stub: its `Warnings?.CollectAsList(w => w.Item1.Original)` lambda is `<HandleWarningOccured>b__674_0` against Mathcad `b__400_0`. The ordinal counts every member in the class including generated stubs (validation.md), so it is parked with the other closure ordinals.
+- Runtime dependency: `HandleTypeoverChanged` calls `BringCurrentNodeIntoView` and `GetFormatForMatrix` (both stubs), so typeover changes will still throw until those land. `HandleWarningOccured` calls `UpdateEngineResult(IEnumerable<EngineRedefInfo>)`, which is also a stub.

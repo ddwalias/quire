@@ -619,6 +619,24 @@ public partial class EquationControl
         UpdateLhsVisibleOnView();
     }
 
+    private void HandleTypeoverChanged(TypeoverChangeEventArgs arg)
+    {
+        CurrentIdLabel = null;
+        CurrentDisplayIdLabel = null;
+        if (!IsResizingMatrix)
+        {
+            if (CurrentNestedResultMatrixPosition != null)
+            {
+                CurrentNestedResultMatrixPosition = null;
+            }
+
+            MathNode commonAncestor = MathNode.Utilities.FindCommonAncestor(arg.State.LeftNode, arg.State.RightNode);
+            CurrentMatrixFormat = GetFormatForMatrix(commonAncestor);
+        }
+
+        BringCurrentNodeIntoView(arg.State.NavState.Current);
+    }
+
     public bool InCustomInitialization
     {
         get => _model.InCustomInitialization;

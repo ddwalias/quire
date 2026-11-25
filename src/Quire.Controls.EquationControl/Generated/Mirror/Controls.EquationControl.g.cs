@@ -370,8 +370,6 @@ public partial class EquationControl : global::System.Windows.Controls.ContentCo
     [global::Quire.Mirror.MirrorStub]
     private void OnVisibleWarningMessageChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HandleTypeoverChanged(global::Quire.EquationEditor.TypeoverChangeEventArgs arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void HandleScopeChanged(global::Quire.EquationEditor.Equation.ScopeStateChangeEventArgs arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleNavigatorStateChanged(global::Quire.EquationEditor.NavigatorStateChangeEventArgs arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
