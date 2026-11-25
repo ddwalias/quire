@@ -24,8 +24,6 @@ internal partial class PlotPresenter
     [global::Quire.Mirror.MirrorStub]
     public PlotPresenter(global::Quire.Controls.Plots.Presenter.IPlotView view, global::Quire.Controls.Plots.Presenter.IPlotModel model) { }
     [global::Quire.Mirror.MirrorStub]
-    private void BoundToEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void BoundToAxisModelEvents(global::Quire.Controls.Plots.Presenter.IAxisModel axisModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void xAxis_EquationContolChange(global::Quire.Controls.Plots.Presenter.IPlotEquation equation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

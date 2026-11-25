@@ -220,4 +220,26 @@ internal partial class PlotPresenter
         double? end = traces.Max(maxSelector);
         axis.SetRange(start, end);
     }
+
+    private void BoundToEvents()
+    {
+        BoundToAxisViewEvents(_view.RangeAxis, xAxis_EquationAdded, xAxis_EquationRemoved, xAxis_EquationContolChange);
+        new AxisPresenter(_view.RangeAxis, _model.rangeAxis);
+        BoundToAxisModelEvents(_model.rangeAxis);
+        BoundToAxisViewEvents(_view.PrimaryResultAxis, PrimaryYAxis_EquationAdded, PrimaryYAxis_EquationRemoved, PrimaryYAxis_EquationContolChange);
+        new AxisPresenter(_view.PrimaryResultAxis, _model.PrimaryResultAxis);
+        BoundToAxisModelEvents(_model.PrimaryResultAxis);
+        _view.HasOriginPositioningChanged += View_HasOriginPositioningChanged;
+        _view.XLegendPositionsIndexChanged += View_XLegendPositionsIndexChanged;
+        _view.YLegendPositionsIndexChanged += View_YLegendPositionsIndexChanged;
+        _view.PlotTitlePositionsIndexChanged += View_TitlePositionsIndexChanged;
+        _view.PlotLegendPositionsIndexChanged += View_PlotLegendPositionsIndexChanged;
+        _view.BackgroundTypePropertyChanged += View_BackgroundTypePropertyChanged;
+        if (_view.PlotLegend != null)
+        {
+            _view.PlotLegend.LegendWidthChanged += View_PlotLegendWidthChanged;
+        }
+        _model.DeserializationFinished += Model_DeserializationFinished;
+        _model.DeserializationStarted += Model_DeserializationStarted;
+    }
 }
