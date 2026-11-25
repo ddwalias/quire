@@ -318,7 +318,6 @@ public partial class EquationControl
     private void HandleRequestChangeToTextBox() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public bool IsChangeToTextBoxReady() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public bool IsWithinSolveBlock { get; set; }
-    private global::Quire.Controls.Core.NumberFormat _currentNumberFormat;
     private global::Quire.Controls.Core.MatrixFormat _currentMatrixFormat;
     private void ActivateEquationForComboBoxNode(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void OnViewDeActivated() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -765,7 +764,10 @@ public partial class EquationControl
         UpdateLhsVisibleOnView();
     }
 
-    private void HandleWarningOccured() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleWarningOccured()
+    {
+        UpdateEngineResult(_model.Warnings?.CollectAsList(((RedefinitionWarning parsedWarning, MathNode warningNode) tuple) => tuple.parsedWarning.Original));
+    }
 
     private void OnVisibleWarningMessageChanged() => UpdateLhsVisibleOnView();
 
@@ -787,7 +789,53 @@ public partial class EquationControl
         BringCurrentNodeIntoView(arg.State.NavState.Current);
     }
 
-    private void HandleScopeChanged(global::Quire.EquationEditor.Equation.ScopeStateChangeEventArgs arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleScopeChanged(ScopeStateChangeEventArgs arg)
+    {
+        if (arg.ScopedNodes.ScopedLines.Count != 1)
+        {
+            CurrentIdLabel = null;
+            CurrentDisplayIdLabel = null;
+        }
+        else
+        {
+            MathNode getFirstScopedNode = arg.ScopedNodes.GetFirstScopedNode;
+            if (_model.ResolvedLabelOverridesIdLabel(getFirstScopedNode))
+            {
+                CurrentIdLabel = IdLabels.None;
+                CurrentDisplayIdLabel = ((IdentifierNodeInfo)getFirstScopedNode.NodeInfo).ResolvedIdLabel;
+            }
+            else
+            {
+                CurrentIdLabel = MathNode.Utilities.IdLabelOfNode(getFirstScopedNode);
+                CurrentDisplayIdLabel = MathNode.Utilities.DisplayIdLabelOfNode(getFirstScopedNode);
+            }
+        }
+        if (!IsResizingMatrix)
+        {
+            MathNode node = MathNode.Utilities.FindCommonAncestor(arg.ScopedNodes.GetFirstScopedNode, arg.ScopedNodes.GetLastScopedNode);
+            IList<TableCoordinate> nestedPositionForMatrix = GetNestedPositionForMatrix(node);
+            if (!AreTableCoordinateListsEqual(CurrentNestedResultMatrixPosition, nestedPositionForMatrix))
+            {
+                CurrentNestedResultMatrixPosition = nestedPositionForMatrix;
+            }
+            CurrentMatrixFormat = GetFormatForMatrix(node);
+        }
+        MathNode mathNode = null;
+        try
+        {
+            MathNode currentNode = SExpressionToMathNodeTransform.Default.Transform(_model.ScopedSExpression);
+            mathNode = _model.ScopedNodesByLines.FirstOrDefault((MathNode mathNode2) => currentNode.SExpression == mathNode2.SExpression);
+        }
+        catch (Exception ex)
+        {
+            DebugTools.FailAssertion(ex);
+        }
+        if (mathNode != null)
+        {
+            BringCurrentNodeIntoView(mathNode);
+        }
+        IncreaseEquationWidthIfNessessary(_model.GetNavigatorStateFromScoperCaretSide());
+    }
 
     private void HandleNavigatorStateChanged(NavigatorStateChangeEventArgs arg)
     {
@@ -832,17 +880,53 @@ public partial class EquationControl
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
     private void FixCaretToRightMostPositionAfterClipping() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void NavigateLeftIfNeccessary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void IncreaseEquationWidthIfNessessary(global::Quire.EquationEditor.Tree.Navigation.NavigatorState navigatorState) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void IncreaseEquationWidthIfNessessary(NavigatorState navigatorState)
+    {
+        Action action = () =>
+        {
+            if (!IsShrunk)
+            {
+                return;
+            }
+            double xFromNavigator = XFromNavigatorState(navigatorState);
+            if (xFromNavigator > ViewClippedWidth)
+            {
+                double leftOverhang = (ViewFullWidth - (_view.RootNode as FrameworkElement).ActualWidth) / 2.0;
+                double rightOverhang = DesiredSize.Width - ViewClippedWidth;
+                Width = xFromNavigator + leftOverhang + rightOverhang;
+            }
+        };
+        ExecuteOnRootLoaded(action);
+    }
     private double XFromNavigatorState(global::Quire.EquationEditor.Tree.Navigation.NavigatorState navigatorState) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private global::System.Nullable<double> MidYFromCurrentMathNode(global::Quire.EquationEditor.Tree.Navigation.NavigatorState navigatorState) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void UpdateWidth(bool widthNotSet) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     internal double ViewFullWidth => _view.ActualWidth;
     internal double ViewClippedWidth => _view.DesiredSize.Width;
-    private void BringCurrentNodeIntoView(global::Quire.EquationEditor.Tree.MathNode currentNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void BringCurrentNodeIntoView(MathNode currentNode)
+    {
+        if (IsKeyboardFocusWithin)
+        {
+            Quire.EquationEditor.View.IVisualMathNode visualMathNode = _map.AssociateNode(currentNode);
+            FrameworkElement current = visualMathNode as FrameworkElement;
+            if (current != null)
+            {
+                WpfUtils.ExecuteOnLoad(current, () =>
+                {
+                    WpfUtils.ExecuteOnLayoutUpdated(current, () =>
+                    {
+                        current.BringIntoView();
+                    });
+                });
+            }
+        }
+    }
     private void OnRootLoaded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void _model_EquationChanged() => RaiseEvent(new RoutedEventArgs(ChangedEvent));
     private void RemoveMatrixResizeAdorner() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void RemoveMatrixResizeAdornerIfNotNeeded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    // Placed after BringCurrentNodeIntoView: closure ordinals in Release IL count this field there.
+    private global::Quire.Controls.Core.NumberFormat _currentNumberFormat;
     public event global::System.Action RequestFocus;
     private global::System.Windows.Input.CommandBindingCollection _nonEditableCommandBindings;
     private global::System.Windows.Input.CommandBindingCollection _editableCommandBindings;
@@ -909,10 +993,6 @@ public partial class EquationControl
     }
 
     internal void FireRequestEvaluationControlOnly() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private readonly bool _isForEngineCalculation = true;
-    private global::Quire.Controls.ControlAdorners.MatrixResizeAdorner _matrixResizeAdorner;
-    private bool _temporaryResultMatrixFormatShouldClear;
-    private global::System.Collections.Generic.IList<global::Quire.TableCoordinate> _nestedMatrixPositionWhichFormatShouldClear;
 
     private void FireRequestRemove(Direction direction)
     {
@@ -1025,6 +1105,9 @@ public partial class EquationControl
     }
 
     private void CanToggleVisibleLhsOfDefinition(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private readonly bool _isForEngineCalculation = true;
+    private global::Quire.Controls.ControlAdorners.MatrixResizeAdorner _matrixResizeAdorner;
+
     private void BindEditingCommands() => CommandBindings.AddRange(EditableCommandBindings);
 
     private void UnBindEditingCommands()
@@ -1196,7 +1279,10 @@ public partial class EquationControl
     public string GetCurrentNodeIdentifier() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     internal global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.View.IVisualComboBoxControlNode> GetAllComboBoxControlsFromEquation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public int WarningsCount => _model.Warnings?.Count ?? 0;
-    internal global::System.Collections.Generic.List<global::System.ValueTuple<global::Quire.EquationEditor.RedefinitionWarning, global::Quire.EquationEditor.Tree.MathNode, global::Quire.EquationEditor.View.IVisualMathNode>> Warnings { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    internal List<(RedefinitionWarning parsedWarning, MathNode warningNode, global::Quire.EquationEditor.View.IVisualMathNode visualMathNode)> Warnings => _model.Warnings?.Select(((RedefinitionWarning parsedWarning, MathNode warningNode) warning) => (parsedWarning: warning.parsedWarning, warningNode: warning.warningNode, _map.AssociateNode(warning.warningNode))).ToList();
+
+    private bool _temporaryResultMatrixFormatShouldClear;
+    private global::System.Collections.Generic.IList<global::Quire.TableCoordinate> _nestedMatrixPositionWhichFormatShouldClear;
     internal global::Quire.EquationEditor.View.IVisualMathNode CurrentVisualMathNode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public bool ContainsError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public void ShowError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

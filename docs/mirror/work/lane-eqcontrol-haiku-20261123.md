@@ -649,3 +649,12 @@
 - Layout: the four ambiguous fields `_isForEngineCalculation`, `_matrixResizeAdorner`, `_temporaryResultMatrixFormatShouldClear`, `_nestedMatrixPositionWhichFormatShouldClear` now sit after `FireRequestEvaluation`; this is the placement the closure ordinals of `FocusWhenAble` (428) and `FireRequestEvaluation` (430) need.
 - Release IL: PASS, 3795 checked, zero failures (`.mirror-cache/release-il-29d4061f4f6b/release-il.json`).
 - Open: `HandleWarningOccured` measures closure 401 against Mathcad 400 (one non-method member too many before it, in the 275-297 band); kept as a stub. `HandleScopeChanged`, `IncreaseEquationWidthIfNessessary`, `BringCurrentNodeIntoView`, `Warnings` (588) and `UpdateLhsVisibleOnView` are not implemented yet.
+
+## Batch 94
+
+- Owner: haiku-equationcontrol-20261123; branch `haiku-equationcontrol-20261123-b94` (from main 1555c7d21, rebased onto main before landing).
+- Members: `HandleWarningOccured` (closure `b__400_0`), `HandleScopeChanged` (`DisplayClass403_0`), `IncreaseEquationWidthIfNessessary` (`DisplayClass409_0`), `BringCurrentNodeIntoView` (`DisplayClass417_0`, `b__0/1`), `Warnings` (`b__588_0`). All exact.
+- Layout: `_currentNumberFormat` moved after `BringCurrentNodeIntoView` (closure ordinals need it there); `_isForEngineCalculation` and `_matrixResizeAdorner` moved between `EditableCommandBindings` and `SymbolicEvalKeywordsVisibilityState`; `_temporaryResultMatrixFormatShouldClear` and `_nestedMatrixPositionWhichFormatShouldClear` moved after `Warnings`.
+- Shapes: `BringCurrentNodeIntoView` uses a positive `if (IsKeyboardFocusWithin)` block so the display class is created after the check; `IncreaseEquationWidthIfNessessary` uses a guard `if (!IsShrunk) return;` and `DesiredSize.Width` without a named `Size` local.
+- Open: `UpdateLhsVisibleOnView` stays a stub. The Mathcad IL keeps the `num` value on the evaluation stack while `flag` is computed (no local for `num`); both the named-local form and the reference ternary give a Release IL difference, so it is not landed in this batch.
+- Release IL: PASS, 3809 checked, zero failures (`.mirror-cache/release-il-5c2accdf8924/release-il.json`).
