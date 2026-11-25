@@ -46,11 +46,7 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         [global::Quire.Mirror.MirrorStub]
         private void SubscribeOnActiveTabChangedEvent(global::System.Windows.DependencyProperty activeDocumentProperty, global::System.Windows.DependencyObject spiritMainWindowDependencyObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
-        private void UnSubscribeOnActiveTabChangedEvent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         private void HandlerOnActiveTabChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public virtual void Dispose() { }
         [global::Quire.Mirror.MirrorStub]
         protected abstract void DestructUI();
         [global::Quire.Mirror.MirrorStub]

@@ -68,6 +68,23 @@ public partial class WorksheetControlDebugger
             }
         }
 
+        private void UnSubscribeOnActiveTabChangedEvent()
+        {
+            global::Quire.Wpf.DependencyPropertyChangeManager.RemovePropertyChangedHandler(
+                _activeDocumentProperty,
+                _spiritMainWindowDependencyObject,
+                HandlerOnActiveTabChanged);
+        }
+
+        public virtual void Dispose()
+        {
+            global::Quire.DebugTools.DevAssert(_isDebuggingEnabled, "Debugging already disabled.");
+            UnSubscribeEvents();
+            UnSubscribeOnActiveTabChangedEvent();
+            DestructUI();
+            _isDebuggingEnabled = false;
+        }
+
         protected virtual void AskCloseInstance()
         {
             InvokeAskedCloseInstance();
