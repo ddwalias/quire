@@ -147,6 +147,18 @@ public partial class WorksheetControl
         set => SetValue(DisplayNumberFormatProperty, value);
     }
 
+    public global::Quire.Controls.Core.BackgroundTypeE PlotBackgroundType
+    {
+        get => (global::Quire.Controls.Core.BackgroundTypeE)GetValue(PlotBackgroundTypeProperty);
+        set => SetValue(PlotBackgroundTypeProperty, value);
+    }
+
+    public global::Quire.Controls.Core.CameraType3D PlotCameraType
+    {
+        get => (global::Quire.Controls.Core.CameraType3D)GetValue(PlotCameraTypeProperty);
+        set => SetValue(PlotCameraTypeProperty, value);
+    }
+
     public global::Quire.Controls.Core.MatrixFormat ResultMatrixFormat
     {
         get => (global::Quire.Controls.Core.MatrixFormat)GetValue(ResultMatrixFormatProperty);
@@ -188,6 +200,20 @@ public partial class WorksheetControl
         get => (TextFormat)GetValue(TextFormatProperty);
         set => SetValue(TextFormatProperty, value);
     }
+
+    public int StartingPageNumber
+    {
+        get => _viewModel.StartingPageNumber;
+        set => _viewModel.StartingPageNumber = value;
+    }
+
+    public int TotalPagesOffset
+    {
+        get => _viewModel.TotalPagesOffset;
+        set => _viewModel.TotalPagesOffset = value;
+    }
+
+    public Thickness PageMargin => PageLayout.PageMargin;
 
     public NumberFormat CurrentNumberFormat
     {
