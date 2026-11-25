@@ -93,7 +93,28 @@ internal partial class PlotModel
 
     private static global::System.Xml.XmlNode GetAxisXmlNode(global::System.Xml.XmlDocument xmlDoc, global::Quire.Controls.Plots.Presenter.IAxisModel axis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.ITraceModel> SortedTraces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    private IEnumerable<ITraceModel> SortedTraces
+    {
+        get
+        {
+            AxesType longestAxisType;
+            IAxisModel longestAxis;
+            if (rangeAxis.Equations.Count() > PrimaryResultAxis.Equations.Count())
+            {
+                longestAxisType = rangeAxis.Type;
+                longestAxis = rangeAxis;
+            }
+            else
+            {
+                longestAxisType = PrimaryResultAxis.Type;
+                longestAxis = PrimaryResultAxis;
+            }
+
+            // The captured name is part of the Release IL (display class field), so it keeps Mathcad's spelling.
+            List<IPlotEquation> logestList = longestAxis.Equations.Select(equation => equation.Equation).ToList();
+            return Traces.OrderBy(trace => logestList.IndexOf(trace.GetEquation(AxesTypeToIndex.Index(longestAxisType))));
+        }
+    }
 
     public global::System.Xml.XmlNode GraphRegionXmlNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 
