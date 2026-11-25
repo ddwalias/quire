@@ -619,7 +619,51 @@ public partial class EquationControl
         UpdateLhsVisibleOnView();
     }
 
-private IList<TableCoordinate> GetNestedPositionForMatrix(MathNode node)
+    private MatrixFormat GetFormatForMatrix(MathNode node)
+    {
+        if (node != null && !node.IsInNumericPartOfEvaluationResult)
+        {
+            MathNode matrixNode = null;
+            if (node.DescriptorName == "MATRIX" || node.DescriptorName == "ScriptableControl1")
+            {
+                matrixNode = node;
+            }
+            else
+            {
+                MathNode ancestor = node.GetNearestAncestor("MATRIX") ?? node.GetNearestAncestor("ScriptableControl1");
+                if (ancestor != null)
+                {
+                    matrixNode = ancestor;
+                }
+            }
+
+            if (matrixNode != null)
+            {
+                return ((MatrixNodeInfo)matrixNode.NodeInfo).MatrixFormat;
+            }
+        }
+
+        MatrixFormat format = ResultMatrixFormat;
+        IList<TableCoordinate> nestedPosition = GetNestedPositionForMatrix(node);
+        if (nestedPosition == null)
+        {
+            return format;
+        }
+
+        foreach (TableCoordinate position in nestedPosition)
+        {
+            MatrixFormat parentFormat = format;
+            format = parentFormat.NestedMatrixFormats[position];
+            if (format == parentFormat.NestedMatrixFormats.EmptyPosition)
+            {
+                return parentFormat;
+            }
+        }
+
+        return format;
+    }
+
+    private IList<TableCoordinate> GetNestedPositionForMatrix(MathNode node)
     {
         List<TableCoordinate> nestedPosition = null;
         if (node == null)

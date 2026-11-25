@@ -616,3 +616,8 @@
 
 - Members: `GetNestedPositionForMatrix` (193 IL) implemented; stub pair removed. No lambda. The count test is `Count != 0`, which Roslyn emits as the single `brfalse` the IL uses.
 - Release IL: PASS, 3779 checked, zero failures.
+
+## Batch 89
+
+- Members: `GetFormatForMatrix` (136 IL) implemented; stub pair removed. No lambda. The `??` ancestor lookup and the foreach early return match.
+- Release IL: PASS, 3780 checked, zero failures.

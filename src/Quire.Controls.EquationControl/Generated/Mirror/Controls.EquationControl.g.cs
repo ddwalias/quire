@@ -648,8 +648,6 @@ public partial class EquationControl : global::System.Windows.Controls.ContentCo
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.FrameworkElement GetAdornedElement() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.MatrixFormat GetFormatForMatrix(global::Quire.EquationEditor.Tree.MathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Core.MatrixFormat GetFormatForVisualMatrix(global::Quire.EquationEditor.View.IVisualMatrixNode visualMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void SetMatrixForResizeAdorner(global::Quire.EquationEditor.View.IVisualMatrixNode matrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
