@@ -149,6 +149,27 @@ public partial class WorksheetControl
         }
     }
 
+    public bool SpellCheckEnabled
+    {
+        get => _spellCheckEnabled;
+        set
+        {
+            bool enabled = value && FunctionalityService.Instance.IsFunctionalityEnabled(
+                global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey.ToggleSpellCheckEnabledCommand);
+            if (_spellCheckEnabled == enabled)
+            {
+                return;
+            }
+            _spellCheckEnabled = enabled;
+            global::Quire.DebugTools.DevAssert(
+                FunctionalityService.Instance.IsFunctionalityEnabled(
+                    global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey.ToggleSpellCheckEnabledCommand),
+                null);
+            FirePropertyChanged("SpellCheckEnabled");
+            FireChanged();
+        }
+    }
+
     public IIORegionManager InputOutputRegionManager
     {
         get => (IIORegionManager)GetValue(InputOutputRegionManagerProperty);

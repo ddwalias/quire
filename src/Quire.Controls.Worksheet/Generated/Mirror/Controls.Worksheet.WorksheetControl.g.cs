@@ -12,8 +12,6 @@ namespace Quire.Controls.Worksheet;
 public partial class WorksheetControl : global::System.Windows.Controls.ContentControl, global::Quire.Controls.Worksheet.IWorksheetControl, global::System.ComponentModel.INotifyPropertyChanged, global::System.IDisposable, global::Quire.Controls.Core.IORegions.IIORegionContainer, global::Quire.Controls.Core.IORegions.IIORegionBase, global::Quire.Controls.Core.IWorksheetPropertiesSource, global::Quire.Controls.Core.IWorksheetProperties, global::Quire.Controls.Core.IMathFormatOwnerWithInitialValues, global::Quire.Controls.Core.IMathFormatOwner, global::Quire.Controls.IIdLabelOwner, global::Quire.Controls.Core.IWorksheetPageLayoutSize, global::Quire.Controls.Core.ICurrentNumberFormatProperty, global::Quire.Controls.Core.ICurrentMatrixFormatProperty, global::Quire.Core.ICurrentTextFormatProperty, global::Quire.Controls.Core.ICurrentMathFormatProperty, global::Quire.Controls.Core.ICurrentProofingLanguageProperty, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
-    public bool SpellCheckEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
     public WorksheetControl(global::Quire.Controls.Core.ITextStylesManager textStylesManager) { }
