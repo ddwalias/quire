@@ -43,4 +43,34 @@ public abstract partial class PlotGraphAxis
         }
 
     }
+
+    public int EquationCount
+    {
+        get
+        {
+            if (!HasEquationList())
+            {
+                return 0;
+            }
+            return EquationList.EquationCount;
+        }
+    }
+
+    public bool ShowTicks
+    {
+        get => (bool)GetValue(ShowTicksProperty);
+        set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
+
+    public bool ShowNumbers
+    {
+        get => (bool)GetValue(ShowNumbersProperty);
+        set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
+
+    public double Offset
+    {
+        get => (double)GetValue(OffsetProperty);
+        set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
 }
