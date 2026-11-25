@@ -597,3 +597,11 @@
 - Members: the four `UpdateEngineResult` overloads (`SynchronizationStatus`, `IResultNode`, `EngineError`, `IEnumerable<EngineRedefInfo>`). Each copies `EngineResult` to a local before the constructor call, which the Release IL shows.
 - Release IL: PASS, 3774 checked, zero failures.
 - Remaining: `UpdateLhsVisibleOnView` (106 IL) is a stub. `HandleWarningOccured` (lambda ordinal) and `HandleScopeChanged`/`FocusWhenAble` (closures) stay parked.
+
+## Batch 86
+
+- Owner: haiku-equationcontrol-20261123; branch feature/haiku-equationcontrol-20261123-next (on batch 85 tip e02337274, base main 22371b2e5).
+- Members: `BindCommands`, `BindEditingCommands`, `UnBindEditingCommands`; stub pairs removed from the `.g.cs`.
+- Release IL: PASS, 3777 checked, zero failures.
+- Runtime dependency: the binding members call `EditableCommandBindings` and `NonEditableCommandBindings`, which are still stubs, so binding throws until those land. Nothing calls `BindCommands` yet.
+- Parked: `UpdateLhsVisibleOnView` (106 IL). Its first condition is materialized as a bool (`ldc.i4.1`/`ldc.i4.0`) and tested after the second, which the natural ternary chain does not reproduce. Probe at scratchpad `updatelhs_probe.patch`.

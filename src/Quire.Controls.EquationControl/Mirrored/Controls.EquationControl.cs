@@ -619,6 +619,25 @@ public partial class EquationControl
         UpdateLhsVisibleOnView();
     }
 
+    private void BindCommands()
+    {
+        CommandBindings.AddRange(NonEditableCommandBindings);
+        if (!_model.IsRestrictedReadOnly)
+        {
+            BindEditingCommands();
+        }
+    }
+
+    private void BindEditingCommands() => CommandBindings.AddRange(EditableCommandBindings);
+
+    private void UnBindEditingCommands()
+    {
+        foreach (System.Windows.Input.CommandBinding commandBinding in EditableCommandBindings)
+        {
+            CommandBindings.Remove(commandBinding);
+        }
+    }
+
     private void UpdateEngineResult(SynchronizationStatus syncStatus)
     {
         var engineResult = EngineResult;
