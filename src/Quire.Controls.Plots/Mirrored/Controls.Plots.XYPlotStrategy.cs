@@ -167,8 +167,7 @@ internal partial class XYPlotStrategy
             plot.PlotTitlePositions[1].GetMinLegendPlaceholderHeight()
         }.Max();
         double value5 = plot.PlotLegendPositions != null ? plot.PlotLegendPositions[0].GetMinLegendPlaceholderHeight() : 0.0;
-        Size gridCellSize = plot.GridCellSize;
-        plot.MinHeight = Safe(gridCellSize.Height) + Safe(value4) + Safe(minLegendPlaceholderHeight2) + Safe(value5) + Safe(Math.Max(yLegendHeight, yLegendsColumnHeight + xLegendOverflowHeight));
+        plot.MinHeight = Safe(plot.GridCellSize.Height) + Safe(value4) + Safe(minLegendPlaceholderHeight2) + Safe(value5) + Safe(Math.Max(yLegendHeight, yLegendsColumnHeight + xLegendOverflowHeight));
         static double Safe(double result)
         {
             if (!double.IsNaN(result))
