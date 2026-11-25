@@ -1,9 +1,11 @@
 #nullable disable
 #pragma warning disable
 
+using System;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Xml;
 using Quire.Calculation.Core.Trace2DResults;
 using Quire.Controls.Plots.Presenter;
 
@@ -63,9 +65,26 @@ internal partial class PlotModel
 
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.ITraceModel> Traces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 
-    public string RegionSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public string RegionSExpression
+    {
+        get => throw new NotImplementedException();
+    }
 
-    public global::System.Xml.XmlNode PlotXmlNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public XmlNode PlotXmlNode
+    {
+        get => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        set
+        {
+            if (value == null)
+            {
+                throw new ArgumentException("plot should have plot type sub element");
+            }
+
+            FireDeserializationStarted();
+            createPlot(value);
+            FireDeserializationFinished();
+        }
+    }
 
     private void createPlot(global::System.Xml.XmlNode typeNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
