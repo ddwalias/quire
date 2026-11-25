@@ -134,7 +134,7 @@ public partial class PlotViewModelBase<TModel>
         }
         set
         {
-            if (!(CalcIsDisabled == value))
+            if ((CalcIsDisabled != value) == true)
             {
                 CompoundCommand cmd = new CompoundCommand();
                 DelegateFunction0<bool> doMethod = () =>
