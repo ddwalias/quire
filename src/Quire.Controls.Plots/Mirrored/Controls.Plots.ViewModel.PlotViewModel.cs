@@ -14,13 +14,26 @@ namespace Quire.Controls.Plots.ViewModel;
 
 internal partial class PlotViewModel
 {
-    private readonly global::Quire.Controls.Plots.Presenter.IPlotModel _model;
-
     public static readonly global::System.Windows.Input.RoutedCommand ActivateCommand;
 
-    public static readonly global::System.Windows.Input.RoutedCommand ShowAxisExpressionsCommand;
+    public PlotViewModel(IPlotModel model, IValueToScreen horizontalValueToScreen, IValueToScreen verticalValueToScreen)
+    {
+        _model = model;
+        _model.PropertyChanged += (sender, e) => OnPropertyChanged(e.PropertyName);
+        if (_model.Type == PlotType.XY)
+        {
+            Markers = new MarkersViewModel(_model.rangeAxis, _model.PrimaryResultAxis, horizontalValueToScreen, verticalValueToScreen);
+            Markers.MarkerDeleted += (sender, e) => Activate();
+            Markers.PropertyChanged += MarkersPropertyChanged;
+            Markers.ActiveMarkerStyleChanged += SetValuesForActiveMarker;
+            CommandBindings.AddRange(Markers.CommandBindings);
+        }
+        CreateCommandBinding(ShowAxisExpressionsCommand, ShowAxisExpressionsCommandExecute);
+    }
 
-    public PlotViewModel(global::Quire.Controls.Plots.Presenter.IPlotModel model, global::Quire.Controls.Plots.Presenter.IValueToScreen horizontalValueToScreen, global::Quire.Controls.Plots.Presenter.IValueToScreen verticalValueToScreen) { }
+    private readonly global::Quire.Controls.Plots.Presenter.IPlotModel _model;
+
+    public static readonly global::System.Windows.Input.RoutedCommand ShowAxisExpressionsCommand;
 
     private void MarkersPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
@@ -125,7 +138,7 @@ internal partial class PlotViewModel
         }
     }
 
-    private global::System.Collections.Generic.List<global::Quire.Controls.Plots.Presenter.IPlotTrace> _selectedTraces;
+    private List<IPlotTrace> _selectedTraces = new List<IPlotTrace>();
 
     public List<IPlotTrace> SelectedTraces
     {
@@ -166,7 +179,14 @@ internal partial class PlotViewModel
         trace.TraceChanged -= TraceChanged;
     }
 
-    private void SetValuesForSelectedTraceProperties() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void SetValuesForSelectedTraceProperties()
+    {
+        SelectedColor = GetAggregatedTracesProperty(trace => trace.Color);
+        SelectedLineStyle = GetAggregatedTracesProperty(trace => trace.LineStyle);
+        SelectedLineWeight = GetAggregatedTracesProperty(trace => trace.LineWeight);
+        SelectedTracesType = GetAggregatedTracesProperty(trace => trace.Type);
+        SelectedTracesSymbol = GetAggregatedTracesProperty(trace => trace.Symbol);
+    }
 
     private void SetValuesForActiveMarker()
     {
@@ -186,9 +206,43 @@ internal partial class PlotViewModel
         SelectedTracesSymbol = null;
     }
 
-    private global::System.Nullable<T> GetAggregatedTracesProperty<T>(global::System.Func<global::Quire.Controls.Plots.Presenter.IPlotTrace, T> propertySelector) where T : struct => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private Nullable<T> GetAggregatedTracesProperty<T>(Func<IPlotTrace, T> propertySelector)
+        where T : struct
+    {
+        return GetAggregatedProperty<IPlotTrace, T, T?>(SelectedTraces, propertySelector, value => value);
+    }
 
-    private static TResult GetAggregatedProperty<TSource, T, TResult>(global::System.Collections.Generic.IEnumerable<TSource> source, global::System.Func<TSource, T> propertySelector, global::System.Func<T, TResult> resultCorverter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static TResult GetAggregatedProperty<TSource, T, TResult>(IEnumerable<TSource> source, Func<TSource, T> propertySelector, Func<T, TResult> resultCorverter)
+    {
+        if (propertySelector == null)
+        {
+            throw new ArgumentNullException("propertySelector");
+        }
+        if (resultCorverter == null)
+        {
+            throw new ArgumentNullException("resultCorverter");
+        }
+        if (source == null)
+        {
+            return default(TResult);
+        }
+        using (IEnumerator<TSource> enumerator = source.GetEnumerator())
+        {
+            if (!enumerator.MoveNext())
+            {
+                return default(TResult);
+            }
+            T value = propertySelector(enumerator.Current);
+            while (enumerator.MoveNext())
+            {
+                if (!value.Equals(propertySelector(enumerator.Current)))
+                {
+                    return default(TResult);
+                }
+            }
+            return resultCorverter(value);
+        }
+    }
 
     private global::System.Nullable<global::System.Windows.Media.Color> _selectedColor;
 
