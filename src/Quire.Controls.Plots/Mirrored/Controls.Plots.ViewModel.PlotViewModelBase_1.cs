@@ -1,6 +1,12 @@
 #nullable disable
 #pragma warning disable
 
+using System;
+using System.Collections.Generic;
+using System.Windows;
+using Quire.Calculation.Core;
+using Quire.Controls.Plots.Model;
+
 namespace Quire.Controls.Plots.ViewModel;
 
 public partial class PlotViewModelBase<TModel>
@@ -25,11 +31,23 @@ public partial class PlotViewModelBase<TModel>
 
     internal PlotViewModelBase() { }
 
-    private void OnModelDeserializationEnded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnModelDeserializationEnded()
+    {
+        DelegateModelEvent(DeserializationEnded);
+    }
 
-    private void OnModelChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnModelChanged()
+    {
+        DelegateModelEvent(ModelChanged);
+    }
 
-    private static void DelegateModelEvent(global::System.Action handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void DelegateModelEvent(Action handler)
+    {
+        if (handler != null)
+        {
+            handler();
+        }
+    }
 
     protected virtual void BindCommandsAndEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -68,7 +86,10 @@ public partial class PlotViewModelBase<TModel>
         }
     }
 
-    protected virtual void OnAxisExpressionsVisibilityChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void OnAxisExpressionsVisibilityChanged()
+    {
+        UpdateShowControlLevelErrorFrameForNestedError();
+    }
 
     public bool CalcIsDisabled
     {
@@ -88,21 +109,54 @@ public partial class PlotViewModelBase<TModel>
 
     public bool HideFromCalculationContext { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 
-    public bool PendingActivation { private get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public bool PendingActivation
+    {
+        private get
+        {
+            return _isPendingActivation;
+        }
+        set
+        {
+            _isPendingActivation = value;
+            ComputeAreAxisExpresionsVisible();
+        }
+    }
 
-    public virtual bool IsActiveRegion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public virtual bool IsActiveRegion
+    {
+        get
+        {
+            return _isActiveRegion;
+        }
+        set
+        {
+            PendingActivation = false;
+            if (_isActiveRegion != value)
+            {
+                _isActiveRegion = value;
+                OnPropertyChanged("IsActiveRegion");
+            }
+            ComputeAreAxisExpresionsVisible();
+        }
+    }
 
-    protected void UpdateShowControlLevelErrorFrameForNestedError() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void UpdateShowControlLevelErrorFrameForNestedError()
+    {
+        ShowControlLevelErrorFrameForNestedError = Model.HasError && !AreAxisExpressionsVisible;
+    }
 
     internal global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CollectHiddenAndVisibleCalculatables() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private void ComputeAreAxisExpresionsVisible() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ComputeAreAxisExpresionsVisible()
+    {
+        AreAxisExpressionsVisible = CalculateAreAxisExpressionsVisible;
+    }
 
-    private bool CalculateAreAxisExpressionsVisible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    private bool CalculateAreAxisExpressionsVisible => PendingActivation || IsActiveRegion || ShowAxisExpressions;
 
     public bool ShowAxisExpressions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 
-    public bool IsCalculating { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public bool IsCalculating => Model != null && Model.IsCalculating;
 
     public global::Quire.Controls.Core.BackgroundTypeE PlotBackgroundType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 
@@ -118,17 +172,35 @@ public partial class PlotViewModelBase<TModel>
 
     private void ShowAxisExpressionsCommandExecute(object arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    internal void OnGraphSizeChanged(global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal void OnGraphSizeChanged(Size newSize)
+    {
+        GraphHeight = newSize.Height;
+        GraphWidth = newSize.Width;
+    }
 
     public void SetDataObject(global::Quire.Serialization.IDeS11NProvider de11NProvider, global::Quire.PersistentDataObjects.plotType dataObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public global::Quire.PersistentDataObjects.plotType GetDataObject(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void FireCalculatableAdded(ICalculatable calc)
+    {
+        Action<ICalculatable> calculatableAdded = CalculatableAdded;
+        if (calculatableAdded != null)
+        {
+            calculatableAdded(calc);
+        }
+    }
 
-    private void FireCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void FireCalculatableRemoved(ICalculatable calc)
+    {
+        Action<ICalculatable> calculatableRemoved = CalculatableRemoved;
+        if (calculatableRemoved != null)
+        {
+            calculatableRemoved(calc);
+        }
+    }
 
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public IEnumerable<ICalculatable> CalculatableChildren => _childHider.CalculatableChildren;
 
     public global::Quire.Calculation.Core.EngineError PlotCalculatableError { get; private set; }
 
@@ -136,11 +208,23 @@ public partial class PlotViewModelBase<TModel>
 
     public double CurrentMinimalGraphWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 
-    protected void OnCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void OnCalculatableAdded(ICalculatable calculatable)
+    {
+        ICalculationHideableChild hideableChild = calculatable as ICalculationHideableChild;
+        if (hideableChild != null)
+        {
+            hideableChild.HideFromCalculationContext = HideFromCalculationContext;
+        }
+        _childHider.ChildAdded(calculatable);
+    }
 
     protected void OnCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    protected void ModelPlotCalculatableError(object sender, global::Quire.Controls.Plots.Model.EngineErrorEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void ModelPlotCalculatableError(object sender, EngineErrorEventArgs e)
+    {
+        PlotCalculatableError = e.EngineError;
+        OnPropertyChanged("PlotCalculatableError");
+    }
 }
