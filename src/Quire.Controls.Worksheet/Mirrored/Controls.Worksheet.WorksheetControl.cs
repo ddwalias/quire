@@ -45,6 +45,26 @@ public partial class WorksheetControl
         }
     }
 
+    public DependencyObject CurrentElement
+    {
+        get => _currentElement;
+        set
+        {
+            if (_currentElement == value)
+            {
+                return;
+            }
+            _currentElement = value;
+            FirePropertyChanged(nameof(CurrentElement));
+        }
+    }
+
+    public bool ShowInputOutputDesignation
+    {
+        get => (bool)GetValue(ShowInputOutputDesignationProperty);
+        set => SetValue(ShowInputOutputDesignationProperty, value);
+    }
+
     public NumberFormat CurrentNumberFormat
     {
         get => _currentNumberFormat;
