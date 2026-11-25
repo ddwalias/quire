@@ -294,7 +294,15 @@ public abstract partial class PlotGraphLinearAxisBase
     {
         get
         {
-            Point startPoint = Orientation != Orientation.Horizontal ? new Point(0.0, 5.0) : new Point(Length(fullSize: false), 0.0);
+            Point startPoint;
+            if (Orientation == Orientation.Horizontal)
+            {
+                startPoint = new Point(Length(fullSize: false), 0.0);
+            }
+            else
+            {
+                startPoint = new Point(0.0, 5.0);
+            }
             PathFigure[] array = new PathFigure[1]
             {
                 new PathFigure
@@ -339,8 +347,8 @@ public abstract partial class PlotGraphLinearAxisBase
         Size result = base.MeasureOverride(availableSize);
         if (double.IsInfinity(result.Width) || double.IsInfinity(result.Height))
         {
-            Rect labelsBounds = new Rect(0.0, 0.0, 0.0, 0.0);
             GetPositions(out var firstEqnPosition, out var secondEqnPosition, out var lastEqnPosition, out var firstLabelPosition, out var secondLabelPosition, out var lastLabelPosition);
+            Rect labelsBounds = new Rect(0.0, 0.0, 0.0, 0.0);
             labelsBounds.Union(StartEquationRectangle(firstEqnPosition));
             labelsBounds.Union(EndEquationRectangle(lastEqnPosition));
             labelsBounds.Union(SecondExpressionEquation(secondEqnPosition));
