@@ -12,27 +12,6 @@ namespace Quire.Controls.Text;
 public partial class RichTextBase : global::System.Windows.Controls.RichTextBox, global::Quire.Controls.Core.IRichTextBase, global::Quire.Controls.Core.ISearchableRegion, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Core.ITextFormatOwner, global::Quire.Core.ICurrentTextFormatProperty, global::Quire.Core.ITextFormatCreation, global::Quire.Controls.Core.ISpellCheckRegion, global::Quire.Serialization.IPersistentDataProvider, global::System.IDisposable, global::Quire.Controls.Core.IWorksheetPropertiesTarget, global::Quire.Controls.Core.ICurrentProofingLanguageProperty
 {
 
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.RichTextBase+BlockedSelectionDirection, Ptc.Controls.Text")]
-    [global::System.Flags]
-    protected enum BlockedSelectionDirection
-    {
-        None = 0,
-        Down = 1,
-        Up = 2,
-        Left = 4,
-        Right = 8,
-        Start = 16,
-        End = 32,
-        Backward = 22,
-        Forward = 41,
-        All = 63,
-    }
-
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.RichTextBase+PropertyNames, Ptc.Controls.Text")]
-    public static partial class PropertyNames
-    {
-    }
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.RichTextBase+SyncTextChangedCommand, Ptc.Controls.Text")]
     protected partial class SyncTextChangedCommand : global::Quire.Undo.UndoableCommand, global::Quire.Undo.IUndoableCommandWithSideEffects, global::Quire.Undo.IUndoableCommand
     {
