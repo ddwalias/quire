@@ -3,6 +3,7 @@
 
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using Quire.Calculation.Core.Trace2DResults;
 using Quire.Controls.Plots.Presenter;
 
@@ -32,7 +33,19 @@ internal partial class PlotModel
 
     private bool _showAxisExpressions;
 
-    public bool ShowAxisExpressions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public bool ShowAxisExpressions
+    {
+        get
+        {
+            return _showAxisExpressions;
+        }
+
+        set
+        {
+            _showAxisExpressions = value;
+            Notify(PropertyNames.ShowAxisExpressions);
+        }
+    }
 
     private void Notify(string propName)
     {
@@ -66,7 +79,11 @@ internal partial class PlotModel
 
     private global::System.Windows.Size _graphSize;
 
-    public global::System.Windows.Size GraphSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public Size GraphSize
+    {
+        get => _graphSize;
+        set => _graphSize = value;
+    }
 
     public IAxisModel rangeAxis => _rangeAxis;
 
