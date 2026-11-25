@@ -18,27 +18,190 @@ namespace Quire.Controls.Plots.Model;
 
 internal partial class TraceModel
 {
-    private Rect DataRange
+    private readonly global::Quire.Controls.Plots.Model.PlottingPointsFilter _plottingPointsFilter;
+
+    private global::Quire.Controls.Plots.Model.TraceModel.PlottingPointsForDisplay _plottingPointsForDisplay;
+
+    private global::Quire.Controls.Plots.Model.TraceModel.TraceAnalyzedData _analyzedData;
+
+    private readonly global::Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter _converter;
+
+    private const double EffectsMargin = 0.25d;
+
+    private static readonly double[] _effectsTickPattern;
+
+    private readonly global::Quire.Controls.Plots.Presenter.IAxisModel[] _axes;
+
+    private readonly global::Quire.Controls.Plots.Presenter.IEquationItem[] _equations;
+
+    private global::Quire.Calculation.Core.Trace2DResults.TraceType _type;
+
+    private bool _isCommitted;
+
+    private global::System.Nullable<bool> _isTypeDefault;
+
+    private bool _resultValid;
+
+    public bool IsUsingDensityVisualization
     {
         get
         {
-            Rect result;
-            if (PlotType.Polar == PlotType)
+            if (AreDensityPointsSupported)
             {
-                double num = ResultAxisModel.LinearizedEnd - ResultAxisModel.LinearizedStart;
-                result = new Rect(-num, -num, 2.0 * num, 2.0 * num);
+                if (!ForcedToDensityVisualization)
+                {
+                    if (RestrictedToDensityPointsOrSolidLine)
+                    {
+                        return LineStyle == LineStyle.None;
+                    }
+                    return false;
+                }
+                return true;
             }
-            else
-            {
-                result = new Rect(RangeAxisModel.LinearizedStart, ResultAxisModel.LinearizedStart, RangeAxisModel.LinearizedEnd - RangeAxisModel.LinearizedStart, ResultAxisModel.LinearizedEnd - ResultAxisModel.LinearizedStart);
-            }
-            return result;
+            return false;
         }
     }
 
-    public void RecalculateResultOnPlotTypeChange()
+    public bool AreDensityPointsSupported => PlotType != PlotType.Polar;
+
+    public bool RestrictedToDensityPointsOrSolidLine
     {
-        ResultManager.DispatchResult(this);
+        get
+        {
+            int finalNumberOfDataPointsToRender = FinalNumberOfDataPointsToRender;
+            if (ControlSettings.Instance.MinPointsForDensity <= finalNumberOfDataPointsToRender)
+            {
+                return finalNumberOfDataPointsToRender < ControlSettings.Instance.MinPointsForForceDensity;
+            }
+            return false;
+        }
+    }
+
+    public bool ForcedToDensityVisualization
+    {
+        get
+        {
+            if (!ImageRendererModel.HasCachedBitmap)
+            {
+                return FinalNumberOfDataPointsToRender >= ControlSettings.Instance.MinPointsForForceDensity;
+            }
+            return true;
+        }
+    }
+
+    internal TraceModel(global::Quire.Controls.Plots.Presenter.PlotType plotType, global::Quire.Controls.Plots.Presenter.IEquationItem rangeEquationItem, global::Quire.Controls.Plots.Presenter.IEquationItem resultEquationItem, global::Quire.Controls.Plots.Presenter.IAxisModel rangeAxisModel, global::Quire.Controls.Plots.Presenter.IAxisModel resultAxisModel, global::System.Windows.Size viewPortDpi) { }
+
+    private void AxisModelRangeChanged()
+    {
+        if (IsUsingDensityVisualization)
+        {
+            ImageRendererModel.BeginInit();
+            ImageRendererModel.DataRange = DataRange;
+            ImageRendererModel.EndInit();
+        }
+        _plottingPointsFilter.PlottingPoints = _analyzedData.PointsCollection != null ? new PointCollection(_analyzedData.PointsCollection) : null;
+    }
+
+    public void ResultAxisLimitValueChanged()
+    {
+        SetAnalyzedData();
+    }
+
+    private void UpdateFilteringAllowed()
+    {
+        _plottingPointsFilter.FilteringAllowed = TraceTypeIsLinearAndAxesScalingIsLinear();
+    }
+
+    private void UpdateIsTypeDefault(bool forceUpdate = false)
+    {
+        if (ResultValid | forceUpdate)
+        {
+            _isTypeDefault = (_analyzedData.HasMoreThanOneColumn && Type == TraceType.Waterfall) || (!_analyzedData.HasMoreThanOneColumn && Type == TraceType.Lines);
+        }
+        else
+        {
+            ResetIsTypeDefault();
+        }
+    }
+
+    private void SetDefaultType()
+    {
+        if (!_isTypeDefault.HasValue)
+        {
+            UpdateIsTypeDefault(forceUpdate: true);
+        }
+        if (_isTypeDefault.HasValue && _isTypeDefault.Value)
+        {
+            SetTypeImpl(_analyzedData.HasMoreThanOneColumn ? TraceType.Waterfall : TraceType.Lines, callStyleChanged: true);
+        }
+    }
+
+    private void AxesScalingChanged(AxisScaling scaling)
+    {
+        UpdateFilteringAllowed();
+        SetAnalyzedData();
+    }
+
+    public void RangeAxisLimitValueChanged()
+    {
+        Commit();
+    }
+
+    public bool ResultValid
+    {
+        get
+        {
+            return _resultValid;
+        }
+        set
+        {
+            _resultValid = value;
+            FireResultValidChanged(_resultValid);
+        }
+    }
+
+    public bool ContainsEmptyEquation
+    {
+        get
+        {
+            if (!GetEquation(AxesIndex.Range).IsPlotEquationEmpty)
+            {
+                return GetEquation(AxesIndex.Result).IsPlotEquationEmpty;
+            }
+            return true;
+        }
+    }
+
+    public double? MinPositiveX => MinPlottingPointCoordinate(point => point.X > 0 ? point.X : null);
+
+    private double? MinPlottingPointCoordinate(Func<Point, double?> selector)
+    {
+        if (_plottingPointsFilter.PlottingPoints == null)
+        {
+            return null;
+        }
+        return _plottingPointsFilter.PlottingPoints.Select(selector).Min();
+    }
+
+    public double? MinPositiveY => MinPlottingPointCoordinate(point => point.Y > 0 ? point.Y : null);
+
+    protected override void OnTraceEquationSExpressionChanged()
+    {
+        base.OnTraceEquationSExpressionChanged();
+        SetIsCommitted(value: false);
+    }
+
+    private void FireIsTraceCommitted(bool isTraceCommitted)
+    {
+        if (IsTraceCommittedChanged != null)
+        {
+            IsTraceCommittedChanged(isTraceCommitted);
+        }
+    }
+
+    private void EquationControlRequestEvaluation()
+    {
+        Commit();
     }
 
     private static void CalculateRadialRange(IEnumerable<Point> points, out double min, out double max)
@@ -124,134 +287,6 @@ internal partial class TraceModel
         return pointCollection;
     }
 
-    private bool TraceTypeIsLinearAndAxesScalingIsLinear()
-    {
-        return Type == TraceType.Lines;
-    }
-
-    private bool Containes(Point arg)
-    {
-        if (RangeAxisModel.Contains(arg.X))
-        {
-            return ResultAxisModel.Contains(arg.Y);
-        }
-        return false;
-    }
-
-    private Interval GetParameterRange()
-    {
-        IAxisModel rangeAxisModel = RangeAxisModel;
-        if (rangeAxisModel.Type != AxesType.Angular)
-        {
-            return new Interval
-            {
-                Lower = GetXAxisLimitEditorValue(rangeAxisModel.StartExpression, rangeAxisModel.StartDefault),
-                Upper = GetXAxisLimitEditorValue(rangeAxisModel.EndExpression, rangeAxisModel.EndDefault)
-            };
-        }
-        return _angularRange;
-    }
-
-    private static double GetXAxisLimitEditorValue(IAxisLimitEditor limitEditor, double defaultValue)
-    {
-        if (limitEditor != null && limitEditor.IsValueValid)
-        {
-            return limitEditor.CalculatedValue;
-        }
-        return defaultValue;
-    }
-
-    private string GetxyplotScalingRl(AxesIndex axesType)
-    {
-        IPlotEquation equation = _equations[(int)axesType].Equation;
-        return GetReplacedRl(equation.ScalingEquation, equation.ScalingRl);
-    }
-
-    private string GetExpRl(AxesIndex axesType)
-    {
-        return GetReplacedRl(_equations[(int)axesType].Equation.Expression);
-    }
-
-    private void InvalidateEngineResult()
-    {
-        EngineResult = default;
-    }
-
-    private void FireIsTraceCommitted(bool isTraceCommitted)
-    {
-        if (IsTraceCommittedChanged != null)
-        {
-            IsTraceCommittedChanged(isTraceCommitted);
-        }
-    }
-
-    protected override void OnPlotCalculatableError(EngineErrorEventArgs args)
-    {
-        base.OnPlotCalculatableError(args);
-        IsNumOfPointsMutable = false;
-        if (args.EngineError != null)
-        {
-            ClearPoints();
-        }
-    }
-
-    private void FireResultValidChanged(bool resultValid)
-    {
-        if (ResultValidChanged != null)
-        {
-            ResultValidChanged(resultValid);
-        }
-    }
-
-    private void FireAnalyzedDataChanged()
-    {
-        Action<ITraceModel> handler = AnalyzedDataChanged;
-        if (handler != null)
-        {
-            handler(this);
-        }
-    }
-
-    private void FireValidateTraceVsPlotType()
-    {
-        if (ValidateTraceVsPlotType != null)
-        {
-            ValidateTraceVsPlotType();
-        }
-    }
-
-    private void FireStyleChanged()
-    {
-        if (StyleChanged != null)
-        {
-            StyleChanged();
-        }
-    }
-
-    private void SetIsCommitted(bool value)
-    {
-        if (value != _isCommitted)
-        {
-            _isCommitted = value;
-            FireIsTraceCommitted(_isCommitted);
-        }
-    }
-
-    protected void FireEquationError(EngineError engineError)
-    {
-        Action<EngineError> handler = EquationError;
-        if (handler != null)
-        {
-            handler(engineError);
-        }
-    }
-
-    protected override void OnTraceEquationSExpressionChanged()
-    {
-        base.OnTraceEquationSExpressionChanged();
-        SetIsCommitted(value: false);
-    }
-
     public IAxisModel GetAxis(AxesIndex axis)
     {
         return _axes[(int)axis];
@@ -270,146 +305,6 @@ internal partial class TraceModel
         {
             CommitIfEquationsNotEmpty();
         }
-    }
-
-    public PointCollection GetPlottingPointsForDisplay()
-    {
-        return _plottingPointsForDisplay.ViewPoints;
-    }
-
-    public override void Commit()
-    {
-        FireRequestEvaluation();
-    }
-
-    public override void SetError(EngineError error)
-    {
-        if (error != null)
-        {
-            _engineResultForSerialization = null;
-        }
-        base.SetError(error);
-    }
-
-    protected override void PreprocessEquationSpecificError()
-    {
-        base.PreprocessEquationSpecificError();
-        ClearPoints();
-    }
-
-    protected override void OnEquationSpecificError(ICalculatable equation)
-    {
-        base.OnEquationSpecificError(equation);
-        FireEquationError(Error);
-    }
-
-    private void ClearPoints()
-    {
-        NumberOfPointsInResult = 0;
-        _analyzedData.SetDefaults();
-        _analyzedData.PointsCollection = new PointCollection();
-        SetPlottingPoints(_analyzedData.PointsCollection);
-    }
-
-    protected override void BeforeRequestEvaluation()
-    {
-        SetIsCommitted(value: true);
-        ResultValid = false;
-        FireEquationError(null);
-    }
-
-    public AxesType GetRangeAxisType()
-    {
-        return GetAxis(AxesIndex.Range).Type;
-    }
-
-    private void AxisModelRangeChanged()
-    {
-        if (IsUsingDensityVisualization)
-        {
-            ImageRendererModel.BeginInit();
-            ImageRendererModel.DataRange = DataRange;
-            ImageRendererModel.EndInit();
-        }
-        _plottingPointsFilter.PlottingPoints = _analyzedData.PointsCollection != null ? new PointCollection(_analyzedData.PointsCollection) : null;
-    }
-
-    public void ResultAxisLimitValueChanged()
-    {
-        SetAnalyzedData();
-    }
-
-    private void UpdateFilteringAllowed()
-    {
-        _plottingPointsFilter.FilteringAllowed = TraceTypeIsLinearAndAxesScalingIsLinear();
-    }
-
-    private void UpdateIsTypeDefault(bool forceUpdate = false)
-    {
-        if (ResultValid | forceUpdate)
-        {
-            _isTypeDefault = (_analyzedData.HasMoreThanOneColumn && Type == TraceType.Waterfall) || (!_analyzedData.HasMoreThanOneColumn && Type == TraceType.Lines);
-        }
-        else
-        {
-            ResetIsTypeDefault();
-        }
-    }
-
-    private void SetDefaultType()
-    {
-        if (!_isTypeDefault.HasValue)
-        {
-            UpdateIsTypeDefault(forceUpdate: true);
-        }
-        if (_isTypeDefault.HasValue && _isTypeDefault.Value)
-        {
-            SetTypeImpl(_analyzedData.HasMoreThanOneColumn ? TraceType.Waterfall : TraceType.Lines, callStyleChanged: true);
-        }
-    }
-
-    private void AxesScalingChanged(AxisScaling scaling)
-    {
-        UpdateFilteringAllowed();
-        SetAnalyzedData();
-    }
-
-    public void RangeAxisLimitValueChanged()
-    {
-        Commit();
-    }
-
-    private void EquationControlRequestEvaluation()
-    {
-        Commit();
-    }
-
-    private static EngineResult CopyMinMaxAndUnitsResults(EngineResult source)
-    {
-        IResultNode resultNode = null;
-        if (source.ResultNode is ITrace2DResultNode trace2DResultNode)
-        {
-            resultNode = new Trace2DResultNode(trace2DResultNode.RangeAxisInfo, trace2DResultNode.ResultAxisInfo, new TraceDataPoints(), trace2DResultNode.TraceResultType);
-        }
-        else
-        {
-            DebugTools.FailAssertion(null, Array.Empty<object>());
-        }
-        return new EngineResult(resultNode, null, SynchronizationStatus.Synchronized);
-    }
-
-    public void ResetIsTypeDefault(bool? value = null)
-    {
-        _isTypeDefault = value;
-    }
-
-    private double? MinPlottingPointCoordinate(Func<Point, double?> selector)
-    {
-        if (_plottingPointsFilter.PlottingPoints == null)
-        {
-            return null;
-        }
-        return _plottingPointsFilter.PlottingPoints.Select(selector).Min();
     }
 
     private void SetEquationWithoutCommit(AxesIndex axis, IEquationItem equationItem)
@@ -449,9 +344,165 @@ internal partial class TraceModel
         }
     }
 
+    public void RecalculateResultOnPlotTypeChange()
+    {
+        ResultManager.DispatchResult(this);
+    }
+
+    public event global::System.Action<bool> ResultValidChanged;
+
+    public event global::System.Action ValidateTraceVsPlotType;
+
+    public event global::System.Action PlottingPointsChanged;
+
+    public event global::System.Action<global::Quire.Controls.Plots.Presenter.ITraceModel> AnalyzedDataChanged;
+
+    public event global::System.Action StyleChanged;
+
+    public event global::System.Action<bool> IsTraceCommittedChanged;
+
     private void SetPlottingPoints(PointCollection value)
     {
         _plottingPointsFilter.PlottingPoints = value;
+    }
+
+    public void UpdatePlottingPointsForDisplay() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public PointCollection GetPlottingPointsForDisplay()
+    {
+        return _plottingPointsForDisplay.ViewPoints;
+    }
+
+    private int PlottingPointsCount
+    {
+        get
+        {
+            if (_plottingPointsFilter == null || _plottingPointsFilter.FilteredPointsCollection == null)
+            {
+                return 0;
+            }
+            return _plottingPointsFilter.FilteredPointsCollection.Count;
+        }
+    }
+
+    private int FinalNumberOfDataPointsToRender
+    {
+        get
+        {
+            if (_plottingPointsFilter == null || _plottingPointsFilter.FilteredPointsCollection == null)
+            {
+                return 0;
+            }
+            return _plottingPointsFilter.NotNullPointsCount;
+        }
+    }
+
+    private bool TraceTypeIsLinearAndAxesScalingIsLinear()
+    {
+        return Type == TraceType.Lines;
+    }
+
+    private bool Containes(Point arg)
+    {
+        if (RangeAxisModel.Contains(arg.X))
+        {
+            return ResultAxisModel.Contains(arg.Y);
+        }
+        return false;
+    }
+
+    public ITraceImageRendererModel ImageRendererModel { get; private set; }
+
+    public List<Point> GetGraphPointsForPlottingCoordinateOnRangeAxis(double rangeAxisValue)
+    {
+        if (!DebugTools.AssertNotNull(_plottingPointsForDisplay, null).Passed)
+        {
+            return new List<Point>();
+        }
+        return _plottingPointsForDisplay.GetGraphPointsForPlottingCoordinateOnRangeAxis(rangeAxisValue);
+    }
+
+    public double GetClosestPlottingCoordinateOnRangeAxis(double value, double threshold)
+    {
+        if (!DebugTools.AssertNotNull(_plottingPointsForDisplay, null).Passed)
+        {
+            return double.NaN;
+        }
+        return _plottingPointsForDisplay.GetClosestPlottingCoordinateOnRangeAxis(value, threshold);
+    }
+
+    public PlotType PlotType { get; private set; }
+
+    public Point TopLeft { get; private set; }
+
+    public Point BottomRight { get; private set; }
+
+    private global::System.Windows.Media.Color _color;
+
+    public Color Color
+    {
+        get
+        {
+            return _color;
+        }
+        set
+        {
+            _color = value;
+            ImageRendererModel.StyleOwner.Color = _color;
+        }
+    }
+
+    public TraceSymbol Symbol { get; set; }
+
+    public double SymbolWeight { get; set; }
+
+    public double SymbolFrequency { get; set; }
+
+    private global::Quire.Controls.Plots.Presenter.LineStyle _lineStyle;
+
+    public LineStyle LineStyle
+    {
+        get
+        {
+            return _lineStyle;
+        }
+        set
+        {
+            if (value == _lineStyle)
+            {
+                return;
+            }
+            bool isUsingDensityVisualization = IsUsingDensityVisualization;
+            _lineStyle = value;
+            bool isUsingDensityVisualization2 = IsUsingDensityVisualization;
+            if (isUsingDensityVisualization != isUsingDensityVisualization2)
+            {
+                UpdateImageRendererModel();
+            }
+        }
+    }
+
+    public double LineWeight { get; set; }
+
+    public string Label { get; set; }
+
+    public TraceType Type
+    {
+        get
+        {
+            return _type;
+        }
+        set
+        {
+            if (_type != value)
+            {
+                SetTypeImpl(value);
+                UpdateIsTypeDefault();
+                ClearPoints();
+                InvalidateEngineResult();
+                Commit();
+            }
+        }
     }
 
     private void SetTypeImpl(TraceType type, bool callStyleChanged = false)
@@ -465,6 +516,278 @@ internal partial class TraceModel
         }
     }
 
+    public bool XIsDiscrete { get; private set; }
+
+    public bool YIsDiscrete { get; private set; }
+
+    public global::System.Xml.XmlNode RegionXmlNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
+    protected override void OnPlotCalculatableError(EngineErrorEventArgs args)
+    {
+        base.OnPlotCalculatableError(args);
+        IsNumOfPointsMutable = false;
+        if (args.EngineError != null)
+        {
+            ClearPoints();
+        }
+    }
+
+    private void FireResultValidChanged(bool resultValid)
+    {
+        if (ResultValidChanged != null)
+        {
+            ResultValidChanged(resultValid);
+        }
+    }
+
+    private void OnPlottingPointsChanged()
+    {
+        UpdatePlottingPointsForDisplay();
+        UpdateImageRendererModel();
+        if (PlottingPointsChanged != null)
+        {
+            PlottingPointsChanged();
+        }
+    }
+
+    private void UpdateImageRendererModel()
+    {
+        if (IsUsingDensityVisualization)
+        {
+            ImageRendererModel.BeginInit();
+            ImageRendererModel.DataPoints = GetPlottingPointsForDisplay();
+            ImageRendererModel.DataRange = DataRange;
+            ImageRendererModel.EndInit();
+        }
+        else
+        {
+            ImageRendererModel.StopRendering();
+        }
+    }
+
+    private Rect DataRange
+    {
+        get
+        {
+            Rect result;
+            if (PlotType.Polar == PlotType)
+            {
+                double num = ResultAxisModel.LinearizedEnd - ResultAxisModel.LinearizedStart;
+                result = new Rect(-num, -num, 2.0 * num, 2.0 * num);
+            }
+            else
+            {
+                result = new Rect(RangeAxisModel.LinearizedStart, ResultAxisModel.LinearizedStart, RangeAxisModel.LinearizedEnd - RangeAxisModel.LinearizedStart, ResultAxisModel.LinearizedEnd - ResultAxisModel.LinearizedStart);
+            }
+            return result;
+        }
+    }
+
+    private void FireAnalyzedDataChanged()
+    {
+        Action<ITraceModel> handler = AnalyzedDataChanged;
+        if (handler != null)
+        {
+            handler(this);
+        }
+    }
+
+    private void FireValidateTraceVsPlotType()
+    {
+        if (ValidateTraceVsPlotType != null)
+        {
+            ValidateTraceVsPlotType();
+        }
+    }
+
+    private void FireStyleChanged()
+    {
+        if (StyleChanged != null)
+        {
+            StyleChanged();
+        }
+    }
+
+    public override string Rl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
+    private Interval GetParameterRange()
+    {
+        IAxisModel rangeAxisModel = RangeAxisModel;
+        if (rangeAxisModel.Type != AxesType.Angular)
+        {
+            return new Interval
+            {
+                Lower = GetXAxisLimitEditorValue(rangeAxisModel.StartExpression, rangeAxisModel.StartDefault),
+                Upper = GetXAxisLimitEditorValue(rangeAxisModel.EndExpression, rangeAxisModel.EndDefault)
+            };
+        }
+        return _angularRange;
+    }
+
+    private static double GetXAxisLimitEditorValue(IAxisLimitEditor limitEditor, double defaultValue)
+    {
+        if (limitEditor != null && limitEditor.IsValueValid)
+        {
+            return limitEditor.CalculatedValue;
+        }
+        return defaultValue;
+    }
+
+    private IAxisModel RangeAxisModel => _axes[0];
+
+    private IAxisModel ResultAxisModel => _axes[1];
+
+    private string GetxyplotScalingRl(AxesIndex axesType)
+    {
+        IPlotEquation equation = _equations[(int)axesType].Equation;
+        return GetReplacedRl(equation.ScalingEquation, equation.ScalingRl);
+    }
+
+    private string GetExpRl(AxesIndex axesType)
+    {
+        return GetReplacedRl(_equations[(int)axesType].Equation.Expression);
+    }
+
+    private void InvalidateEngineResult()
+    {
+        EngineResult = default;
+    }
+
+    public override void Commit()
+    {
+        FireRequestEvaluation();
+    }
+
+    public override void SetError(EngineError error)
+    {
+        if (error != null)
+        {
+            _engineResultForSerialization = null;
+        }
+        base.SetError(error);
+    }
+
+    public override void SetResult(global::Quire.Calculation.Core.IResultNode result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private void DoSetResult(IResultNode result)
+    {
+        try
+        {
+            _plottingPointsFilter.BeginInit();
+            using (new CommandScope(new CompoundCommand()))
+            {
+                ClearPoints();
+                try
+                {
+                    if (result is IEmptyResultNode)
+                    {
+                        FireValidateTraceVsPlotType();
+                        SetAnalyzedData();
+                    }
+                    else if (result is IMatrixResultNode)
+                    {
+                        if (AnalyzeResult(result as IMatrixResultNode))
+                        {
+                            FireValidateTraceVsPlotType();
+                            SetAnalyzedData();
+                        }
+                    }
+                    else if (result is ITrace2DResultNode)
+                    {
+                        if (AnalyzeResult(result as ITrace2DResultNode))
+                        {
+                            FireValidateTraceVsPlotType();
+                            SetAnalyzedData();
+                        }
+                    }
+                    else
+                    {
+                        DebugTools.DevAssert(false, "Result is not an empty or a matrix result node.");
+                        OnPlotCalculatableError(new EngineErrorEventArgs(new EngineError
+                        {
+                            Message = "PlotControl.Error.ResultIsNotAMatrix"
+                        }));
+                    }
+                }
+                catch (PlotInvalidResultException ex)
+                {
+                    OnPlotCalculatableError(new EngineErrorEventArgs(new EngineError
+                    {
+                        Message = ex.Message
+                    }));
+                }
+            }
+        }
+        finally
+        {
+            _plottingPointsFilter.EndInit();
+            DebugTools.DevAssert(NumberOfPointsInResult >= FinalNumberOfDataPointsToRender, null);
+        }
+    }
+
+    protected override void PreprocessEquationSpecificError()
+    {
+        base.PreprocessEquationSpecificError();
+        ClearPoints();
+    }
+
+    protected override void OnEquationSpecificError(ICalculatable equation)
+    {
+        base.OnEquationSpecificError(equation);
+        FireEquationError(Error);
+    }
+
+    private void ClearPoints()
+    {
+        NumberOfPointsInResult = 0;
+        _analyzedData.SetDefaults();
+        _analyzedData.PointsCollection = new PointCollection();
+        SetPlottingPoints(_analyzedData.PointsCollection);
+    }
+
+    protected override void BeforeRequestEvaluation()
+    {
+        SetIsCommitted(value: true);
+        ResultValid = false;
+        FireEquationError(null);
+    }
+
+    private bool AnalyzeResultData(global::Quire.Calculation.Core.IVectorListResultNode xResult, global::Quire.Calculation.Core.IVectorListResultNode yResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private bool CreateAllPointsByTraceType(IVectorListResultNode xResult, IVectorListResultNode yResult)
+    {
+        IList<IList<double>> list = TraceResultAnalyzer.ToDoubleDataList(xResult);
+        IList<IList<double>> list2 = TraceResultAnalyzer.ToDoubleDataList(yResult);
+        IList<Point> pointsCollection = _analyzedData.PointsCollection;
+        if (list.IsNullOrEmpty() || list2.IsNullOrEmpty())
+        {
+            return false;
+        }
+        bool result = false;
+        switch (Type)
+        {
+            case TraceType.Lines:
+            case TraceType.Columns:
+            case TraceType.Bars:
+            case TraceType.Stems:
+                result = TraceResultAnalyzer.AddOneDataSegment(pointsCollection, list.First(), list2.First(), ensureTrailingNaN: false);
+                break;
+            case TraceType.Waterfall:
+                result = TraceResultAnalyzer.BuildPointsForWaterfall(pointsCollection, list, list2);
+                break;
+            case TraceType.Boxes:
+                result = TraceResultAnalyzer.BuildPointsForBoxes(pointsCollection, list.First(), list2);
+                break;
+            case TraceType.Errors:
+                result = TraceResultAnalyzer.BuildTuplesOfPoints(pointsCollection, list.First(), list2.Take(2).ToArray());
+                break;
+            case TraceType.Effects:
+                result = TraceResultAnalyzer.BuildTuplesOfPoints(pointsCollection, list.First(), list2.Take(2).ToArray(), new double[2] { -0.25, 0.25 });
+                break;
+        }
+        return result;
+    }
+
     private void SetRect(double top, double left, double bottom, double right)
     {
         if (double.IsInfinity(top) || double.IsInfinity(left) || double.IsInfinity(bottom) || double.IsInfinity(right))
@@ -473,6 +796,112 @@ internal partial class TraceModel
         }
         TopLeft = new Point(left, top);
         BottomRight = new Point(right, bottom);
+    }
+
+    private bool AnalyzeResult(IMatrixResultNode matrix)
+    {
+        string errorMessageCode;
+        ITrace2DResultNode plotResult = _converter.ConvertToVectorsForm(matrix, out errorMessageCode);
+        if (errorMessageCode.IsNotEmpty())
+        {
+            throw new PlotInvalidResultException(errorMessageCode);
+        }
+        AnalyzeVectors(plotResult);
+        return true;
+    }
+
+    private bool AnalyzeResult(ITrace2DResultNode traceReducedResult)
+    {
+        AnalyzeVectors(traceReducedResult);
+        return true;
+    }
+
+    private void AnalyzeVectors(ITrace2DResultNode plotResult)
+    {
+        PlotInvalidResultException ex = null;
+        try
+        {
+            if (plotResult.TraceResultType == Trace2DResultType.Parametric)
+            {
+                Interval parameterRange = GetParameterRange();
+                if (parameterRange.Upper < parameterRange.Lower)
+                {
+                    ClearPoints();
+                    EngineResultForSerialization = new EngineResult(null, new EngineErrorCollection
+                    {
+                        new EngineError
+                        {
+                            Message = "PlotControl.Error.NotValidParameterRangeForParametric"
+                        }
+                    }, EngineResult.SynchronizationStatus);
+                    ex = new PlotInvalidResultException("PlotControl.Error.NotValidParameterRangeForParametric");
+                }
+            }
+            if (ex == null && (!plotResult.DataPoints.IsEmpty || !ImageRendererModel.HasCachedBitmap))
+            {
+                IVectorListResultNode rangePoints = plotResult.DataPoints.RangePoints;
+                IVectorListResultNode resultPoints = plotResult.DataPoints.ResultPoints;
+                if (NumberOfPointsInResult == 0)
+                {
+                    NumberOfPointsInResult = Math.Max(rangePoints.ElementsCount, resultPoints.ElementsCount);
+                }
+                if (!AnalyzeResultData(rangePoints, resultPoints))
+                {
+                    ex = new PlotInvalidResultException("PlotControl.Error.OnlyNaNsAndComplex");
+                }
+            }
+            AnalyzeAxisAndTypeData(plotResult);
+        }
+        catch (Exception ex2)
+        {
+            DebugTools.FailAssertion(ex2.Message);
+            ex = new PlotInvalidResultException("PlotControl.Error.ResultIsNotAMatrix", ex2);
+        }
+        if (ex == null)
+        {
+            EngineResultForSerialization = new EngineResult(plotResult, null, EngineResult.SynchronizationStatus);
+            return;
+        }
+        throw ex;
+    }
+
+    private void AnalyzeAxisAndTypeData(ITrace2DResultNode plotResult)
+    {
+        _analyzedData.RectPoints.Left = plotResult.RangeAxisInfo.Min;
+        _analyzedData.RectPoints.Right = plotResult.RangeAxisInfo.Max;
+        _analyzedData.RangeUnits = plotResult.RangeAxisInfo.Units;
+        _analyzedData.RectPoints.Top = plotResult.ResultAxisInfo.Min;
+        _analyzedData.RectPoints.Bottom = plotResult.ResultAxisInfo.Max;
+        _analyzedData.ResultUnits = plotResult.ResultAxisInfo.Units;
+        IsNumOfPointsMutable = plotResult.TraceResultType == Trace2DResultType.Parametric;
+        _equations[0].Equation.Units = _analyzedData.RangeUnits;
+        _equations[1].Equation.Units = _analyzedData.ResultUnits;
+    }
+
+    public AxesType GetRangeAxisType()
+    {
+        return GetAxis(AxesIndex.Range).Type;
+    }
+
+    private static readonly global::Quire.Interval _angularRange;
+
+    private int NumberOfPointsInResult { get; set; }
+
+    private void SetAnalyzedData()
+    {
+        SetPlottingPoints(_analyzedData.PointsCollection == null ? null : new PointCollection(_analyzedData.PointsCollection));
+        SetAnalyzedDataForAxis(GetAxis(AxesIndex.Result), _analyzedData.YLabels, SetAnalyzedDataForResultAxis);
+        SetAnalyzedDataForAxis(GetAxis(AxesIndex.Range), _analyzedData.XLabels, SetAnalyzedDataForRangeAxis);
+        if (PlotType.Polar == PlotType)
+        {
+            SetPolarPlotRect(_analyzedData.PointsCollection);
+        }
+        else
+        {
+            SetRect(_analyzedData.RectPoints.Top, _analyzedData.RectPoints.Left, _analyzedData.RectPoints.Bottom, _analyzedData.RectPoints.Right);
+        }
+        FireAnalyzedDataChanged();
+        ResultValid = true;
     }
 
     private void SetAnalyzedDataForAxis(IAxisModel axisModel, string[] labels, Action<IAxisModel, string[]> action)
@@ -548,199 +977,45 @@ internal partial class TraceModel
         SetRect(min, min, max, max);
     }
 
-    public List<Point> GetGraphPointsForPlottingCoordinateOnRangeAxis(double rangeAxisValue)
-    {
-        if (!DebugTools.AssertNotNull(_plottingPointsForDisplay, null).Passed)
-        {
-            return new List<Point>();
-        }
-        return _plottingPointsForDisplay.GetGraphPointsForPlottingCoordinateOnRangeAxis(rangeAxisValue);
-    }
+    public override bool IsCommitted => _isCommitted;
 
-    public double GetClosestPlottingCoordinateOnRangeAxis(double value, double threshold)
+    private void SetIsCommitted(bool value)
     {
-        if (!DebugTools.AssertNotNull(_plottingPointsForDisplay, null).Passed)
+        if (value != _isCommitted)
         {
-            return double.NaN;
-        }
-        return _plottingPointsForDisplay.GetClosestPlottingCoordinateOnRangeAxis(value, threshold);
-    }
-
-    private void OnPlottingPointsChanged()
-    {
-        UpdatePlottingPointsForDisplay();
-        UpdateImageRendererModel();
-        if (PlottingPointsChanged != null)
-        {
-            PlottingPointsChanged();
+            _isCommitted = value;
+            FireIsTraceCommitted(_isCommitted);
         }
     }
 
-    private void UpdateImageRendererModel()
+    public event global::System.Action<global::Quire.Calculation.Core.EngineError> EquationError;
+
+    protected void FireEquationError(EngineError engineError)
     {
-        if (IsUsingDensityVisualization)
+        Action<EngineError> handler = EquationError;
+        if (handler != null)
         {
-            ImageRendererModel.BeginInit();
-            ImageRendererModel.DataPoints = GetPlottingPointsForDisplay();
-            ImageRendererModel.DataRange = DataRange;
-            ImageRendererModel.EndInit();
+            handler(engineError);
+        }
+    }
+
+    public bool ShouldNotCopyFullResults { get; set; }
+
+    private static EngineResult CopyMinMaxAndUnitsResults(EngineResult source)
+    {
+        IResultNode resultNode = null;
+        if (source.ResultNode is ITrace2DResultNode trace2DResultNode)
+        {
+            resultNode = new Trace2DResultNode(trace2DResultNode.RangeAxisInfo, trace2DResultNode.ResultAxisInfo, new TraceDataPoints(), trace2DResultNode.TraceResultType);
         }
         else
         {
-            ImageRendererModel.StopRendering();
+            DebugTools.FailAssertion(null, Array.Empty<object>());
         }
+        return new EngineResult(resultNode, null, SynchronizationStatus.Synchronized);
     }
 
-    public bool IsUsingDensityVisualization
-    {
-        get
-        {
-            if (AreDensityPointsSupported)
-            {
-                if (!ForcedToDensityVisualization)
-                {
-                    if (RestrictedToDensityPointsOrSolidLine)
-                    {
-                        return LineStyle == LineStyle.None;
-                    }
-                    return false;
-                }
-                return true;
-            }
-            return false;
-        }
-    }
-
-    public bool ResultValid
-    {
-        get
-        {
-            return _resultValid;
-        }
-        set
-        {
-            _resultValid = value;
-            FireResultValidChanged(_resultValid);
-        }
-    }
-
-    public bool IsTypeDefault
-    {
-        get
-        {
-            if (_isTypeDefault.HasValue)
-            {
-                return _isTypeDefault.Value;
-            }
-            return false;
-        }
-    }
-
-    public bool ContainsEmptyEquation
-    {
-        get
-        {
-            if (!GetEquation(AxesIndex.Range).IsPlotEquationEmpty)
-            {
-                return GetEquation(AxesIndex.Result).IsPlotEquationEmpty;
-            }
-            return true;
-        }
-    }
-
-    public Point TopLeft { get; private set; }
-
-    public Point BottomRight { get; private set; }
-
-    public Color Color
-    {
-        get
-        {
-            return _color;
-        }
-        set
-        {
-            _color = value;
-            ImageRendererModel.StyleOwner.Color = _color;
-        }
-    }
-
-    public LineStyle LineStyle
-    {
-        get
-        {
-            return _lineStyle;
-        }
-        set
-        {
-            if (value == _lineStyle)
-            {
-                return;
-            }
-            bool isUsingDensityVisualization = IsUsingDensityVisualization;
-            _lineStyle = value;
-            bool isUsingDensityVisualization2 = IsUsingDensityVisualization;
-            if (isUsingDensityVisualization != isUsingDensityVisualization2)
-            {
-                UpdateImageRendererModel();
-            }
-        }
-    }
-
-    public TraceType Type
-    {
-        get
-        {
-            return _type;
-        }
-        set
-        {
-            if (_type != value)
-            {
-                SetTypeImpl(value);
-                UpdateIsTypeDefault();
-                ClearPoints();
-                InvalidateEngineResult();
-                Commit();
-            }
-        }
-    }
-
-    private int PlottingPointsCount
-    {
-        get
-        {
-            if (_plottingPointsFilter == null || _plottingPointsFilter.FilteredPointsCollection == null)
-            {
-                return 0;
-            }
-            return _plottingPointsFilter.FilteredPointsCollection.Count;
-        }
-    }
-
-    private int FinalNumberOfDataPointsToRender
-    {
-        get
-        {
-            if (_plottingPointsFilter == null || _plottingPointsFilter.FilteredPointsCollection == null)
-            {
-                return 0;
-            }
-            return _plottingPointsFilter.NotNullPointsCount;
-        }
-    }
-
-    public bool ForcedToDensityVisualization
-    {
-        get
-        {
-            if (!ImageRendererModel.HasCachedBitmap)
-            {
-                return FinalNumberOfDataPointsToRender >= ControlSettings.Instance.MinPointsForForceDensity;
-            }
-            return true;
-        }
-    }
+    private global::System.Nullable<global::Quire.Calculation.Core.EngineResult> _engineResultForSerialization;
 
     public EngineResult EngineResultForSerialization
     {
@@ -759,233 +1034,20 @@ internal partial class TraceModel
         }
     }
 
-    private IAxisModel RangeAxisModel => _axes[0];
+    public void ResetIsTypeDefault(bool? value = null)
+    {
+        _isTypeDefault = value;
+    }
 
-    private IAxisModel ResultAxisModel => _axes[1];
-
-    private int NumberOfPointsInResult { get; set; }
-
-    public override bool IsCommitted => _isCommitted;
-
-    public bool ShouldNotCopyFullResults { get; set; }
-
-    public bool RestrictedToDensityPointsOrSolidLine
+    public bool IsTypeDefault
     {
         get
         {
-            int finalNumberOfDataPointsToRender = FinalNumberOfDataPointsToRender;
-            if (ControlSettings.Instance.MinPointsForDensity <= finalNumberOfDataPointsToRender)
+            if (_isTypeDefault.HasValue)
             {
-                return finalNumberOfDataPointsToRender < ControlSettings.Instance.MinPointsForForceDensity;
+                return _isTypeDefault.Value;
             }
             return false;
-        }
-    }
-
-    public bool AreDensityPointsSupported => PlotType != PlotType.Polar;
-
-    public ITraceImageRendererModel ImageRendererModel { get; private set; }
-
-    public PlotType PlotType { get; private set; }
-
-    public TraceSymbol Symbol { get; set; }
-
-    public double SymbolWeight { get; set; }
-
-    public double SymbolFrequency { get; set; }
-
-    public double LineWeight { get; set; }
-
-    public string Label { get; set; }
-
-    public bool XIsDiscrete { get; private set; }
-
-    public bool YIsDiscrete { get; private set; }
-
-    private void AnalyzeAxisAndTypeData(ITrace2DResultNode plotResult)
-    {
-        _analyzedData.RectPoints.Left = plotResult.RangeAxisInfo.Min;
-        _analyzedData.RectPoints.Right = plotResult.RangeAxisInfo.Max;
-        _analyzedData.RangeUnits = plotResult.RangeAxisInfo.Units;
-        _analyzedData.RectPoints.Top = plotResult.ResultAxisInfo.Min;
-        _analyzedData.RectPoints.Bottom = plotResult.ResultAxisInfo.Max;
-        _analyzedData.ResultUnits = plotResult.ResultAxisInfo.Units;
-        IsNumOfPointsMutable = plotResult.TraceResultType == Trace2DResultType.Parametric;
-        _equations[0].Equation.Units = _analyzedData.RangeUnits;
-        _equations[1].Equation.Units = _analyzedData.ResultUnits;
-    }
-
-    private void SetAnalyzedData()
-    {
-        SetPlottingPoints(_analyzedData.PointsCollection == null ? null : new PointCollection(_analyzedData.PointsCollection));
-        SetAnalyzedDataForAxis(GetAxis(AxesIndex.Result), _analyzedData.YLabels, SetAnalyzedDataForResultAxis);
-        SetAnalyzedDataForAxis(GetAxis(AxesIndex.Range), _analyzedData.XLabels, SetAnalyzedDataForRangeAxis);
-        if (PlotType.Polar == PlotType)
-        {
-            SetPolarPlotRect(_analyzedData.PointsCollection);
-        }
-        else
-        {
-            SetRect(_analyzedData.RectPoints.Top, _analyzedData.RectPoints.Left, _analyzedData.RectPoints.Bottom, _analyzedData.RectPoints.Right);
-        }
-        FireAnalyzedDataChanged();
-        ResultValid = true;
-    }
-
-    private bool CreateAllPointsByTraceType(IVectorListResultNode xResult, IVectorListResultNode yResult)
-    {
-        IList<IList<double>> list = TraceResultAnalyzer.ToDoubleDataList(xResult);
-        IList<IList<double>> list2 = TraceResultAnalyzer.ToDoubleDataList(yResult);
-        IList<Point> pointsCollection = _analyzedData.PointsCollection;
-        if (list.IsNullOrEmpty() || list2.IsNullOrEmpty())
-        {
-            return false;
-        }
-        bool result = false;
-        switch (Type)
-        {
-            case TraceType.Lines:
-            case TraceType.Columns:
-            case TraceType.Bars:
-            case TraceType.Stems:
-                result = TraceResultAnalyzer.AddOneDataSegment(pointsCollection, list.First(), list2.First(), ensureTrailingNaN: false);
-                break;
-            case TraceType.Waterfall:
-                result = TraceResultAnalyzer.BuildPointsForWaterfall(pointsCollection, list, list2);
-                break;
-            case TraceType.Boxes:
-                result = TraceResultAnalyzer.BuildPointsForBoxes(pointsCollection, list.First(), list2);
-                break;
-            case TraceType.Errors:
-                result = TraceResultAnalyzer.BuildTuplesOfPoints(pointsCollection, list.First(), list2.Take(2).ToArray());
-                break;
-            case TraceType.Effects:
-                result = TraceResultAnalyzer.BuildTuplesOfPoints(pointsCollection, list.First(), list2.Take(2).ToArray(), new double[2] { -0.25, 0.25 });
-                break;
-        }
-        return result;
-    }
-
-    private bool AnalyzeResult(IMatrixResultNode matrix)
-    {
-        string errorMessageCode;
-        ITrace2DResultNode plotResult = _converter.ConvertToVectorsForm(matrix, out errorMessageCode);
-        if (errorMessageCode.IsNotEmpty())
-        {
-            throw new PlotInvalidResultException(errorMessageCode);
-        }
-        AnalyzeVectors(plotResult);
-        return true;
-    }
-
-    private bool AnalyzeResult(ITrace2DResultNode traceReducedResult)
-    {
-        AnalyzeVectors(traceReducedResult);
-        return true;
-    }
-
-    private void AnalyzeVectors(ITrace2DResultNode plotResult)
-    {
-        PlotInvalidResultException ex = null;
-        try
-        {
-            if (plotResult.TraceResultType == Trace2DResultType.Parametric)
-            {
-                Interval parameterRange = GetParameterRange();
-                if (parameterRange.Upper < parameterRange.Lower)
-                {
-                    ClearPoints();
-                    EngineResultForSerialization = new EngineResult(null, new EngineErrorCollection
-                    {
-                        new EngineError
-                        {
-                            Message = "PlotControl.Error.NotValidParameterRangeForParametric"
-                        }
-                    }, EngineResult.SynchronizationStatus);
-                    ex = new PlotInvalidResultException("PlotControl.Error.NotValidParameterRangeForParametric");
-                }
-            }
-            if (ex == null && (!plotResult.DataPoints.IsEmpty || !ImageRendererModel.HasCachedBitmap))
-            {
-                IVectorListResultNode rangePoints = plotResult.DataPoints.RangePoints;
-                IVectorListResultNode resultPoints = plotResult.DataPoints.ResultPoints;
-                if (NumberOfPointsInResult == 0)
-                {
-                    NumberOfPointsInResult = Math.Max(rangePoints.ElementsCount, resultPoints.ElementsCount);
-                }
-                if (!AnalyzeResultData(rangePoints, resultPoints))
-                {
-                    ex = new PlotInvalidResultException("PlotControl.Error.OnlyNaNsAndComplex");
-                }
-            }
-            AnalyzeAxisAndTypeData(plotResult);
-        }
-        catch (Exception ex2)
-        {
-            DebugTools.FailAssertion(ex2.Message);
-            ex = new PlotInvalidResultException("PlotControl.Error.ResultIsNotAMatrix", ex2);
-        }
-        if (ex == null)
-        {
-            EngineResultForSerialization = new EngineResult(plotResult, null, EngineResult.SynchronizationStatus);
-            return;
-        }
-        throw ex;
-    }
-
-    private void DoSetResult(IResultNode result)
-    {
-        try
-        {
-            _plottingPointsFilter.BeginInit();
-            using (new CommandScope(new CompoundCommand()))
-            {
-                ClearPoints();
-                try
-                {
-                    if (result is IEmptyResultNode)
-                    {
-                        FireValidateTraceVsPlotType();
-                        SetAnalyzedData();
-                    }
-                    else if (result is IMatrixResultNode)
-                    {
-                        if (AnalyzeResult(result as IMatrixResultNode))
-                        {
-                            FireValidateTraceVsPlotType();
-                            SetAnalyzedData();
-                        }
-                    }
-                    else if (result is ITrace2DResultNode)
-                    {
-                        if (AnalyzeResult(result as ITrace2DResultNode))
-                        {
-                            FireValidateTraceVsPlotType();
-                            SetAnalyzedData();
-                        }
-                    }
-                    else
-                    {
-                        DebugTools.DevAssert(false, "Result is not an empty or a matrix result node.");
-                        OnPlotCalculatableError(new EngineErrorEventArgs(new EngineError
-                        {
-                            Message = "PlotControl.Error.ResultIsNotAMatrix"
-                        }));
-                    }
-                }
-                catch (PlotInvalidResultException ex)
-                {
-                    OnPlotCalculatableError(new EngineErrorEventArgs(new EngineError
-                    {
-                        Message = ex.Message
-                    }));
-                }
-            }
-        }
-        finally
-        {
-            _plottingPointsFilter.EndInit();
-            DebugTools.DevAssert(NumberOfPointsInResult >= FinalNumberOfDataPointsToRender, null);
         }
     }
 
