@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
+using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Markup;
 using Quire.Calculation.Core;
@@ -1585,4 +1586,86 @@ internal partial class WorksheetViewModel
         InsertPageBreak(InsertionPoint);
     }
 
+    private bool DeleteSelectedItems()
+    {
+        IList<IWhiteboardItem> items = new List<IWhiteboardItem>(SelectedItems);
+        bool deleted = ActiveSection.HandleDelete();
+        if (deleted)
+        {
+            HandlePageWideSizableDeletion(items);
+        }
+        return deleted;
+    }
+
+    private void DeleteActiveOrSelectedItems()
+    {
+        if (CanDeleteActiveItem())
+        {
+            DeleteActiveItem();
+        }
+        else if (CanDeleteSelectedItems())
+        {
+            DeleteSelectedItems();
+        }
+    }
+
+    private void SetActivePage(IWhiteboardItem activeItem)
+    {
+        ActivePage = _pageManager.GetItemPage(activeItem);
+        if (DebugTools.DevAssert(ActivePage.PageBody.WhiteboardItems.Contains(activeItem), null).Passed)
+        {
+            ActivePage.PageBody.ActiveItem = activeItem;
+        }
+    }
+
+    private void MakeContentActive()
+    {
+        if (!IsContentActive)
+        {
+            ActiveSection.SaveVisualState();
+            ActiveSection.ClearVisualState();
+            ActiveSection = WorksheetContent;
+        }
+    }
+
+    public bool CanImportData()
+    {
+        if (ActiveOrSelectedItems.Count() == 0)
+        {
+            return true;
+        }
+        if (ActiveDescendant is EquationControl)
+        {
+            return true;
+        }
+        if (!(ActiveDescendant is IWhiteboardControl whiteboardControl))
+        {
+            return false;
+        }
+        if (whiteboardControl.SelectedItems.Count() == 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private bool CanCreateStyleFrom()
+    {
+        if (ActiveDescendant is RichTextBase richTextBase)
+        {
+            List<Run> list = richTextBase.Selection.EnumerateRunsInRange().ToList();
+            if (list.Count() > 1)
+            {
+                for (int i = 1; i < list.Count; i++)
+                {
+                    if (!RichTextBase.compareRuns(list[0], list[i]))
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 }

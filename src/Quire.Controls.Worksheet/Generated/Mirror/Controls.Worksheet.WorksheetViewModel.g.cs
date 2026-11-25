@@ -248,11 +248,7 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     protected override void OnDispose() => base.OnDispose();
     [global::Quire.Mirror.MirrorStub]
-    private bool DeleteSelectedItems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private bool CanTogglePageLayout(object param) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DeleteActiveOrSelectedItems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool CanCreateInputControlOfType<T>(global::System.Nullable<global::Quire.Controls.Core.InputControlTypes> inputControlTypes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -382,8 +378,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     private void HandleItemGotFocus(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void SetActivePage(global::Quire.Controls.Core.IWhiteboardItem activeItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void ChangePageLayoutAndGridAreaIfNeeded(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void RemoveActiveSectionItemAndRestoreInsertionPoint(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point insertionPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -399,8 +393,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     private void HandleAddToDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleCreateStyleFrom() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool CanCreateStyleFrom() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RefreshDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -421,8 +413,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GetTabNavigatableItems(bool includingActiveItem = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ActivateSection(global::Quire.Controls.Worksheet.IWorksheetSection section, global::Quire.Controls.Worksheet.IWorksheetPage page, global::System.Nullable<global::System.Windows.Point> position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void MakeContentActive() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SelectItemsInBounds(global::Quire.Controls.Worksheet.IWorksheetControl worksheet, global::System.Windows.Point start, global::System.Windows.Point end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -489,8 +479,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     private void UpdateCalculationButtonStatus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool RemoveAnnotationsCanExecute() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool CanImportData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool HandleRequestBringIntoView(global::System.Windows.DependencyObject intoViewObject, global::System.Windows.Rect bringIntoViewRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
