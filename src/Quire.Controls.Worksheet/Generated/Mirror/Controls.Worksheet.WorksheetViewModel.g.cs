@@ -82,10 +82,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     private void UpdateFirstPageHeaderFooter() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void createFirstPageZombiesIfNeeded(global::Quire.Controls.Worksheet.IWorksheetPage page) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateActiveSectionForDifferentFirstPage() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void HandleTabOutOfText(global::Quire.Wpf.CustomRoutedEventArgs<global::System.Windows.Input.FocusNavigationDirection> eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void TraverseWhiteboardItems(global::System.Func<global::Quire.Controls.Core.IWhiteboardItem, bool, bool> function) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

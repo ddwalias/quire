@@ -1787,4 +1787,32 @@ internal partial class WorksheetViewModel
         }
         return result;
     }
+
+    private void createFirstPageZombiesIfNeeded(IWorksheetPage page)
+    {
+        if (page.FirstPageHeaderZombie == null)
+        {
+            page.FirstPageHeaderZombie = ControlCreator.CreateHeaderFooterZombieControl(FirstPageHeader);
+        }
+        if (page.FirstPageFooterZombie == null)
+        {
+            page.FirstPageFooterZombie = ControlCreator.CreateHeaderFooterZombieControl(FirstPageFooter);
+        }
+    }
+
+    private void UpdateActiveSectionForDifferentFirstPage()
+    {
+        IWorksheetPage worksheetPage = Pages[0];
+        if (ActivePage == worksheetPage)
+        {
+            if (IsHeaderActive)
+            {
+                ActivateHeader(InsertionPoint);
+            }
+            else if (IsFooterActive)
+            {
+                ActivateFooter(InsertionPoint);
+            }
+        }
+    }
 }
