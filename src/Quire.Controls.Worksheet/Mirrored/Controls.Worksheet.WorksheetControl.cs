@@ -764,4 +764,30 @@ public partial class WorksheetControl
         ContentMathFormat = ((MathFormat != null) ? new StaticMathFormat(MathFormat) : null);
         FireChanged();
     }
+
+    private void FirePropertyChanged(string propertyName, global::System.Nullable<DependencyPropertyChangedEventArgs> eArgs = default)
+    {
+        PropertyChanged?.Invoke(this, new global::System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        global::Quire.DebugTools.DevAssert(
+            !eArgs.HasValue || (eArgs.HasValue ? eArgs.GetValueOrDefault().Property.Name : null) == propertyName,
+            null);
+    }
+
+    private void HandleCurrentTextFormattingChanged(DependencyPropertyChangedEventArgs arg)
+    {
+        if (IsContentActive)
+        {
+            Activate();
+            return;
+        }
+        if (IsHeaderActive)
+        {
+            _viewModel.ActivateHeader(InsertionPoint);
+            return;
+        }
+        if (IsFooterActive)
+        {
+            _viewModel.ActivateFooter(InsertionPoint);
+        }
+    }
 }
