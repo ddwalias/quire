@@ -1815,4 +1815,32 @@ internal partial class WorksheetViewModel
             }
         }
     }
+
+    private void UpdateNonprintableSpaceIndicator(IWorksheetPage page)
+    {
+        page.UpdateNonPrintableSpaceIndicator(PageLayout.PageBodyWidth);
+    }
+
+    private void RemoveGridRestrictedAreaForItem(IWhiteboardItem item)
+    {
+        _worksheetGrid.RestrictedAreas.Remove(item);
+        _worksheetGrid.ProtectedAreas.Remove(item);
+    }
+
+    private bool OverlapsRightMargin(IWhiteboardItem item)
+    {
+        Size renderSize = ItemManager.GetRenderSize(item);
+        Point worksheetSectionItemLocation = GetWorksheetSectionItemLocation(item);
+        if (WorksheetPageLayoutMode == PageLayoutMode.PageMode)
+        {
+            return renderSize.Width + worksheetSectionItemLocation.X >= PageLayout.PageBodyWidth;
+        }
+        return false;
+    }
+
+    private void UpdateSizeLimit(IWhiteboardControl whiteBoard)
+    {
+        Size sizeLimit = FindSizeLimit((IWhiteboardItem)whiteBoard);
+        whiteBoard.UpdateSizeLimits(new Size(sizeLimit.Width, sizeLimit.Height));
+    }
 }

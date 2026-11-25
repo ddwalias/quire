@@ -226,3 +226,13 @@
 - `HandleItemMoved(item, oldLocation)`: page is `GetContainingPage(item) ?? GetPage(oldLocation.Y)`; captured `location` and `stamp` locals; `AppendNewPageIfNeeded`; the stamp update as `ItemManager.SetItemAddMoveRemoveTimestamp(item, ++stamp)` (captured-field increment as an argument matches the Mathcad temp-local shape, where the statement-level `long newStamp` form did not); same-page branch removes zombies, moves the item and registers `ExecuteOnLoad(item, () => SplitItemIfNeededAndRemoveEmptyPages(item, location, stamp))`; other branch removes from page and re-adds.
 - Runtime dependency: the `ExecuteOnLoad` closure calls the parked `SplitItemIfNeededAndRemoveEmptyPages`, which is still a stub at runtime. The IL of `HandleItemMoved` itself does not depend on it.
 - Release IL gate: PASS, 1350 checked, 1350 exact, 0 failures.
+
+## Batches 39-43 — WorksheetViewModel closure-free members
+
+- Batch 39: CopySelection, CreateFileNameControl, CreateFilePathControl, GetPageIndex, UpdateWorksheetGridSize (landed b8594bf70).
+- Batch 40: CreateSolveBlockControl, CreateCollapsibleAreaControl, ActivateContent(Point) (landed f0fa28c2e). Needed `using Quire.Controls.Mathboard;`.
+- Batch 41: ApplyFirstPageHeaderFooterToInactive, ApplyRegularHeaderFooterToInactive, UpdateHeaderFooterTops, GetCurrentTextFormat (landed 3c3684b72). `UpdateHeaderFooterTops` must assign `HeaderTop` as a separate statement; the chained `HeaderTop = ...` pushes the setter receiver first, which Mathcad does not.
+- Batch 42: createFirstPageZombiesIfNeeded, UpdateActiveSectionForDifferentFirstPage (landed 9723265cd).
+- Batch 43: UpdateNonprintableSpaceIndicator, RemoveGridRestrictedAreaForItem, OverlapsRightMargin, UpdateSizeLimit.
+- Blocker, `SetStyleValues`: Mathcad emits `conv.r8` on `style.FontSize.Value` (the original source value is float); Quire's `ITextStyle.FontSize` is `double`, so the callsite differs. Fix needed in `src/Quire.Core/Generated/Mirror/ITextStyle.g.cs` (the member type must match Mathcad) before this method can be exact. Parked, stub kept.
+- Parked Execute-shape members (new-object `WorksheetCommand.Execute` call vs callvirt): HandleDelete, HandleBackspace, DeleteActiveItem, HandleRemoveAnnotations, InsertPageBreak(Point), HandleAddToDictionary; and MoveItemsBy.
