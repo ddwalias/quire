@@ -19,47 +19,9 @@ namespace Quire.Controls.ExcelComponent.Model;
 
 public partial class ChartContainerModel
 {
-    public override string ProgId => "PTC.ChartAppOLE";
-
-    public override bool AsyncUpdateVisibleSize => true;
-
-    protected override string[] ExcludeElementsNames => _excludeElementsNames;
-
-    protected override EnumFunctionalityKey ToggleActivateStateFunctionalityKey => (EnumFunctionalityKey)800;
-
-    public bool IsTypeDefault => true;
-
-    public global::Quire.Calculation.Core.Trace2DResults.TraceType Type => default;
-
-    public override bool ShouldCommitAtLeastOnce => false;
-
-    public override bool ShouldCommitIfDirty => true;
-
     protected override bool CheckOleActiveState => false;
 
     public bool IsImageFrozen => ImageFreezeSources != ImageFreezeSources.None;
-
-    public override void Commit()
-    {
-        AssertDispatcherAccess();
-        RemoveImageFreezeSource(ImageFreezeSources.AsynchronousCalculation);
-    }
-
-    public override global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, global::Quire.PersistentData.chartContainerType chartContainer)
-    {
-        Unpack(d11NProvider, chartContainer.itemidref);
-        return null;
-    }
-
-    public override IValue GetValue(string place)
-    {
-        throw new NotImplementedException();
-    }
-
-    private void SetString(string place, IValue value)
-    {
-        throw new AddressErrorException(place);
-    }
 
     public void AddImageFreezeSource(ImageFreezeSources source, bool forceRun = false)
     {
@@ -73,27 +35,6 @@ public partial class ChartContainerModel
     public void RemoveImageFreezeSource(ImageFreezeSources source)
     {
         AddOrRemoveImageFreezeSource(source, add: false);
-    }
-
-    private string _helpServerPath;
-
-    private uint[] _traceIds;
-
-    private Dictionary<uint, double[,]> _dataLimitsDict;
-
-    public override Dictionary<Guid, Guid> GuidsConversionDict => OleUtils.ChartAppOleGuidsConversionDict;
-
-    public string HelpServerPath
-    {
-        get
-        {
-            return _helpServerPath;
-        }
-        set
-        {
-            _helpServerPath = value;
-            SetHelpServerPathIfRunning();
-        }
     }
 
     public double[,] DataLimits
@@ -152,70 +93,6 @@ public partial class ChartContainerModel
         }
     }
 
-    public event Func<IResultNode, double[,], StringBuilder, double[,]> OnProcessMinMax;
-
-    protected override void OnStartRunning()
-    {
-        base.OnStartRunning();
-        if (IsImageFrozen)
-        {
-            ApplyImageFrozenState();
-        }
-        SetHelpServerPathIfRunning();
-    }
-
-    protected override void DoDeactivate()
-    {
-        ChartContainerModelUtils.WaitForChartImagesReady(new ChartContainerModel[1] { this }, null);
-        base.DoDeactivate();
-    }
-
-    public override chartContainerType GetRegionPersistentData(IS11NProvider s11NProvider, string uniqueId, Action onServerBusy)
-    {
-        return new chartContainerType(SizeData)
-        {
-            itemidref = Pack(s11NProvider, uniqueId, ExternalObjectType.Chart, onServerBusy)
-        };
-    }
-
-    public override void SetValue(string place, IValue value, IValueToIResultNodeTransform resultsTransform)
-    {
-        CheckInstalledAndAvailable(forceRun: true);
-        string type = value.Type;
-        if (!(type == "String"))
-        {
-            if (!(type == "Matrix"))
-            {
-                throw new Exception($"Unsupported type {value.Type}");
-            }
-            SetMatrix(place, value, resultsTransform);
-        }
-        else
-        {
-            SetString(place, value);
-        }
-    }
-
-    public Exception RemoveTrace(uint traceId)
-    {
-        lock (_dataLimitsLock)
-        {
-            if (_dataLimitsDict.IsNotEmpty())
-            {
-                _dataLimitsDict.Remove(traceId);
-            }
-        }
-        try
-        {
-            ChartObject.deleteTraceByTraceId(ChartTraceCalculatable.TraceIdForChartApp(traceId));
-            return null;
-        }
-        catch (Exception result)
-        {
-            return result;
-        }
-    }
-
     public void ForceUnfreezeImage(bool force)
     {
         if (!IsOleSiteManagerRunning)
@@ -262,78 +139,6 @@ public partial class ChartContainerModel
                 m_Max = double.NaN
             }
         };
-    }
-
-    private void SetMatrix(string place, IValue value, IValueToIResultNodeTransform resultsTransform)
-    {
-        DebugTools.LogData(string.Format("ChartContainerModel.SetMatrix: {0}: Start", place));
-        try
-        {
-            IMatrixValue value2 = (IMatrixValue)value;
-            if (place == "MinMaxPre" || place == "MinMaxPost")
-            {
-                IResultNode arg = resultsTransform.Transform((IAutomationValue)value);
-                if (DebugTools.AssertNotNull(OnProcessMinMax, null).Failed)
-                {
-                    return;
-                }
-                StringBuilder stringBuilder = new StringBuilder();
-                double[,] array = OnProcessMinMax(arg, (place == "MinMaxPost") ? DataLimits : null, stringBuilder);
-                if (array == null)
-                {
-                    throw new Exception(stringBuilder.ToString());
-                }
-                if (!(place == "MinMaxPost"))
-                {
-                    return;
-                }
-                AddImageFreezeSource(ImageFreezeSources.AsynchronousCalculation);
-                try
-                {
-                    ChartMinMax chartMinMax = CreateEmptyChartMinMax();
-                    chartMinMax.m_X = new MinMax
-                    {
-                        m_Min = array[0, 0],
-                        m_Max = array[0, 1]
-                    };
-                    chartMinMax.m_Y = new MinMax
-                    {
-                        m_Min = array[1, 0],
-                        m_Max = array[1, 1]
-                    };
-                    chartMinMax.m_Y2 = new MinMax
-                    {
-                        m_Min = array[2, 0],
-                        m_Max = array[2, 1]
-                    };
-                    chartMinMax.m_Z = new MinMax
-                    {
-                        m_Min = array[3, 0],
-                        m_Max = array[3, 1]
-                    };
-                    ChartAppOLE chartObject = ChartObject;
-                    ChartMinMax data = chartMinMax;
-                    chartObject.setChartMinMax(ref data);
-                    return;
-                }
-                catch (Exception ex)
-                {
-                    RemoveImageFreezeSource(ImageFreezeSources.AsynchronousCalculation);
-                    if (ex is COMException)
-                    {
-                        throw new Exception(ComExceptionEngineErrorCode, ex);
-                    }
-                    throw;
-                }
-            }
-            if (DebugTools.DevAssert(uint.TryParse(place, out var result), null).Passed)
-            {
-                SetTrace(result, value2, resultsTransform);
-            }
-        }
-        finally
-        {
-        }
     }
 
     private void AddOrRemoveImageFreezeSource(ImageFreezeSources source, bool add)

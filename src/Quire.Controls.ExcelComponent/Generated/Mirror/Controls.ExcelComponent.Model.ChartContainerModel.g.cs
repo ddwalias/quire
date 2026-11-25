@@ -12,16 +12,6 @@ namespace Quire.Controls.ExcelComponent.Model;
 public partial class ChartContainerModel : global::Quire.Controls.ExcelComponent.Model.OleDataExchangeContainerModel<global::Quire.PersistentData.chartContainerType>, global::Quire.Controls.ExcelComponent.Model.IPublicChartContainerModel, global::Quire.Controls.Core.Ole.IPublicOleContainerModel<global::Quire.PersistentData.chartContainerType>, global::Quire.Calculation.ICalculationComponent, global::Quire.Calculation.IDataExchangeIValueModel, global::Quire.Calculation.Core.IDataExchangeModel, global::Quire.Calculation.Core.Trace2DResults.ITrace2DResultOwner
 {
     [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Calculation.Core.Trace2DResults.Trace2DResultConverter _converter;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly string ComExceptionEngineErrorCode;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly string[] _excludeElementsNames;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly object _dataLimitsLock;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<uint> CurrentTraceIds { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public ChartContainerModel() : base(default(global::Quire.OLE.IOleSiteManager), default(bool)) { }
     [global::Quire.Mirror.MirrorStub]
     private void SetTrace(uint traceId, global::Quire.IMatrixValue value, global::Quire.Calculation.IValueToIResultNodeTransform resultsTransform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
