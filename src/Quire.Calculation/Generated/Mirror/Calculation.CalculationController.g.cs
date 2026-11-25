@@ -60,60 +60,6 @@ public partial class CalculationController
     [global::Quire.Mirror.MirrorOf("Ptc.Calculation.CalculationController+DispatchedEngineCallbackHandler, Ptc.Calculation")]
     private partial class DispatchedEngineCallbackHandler : global::Quire.Calculation.CalculationController.IEngineCallbackHandler, global::Quire.Calculation.Core.ICalculatable
     {
-        [global::Quire.Mirror.MirrorStub]
-        protected readonly global::Quire.Calculation.Core.ICalculatable _encapsulatedCalculatable;
-        [global::Quire.Mirror.MirrorStub]
-        protected readonly global::System.Windows.Threading.Dispatcher _dispatcher;
-        [global::Quire.Mirror.MirrorStub]
-        protected global::Quire.Calculation.CalculationController.EngineOptions _engineOptions;
-        [global::Quire.Mirror.MirrorStub]
-        protected readonly global::System.Func<global::Quire.Calculation.Core.ICalculatable, bool> _isCalcInContext;
-        [global::Quire.Mirror.MirrorStub]
-        private int _cookie;
-        [global::Quire.Mirror.MirrorStub]
-        public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> RequestEvaluation;
-        [global::Quire.Mirror.MirrorStub]
-        public event global::System.Func<global::Quire.Calculation.Core.ICalculatable, string, global::Quire.Calculation.Core.IResultNode> GetValueOfIdentifierBefore;
-        [global::Quire.Mirror.MirrorStub]
-        public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> TreatAsUpToDate;
-        [global::Quire.Mirror.MirrorStub]
-        public void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public void SetStatusSynchronized() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public virtual void SetSynchronizationStatus(global::Quire.Calculation.Core.SynchronizationStatus syncStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public virtual void SetCalculatingStatus(global::Quire.Calculation.Core.CalculatingStatus computingStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public virtual void SetResult(global::Quire.Calculation.Core.IResultNode result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public virtual void SetError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public virtual void SetRedefinitionWarnings(global::System.Collections.Generic.IList<global::Quire.Calculation.Core.EngineRedefInfo> warnings) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public virtual void SetIdentifierLabels(global::System.Collections.Generic.IDictionary<global::Quire.Calculation.Core.ResolvedId, string[]> idLabelMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public virtual void SetSynchronizedNoResultNoError() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public virtual void SetSynchronizedWithResultNoError(global::Quire.Calculation.Core.SimpleResultNode result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public virtual void SetSynchronizedWithErrorNoResult(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public virtual void SetAutoSelectAlgorithm(global::System.Collections.Generic.IDictionary<int, string> autoAlgorithmMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private global::System.Collections.IDictionary ParentGlobalErrorResultsDictionary(int handle, global::Quire.Engine.IEngine engine, global::System.Collections.Generic.Dictionary<int, global::Quire.Calculation.Core.ICalculatable> handleToICalculatableMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        protected virtual void ErrorHandle(global::System.Collections.IDictionary resultsIDictionary, global::System.Collections.Generic.Dictionary<int, global::Quire.Calculation.Core.ICalculatable> handleToICalculatableMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public virtual void SetResult(int handle, global::Quire.Engine.IEngine engine, global::System.Collections.Generic.Dictionary<int, global::Quire.Calculation.Core.ICalculatable> handleToICalculatableMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        protected virtual void ProcessResult(int handle, global::Quire.Engine.IEngine engine, global::System.Collections.IDictionary results, global::System.Collections.Generic.Dictionary<int, global::Quire.Calculation.Core.ICalculatable> handleToICalculatableMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        protected virtual void ProcessIdBoundLabels(int handle, global::System.Collections.IDictionary results, global::System.Collections.Generic.Dictionary<int, global::Quire.Calculation.Core.ICalculatable> handleToICalculatableMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        protected virtual void ProcessAlgorithms(global::System.Collections.IDictionary results, global::System.Collections.Generic.Dictionary<int, global::Quire.Calculation.Core.ICalculatable> handleToICalculatableMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        protected virtual void ProcessWarningRedefinition(global::System.Collections.IDictionary results, global::System.Collections.Generic.Dictionary<int, global::Quire.Calculation.Core.ICalculatable> handleToICalculatableMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Calculation.CalculationController+DispatchedEngineCallbackHandlerHideableChildWithCache, Ptc.Calculation")]
