@@ -2124,4 +2124,30 @@ internal partial class WorksheetViewModel
 
         return false;
     }
+    private void SetInsertionPointOnAppropriatePage(Point insertionPoint)
+    {
+        ActivePage = _pageManager.SetInsertionPointOnAppropriatePage(insertionPoint);
+        if (ActivePage.ActiveItem == null)
+        {
+            WorksheetContent.ActiveItem = null;
+        }
+
+        ClearSelection();
+    }
+
+    private void PageRequestScrollHandler(IWorksheetPageSection section, Rect target)
+    {
+        VisualHelper.BringIntoView(section, target);
+    }
+
+    private void HandleItemSplitRequest(ICustomSplitItem customSplitItem)
+    {
+        customSplitItem.ValidateLayout();
+        _pageManager.SplitItemIfNeeded(customSplitItem, null, false);
+    }
+
+    private void HandlePageWideSizableSizeChanged(IWhiteboardItem item, Size oldSize, Size newSize)
+    {
+        HandlePageWideSizableHeightChanged(item, oldSize, newSize);
+    }
 }
