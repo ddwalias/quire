@@ -44,7 +44,24 @@ partial class WorksheetModel
         }
     }
     public bool EvaluatingEnabled { get; set; }
-    private global::System.Collections.Generic.IEnumerable<object> GetCalculatables() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private global::System.Collections.Generic.IEnumerable<object> GetCalculatables()
+    {
+        foreach (global::Quire.Controls.Core.IWhiteboardItem item in WhiteboardItems)
+        {
+            yield return item;
+            if (item is global::Quire.Controls.Core.IORegions.IIORegion region)
+            {
+                global::System.Collections.Generic.IList<global::Quire.Calculation.Core.ICalculatable> calculationOverrides = InputOutputRegionManager.GetCalculationOverrides(region);
+                if (calculationOverrides != null)
+                {
+                    foreach (global::Quire.Calculation.Core.ICalculatable item2 in calculationOverrides)
+                    {
+                        yield return item2;
+                    }
+                }
+            }
+        }
+    }
     private void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calc)
     {
         if (CalculatableAdded == null)
