@@ -2,6 +2,7 @@
 #pragma warning disable
 
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using Quire.Undo;
 using Quire.Controls.Core.AttachedBehavior;
 using Quire.Controls.Plots.Model;
@@ -375,7 +376,38 @@ internal partial class MarkersViewModel
         }
     }
 
-    private void HandleMarkersCollectionChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e, global::System.ComponentModel.PropertyChangedEventHandler handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleMarkersCollectionChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e, global::System.ComponentModel.PropertyChangedEventHandler handler)
+    {
+        if (e.Action == NotifyCollectionChangedAction.Move)
+        {
+            return;
+        }
+        if (e.OldItems != null)
+        {
+            foreach (AxisMarkerViewModel marker in e.OldItems)
+            {
+                marker.PropertyChanged -= handler;
+                AllMarkers.Remove(marker);
+                FireCalculatableRemoved(marker.Calculatable);
+            }
+        }
+        if (e.NewItems != null)
+        {
+            foreach (AxisMarkerViewModel marker in e.NewItems)
+            {
+                marker.PropertyChanged += handler;
+                AllMarkers.Add(marker);
+                FireCalculatableAdded(marker.Calculatable);
+            }
+        }
+        global::Quire.DebugTools.DevAssert(
+            e.Action == NotifyCollectionChangedAction.Add
+            || e.Action == NotifyCollectionChangedAction.Move
+            || e.Action == NotifyCollectionChangedAction.Remove
+            || e.Action == NotifyCollectionChangedAction.Replace,
+            "Unsupported action: {0}",
+            e.Action);
+    }
 
     internal global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> InternalCalculatables { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 
