@@ -530,7 +530,48 @@ public partial class RichTextBase
 
     private void DoApplyTextStyle_internal(global::Quire.TextStyleData styleData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private void HandleClearTextFormat(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleClearTextFormat(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (!ClearTextFormatCanExecute(e.Parameter))
+        {
+            return;
+        }
+        TextFormat textFormat = (TextFormat)e.Parameter;
+        if (DebugTools.AssertNotNull(textFormat, null, Array.Empty<object>()).Failed)
+        {
+            return;
+        }
+        DocumentTextRange range;
+        if (Selection.IsEmpty)
+        {
+            Hyperlink hyperlink = Selection.Start.GetTextElementFromTextPointer<Hyperlink>() ?? Selection.Start.GetAdjacentHyperlink(LogicalDirection.Forward) ?? Selection.Start.GetAdjacentHyperlink(LogicalDirection.Backward);
+            range = hyperlink != null ? new DocumentTextRange(hyperlink.ContentStart, hyperlink.ContentEnd) : GetWordRangeAtCaretPosition(out string wordText, TextFromRunsStops.FindWordStrict, true);
+        }
+        else
+        {
+            range = Selection;
+        }
+        if (range != null)
+        {
+            CompoundCommand clearAllFormatProperties = new CompoundCommand();
+            DelegateFunction0<bool> doMethod = () =>
+            {
+                using (new CommandScope(clearAllFormatProperties))
+                {
+                    if (IsSelected)
+                    {
+                        ClearSelectedRegionFormatProperties(textFormat);
+                    }
+                    else
+                    {
+                        ClearFormatPropertiesInRange(textFormat, range);
+                    }
+                }
+                return true;
+            };
+            CommandBuffer.Execute(new UndoableCommand("Clear TextFormat", doMethod, () => clearAllFormatProperties.Undo()), null);
+        }
+    }
 
     private void ClearFormatPropertiesInRange(global::Quire.Core.TextFormat textFormat, global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -559,7 +600,21 @@ public partial class RichTextBase
 
     protected void ToggleRunElementAccordingToScriptState(global::System.Windows.Controls.TextChangedEventArgs argsChanges) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private void RecalculateTextScriptState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void RecalculateTextScriptState()
+    {
+        bool allRunsOfSameType = false;
+        Run firstRun = Selection.EnumerateRunsInRange().FirstOrDefault();
+        if (firstRun != null)
+        {
+            Type typeFirst = firstRun.GetType();
+            allRunsOfSameType = Selection.EnumerateRunsInRange().All(run => run.GetType() == typeFirst);
+        }
+        ScriptState scriptState = CurrentInsertionScriptState?.Item1 ?? (allRunsOfSameType ? CustomScriptServiceFunctions.RunTypeToScriptState(firstRun) : default);
+        if (TextScriptState != scriptState)
+        {
+            TextScriptState = scriptState;
+        }
+    }
 
     private void IsSelectedChangedHandler()
     {
