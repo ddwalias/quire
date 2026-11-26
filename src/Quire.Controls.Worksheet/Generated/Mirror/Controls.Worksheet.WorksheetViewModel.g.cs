@@ -196,8 +196,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     private void InitializePlotControl(global::Quire.Controls.Plots.IPlotControl control, string xSExpression, string ySExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void InitializeXYZPlotControl(global::Quire.Controls.Plots.IPlotControl<global::Quire.Controls.Plots.XyzEquation> control, string xSExpression, string ySExpression, string zSExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Plots.IPlotControl CreateXYPlotControl(global::Quire.Controls.Plots.XyEquation xyEquation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Plots.IPlotControl CreatePolarPlotControl(global::Quire.Controls.Plots.XyEquation xyEquation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -350,11 +348,7 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     private void ResizeItemToFit(global::Quire.Controls.Core.IResizeToFitWhiteboardItem item, bool assertIsNotReady) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HandleBookmarkTag() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private bool CanRemoveBookmarkTag() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleRemoveBookmarkTag() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RequestNavigateHandler(global::Quire.Controls.Worksheet.IWorksheetControl worksheetControl, global::System.Windows.Navigation.RequestNavigateEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 

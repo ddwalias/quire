@@ -18,6 +18,7 @@ using Quire.Undo;
 using Quire.Controls.Core.Whiteboard;
 using Quire.Controls.Include;
 using Quire.Controls.CollapsibleArea;
+using Quire.Controls.Core.BookmarkTags;
 using Quire.Controls.Mathboard;
 using Quire.Controls.Plots;
 using Quire.Controls.Plots.View;
@@ -2408,5 +2409,42 @@ internal partial class WorksheetViewModel
         int pageIndex = GetPageIndex(location.Y);
         double margin = (PageLayout.DisplayHeight - PageLayout.PageHeight) / 2.0;
         pagebreak.VerticalPosition = PageLayout.DisplayHeight * pageIndex - margin - 2.0 * PageBreaks.IndexOf(pagebreak);
+    }
+    private void InitializeXYZPlotControl(IPlotControl<XyzEquation> control, string xSExpression, string ySExpression, string zSExpression)
+    {
+        if (zSExpression != null)
+        {
+            control.AddEquations(new XyzEquation(xSExpression, ySExpression, zSExpression));
+        }
+    }
+
+    private void HandleBookmarkTag()
+    {
+        IWhiteboardItem item = ActiveItem ?? SelectedItems.First();
+        if (DebugTools.AssertNotNull(item).Failed || DebugTools.AssertNotNull(_model.BookmarksManager).Failed)
+        {
+            return;
+        }
+
+        string bookmarkTag = BookmarkTag.GetBookmarkTag(item as DependencyObject);
+        BookmarkTagViewModel viewModel = new BookmarkTagViewModel(bookmarkTag);
+        if (BookmarkTagDialog.ShowBookmarkTagsDialog(viewModel, Application.Current.MainWindow))
+        {
+            _model.BookmarksManager.SetBookmarkTagCommand(item, bookmarkTag, viewModel.Tag);
+        }
+    }
+
+    private void HandleRemoveBookmarkTag()
+    {
+        if (DebugTools.AssertNotNull(ActiveOrSelectedItems).Failed || DebugTools.AssertNotNull(_model.BookmarksManager).Failed)
+        {
+            return;
+        }
+
+        foreach (IWhiteboardItem item in ActiveOrSelectedItems)
+        {
+            string bookmarkTag = BookmarkTag.GetBookmarkTag(item as DependencyObject);
+            _model.BookmarksManager.RemoveBookmarkTagCommand(item, bookmarkTag);
+        }
     }
 }
