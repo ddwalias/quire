@@ -59,7 +59,7 @@ public sealed partial class LicenseManager
             licenseType = IsEducationalLicense ? LicenseType.EducationTerm : LicenseType.CommercialTerm;
         }
 
-        // Keep the trial path on the same return join as Mathcad.
+        // Release IL requires a shared return block for the trial path.
     ReturnLicenseType:
         return licenseType;
     }

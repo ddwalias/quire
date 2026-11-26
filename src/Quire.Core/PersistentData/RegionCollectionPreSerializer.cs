@@ -10,12 +10,7 @@ public partial class RegionCollectionPreSerializer
     [MirrorVerified("Release IL")]
     public void PreSerialize()
     {
-        if (Regions != null)
-        {
-            goto HasRegions;
-        }
-        return;
-    HasRegions:
+        if (Regions == null) return;
         global::Quire.EnumerableExtensions.Each<global::Quire.PersistentDataObjects.IRegionType>(Regions, item => item.PreSerialize());
     }
 

@@ -159,6 +159,7 @@ public partial class TextStyleBase
     {
         if (value == null)
         {
+            // Release IL requires the long branch into the common return block.
             if (!_htPropertyToIndex.ContainsKey(propertyName)) goto Return;
             Style.Setters.RemoveAt((int)_htPropertyToIndex[propertyName]);
             _htPropertyToIndex.Remove(propertyName);

@@ -486,18 +486,8 @@ public partial class TextFormat
     private static void HandleTextFormatPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         TextFormat textFormat = d as TextFormat;
-        if (textFormat != null)
-        {
-            if (e.NewValue != null || e.OldValue != null)
-            {
-                if (e.NewValue == null || !e.NewValue.Equals(e.OldValue))
-                {
-                    goto Changed;
-                }
-            }
-        }
-        return;
-    Changed:
+        if (textFormat == null || (e.NewValue == null && e.OldValue == null) ||
+            (e.NewValue != null && e.NewValue.Equals(e.OldValue))) return;
         if (e.Property == FontSizeProperty)
         {
             textFormat.FirePropertyChanged("FontSizeInPoints");
