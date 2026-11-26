@@ -244,8 +244,6 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
             protected override global::System.Windows.Media.Visual GetVisualChild(int index) => base.GetVisualChild(index);
             [global::Quire.Mirror.MirrorStub]
             protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
-            [global::Quire.Mirror.MirrorStub]
-            private void UpdateOnScrollViewerChanged(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         }
     }
 }

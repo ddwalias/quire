@@ -273,5 +273,16 @@ public partial class WorksheetControlDebugger
             RemoveStatusBarItemFromStatusBar();
             DestroyPreviewWindow();
         }
+
+        private partial class IndicationVisibilityAdorner
+        {
+            private void UpdateOnScrollViewerChanged(object sender, System.EventArgs e)
+            {
+                if (_toBeClipped && AdornedElement.Clip != null)
+                {
+                    InvalidateVisual();
+                }
+            }
+        }
     }
 }
