@@ -218,7 +218,30 @@ partial class WorksheetModel
             InputOutputRegionManager.HandleElementAddedToParentContainer(region);
         }
     }
-    public void CommitItemIfNeeded(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void CommitItemIfNeeded(global::Quire.Controls.Core.IWhiteboardItem item)
+    {
+        global::Quire.Calculation.Core.ICalculatable calculatable = item as global::Quire.Calculation.Core.ICalculatable;
+        if (calculatable != null)
+        {
+            global::Quire.Calculation.Core.ICalculatableInfo info = calculatable as global::Quire.Calculation.Core.ICalculatableInfo;
+            if (info == null || !info.IsCommitted)
+            {
+                calculatable.Commit();
+            }
+        }
+        global::Quire.Calculation.Core.ICalculatableContainer container = item as global::Quire.Calculation.Core.ICalculatableContainer;
+        if (container != null && !(container is global::Quire.Calculation.Core.ICalculatableAggregate))
+        {
+            foreach (global::Quire.Calculation.Core.ICalculatable calculatableChild in container.CalculatableChildren)
+            {
+                global::Quire.Calculation.Core.ICalculatableInfo childInfo = calculatableChild as global::Quire.Calculation.Core.ICalculatableInfo;
+                if (childInfo == null || !childInfo.IsCommitted)
+                {
+                    calculatableChild.Commit();
+                }
+            }
+        }
+    }
     public void CommitItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public void FireCommitAndNotifyDependentCalculatables(global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> toBeCommitted)
     {
@@ -232,7 +255,10 @@ partial class WorksheetModel
         FireWaitForCalculationIdle(60, global::Quire.Calculation.Core.CalcResultsProcessingPriorities.DefaultResultDispatchPriority_Background);
     }
     public void FireWaitForCalculationIdle(int seconds, global::System.Windows.Threading.DispatcherPriority priority) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void FireBinOctHexModeOptionUpdated(string binOctHexMode, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void FireBinOctHexModeOptionUpdated(string binOctHexMode, object value)
+    {
+        global::Quire.EquationEditor.Tree.DefaultDescriptorTable.Default["NUMERIC"].BinOctHexModeOn = (bool)value;
+    }
     private void FireCalculationOptionUpdated(string name, object value)
     {
         CalculationOptionUpdated?.Invoke(name, value);
@@ -331,7 +357,23 @@ partial class WorksheetModel
     {
         WhiteboardItems.Remove(item);
     }
-    public void AddItemAtLocation(object item, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void AddItemAtLocation(object item, global::System.Windows.Point location)
+    {
+        if (item is global::Quire.Controls.Core.IWorksheetPageBreak worksheetPageBreak)
+        {
+            ItemManager.SetItemWorksheetLocation(worksheetPageBreak, location);
+            PageBreaks.Add(worksheetPageBreak);
+            return;
+        }
+        if (!(item is global::Quire.Controls.Core.IWhiteboardItem whiteboardItem))
+        {
+            throw new global::System.InvalidOperationException("Bad programmer! Item should be an IWhiteboardItem.");
+        }
+        ItemManager.SetItemWorksheetLocation(whiteboardItem, location);
+        int index = WhiteboardItems.ToList().BinarySearch(whiteboardItem, _itemPositionComparer);
+        global::Quire.DebugTools.DevAssert(index <= 0, "The item is already in the list, cannot be added twice");
+        WhiteboardItems.Insert(~index, whiteboardItem);
+    }
     public void SetItemWorksheetLocation(object item, global::System.Windows.Point newLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public global::System.Windows.Point GetItemWorksheetLocation(object item)
     {
