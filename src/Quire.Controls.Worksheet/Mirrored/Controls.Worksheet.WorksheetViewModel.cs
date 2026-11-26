@@ -2018,4 +2018,23 @@ internal partial class WorksheetViewModel
         UpdateIsRegionBorderShownState();
         OnPropertyChanged(e.PropertyName);
     }
+    private bool CanToggleIORegions<T>() where T : IIORegion
+    {
+        if (!IsContentActive)
+        {
+            return false;
+        }
+
+        if (_model.InputOutputRegionManager == null)
+        {
+            return false;
+        }
+
+        if (GetIORegions<T>().Count() == 0)
+        {
+            return false;
+        }
+
+        return true;
+    }
 }
