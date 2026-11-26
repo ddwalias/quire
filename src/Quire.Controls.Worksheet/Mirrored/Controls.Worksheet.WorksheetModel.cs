@@ -369,7 +369,33 @@ partial class WorksheetModel
         _itemPositionComparer = new global::Quire.Controls.Worksheet.WorksheetItemPositionComparer();
         InitializeCalculation();
     }
-    private void HandleShadowCalculatableCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleShadowCalculatableCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        switch (e.Action)
+        {
+            case global::System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+                foreach (var pair in e.NewItems.Cast<global::Quire.Pair<global::Quire.Controls.Core.IORegions.IIORegion, global::Quire.Calculation.Core.ICalculatable>>())
+                {
+                    if (WhiteboardItems.Contains(pair.First as global::Quire.Controls.Core.IWhiteboardItem))
+                    {
+                        FireCalculatableAdded(pair.Second);
+                    }
+                }
+                break;
+            case global::System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
+                foreach (var pair in e.OldItems.Cast<global::Quire.Pair<global::Quire.Controls.Core.IORegions.IIORegion, global::Quire.Calculation.Core.ICalculatable>>())
+                {
+                    if (WhiteboardItems.Contains(pair.First as global::Quire.Controls.Core.IWhiteboardItem))
+                    {
+                        FireCalculatableRemoved(pair.Second);
+                    }
+                }
+                break;
+            default:
+                global::Quire.DebugTools.FailAssertion("Unsupported action: {0}", e.Action);
+                break;
+        }
+    }
     public void RemoveItem(global::Quire.Controls.Core.IWhiteboardItem item)
     {
         WhiteboardItems.Remove(item);
