@@ -1242,7 +1242,13 @@ public partial class RichTextBase
         return lines == 0;
     }
 
-    protected virtual global::Quire.Undo.IUndoableCommand CreateTextChangedCommand(global::System.Windows.Controls.TextChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual global::Quire.Undo.IUndoableCommand CreateTextChangedCommand(global::System.Windows.Controls.TextChangedEventArgs args)
+    {
+        bool wasScriptElementDeleted = WasScriptElementDeletedOnChangeEvent(args);
+        IUndoableCommand command = new SyncTextChangedCommand(this, _oldTextFormatStyleKey, _undoRunsTextStyleKey, _cachedDocumentHighlightColor, _redoTextFormatStyleKey, wasScriptElementDeleted);
+        _undoRunsTextStyleKey = null;
+        return command;
+    }
 
     private global::System.Collections.Generic.List<global::System.ValueTuple<int, int>> _cacheSelectedScriptElementsOffsets;
 
