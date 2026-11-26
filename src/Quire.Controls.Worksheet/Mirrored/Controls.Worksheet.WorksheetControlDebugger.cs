@@ -218,6 +218,24 @@ public partial class WorksheetControlDebugger
             UpdateDebugWindowCellsAll(PropertyName.PagesCount, WorksheetControlInst.PageManager.Pages.Count.ToString());
         }
 
+        private void OnVisiblePagesCollectionChanged(
+            object sender,
+            global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            UpdateDebugWindowCellsAll(PropertyName.VisiblePagesCount, WorksheetControlInst.PageManager.VisiblePages.Count.ToString());
+            if (WorksheetControlInst.PageManager.VisiblePages.Count > 0)
+            {
+                IWorksheetPage firstVisiblePage = WorksheetControlInst.PageManager.VisiblePages.First();
+                IWorksheetPage lastVisiblePage = WorksheetControlInst.PageManager.VisiblePages.Last();
+                UpdateDebugWindowCellsAll(
+                    PropertyName.VisiblePagesNumbers,
+                    string.Format(
+                        "{0},...,{1}",
+                        WorksheetControlInst.PageManager.Pages.IndexOf(firstVisiblePage) + 1,
+                        WorksheetControlInst.PageManager.Pages.IndexOf(lastVisiblePage) + 1));
+            }
+        }
+
         private void WorksheetControlUIDebugClosed(object sender, EventArgs e)
         {
             AskCloseInstance();
@@ -279,6 +297,74 @@ public partial class WorksheetControlDebugger
         {
             RemoveStatusBarItemFromStatusBar();
             DestroyPreviewWindow();
+        }
+
+        private void RemoveStatusBarItemFromStatusBar()
+        {
+            if (_indicationStatusBarItem != null && _statusBar.Items.Contains(_indicationStatusBarItem))
+            {
+                _statusBar.Items.Remove(_indicationStatusBarItem);
+            }
+            _indicationTextBlock = null;
+            _indicationStatusBarItem = null;
+        }
+
+        private void UpdateIndicationInStatusBar()
+        {
+            if (_indicationTextBlock != null)
+            {
+                _indicationTextBlock.Text = string.Format("{0} | {1} | {2}", _textPages, _textVisiblePages, _textItemsPart);
+            }
+        }
+
+        private void SubscribePagesEvents()
+        {
+            WorksheetViewModelInst.Pages.RangeChanged += WorksheetPagesCollectionChanged;
+            WorksheetViewModelInst.VisiblePages.RangeChanged += WorksheetVisiblePagesCollectionChanged;
+            WorksheetViewModelInst.PageManager.ContentActivated += OnPageManagerContentActivated;
+            WorksheetControlInst.SizeChanged += WorksheetControlSizeChanged;
+            WorksheetPagesCollectionChanged(null, null);
+            WorksheetVisiblePagesCollectionChanged(null, null);
+            foreach (IWorksheetPage visiblePage in WorksheetViewModelInst.VisiblePages)
+            {
+                UpdatePageZombiesVisibility(visiblePage, toBeClipped: true);
+            }
+            UpdateWorksheetItemsVisibilityAdorner(WorksheetViewModelInst.Header, isItemOnVisiblePage: true);
+            UpdateWorksheetItemsVisibilityAdorner(WorksheetViewModelInst.Footer, isItemOnVisiblePage: true);
+            UpdateWorksheetItemsVisibilityAdorner(
+                ((global::System.Windows.Controls.Grid)(object)ScrollViewerInst.Parent).Children[1],
+                isItemOnVisiblePage: true,
+                toBeClipped: true);
+            UpdatePreviewVisual();
+        }
+
+        private void UnsSubscribePagesEvents()
+        {
+            WorksheetViewModelInst.Pages.RangeChanged -= WorksheetPagesCollectionChanged;
+            WorksheetViewModelInst.VisiblePages.RangeChanged -= WorksheetVisiblePagesCollectionChanged;
+            WorksheetViewModelInst.PageManager.ContentActivated -= OnPageManagerContentActivated;
+            WorksheetControlInst.SizeChanged -= WorksheetControlSizeChanged;
+            foreach (IWorksheetPage visiblePage in WorksheetViewModelInst.VisiblePages)
+            {
+                UpdatePageZombiesVisibility(visiblePage);
+            }
+            UpdateWorksheetItemsVisibilityAdorner(WorksheetViewModelInst.Header, isItemOnVisiblePage: false);
+            UpdateWorksheetItemsVisibilityAdorner(WorksheetViewModelInst.Footer, isItemOnVisiblePage: false);
+            UpdateWorksheetItemsVisibilityAdorner(
+                ((global::System.Windows.Controls.Grid)(object)ScrollViewerInst.Parent).Children[1],
+                isItemOnVisiblePage: false);
+        }
+
+        private void WorksheetControlSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            UpdatePreviewVisual();
+        }
+
+        private void WorksheetPagesCollectionChanged(
+            object sender,
+            global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            _textPages = string.Format("Pages: [{0}]", WorksheetControlInst.PageManager.Pages.Count);
         }
 
         private void OnPageManagerContentActivated()
@@ -483,6 +569,19 @@ public partial class WorksheetControlDebugger
         private void OnWin2SizeChanged(object sender, SizeChangedEventArgs e)
         {
             UpdatePreviewVisual();
+        }
+
+        private void DestroyPreviewWindow()
+        {
+            if (_win2 != null)
+            {
+                _win2.Closed -= WorksheetPreviewClosed;
+                _win2.SizeChanged -= OnWin2SizeChanged;
+                _grid2 = null;
+                _viewbox = null;
+                _win2.Close();
+                _win2 = null;
+            }
         }
 
         private void WorksheetPreviewClosed(object sender, System.EventArgs e)

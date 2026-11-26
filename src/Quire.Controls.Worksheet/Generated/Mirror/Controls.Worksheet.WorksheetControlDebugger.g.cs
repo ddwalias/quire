@@ -70,8 +70,6 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         [global::Quire.Mirror.MirrorStub]
         private void OnScrollViewerChanged(object sender, global::System.Windows.Controls.ScrollChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
-        private void OnVisiblePagesCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         private void OnPageLayoutPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
         [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlDebugger+WorksheetControlUI+PropertyName, Ptc.Controls.Worksheet")]
@@ -169,18 +167,6 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         [global::Quire.Mirror.MirrorStub]
         private void AddStatusBarItemToStatusBar() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
-        private void RemoveStatusBarItemFromStatusBar() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void UpdateIndicationInStatusBar() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void SubscribePagesEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void UnsSubscribePagesEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void WorksheetControlSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void WorksheetPagesCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         private void WorksheetVisiblePagesCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         private void UpdateVisibleItemsCounter() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -190,8 +176,6 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         private void InitializePreviewWindow() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         private void UpdatePreviewVisual() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void DestroyPreviewWindow() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
         [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlDebugger+VisibleObjects+IndicationVisibilityAdorner, Ptc.Controls.Worksheet")]
         private partial class IndicationVisibilityAdorner : global::System.Windows.Documents.Adorner
