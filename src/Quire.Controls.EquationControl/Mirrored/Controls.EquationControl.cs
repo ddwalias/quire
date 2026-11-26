@@ -778,7 +778,22 @@ public partial class EquationControl
         set => _model.ResultScalingSExpression = value;
     }
 
-    public string EquationSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public string EquationSExpression
+    {
+        get
+        {
+            return _model.EquationSExpression;
+        }
+        set
+        {
+            OnSExpressionChanging(value);
+            _model.SetEquationSExpression(value, !InCustomInitialization);
+            if (_model.EvaluationRoot != null)
+            {
+                FireRequestEvaluation();
+            }
+        }
+    }
     public string EquationSExpressionWithResolvedLabels => _model.EquationSExpressionWithResolvedLabels;
     public string RegionType => "equation";
 
@@ -1608,7 +1623,10 @@ public partial class EquationControl
         }
     }
 
-    private void CanToggleVisibleLhsOfDefinition(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void CanToggleVisibleLhsOfDefinition(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = !IOTag.IsIOTagged(this) && _model.CanToggleVisibleLhsOfDefinition();
+    }
     private readonly bool _isForEngineCalculation = true;
     private global::Quire.Controls.ControlAdorners.MatrixResizeAdorner _matrixResizeAdorner;
 
@@ -1640,7 +1658,33 @@ public partial class EquationControl
     private void SymbolicEvalKeywordsRegionActivatedEventHandler() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void SymbolicEvalKeywordsRegionDeactivatedEventHandler() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void HandleSymCalculationErrorChanged(global::Quire.Wpf.PropertyChangedEventArgs<global::Quire.Calculation.Core.EngineError> eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public bool SymbolicEvalKeywordsVisibilityState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public bool SymbolicEvalKeywordsVisibilityState
+    {
+        get
+        {
+            return _isSymbolicEvalKeywordsShown;
+        }
+        set
+        {
+            if (_isSymbolicEvalKeywordsShown != value)
+            {
+                _isSymbolicEvalKeywordsShown = value;
+                _view.SymbolicEvalKeywordsVisibilityState = _isSymbolicEvalKeywordsShown;
+                if (!value)
+                {
+                    _view.Activated += SymbolicEvalKeywordsRegionActivatedEventHandler;
+                    _view.Deactivated += SymbolicEvalKeywordsRegionDeactivatedEventHandler;
+                    _model.CalculationErrorChanged += HandleSymCalculationErrorChanged;
+                }
+                else
+                {
+                    _view.Activated -= SymbolicEvalKeywordsRegionActivatedEventHandler;
+                    _view.Deactivated -= SymbolicEvalKeywordsRegionDeactivatedEventHandler;
+                    _model.CalculationErrorChanged -= HandleSymCalculationErrorChanged;
+                }
+            }
+        }
+    }
     private void ExecuteClearMathFormat(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
     {
         MathFormat.ClearFormat();
@@ -1801,15 +1845,53 @@ public partial class EquationControl
         string text = e.Parameter as string;
         _view.FireInsertString(text ?? string.Empty);
     }
-    private void OpenComboBoxEditingMode(global::Quire.EquationEditor.Tree.MathNode mathNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OpenComboBoxEditingMode(global::Quire.EquationEditor.Tree.MathNode mathNode)
+    {
+        DebugTools.DevAssert(mathNode == _model.CurrentModeNavigatorState.Current, null);
+        global::Quire.EquationEditor.View.IVisualComboBoxControlNode visualComboBoxControlNode = _map.AssociateNode(mathNode) as global::Quire.EquationEditor.View.IVisualComboBoxControlNode;
+        if (DebugTools.AssertNotNull(visualComboBoxControlNode, null).Passed)
+        {
+            visualComboBoxControlNode.OpenEditingOnComboBoxIsVisible();
+        }
+    }
     public void InputControlOnEquationActivated(object param) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnInsertInputControl(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnInsertInputControl(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        if (e.Parameter is InputControlTypes inputControlTypes)
+        {
+            _view.FireInsertInputControl(inputControlTypes);
+            MathNode current = _model.CurrentModeNavigatorState.Current;
+            if (inputControlTypes == InputControlTypes.ComboBoxControl && _view.IsVisible)
+            {
+                OpenComboBoxEditingMode(current);
+            }
+        }
+    }
     private void CanInsertInputControl(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e)
     {
         _view.FireCanInsertInputControl(sender, e);
     }
-    private void OnInsertMatrix(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnInsertFunction(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnInsertMatrix(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        TableSize? matrixSize = global::System.ComponentModel.TypeDescriptor.GetConverter(typeof(TableSize)).ConvertFrom(e.Parameter) as TableSize?;
+        _view.FireInsertMatrix(matrixSize);
+    }
+    private void OnInsertFunction(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        InsertFunctionCommandParameter insertFunctionCommandParameter = e.Parameter as InsertFunctionCommandParameter;
+        if (insertFunctionCommandParameter == null)
+        {
+            return;
+        }
+        if (insertFunctionCommandParameter.Args != null)
+        {
+            _view.FireInsertFunction(insertFunctionCommandParameter.Name, insertFunctionCommandParameter.ArgsCount, insertFunctionCommandParameter.Label, insertFunctionCommandParameter.Args);
+        }
+        else
+        {
+            _view.FireInsertFunction(insertFunctionCommandParameter.Name, insertFunctionCommandParameter.ArgsCount, insertFunctionCommandParameter.Label);
+        }
+    }
     private void CanInsertFunction(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs eArgs)
     {
         _view.FireCanInsertFunction(sender, eArgs);
@@ -1837,7 +1919,10 @@ public partial class EquationControl
         _view.FireInsertModifier(text);
     }
     private void CanPerformColumnOperations(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e) => _view.FireCanPerformColumnOperations(sender, e);
-    private void CanPerformCearCellsOperation(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void CanPerformCearCellsOperation(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        _view.FireCanPerformCearCellsOperation(sender, e);
+    }
     private void OnInsertRow(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
     {
         Direction direction = Direction.Indeterminate;
@@ -1989,12 +2074,21 @@ public partial class EquationControl
         _view.FireConvertToOperator();
     }
     private void OnCommit(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void CanTraverseForward(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void CanTraverseBackward(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void CanTraverseForward(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        _view.FireCanTraverse(e, (FocusNavigationDirection)0);
+    }
+    private void CanTraverseBackward(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        _view.FireCanTraverse(e, (FocusNavigationDirection)1);
+    }
     private void OnTraverseForward(object sender, System.Windows.Input.ExecutedRoutedEventArgs e) => OnTraverse(e, Direction.Right);
     private void OnTraverseBackward(object sender, System.Windows.Input.ExecutedRoutedEventArgs e) => OnTraverse(e, Direction.Left);
     private void OnTraverse(System.Windows.Input.ExecutedRoutedEventArgs e, Direction direction) => _view.FireTraversalRequest(e, direction);
-    protected void OnClearResultFormat(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void OnClearResultFormat(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        ClearResultFormat();
+    }
     public global::System.TypeCode GetTypeCode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public bool ToBoolean(global::System.IFormatProvider provider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public char ToChar(global::System.IFormatProvider provider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -2048,7 +2142,32 @@ public partial class EquationControl
             throw new InvalidOperationException("Property is valid only for Matrices!");
         }
     }
-    public int[] VisibleMatrixCellRange { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public int[] VisibleMatrixCellRange
+    {
+        get
+        {
+            MathNode mathNode = _model.CurrentModeNavigatorState.Current;
+            if (mathNode.DescriptorName != "MATRIX")
+            {
+                mathNode = mathNode.GetNearestAncestor("MATRIX");
+            }
+            if (mathNode != null)
+            {
+                MatrixNodeInfo matrixNodeInfo = (MatrixNodeInfo)mathNode.NodeInfo;
+                if (!matrixNodeInfo.IsInResult)
+                {
+                    return new int[4]
+                    {
+                        matrixNodeInfo.ViewportOffset.Row,
+                        matrixNodeInfo.ViewportOffset.Column,
+                        matrixNodeInfo.ViewportOffset.Row + matrixNodeInfo.ViewportSize.Rows - 1,
+                        matrixNodeInfo.ViewportOffset.Column + matrixNodeInfo.ViewportSize.Columns - 1
+                    };
+                }
+            }
+            throw new InvalidOperationException("Property is valid only for Matrices!");
+        }
+    }
 
     private void HandleModelIsRestrictedReadonlyChanged(bool isRestrictedReadonly)
     {

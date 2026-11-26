@@ -681,3 +681,10 @@
 - Members: `ScopeTo`, `ScopeLhs`, `Keypress`, `SetResultMatrixSize`, `SetResultMatrixOffset`, `ToggleSymbolicKeywordsVisibility`, `IsAlgorithmSupportOptions`, `EditNodeOnCaretSide`, `EditNodeOnNodeSide`, `IsResultMatrixFormatIndexVisible`.
 - Release IL: PASS, 3939 checked, zero failures (`.mirror-cache/release-il-eb9908eaaefa/release-il.json`).
 - Open: `FixCaretToRightMostPositionAfterClipping` stays a stub (one extra instruction in the Mathcad body, not matched by the temp-local or inline forms); `XFromNavigatorState`, `ToggleAlgorithmOption` (nested-if shape), and the rest of the remaining placeholders are not yet attempted.
+
+## Batch 98
+
+- Owner: haiku-equationcontrol-20261123; branch `haiku-equationcontrol-20261123-b98` (from main 711dad224).
+- Members: properties `SymbolicEvalKeywordsVisibilityState`, `VisibleMatrixCellRange`, `EquationSExpression`; handlers `CanPerformCearCellsOperation`, `CanTraverseForward`, `CanTraverseBackward`, `CanToggleVisibleLhsOfDefinition`, `OnClearResultFormat`, `OnInsertFunction` (guard form on `as`), `OnInsertMatrix`, `OnInsertInputControl`, `OpenComboBoxEditingMode`.
+- Parked: `CanClearResultFormat` (Mathcad reads `DisplayNumberFormatProperty` without the `DependencyObject` cast that the source needs), `OnInsertId` (the Mathcad null-check order, `p != null && p.Name != null`, has not matched in three shapes).
+- Release IL: PASS, 3953 checked, zero failures (`.mirror-cache/release-il-e30b9215a3eb/release-il.json`).
