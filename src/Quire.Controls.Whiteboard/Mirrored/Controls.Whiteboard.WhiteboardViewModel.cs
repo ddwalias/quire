@@ -718,31 +718,18 @@ public partial class WhiteboardViewModel
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Whiteboard.WhiteboardViewModel+PropertyNames, Ptc.Controls.Whiteboard")]
     public static partial class PropertyNames
     {
-        [global::Quire.Mirror.MirrorStub]
         public const string IsFocused = "IsFocused";
-        [global::Quire.Mirror.MirrorStub]
         public const string InsertionPoint = "InsertionPoint";
-        [global::Quire.Mirror.MirrorStub]
         public const string IsCrosshairVisible = "IsCrosshairVisible";
-        [global::Quire.Mirror.MirrorStub]
         public const string ContentWidth = "ContentWidth";
-        [global::Quire.Mirror.MirrorStub]
         public const string ContentHeight = "ContentHeight";
-        [global::Quire.Mirror.MirrorStub]
         public const string MinimumWidth = "MinimumWidth";
-        [global::Quire.Mirror.MirrorStub]
         public const string MinimumHeight = "MinimumHeight";
-        [global::Quire.Mirror.MirrorStub]
         public const string MaximumWidth = "MaximumWidth";
-        [global::Quire.Mirror.MirrorStub]
         public const string MaximumHeight = "MaximumHeight";
-        [global::Quire.Mirror.MirrorStub]
         public const string ActiveItem = "ActiveItem";
-        [global::Quire.Mirror.MirrorStub]
         public const string SelectedItems = "SelectedItems";
-        [global::Quire.Mirror.MirrorStub]
         public const string ActiveDescendant = "ActiveDescendant";
-        [global::Quire.Mirror.MirrorStub]
         public const string SelectedDescendants = "SelectedDescendants";
     }
 
@@ -2601,7 +2588,6 @@ public partial class WhiteboardViewModel
             : base(viewModel, commandName)
         {
         }
-        [global::Quire.Mirror.MirrorStub]
         protected abstract bool DoWithResize();
         protected void BackupTheSize()
         {

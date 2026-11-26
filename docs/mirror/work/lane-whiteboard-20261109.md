@@ -871,18 +871,14 @@
 - Release IL: PASS — 1126 checked in Whiteboard, 0 failures, 0 skipped (`release-il-b12e5668e920`). 100% exact parity achieved across all 1126 members of `Quire.Controls.Whiteboard`.
 - Remaining mismatches in this batch: none.
 
+## Batch 59 — WhiteboardViewModel Leftover `[MirrorStub]` Cleanup
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- Owner / Branch: Orca task `task_b2b45ea4e9a3` / `feature/agy-whiteboard-3`.
+- Members:
+  - `WhiteboardViewModel.PropertyNames` (13 `const string` fields: `IsFocused`, `InsertionPoint`, `IsCrosshairVisible`, `ContentWidth`, `ContentHeight`, `MinimumWidth`, `MinimumHeight`, `MaximumWidth`, `MaximumHeight`, `ActiveItem`, `SelectedItems`, `ActiveDescendant`, `SelectedDescendants`)
+  - `WhiteboardViewModel.WhiteboardResizingCommand.DoWithResize()`
+- Hand-written:
+  - `src/Quire.Controls.Whiteboard/Mirrored/Controls.Whiteboard.WhiteboardViewModel.cs`
+- Cleanup: Removed the 14 leftover `[global::Quire.Mirror.MirrorStub]` attributes so MirrorGen planner no longer treats already-mirrored constants and abstract declaration as unmirrored stubs (0 `[MirrorStub]` remaining in `Quire.Controls.Whiteboard`).
+- Release IL: PASS — 1127 checked (`1126` exact body methods + `DoWithResize` declaration shape match), 0 failures, 0 missing, 0 skipped (`release-il-365ae1622ecf`).
+- Remaining mismatches: none.
