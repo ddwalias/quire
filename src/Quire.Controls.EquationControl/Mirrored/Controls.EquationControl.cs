@@ -637,7 +637,15 @@ public partial class EquationControl
             AttachedProperties.ClearHandlesContextMenu(this);
         }
     }
-    private void HandleRequestNavigateOutOfInputControlNode(object sender, global::Quire.Wpf.CustomRoutedEventArgs<global::System.Windows.Input.RoutedUICommand> args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleRequestNavigateOutOfInputControlNode(object sender, global::Quire.Wpf.CustomRoutedEventArgs<global::System.Windows.Input.RoutedUICommand> args)
+    {
+        global::System.Windows.Input.RoutedCommand parameter = args.Parameter;
+        if (parameter != null && DebugTools.DevAssert(parameter.Name == EquationCommands.NavigateToEquationEnd.Name || parameter.Name == EquationCommands.NavigateToEquationStart.Name || parameter.Name == EquationCommands.NavigateLeft.Name || parameter.Name == EquationCommands.NavigateRight.Name, null).Passed)
+        {
+            _view.EnsureFocus();
+            parameter.Execute(null, this);
+        }
+    }
     private void FireMeasureOverideCompleted()
     {
         if (MeasureOverideCompleted != null)
@@ -850,7 +858,22 @@ public partial class EquationControl
             }
         }
     }
-    public global::System.Nullable<global::System.Windows.Vector> NavigateIntoItem(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::System.Nullable<global::System.Windows.Vector> NavigateIntoItem(global::Quire.Direction direction)
+    {
+        Activate(isActive: true);
+        switch (direction)
+        {
+            case global::Quire.Direction.Left:
+            case global::Quire.Direction.Up:
+                NavigateRegionEnd();
+                break;
+            case global::Quire.Direction.Right:
+            case global::Quire.Direction.Down:
+                NavigateRegionStart();
+                break;
+        }
+        return null;
+    }
     public void SimulateMouseClick(global::System.Windows.Point location, int numberOfClicks)
     {
         Activate(isActive: true);
@@ -1008,8 +1031,77 @@ public partial class EquationControl
         private set => _model.EquationXmlNode = value;
     }
 
-    private void SetRegionResultFormat(global::System.Xml.XmlNode xmlElement, string ns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void CreateFakeEngineResults() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void SetRegionResultFormat(global::System.Xml.XmlNode xmlElement, string ns)
+    {
+        if (xmlElement != null)
+        {
+            global::Quire.Controls.Core.NumberFormat numberFormat = (DisplayNumberFormat != null) ? DisplayNumberFormat.Clone() : new global::Quire.Controls.Core.NumberFormat();
+            global::Quire.Controls.Core.MatrixFormat matrixFormat = (ResultMatrixFormat != null) ? ResultMatrixFormat.Clone() : new global::Quire.Controls.Core.MatrixFormat();
+            global::Quire.Controls.Core.ResultFormat resultFormat = new global::Quire.Controls.Core.ResultFormat(numberFormat, matrixFormat, ns);
+            using (global::System.Xml.XmlNodeReader reader = new global::System.Xml.XmlNodeReader(xmlElement))
+            {
+                resultFormat.ReadXml(reader);
+            }
+            if (resultFormat.NumberFormatWasRead)
+            {
+                DisplayNumberFormat = numberFormat;
+            }
+            if (resultFormat.MatrixFormatWasRead)
+            {
+                _temporaryResultMatrixFormatShouldClear = false;
+                ResultMatrixFormat = matrixFormat;
+            }
+        }
+    }
+    private void CreateFakeEngineResults()
+    {
+        global::Quire.Calculation.Core.IResultNode resultNode = null;
+        bool flag = true;
+        global::Quire.EquationEditor.Tree.MathNode evaluationRoot = _model.EvaluationRoot;
+        if (evaluationRoot == null)
+        {
+            return;
+        }
+        if (evaluationRoot.DescriptorName == "EVALUATION" && evaluationRoot[1].DescriptorName == "RSCALE")
+        {
+            global::Quire.EquationEditor.Tree.MathNode mathNode = evaluationRoot[1][0];
+            if (mathNode.DescriptorName == "RESULT")
+            {
+                flag = false;
+            }
+            else
+            {
+                DebugTools.DevAssert(false, "Should never have results inside math region XML, now that we save ResultManager in the Converter !");
+                try
+                {
+                    global::Quire.Calculation.Core.XmcdToIResultNodeTransform xmcdToIResultNodeTransform = new global::Quire.Calculation.Core.XmcdToIResultNodeTransform(new global::Quire.Calculation.Core.SimpleResultNodeFactory());
+                    mathNode.MakeReadOnly();
+                    resultNode = xmcdToIResultNodeTransform.Transform(global::Quire.EquationEditor.Tree.Transform.MathNodeToXmlTransform.Default.Transform(mathNode));
+                }
+                catch
+                {
+                    flag = false;
+                }
+            }
+        }
+        if (evaluationRoot.DescriptorName == "SYMBOLIC_EVALUATION")
+        {
+            if (evaluationRoot[2].DescriptorName == "RESULT")
+            {
+                flag = false;
+            }
+            else
+            {
+                ClearExpressionValueModified();
+                _model.FireEquationChanged();
+                _model.MoveToRegionStart();
+            }
+        }
+        if (flag && resultNode != null)
+        {
+            global::Quire.Calculation.Core.ResultManager.Instance.CreateOldResultRefId(resultNode, this);
+        }
+    }
 
     public bool IsMathFormatHandledLocally
     {
@@ -3196,7 +3288,15 @@ public partial class EquationControl
             _model.ResultNumberFormat = numberFormat;
         }
     }
-    private void HandleResultMatrixFormattingChanged(string propertyName, object newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleResultMatrixFormattingChanged(string propertyName, object newValue)
+    {
+        _temporaryResultMatrixFormatShouldClear = false;
+        global::Quire.Controls.Core.MatrixFormat matrixFormat = (global::Quire.Controls.Core.MatrixFormat)((global::System.Windows.DependencyObject)this).GetValue(ResultMatrixFormatProperty);
+        if (matrixFormat != null && matrixFormat != _model.ResultMatrixFormat)
+        {
+            _model.ResultMatrixFormat = matrixFormat;
+        }
+    }
     private static void HandleResultMatrixFormatChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs args)
     {
         global::Quire.Controls.Core.MatrixFormat matrixFormat = args.OldValue as global::Quire.Controls.Core.MatrixFormat;
