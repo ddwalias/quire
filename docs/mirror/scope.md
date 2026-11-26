@@ -69,7 +69,7 @@ Licence entries marked *verify* still need confirming before release.
 | `System.ServiceModel.*` | Microsoft (dotnet/wcf) | MIT | **Dependency**, when automation needs it |
 | `runtimes/win/…/System.Management.dll` | Microsoft | MIT | **Dependency**: `System.Management` |
 | `Python.Runtime` | pythonnet | MIT | **Dependency**: `pythonnet` |
-| `nrtftree-library` | sgoliver.net (NRtfTree) | LGPL (*verify*) | **Dependency**, linked dynamically as LGPL requires |
+| `nrtftree-library` | sgoliver.net (NRtfTree) | LGPL-3.0-or-later | **Dependency**, vendored source compatibility fork in `third_party/NRtfTree` |
 | `System.Windows.Interactivity` | Microsoft (Blend SDK, closed) | Proprietary | **Substitute**: `Microsoft.Xaml.Behaviors.Wpf` (MIT, its open-source successor) |
 | `JetBrains.Annotations` (vendored into `Ptc.Core`) | JetBrains | MIT | **Dependency**: `JetBrains.Annotations` |
 | `Flobbster.Windows.Forms` property grid (vendored into `Ptc.Core`) | CodeProject article | Unclear (*verify*) | Write our own, or substitute if a property grid is needed |

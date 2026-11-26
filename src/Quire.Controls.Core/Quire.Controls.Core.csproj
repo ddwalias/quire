@@ -6,6 +6,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Quire.Calculation.Core\Quire.Calculation.Core.csproj" />
     <ProjectReference Include="..\Quire.Core\Quire.Core.csproj" />
+    <ProjectReference Include="..\..\third_party\NRtfTree\NRtfTree.csproj" />
   </ItemGroup>
   <Import Project="Generated\Mirror.props" />
 </Project>

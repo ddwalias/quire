@@ -12711,7 +12711,7 @@
     {
       "file": "nrtftree-library.dll",
       "kind": "managed",
-      "treatment": "dependency: NRtfTree (licence D7)",
+      "treatment": "dependency: vendored NRtfTree LGPL compatibility fork",
       "used_by": [
         "Quire.Controls.Core",
         "Quire.Controls.Worksheet"

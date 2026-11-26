@@ -648,7 +648,7 @@ Every other DLL and EXE in the install, with the reason it has no Quire project 
 | `mkl_vml_cmpt.2.dll` | native | substitute: MathNet.Numerics for Intel oneMKL (D6) | None |
 | `mkl_vml_def.2.dll` | native | substitute: MathNet.Numerics for Intel oneMKL (D6) | None |
 | `msvcp140.dll` | native | not needed: MSVC runtime redistributable | `Quire.EfidataImpl`, `Quire.EfidiffeqImpl`, `Quire.EfigraphicsImpl`, `Quire.EfiimageImpl`, `Quire.EfiioImpl`, `Quire.EfisignalImpl`, `Quire.EfisymbolicsImpl`, `Quire.Efiutl`, `Quire.EfiwaveletsImpl`, `Quire.Engine.Utl`, `Quire.EngutilsMgd`, `Quire.Mccore12`, `Quire.Mcdepman`, `Quire.Mceng`, `Quire.Mcfront12`, `Quire.Msclr`, `Quire.Msgen`, `Quire.Mslisp`, `Quire.Native.EfisymbolicsUmgd`, `Quire.Native.Engutils`, `Quire.Native.Mcaduser`, `Quire.Native.Mctranslator`, `Quire.Native.Mshex`, `Quire.Native.Msmpl`, `Quire.Native.Mspcons`, `Quire.Native.Msprolog`, `Quire.Native.Utl` |
-| `nrtftree-library.dll` | managed | dependency: NRtfTree (licence D7) | `Quire.Controls.Core`, `Quire.Controls.Worksheet` |
+| `nrtftree-library.dll` | managed | dependency: vendored NRtfTree LGPL compatibility fork | `Quire.Controls.Core`, `Quire.Controls.Worksheet` |
 | `prod_dcu.exe` | native | deferred: PTC Creo platform (D5) | None |
 | `Ptc.License.Plpf.dll` | managed | deferred: licensing (D5) | `Quire` |
 | `Ptc.OleInterop.dll` | managed | deferred (D5) | `Quire.Controls.ExcelComponent` |

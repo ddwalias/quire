@@ -19,12 +19,16 @@ public sealed class Externals
         ["JetBrains.Annotations"] = new("JetBrains.Annotations", "2024.3.0", "netstandard2.0"),
         // Mathcad ships 2.17.1, which has no separate Framework assembly and still exposes SpreadsheetDocument.Package.
         ["DocumentFormat.OpenXml"] = new("DocumentFormat.OpenXml", "2.17.1", "netstandard2.0"),
-        // Mathcad ships nrtftree-library 0.4.0 (LGPL, D7); the NuGet package of the same name is that version.
-        ["nrtftree-library"] = new("nrtftree-library", "0.4.0", "net40"),
         ["Python.Runtime"] = new("pythonnet", "3.0.5", "netstandard2.0"),
         ["ClearScript.Core"] = new("Microsoft.ClearScript.Windows", "7.4.5", "net5.0"),
         ["ClearScript.Windows"] = new("Microsoft.ClearScript.Windows", "7.4.5", "net5.0"),
         ["ClearScript.Windows.Core"] = new("Microsoft.ClearScript.Windows", "7.4.5", "net5.0"),
+    };
+
+    /// <summary>Assembly name → in-repository project supplying a vendored dependency.</summary>
+    public static readonly Dictionary<string, string> ProjectReferences = new()
+    {
+        ["nrtftree-library"] = "third_party/NRtfTree/NRtfTree.csproj",
     };
 
     public static readonly HashSet<string> WpfAssemblies =
@@ -47,7 +51,7 @@ public sealed class Externals
 
     public TypeModel? Find(string fullName) => _byName.GetValueOrDefault(fullName);
 
-    public static Externals Load()
+    public static Externals Load(string repo)
     {
         var e = new Externals();
         string dotnet = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "dotnet", "packs");
@@ -63,6 +67,11 @@ public sealed class Externals
         foreach (var (asm, p) in Packages)
         {
             string file = Path.Combine(nuget, p.Id.ToLowerInvariant(), p.Version, "lib", p.LibFolder, asm + ".dll");
+            if (File.Exists(file)) e.LoadFile(file);
+        }
+        foreach (var (asm, project) in ProjectReferences)
+        {
+            string file = Path.Combine(repo, Path.GetDirectoryName(project)!, "bin/Release/net10.0-windows", asm + ".dll");
             if (File.Exists(file)) e.LoadFile(file);
         }
         return e;

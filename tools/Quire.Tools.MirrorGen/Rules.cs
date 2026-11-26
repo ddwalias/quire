@@ -102,7 +102,7 @@ public sealed class Rules
             "microsoft.extensions.objectpool" => "dependency: Microsoft.Extensions.ObjectPool",
             "system.management" => "dependency: System.Management",
             "python.runtime" => "dependency: pythonnet",
-            "nrtftree-library" => "dependency: NRtfTree (licence D7)",
+            "nrtftree-library" => "dependency: vendored NRtfTree LGPL compatibility fork",
             "system.windows.interactivity" => "substitute: Microsoft.Xaml.Behaviors.Wpf",
             "knitro1510" => "substitute: IPOPT or NLopt for Knitro (D6)",
             "axiomsys" => "dependency: FriCAS for Axiom",

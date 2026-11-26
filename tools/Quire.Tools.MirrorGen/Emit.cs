@@ -14,7 +14,7 @@ public static class Emit
     {
         var mapper = new Mapper(mathcad, rules);
         mapper.Build();
-        var externals = Externals.Load();
+        var externals = Externals.Load(repo);
         var projects = mapper.Types.Select(t => t.Project!).Distinct().OrderBy(p => p, StringComparer.Ordinal).ToList();
         // Hand-written members are read from the Release build: without one they would read as missing and be
         // regenerated as stubs.
@@ -87,6 +87,7 @@ public static class Emit
     private sealed class ProjectDeps
     {
         public SortedSet<string> Projects { get; } = new(StringComparer.Ordinal);
+        public SortedSet<string> ExternalProjects { get; } = new(StringComparer.Ordinal);
         public SortedDictionary<string, Package> Packages { get; } = new(StringComparer.Ordinal);
         public SortedSet<string> Friends { get; } = new(StringComparer.Ordinal);
         public bool Wpf, WinForms, Unsafe;
@@ -104,6 +105,7 @@ public static class Emit
                 foreach (var n in Stats.Named(sig))
                 {
                     if (deps.ContainsKey(n.Assembly) || n.Assembly == "Quire.Core") { if (n.Assembly != t.Project) d.Projects.Add(n.Assembly); continue; }
+                    if (Externals.ProjectReferences.ContainsKey(n.Assembly)) { d.ExternalProjects.Add(n.Assembly); continue; }
                     if (Externals.WpfAssemblies.Contains(n.Assembly)) d.Wpf = true;
                     if (Externals.WinFormsAssemblies.Contains(n.Assembly)) d.WinForms = true;
                     if (Externals.Packages.TryGetValue(n.Assembly, out var pkg)) d.Packages[pkg.Id] = pkg;
@@ -326,6 +328,14 @@ public static class Emit
             // D20: a split C++/CLI project is referenced through its .vcxproj.
             string reference = Path.GetRelativePath(Path.Combine(repo, "src", project), rules.ReferenceFile(p));
             if (!existing.Contains($"\\{p}.csproj\"") && !existing.Contains($"\\{p}.vcxproj\""))
+                sb.AppendLine($@"    <ProjectReference Include=""{reference}"" />");
+        }
+        foreach (var assembly in d.ExternalProjects)
+        {
+            string path = Path.GetFullPath(Path.Combine(repo, Externals.ProjectReferences[assembly]));
+            string reference = Path.GetRelativePath(dir, path);
+            if (!existing.Contains($"\\{Path.GetFileNameWithoutExtension(path)}.csproj\"")
+                && !existing.Contains($"\\{Path.GetFileNameWithoutExtension(path)}.vcxproj\""))
                 sb.AppendLine($@"    <ProjectReference Include=""{reference}"" />");
         }
         foreach (var pkg in d.Packages.Values)
