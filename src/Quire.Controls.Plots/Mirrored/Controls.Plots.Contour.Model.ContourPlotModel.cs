@@ -3,9 +3,11 @@
 
 using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Media;
 using Quire.Calculation.Core;
+using Quire.PersistentDataObjects;
 using Quire.Controls.Plots.Model;
 using Quire.Controls.Plots.Presenter;
 
@@ -150,7 +152,20 @@ public sealed partial class ContourPlotModel
 
     public void SetContourDataObject(global::Quire.PersistentDataObjects.contourPlotTypeContour contour, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public global::Quire.PersistentDataObjects.contourPlotTypeContour GetContourDataObject(global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::Quire.PersistentDataObjects.contourPlotTypeContour GetContourDataObject(global::Quire.Calculation.Core.IResultManager resultManager)
+    {
+        int resultRef = resultManager == null ? -1 : resultManager.CreateResultRefId(_contourCalculatable);
+        return new contourPlotTypeContour
+        {
+            colorscheme = (colorSchemeType)Enum.Parse(typeof(colorSchemeType), ColorScheme.ToString(), true),
+            linestyle = (traceLineStyle)Enum.Parse(typeof(LineStyle), LineStyle.ToString(), true),
+            color = ContoursColor.ToString(CultureInfo.InvariantCulture),
+            showlables = ShowLabels,
+            lineweight = LineWeight,
+            resultRef = resultRef,
+            resultRefSpecified = resultRef != -1
+        };
+    }
 
     private IAxisModel XAxisModel { get; set; }
 
