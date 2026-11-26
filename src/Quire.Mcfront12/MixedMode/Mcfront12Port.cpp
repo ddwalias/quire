@@ -1269,16 +1269,14 @@ namespace Quire { namespace Engine {
                         System::GC::KeepAlive(this);
                         return;
                     }
-                    goto IL_01a5;
                 }
-                if (mode == IMode::BEFORE)
+                else if (mode == IMode::BEFORE)
                 {
                     if (((linkedListNode->Value->m_child_scope != nullptr) ? linkedListNode->Value->m_child_scope->First(true) : linkedListNode)->Previous == linkedListNode2)
                     {
                         System::GC::KeepAlive(this);
                         return;
                     }
-                    goto IL_0141;
                 }
             }
             if (mode == IMode::CHILD)
@@ -1296,33 +1294,26 @@ namespace Quire { namespace Engine {
                     linkedListNode->Value->m_child_scope->OnNew(linkedListNode2);
                 }
                 ll_move_before(linkedListNode, linkedListNode2);
-                goto IL_01e4;
             }
-            if (mode == IMode::BEFORE)
+            else if (mode == IMode::BEFORE)
             {
-                goto IL_0141;
-            }
-            goto IL_01a5;
-        IL_01a5:
-            if (linkedListNode2->Value->m_scope != linkedListNode->Value->m_scope)
-            {
-                scope_detach(linkedListNode2);
-            }
-            linkedListNode->Value->m_scope->OnAfter(linkedListNode, linkedListNode2);
-            ll_move_after(linkedListNode, linkedListNode2);
-            goto IL_01e4;
-        IL_0141:
-            if (linkedListNode2->Value->m_scope != linkedListNode->Value->m_scope)
-            {
-                scope_detach(linkedListNode2);
-            }
-            linkedListNode->Value->m_scope->OnBefore(linkedListNode, linkedListNode2);
-            {
+                if (linkedListNode2->Value->m_scope != linkedListNode->Value->m_scope)
+                {
+                    scope_detach(linkedListNode2);
+                }
+                linkedListNode->Value->m_scope->OnBefore(linkedListNode, linkedListNode2);
                 System::Collections::Generic::LinkedListNode<NodeCollection^>^ n = (linkedListNode->Value->m_child_scope != nullptr) ? linkedListNode->Value->m_child_scope->First(true) : linkedListNode;
                 ll_move_before(n, linkedListNode2);
             }
-            goto IL_01e4;
-        IL_01e4:
+            else
+            {
+                if (linkedListNode2->Value->m_scope != linkedListNode->Value->m_scope)
+                {
+                    scope_detach(linkedListNode2);
+                }
+                linkedListNode->Value->m_scope->OnAfter(linkedListNode, linkedListNode2);
+                ll_move_after(linkedListNode, linkedListNode2);
+            }
             ce_sync(linkedListNode2);
         }
 

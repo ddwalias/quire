@@ -254,16 +254,16 @@ namespace Quire { namespace utl_mgd {
         void EnsureReleased(UInt32 max_tries)
         {
             UInt32 count = 0;
-            if (0 == max_tries)
-                goto done;
-            do
+            if (0 != max_tries)
             {
-                if (!::ReleaseMutex(static_cast<HANDLE>(m_handle)))
-                    break;
-                ++count;
+                do
+                {
+                    if (!::ReleaseMutex(static_cast<HANDLE>(m_handle)))
+                        break;
+                    ++count;
+                }
+                while (count != max_tries);
             }
-            while (count != max_tries);
-        done:
             GC::KeepAlive(this);
         }
 

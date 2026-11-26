@@ -483,6 +483,7 @@ namespace Quire { namespace Engine {
                         if (readerMacro != nullptr && readerMacro->is_terminating)
                         {
                             t->Unread(num);
+                            // Release IL requires the terminator branch to share the loop's exit block.
                             goto loop_end;
                         }
                     }
@@ -490,6 +491,7 @@ namespace Quire { namespace Engine {
                     num = t->Read();
                     if (!Char::IsWhiteSpace((wchar_t)num))
                     {
+                        // Release IL requires the character test to branch back to the loop head.
                         goto loop_head;
                     }
                 }
@@ -564,12 +566,10 @@ namespace Quire { namespace Engine {
                         break;
                     }
                 }
-                else
+                else if (num != 59)
                 {
-                    if (num != 59)
-                    {
-                        goto next_read;
-                    }
+                    // Release IL requires whitespace to jump directly to the shared next-read block.
+                    goto next_read;
                 }
                 while (num != -1 && (num = t->Read()) != 10)
                 {
