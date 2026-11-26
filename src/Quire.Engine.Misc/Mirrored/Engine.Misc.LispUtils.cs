@@ -552,6 +552,7 @@ partial class LispUtils
                         Queue<string> queue = scanExpressionLine(expanded, ref cursor);
                         if (queue == null)
                         {
+                            // Release IL requires this branch to skip the remaining mode handlers.
                             goto EndTry;
                         }
                         foreach (string item in queue)
@@ -564,6 +565,7 @@ partial class LispUtils
                 if (prettyPrintMode)
                 {
                     PrettyPrint(expanded);
+                    // Release IL requires this branch to skip expression scanning.
                     goto EndTry;
                 }
                 foreach (string expression in scanExpressions(expanded))

@@ -151,21 +151,18 @@ public abstract partial class CustomScriptRunBase : Run, ICustomFontSizeOwner
         }
         else
         {
-            if (deferInit && customScriptRunBase.DataContext is IRichTextBase richTextBase)
+            if (deferInit && customScriptRunBase.DataContext is IRichTextBase richTextBase &&
+                richTextBase.DequeueSplitFontSizeData() is double valueOrDefault)
             {
-                if (richTextBase.DequeueSplitFontSizeData() is double valueOrDefault)
-                {
-                    customScriptRunBase.FontSizeForReport = valueOrDefault;
-                    num2 = customScriptRunBase.FontSizeForReport * CustomScriptsSettings.FontRatio;
-                    goto CheckRatio;
-                }
+                customScriptRunBase.FontSizeForReport = valueOrDefault;
+                num2 = customScriptRunBase.FontSizeForReport * CustomScriptsSettings.FontRatio;
             }
-            customScriptRunBase.FontSizeForReport = num;
-            num2 = num * CustomScriptsSettings.FontRatio;
+            else
+            {
+                customScriptRunBase.FontSizeForReport = num;
+                num2 = num * CustomScriptsSettings.FontRatio;
+            }
         }
-        goto CheckRatio;
-
-    CheckRatio:
         if (num2 < CustomScriptsSettings.FontRatio)
         {
             DebugTools.FailAssertion(null, Array.Empty<object>());

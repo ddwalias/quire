@@ -17,6 +17,7 @@ public static partial class SymbolDescriptorFilter
     {
         string category = (string)ResourceProvider<VisualCategoriesDictionary>.Instance[categoryKey];
         DictionaryEntry entry = (DictionaryEntry)e.Item;
+        // Release IL requires these branches to preserve Mathcad's separate accepted and rejected blocks.
         if (entry.Value is not SymbolDescriptor symbolDescriptor) goto NotAccepted;
         if (symbolDescriptor.Categories != null) goto Accepted;
 

@@ -601,6 +601,7 @@ public abstract partial class OleContainerViewModel<TModel, TIPublicModel, TPers
                 oleViewportSize2 = OleViewportSize;
                 if (!DebugTools.DevAssert(!oleViewportSize2.IsEmpty, null).Failed)
                 {
+                    // Release IL requires the shared continuation branch.
                     goto IL_0063;
                 }
             }

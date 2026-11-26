@@ -53,6 +53,7 @@ public static partial class CustomScriptServiceFunctions
                         }) ?? null;
                     }
                 }
+                // Release IL requires this branch to skip fallback run construction.
                 goto Done;
             }
         }

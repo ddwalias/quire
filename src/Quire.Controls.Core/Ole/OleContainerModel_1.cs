@@ -472,6 +472,7 @@ public abstract partial class OleContainerModel<TPersistentData> : IPublicOleCon
         }
         finally
         {
+            // Release IL requires a no-op finally region.
             goto L;
             L:;
         }
