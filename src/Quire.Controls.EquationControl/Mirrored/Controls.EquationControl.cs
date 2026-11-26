@@ -2349,11 +2349,29 @@ public partial class EquationControl
     public int WarningsCount => _model.Warnings?.Count ?? 0;
     internal List<(RedefinitionWarning parsedWarning, MathNode warningNode, global::Quire.EquationEditor.View.IVisualMathNode visualMathNode)> Warnings => _model.Warnings?.Select(((RedefinitionWarning parsedWarning, MathNode warningNode) warning) => (parsedWarning: warning.parsedWarning, warningNode: warning.warningNode, _map.AssociateNode(warning.warningNode))).ToList();
 
-    private bool _temporaryResultMatrixFormatShouldClear;
-    private global::System.Collections.Generic.IList<global::Quire.TableCoordinate> _nestedMatrixPositionWhichFormatShouldClear;
     internal global::Quire.EquationEditor.View.IVisualMathNode CurrentVisualMathNode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public bool ContainsError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void ShowError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void ShowError(global::Quire.Calculation.Core.EngineError error)
+    {
+        if (!IsKeyboardFocusWithin)
+        {
+            Activate(isActive: true);
+        }
+        if (Error == null)
+        {
+            error.IsRuntime = true;
+            if (Equals(error.ErrorSource))
+            {
+                SetError(error);
+                return;
+            }
+            ICalculatable errorSourceChild = CalculatableChildren.FirstOrDefault(child => child.Equals(error.ErrorSource));
+            if (errorSourceChild != null)
+            {
+                errorSourceChild.SetError(error);
+            }
+        }
+    }
     public EngineError CurrentError => Error;
     public bool IsMatrixResized
     {
@@ -2579,6 +2597,9 @@ public partial class EquationControl
     public global::Quire.Calculation.Core.EngineResult EngineResultForSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     private static bool IsUnitedMatrixUniform(global::Quire.Calculation.Core.IUnitedValueResultNode unitedElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private static global::Quire.Calculation.Core.IResultNode ConvertAnyFormattedMatrixToDisplayMatrix(global::Quire.Calculation.Core.IResultNode resultNode, global::Quire.Controls.Core.MatrixFormat matrixFormat, bool useEagerMatrixForSmallMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    // Measured: closure ordinals count these fields after ConvertAnyFormattedMatrixToDisplayMatrix, not before ShowError.
+    private bool _temporaryResultMatrixFormatShouldClear;
+    private global::System.Collections.Generic.IList<global::Quire.TableCoordinate> _nestedMatrixPositionWhichFormatShouldClear;
     private static global::Quire.Calculation.Core.IMatrixResultNode ConvertToDisplayMatrix(global::Quire.Calculation.Core.IMatrixResultNode originalMatrix, global::Quire.Controls.Core.MatrixFormat matrixFormat, bool useEagerMatrixForSmallMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private static global::Quire.Calculation.Core.IResultNode GetDisplayMatrixCell(global::Quire.Calculation.Core.IMatrixResultNode matrix, global::Quire.Controls.Core.MatrixFormat matrixFormat, int r, int c, bool useEagerMatrixForSmallMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private static global::Quire.Calculation.Core.IMatrixResultNode ConvertToEagerMatrix(global::Quire.Calculation.Core.IMatrixResultNode originalMatrix, global::Quire.Controls.Core.MatrixFormat matrixFormat, bool useEagerMatrixForSmallMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
