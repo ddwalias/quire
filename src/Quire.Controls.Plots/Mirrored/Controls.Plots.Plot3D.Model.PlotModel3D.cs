@@ -6,11 +6,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Media.Media3D;
+using System.Xml;
 using Quire;
 using Quire.Calculation.Core;
 using Quire.Controls.Core;
 using Quire.Controls.Plots.Model;
 using Quire.Controls.Plots.Presenter;
+using Quire.PersistentDataObjects;
+using Quire.Serialization;
+using Quire.Xml;
 
 namespace Quire.Controls.Plots.Plot3D.Model;
 
@@ -446,7 +450,59 @@ public partial class PlotModel3D
 
     public override bool SetDataObject(global::Quire.Serialization.IDeS11NProvider de11NProvider, global::Quire.PersistentDataObjects.plotType dataObject, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public override global::Quire.PersistentDataObjects.plotType GetDataObject(global::Quire.Serialization.IS11NProvider s11NProvider, global::Quire.Calculation.Core.IResultManager resultManager, bool hideFromCalculation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public override plotType GetDataObject(IS11NProvider s11NProvider, IResultManager resultManager, bool hideFromCalculation)
+    {
+        axes3Type axes = new axes3Type
+        {
+            xAxis = XAxis.GetDataObject(resultManager) as xAxis,
+            yAxis = YAxis.GetDataObject(resultManager) as yAxis,
+            zAxis = ZAxis.GetDataObject(resultManager) as zAxis
+        };
+        Matrix3D cameraMatrix = CameraTransform.Value;
+        MatrixOfDoubles cameraTransformMatrix = new MatrixOfDoubles
+        {
+            Rows = 4.ToString(),
+            Columns = 4.ToString(),
+            Cells = new double[]
+            {
+                cameraMatrix.M11, cameraMatrix.M12, cameraMatrix.M13, cameraMatrix.M14,
+                cameraMatrix.M21, cameraMatrix.M22, cameraMatrix.M23, cameraMatrix.M24,
+                cameraMatrix.M31, cameraMatrix.M32, cameraMatrix.M33, cameraMatrix.M34,
+                cameraMatrix.OffsetX, cameraMatrix.OffsetY, cameraMatrix.OffsetZ, cameraMatrix.M44
+            }
+        };
+        if (s11NProvider != null)
+        {
+            XmlElement axesElement = s11NProvider.XmlContentDocument.CreateElement("axes", s11NProvider.NameSpaceManager.DefaultNamespace);
+            using (XmlNodeWriter writer = new XmlNodeWriter(axesElement))
+            {
+                axes3Type.XmlSerializer.Serialize(writer, axes);
+            }
+            axes.xAxisRaw = axesElement.LastChild.SelectSingleNode(XmlQualifiedName.ToString(xmlWorksheetNodeNames.xAxis, "ws"), s11NProvider.NameSpaceManager);
+            axes.yAxisRaw = axesElement.LastChild.SelectSingleNode(XmlQualifiedName.ToString(xmlWorksheetNodeNames.yAxis, "ws"), s11NProvider.NameSpaceManager);
+            axes.zAxisRaw = axesElement.LastChild.SelectSingleNode(XmlQualifiedName.ToString(xmlWorksheetNodeNames.zAxis, "ws"), s11NProvider.NameSpaceManager);
+        }
+        Plot3DTypeCameraType cameraType;
+        EnumHelper.TryParse(PlotCameraType.ToString(), out cameraType, new EnumHelper.EnumHelperSettings { IgnoreCase = true, AssertOnParseFailure = true });
+        Plot3DType plot3D = new Plot3DType
+        {
+            traces = _traces.Collect(trace => trace.GetDataObject(resultManager)).ToArray(),
+            axes = axes,
+            plotEquations = _equationListModel3D.GetDataObject(resultManager),
+            CameraTransformMatrix = cameraTransformMatrix,
+            CameraType = cameraType,
+            graphsize = GraphSizeDataObject
+        };
+        BackgroundType backgroundType;
+        EnumHelper.TryParse(PlotBackgroundType.ToString(), out backgroundType, new EnumHelper.EnumHelperSettings { IgnoreCase = true, AssertOnParseFailure = true });
+        return new plotType
+        {
+            Item = plot3D,
+            showaxisexpressions = ShowAxisExpressions,
+            backgroundtype = backgroundType,
+            disablecalc = hideFromCalculation
+        };
+    }
 
     internal virtual IPlotEquationModel3D CreateEquationModel()
     {
