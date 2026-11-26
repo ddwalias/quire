@@ -779,19 +779,12 @@ public partial class WorksheetControlContent
         items.GetRegionsOfType<ISpellCheckRegion>().Each(text => text.DisableSpellCheck());
     }
 
-    private readonly global::Quire.Controls.Core.CustomSplitItemRenderSizeDelegate _customSplitItemRenderSizeDelegate;
 
-    private global::System.Nullable<global::System.Windows.Point> _savedInsertionPoint;
 
-    private global::System.Collections.Generic.List<global::Quire.Controls.Core.IWhiteboardItem> _savedSelectionList;
 
-    private global::Quire.Controls.Core.IWhiteboardItem _savedActiveItem;
 
-    private double _contentAreaWidth;
 
-    private global::Quire.Wpf.IObservableRangeCollection<global::Quire.Controls.Core.IWhiteboardItem> _selectedItems;
 
-    private global::System.Func<global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem>, bool> _copyWhiteboardItems;
 
     private void ItemsAdded(IEnumerable<IWhiteboardItem> items)
     {
@@ -824,7 +817,24 @@ public partial class WorksheetControlContent
         return false;
     }
 
-    public global::Quire.Controls.Core.IWhiteboardItem GetItemAtLocation(global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::Quire.Controls.Core.IWhiteboardItem GetItemAtLocation(global::System.Windows.Point location)
+    {
+        return WhiteboardItems.FirstOrDefault((IWhiteboardItem item) =>
+        {
+            Point itemLocation = GetItemLocation(item);
+            itemLocation.Offset(0.0, item.VerticalAlignmentOffset);
+            Size renderSize = WorksheetItemManager.GetRenderSize(item);
+            return new Rect(itemLocation, renderSize).ContainsAccountingForMeasurementError(location);
+        });
+    }
+
+    private readonly global::Quire.Controls.Core.CustomSplitItemRenderSizeDelegate _customSplitItemRenderSizeDelegate;
+    private global::System.Nullable<global::System.Windows.Point> _savedInsertionPoint;
+    private global::System.Collections.Generic.List<global::Quire.Controls.Core.IWhiteboardItem> _savedSelectionList;
+    private global::Quire.Controls.Core.IWhiteboardItem _savedActiveItem;
+    private double _contentAreaWidth;
+    private global::Quire.Wpf.IObservableRangeCollection<global::Quire.Controls.Core.IWhiteboardItem> _selectedItems;
+    private global::System.Func<global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem>, bool> _copyWhiteboardItems;
 
     public bool IsValidInsertionPoint(Point point)
     {
