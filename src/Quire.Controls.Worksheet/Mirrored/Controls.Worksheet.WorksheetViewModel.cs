@@ -14,8 +14,11 @@ using Quire.Controls.ExcelComponent;
 using Quire.Controls.ExcelComponent.View;
 using Quire.Controls.Text;
 using Quire.Controls.Worksheet.Printing;
+using Quire.Undo;
 using Quire.Controls.Core.Whiteboard;
 using Quire.Controls.Mathboard;
+using Quire.Controls.Plots;
+using Quire.Controls.Plots.View;
 using Quire.Core;
 using Quire.IO;
 using Quire.PersistentData;
@@ -1915,5 +1918,35 @@ internal partial class WorksheetViewModel
     private void CreateNewEquationWithInputControl(ICommand command, InputControlTypes? parameter)
     {
         CreateNewEquation(command, parameter).InputControlOnEquationActivated(parameter);
+    }
+
+    public IPlotControl CreateXYPlotControl(string xSExpression, string ySExpression)
+    {
+        IPlotControl plotControl = ControlCreator.CreateXYPlotControl(GetCurrentTextFormatClone(GetCurrentTextFormat()));
+        if (plotControl is PlotControlBase plotControlBase)
+        {
+            plotControlBase.TextStyleChangedHandler = _textStylesManager.TextStyleChangedHandler;
+        }
+        using (new CommandScope(new CompoundCommand()))
+        {
+            InitializePlotControl(plotControl, xSExpression, ySExpression);
+        }
+        AddItemAtInsertionPointAndActivate(plotControl, "Add XYPlot");
+        return plotControl;
+    }
+
+    public IPlotControl CreatePolarPlotControl(string xSExpression, string ySExpression)
+    {
+        IPlotControl plotControl = ControlCreator.CreatePolarPlotControl(GetCurrentTextFormatClone(GetCurrentTextFormat()));
+        if (plotControl is PlotControlBase plotControlBase)
+        {
+            plotControlBase.TextStyleChangedHandler = _textStylesManager.TextStyleChangedHandler;
+        }
+        using (new CommandScope(new CompoundCommand()))
+        {
+            InitializePlotControl(plotControl, xSExpression, ySExpression);
+        }
+        AddItemAtInsertionPointAndActivate(plotControl, "Add PolarPlot");
+        return plotControl;
     }
 }
