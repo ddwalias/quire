@@ -2,6 +2,9 @@
 #pragma warning disable
 
 using System;
+using System.Windows.Markup;
+using System.Diagnostics;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
@@ -931,5 +934,26 @@ public partial class PlotTrace
         Style style = new Style(_typeOfThis, (Style)Resources["BasicPlotTraceStyle"]);
         style.Setters.Add(new Setter(RenderColorProperty, color));
         Style = style;
+    }
+
+    [DebuggerNonUserCode]
+    [GeneratedCode("PresentationBuildTasks", "10.0.11.0")]
+    public void InitializeComponent()
+    {
+        if (_contentLoaded)
+        {
+            return;
+        }
+        _contentLoaded = true;
+        Uri resourceLocator = new Uri("/Quire.Controls.Plots;component/plottrace.xaml", UriKind.Relative);
+        Application.LoadComponent(this, resourceLocator);
+    }
+
+    [DebuggerNonUserCode]
+    [GeneratedCode("PresentationBuildTasks", "10.0.11.0")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    void IComponentConnector.Connect(int connectionId, object target)
+    {
+        _contentLoaded = true;
     }
 }

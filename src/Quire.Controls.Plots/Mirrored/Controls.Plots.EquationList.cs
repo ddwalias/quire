@@ -3,11 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.CodeDom.Compiler;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Xml;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Markup;
 using System.Windows.Input;
 using Quire;
 using Quire.Controls.Core;
@@ -498,5 +501,40 @@ public partial class EquationList
             return AddItem(SelectedItemIndex);
         }
         return AddItem(SelectedItemIndex + 1);
+    }
+
+    [DebuggerNonUserCode]
+    [GeneratedCode("PresentationBuildTasks", "10.0.11.0")]
+    public void InitializeComponent()
+    {
+        if (_contentLoaded)
+        {
+            return;
+        }
+        _contentLoaded = true;
+        Uri resourceLocator = new Uri("/Quire.Controls.Plots;component/equationlist.xaml", UriKind.Relative);
+        Application.LoadComponent(this, resourceLocator);
+    }
+
+    [DebuggerNonUserCode]
+    [GeneratedCode("PresentationBuildTasks", "10.0.11.0")]
+    internal Delegate _CreateDelegate(Type delegateType, string handler)
+    {
+        return Delegate.CreateDelegate(delegateType, this, handler);
+    }
+
+    [DebuggerNonUserCode]
+    [GeneratedCode("PresentationBuildTasks", "10.0.11.0")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    void IComponentConnector.Connect(int connectionId, object target)
+    {
+        if (connectionId == 1)
+        {
+            EquationListGrid = (EquationListContents)target;
+        }
+        else
+        {
+            _contentLoaded = true;
+        }
     }
 }
