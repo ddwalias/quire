@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Input;
 using Quire;
 using Quire.Controls.Core;
 using Quire.Controls.Plots.Presenter;
@@ -112,4 +113,115 @@ public partial class EquationList
 
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public IDictionary<IdLabels, ExtendedFont> DeserializeLabeledIdFormat { get; set; }
+
+    private static void HandleItemsMarginChanged(DependencyObject dObj, DependencyPropertyChangedEventArgs eArgs)
+    {
+        ((EquationList)(object)dObj).SetMinMaxWidth();
+    }
+
+    private void BindCommands()
+    {
+        CommandBindings.Add(new CommandBinding(EquationCommands.InsertRow, HandleInsertItemToLegendCommand));
+        CommandBindings.Add(new CommandBinding(EquationCommands.NavigateLeft, OnNavigateLeft, CanNavigateLeft));
+        CommandBindings.Add(new CommandBinding(EquationCommands.NavigateRight, OnNavigateRight, CanNavigateRight));
+        CommandBindings.Add(new CommandBinding(EquationCommands.NavigateUp, OnNavigateUp, CanNavigateUp));
+        CommandBindings.Add(new CommandBinding(EquationCommands.NavigateDown, OnNavigateDown, CanNavigateDown));
+    }
+
+    private void CanNavigateDown(object sender, CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = CanNavigate(SelectedItem.Equation, Direction.Down);
+    }
+
+    private void CanNavigateUp(object sender, CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = CanNavigate(SelectedItem.Equation, Direction.Up);
+    }
+
+    private void CanNavigateRight(object sender, CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = CanNavigate(SelectedItem.Equation, Direction.Right);
+    }
+
+    private void CanNavigateLeft(object sender, CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = CanNavigate(SelectedItem.Equation, Direction.Left);
+    }
+
+    private void OnNavigateDown(object sender, ExecutedRoutedEventArgs e)
+    {
+        EquationControlNavigateOffOfEquation(Direction.Down, isJumpNavigation: false);
+    }
+
+    private void OnNavigateUp(object sender, ExecutedRoutedEventArgs e)
+    {
+        EquationControlNavigateOffOfEquation(Direction.Up, isJumpNavigation: false);
+    }
+
+    private void OnNavigateRight(object sender, ExecutedRoutedEventArgs e)
+    {
+        EquationControlNavigateOffOfEquation(Direction.Right, isJumpNavigation: false);
+    }
+
+    private void OnNavigateLeft(object sender, ExecutedRoutedEventArgs e)
+    {
+        EquationControlNavigateOffOfEquation(Direction.Left, isJumpNavigation: false);
+    }
+
+    public EquationListItem GetItem(int index)
+    {
+        return EquationListGrid.Children[index] as EquationListItem;
+    }
+
+    private void MoveToEquation(int i, bool shouldMoveToEnd)
+    {
+        this[i].DelegateFocus();
+        if (shouldMoveToEnd)
+        {
+            EquationCommands.NavigateToEquationEnd.Execute(null, this[i]);
+        }
+        else
+        {
+            EquationCommands.NavigateToEquationStart.Execute(null, this[i]);
+        }
+        ChangeSelectedItem(EquationListGrid.Children[SelectedItemIndex] as EquationListItem);
+    }
+
+    public void MoveToEquationStart(int i)
+    {
+        MoveToEquation(i, shouldMoveToEnd: false);
+    }
+
+    public void MoveToEquationEnd(int i)
+    {
+        MoveToEquation(i, shouldMoveToEnd: true);
+    }
+
+    public bool IsItemActive(int indexToCheck)
+    {
+        return SelectedItemIndex == indexToCheck;
+    }
+
+    private static void WidthListChanged(DependencyObject dObj, DependencyPropertyChangedEventArgs eArgs)
+    {
+        EquationList equationList = dObj as EquationList;
+        double newWidth = (double)eArgs.NewValue;
+        if (equationList == null)
+        {
+            return;
+        }
+        if (equationList.MaxListWidth <= 0.0)
+        {
+            equationList.SetMinMaxWidth();
+            if (equationList.Visibility == Visibility.Collapsed)
+            {
+                ForceMeasure(equationList.EquationListGrid);
+            }
+        }
+        if (equationList.MaxListWidth <= 0.0)
+        {
+            return;
+        }
+        equationList.Columns = equationList.EquationListGrid.AdjustNumberOfColumnsToWidth(newWidth);
+    }
 }
