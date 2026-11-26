@@ -739,3 +739,10 @@
 - Batch 109: `GetRegionXmlNode`, `SetVisibleMatrixCellRange`, `GetRegionPersistentData`.
 - Shapes learned: `WpfUtils.HasLocalValue` is a static call on `this` in Mathcad IL, so the reference's `(DependencyObject)(object)this` cast is not emitted; call it statically with `this`.
 - Release IL: PASS, 4088 checked, zero failures.
+
+## Batch 110
+
+- Owner: haiku-equationcontrol-20261123; branch `haiku-equationcontrol-20261123-b100-next`.
+- Landed (gate PASS, 4095 exact): `CanClearResultFormat`, `FindOncePrivate`, `HandleSizeChanged(Vector, ...)`, `SetRegionPersistentData`, `FocusViewAndUpdateNavigatorStateIfNeeded` (local-function closure).
+- Parked after one or more gate runs (IL shape not reproduced): `OnInsertId` (first branch offset: `brfalse.s 4` in Mathcad, `brfalse.s 11` in ours, for `is`, `as` and nested forms), `OnSetNumberFormatField` (string-compare order against `CoerceDecimalPlaces` calls), `GetImeWindowPosition` (Mathcad constructs the unused `Point` with `call .ctor` on a local address, not `newobj`), `XFromNavigatorState` (ternary branch sense), `UpdateLhsVisibleOnView` (`bne.un` layout), `SetMatrixForResizeAdorner` (`brfalse` layout), `FixCaretToRightMostPositionAfterClipping` (`conv.r8` on the clip width), `CreateWithTextInput` (`ldarg.0` order), `ExecuteOnRootLoaded` (lambda `brtrue` layout), `HideFromCalculationContext` (setter compares with `ceq`).
+- Release IL: PASS for the landed members, 4095 exact.

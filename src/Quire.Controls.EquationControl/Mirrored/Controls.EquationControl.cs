@@ -344,7 +344,10 @@ public partial class EquationControl
         }
     }
 
-    public void HandleSizeChanged(global::System.Windows.Vector offset, bool changeWidth, bool changeHeight, bool resizeInProgress) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void HandleSizeChanged(global::System.Windows.Vector offset, bool changeWidth, bool changeHeight, bool resizeInProgress)
+    {
+        ((global::Quire.Controls.Internal.VisualMathRegionNode)Content).MeasureResizableChildNode(offset, changeWidth, changeHeight, resizeInProgress);
+    }
 
     private void ReadDeserializationFormatsForPaste()
     {
@@ -921,7 +924,23 @@ public partial class EquationControl
 
     public bool IsScriptableControl => _model.IsScriptableControl;
     protected override void OnGotFocus(global::System.Windows.RoutedEventArgs e) => base.OnGotFocus(e);
-    private void FocusViewAndUpdateNavigatorStateIfNeeded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void FocusViewAndUpdateNavigatorStateIfNeeded()
+    {
+        bool navigatorStateWasChanged = false;
+        _model.NavigatorStateChanged += OnNavigatorStateChangedMarkStateChanged;
+        _view.Focus();
+        _model.NavigatorStateChanged -= OnNavigatorStateChangedMarkStateChanged;
+        if (!navigatorStateWasChanged && _model.Mode == EquationEditModeEnum.Normal && DebugTools.DevAssert(_view.IsFocused, null).Passed)
+        {
+            _model.FireNavigatorStateChanged();
+        }
+        _postActivated?.Invoke(FocusChangeLevel.Keyboard);
+
+        void OnNavigatorStateChangedMarkStateChanged(NavigatorStateChangeEventArgs _)
+        {
+            navigatorStateWasChanged = true;
+        }
+    }
     private void ViewOnIsVisibleChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e)
     {
         if (DebugTools.DevAssert(_view.IsVisible, null).Passed)
@@ -1277,7 +1296,50 @@ public partial class EquationControl
         }
         return xmlElement;
     }
-    public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data)
+    {
+        if (data is global::Quire.PersistentDataObjects.mathType mathType2)
+        {
+            for (int i = 1; i < mathType2.InnerXml.Length; i++)
+            {
+                global::System.Xml.XmlNode xmlNode = mathType2.InnerXml[i];
+                if (xmlNode.Name == "resultFormat")
+                {
+                    SetRegionResultFormat(xmlNode, xmlNode.NamespaceURI);
+                }
+                else if (xmlNode.Name == "formattingOverride")
+                {
+                    using global::System.Xml.XmlNodeReader reader = new global::System.Xml.XmlNodeReader(xmlNode);
+                    new global::Quire.Controls.Core.Serialization.MathFormatSerializer("formattingOverride", xmlNode.NamespaceURI, MathFormat, ignoreUnsetProperty: false).ReadXml((global::System.Xml.XmlReader)reader);
+                }
+            }
+            EquationXmlNode = mathType2.InnerXml[0];
+            if (mathType2.resultRefSpecified)
+            {
+                global::Quire.Calculation.Core.ResultManager.Instance.SetResultByRefId(mathType2.resultRef, this);
+            }
+            else
+            {
+                if (IsScriptableControl)
+                {
+                    global::Quire.Calculation.Core.ResultManager.Instance.SetResultByRefId(mathType2.resultRef, this, mathType2.resultRef == 0);
+                }
+                CreateFakeEngineResults();
+            }
+            HideFromCalculationContext = mathType2.disablecalc;
+            if (!mathType2.showLhsOfDefinition)
+            {
+                mathType2.visibilityLhsOfDefinition = global::Quire.PersistentDataObjects.LhsOfDefinitionVisibility.Hidden;
+            }
+            if (mathType2.visibilityLhsOfDefinition != (global::Quire.PersistentDataObjects.LhsOfDefinitionVisibility)VisibleLhsOfDefinition)
+            {
+                _model.ToggleVisibleLhsOfDefinition((Visibility)mathType2.visibilityLhsOfDefinition);
+            }
+            SymbolicEvalKeywordsVisibilityState = mathType2.symbolicEvalKeywordsVisibilityState;
+            return null;
+        }
+        throw new ArgumentException("should be of mathType");
+    }
     public object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider)
     {
         int num = global::Quire.Calculation.Core.ResultManager.Instance.CreateResultRefId(this);
@@ -2309,7 +2371,11 @@ public partial class EquationControl
     {
         e.CanExecute = _model.CanNavigate(Direction.Left);
     }
-    private void CanClearResultFormat(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void CanClearResultFormat(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args)
+    {
+        args.CanExecute = global::Quire.Wpf.WpfUtils.HasLocalValue(this, DisplayNumberFormatProperty);
+        args.Handled = true;
+    }
     private void CanClearMathFormat(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args)
     {
         args.CanExecute = CurrentMathFormat.AreAnyPropertiesSet;
@@ -2819,7 +2885,21 @@ public partial class EquationControl
     {
         throw new NotImplementedException();
     }
-    public bool FindOncePrivate(string text, bool startFromCaret, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public bool FindOncePrivate(string text, bool startFromCaret, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions)
+    {
+        if (!options.HasFlag(global::Quire.Controls.Core.FindOptions.FindInMath))
+        {
+            return false;
+        }
+        bool matchCase = options.HasFlag(global::Quire.Controls.Core.FindOptions.MatchCase);
+        bool wholeWordOnly = options.HasFlag(global::Quire.Controls.Core.FindOptions.WholeWordOnly);
+        bool found = _model.Find(text, startFromCaret, direction, matchCase, wholeWordOnly, subscriptPositions);
+        if (found)
+        {
+            Activate(isActive: true);
+        }
+        return found;
+    }
     public virtual string GetHelpContext()
     {
         string text = "EquationControl.";
