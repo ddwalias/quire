@@ -2256,4 +2256,14 @@ internal partial class WorksheetViewModel
 
         return true;
     }
+    public void SetStyleValues(TextFormat textFormat, ITextStyle style)
+    {
+        textFormat.FontSize = (double)style.FontSize.Value;
+        textFormat.FontFamily = style.FontFamily;
+        textFormat.Foreground = style.Foreground;
+        textFormat.Background = style.Background;
+        textFormat.FontStyle = style.FontStyle.Value;
+        textFormat.FontWeight = style.FontWeight.Value;
+        textFormat.TextDecorations = style.TextDecorations;
+    }
 }
