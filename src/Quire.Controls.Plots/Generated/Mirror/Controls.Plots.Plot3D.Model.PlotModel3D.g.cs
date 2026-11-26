@@ -78,32 +78,6 @@ public partial class PlotModel3D : global::Quire.Controls.Plots.Model.PlotModelB
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.PersistentDataObjects.plotType GetDataObject(global::Quire.Serialization.IS11NProvider s11NProvider, global::Quire.Calculation.Core.IResultManager resultManager, bool hideFromCalculation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal virtual global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D CreateEquationModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal virtual global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D CreateTraceModel(global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D plotEquationModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D AddNewEquation(int index, int previousIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool Contains(double xCordinate, double yCoordinate, double zCoordinate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D AddEquation(global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D equationModel, int index, int previousIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void InsertTrace(int index, global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireEquationAdded(int index, int previousindex, global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D plotEquationModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D RemoveEquation(global::Quire.Controls.Plots.Presenter.IPlotEquation equation, int deletedItemIndex, int previousItemIndex, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireEquationRemoved(int deletedItemIndex, int priviousItemIndex, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void CheckAndCorrectDirection(ref global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool ConditionsAreValidForDeleteOperation(int index, int previousIndex, global::Quire.Controls.Plots.Plot3D.Model.IEquationListModel3D list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool IndicesAreValidForAddOperation(int index, int previousIndex, global::Quire.Controls.Plots.Plot3D.Model.IEquationListModel3D list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CheckAndCorrectIndicesForAddOperation(ref int index, ref int previousIndex, global::Quire.Controls.Plots.Plot3D.Model.IEquationListModel3D list) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public PlotModel3D() { }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.Model.PlotModel3D+PropertyNames, Ptc.Controls.Plots")]

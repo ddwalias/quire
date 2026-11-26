@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Media.Media3D;
+using Quire;
 using Quire.Calculation.Core;
 using Quire.Controls.Core;
 using Quire.Controls.Plots.Model;
@@ -308,4 +309,127 @@ public partial class PlotModel3D
             TraceRemoved(trace);
         }
     }
+
+internal virtual IPlotEquationModel3D CreateEquationModel()
+{
+    return new PlotEquationModel3D();
+}
+
+internal virtual IPlotTraceModel3D CreateTraceModel(IPlotEquationModel3D plotEquationModel)
+{
+    return new PlotTraceModel3D(plotEquationModel)
+    {
+        Contains = Contains
+    };
+}
+
+public IPlotEquationModel3D AddNewEquation(int index, int previousIndex)
+{
+    IPlotEquationModel3D plotEquationModel3D = CreateEquationModel();
+    IPlotTraceModel3D trace = CreateTraceModel(plotEquationModel3D);
+    plotEquationModel3D.Trace = trace;
+    return AddEquation(plotEquationModel3D, index, previousIndex);
+}
+
+private bool Contains(double xCordinate, double yCoordinate, double zCoordinate)
+{
+    if (_xAxis.Contains(xCordinate) && _yAxis.Contains(yCoordinate))
+    {
+        return _zAxis.Contains(zCoordinate);
+    }
+    return false;
+}
+
+public IPlotEquationModel3D AddEquation(IPlotEquationModel3D equationModel, int index, int previousIndex)
+{
+    if (DebugTools.AssertNotNull(equationModel, null).Failed)
+    {
+        return null;
+    }
+    CheckAndCorrectIndicesForAddOperation(ref index, ref previousIndex, _equationListModel3D);
+    _equationListModel3D.Insert(index, equationModel);
+    FireEquationAdded(index, previousIndex, equationModel);
+    InsertTrace(index, equationModel.Trace);
+    return equationModel;
+}
+
+private void InsertTrace(int index, IPlotTraceModel3D trace)
+{
+    trace.PropertyChanged += TracePropertyChanged;
+    trace.Changed += OnChanged;
+    trace.PlotCalculatableError += TracePlotCalculatableError;
+    _traces.Insert(index, trace);
+    trace.SetUserDefinedLimits(_xStart, _xEnd, _yStart, _yEnd, _zStart, _zEnd, out var _);
+    ComputeTotalTracesSynchronizationStatus();
+    FireTraceInserted(trace, index);
+}
+
+private void FireEquationAdded(int index, int previousindex, IPlotEquationModel3D plotEquationModel)
+{
+    if (EquationAdded != null)
+    {
+        EquationAdded(index, previousindex, plotEquationModel);
+    }
+}
+
+public IPlotEquationModel3D RemoveEquation(IPlotEquation equation, int deletedItemIndex, int previousItemIndex, Direction direction)
+{
+    if (DebugTools.DevAssert(ConditionsAreValidForDeleteOperation(deletedItemIndex, previousItemIndex, _equationListModel3D), "Equation list should be non empty").Failed)
+    {
+        return null;
+    }
+    CheckAndCorrectDirection(ref direction);
+    IPlotEquationModel3D plotEquationModel3D = _equationListModel3D[deletedItemIndex];
+    DebugTools.DevAssert(plotEquationModel3D.EquationProxy == equation, null);
+    _equationListModel3D.RemoveAt(deletedItemIndex);
+    RemoveTrace(plotEquationModel3D.Trace);
+    FireEquationRemoved(deletedItemIndex, previousItemIndex, direction);
+    return plotEquationModel3D;
+}
+
+private void FireEquationRemoved(int deletedItemIndex, int priviousItemIndex, Direction direction)
+{
+    if (EquationRemoved != null)
+    {
+        EquationRemoved(deletedItemIndex, priviousItemIndex, direction);
+    }
+}
+
+private static void CheckAndCorrectDirection(ref Direction direction)
+{
+    if (DebugTools.DevAssert(direction == Direction.Left || direction == Direction.Right || direction == Direction.Indeterminate, "Direction should be valid").Failed)
+    {
+        direction = Direction.Left;
+    }
+}
+
+private static bool ConditionsAreValidForDeleteOperation(int index, int previousIndex, IEquationListModel3D list)
+{
+    bool isEmpty = list.Count == 0;
+    bool previousIndexInRange = 0 <= previousIndex && previousIndex < list.Count;
+    bool indexInRange = ((previousIndex <= index && index < list.Count) & previousIndexInRange) && Math.Abs(index - previousIndex) <= 1;
+    return !isEmpty & indexInRange;
+}
+
+private static bool IndicesAreValidForAddOperation(int index, int previousIndex, IEquationListModel3D list)
+{
+    bool isEmpty = list.Count == 0;
+    bool isStart = index == 0 && previousIndex == 0;
+    bool previousIndexInRange = 0 <= previousIndex && previousIndex < list.Count;
+    bool indexInRange = ((previousIndex <= index && index <= list.Count) & previousIndexInRange) && Math.Abs(index - previousIndex) <= 1;
+    if (!(isEmpty & isStart))
+    {
+        return !isEmpty & indexInRange;
+    }
+    return true;
+}
+
+private void CheckAndCorrectIndicesForAddOperation(ref int index, ref int previousIndex, IEquationListModel3D list)
+{
+    if (DebugTools.DevAssert(IndicesAreValidForAddOperation(index, previousIndex, _equationListModel3D), "Equation index Value should be valid").Failed)
+    {
+        index = list.Count;
+        previousIndex = Math.Max(list.Count - 1, 0);
+    }
+}
 }
