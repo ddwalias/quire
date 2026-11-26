@@ -350,31 +350,34 @@ internal partial class PlotTraceModel3D
             if (VisualData == null || VisualData.TraceType != TraceType3D.Undefined)
             {
                 VisualData = PlotTraceVisualData3D.Undefined;
+                return;
             }
-            return;
-        }
-        VisualData = EngineResultParser.CreateVisualData(TransformForVisual(CommonRange));
-        EngineError engineError;
-        if (VisualData.HasNoData)
-        {
-            engineError = new EngineError
-            {
-                Message = NoDataFound
-            };
-        }
-        else if (EngineResultParser.Error != null)
-        {
-            engineError = EngineResultParser.Error;
         }
         else
         {
-            engineError = Error;
-            if (engineError != null && FindChildWithMatchingId(engineError.NodeHandle) != null)
+            VisualData = EngineResultParser.CreateVisualData(TransformForVisual(CommonRange));
+            EngineError engineError;
+            if (VisualData.HasNoData)
             {
-                engineError = null;
+                engineError = new EngineError
+                {
+                    Message = NoDataFound
+                };
             }
+            else if (EngineResultParser.Error != null)
+            {
+                engineError = EngineResultParser.Error;
+            }
+            else
+            {
+                engineError = Error;
+                if (engineError != null && FindChildWithMatchingId(engineError.NodeHandle) != null)
+                {
+                    engineError = null;
+                }
+            }
+            OnPlotCalculatableError(new EngineErrorEventArgs(engineError));
         }
-        OnPlotCalculatableError(new EngineErrorEventArgs(engineError));
     }
 
     private void UpdateStyle()
@@ -396,7 +399,7 @@ internal partial class PlotTraceModel3D
 
     public void SetUserDefinedLimits(double xStart, double xEnd, double yStart, double yEnd, double zStart, double zEnd, out bool needsCommit)
     {
-        UserDefinedLimits.Set(xStart, xEnd, yStart, yEnd, zStart, zEnd, out var xLimitsChanged, out var yLimitsChanged, out var _);
+        UserDefinedLimits.Set(xStart, xEnd, yStart, yEnd, zStart, zEnd, out var xLimitsChanged, out var yLimitsChanged, out var zLimitsChanged);
         EngineTraceType3D engineTraceType = EngineResultParser.EngineTraceType;
         needsCommit = (xLimitsChanged | yLimitsChanged) && (engineTraceType == EngineTraceType3D.NonParametricSurface || engineTraceType == EngineTraceType3D.Unknown);
     }
