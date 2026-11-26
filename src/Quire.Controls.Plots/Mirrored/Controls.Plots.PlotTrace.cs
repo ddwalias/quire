@@ -3,14 +3,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using Quire;
 using Quire.Calculation.Core;
 using Quire.Calculation.Core.Trace2DResults;
+using Quire.Controls.Core;
 using Quire.Controls.Plots.Presenter;
 
 namespace Quire.Controls.Plots;
@@ -585,5 +588,348 @@ public partial class PlotTrace
             plotTrace.FireTypeChanged();
             plotTrace._renderer = plotTrace._rendererFactory.GetRenderer(plotTrace.Type);
         }
+    }
+
+    public Quire.Controls.Plots.ViewModel.TraceViewModel ViewModel
+    {
+        get
+        {
+            return _viewModel;
+        }
+        set
+        {
+            if (_viewModel == value)
+            {
+                return;
+            }
+            _viewModel = value;
+            DataContext = value;
+            Rect val = default;
+            if (_copiedImageRenderer.Bitmap != null)
+            {
+                ViewModel.ImageRendererViewModel.SetCachedBitmap(_copiedImageRenderer.Bitmap);
+                val = _copiedImageRenderer.ViewPortRect;
+                _copiedImageRenderer = default;
+                DebugTools.DevAssert(val != default(Rect), null);
+            }
+            ViewPortRect = ((val != default(Rect)) ? val : ComputeViewPortRect());
+        }
+    }
+
+    public Rect ViewPortRect
+    {
+        get
+        {
+            if (ViewModel != null)
+            {
+                return ViewModel.ImageRendererViewModel.ViewPortRect;
+            }
+            return _copiedImageRenderer.ViewPortRect;
+        }
+        set
+        {
+            if (value == default(Rect))
+            {
+                return;
+            }
+            if (ViewModel == null)
+            {
+                _copiedImageRenderer.ViewPortRect = value;
+            }
+            else if (DoubleComparer.DefaultDoubleComparer.Compare(value, ViewModel.ImageRendererViewModel.ViewPortRect) != 0)
+            {
+                ViewModel.ImageRendererViewModel.ViewPortRect = value;
+                if (ViewModel.IsUsingDensityVisualization)
+                {
+                    InvalidateVisual();
+                }
+            }
+        }
+    }
+
+    public Rect ClippingRect
+    {
+        get
+        {
+            if (DebugTools.DevAssert(XAxis != null && YAxis != null, null).Failed)
+            {
+                return Rect.Empty;
+            }
+            if (IsResizing)
+            {
+                return _clippingRect;
+            }
+            _clippingRect = ComputeViewPortRect();
+            if (XAxis is PlotGraphLinearAxis && YAxis is PlotGraphLinearAxis)
+            {
+                Vector val = new Vector(2.0 * SymbolWeight, 2.0 * SymbolWeight);
+                _clippingRect.Union(_clippingRect.TopLeft - val);
+                _clippingRect.Union(_clippingRect.BottomRight + val);
+            }
+            return _clippingRect;
+        }
+    }
+
+    public Geometry ClippingGeometry
+    {
+        get
+        {
+            if (DebugTools.DevAssert(XAxis != null && YAxis != null, null).Failed)
+            {
+                return null;
+            }
+            if (ViewModel.PlotType != PlotType.Polar)
+            {
+                return new RectangleGeometry(ClippingRect);
+            }
+            return new EllipseGeometry(ClippingRect);
+        }
+    }
+
+    public TraceSymbol Symbol
+    {
+        get
+        {
+            return (TraceSymbol)((DependencyObject)this).GetValue(SymbolProperty);
+        }
+        set
+        {
+            ((DependencyObject)this).SetValue(SymbolProperty, (object)value);
+        }
+    }
+
+    public LineStyle LineStyle
+    {
+        get
+        {
+            return (LineStyle)((DependencyObject)this).GetValue(LineStyleProperty);
+        }
+        set
+        {
+            ((DependencyObject)this).SetValue(LineStyleProperty, (object)value);
+        }
+    }
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public IList<Point> PlottingPoints
+    {
+        get
+        {
+            return (IList<Point>)((DependencyObject)this).GetValue(PlottingPointsProperty);
+        }
+        set
+        {
+            DispatchSetValue(PlottingPointsProperty, value);
+            ConformStyleToPointCount();
+        }
+    }
+
+    public PlotGraphAxis.Point2ScreenHelper XPoint2ScreenHelper
+    {
+        get
+        {
+            if (XAxis == null)
+            {
+                return new PlotGraphAxis.Point2ScreenHelper(ActualWidth);
+            }
+            return XAxis.Helper;
+        }
+    }
+
+    public PlotGraphAxis.Point2ScreenHelper YPoint2ScreenHelper
+    {
+        get
+        {
+            if (YAxis == null)
+            {
+                return new PlotGraphAxis.Point2ScreenHelper(ActualHeight);
+            }
+            return YAxis.Helper;
+        }
+    }
+
+    EngineError IPlotTrace.PlotCalculatableError
+    {
+        get
+        {
+            return _plotCalculatableError;
+        }
+        set
+        {
+            _plotCalculatableError = value;
+            IPlotEquation[] plotEquations = _plotEquations;
+            foreach (IPlotEquation plotEquation in plotEquations)
+            {
+                if (plotEquation != null)
+                {
+                    plotEquation.PlotCalculatableError = _plotCalculatableError;
+                }
+            }
+            FireErrorChanged();
+        }
+    }
+
+    public Color Color
+    {
+        get
+        {
+            return _color;
+        }
+        set
+        {
+            if (_color != value)
+            {
+                _color = value;
+                RenderColor = value;
+                FireTraceChanged();
+            }
+        }
+    }
+
+    private bool IsCopyAsImage => DocumentAttachedProperties.GetCopyAsImageSettings(this).HasValue;
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public BitmapSource CopiedImageBitmap
+    {
+        get
+        {
+            if (ViewModel == null || !ViewModel.ImageRendererViewModel.HasCachedBitmap)
+            {
+                return _copiedImageRenderer.Bitmap;
+            }
+            return ViewModel.ImageRendererViewModel.RenderingBitmap;
+        }
+        set
+        {
+            if (ViewModel != null)
+            {
+                ViewModel.ImageRendererViewModel.SetCachedBitmap(value);
+            }
+            else
+            {
+                _copiedImageRenderer.Bitmap = value;
+            }
+        }
+    }
+
+    private Rect ComputeViewPortRect()
+    {
+        Rect result = default;
+        try
+        {
+            result = new Rect(new Point(XAxis.Point2Screen(XAxis.ClipBounds.First), YAxis.Point2Screen(YAxis.ClipBounds.First)), new Point(XAxis.Point2Screen(XAxis.ClipBounds.Second), YAxis.Point2Screen(YAxis.ClipBounds.Second)));
+        }
+        catch (Exception ex)
+        {
+            DebugTools.FailAssertion(ex.Message, null);
+        }
+        return result;
+    }
+
+    public void MoveFocusToEquation(AxesIndex id)
+    {
+        ((UIElement)_plotEquations[(int)id]).Focus();
+    }
+
+    public void SetAxis(IPlotAxisView xAxis, IPlotAxisView yAxis)
+    {
+        if (XAxis != null)
+        {
+            XAxis.PropertyChanged -= InvalidateVisualOnAxisPropertiesChanged;
+            XAxis.SizeChanged -= InitializeViewPortBoxOnAxisSizeChanged;
+        }
+        XAxis = xAxis;
+        if (XAxis != null)
+        {
+            XAxis.PropertyChanged += InvalidateVisualOnAxisPropertiesChanged;
+            XAxis.SizeChanged += InitializeViewPortBoxOnAxisSizeChanged;
+        }
+        if (YAxis != null)
+        {
+            YAxis.PropertyChanged -= InvalidateVisualOnAxisPropertiesChanged;
+            YAxis.SizeChanged -= InitializeViewPortBoxOnAxisSizeChanged;
+        }
+        YAxis = yAxis;
+        if (YAxis != null)
+        {
+            YAxis.PropertyChanged += InvalidateVisualOnAxisPropertiesChanged;
+            YAxis.SizeChanged += InitializeViewPortBoxOnAxisSizeChanged;
+        }
+    }
+
+    private void InitializeViewPortBoxOnAxisSizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        UpdateViewPortRectOnAxisPropertyChanged();
+    }
+
+    private void InvalidateVisualOnAxisPropertiesChanged(object sender, PropertyChangedEventArgs e)
+    {
+        bool flag = e.PropertyName == "EndValue" || e.PropertyName == "StartValue";
+        if (flag)
+        {
+            UpdateViewPortRectOnAxisPropertyChanged();
+        }
+        if (!ViewModel.IsUsingDensityVisualization && ((e.PropertyName == "Offset" || e.PropertyName == "PositionTickmrak") | flag))
+        {
+            InvalidateVisual();
+        }
+    }
+
+    private void UpdateViewPortRectOnAxisPropertyChanged()
+    {
+        if (!IsResizing)
+        {
+            ViewPortRect = ComputeViewPortRect();
+        }
+    }
+
+    private static void CalculatingStatusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        PlotTrace plotTrace = d as PlotTrace;
+        if (plotTrace == null)
+        {
+            return;
+        }
+        plotTrace.FireCalculatingStatusChangedEvent();
+    }
+
+    private void DispatchSetValue(DependencyProperty dp, object value)
+    {
+        if (((DispatcherObject)this).Dispatcher.CheckAccess())
+        {
+            ((DependencyObject)this).SetValue(dp, value);
+            return;
+        }
+        Action<DependencyProperty, object> action = ((DependencyObject)this).SetValue;
+        ((DispatcherObject)this).Dispatcher.Invoke((DispatcherPriority)9, (Delegate)action, (object)dp, new object[1] { value });
+    }
+
+    private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        if (IsResizing)
+        {
+            if (RenderTransform is ScaleTransform scaleTransform)
+            {
+                scaleTransform.ScaleX = ActualWidth / _sizeBeforeResizing.Width;
+                scaleTransform.ScaleY = ActualHeight / _sizeBeforeResizing.Height;
+            }
+            else
+            {
+                RenderTransform = new ScaleTransform(ActualWidth / _sizeBeforeResizing.Width, ActualHeight / _sizeBeforeResizing.Height);
+            }
+            ClipToBounds = false;
+        }
+        else
+        {
+            RenderTransform = Transform.Identity;
+            ClipToBounds = true;
+        }
+    }
+
+    private void SetColorStyle(Color color)
+    {
+        Style style = new Style(_typeOfThis, (Style)Resources["BasicPlotTraceStyle"]);
+        style.Setters.Add(new Setter(RenderColorProperty, color));
+        Style = style;
     }
 }
