@@ -3039,7 +3039,11 @@ public partial class EquationControl
         return null;
     }
 
-    internal global::System.Collections.Generic.IList<global::Quire.TableCoordinate> GetNestedPositionForVisualMatrix(global::Quire.EquationEditor.View.IVisualMatrixNode visualMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal global::System.Collections.Generic.IList<global::Quire.TableCoordinate> GetNestedPositionForVisualMatrix(global::Quire.EquationEditor.View.IVisualMatrixNode visualMatrix)
+    {
+        global::Quire.EquationEditor.Tree.MathNode node = _map.AssociateNode(visualMatrix);
+        return GetNestedPositionForMatrix(node);
+    }
     private void CreateOrClearTemporaryResultMatrixFormat(bool create)
     {
         if (create)
@@ -3166,7 +3170,27 @@ public partial class EquationControl
         }
         return eagerMatrixResultNode;
     }
-    public void HandleMathFormatChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void HandleMathFormatChanged(global::System.Windows.DependencyPropertyChangedEventArgs e)
+    {
+        if (e.Property == global::Quire.Controls.Core.MathFormatAttachedProperties.FontColorProperty && IsMathFormatHandledLocally)
+        {
+            if (MathFormat.IsFontColorSet)
+            {
+                SetOverrideLabelColor((global::System.Windows.DependencyObject)Content, val: true);
+            }
+            else
+            {
+                ClearOverrideLabelColor((global::System.Windows.DependencyObject)Content);
+            }
+        }
+        if (e.Property == global::Quire.Controls.Core.MathFormatAttachedProperties.HighlightColorProperty)
+        {
+            ReApplyBackground();
+        }
+        ((global::System.Windows.DependencyObject)Content).SetValue(e.Property, e.NewValue);
+        FirePropertyChanged(new global::System.ComponentModel.PropertyChangedEventArgs(e.Property.Name));
+        FireContentChangedEvents();
+    }
     private void ReApplyBackground()
     {
         Background = _view.LhsOfDefinitionVisibility == global::System.Windows.Visibility.Visible
@@ -3461,8 +3485,20 @@ public partial class EquationControl
             equationControl.CreateTemporaryResultMatrixFormat();
         }
     }
-    private static void IsSelectedChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static void IsActiveChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void IsSelectedChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e)
+    {
+        if (d is EquationControl && e.NewValue is bool)
+        {
+            (d as EquationControl).IsSelectedChanged((bool)e.NewValue);
+        }
+    }
+    private static void IsActiveChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e)
+    {
+        if (d is EquationControl && e.NewValue is bool)
+        {
+            (d as EquationControl).IsActiveChanged((bool)e.NewValue);
+        }
+    }
     private void IsSelectedChanged(bool isSelected) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void IsActiveChanged(bool isActive) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 

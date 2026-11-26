@@ -724,3 +724,10 @@
 - Shapes learned: a `DependencyProperty` change handler that starts `if (d is X x)` with nothing else can use a guard return; Roslyn's `<=` in an `if` materialises as `cgt; ldc.i4.0; ceq` in Mathcad, and no source spelling of ours reproduced it.
 - Parked: `ToggleAlgorithmOption` (Mathcad calls the string comparison before reading `AlgorithmOptions`; both orderings of the if chain miss), `UpdateMatrixForResizeAdorner` (guard form matches up to one branch, the remaining branch differs), `ConvertToDisplayMatrix`.
 - Release IL: PASS, 4056 checked, zero failures.
+
+## Batches 104-107
+
+- Owner: haiku-equationcontrol-20261123; branch `haiku-equationcontrol-20261123-b100`.
+- Landed: batch 104 (result-format region helpers, `CreateFakeEngineResults`, `NavigateIntoItem`, command routing, `HandleResultMatrixFormattingChanged`); batch 105 (`ClearResultFormat` with closure ordinal 579, `SetupInputGestures`, `ActivateAndScopeResultPrivate`, `GetAllComboBoxControlsFromEquation`); batch 106 (`HighlightAll`, `ICloneable.Clone`, `RestoreResult`, `UpdateWidth` with closure ordinal 412, whose lambda folds the `Point` temporary into `double num = ...X`).
+- Batch 107 (this commit): `GetNestedPositionForVisualMatrix`, `IsSelectedChanged`, `IsActiveChanged`, `HandleMathFormatChanged`. Release IL: PASS, 4080 checked, zero failures.
+- Parked (not matched): `InputControlOnEquationActivated` (switch lowering differs at one branch), `ConvertToDisplayMatrix`, `ConvertAnyFormattedMatrixToDisplayMatrix`, `ToggleAlgorithmOption`, `UpdateMatrixForResizeAdorner`.
