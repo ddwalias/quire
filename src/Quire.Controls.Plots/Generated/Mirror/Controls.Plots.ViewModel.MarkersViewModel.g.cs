@@ -66,8 +66,6 @@ internal partial class MarkersViewModel : global::Quire.Controls.Core.ViewModelB
     [global::Quire.Mirror.MirrorStub]
     internal void AddPointMarker() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal bool CanDeleteMarker() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal void DeleteMarker() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void AddMarker(global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -113,10 +111,6 @@ internal partial class MarkersViewModel : global::Quire.Controls.Core.ViewModelB
     private void UpdateHorizontalMarkersFromModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleMarkersCollectionChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e, global::System.ComponentModel.PropertyChangedEventHandler handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.ViewModel.MarkersViewModel+PropertyNames, Ptc.Controls.Plots")]
     public static partial class PropertyNames

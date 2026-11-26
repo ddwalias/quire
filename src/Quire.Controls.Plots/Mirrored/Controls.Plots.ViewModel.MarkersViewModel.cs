@@ -37,4 +37,25 @@ internal partial class MarkersViewModel
     }
 
     public RoutedEventBindingCollection RoutedEventBindings => _routedEventBindings;
+
+    internal bool CanDeleteMarker()
+    {
+        return ActiveMarker != null;
+    }
+
+    private void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable)
+    {
+        if (CalculatableAdded != null)
+        {
+            CalculatableAdded(calculatable);
+        }
+    }
+
+    private void FireCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calculatable)
+    {
+        if (CalculatableRemoved != null)
+        {
+            CalculatableRemoved(calculatable);
+        }
+    }
 }
