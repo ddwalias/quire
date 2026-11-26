@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Windows.Media.Media3D;
 using System.Xml;
 using Quire;
@@ -448,7 +449,73 @@ public partial class PlotModel3D
 
     public void Dispose() { }
 
-    public override bool SetDataObject(global::Quire.Serialization.IDeS11NProvider de11NProvider, global::Quire.PersistentDataObjects.plotType dataObject, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public override bool SetDataObject(IDeS11NProvider de11NProvider, plotType dataObject, IResultManager resultManager)
+    {
+        IsDeserializing = true;
+        Plot3DType plot3D = dataObject.Item as Plot3DType;
+        if (plot3D == null)
+        {
+            throw new SerializationException("3d plot element was not found");
+        }
+        ShowAxisExpressions = dataObject.showaxisexpressions;
+        BackgroundTypeE backgroundType;
+        if (EnumHelper.TryParse(dataObject.backgroundtype.ToString(), out backgroundType, new EnumHelper.EnumHelperSettings { IgnoreCase = true, AssertOnParseFailure = true }))
+        {
+            PlotBackgroundType = backgroundType;
+        }
+        CameraType3D cameraType;
+        EnumHelper.TryParse(plot3D.CameraType.ToString(), out cameraType, new EnumHelper.EnumHelperSettings { IgnoreCase = true, AssertOnParseFailure = true });
+        PlotCameraType = cameraType;
+        axes3Type axes = plot3D.axes;
+        if (de11NProvider != null)
+        {
+            XmlElement axesElement = de11NProvider.XmlContentDocument.CreateElement("axes", de11NProvider.NameSpaceManager.DefaultNamespace);
+            axesElement.AppendChild(de11NProvider.XmlContentDocument.ImportNode(plot3D.axes.xAxisRaw, deep: true));
+            axesElement.AppendChild(de11NProvider.XmlContentDocument.ImportNode(plot3D.axes.yAxisRaw, deep: true));
+            axesElement.AppendChild(de11NProvider.XmlContentDocument.ImportNode(plot3D.axes.zAxisRaw, deep: true));
+            using (XmlNodeReader reader = new XmlNodeReader(axesElement))
+            {
+                axes = axes3Type.XmlSerializer.Deserialize(reader) as axes3Type;
+            }
+        }
+        if (DebugTools.AssertNotNull(axes, null, Array.Empty<object>()).Passed)
+        {
+            XAxis.SetDataObject(axes.xAxis, resultManager);
+            YAxis.SetDataObject(axes.yAxis, resultManager);
+            ZAxis.SetDataObject(axes.zAxis, resultManager);
+        }
+        if (plot3D.plotEquations.Length != plot3D.traces.Length)
+        {
+            throw new InvalidEnumArgumentException("traces and equations count are not match");
+        }
+        int equationCount = plot3D.plotEquations.Count();
+        for (int i = _equationListModel3D.Count; i < equationCount; i++)
+        {
+            AddNewEquation(i, i - 1);
+        }
+        for (int j = 0; j < equationCount; j++)
+        {
+            _equationListModel3D[j].SetDataObject(plot3D.plotEquations[j]);
+            _traces[j].SetDataObject(plot3D.traces[j], resultManager);
+        }
+        MatrixOfDoubles cameraTransformMatrix = plot3D.CameraTransformMatrix;
+        if (cameraTransformMatrix != null)
+        {
+            double[] cells = cameraTransformMatrix.Cells;
+            if (cameraTransformMatrix.Rows == 4.ToString() && cameraTransformMatrix.Columns == 4.ToString() && cells != null && cells.Length == 16)
+            {
+                Matrix3D cameraMatrix = new Matrix3D(cells[0], cells[1], cells[2], cells[3], cells[4], cells[5], cells[6], cells[7], cells[8], cells[9], cells[10], cells[11], cells[12], cells[13], cells[14], cells[15]);
+                CameraTransform = new MatrixTransform3D(cameraMatrix);
+            }
+            else
+            {
+                DebugTools.DevAssert(false, null, Array.Empty<object>());
+            }
+        }
+        GraphSizeDataObject = plot3D.graphsize;
+        IsDeserializing = false;
+        return dataObject.disablecalc;
+    }
 
     public override plotType GetDataObject(IS11NProvider s11NProvider, IResultManager resultManager, bool hideFromCalculation)
     {
