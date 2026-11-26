@@ -49,7 +49,15 @@ public partial class EquationControl
     {
         FireRequestEvaluation();
     }
-    public void SetStatusSynchronized() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SetStatusSynchronized()
+    {
+        // The IL reads the event field twice (null check, then invoke); "?.Invoke" reads it once.
+        if (TreatAsUpToDate != null)
+        {
+            TreatAsUpToDate(this);
+        }
+        _calculatableChildren.Each(child => child.SetStatusSynchronized());
+    }
     public void SetSynchronizationStatus(global::Quire.Calculation.Core.SynchronizationStatus syncStatus)
     {
         _syncStatus = syncStatus;
@@ -175,7 +183,16 @@ public partial class EquationControl
 
     public bool CanHideFromCalculationContext => true;
     public bool HideFromCalculationContext { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    private void UpdateSynchronizationStatus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void UpdateSynchronizationStatus()
+    {
+        SynchronizationStatus synchronizationStatus = SynchronizationStatus.Synchronized;
+        if (_syncStatus == SynchronizationStatus.Pending || _calculatableChildren.Any(child => child.SynchronizationStatus == SynchronizationStatus.Pending))
+        {
+            synchronizationStatus = SynchronizationStatus.Pending;
+        }
+        SetValue(SynchronizationStatusProperty, synchronizationStatus);
+        UpdateEngineResult(synchronizationStatus);
+    }
     private void SetMatrixOrigin(global::Quire.Calculation.Core.RealSimpleResultNode result = default)
     {
         if (result == null)
@@ -190,7 +207,14 @@ public partial class EquationControl
             }
         }
     }
-    private void UpdateCalculatingStatus(global::Quire.Calculation.Core.CalculatingStatus calculatingStatus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void UpdateCalculatingStatus(global::Quire.Calculation.Core.CalculatingStatus calculatingStatus)
+    {
+        if (_calculatableChildren.Any(child => child.CalculatingStatus == CalculatingStatus.Calculating))
+        {
+            calculatingStatus = CalculatingStatus.Calculating;
+        }
+        SetValue(CalculatingStatusProperty, calculatingStatus);
+    }
 
     private void UpdateEngineResult(SynchronizationStatus syncStatus)
     {
@@ -227,7 +251,59 @@ public partial class EquationControl
         EngineResult = new EngineResult(engineResult, warnings);
     }
 
-    private global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> UpdateAggregateFromModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> UpdateAggregateFromModel()
+    {
+        MathNodeToRlTransformer mathNodeToRlTransformer = MathNodeToRlTransformer.Default;
+        IList<string> rlList = mathNodeToRlTransformer.TransformForAggregateWithReplacementScalingFactor(_model.EquationRoot, _model.ResultScalingFactor, IsWithinSolveBlock);
+        if (DebugTools.DevAssert(rlList.IsNotEmpty(), null).Failed)
+        {
+            return Enumerable.Empty<ICalculatable>();
+        }
+        int childCount = rlList.Count - 1;
+        if (childCount < _calculatableChildren.Count)
+        {
+            // The IL keeps "childCount - 1" in the loop test; "i >= childCount" compiles to a different branch.
+            for (int i = _calculatableChildren.Count - 1; i > childCount - 1; i--)
+            {
+                ICalculatable calc = _calculatableChildren[i];
+                _calculatableChildren.RemoveAt(i);
+                FireCalculatableRemoved(calc);
+            }
+        }
+        else
+        {
+            for (int i = _calculatableChildren.Count; i < childCount; i++)
+            {
+                EquationControlChildCalculatable child = new EquationControlChildCalculatable(this)
+                {
+                    Rl = "nil",
+                    RlIndex = i + 1
+                };
+                _calculatableChildren.Add(child);
+                FireCalculatableAdded(child);
+            }
+        }
+        List<ICalculatable> updatesNeeded = new List<ICalculatable>();
+        _calculatableChildren.EachWithIndex((index, child) =>
+        {
+            // The IL advances the index in place before the first lookup.
+            if (child.Rl != rlList[++index])
+            {
+                updatesNeeded.Add(child);
+                child.Rl = rlList[index];
+            }
+        });
+        if (rlList[0] != _rl)
+        {
+            updatesNeeded.Add(this);
+            _rl = mathNodeToRlTransformer.ApplyRlParams(rlList[0], new MathNodeToRlTransformer.MathNodeToRlTransformerParams
+            {
+                Handle = ComponentHandle,
+                HasError = _model.IsScriptError
+            });
+        }
+        return updatesNeeded;
+    }
     public IDataExchangeModel DataExchangeModel => _model.DataExchangeModel;
     public int? ComponentHandle { get; set; }
     public int ComponentCookieMultiThreaded { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -302,7 +378,25 @@ public partial class EquationControl
         set => _model.InCustomInitialization = value;
     }
 
-    public bool SubstituteAndCommitInputValue(string sExpr, string valueSExpr, string scalingSExpr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public bool SubstituteAndCommitInputValue(string sExpr, string valueSExpr, string scalingSExpr)
+    {
+        string origSExpr = EquationSExpression;
+        DelegateFunction0<bool> doMethod = () =>
+        {
+            if (!_model.SetDefinitionValue(sExpr, valueSExpr, scalingSExpr))
+            {
+                return false;
+            }
+            Commit();
+            return true;
+        };
+        Delegate0 undoMethod = () =>
+        {
+            _model.SetEquationSExpression(origSExpr, isUserOperation: false);
+            Commit();
+        };
+        return CommandBuffer.Execute(new UndoableCommand("CommitEquationScalarValue", doMethod, undoMethod));
+    }
     public bool IsSuitableForInputTaggingPrivate()
     {
         return _model.IsSuitableForInputTagging();
@@ -324,7 +418,38 @@ public partial class EquationControl
     {
         return _model.GetDefinitionSExpression(idSExpr);
     }
-    public global::Quire.Undo.UndoableCommand CreateToggleInputCommand(global::System.Action<global::Quire.Controls.Core.IORegions.IInputRegion, bool> toggleInputTag, bool setTag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::Quire.Undo.UndoableCommand CreateToggleInputCommand(global::System.Action<global::Quire.Controls.Core.IORegions.IInputRegion, bool> toggleInputTag, bool setTag)
+    {
+        string undoSExpr = EquationSExpression;
+        string reDoSExpr = null;
+        DelegateFunction0<bool> doMethod = () =>
+        {
+            if (setTag)
+            {
+                Commit();
+            }
+            toggleInputTag(this, setTag);
+            if (IsKeyboardFocusWithin)
+            {
+                EquationCommands.NavigateToEquationStart.Execute(null, this);
+            }
+            return true;
+        };
+        Delegate0 undoMethod = () =>
+        {
+            reDoSExpr = EquationSExpression;
+            ToggleInput(!setTag, undoSExpr, toggleInputTag);
+        };
+        Delegate0 redoMethod = () =>
+        {
+            if (DebugTools.AssertNotNull(reDoSExpr, null).Failed)
+            {
+                return;
+            }
+            ToggleInput(setTag, reDoSExpr, toggleInputTag);
+        };
+        return new UndoableCommand("EquationPreSetInput", doMethod, undoMethod, redoMethod);
+    }
     private void ToggleInput(bool setTag, string sExpr, global::System.Action<global::Quire.Controls.Core.IORegions.IInputRegion, bool> toggleInputTag)
     {
         if (!setTag)

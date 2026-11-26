@@ -698,3 +698,11 @@
 - Blocked on ordinals: the six members with closures before the constructor (`SetStatusSynchronized`, `UpdateSynchronizationStatus`, `UpdateCalculatingStatus`, `UpdateAggregateFromModel`, `SubstituteAndCommitInputValue`, `CreateToggleInputCommand`) are each measured 4 too high. The cause is that `Generated/` compiles first, so the four nested types (in `.g.cs`) are counted before every hand-written member, while Mathcad counts them between `CreateToggleInputCommand` and the constructor. Fixing this needs a compile-order change in the generated file, not a hand-written member change.
 - Blocked on ordinals: `ShowError` (593 vs 591) and `ConvertAnyFormattedMatrixToDisplayMatrix` (631 vs 629) are each 2 too high, between `ClearResultFormat` and `ShowError`; not yet located.
 - Parked shapes: `ClearResultFormat` and `CanClearResultFormat` need the `DependencyObject` cast that Mathcad omits; `ExecuteOnRootLoaded`'s postponed lambda has one extra instruction.
+
+## Batch 100
+
+- Owner: haiku-equationcontrol-20261123; branch `haiku-equationcontrol-20261123-b100` (from main 0bcc6cfd9).
+- Layout slice (landed as f3420f076, pure move): the four nested types (`EquationControlChildCalculatable`, `SizeList2String`, `PropertyNames`, `TestHelper`) moved from the generated `.g.cs` into the hand-written partial before the constructor. Their `MirrorStub` markers were removed, which is what makes MirrorGen stop writing shells for them; a clean emit now leaves `Controls.EquationControl.g.cs` as the header and closing brace only.
+- Members: `SetStatusSynchronized` (null-check invoke shape: the IL reads the event field twice), `UpdateSynchronizationStatus`, `UpdateCalculatingStatus`, `UpdateAggregateFromModel` (`rlList[++index]` and `i > childCount - 1` loop test), `SubstituteAndCommitInputValue`, `CreateToggleInputCommand` (guard return in the redo lambda).
+- Release IL: PASS, 3986 checked, zero failures (`.mirror-cache/release-il-f50d4519903a/release-il.json`).
+- Open: `ShowError` and `ConvertAnyFormattedMatrixToDisplayMatrix` are still 2 too high, between `ClearResultFormat` and `ShowError`; not yet located.
