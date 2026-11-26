@@ -100,8 +100,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.IEquationControl CreateNewEquation(global::System.Windows.Input.ICommand command, object parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void CreateNewEquationWithInputControl(global::System.Windows.Input.ICommand command, global::System.Nullable<global::Quire.Controls.Core.InputControlTypes> parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IImageControl CreateImageControl(string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IRichTextBase CreateTextboxControl(string text = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -256,8 +254,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     private void Paste() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void EvaluateItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void Evaluate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void AddItemAtInsertionPointAndActivate(global::Quire.Controls.Core.IWhiteboardItem item, string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -331,8 +327,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     private void HandleHeaderPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandlePagesCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RemoveItemFromPage(global::Quire.Controls.Core.IWhiteboardItem item, bool removeEmptyPages) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void AddItemToAppropriatePage(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

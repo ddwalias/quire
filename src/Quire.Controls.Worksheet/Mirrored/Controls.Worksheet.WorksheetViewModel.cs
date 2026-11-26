@@ -1896,4 +1896,24 @@ internal partial class WorksheetViewModel
             }
         }
     }
+
+    private void RemoveItemFromPage(IWhiteboardItem item, bool removeEmptyPages)
+    {
+        _pageManager.RemoveItemFromAppropriatePage(item, removeEmptyPages);
+        RemoveGridRestrictedAreaForItem(item);
+    }
+
+    private void EvaluateItem(IWhiteboardItem item)
+    {
+        if (item is IHasPreCalculationAction hasPreCalculationAction)
+        {
+            hasPreCalculationAction.PreCalculationAction();
+        }
+        _model.CommitItem(item);
+    }
+
+    private void CreateNewEquationWithInputControl(ICommand command, InputControlTypes? parameter)
+    {
+        CreateNewEquation(command, parameter).InputControlOnEquationActivated(parameter);
+    }
 }
