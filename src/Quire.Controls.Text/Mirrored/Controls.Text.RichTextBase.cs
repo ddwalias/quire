@@ -381,7 +381,37 @@ public partial class RichTextBase
         CommandBindings.Add(new CommandBinding(ApplicationCommands.Paste, OnPasteExecuted, OnPasteCanExecute));
     }
 
-    private void InitializeFeatureFlagCommandBindings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void InitializeFeatureFlagCommandBindings()
+    {
+        if (!SupportsLists)
+        {
+            ExecutedRoutedEventHandler emptyHandler = (sender, e) => { };
+            CommandBindings.Add(new CommandBinding(EditingCommands.ToggleBullets, emptyHandler, (sender, e) =>
+            {
+                e.CanExecute = false;
+                e.Handled = true;
+            }));
+            CommandBindings.Add(new CommandBinding(EditingCommands.ToggleNumbering, emptyHandler, (sender, e) =>
+            {
+                e.CanExecute = false;
+                e.Handled = true;
+            }));
+        }
+        if (!SupportsIndentation)
+        {
+            ExecutedRoutedEventHandler emptyHandler = (sender, e) => { };
+            CommandBindings.Add(new CommandBinding(EditingCommands.IncreaseIndentation, emptyHandler, (sender, e) =>
+            {
+                e.CanExecute = false;
+                e.Handled = true;
+            }));
+            CommandBindings.Add(new CommandBinding(EditingCommands.DecreaseIndentation, emptyHandler, (sender, e) =>
+            {
+                e.CanExecute = false;
+                e.Handled = true;
+            }));
+        }
+    }
 
     private void OnPasteExecuted(object sender, ExecutedRoutedEventArgs e)
     {
