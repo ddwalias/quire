@@ -8,6 +8,7 @@ using System.Linq;
 using System.Windows.Media;
 using Quire.Calculation.Core;
 using Quire.PersistentDataObjects;
+using Quire.Serialization;
 using Quire.Controls.Plots.Model;
 using Quire.Controls.Plots.Presenter;
 
@@ -148,7 +149,31 @@ public sealed partial class ContourPlotModel
 
     public override bool SetDataObject(global::Quire.Serialization.IDeS11NProvider de11NProvider, global::Quire.PersistentDataObjects.plotType dataObject, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public override global::Quire.PersistentDataObjects.plotType GetDataObject(global::Quire.Serialization.IS11NProvider s11NProvider, global::Quire.Calculation.Core.IResultManager resultManager, bool hideFromCalculationContext) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public override plotType GetDataObject(IS11NProvider s11NProvider, IResultManager resultManager, bool hideFromCalculationContext)
+    {
+        axes3Type axes = new axes3Type
+        {
+            xAxisRaw = XAxisModel.RegionXmlNode,
+            yAxisRaw = YAxisModel.RegionXmlNode,
+            zAxisRaw = ZAxisModel.RegionXmlNode
+        };
+        SizeType graphSize = GraphSizeDataObject;
+        contourPlotType contourPlot = new contourPlotType
+        {
+            axes = axes,
+            contour = GetContourDataObject(resultManager),
+            plotEquationRaw = _contourCalculatable.PlotEquation.GetRegionXmlNode(),
+            graphsize = graphSize
+        };
+        return new plotType
+        {
+            Item = contourPlot,
+            originpositioning = HasOriginPositioning,
+            showaxisexpressions = ShowAxisExpressions,
+            backgroundtype = (BackgroundType)Enum.Parse(typeof(Quire.Controls.Core.BackgroundTypeE), PlotBackgroundType.ToString(), true),
+            disablecalc = hideFromCalculationContext
+        };
+    }
 
     public void SetContourDataObject(global::Quire.PersistentDataObjects.contourPlotTypeContour contour, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
