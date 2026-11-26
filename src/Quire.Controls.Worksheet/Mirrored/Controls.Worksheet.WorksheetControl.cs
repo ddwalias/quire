@@ -1020,6 +1020,33 @@ public partial class WorksheetControl
         worksheetControl.BookmarksManager.DataChanged += worksheetControl.FireChanged;
     }
 
+    private void SetCurrentElement()
+    {
+        if (SelectedDescendants.Any())
+        {
+            IEnumerable<IWhiteboardItem> descendants =
+                global::Quire.Controls.Whiteboard.WhiteboardViewModel.RecursivelyEnumerateDescendantsIgnoringTypes(
+                    SelectedDescendants);
+            if (descendants.Count() > 0)
+            {
+                CurrentElement = new RegionCollectionWithProperty(descendants);
+            }
+            else
+            {
+                CurrentElement = null;
+            }
+        }
+        else if (ActiveDescendant != null && !(ActiveDescendant is IWhiteboardControl))
+        {
+            CurrentElement = ActiveDescendant as DependencyObject;
+        }
+        else
+        {
+            CurrentElement = this;
+            SetCurrentTextFormat();
+        }
+    }
+
     object IWorksheetControl.FindResource(object key)
     {
         return FindResource(key);
