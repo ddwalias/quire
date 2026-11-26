@@ -111,11 +111,12 @@ internal partial class PlotTraceModel3D
         }
         set
         {
-            if (_lineStyle != value)
+            if (_lineStyle == value)
             {
-                _lineStyle = value;
-                FirePropertyChanged("LineStyle");
+                return;
             }
+            _lineStyle = value;
+            FirePropertyChanged("LineStyle");
         }
     }
 
@@ -127,11 +128,12 @@ internal partial class PlotTraceModel3D
         }
         set
         {
-            if (_symbol != value)
+            if (_symbol == value)
             {
-                _symbol = value;
-                FirePropertyChanged("Symbol");
+                return;
             }
+            _symbol = value;
+            FirePropertyChanged("Symbol");
         }
     }
 
@@ -143,11 +145,12 @@ internal partial class PlotTraceModel3D
         }
         set
         {
-            if (!(_surfaceFill == value))
+            if (_surfaceFill == value)
             {
-                _surfaceFill = value;
-                FirePropertyChanged("SurfaceFill");
+                return;
             }
+            _surfaceFill = value;
+            FirePropertyChanged("SurfaceFill");
         }
     }
 
