@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Media.Media3D;
 using Quire;
 using Quire.Calculation.Core;
@@ -263,7 +264,10 @@ public partial class PlotModel3D
         FireTraceRemoved(trace);
     }
 
-    private void ComputeTotalTracesSynchronizationStatus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ComputeTotalTracesSynchronizationStatus()
+    {
+        SynchronizationStatus = _traces.Any(trace => trace.SynchronizationStatus == SynchronizationStatus.Pending) ? SynchronizationStatus.Pending : SynchronizationStatus.Synchronized;
+    }
 
     private void TracePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -378,7 +382,10 @@ public partial class PlotModel3D
         return false;
     }
 
-    private void ComputeTotalTracesCalculationStatus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ComputeTotalTracesCalculationStatus()
+    {
+        IsCalculating = _traces.Any(trace => trace.CalculatingStatus == CalculatingStatus.Calculating);
+    }
 
     private void FireTraceInserted(IPlotTraceModel3D trace, int index)
     {
