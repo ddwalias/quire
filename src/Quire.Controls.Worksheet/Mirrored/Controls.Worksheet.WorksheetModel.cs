@@ -384,7 +384,17 @@ partial class WorksheetModel
         return ItemManager.GetItemWorksheetLocation(item as global::Quire.Controls.Core.IWorksheetPageBreak);
     }
     public global::Quire.Controls.Core.IWhiteboardItem FirstItemInDirection(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items, global::Quire.Direction direction, global::System.Windows.Point startPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public bool ContainsError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public bool ContainsError(global::Quire.Calculation.Core.EngineError error)
+    {
+        foreach (global::Quire.Controls.Core.IWhiteboardItem whiteboardItem in WhiteboardItems)
+        {
+            if (whiteboardItem is global::Quire.Calculation.Core.ICalculationErrorOwner calculationErrorOwner && calculationErrorOwner.ContainsError(error))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     public void ShowError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public bool IsAutoCalcOn
