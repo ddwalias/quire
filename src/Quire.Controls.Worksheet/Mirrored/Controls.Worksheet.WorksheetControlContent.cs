@@ -16,197 +16,16 @@ namespace Quire.Controls.Worksheet;
 
 public partial class WorksheetControlContent
 {
-    public Point GridPosition
-    {
-        get
-        {
-            throw new NotImplementedException();
-        }
 
-        set => throw new NotImplementedException();
-    }
+    private global::System.Windows.Point _insertionPoint;
 
-    public Point InsertionPointForResize
-    {
-        get
-        {
-            throw new NotImplementedException();
-        }
-    }
+    private global::Quire.Controls.Core.IWhiteboardItem _activeItem;
 
-    public event Action<IWhiteboardControl, Rect> RequestScrollTo;
+    [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorBlocked("closure ordinal anchor; body pending")]
+    public WorksheetControlContent(global::Quire.Controls.Worksheet.IWorksheetModel model, global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid alignmentGrid, global::Quire.Controls.Core.CustomSplitItemRenderSizeDelegate splitItemRenderSizeDelegate = default) { }
 
-    public event Action<IWhiteboardControl, Size, Size> ChildTriggeredResize;
-
-    public event Action<IWhiteboardControl> RequestMaximumSize;
-
-    public event Action Activated;
-
-    public event Action<IWhiteboardItemContainer, IWhiteboardItem> RequestActivatePartContainingChild;
-
-    public event Action InsertionPointSet;
-
-    public event Action<IWhiteboardItem, IWhiteboardItem> ActiveItemChanged;
-
-    public event Action ActiveDescendantChanged;
-
-    public event Action SelectedDescendantsChanged;
-
-    public event Action<double> NonprintableSpaceWidthIncrease;
-
-    public Point GetItemGridPosition(IWhiteboardItem item)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void SetItemGridPosition(IWhiteboardItem item, Point location)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void AddItem(IWhiteboardItem item)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void AddItems(Dictionary<IWhiteboardItem, Point> addItemsAtLocation)
-    {
-        AddItemsCommand command = new AddItemsCommand(this, addItemsAtLocation);
-        command.Execute();
-    }
-
-    public void RemoveItem(IWhiteboardItem item)
-    {
-        _model.RemoveItem(item);
-    }
-
-    public void TabInto(FocusNavigationDirection dir)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void CommitItem(IWhiteboardItem item)
-    {
-        _model.CommitItem(item);
-    }
-
-    public void SelectAllItems()
-    {
-        SelectItems(WhiteboardItems);
-    }
-
-    public void SelectItem(IWhiteboardItem item)
-    {
-        SelectItems(new IWhiteboardItem[1] { item });
-    }
-
-    public void UnSelectItem(IWhiteboardItem item)
-    {
-        UnSelectItems(new IWhiteboardItem[1] { item });
-    }
-
-    public void PasteItems(IDictionary<IWhiteboardItem, Point> pasteItemsAtLocation)
-    {
-        PasteItemsCommand command = new PasteItemsCommand(this, pasteItemsAtLocation);
-        command.Execute();
-    }
-
-    public Vector? NavigateInto(Direction direction, Point point)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void UpdateSizeLimits(Size maximumSize)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void InsertVerticalSpace(object sender, ExecutedRoutedEventArgs e)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void DeleteVerticalSpaceAbove(object sender, ExecutedRoutedEventArgs e)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void DeleteVerticalSpaceBelow(object sender, ExecutedRoutedEventArgs e)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void GridCellSizeChangedHandler(Size oldSize, Size newSize)
-    {
-        throw new NotImplementedException();
-    }
-
-    public bool CanSeparateOverlappedItems(Dimension dimension)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Point GetDescendantInsertionPoint()
-    {
-        throw new NotImplementedException();
-    }
-
-    private void DeleteSelection()
-    {
-        WorksheetContentCommand command = new DeleteSelectedItemsCommand(this, "Delete selected items");
-        command.Execute();
-    }
-
-    public void MoveItemsBy(IEnumerable<IWhiteboardItem> items, Vector offset)
-    {
-        throw new NotImplementedException("The move command from the worksheet view model should be reviewed and placed here. For now this method cannot be used.");
-    }
-
-    public void SetCopyWhiteboardItemsDelegate(Func<IEnumerable<IWhiteboardItem>, bool> copyWhiteboardItems)
-    {
-        _copyWhiteboardItems = copyWhiteboardItems;
-    }
-
-    public void ActivateWhiteboard(bool isActive)
-    {
-    }
-
-    public void SetInsertionPointWhenLoaded(Point insertionPoint)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void HandleItemGotFocus(IWhiteboardItem item)
-    {
-        ActiveItem = item;
-    }
-
-    private void FireActivated()
-    {
-        Activated?.Invoke();
-    }
-
-    public void ClearVisualState()
-    {
-        ActiveItem = null;
-        ClearSelection();
-    }
-
-    public void UnSelectItems(IEnumerable<IWhiteboardItem> itemsToRemove)
-    {
-        if (_selectedItems.Any())
-        {
-            _selectedItems.RemoveRange(itemsToRemove);
-        }
-    }
-
-    public void ClearSelection()
-    {
-        if (_selectedItems.Count() > 0)
-        {
-            _selectedItems.Clear();
-        }
-    }
+    private readonly global::Quire.Controls.Worksheet.IWorksheetModel _model;
 
     private static IWorksheetItemManager WorksheetItemManager => WorksheetViewModel.ItemManager;
 
@@ -215,82 +34,6 @@ public partial class WorksheetControlContent
     IWhiteboardItemManager IWhiteboardControl.WhiteboardItemManager => WorksheetItemManager;
 
     IUIElementArrangeInfoProvider IHasChildArrangeInfoProvider.ChildArrangeInfoProvider => WorksheetItemManager;
-
-    public Point DefaultInsertionPoint => default;
-
-    public bool IsCrosshairVisible
-    {
-        get => ActiveOrSelectedItems.Count() == 0;
-        set => throw new NotImplementedException();
-    }
-
-    public WhiteboardItemsCollection WhiteboardItems => _model.WhiteboardItems;
-
-    public ObservableRangeCollection<IWorksheetPageBreak> PageBreaks => _model.PageBreaks;
-
-    public Size GridCellSize
-    {
-        get => _worksheetGrid.GridCellSize;
-        set => throw new NotImplementedException();
-    }
-
-    public bool CanAddItems => true;
-
-    public INotifyCollectionRangeChanged<IWhiteboardItem> SelectedItems => _selectedItems;
-
-    public bool IsTabNavigatable => throw new NotImplementedException();
-
-    public bool ForbidGrowingMovementRight
-    {
-        set => throw new NotImplementedException();
-    }
-
-    public Point GetItemLocation(IWhiteboardItem item) => _model.GetItemWorksheetLocation(item);
-
-    public Rect GetItemRect(IWhiteboardItem item) => WorksheetItemManager.GetItemRect(item);
-
-    public IEnumerable<IWhiteboardItem> RecursivelyEnumerateDescendantItemssBypassWhiteboard() =>
-        global::Quire.Controls.Whiteboard.WhiteboardViewModel.RecursivelyEnumerateDescendantsIgnoringTypes(WhiteboardItems);
-
-    private void HandleItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
-    {
-        switch (args.Action)
-        {
-            case NotifyCollectionChangedAction.Add:
-                ItemsAdded(args.NewItems.OfType<IWhiteboardItem>().ToList());
-                break;
-            case NotifyCollectionChangedAction.Remove:
-                ItemsRemoved(args.OldItems.OfType<IWhiteboardItem>().ToList());
-                break;
-            default:
-                DebugTools.FailAssertion("Unsupported action: {0}", args.Action);
-                break;
-            case NotifyCollectionChangedAction.Move:
-                break;
-        }
-    }
-
-    private void HandleSelectedItemsChanged(object sender, NotifyCollectionChangedEventArgs args)
-    {
-        if (args.Action == NotifyCollectionChangedAction.Add && SelectedItems.Count() == args.NewItems.Count)
-        {
-            ActiveItem = null;
-        }
-    }
-
-    private void ItemsAdded(IEnumerable<IWhiteboardItem> items)
-    {
-    }
-
-    public Point GetItemLocation(IWorksheetPageBreak pageBreak) => _model.GetItemWorksheetLocation(pageBreak);
-
-    public void SetItemLocation(IWorksheetPageBreak pageBreak, Point location) => _model.SetItemWorksheetLocation(pageBreak, location);
-
-    public void SaveResizeInformation() => throw new NotImplementedException();
-
-    public void RestoreResizeInformation() => throw new NotImplementedException();
-
-    public void SeparateOverlappedItems(Dimension dimension) => throw new NotImplementedException();
 
     public IEnumerable<IWhiteboardItem> ActiveOrSelectedItems
     {
@@ -304,10 +47,28 @@ public partial class WorksheetControlContent
         }
     }
 
+    public Point GridPosition
+    {
+        get
+        {
+            throw new NotImplementedException();
+        }
+
+        set => throw new NotImplementedException();
+    }
+
     public Point InsertionPoint
     {
         get => _insertionPoint;
         set => SetInsertionPoint(value, false, GridRestriction.Skip);
+    }
+
+    public Point DefaultInsertionPoint => default;
+
+    public bool IsCrosshairVisible
+    {
+        get => ActiveOrSelectedItems.Count() == 0;
+        set => throw new NotImplementedException();
     }
 
     public IWhiteboardItem ActiveItem
@@ -336,6 +97,41 @@ public partial class WorksheetControlContent
                 WorksheetItemManager.ActivateItem(ActiveItem);
                 ClearSelection();
             }
+        }
+    }
+
+    private void HookupActiveItem(IWhiteboardItem item)
+    {
+        if (item is IWhiteboardItemContainer)
+        {
+            item.PropertyChanged += ChildWhiteboardPropertyChangedHandler;
+        }
+    }
+
+    private void UnhookActiveItem(IWhiteboardItem item)
+    {
+        if (item is IWhiteboardItemContainer)
+        {
+            item.PropertyChanged -= ChildWhiteboardPropertyChangedHandler;
+        }
+    }
+
+    private void ChildWhiteboardPropertyChangedHandler(object sender, PropertyChangedEventArgs e)
+    {
+        if (sender is IWhiteboardControl)
+        {
+            if (e.PropertyName == "ActiveDescendant")
+            {
+                ActiveDescendantChanged();
+            }
+            if (e.PropertyName == "SelectedDescendants")
+            {
+                SelectedDescendantsChanged();
+            }
+        }
+        else if (e.PropertyName == "ActiveItem")
+        {
+            ActiveDescendantChanged();
         }
     }
 
@@ -378,66 +174,27 @@ public partial class WorksheetControlContent
         }
     }
 
-    public double ContentAreaWidth
+    public WhiteboardItemsCollection WhiteboardItems => _model.WhiteboardItems;
+
+    public ObservableRangeCollection<IWorksheetPageBreak> PageBreaks => _model.PageBreaks;
+
+    public Size GridCellSize
     {
-        private get => _contentAreaWidth;
-        set
-        {
-            _contentAreaWidth = value;
-            _worksheetGrid.GridArea = new Rect(new Size(ContentAreaWidth, _worksheetGrid.GridArea.Height));
-        }
+        get => _worksheetGrid.GridCellSize;
+        set => throw new NotImplementedException();
     }
 
-    public bool BoundDirectionalMoveByContentWidth { private get; set; }
+    public bool CanAddItems => true;
 
-    public StaticMathFormat MathFormat { get; set; }
+    public INotifyCollectionRangeChanged<IWhiteboardItem> SelectedItems => _selectedItems;
 
-    public IDictionary<IdLabels, ExtendedFont> LabeledIdFormat { get; set; }
+    public Point GetItemLocation(IWhiteboardItem item) => _model.GetItemWorksheetLocation(item);
 
-    public bool HasRegionsWithConverterAnnotations => this.HasRegionsWithConverterAnnotations();
+    public Rect GetItemRect(IWhiteboardItem item) => WorksheetItemManager.GetItemRect(item);
 
-    public IEnumerable<UIElement> RegionsWithConverterAnnotations => this.RegionsWithConverterAnnotations();
+    public Point GetItemLocation(IWorksheetPageBreak pageBreak) => _model.GetItemWorksheetLocation(pageBreak);
 
-    public StaticMathFormat TargetMathFormat => MathFormat;
-
-    public IDictionary<IdLabels, ExtendedFont> TargetLabeledIdFormat => LabeledIdFormat;
-
-    public ISnapToPixelHelper SnappingHelper => null;
-
-    private void HookupActiveItem(IWhiteboardItem item)
-    {
-        if (item is IWhiteboardItemContainer)
-        {
-            item.PropertyChanged += ChildWhiteboardPropertyChangedHandler;
-        }
-    }
-
-    private void UnhookActiveItem(IWhiteboardItem item)
-    {
-        if (item is IWhiteboardItemContainer)
-        {
-            item.PropertyChanged -= ChildWhiteboardPropertyChangedHandler;
-        }
-    }
-
-    private void ChildWhiteboardPropertyChangedHandler(object sender, PropertyChangedEventArgs e)
-    {
-        if (sender is IWhiteboardControl)
-        {
-            if (e.PropertyName == "ActiveDescendant")
-            {
-                ActiveDescendantChanged();
-            }
-            if (e.PropertyName == "SelectedDescendants")
-            {
-                SelectedDescendantsChanged();
-            }
-        }
-        else if (e.PropertyName == "ActiveItem")
-        {
-            ActiveDescendantChanged();
-        }
-    }
+    public void SetItemLocation(IWorksheetPageBreak pageBreak, Point location) => _model.SetItemWorksheetLocation(pageBreak, location);
 
     public Point CalculateItemWorksheetLocation(IWhiteboardItem item, Point worksheetLocation, GridRestriction restriction)
     {
@@ -457,6 +214,48 @@ public partial class WorksheetControlContent
     {
         GridRestriction restriction = (WorksheetItemManager.GetShouldAssertOnLocation(item) ? GridRestriction.Assert : GridRestriction.Ignore);
         _model.SetItemWorksheetLocation(item, CalculateItemWorksheetLocation(item, worksheetLocation, restriction));
+    }
+
+    public Point GetItemGridPosition(IWhiteboardItem item)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void ActivateWhiteboard(bool isActive)
+    {
+    }
+
+    public void SetInsertionPointWhenLoaded(Point insertionPoint)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SetItemGridPosition(IWhiteboardItem item, Point location)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void AddItem(IWhiteboardItem item)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void AddItems(Dictionary<IWhiteboardItem, Point> addItemsAtLocation)
+    {
+        AddItemsCommand command = new AddItemsCommand(this, addItemsAtLocation);
+        command.Execute();
+    }
+
+    public void RemoveItem(IWhiteboardItem item)
+    {
+        _model.RemoveItem(item);
+    }
+
+    public bool IsTabNavigatable => throw new NotImplementedException();
+
+    public void TabInto(FocusNavigationDirection dir)
+    {
+        throw new NotImplementedException();
     }
 
     public void AddItemAtLocation(IWhiteboardItem item, Point location, bool forceAlignment = false)
@@ -480,6 +279,11 @@ public partial class WorksheetControlContent
     public void AddPageBreakAtLocation(IWorksheetPageBreak pageBreak, Point location, bool forceAlignment = false)
     {
         _model.AddItemAtLocation(pageBreak, location);
+    }
+
+    public void CommitItem(IWhiteboardItem item)
+    {
+        _model.CommitItem(item);
     }
 
     public void CommitActiveItem()
@@ -514,6 +318,45 @@ public partial class WorksheetControlContent
         }
     }
 
+    public void SelectContiguous(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public void SelectAllItems()
+    {
+        SelectItems(WhiteboardItems);
+    }
+
+    public void ClearSelection()
+    {
+        if (_selectedItems.Count() > 0)
+        {
+            _selectedItems.Clear();
+        }
+    }
+
+    [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorBlocked("closure ordinal anchor; body pending")]
+    public void SelectItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToSelect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private readonly global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid _worksheetGrid;
+
+    public void UnSelectItems(IEnumerable<IWhiteboardItem> itemsToRemove)
+    {
+        if (_selectedItems.Any())
+        {
+            _selectedItems.RemoveRange(itemsToRemove);
+        }
+    }
+
+    public void SelectItem(IWhiteboardItem item)
+    {
+        SelectItems(new IWhiteboardItem[1] { item });
+    }
+
+    public void UnSelectItem(IWhiteboardItem item)
+    {
+        UnSelectItems(new IWhiteboardItem[1] { item });
+    }
+
     public bool CopySelection()
     {
         if (_copyWhiteboardItems != null)
@@ -529,6 +372,12 @@ public partial class WorksheetControlContent
         {
             DeleteSelection();
         }
+    }
+
+    public void PasteItems(IDictionary<IWhiteboardItem, Point> pasteItemsAtLocation)
+    {
+        PasteItemsCommand command = new PasteItemsCommand(this, pasteItemsAtLocation);
+        command.Execute();
     }
 
     public void SaveVisualState()
@@ -562,6 +411,34 @@ public partial class WorksheetControlContent
         }
     }
 
+    public void ClearVisualState()
+    {
+        ActiveItem = null;
+        ClearSelection();
+    }
+
+    public void SaveResizeInformation() => throw new NotImplementedException();
+
+    public void RestoreResizeInformation() => throw new NotImplementedException();
+
+    public Point InsertionPointForResize
+    {
+        get
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public bool ForbidGrowingMovementRight
+    {
+        set => throw new NotImplementedException();
+    }
+
+    public Vector? NavigateInto(Direction direction, Point point)
+    {
+        throw new NotImplementedException();
+    }
+
     private Size GetItemRenderSize(IWhiteboardItem item)
     {
         Size renderSize;
@@ -574,6 +451,73 @@ public partial class WorksheetControlContent
             renderSize = WorksheetItemManager.GetRenderSize(item);
         }
         return renderSize;
+    }
+
+    public global::System.Windows.Point GetNavigationStartLocation(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public event Action<IWhiteboardControl, Rect> RequestScrollTo;
+
+    public event Action<IWhiteboardControl, Size, Size> ChildTriggeredResize;
+
+    public event Action<IWhiteboardControl> RequestMaximumSize;
+
+    public event Action Activated;
+
+    public event Action<IWhiteboardItemContainer, IWhiteboardItem> RequestActivatePartContainingChild;
+
+    public void SetCopyWhiteboardItemsDelegate(Func<IEnumerable<IWhiteboardItem>, bool> copyWhiteboardItems)
+    {
+        _copyWhiteboardItems = copyWhiteboardItems;
+    }
+
+    public void UpdateSizeLimits(Size maximumSize)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void InsertVerticalSpace(object sender, ExecutedRoutedEventArgs e)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void DeleteVerticalSpaceAbove(object sender, ExecutedRoutedEventArgs e)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void DeleteVerticalSpaceBelow(object sender, ExecutedRoutedEventArgs e)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void GridCellSizeChangedHandler(Size oldSize, Size newSize)
+    {
+        throw new NotImplementedException();
+    }
+
+    public IEnumerable<IWhiteboardItem> RecursivelyEnumerateDescendantItemssBypassWhiteboard() =>
+        global::Quire.Controls.Whiteboard.WhiteboardViewModel.RecursivelyEnumerateDescendantsIgnoringTypes(WhiteboardItems);
+
+    public bool CanSeparateOverlappedItems(Dimension dimension)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void SeparateOverlappedItems(Dimension dimension) => throw new NotImplementedException();
+
+    public Point GetDescendantInsertionPoint()
+    {
+        throw new NotImplementedException();
+    }
+
+    public double ContentAreaWidth
+    {
+        private get => _contentAreaWidth;
+        set
+        {
+            _contentAreaWidth = value;
+            _worksheetGrid.GridArea = new Rect(new Size(ContentAreaWidth, _worksheetGrid.GridArea.Height));
+        }
     }
 
     public void UpdateItemLocationsAfterGridSizeChanged(Size oldGridCellSize)
@@ -596,6 +540,35 @@ public partial class WorksheetControlContent
         return false;
     }
 
+    private void DeleteSelection()
+    {
+        WorksheetContentCommand command = new DeleteSelectedItemsCommand(this, "Delete selected items");
+        command.Execute();
+    }
+
+    public void MoveItemsBy(IEnumerable<IWhiteboardItem> items, Vector offset)
+    {
+        throw new NotImplementedException("The move command from the worksheet view model should be reviewed and placed here. For now this method cannot be used.");
+    }
+
+    public void HandleDirectionalMove(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public event Action InsertionPointSet;
+
+    public event Action<IWhiteboardItem, IWhiteboardItem> ActiveItemChanged;
+
+    public event Action ActiveDescendantChanged;
+
+    public event Action SelectedDescendantsChanged;
+
+    public event Action<double> NonprintableSpaceWidthIncrease;
+
+    public bool BoundDirectionalMoveByContentWidth { private get; set; }
+
+    public StaticMathFormat MathFormat { get; set; }
+
+    public IDictionary<IdLabels, ExtendedFont> LabeledIdFormat { get; set; }
+
     public void SetWidthWithNonprintableSpace(double newWidth)
     {
         if (newWidth > _worksheetGrid.GridArea.Width)
@@ -607,6 +580,67 @@ public partial class WorksheetControlContent
     public IEnumerable<IWhiteboardItem> SortItemsByLocation(IEnumerable<IWhiteboardItem> items, bool descending)
     {
         return WorksheetItemManager.SortItemsByLocation(items, descending);
+    }
+
+    [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorBlocked("closure ordinal anchor; body pending")]
+    public bool CheckPotentialMove(global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> itemsAtNewLocationsRaw, bool preventRestrictedItemLocations) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public bool HasRegionsWithConverterAnnotations => this.HasRegionsWithConverterAnnotations();
+
+    public IEnumerable<UIElement> RegionsWithConverterAnnotations => this.RegionsWithConverterAnnotations();
+
+    private void HandleItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
+    {
+        switch (args.Action)
+        {
+            case NotifyCollectionChangedAction.Add:
+                ItemsAdded(args.NewItems.OfType<IWhiteboardItem>().ToList());
+                break;
+            case NotifyCollectionChangedAction.Remove:
+                ItemsRemoved(args.OldItems.OfType<IWhiteboardItem>().ToList());
+                break;
+            default:
+                DebugTools.FailAssertion("Unsupported action: {0}", args.Action);
+                break;
+            case NotifyCollectionChangedAction.Move:
+                break;
+        }
+    }
+
+    [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorBlocked("closure ordinal anchor; body pending")]
+    private void ItemsRemoved(global::System.Collections.Generic.IList<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private readonly global::Quire.Controls.Core.CustomSplitItemRenderSizeDelegate _customSplitItemRenderSizeDelegate;
+
+    private global::System.Nullable<global::System.Windows.Point> _savedInsertionPoint;
+
+    private global::System.Collections.Generic.List<global::Quire.Controls.Core.IWhiteboardItem> _savedSelectionList;
+
+    private global::Quire.Controls.Core.IWhiteboardItem _savedActiveItem;
+
+    private double _contentAreaWidth;
+
+    private global::Quire.Wpf.IObservableRangeCollection<global::Quire.Controls.Core.IWhiteboardItem> _selectedItems;
+
+    private global::System.Func<global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem>, bool> _copyWhiteboardItems;
+
+    private void ItemsAdded(IEnumerable<IWhiteboardItem> items)
+    {
+    }
+
+    private void HandleSelectedItemsChanged(object sender, NotifyCollectionChangedEventArgs args)
+    {
+        if (args.Action == NotifyCollectionChangedAction.Add && SelectedItems.Count() == args.NewItems.Count)
+        {
+            ActiveItem = null;
+        }
+    }
+
+    public void HandleItemGotFocus(IWhiteboardItem item)
+    {
+        ActiveItem = item;
     }
 
     private bool CanMoveToInsertionPoint(Point insertionPoint)
@@ -622,6 +656,8 @@ public partial class WorksheetControlContent
         }
         return false;
     }
+
+    public global::Quire.Controls.Core.IWhiteboardItem GetItemAtLocation(global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public bool IsValidInsertionPoint(Point point)
     {
@@ -676,6 +712,17 @@ public partial class WorksheetControlContent
         _insertionPoint = nearestIntersectionPointDisregardingBounds;
         InsertionPointSet();
     }
+
+    public StaticMathFormat TargetMathFormat => MathFormat;
+
+    public IDictionary<IdLabels, ExtendedFont> TargetLabeledIdFormat => LabeledIdFormat;
+
+    private void FireActivated()
+    {
+        Activated?.Invoke();
+    }
+
+    public ISnapToPixelHelper SnappingHelper => null;
 
     internal abstract partial class WorksheetContentCommand : global::Quire.Undo.IUndoableCommand
     {
@@ -809,5 +856,6 @@ public partial class WorksheetControlContent
         {
         }
     }
+
 }
 

@@ -11,44 +11,6 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlContent, Ptc.Controls.Worksheet")]
 public partial class WorksheetControlContent : global::Quire.Controls.Worksheet.IWorksheetContent, global::Quire.Controls.Worksheet.IWorksheetSection, global::Quire.Controls.Core.Whiteboard.IWhiteboardControl, global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainer, global::Quire.Controls.Core.Serialization.IHasRegionsWithConverterAnnotations, global::Quire.Controls.Core.IMathFormatDeserializationProvider, global::Quire.Core.IMaybeHasPointThatSnapsToPixel, global::Quire.Controls.Core.IHasChildArrangeInfoProvider, global::System.IDisposable
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Point _insertionPoint;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.IWhiteboardItem _activeItem;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Worksheet.IWorksheetModel _model;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid _worksheetGrid;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Core.CustomSplitItemRenderSizeDelegate _customSplitItemRenderSizeDelegate;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<global::System.Windows.Point> _savedInsertionPoint;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.List<global::Quire.Controls.Core.IWhiteboardItem> _savedSelectionList;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.IWhiteboardItem _savedActiveItem;
-    [global::Quire.Mirror.MirrorStub]
-    private double _contentAreaWidth;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Wpf.IObservableRangeCollection<global::Quire.Controls.Core.IWhiteboardItem> _selectedItems;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Func<global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem>, bool> _copyWhiteboardItems;
-    [global::Quire.Mirror.MirrorStub]
-    public WorksheetControlContent(global::Quire.Controls.Worksheet.IWorksheetModel model, global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid alignmentGrid, global::Quire.Controls.Core.CustomSplitItemRenderSizeDelegate splitItemRenderSizeDelegate = default) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void SelectContiguous(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SelectItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToSelect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Point GetNavigationStartLocation(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleDirectionalMove(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool CheckPotentialMove(global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> itemsAtNewLocationsRaw, bool preventRestrictedItemLocations) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ItemsRemoved(global::System.Collections.Generic.IList<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IWhiteboardItem GetItemAtLocation(global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlContent+WorksheetContentCommand, Ptc.Controls.Worksheet")]
     internal abstract partial class WorksheetContentCommand : global::Quire.Undo.IUndoableCommand
@@ -148,4 +110,5 @@ public partial class WorksheetControlContent : global::Quire.Controls.Worksheet.
         [global::Quire.Mirror.MirrorStub]
         public ResizeItemCommandWithSizeEffects(global::Quire.Controls.Worksheet.IWorksheetContent content, global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Size oldSize, global::System.Windows.Size newSize) : base(default(global::Quire.Controls.Worksheet.IWorksheetContent), default(global::Quire.Controls.Core.IWhiteboardItem), default(global::System.Windows.Size), default(global::System.Windows.Size), default(global::Quire.Controls.Core.DragMode)) { }
     }
+
 }
