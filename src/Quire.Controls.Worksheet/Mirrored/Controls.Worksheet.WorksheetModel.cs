@@ -22,6 +22,8 @@ partial class WorksheetModel
     public global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Core.IWorksheetPageBreak> PageBreaks { get; private set; }
     public global::Quire.Controls.Core.BookmarkTags.IBookmarksManager BookmarksManager { get; set; }
 
+    public event global::System.Action<int, global::System.Windows.Threading.DispatcherPriority> WaitForCalculationIdle;
+
     private bool _isCalculating;
     private bool _isCalculationsEnabled;
     private global::Quire.Calculation.Core.ICalculatable _lastVisibleCalculatable;
@@ -254,7 +256,22 @@ partial class WorksheetModel
     {
         FireWaitForCalculationIdle(60, global::Quire.Calculation.Core.CalcResultsProcessingPriorities.DefaultResultDispatchPriority_Background);
     }
-    public void FireWaitForCalculationIdle(int seconds, global::System.Windows.Threading.DispatcherPriority priority) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void FireWaitForCalculationIdle(int seconds, global::System.Windows.Threading.DispatcherPriority priority)
+    {
+        if (WaitForCalculationIdle != null)
+        {
+            bool renderingEnabled = global::Quire.Controls.Plots.Plot3D.View.PlotGraphViewport3D.RenderingEnabled;
+            try
+            {
+                global::Quire.Controls.Plots.Plot3D.View.PlotGraphViewport3D.RenderingEnabled = false;
+                WaitForCalculationIdle(seconds, priority);
+            }
+            finally
+            {
+                global::Quire.Controls.Plots.Plot3D.View.PlotGraphViewport3D.RenderingEnabled = renderingEnabled;
+            }
+        }
+    }
     private void FireBinOctHexModeOptionUpdated(string binOctHexMode, object value)
     {
         global::Quire.EquationEditor.Tree.DefaultDescriptorTable.Default["NUMERIC"].BinOctHexModeOn = (bool)value;

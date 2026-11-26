@@ -70,8 +70,6 @@ internal partial class WorksheetModel : global::Quire.Controls.Worksheet.IWorksh
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable>> CommitAndNotifyDependentCalculatables;
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<int, global::System.Windows.Threading.DispatcherPriority> WaitForCalculationIdle;
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.Func<string, object> GetEngineOption;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
