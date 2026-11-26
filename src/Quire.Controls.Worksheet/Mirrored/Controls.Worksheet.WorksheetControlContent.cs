@@ -582,9 +582,38 @@ public partial class WorksheetControlContent
         return WorksheetItemManager.SortItemsByLocation(items, descending);
     }
 
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorBlocked("closure ordinal anchor; body pending")]
-    public bool CheckPotentialMove(global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> itemsAtNewLocationsRaw, bool preventRestrictedItemLocations) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public bool CheckPotentialMove(Dictionary<IWhiteboardItem, Point> itemsAtNewLocationsRaw, bool preventRestrictedItemLocations)
+    {
+        Dictionary<IWhiteboardItem, Point> itemsAtNewLocations = itemsAtNewLocationsRaw.ToDictionary(pair => pair.Key, pair => CalculateItemWorksheetLocation(pair.Key, pair.Value, GridRestriction.Ignore));
+        Func<IWhiteboardItem, Point, bool> movesToALocation = (item, loc) =>
+        {
+            return loc != GetItemLocation(item);
+        };
+        bool flag = itemsAtNewLocations.All(item => item.Key is ICollapsibleAreaControl || movesToALocation(item.Key, item.Value));
+        if (flag)
+        {
+            Func<IWhiteboardItem, double> getItemTop = item =>
+            {
+                Point val = itemsAtNewLocations[item];
+                return val.Y + item.VerticalAlignmentOffset;
+            };
+            double itemsTopEdge = itemsAtNewLocations.Min(item => getItemTop(item.Key));
+            flag = !(from item in WhiteboardItems.Except(itemsAtNewLocations.Keys)
+                     where item is ICollapsibleAreaControl
+                     select item).Any(item =>
+            {
+                Rect itemRect = WorksheetItemManager.GetItemRect(item);
+                return itemsTopEdge.IsBetween(itemRect.Top, itemRect.Bottom);
+            });
+        }
+
+        if (flag & preventRestrictedItemLocations)
+        {
+            flag = itemsAtNewLocations.Values.All(IsValidInsertionPoint);
+        }
+
+        return flag;
+    }
 
     public bool HasRegionsWithConverterAnnotations => this.HasRegionsWithConverterAnnotations();
 
