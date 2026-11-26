@@ -85,4 +85,36 @@ internal partial class MarkersViewModel
             HorizontalMarkers.Add(CreateHorizontalMarkerViewModel(marker));
         }
     }
+
+    private void OnMarkerAdded(BaseMarkerViewModel marker)
+    {
+        ActivateMarker(marker);
+        if (MarkerAdded != null)
+        {
+            MarkerAdded(this, new MarkerEventArgs(marker));
+        }
+    }
+
+    private void OnMarkerDeleted(BaseMarkerViewModel marker)
+    {
+        if (marker == ActiveMarker)
+        {
+            ActivateMarker(null);
+        }
+        marker.Calculatable.OverrideHideFromCalculation = true;
+        if (MarkerDeleted != null)
+        {
+            MarkerDeleted(this, new MarkerEventArgs(marker));
+        }
+    }
+
+    private static void SetMarkerOutOfRangeError(IAxisMarker marker)
+    {
+        marker.RealNumberCalculatable.SetCustomError("Ptc.Plots.MARKER_OUT_OF_RANGE");
+    }
+
+    private static void ClearMarkerOutOfRangeError(IAxisMarker marker)
+    {
+        marker.RealNumberCalculatable.ClearCustomErrors("Ptc.Plots.MARKER_OUT_OF_RANGE");
+    }
 }

@@ -50,10 +50,6 @@ internal partial class MarkersViewModel : global::Quire.Controls.Core.ViewModelB
     [global::Quire.Mirror.MirrorStub]
     public MarkersViewModel(global::Quire.Controls.Plots.Presenter.IMarkersContainer horizontalRange, global::Quire.Controls.Plots.Presenter.IMarkersContainer verticalRange, global::Quire.Controls.Plots.Presenter.IValueToScreen horizontalValueToScreen, global::Quire.Controls.Plots.Presenter.IValueToScreen verticalValueToScreen) { }
     [global::Quire.Mirror.MirrorStub]
-    private void OnMarkerAdded(global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnMarkerDeleted(global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel AddVerticalMarker() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Plots.ViewModel.VerticalMarkerViewModel CreateVerticalMarkerViewModel(global::Quire.Controls.Plots.Model.AxisMarker marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -77,10 +73,6 @@ internal partial class MarkersViewModel : global::Quire.Controls.Core.ViewModelB
     private void DeleteMarker(global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Controls.Plots.Model.AxisMarker CreateDefaultAxisMarker(global::Quire.Controls.Plots.Presenter.IMarkersContainer markersContainer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void SetMarkerOutOfRangeError(global::Quire.Controls.Plots.Model.IAxisMarker marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void ClearMarkerOutOfRangeError(global::Quire.Controls.Plots.Model.IAxisMarker marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void SetCustomErrorIfMarkerOutOfRange(global::Quire.Controls.Plots.Model.IAxisMarker marker, global::Quire.Controls.Plots.Presenter.IMarkersContainer markersContainer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
