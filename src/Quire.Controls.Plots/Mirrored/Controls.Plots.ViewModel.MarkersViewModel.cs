@@ -117,4 +117,38 @@ internal partial class MarkersViewModel
     {
         marker.RealNumberCalculatable.ClearCustomErrors("Ptc.Plots.MARKER_OUT_OF_RANGE");
     }
+
+    private VerticalMarkerViewModel CreateVerticalMarkerViewModel(AxisMarker marker)
+    {
+        return new VerticalMarkerViewModel(marker)
+        {
+            DisplayNumberFormat = _horizontalRange.DisplayNumberFormat,
+        };
+    }
+
+    private HorizontalMarkerViewModel CreateHorizontalMarkerViewModel(AxisMarker marker)
+    {
+        return new HorizontalMarkerViewModel(marker)
+        {
+            DisplayNumberFormat = _verticalRange.DisplayNumberFormat,
+        };
+    }
+
+    internal void AddPointMarker()
+    {
+    }
+
+    private void AddVerticalMarker(VerticalMarkerViewModel viewModel)
+    {
+        VerticalMarkers.Add(viewModel);
+        _horizontalRange.Markers.Add(viewModel.Model as AxisMarker);
+        OnMarkerAdded(viewModel);
+    }
+
+    private void AddHorizontalMarker(HorizontalMarkerViewModel viewModel)
+    {
+        HorizontalMarkers.Add(viewModel);
+        _verticalRange.Markers.Add(viewModel.Model as AxisMarker);
+        OnMarkerAdded(viewModel);
+    }
 }

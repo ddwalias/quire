@@ -52,21 +52,11 @@ internal partial class MarkersViewModel : global::Quire.Controls.Core.ViewModelB
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel AddVerticalMarker() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.ViewModel.VerticalMarkerViewModel CreateVerticalMarkerViewModel(global::Quire.Controls.Plots.Model.AxisMarker marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel AddHorizontalMarker() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.ViewModel.HorizontalMarkerViewModel CreateHorizontalMarkerViewModel(global::Quire.Controls.Plots.Model.AxisMarker marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void AddPointMarker() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void DeleteMarker() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void AddMarker(global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void AddVerticalMarker(global::Quire.Controls.Plots.ViewModel.VerticalMarkerViewModel viewModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void AddHorizontalMarker(global::Quire.Controls.Plots.ViewModel.HorizontalMarkerViewModel viewModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ActivateMarker(global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
