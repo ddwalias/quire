@@ -20,13 +20,15 @@ internal partial class MarkersViewModel
 
     private readonly global::Quire.Controls.Plots.Presenter.IMarkersContainer _horizontalRange;
 
-    private readonly global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel> _verticalMarkers;
+    private readonly global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel> _verticalMarkers = new global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel>();
 
-    private readonly global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel> _horizontalMarkers;
+    private readonly global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel> _horizontalMarkers = new global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel>();
 
-    private readonly global::Quire.Wpf.IObservableRangeCollection<global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel> _allMarkers;
+    private readonly global::Quire.Wpf.IObservableRangeCollection<global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel> _allMarkers = new global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel>();
 
-    private readonly global::Quire.Controls.Core.AttachedBehavior.RoutedEventBindingCollection _routedEventBindings;
+    private readonly global::Quire.Controls.Core.AttachedBehavior.RoutedEventBindingCollection _routedEventBindings = new global::Quire.Controls.Core.AttachedBehavior.RoutedEventBindingCollection();
+
+    private global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel _activeMarker;
 
     public static readonly global::System.Windows.Input.RoutedUICommand AddVerticalMarkerCommand = new RoutedUICommandWithFunctionalityKey("Add Vertical Marker", "AddVerticalMarker", _typeOfThis, EnumFunctionalityKey.PlotsCategoryAddVerticalMarker);
 
@@ -36,7 +38,24 @@ internal partial class MarkersViewModel
 
     public static readonly global::System.Windows.Input.RoutedUICommand DeleteMarkerCommand = new RoutedUICommandWithFunctionalityKey("Delete Marker", "DeleteMarker", _typeOfThis, EnumFunctionalityKey.PlotsCategoryDeleteMarker);
 
-    public MarkersViewModel(global::Quire.Controls.Plots.Presenter.IMarkersContainer horizontalRange, global::Quire.Controls.Plots.Presenter.IMarkersContainer verticalRange, global::Quire.Controls.Plots.Presenter.IValueToScreen horizontalValueToScreen, global::Quire.Controls.Plots.Presenter.IValueToScreen verticalValueToScreen) { }
+    public MarkersViewModel(global::Quire.Controls.Plots.Presenter.IMarkersContainer horizontalRange, global::Quire.Controls.Plots.Presenter.IMarkersContainer verticalRange, global::Quire.Controls.Plots.Presenter.IValueToScreen horizontalValueToScreen, global::Quire.Controls.Plots.Presenter.IValueToScreen verticalValueToScreen)
+    {
+        HorizontalValueToScreen = horizontalValueToScreen;
+        VerticalValueToScreen = verticalValueToScreen;
+        _horizontalRange = horizontalRange;
+        _verticalRange = verticalRange;
+        _horizontalRange.RangeChanged += () => HandleRangeChanged(VerticalMarkers, _horizontalRange);
+        _verticalRange.RangeChanged += () => HandleRangeChanged(HorizontalMarkers, _verticalRange);
+        _horizontalRange.PropertyChanged += (sender, e) => HandleRangePropertyChanged(e, VerticalMarkers, _horizontalRange);
+        _verticalRange.PropertyChanged += (sender, e) => HandleRangePropertyChanged(e, HorizontalMarkers, _verticalRange);
+        _horizontalMarkers.RangeChanged += HorizontalMarkersCollectionChanged;
+        _verticalMarkers.RangeChanged += VerticalMarkersCollectionChanged;
+        CreateCommandBinding(AddVerticalMarkerCommand, _ => AddVerticalMarker(), _ => _horizontalRange.CanHaveMarkers);
+        CreateCommandBinding(AddHorizontalMarkerCommand, _ => AddHorizontalMarker(), _ => _verticalRange.CanHaveMarkers);
+        CreateCommandBinding(AddPointMarkerCommand, _ => AddPointMarker());
+        CreateCommandBinding(DeleteMarkerCommand, _ => DeleteMarker(), _ => CanDeleteMarker());
+        RoutedEventBindings.Add(new RoutedEventBinding(EvaluativeEquationControl.RequestRemoveEvent, new global::System.Windows.RoutedEventHandler((sender, e) => DeleteMarker())));
+    }
 
     public event global::System.EventHandler<global::Quire.Controls.Plots.ViewModel.MarkerEventArgs> MarkerAdded;
 
@@ -83,8 +102,6 @@ internal partial class MarkersViewModel
     public ObservableCollection<AxisMarkerViewModel> HorizontalMarkers => _horizontalMarkers;
 
     public IObservableRangeCollection<BaseMarkerViewModel> AllMarkers => _allMarkers;
-
-    private global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel _activeMarker;
 
     public BaseMarkerViewModel ActiveMarker
     {
