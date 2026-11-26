@@ -40,6 +40,8 @@ import time
 import uuid
 from xml.sax.saxutils import quoteattr
 
+import merge_lock
+
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_INSTALL = (r'C:\Program Files\PTC\Mathcad Prime 12.0.1.0' if os.name == 'nt'
                    else '/mnt/c/Program Files/PTC/Mathcad Prime 12.0.1.0')
@@ -822,7 +824,9 @@ def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vc
                    timings=None, prefix='candidate'):
     """Build the projects in Release and scan them with MethodAudit; keep is where a failed scan's inventory goes."""
     timings = timings if timings is not None else {}
-    with timed(timings, prefix + '_build'):
+    # Every build, from lane_merge or a worker's own release_il.py run, takes one of the machine-wide validation
+    # slots: a dozen builds at once exhaust memory and make all of them slower than a few at a time.
+    with merge_lock.validation_slot(), timed(timings, prefix + '_build'):
         assemblies = work / 'assemblies'
         env = dict(os.environ)
         # C++/CLI builds use the pinned MSVC; the production .csproj receives it as QuireMsvcInstallDir.
@@ -849,7 +853,7 @@ def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vc
             solution.parent.mkdir(parents=True, exist_ok=True)
             solution.write_text('<Solution>\n' + ''.join(f'  <Project Path={quoteattr(str(t.resolve()))} />\n' for t in targets)
                                 + '</Solution>\n', encoding='utf-8')
-            build_solution([dotnet, 'build', solution, '-c', 'Release', '--no-incremental', '-nodeReuse:false', '-o', assemblies,
+            build_solution([dotnet, 'build', solution, '-c', 'Release', '--no-incremental', '-nodeReuse:false', '-maxcpucount:4', '-o', assemblies,
                             '-nologo', '-v:q', '-p:EnableSourceControlManagerQueries=false',
                             '-p:ShouldUnsetParentConfigurationAndPlatform=false'], root, log, timeout, env)
         for project in projects:
