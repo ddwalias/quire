@@ -269,7 +269,29 @@ public partial class PlotModel3D
         SynchronizationStatus = _traces.Any(trace => trace.SynchronizationStatus == SynchronizationStatus.Pending) ? SynchronizationStatus.Pending : SynchronizationStatus.Synchronized;
     }
 
-    private void TracePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void TracePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args)
+    {
+        IPlotTraceModel3D trace = sender as IPlotTraceModel3D;
+        if (AssertionE.Failed == (AssertionE)DebugTools.DevAssert(trace != null, null, Array.Empty<object>()))
+        {
+            return;
+        }
+        switch (args.PropertyName)
+        {
+            case "TraceBounds":
+                UpdateCommonTraceBounds();
+                break;
+            case "CalculatingStatus":
+                ComputeTotalTracesCalculationStatus();
+                break;
+            case "SynchronizationStatus":
+                ComputeTotalTracesSynchronizationStatus();
+                break;
+            case "Error":
+                HasError = _traces.Any(traceModel => traceModel.Error != null);
+                break;
+        }
+    }
 
     private void SetRangeOnAxes(Rect3D newRange)
     {
