@@ -62,31 +62,13 @@ public partial class VisualDataCollection : global::System.Windows.DependencyObj
     [global::Quire.Mirror.MirrorStub]
     private void LogicalDataChanged(global::Quire.Controls.Plots.Contour.Model.ContourLogicalDataCollection newValue, global::Quire.Controls.Plots.Contour.Model.ContourLogicalDataCollection oldValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private global::Quire.Controls.Plots.Contour.View.VisualData CreateContourVisualData(global::Quire.Controls.Plots.Contour.Model.ContourLogicalData contourLogicalData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     internal void PositionLabels() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerator<global::Quire.Controls.Plots.Contour.View.VisualData> GetEnumerator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.Contour.View.VisualData CreateContourVisualData(global::Quire.Controls.Plots.Contour.Model.ContourLogicalData contourLogicalData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.Contour.View.VisualData CreateVisualDataRaw(global::Quire.Controls.Plots.Contour.Model.ContourLogicalData contourLogicalData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireCollectionReset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Add(global::Quire.Controls.Plots.Contour.View.VisualData item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Clear() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool Contains(global::Quire.Controls.Plots.Contour.View.VisualData item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CopyTo(global::Quire.Controls.Plots.Contour.View.VisualData[] array, int arrayIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool Remove(global::Quire.Controls.Plots.Contour.View.VisualData item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void Initialize(global::Quire.Controls.Plots.Presenter.IValueToScreen horizontalTransformer, global::Quire.Controls.Plots.Presenter.IValueToScreen verticalTransformer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UpdateBrushes(global::System.Windows.Media.Brush[] brushes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetContoursLineStyle(object parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -95,8 +77,6 @@ public partial class VisualDataCollection : global::System.Windows.DependencyObj
     private void SetLineWeight(double newLineWeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetContoursLineColor(global::System.Windows.Media.Color newLinesColor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnPropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Contour.View.VisualDataCollection+PropertyNames, Ptc.Controls.Plots")]
     public static partial class PropertyNames

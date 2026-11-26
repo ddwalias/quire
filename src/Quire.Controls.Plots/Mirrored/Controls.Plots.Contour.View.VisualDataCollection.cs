@@ -1,19 +1,22 @@
 #nullable disable
 #pragma warning disable
 
-using System;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-using Quire;
 using Quire.Controls.Core;
 using Quire.Controls.Plots.Contour.Model;
 using Quire.Controls.Plots.Presenter;
 using Quire.Controls.Plots.Traces;
 using Quire.Controls.Plots.ViewModel;
 using Quire.Wpf;
+using Quire;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Media;
+using System.Windows;
+using System;
 
 namespace Quire.Controls.Plots.Contour.View;
 
@@ -305,5 +308,84 @@ public partial class VisualDataCollection
         VisualDataCollection obj = d as VisualDataCollection;
         DebugTools.DevAssert(d != null, null);
         obj.PositionLabels();
+    }
+
+    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
+
+    private VisualData CreateVisualDataRaw(ContourLogicalData contourLogicalData)
+    {
+        return new VisualData(contourLogicalData.Points, HorizontalValueToScreen, VerticalValueToScreen);
+    }
+
+    private void FireCollectionReset()
+    {
+        if (CollectionChanged != null)
+        {
+            CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        }
+    }
+
+    public void Add(VisualData item)
+    {
+        throw new NotSupportedException();
+    }
+
+    public void Clear()
+    {
+        throw new NotSupportedException();
+    }
+
+    public bool Contains(VisualData item)
+    {
+        return _visualData.Contains(item, null);
+    }
+
+    public void CopyTo(VisualData[] array, int arrayIndex)
+    {
+        _visualData.CopyTo(array, arrayIndex);
+    }
+
+    public bool Remove(VisualData item)
+    {
+        throw new NotSupportedException();
+    }
+
+    public void UpdateBrushes(Brush[] brushes)
+    {
+        if (brushes != null && brushes.Length != 0)
+        {
+            ContourLogicalDataCollection contourLogicalData = ContourLogicalData;
+            for (int num = 0; num < _visualData.Length; num++)
+            {
+                int extendedIntervalIndex = contourLogicalData.GetExtendedIntervalIndex(num);
+                if (-1 < extendedIntervalIndex && extendedIntervalIndex < brushes.Length)
+                {
+                    _visualData[num].Fill = brushes[extendedIntervalIndex];
+                }
+                else
+                {
+                    _visualData[num].Fill = null;
+                }
+            }
+        }
+        else
+        {
+            VisualData[] visualData = _visualData;
+            for (int num2 = 0; num2 < visualData.Length; num2++)
+            {
+                visualData[num2].Fill = null;
+            }
+        }
+    }
+
+    private void OnPropertyChanged(string propertyName)
+    {
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
