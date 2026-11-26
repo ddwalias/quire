@@ -17,6 +17,32 @@ public partial class ZombieCreator
 
     private IWhiteboardItem Item { get; set; }
 
+    private Rect ItemBounds
+    {
+        get
+        {
+            Rect? itemBounds = _itemBounds;
+            if (!itemBounds.HasValue)
+            {
+                return (_itemBounds = ItemManager.GetDescendantBounds(Item)).Value;
+            }
+            return itemBounds.GetValueOrDefault();
+        }
+    }
+
+    private Size ItemSize
+    {
+        get
+        {
+            Size? itemSize = _itemSize;
+            if (!itemSize.HasValue)
+            {
+                return (_itemSize = ItemManager.GetRenderSize(Item)).Value;
+            }
+            return itemSize.GetValueOrDefault();
+        }
+    }
+
     private double PageBodyHeight => _pageLayout.PageBodyHeight;
 
     public ZombieCreator(IWhiteboardItem item, int pageIndex, WorksheetPageLayout pageLayout)

@@ -18,10 +18,6 @@ public partial class ZombieCreator
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.Controls.Core.WorksheetPageLayout _pageLayout;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Rect ItemBounds { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Size ItemSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.ICollection<global::Quire.Controls.Worksheet.IWhiteboardItemZombie> CreateZombies(out global::Quire.Controls.Worksheet.IWhiteboardItemZombie activeZombie) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void CreateZombiesAboveItemPage(global::Quire.Controls.Worksheet.ZombieCreator.CreateZombiesData data, global::Quire.Controls.Core.ICustomSplitItem customSplitItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
