@@ -747,12 +747,6 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     protected override void PropagateTextStyleChangedHandler() => base.PropagateTextStyleChangedHandler();
     [global::Quire.Mirror.MirrorStub]
     protected override void PropagateInitialTextFormat() => base.PropagateInitialTextFormat();
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Delegate _CreateDelegate(global::System.Type delegateType, string handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotControl+NumberOfPointsAction, Ptc.Controls.Plots")]
     public enum NumberOfPointsAction
