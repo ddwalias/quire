@@ -72,13 +72,9 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     public int DisplayMessageId(global::Quire.PersistentDataObjects.worksheetMessageIdType messageId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void TextStyleChanged(global::System.Collections.Generic.ICollection<global::Quire.TextStyleData> arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void SetStyleValues(global::Quire.Core.TextFormat textFormat, global::Quire.ITextStyle style) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void Initialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateFirstPageHeaderFooter() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -105,8 +101,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     private global::Quire.Controls.Core.IEquationControl CreateNewEquation(global::System.Windows.Input.ICommand command, object parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void CreateNewEquationWithInputControl(global::System.Windows.Input.ICommand command, global::System.Nullable<global::Quire.Controls.Core.InputControlTypes> parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IImageControl CreateImageControl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IImageControl CreateImageControl(string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

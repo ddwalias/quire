@@ -1868,4 +1868,32 @@ internal partial class WorksheetViewModel
         eventArgs.Handled = true;
         HandleTab(eventArgs.Parameter);
     }
+
+    public IImageControl CreateImageControl()
+    {
+        IImageControl imageControl = ControlCreator.CreateImageControl();
+        if (imageControl != null)
+        {
+            AddItemAtInsertionPointAndActivate(imageControl, "Add Image");
+        }
+        return imageControl;
+    }
+
+    private void HandleModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        OnPropertyChanged(e.PropertyName);
+    }
+
+    private void TextStyleChanged(ICollection<TextStyleData> arg)
+    {
+        foreach (TextStyleData item in arg)
+        {
+            if (item.StyleKey == "Normal")
+            {
+                TextStyle style = new TextStyle(item);
+                SetStyleValues(ContentTextFormat, style);
+                break;
+            }
+        }
+    }
 }
