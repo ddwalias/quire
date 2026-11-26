@@ -1,5 +1,3 @@
-#nullable disable
-
 using System;
 using System.Windows.Input;
 using Quire.FunctionalitiesLimitation;
@@ -10,6 +8,86 @@ namespace Quire;
 
 public static partial class AppCommands
 {
+    private static readonly Type _typeOfThis;
+
+    public static readonly RoutedUICommand NewEngineeringDocument;
+
+    public static readonly RoutedUICommand SaveEngineeringDocumentWithInputsOutputs;
+
+    public static readonly RoutedUICommand SaveEngineeringDocumentWithoutInputsOutputs;
+
+    public static readonly RoutedUICommand SaveEngineeringDocumentAs;
+
+    public static readonly RoutedUICommand SaveEngineeringDocumentCopy;
+
+    public static readonly RoutedUICommand SaveEngineeringDocumentAsXPS;
+
+    public static readonly RoutedUICommand SaveEngineeringDocumentAsMCDX;
+
+    public static readonly RoutedUICommand ShowSaveAsError;
+
+    public static readonly RoutedUICommand OpenEngineeringDocument;
+
+    public static readonly RoutedUICommand PrintEngineeringDocument;
+
+    public static readonly RoutedUICommand CloseEngineeringDocument;
+
+    public static readonly RoutedUICommandWithFunctionalityKey MoveTabCommand;
+
+    public static readonly RoutedUICommandWithFunctionalityKey CloseTabsCommand;
+
+    public static readonly RoutedUICommand MruOpenEngineeringDocWithoutCommandExtender;
+
+    public static readonly RoutedUICommand MruNewEngineeringDocWithoutCommandExtender;
+
+    public static readonly RoutedUICommand DisplayHelp;
+
+    public static readonly RoutedUICommand DisplayTutorial;
+
+    public static readonly RoutedUICommand DisplayAbout;
+
+    public static readonly RoutedUICommand DisplayOptions;
+
+    public static readonly RoutedUICommand DisplayHyperlink;
+
+    public static readonly RoutedUICommand Exit;
+
+    public static readonly RoutedUICommand DisplayFreemiumAboutBox;
+
+    public static readonly RoutedUICommand DisplayLicenseStatusIfNeeded;
+
+    public static readonly RoutedUICommand FindNext;
+
+    public static readonly RoutedUICommand FindPrevious;
+
+    public static readonly RoutedUICommand ReplaceAndFindNext;
+
+    public static readonly RoutedUICommand GoToFind;
+
+    public static readonly RoutedUICommand GoToPage;
+
+    public static readonly RoutedUICommand WorksheetControlVisibleObjectsDebugging;
+
+    public static readonly RoutedUICommand WorksheetControlUIDebugging;
+
+    public static readonly RoutedUICommand ImportExcel;
+
+    public static readonly RoutedUICommand OpenInputOutputDesignationWindow;
+
+    public static readonly RoutedUICommand OpenFunctionBrowser;
+
+    public static readonly RoutedUICommand LaunchConverter;
+
+    public static readonly RoutedUICommand SaveEngineeringDocumentAsRtf;
+
+    public static readonly RoutedUICommand SaveEngineeringDocumentAsPdf;
+
+    public static readonly RoutedUICommand SaveEngineeringDocumentAsMCTX;
+
+    public static readonly RoutedUICommand NewEngineeringDocumentFromExisting;
+
+    public static readonly RoutedUICommand OpenTemplateDocument;
+
     static AppCommands()
     {
         _typeOfThis = typeof(AppCommands);
