@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows.Media;
+using System.Xml;
 using Quire.Calculation.Core;
 using Quire.PersistentDataObjects;
 using Quire.Serialization;
@@ -147,7 +148,28 @@ public sealed partial class ContourPlotModel
         OnPlotCalculatableError(e);
     }
 
-    public override bool SetDataObject(global::Quire.Serialization.IDeS11NProvider de11NProvider, global::Quire.PersistentDataObjects.plotType dataObject, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public override bool SetDataObject(IDeS11NProvider de11NProvider, plotType dataObject, IResultManager resultManager)
+    {
+        IsDeserializing = true;
+        contourPlotType contourPlot = dataObject.Item as contourPlotType;
+        DebugTools.DevAssert(contourPlot != null, null, Array.Empty<object>());
+        HasOriginPositioning = dataObject.originpositioning;
+        ShowAxisExpressions = dataObject.showaxisexpressions;
+        PlotBackgroundType = (Quire.Controls.Core.BackgroundTypeE)Enum.Parse(typeof(global::Quire.PersistentDataObjects.BackgroundType), dataObject.backgroundtype.ToString(), true);
+        axes3Type axes = contourPlot.axes;
+        XAxisModel.RegionXmlNode = axes.xAxisRaw;
+        YAxisModel.RegionXmlNode = axes.yAxisRaw;
+        XmlNode zAxisRaw = axes.zAxisRaw;
+        if (zAxisRaw != null)
+        {
+            ZAxisModel.RegionXmlNode = zAxisRaw;
+        }
+        _contourCalculatable.PlotEquation.SetRegionXmlNode(contourPlot.plotEquationRaw);
+        SetContourDataObject(contourPlot.contour, resultManager);
+        GraphSizeDataObject = contourPlot.graphsize;
+        IsDeserializing = false;
+        return dataObject.disablecalc;
+    }
 
     public override plotType GetDataObject(IS11NProvider s11NProvider, IResultManager resultManager, bool hideFromCalculationContext)
     {
