@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Threading;
 using Quire.Calculation.Core;
+using Quire.Engine;
 using Quire.Wpf;
 namespace Quire.Calculation;
 
@@ -31,7 +32,19 @@ partial class CalculationController
     {
         _enableDebugWrites = enable;
     }
-    public static global::Quire.Calculation.CalculationController BindTo(global::Quire.Calculation.Core.ICalculatableContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static CalculationController BindTo(ICalculatableContext context)
+    {
+        if (_engineBuilder == null)
+        {
+            _engineBuilder = new EngineBuilder();
+        }
+        int importRequestHandle;
+        int initialHandle;
+        IEngine engine = _engineBuilder.CreateEngine(string.Format(EngineBuilder.ImportRequestFormat, UnitSystems.SI), out importRequestHandle, out initialHandle);
+        CalculationController calculationController = new CalculationController(context, engine, importRequestHandle, initialHandle);
+        _boundControllers.Add(calculationController);
+        return calculationController;
+    }
     public static void Dispose() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
     public static void UNITTEST_InitBuilder(global::Quire.Calculation.EngineBuilder engineBuilder)
@@ -42,7 +55,19 @@ partial class CalculationController
         }
         _engineBuilder = engineBuilder;
     }
-    private void HookupAndInitializeEngine() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HookupAndInitializeEngine()
+    {
+        HandleEngineBusy(_engine.IsBusy);
+        HandleEngineUpToDate(_engine.IsUpToDate);
+        _engine.AddNodeCallback(HandleEngineNodeCallback);
+        _engine.OnBusy += HandleEngineBusy;
+        _engine.OnUpToDate += HandleEngineUpToDate;
+        HandleStartAutoCalc();
+        if (_evaluatingEnabled)
+        {
+            _engine.StartWorkers();
+        }
+    }
     private void HookupContextEvents()
     {
         _context.GetEngineVersion += HandleGetEngineVersion;
