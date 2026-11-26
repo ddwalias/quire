@@ -217,7 +217,24 @@ public sealed partial class ContourPlotModel
         return limitExpression.CalculatedValue;
     }
 
-    private void ZAxisModelRangeChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ZAxisModelRangeChanged()
+    {
+        if (ZAxisModel.StartExpression != null && ZAxisModel.SecondTickExpression != null && ZAxisModel.EndExpression != null && (ZAxisModel.StartExpression.IsValueValid || ZAxisModel.EndExpression.IsValueValid || ZAxisModel.SecondTickExpression.IsValueValid))
+        {
+            if (_contourCalculatable.Levels.Array != ZAxisModel.MajorTickMarks.Values)
+            {
+                _contourCalculatable.Levels = new Levels
+                {
+                    Array = ZAxisModel.MajorTickMarks.Values
+                };
+                return;
+            }
+        }
+        if (_contourCalculatable.Levels.Array != null)
+        {
+            SetDefaultLevels();
+        }
+    }
 
     private void SetDefaultLevels()
     {
