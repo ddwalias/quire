@@ -1153,7 +1153,24 @@ public partial class RichTextBase
         CurrentProofingLanguage = ComputeProofingLanguage(range);
     }
 
-    internal global::System.Windows.Markup.XmlLanguage ComputeProofingLanguage(global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal XmlLanguage ComputeProofingLanguage(global::System.Windows.Documents.TextRange range)
+    {
+        IEnumerable<Run> runs = range.EnumerateRunsInRange();
+        if (runs.IsNotEmpty())
+        {
+            XmlLanguage language;
+            if (!runs.Select(run => run.Language).HasCommonValue(out language))
+            {
+                return null;
+            }
+            return language;
+        }
+        if (WhiteboardDependencyProperties.GetIsSelected(this) || IsEmpty)
+        {
+            return Document.Language;
+        }
+        return XmlLanguage.Empty;
+    }
 
     private void AddBlockedSelectDirectionForNextElement(LogicalDirection direction)
     {
