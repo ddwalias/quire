@@ -2114,4 +2114,14 @@ internal partial class WorksheetViewModel
             PageManager.GoToPage(PageManager.Pages[pageNum - 1]);
         }
     }
+    public bool CanGotopage(object pageNumber)
+    {
+        int pageNum = 1;
+        if (int.TryParse(pageNumber.ToString(), out pageNum) && pageNum > 0 && pageNum <= PageManager.Pages.Count)
+        {
+            return true;
+        }
+
+        return false;
+    }
 }

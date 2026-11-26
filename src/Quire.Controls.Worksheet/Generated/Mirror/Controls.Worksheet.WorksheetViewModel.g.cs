@@ -180,8 +180,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     public void MoveItemsBy(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items, global::System.Windows.Vector offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool CanGotopage(object pageNumber) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void InsertSpace(global::System.Nullable<int> numberOfLines) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RemoveSpace(global::System.Nullable<int> numberOfLines, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
