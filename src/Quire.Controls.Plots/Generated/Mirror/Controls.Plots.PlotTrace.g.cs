@@ -146,28 +146,6 @@ public partial class PlotTrace : global::System.Windows.FrameworkElement, global
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action RequestResetIsTypeDefault;
     [global::Quire.Mirror.MirrorStub]
-    private static void OnImageRendererChanged(global::System.Windows.DependencyObject depObj, global::System.Windows.DependencyPropertyChangedEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void HandleUseTraceInvalidStylechanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static object NumberOfPointsCoerceValue(global::System.Windows.DependencyObject d, object baseValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void NumberOfPointsChangedCallback(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void IsNumOfPointsMutableChangedCallback(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static object CoerceSymbol(global::System.Windows.DependencyObject d, object baseValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static object CoerceLineStyle(global::System.Windows.DependencyObject d, object baseValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void TraceChangedCallback(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void TraceLineStyleChangedCallback(global::System.Windows.DependencyObject sender, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void TraceSymbolChangedCallback(global::System.Windows.DependencyObject sender, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void TypeChangedCallback(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Rect ComputeViewPortRect() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void MoveFocusToEquation(global::Quire.Controls.Plots.Presenter.AxesIndex id) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -5,7 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using Quire;
 using Quire.Calculation.Core;
 using Quire.Calculation.Core.Trace2DResults;
 using Quire.Controls.Plots.Presenter;
@@ -480,6 +483,107 @@ public partial class PlotTrace
         private set
         {
             SetValue(_yMinGapPropertyKey, value);
+        }
+    }
+
+    private static void OnImageRendererChanged(DependencyObject depObj, DependencyPropertyChangedEventArgs eventArgs)
+    {
+        if (eventArgs.OldValue == null || eventArgs.NewValue == null)
+        {
+            CommandManager.InvalidateRequerySuggested();
+        }
+    }
+
+    private static void HandleUseTraceInvalidStylechanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is PlotTrace plotTrace && e.OldValue != e.NewValue && plotTrace.ViewModel != null)
+        {
+            plotTrace.ViewModel.ImageRendererViewModel.UseTraceInvalidStyle = (bool)e.NewValue;
+        }
+    }
+
+    private static object NumberOfPointsCoerceValue(DependencyObject d, object baseValue)
+    {
+        PlotTrace plotTrace = (PlotTrace)(object)d;
+        if (!plotTrace.IsNumOfPointsMutable)
+        {
+            return plotTrace.NumberOfPoints;
+        }
+        int num = (int)baseValue;
+        num = ((num < 100) ? 100 : num);
+        num = ((num > 3000) ? 3000 : num);
+        return num;
+    }
+
+    private static void NumberOfPointsChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is PlotTrace plotTrace && plotTrace.NumberOfPointsChanged != null && (int)e.OldValue != (int)e.NewValue)
+        {
+            plotTrace.NumberOfPointsChanged();
+        }
+    }
+
+    private static void IsNumOfPointsMutableChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is PlotTrace plotTrace && plotTrace.IsNumOfPointsMutableChanged != null && (bool)e.OldValue != (bool)e.NewValue)
+        {
+            plotTrace.IsNumOfPointsMutableChanged();
+        }
+    }
+
+    private static object CoerceSymbol(DependencyObject d, object baseValue)
+    {
+        PlotTrace plotTrace = (PlotTrace)(object)d;
+        if (plotTrace.LineStyle == LineStyle.None && (global::Quire.Controls.Plots.Presenter.TraceSymbol)baseValue == global::Quire.Controls.Plots.Presenter.TraceSymbol.none)
+        {
+            return plotTrace.Symbol;
+        }
+        return baseValue;
+    }
+
+    private static object CoerceLineStyle(DependencyObject d, object baseValue)
+    {
+        PlotTrace plotTrace = (PlotTrace)(object)d;
+        if ((LineStyle)baseValue == LineStyle.None && (plotTrace.Symbol == global::Quire.Controls.Plots.Presenter.TraceSymbol.none || plotTrace.Type == TraceType.Stems))
+        {
+            return plotTrace.LineStyle;
+        }
+        return baseValue;
+    }
+
+    private static void TraceChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is PlotTrace plotTrace)
+        {
+            plotTrace.FireTraceChanged();
+        }
+    }
+
+    private static void TraceLineStyleChangedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs args)
+    {
+        PlotTrace plotTrace = sender as PlotTrace;
+        if (DebugTools.AssertNotNull(plotTrace, null).Passed)
+        {
+            plotTrace.FireTraceChanged();
+        }
+    }
+
+    private static void TraceSymbolChangedCallback(DependencyObject sender, DependencyPropertyChangedEventArgs args)
+    {
+        PlotTrace plotTrace = sender as PlotTrace;
+        if (DebugTools.AssertNotNull(plotTrace, null).Passed)
+        {
+            plotTrace.FireTraceChanged();
+        }
+    }
+
+    private static void TypeChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is PlotTrace plotTrace)
+        {
+            Panel.SetZIndex(plotTrace, (plotTrace.Type == TraceType.Lines) ? 1 : 0);
+            plotTrace.FireTypeChanged();
+            plotTrace._renderer = plotTrace._rendererFactory.GetRenderer(plotTrace.Type);
         }
     }
 }
