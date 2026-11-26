@@ -2096,4 +2096,14 @@ internal partial class WorksheetViewModel
             whiteboard.ForbidGrowingMovementRight = OverlapsRightMargin(item);
         }
     }
+    private void AddItemToAppropriatePage(IWhiteboardItem item)
+    {
+        _pageManager.AddItemToAppropriatePage(item);
+        UpdateGridRestrictedAreaForItem(item);
+    }
+
+    private void OffsetItemsVertically(double offset, IEnumerable<IWhiteboardItem> itemsToOffset)
+    {
+        CommandBuffer.ExecuteAndAttach(new MoveItemsCommandWithSideEffects(this, new Vector(0.0, offset), itemsToOffset.ToList()));
+    }
 }
