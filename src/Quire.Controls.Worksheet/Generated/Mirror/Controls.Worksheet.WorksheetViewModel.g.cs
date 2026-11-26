@@ -266,11 +266,7 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     private void HandleItemsCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HandleItemMoved(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point oldLocation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void HandleItemsAdded(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleIsOnVisiblePagePropertyChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void CheckFlagsAndSplitItemIfNeeded(global::Quire.Controls.Core.IWhiteboardItem item, bool isOnVisiblePage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -281,8 +277,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     private void HandleActivatePartContainingChildRequested(global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainer wbContainer, global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleItemSplitRequest(global::Quire.Controls.Core.ICustomSplitItem customSplitItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleCollapsedStateChanged(global::Quire.Controls.Core.ICollapsibleAreaControl item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void NavigateOutsideMovingAreaDownIfNeeded(global::Quire.Controls.Core.ICollapsibleAreaControl area, global::Quire.Direction direction, bool moveDown) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

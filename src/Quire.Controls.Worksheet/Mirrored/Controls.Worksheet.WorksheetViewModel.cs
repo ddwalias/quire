@@ -2052,4 +2052,24 @@ internal partial class WorksheetViewModel
         FirstPageFooterTextFormat = new TextFormat("footerLayoutStyle");
         LabeledIdFormat = VisualHelper.GetDefaultLabeledIdFormat();
     }
+    private void HandleItemMoved(IWhiteboardItem item, Point oldLocation)
+    {
+        _pageManager.HandleItemMoved(item, oldLocation);
+        FireChanged();
+    }
+
+    private void HandleIsOnVisiblePagePropertyChanged(object sender, DependencyPropertyChangedEventArgs args)
+    {
+        CheckFlagsAndSplitItemIfNeeded(sender as IWhiteboardItem, (bool)args.NewValue);
+    }
+
+    private void HandleCollapsedStateChanged(ICollapsibleAreaControl item)
+    {
+        if (!item.IsCollapsed && !SelectedItems.Contains(item) && _itemManager.GetCanActivate(item))
+        {
+            ActivateAndNavigateIntoArea(item);
+        }
+
+        UpdateNonprintableSpaceIndicatorWhenAreaHeightChanged(item);
+    }
 }
