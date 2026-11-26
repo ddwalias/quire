@@ -324,7 +324,43 @@ public partial class WorksheetControlContent
         }
     }
 
-    public void SelectContiguous(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SelectContiguous(global::Quire.Controls.Core.IWhiteboardItem item)
+    {
+        if (item == ActiveItem)
+        {
+            SelectItem(ActiveItem);
+            return;
+        }
+        int num = WhiteboardItems.IndexOf(item);
+        List<IWhiteboardItem> itemsToSelect = new List<IWhiteboardItem>();
+        if (ActiveItem == null && SelectedItems.IsEmpty())
+        {
+            0.UpTo(num, (int index) =>
+            {
+                itemsToSelect.Add(WhiteboardItems[index]);
+            });
+        }
+        else
+        {
+            int num2 = WhiteboardItems.IndexOf(ActiveItem ?? SelectedItems.First());
+            if (num2 < num)
+            {
+                num2.UpTo(num, (int index) =>
+                {
+                    itemsToSelect.Add(WhiteboardItems[index]);
+                });
+            }
+            else
+            {
+                num2.DownTo(num, (int index) =>
+                {
+                    itemsToSelect.Add(WhiteboardItems[index]);
+                });
+            }
+        }
+        ClearSelection();
+        SelectItems(itemsToSelect);
+    }
 
     public void SelectAllItems()
     {
