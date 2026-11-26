@@ -4,6 +4,7 @@
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Quire.Undo;
+using Quire.FunctionalitiesLimitation;
 using Quire.Controls.Core.AttachedBehavior;
 using Quire.Controls.Plots.Model;
 using Quire.Controls.Plots.Presenter;
@@ -13,7 +14,7 @@ namespace Quire.Controls.Plots.ViewModel;
 
 internal partial class MarkersViewModel
 {
-    private static readonly global::System.Type _typeOfThis;
+    private static readonly global::System.Type _typeOfThis = typeof(MarkersViewModel);
 
     private readonly global::Quire.Controls.Plots.Presenter.IMarkersContainer _verticalRange;
 
@@ -27,13 +28,13 @@ internal partial class MarkersViewModel
 
     private readonly global::Quire.Controls.Core.AttachedBehavior.RoutedEventBindingCollection _routedEventBindings;
 
-    public static readonly global::System.Windows.Input.RoutedUICommand AddVerticalMarkerCommand;
+    public static readonly global::System.Windows.Input.RoutedUICommand AddVerticalMarkerCommand = new RoutedUICommandWithFunctionalityKey("Add Vertical Marker", "AddVerticalMarker", _typeOfThis, EnumFunctionalityKey.PlotsCategoryAddVerticalMarker);
 
-    public static readonly global::System.Windows.Input.RoutedUICommand AddHorizontalMarkerCommand;
+    public static readonly global::System.Windows.Input.RoutedUICommand AddHorizontalMarkerCommand = new RoutedUICommandWithFunctionalityKey("Add Horizontal Marker", "AddHorizontalMarker", _typeOfThis, EnumFunctionalityKey.PlotsCategoryAddHorizontalMarker);
 
-    public static readonly global::System.Windows.Input.RoutedCommand AddPointMarkerCommand;
+    public static readonly global::System.Windows.Input.RoutedCommand AddPointMarkerCommand = new global::System.Windows.Input.RoutedCommand("AddPointMarker", typeof(MarkersViewModel));
 
-    public static readonly global::System.Windows.Input.RoutedUICommand DeleteMarkerCommand;
+    public static readonly global::System.Windows.Input.RoutedUICommand DeleteMarkerCommand = new RoutedUICommandWithFunctionalityKey("Delete Marker", "DeleteMarker", _typeOfThis, EnumFunctionalityKey.PlotsCategoryDeleteMarker);
 
     public MarkersViewModel(global::Quire.Controls.Plots.Presenter.IMarkersContainer horizontalRange, global::Quire.Controls.Plots.Presenter.IMarkersContainer verticalRange, global::Quire.Controls.Plots.Presenter.IValueToScreen horizontalValueToScreen, global::Quire.Controls.Plots.Presenter.IValueToScreen verticalValueToScreen) { }
 
@@ -154,7 +155,21 @@ internal partial class MarkersViewModel
         return ActiveMarker != null;
     }
 
-    internal void DeleteMarker() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal void DeleteMarker()
+    {
+        BaseMarkerViewModel marker;
+        // The IL compares the constant on the left of == (Failed is 1).
+        if (global::Quire.AssertionE.Failed == global::Quire.DebugTools.DevAssert(ActiveMarker != null))
+        {
+            return;
+        }
+        marker = ActiveMarker;
+        CommandBuffer.Execute(new UndoableCommand("Delete Marker", () =>
+        {
+            DeleteMarker(marker);
+            return true;
+        }, () => AddMarker(marker)), null);
+    }
 
     private void AddMarker(BaseMarkerViewModel marker)
     {
@@ -409,7 +424,14 @@ internal partial class MarkersViewModel
             e.Action);
     }
 
-    internal global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> InternalCalculatables { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    internal global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> InternalCalculatables
+    {
+        get
+        {
+            global::System.Func<AxisMarker, global::Quire.Calculation.Core.ICalculatable> calculatable = marker => marker.Calculatable;
+            return _horizontalRange.Markers.Select(calculatable).Union(_verticalRange.Markers.Select(calculatable));
+        }
+    }
 
     public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableAdded;
 
