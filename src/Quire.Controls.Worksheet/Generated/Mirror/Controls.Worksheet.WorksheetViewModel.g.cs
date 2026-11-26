@@ -164,8 +164,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     public bool HandleMouseDown(object originalSource, bool alreadyHandled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void HandleBlockedPreviewMouseButton(object originalSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public bool HandlePreviewMouseUp(object originalSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool HandleMouseUp(object originalSource, global::System.Windows.Point position, bool rightButton) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -391,8 +389,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     private void HandleHeaderFooterPageDown() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HookupCollectionChangedHandlers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetupDisplayFormats() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HookupDraggerHandlers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

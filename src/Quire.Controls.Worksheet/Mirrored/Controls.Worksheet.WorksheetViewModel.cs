@@ -2037,4 +2037,19 @@ internal partial class WorksheetViewModel
 
         return true;
     }
+    public void HandleBlockedPreviewMouseButton(object originalSource)
+    {
+        _worksheetMouseDownHandler.HandleBlockedPreviewMouseButton(originalSource);
+    }
+
+    private void SetupDisplayFormats()
+    {
+        ContentTextFormat = new TextFormat("areaLayoutStyle");
+        DisplayNumberFormat = new NumberFormat();
+        HeaderTextFormat = new TextFormat("headerLayoutStyle");
+        FooterTextFormat = new TextFormat("footerLayoutStyle");
+        FirstPageHeaderTextFormat = new TextFormat("headerLayoutStyle");
+        FirstPageFooterTextFormat = new TextFormat("footerLayoutStyle");
+        LabeledIdFormat = VisualHelper.GetDefaultLabeledIdFormat();
+    }
 }
