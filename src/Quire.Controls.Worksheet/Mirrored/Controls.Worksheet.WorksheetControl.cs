@@ -1047,6 +1047,19 @@ public partial class WorksheetControl
         }
     }
 
+    public void InitializeComponent()
+    {
+        if (_contentLoaded)
+        {
+            return;
+        }
+        _contentLoaded = true;
+        Uri resourceLocator = new Uri(
+            "/Quire.Controls.Worksheet;component/worksheetcontrol.xaml",
+            UriKind.Relative);
+        Application.LoadComponent(this, resourceLocator);
+    }
+
     object IWorksheetControl.FindResource(object key)
     {
         return FindResource(key);
