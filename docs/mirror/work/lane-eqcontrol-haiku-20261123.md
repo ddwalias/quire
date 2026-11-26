@@ -688,3 +688,13 @@
 - Members: properties `SymbolicEvalKeywordsVisibilityState`, `VisibleMatrixCellRange`, `EquationSExpression`; handlers `CanPerformCearCellsOperation`, `CanTraverseForward`, `CanTraverseBackward`, `CanToggleVisibleLhsOfDefinition`, `OnClearResultFormat`, `OnInsertFunction` (guard form on `as`), `OnInsertMatrix`, `OnInsertInputControl`, `OpenComboBoxEditingMode`.
 - Parked: `CanClearResultFormat` (Mathcad reads `DisplayNumberFormatProperty` without the `DependencyObject` cast that the source needs), `OnInsertId` (the Mathcad null-check order, `p != null && p.Name != null`, has not matched in three shapes).
 - Release IL: PASS, 3953 checked, zero failures (`.mirror-cache/release-il-e30b9215a3eb/release-il.json`).
+
+## Batch 99
+
+- Owner: haiku-equationcontrol-20261123; branch `haiku-equationcontrol-20261123-b99` (from main be82c9a53).
+- Layout (measured, not guessed): `GetErrorDisplayText` field moved before the `RequestRemove` event (its closure-ordinal slot is after `CreateToggleInputCommand`); `ChangedEvent` moved to between `ExecuteOnRootSizeChanged` and `HandleWarningOccured`. Probe ordinals now match Mathcad for `Activate` (218), `SimulateMouseClick` (220), `RestoreResult` (251 probe), `ExecuteOnRootLoaded` (296), `ExecuteOnRootSizeChanged` (297), `UpdateWidth` (412), `OnRootLoaded` (418), `SymbolicEvalKeywordsStateUndoRedoSupport` (452), `InputControlOnEquationActivated` (506), `ClearResultFormat` (579), `HandleWarningOccured` (400).
+- Members: `Activate` (positive-branch shape), `SimulateMouseClick`, `ExecuteOnRootSizeChanged`, `OnRootLoaded`.
+- Release IL: PASS, 3968 checked, zero failures (`.mirror-cache/release-il-cd59e38b200f/release-il.json`).
+- Blocked on ordinals: the six members with closures before the constructor (`SetStatusSynchronized`, `UpdateSynchronizationStatus`, `UpdateCalculatingStatus`, `UpdateAggregateFromModel`, `SubstituteAndCommitInputValue`, `CreateToggleInputCommand`) are each measured 4 too high. The cause is that `Generated/` compiles first, so the four nested types (in `.g.cs`) are counted before every hand-written member, while Mathcad counts them between `CreateToggleInputCommand` and the constructor. Fixing this needs a compile-order change in the generated file, not a hand-written member change.
+- Blocked on ordinals: `ShowError` (593 vs 591) and `ConvertAnyFormattedMatrixToDisplayMatrix` (631 vs 629) are each 2 too high, between `ClearResultFormat` and `ShowError`; not yet located.
+- Parked shapes: `ClearResultFormat` and `CanClearResultFormat` need the `DependencyObject` cast that Mathcad omits; `ExecuteOnRootLoaded`'s postponed lambda has one extra instruction.

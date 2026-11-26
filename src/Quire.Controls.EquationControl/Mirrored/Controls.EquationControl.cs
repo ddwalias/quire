@@ -247,7 +247,6 @@ public partial class EquationControl
     private bool _isSymbolicEvalKeywordsShown = true;
     public const double RecommendedSymbolicResultsWidthInInches = 5d;
     public static readonly double RecommendedSymbolicResultsWidth;
-    private readonly global::Quire.DelegateFunction1<string, global::Quire.Calculation.Core.EngineError> GetErrorDisplayText;
 
     public static bool WasSuspendedRegenerate
     {
@@ -359,6 +358,7 @@ public partial class EquationControl
         }
     }
 
+    private readonly global::Quire.DelegateFunction1<string, global::Quire.Calculation.Core.EngineError> GetErrorDisplayText;
     public event Action<IWhiteboardItem, Direction> RequestRemove = delegate { };
     public event global::System.Action RootNodeChanged;
     public event global::System.Action MeasureOverideCompleted;
@@ -413,7 +413,6 @@ public partial class EquationControl
     }
 
     public static readonly global::System.Windows.RoutedEvent ContentChangedEvent;
-    public static global::System.Windows.RoutedEvent ChangedEvent;
     private void SetupInputGestures() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     protected override void OnContextMenuClosing(global::System.Windows.Controls.ContextMenuEventArgs e) => base.OnContextMenuClosing(e);
     private void SetContextMenu(string contextMenuKey)
@@ -654,9 +653,51 @@ public partial class EquationControl
     public double VerticalAlignmentOffset => -TextBaselineOffset;
     public bool IsEmpty => _model.IsEmpty;
     private event global::System.Action<global::Quire.Controls.Core.FocusChangeLevel> _postActivated;
-    public void Activate(bool isActive) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void Activate(bool isActive)
+    {
+        if (isActive)
+        {
+            if (!IsKeyboardFocusWithin)
+            {
+                AppServiceRegistry.GetService<IFrameworkElementFacade>().ExecuteOnLoad(this, () =>
+                {
+                    if (!IsKeyboardFocusWithin)
+                    {
+                        bool activating = _view.Activating;
+                        _view.Activating = true;
+                        try
+                        {
+                            Focus();
+                        }
+                        finally
+                        {
+                            _view.Activating = activating;
+                        }
+                    }
+                });
+            }
+            else if (!_view.IsLogicalFocusWithin)
+            {
+                DebugTools.DevAssert(_view.IsKeyboardFocusWithin, null);
+                _view.FireActivated(setLogicalFocus: true);
+                _postActivated?.Invoke(FocusChangeLevel.Logical);
+            }
+            else
+            {
+                OnViewOnActivated(skipAnimation: true);
+                _postActivated?.Invoke(FocusChangeLevel.None);
+            }
+        }
+    }
     public global::System.Nullable<global::System.Windows.Vector> NavigateIntoItem(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void SimulateMouseClick(global::System.Windows.Point location, int numberOfClicks) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SimulateMouseClick(global::System.Windows.Point location, int numberOfClicks)
+    {
+        Activate(isActive: true);
+        WpfUtils.ExecuteOnLoad(this, () =>
+        {
+            _view.SimulateMouseClick(location, numberOfClicks);
+        });
+    }
     public bool CanNavigate(global::Quire.Direction direction)
     {
         return _model.CanNavigate(direction);
@@ -879,7 +920,17 @@ public partial class EquationControl
     }
 
     public void ExecuteOnRootLoaded(global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void ExecuteOnRootSizeChanged(global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ExecuteOnRootSizeChanged(global::System.Action action)
+    {
+        if (_view.RootNode is FrameworkElement frameworkElement)
+        {
+            frameworkElement.SizeChanged += (object sender, SizeChangedEventArgs args) =>
+            {
+                action();
+            };
+        }
+    }
+    public static global::System.Windows.RoutedEvent ChangedEvent;
     public void SetRegionXmlNode(global::System.Xml.XmlNode value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public global::System.Xml.XmlNode GetRegionXmlNode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -1414,7 +1465,19 @@ public partial class EquationControl
             }
         }
     }
-    private void OnRootLoaded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnRootLoaded()
+    {
+        RemoveMatrixResizeAdornerIfNotNeeded();
+        bool widthNotSet = double.IsNaN(Width);
+        AppServiceRegistry.GetService<IFrameworkElementFacade>().ExecuteOnLayoutUpdated(this, () =>
+        {
+            UpdateWidth(widthNotSet);
+        });
+        ExecuteOnRootSizeChanged(() =>
+        {
+            UpdateWidth(widthNotSet);
+        });
+    }
     private void _model_EquationChanged() => RaiseEvent(new RoutedEventArgs(ChangedEvent));
     private void RemoveMatrixResizeAdorner()
     {
@@ -1647,7 +1710,16 @@ public partial class EquationControl
     }
     private void ResetAlgorithmOptionIfNeeded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void ToggleAlgorithmOption(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void SymbolicEvalKeywordsStateUndoRedoSupport() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void SymbolicEvalKeywordsStateUndoRedoSupport()
+    {
+        DelegateFunction0<bool> doMethod = () => true;
+        Delegate0 undoMethod = () =>
+        {
+            SymbolicEvalKeywordsVisibilityState = !SymbolicEvalKeywordsVisibilityState;
+            UpdateSymbolicEvalKeywordsVisibility(SymbolicEvalKeywordsVisibilityState);
+        };
+        CommandBuffer.Execute("SymbolicEvalKeywordsVisibilityState", doMethod, undoMethod, undoMethod);
+    }
     private void ToggleSymbolicKeywordsVisibility(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
     {
         SymbolicEvalKeywordsVisibilityState = !SymbolicEvalKeywordsVisibilityState;
