@@ -178,7 +178,38 @@ internal partial class PlotGraphLinearAxis
         MoveRowOrCol(tickNumber);
     }
 
-    private void CalcNewPosition(int tickNumber) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void CalcNewPosition(int tickNumber)
+    {
+        Positions newPosition = Positions.TickNumberLock;
+        if (HasOriginPositioning && OtherLinearAxis.HasZeroInRange())
+        {
+            newPosition = Positions.Origin;
+        }
+        else if (Orientation == Orientation.Horizontal)
+        {
+            if (tickNumber < 0)
+            {
+                newPosition = Positions.Bottom;
+            }
+            else if (tickNumber >= OtherLinearAxis.TickMarks)
+            {
+                newPosition = Positions.Top;
+            }
+        }
+        else
+        {
+            if (tickNumber < 0)
+            {
+                newPosition = Positions.Left;
+            }
+            else if (tickNumber >= OtherLinearAxis.TickMarks)
+            {
+                newPosition = Positions.Right;
+            }
+        }
+        Position = newPosition;
+        FireChanged();
+    }
 
     private static void PositionPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e)
     {
@@ -231,7 +262,29 @@ internal partial class PlotGraphLinearAxis
         SetupAxisArrowHeadsDisplay();
     }
 
-    private void SetupAxisArrowHeadsDisplay() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void SetupAxisArrowHeadsDisplay()
+    {
+        if (Orientation == Orientation.Vertical)
+        {
+            bool showArrowHead = Position != Positions.Right;
+            bool otherShowArrowHead = OtherLinearAxis == null || OtherLinearAxis.Position != Positions.Top;
+            if (OtherLinearAxis != null)
+            {
+                OtherLinearAxis.ShowArrowHead = showArrowHead;
+            }
+            ShowArrowHead = otherShowArrowHead;
+        }
+        else
+        {
+            bool showArrowHead = OtherLinearAxis == null || OtherLinearAxis.Position != Positions.Right;
+            bool otherShowArrowHead = Position != Positions.Top;
+            ShowArrowHead = showArrowHead;
+            if (OtherLinearAxis != null)
+            {
+                OtherLinearAxis.ShowArrowHead = otherShowArrowHead;
+            }
+        }
+    }
 
     private void CalcOriginPositioning()
     {
