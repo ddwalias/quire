@@ -308,6 +308,17 @@ public partial class WorksheetControlDebugger
 
     private sealed partial class VisibleObjects
     {
+        public VisibleObjects(object spiritMainWindow, DependencyProperty activeDocumentProperty)
+            : base(spiritMainWindow, activeDocumentProperty)
+        {
+            _statusBar = TryFindVisualChild<global::System.Windows.Controls.Primitives.StatusBar>(
+                spiritMainWindow as global::System.Windows.DependencyObject);
+            DebugTools.DevAssert(_statusBar != null, "StatusBar was not found");
+            AddStatusBarItemToStatusBar();
+            InitializePreviewWindow();
+            base.InitializeUI();
+        }
+
         protected override void DestructUI()
         {
             RemoveStatusBarItemFromStatusBar();
@@ -421,6 +432,53 @@ public partial class WorksheetControlDebugger
                 _win2.Show();
                 _win2.Closed += WorksheetPreviewClosed;
                 _win2.SizeChanged += OnWin2SizeChanged;
+            }
+        }
+
+        private void UpdatePreviewVisual()
+        {
+            if (_win2 != null)
+            {
+                global::System.Windows.Media.VisualBrush visualBrush = new global::System.Windows.Media.VisualBrush(WorksheetControlInst)
+                {
+                    Stretch = global::System.Windows.Media.Stretch.Uniform
+                };
+                global::System.Windows.Rect descendantBounds =
+                    global::System.Windows.Media.VisualTreeHelper.GetDescendantBounds(visualBrush.Visual);
+                double width = _win2.Width - 40.0;
+                double scale = descendantBounds.Width / width;
+                double height = descendantBounds.Height / scale;
+                _grid2.Children.RemoveAll();
+                _viewbox = new global::System.Windows.Controls.Viewbox
+                {
+                    Child = new global::System.Windows.Shapes.Rectangle
+                    {
+                        Fill = visualBrush,
+                        Width = width,
+                        Height = height
+                    }
+                };
+                if (descendantBounds.Y > 0.0)
+                {
+                    double pixels = descendantBounds.Y / scale;
+                    _grid2.RowDefinitions[0].Height = new global::System.Windows.GridLength(pixels);
+                }
+                global::System.Windows.Controls.Border firstBorder = new global::System.Windows.Controls.Border
+                {
+                    BorderBrush = global::System.Windows.Media.Brushes.Transparent,
+                    BorderThickness = new global::System.Windows.Thickness(2.0, 2.0, 2.0, 0.0)
+                };
+                _grid2.Children.Add(firstBorder);
+                global::System.Windows.Controls.Grid.SetRow(firstBorder, 0);
+                global::System.Windows.Controls.Border secondBorder = new global::System.Windows.Controls.Border
+                {
+                    BorderBrush = global::System.Windows.Media.Brushes.Transparent,
+                    BorderThickness = new global::System.Windows.Thickness(2.0, 0.0, 2.0, 0.0)
+                };
+                _grid2.Children.Add(secondBorder);
+                global::System.Windows.Controls.Grid.SetRow(secondBorder, 1);
+                _grid2.Children.Add(_viewbox);
+                global::System.Windows.Controls.Grid.SetRow(_viewbox, 1);
             }
         }
 
@@ -663,6 +721,20 @@ public partial class WorksheetControlDebugger
 
         private partial class IndicationVisibilityAdorner
         {
+            public IndicationVisibilityAdorner(
+                global::System.Windows.UIElement adornedElement,
+                global::System.Windows.Controls.ScrollViewer scrollViewerInst,
+                bool toBeClipped)
+                : base(adornedElement)
+            {
+                _toBeClipped = toBeClipped;
+                Name = "ItemsVisibilityAddorner";
+                if (_toBeClipped && AdornedElement.Clip != null)
+                {
+                    scrollViewerInst.ScrollChanged += UpdateOnScrollViewerChanged;
+                }
+            }
+
             public global::System.Windows.UIElement Child
             {
                 get => _child;
