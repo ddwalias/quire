@@ -9,11 +9,59 @@ namespace Quire.Controls.Plots.Presenter;
 
 internal partial class PlotPresenter
 {
+    private readonly global::Quire.Controls.Plots.Presenter.IPlotView _view;
+    private readonly global::Quire.Controls.Plots.Presenter.IPlotModel _model;
+    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Plots.Presenter.IAxisModel, global::Quire.Controls.Plots.Presenter.IPlotAxisView> _axesMap;
+    private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Plots.Presenter.ITraceModel, global::Quire.Controls.Plots.Presenter.IPlotTrace> _tracesMap;
+    private readonly global::Quire.Controls.Plots.Presenter.TraceStyleSelector _traceStyleSelector;
+
+    [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorBlocked("constructor body follows the field layout; not yet mirrored")]
+    public PlotPresenter(global::Quire.Controls.Plots.Presenter.IPlotView view, global::Quire.Controls.Plots.Presenter.IPlotModel model) { }
+
+    private void BoundToEvents()
+    {
+        BoundToAxisViewEvents(_view.RangeAxis, xAxis_EquationAdded, xAxis_EquationRemoved, xAxis_EquationContolChange);
+        new AxisPresenter(_view.RangeAxis, _model.rangeAxis);
+        BoundToAxisModelEvents(_model.rangeAxis);
+        BoundToAxisViewEvents(_view.PrimaryResultAxis, PrimaryYAxis_EquationAdded, PrimaryYAxis_EquationRemoved, PrimaryYAxis_EquationContolChange);
+        new AxisPresenter(_view.PrimaryResultAxis, _model.PrimaryResultAxis);
+        BoundToAxisModelEvents(_model.PrimaryResultAxis);
+        _view.HasOriginPositioningChanged += View_HasOriginPositioningChanged;
+        _view.XLegendPositionsIndexChanged += View_XLegendPositionsIndexChanged;
+        _view.YLegendPositionsIndexChanged += View_YLegendPositionsIndexChanged;
+        _view.PlotTitlePositionsIndexChanged += View_TitlePositionsIndexChanged;
+        _view.PlotLegendPositionsIndexChanged += View_PlotLegendPositionsIndexChanged;
+        _view.BackgroundTypePropertyChanged += View_BackgroundTypePropertyChanged;
+        if (_view.PlotLegend != null)
+        {
+            _view.PlotLegend.LegendWidthChanged += View_PlotLegendWidthChanged;
+        }
+        _model.DeserializationFinished += Model_DeserializationFinished;
+        _model.DeserializationStarted += Model_DeserializationStarted;
+    }
+
     private static void BoundToAxisViewEvents(IPlotAxisView axisView, Action<int, int> addedEventHandler, Action<IPlotEquation, int, int, Direction> removedEventHandler, Action<IPlotEquation> changedEventHandler)
     {
         axisView.RequestAddEquation += addedEventHandler;
         axisView.EquationRemoved += removedEventHandler;
         axisView.ActiveEquationChanged += changedEventHandler;
+    }
+
+    private void BoundToAxisModelEvents(IAxisModel axisModel)
+    {
+        axisModel.StartExpression.ValueChanged += () =>
+        {
+            AxisModelLimitsValueChanged(axisModel, isStart: true, isEnd: false);
+        };
+        axisModel.SecondTickExpression.ValueChanged += () =>
+        {
+            AxisModelLimitsValueChanged(axisModel, isStart: false, isEnd: false);
+        };
+        axisModel.EndExpression.ValueChanged += () =>
+        {
+            AxisModelLimitsValueChanged(axisModel, isStart: false, isEnd: true);
+        };
     }
 
     private void View_YLegendPositionsIndexChanged(int newPositionIndex)
@@ -79,6 +127,72 @@ internal partial class PlotPresenter
         _model.HasOriginPositioning = hasOriginPositioningValue;
     }
 
+    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Presenter.PlotPresenter+AddItemCommand, Ptc.Controls.Plots")]
+    private partial class AddItemCommand : global::Quire.Undo.IUndoableCommand
+    {
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Plots.Presenter.PlotPresenter _presenter;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Plots.Presenter.IAxisModel _axis;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Plots.Presenter.IAxisModel _otherAxis;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Plots.Presenter.IPlotLegendModel _plotLegend;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly int _index;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Controls.Plots.Presenter.ITraceModel _trace;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Controls.Plots.Presenter.IEquationListItem _item;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly int _previousIndex;
+        [global::Quire.Mirror.MirrorStub]
+        public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+        [global::Quire.Mirror.MirrorStub]
+        public AddItemCommand(global::Quire.Controls.Plots.Presenter.PlotPresenter presenter, global::Quire.Controls.Plots.Presenter.IAxisModel axis, global::Quire.Controls.Plots.Presenter.IAxisModel otherAxis, global::Quire.Controls.Plots.Presenter.IPlotLegendModel plotLegend, int index, int previousIndex) { }
+        [global::Quire.Mirror.MirrorStub]
+        public bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        public void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
+
+    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Presenter.PlotPresenter+RemoveItemCommand, Ptc.Controls.Plots")]
+    private partial class RemoveItemCommand : global::Quire.Undo.IUndoableCommand
+    {
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Plots.Presenter.PlotPresenter _presenter;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Plots.Presenter.IAxisModel _axis;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Plots.Presenter.IAxisModel _otherAxis;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Plots.Presenter.IPlotLegendModel _plotLegend;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly int _index;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Controls.Plots.Presenter.ITraceModel _trace;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Controls.Plots.Presenter.IPlotEquation _equation;
+        [global::Quire.Mirror.MirrorStub]
+        private global::Quire.Controls.Plots.Presenter.IEquationListItem _item;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly int _previousItemIndex;
+        [global::Quire.Mirror.MirrorStub]
+        private readonly global::Quire.Direction _direction;
+        [global::Quire.Mirror.MirrorStub]
+        public string Name { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+        [global::Quire.Mirror.MirrorStub]
+        public RemoveItemCommand(global::Quire.Controls.Plots.Presenter.PlotPresenter presenter, global::Quire.Controls.Plots.Presenter.IAxisModel axis, global::Quire.Controls.Plots.Presenter.IAxisModel otherAxis, global::Quire.Controls.Plots.Presenter.IPlotLegendModel plotLegend, int index, global::Quire.Controls.Plots.Presenter.IPlotEquation equation, int priviousItemIndex, global::Quire.Direction direction) { }
+        [global::Quire.Mirror.MirrorStub]
+        public bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        public void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        [global::Quire.Mirror.MirrorStub]
+        public void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
+
     private void PrimaryYAxis_EquationAdded(int index, int previousIndex)
     {
         CommandBuffer.Execute(new AddItemCommand(this, _model.PrimaryResultAxis, _model.rangeAxis, _model.PlotLegendModel, index, previousIndex));
@@ -98,9 +212,38 @@ internal partial class PlotPresenter
         CommandBuffer.Execute(new RemoveItemCommand(this, _model.rangeAxis, _model.PrimaryResultAxis, _model.PlotLegendModel, deletedItemIndex, equation, priviousItemIndex, direction));
     }
 
+    private void xAxis_EquationContolChange(IPlotEquation equation)
+    {
+        IEquationItem equationItem = _model.rangeAxis.Equations.FirstOrDefault((IEquationItem item) => item.Equation == equation);
+        if (equationItem != null)
+        {
+            HandleSelectTraces(equationItem.Traces);
+        }
+    }
+
+    private void PrimaryYAxis_EquationContolChange(IPlotEquation equation)
+    {
+        IEquationItem equationItem = _model.PrimaryResultAxis.Equations.FirstOrDefault((IEquationItem item) => item.Equation == equation);
+        if (equationItem != null)
+        {
+            HandleSelectTraces(equationItem.Traces);
+        }
+    }
+
     private void PrimaryYAxis_EquationRemoved(IPlotEquation equation, int deletedItemIndex, int previousItemIndex, Direction direction)
     {
         CommandBuffer.Execute(new RemoveItemCommand(this, _model.PrimaryResultAxis, _model.rangeAxis, _model.PlotLegendModel, deletedItemIndex, equation, previousItemIndex, direction));
+    }
+
+    private global::Quire.Controls.Plots.Presenter.ITraceModel HandleEquationAdded(global::Quire.Controls.Plots.Presenter.IAxisModel axis1, global::Quire.Controls.Plots.Presenter.IAxisModel axis2, global::Quire.Controls.Plots.Presenter.IPlotLegendModel plotLegendModel, global::Quire.Controls.Plots.Presenter.ITraceModel trace, int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private ITraceModel AddTrace(IAxisModel axis1, IEquationItem equation1, IAxisModel axis2, IEquationItem equation2)
+    {
+        TraceType defaultTraceType = _model.GetDefaultTraceType();
+        ITraceModel traceModel = _model.AddTrace(axis1, equation1, axis2, equation2);
+        _traceStyleSelector.ApplyNextStyle(traceModel);
+        traceModel.Type = defaultTraceType;
+        return traceModel;
     }
 
     private void HandleSelectTraces(IEnumerable<ITraceModel> Traces)
@@ -113,14 +256,7 @@ internal partial class PlotPresenter
         _view.SelectedTraces = list;
     }
 
-    private ITraceModel AddTrace(IAxisModel axis1, IEquationItem equation1, IAxisModel axis2, IEquationItem equation2)
-    {
-        TraceType defaultTraceType = _model.GetDefaultTraceType();
-        ITraceModel traceModel = _model.AddTrace(axis1, equation1, axis2, equation2);
-        _traceStyleSelector.ApplyNextStyle(traceModel);
-        traceModel.Type = defaultTraceType;
-        return traceModel;
-    }
+    private global::Quire.Controls.Plots.Presenter.ITraceModel HandleEquationRemoved(global::Quire.Controls.Plots.Presenter.IPlotLegendModel plotLegendModel, global::Quire.Controls.Plots.Presenter.IEquationItem eq_item, global::Quire.Controls.Plots.Presenter.AxesType eqAxis, global::Quire.Controls.Plots.Presenter.AxesType otherAxis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     private void RemovePlotLegendItemFromPlotLegend(IPlotLegendModel plotLegendModel, ITraceModel trace)
     {
@@ -214,6 +350,21 @@ internal partial class PlotPresenter
         return _tracesMap[traceModel];
     }
 
+    private void SetCommonRange(ITraceModel traceModel)
+    {
+        IAxisModel xAxis = traceModel.GetAxis(AxesIndex.Range);
+        IAxisModel yAxis = traceModel.GetAxis(AxesIndex.Result);
+        IEnumerable<ITraceModel> traces = _model.Traces.Where((ITraceModel trace) => xAxis == trace.GetAxis(AxesIndex.Range) || yAxis == trace.GetAxis(AxesIndex.Result));
+        SetRangeAxisCommonRange(traces, xAxis);
+        SetResultAxisCommonRange(traces, yAxis);
+    }
+
+    private void AxisModelLimitsValueChanged(global::Quire.Controls.Plots.Presenter.IAxisModel axisModel, bool isStart, bool isEnd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private static void SetRangeAxisCommonRange(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.ITraceModel> traces, global::Quire.Controls.Plots.Presenter.IAxisModel xAxis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private static void SetResultAxisCommonRange(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.ITraceModel> traces, global::Quire.Controls.Plots.Presenter.IAxisModel yAxis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
     private static void SetCommonRange(IEnumerable<ITraceModel> traces, IAxisModel axis, Func<ITraceModel, double?> minSelector, Func<ITraceModel, double?> maxSelector)
     {
         double? start = traces.Min(minSelector);
@@ -221,25 +372,6 @@ internal partial class PlotPresenter
         axis.SetRange(start, end);
     }
 
-    private void BoundToEvents()
-    {
-        BoundToAxisViewEvents(_view.RangeAxis, xAxis_EquationAdded, xAxis_EquationRemoved, xAxis_EquationContolChange);
-        new AxisPresenter(_view.RangeAxis, _model.rangeAxis);
-        BoundToAxisModelEvents(_model.rangeAxis);
-        BoundToAxisViewEvents(_view.PrimaryResultAxis, PrimaryYAxis_EquationAdded, PrimaryYAxis_EquationRemoved, PrimaryYAxis_EquationContolChange);
-        new AxisPresenter(_view.PrimaryResultAxis, _model.PrimaryResultAxis);
-        BoundToAxisModelEvents(_model.PrimaryResultAxis);
-        _view.HasOriginPositioningChanged += View_HasOriginPositioningChanged;
-        _view.XLegendPositionsIndexChanged += View_XLegendPositionsIndexChanged;
-        _view.YLegendPositionsIndexChanged += View_YLegendPositionsIndexChanged;
-        _view.PlotTitlePositionsIndexChanged += View_TitlePositionsIndexChanged;
-        _view.PlotLegendPositionsIndexChanged += View_PlotLegendPositionsIndexChanged;
-        _view.BackgroundTypePropertyChanged += View_BackgroundTypePropertyChanged;
-        if (_view.PlotLegend != null)
-        {
-            _view.PlotLegend.LegendWidthChanged += View_PlotLegendWidthChanged;
-        }
-        _model.DeserializationFinished += Model_DeserializationFinished;
-        _model.DeserializationStarted += Model_DeserializationStarted;
-    }
+    private void CheckTraceVsPlotType(global::Quire.Controls.Plots.Presenter.ITraceModel traceModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
+
