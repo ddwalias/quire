@@ -746,6 +746,39 @@ public partial class WorksheetControl
         }
     }
 
+    public void PreSave(IDocumentSaveOptions saveOptions)
+    {
+        if (saveOptions.IsHandlingException)
+        {
+            return;
+        }
+
+        List<ICalculatable> calculatables = new();
+        if (_viewModel.ActiveItem is ICalculatable calculatable)
+        {
+            ICalculatableInfo? calculatableInfo = calculatable as ICalculatableInfo;
+            if (calculatableInfo == null || !calculatableInfo.IsCommitted)
+            {
+                calculatables.Add(calculatable);
+            }
+        }
+
+        if (_viewModel.ActiveItem is ICalculatableContainer calculatableContainer &&
+            !(calculatableContainer is ICalculatableAggregate))
+        {
+            foreach (ICalculatable child in calculatableContainer.CalculatableChildren)
+            {
+                ICalculatableInfo? childInfo = child as ICalculatableInfo;
+                if (childInfo == null || !childInfo.IsCommitted)
+                {
+                    calculatables.Add(child);
+                }
+            }
+        }
+
+        _model.FireCommitAndNotifyDependentCalculatables(calculatables);
+    }
+
     private void ToggleOutputRegion(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
     {
         if (e.OriginalSource is IOutputRegion outputRegion)
