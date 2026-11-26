@@ -574,7 +574,11 @@ public partial class EquationControl
     }
 
     public static readonly global::System.Windows.RoutedEvent ContentChangedEvent;
-    private void SetupInputGestures() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void SetupInputGestures()
+    {
+        InputBindings.Add(new global::System.Windows.Input.KeyBinding(global::System.Windows.Documents.EditingCommands.MoveDownByPage, global::Quire.Wpf.Gestures.PageDown));
+        InputBindings.Add(new global::System.Windows.Input.KeyBinding(global::System.Windows.Documents.EditingCommands.MoveUpByPage, global::Quire.Wpf.Gestures.PageUp));
+    }
     protected override void OnContextMenuClosing(global::System.Windows.Controls.ContextMenuEventArgs e) => base.OnContextMenuClosing(e);
     private void SetContextMenu(string contextMenuKey)
     {
@@ -2613,7 +2617,20 @@ public partial class EquationControl
             _model.FireNavigatorStateChanged();
         }
     }
-    public void ClearResultFormat() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void ClearResultFormat()
+    {
+        global::Quire.Controls.Core.NumberFormat oldValue = DisplayNumberFormat.Clone();
+        DelegateFunction0<bool> doMethod = () =>
+        {
+            ((global::System.Windows.DependencyObject)this).ClearValue(DisplayNumberFormatProperty);
+            return true;
+        };
+        Delegate0 undoMethod = () =>
+        {
+            DisplayNumberFormat = oldValue;
+        };
+        CommandBuffer.Execute("Clear DisplayNumberFormat - EQUATION CONTROL", doMethod, undoMethod);
+    }
     public bool HighlightAll(string text, global::Quire.Controls.Core.FindOptions options) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public bool FindOncePrivate(string text, bool startFromCaret, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public virtual string GetHelpContext()
@@ -2647,7 +2664,10 @@ public partial class EquationControl
         DebugTools.AssertNotNull(helpContext.StartsWith(EquationControlConstants.GetEquationIdentifierHelpContext()), null);
         return helpContext.Substring(EquationControlConstants.GetEquationIdentifierHelpContext().Length + 1);
     }
-    internal global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.View.IVisualComboBoxControlNode> GetAllComboBoxControlsFromEquation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.View.IVisualComboBoxControlNode> GetAllComboBoxControlsFromEquation()
+    {
+        return _map.AllVisualNodesOfType<global::Quire.EquationEditor.View.IVisualComboBoxControlNode>();
+    }
     public int WarningsCount => _model.Warnings?.Count ?? 0;
     internal List<(RedefinitionWarning parsedWarning, MathNode warningNode, global::Quire.EquationEditor.View.IVisualMathNode visualMathNode)> Warnings => _model.Warnings?.Select(((RedefinitionWarning parsedWarning, MathNode warningNode) warning) => (parsedWarning: warning.parsedWarning, warningNode: warning.warningNode, _map.AssociateNode(warning.warningNode))).ToList();
 
@@ -2768,7 +2788,11 @@ public partial class EquationControl
     {
         throw new NotImplementedException();
     }
-    public void ActivateAndScopeResultPrivate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void ActivateAndScopeResultPrivate()
+    {
+        _model.ScopeResult();
+        Activate(isActive: true);
+    }
     public string GetEvaluationSExp(bool getDefineForDefineEval)
     {
         return _model.GetEvaluationSExp(getDefineForDefineEval);
