@@ -1987,4 +1987,35 @@ internal partial class WorksheetViewModel
         ActivateSection(footerControl, ActivePage, null);
         footerControl.RestoreVisualState();
     }
+    private void HandleHeaderPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (!IsHeaderActive)
+        {
+            return;
+        }
+
+        if (e.PropertyName != "ActiveDescendant" && e.PropertyName != "SelectedDescendants")
+        {
+            return;
+        }
+
+        UpdateIsRegionBorderShownState();
+        OnPropertyChanged(e.PropertyName);
+    }
+
+    private void HandleFooterPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (!IsFooterActive)
+        {
+            return;
+        }
+
+        if (e.PropertyName != "ActiveDescendant" && e.PropertyName != "SelectedDescendants")
+        {
+            return;
+        }
+
+        UpdateIsRegionBorderShownState();
+        OnPropertyChanged(e.PropertyName);
+    }
 }
