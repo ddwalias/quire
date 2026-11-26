@@ -280,7 +280,15 @@ public partial class PlotModel3D
         axisModel.SetRange(start, value);
     }
 
-    private global::System.Windows.Media.Media3D.Rect3D GetCommonTraceBounds() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private Rect3D GetCommonTraceBounds()
+    {
+        Rect3D result = Rect3D.Empty;
+        foreach (IPlotTraceModel3D trace in _traces.Where(traceModel => traceModel.TraceBounds != Rect3D.Empty))
+        {
+            result.Union(trace.TraceBounds);
+        }
+        return result;
+    }
 
     private void SetRangeOnTraces(Rect3D newRange)
     {
