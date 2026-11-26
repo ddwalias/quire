@@ -30,8 +30,6 @@ public sealed partial class ContourPlotModel : global::Quire.Controls.Plots.Mode
     [global::Quire.Mirror.MirrorStub]
     public ContourPlotModel(global::Quire.Controls.Plots.Presenter.IAxisModel xAxisModel, global::Quire.Controls.Plots.Presenter.IAxisModel yAxisModel, global::Quire.Controls.Plots.Presenter.IAxisModel zAxisModel) { }
     [global::Quire.Mirror.MirrorStub]
-    private void ContourCalculatableError(object sender, global::Quire.Controls.Plots.Model.EngineErrorEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override bool SetDataObject(global::Quire.Serialization.IDeS11NProvider de11NProvider, global::Quire.PersistentDataObjects.plotType dataObject, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.PersistentDataObjects.plotType GetDataObject(global::Quire.Serialization.IS11NProvider s11NProvider, global::Quire.Calculation.Core.IResultManager resultManager, bool hideFromCalculationContext) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -40,23 +38,9 @@ public sealed partial class ContourPlotModel : global::Quire.Controls.Plots.Mode
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.contourPlotTypeContour GetContourDataObject(global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void UpdateLevels() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void YAxisModelRangeChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void XAxisModelRangeChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static double GetLimitValueOrDefault(global::Quire.Controls.Plots.Presenter.IAxisLimitEditor limitExpression, double defaultValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void ZAxisModelRangeChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void SetDefaultLevels() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ContourCalculatablePropertyChanged(global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> GetHiddenAndVisibleCalculatables() => base.GetHiddenAndVisibleCalculatables();
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeZEquation(global::Quire.Controls.Plots.Presenter.IPlotEquation zEquation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Contour.Model.ContourPlotModel+PropertyNames, Ptc.Controls.Plots")]
     internal sealed partial class PropertyNames : global::Quire.Controls.Plots.Model.PlotModelBase.PropertyNames
