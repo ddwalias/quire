@@ -36,6 +36,17 @@ public partial class ToggleScriptUndoCommand
         return command;
     }
 
+    private ToggleScriptUndoCommand(RichTextBase textRegion, DocumentTextRange range, ScriptState switchToScript, bool bRecreateSelection)
+    {
+        _textRegion = textRegion;
+        _rangeStartOffset = textRegion.GetInsertionPointAtPointer(range.Start);
+        _rangeEndOffset = textRegion.GetInsertionPointAtPointer(range.End);
+        _shouldRecreateSelection = bRecreateSelection;
+        _insertionPoint = textRegion.Selection.IsNotEmpty() ? -1 : textRegion.SelectionStart;
+        _switchToScript = switchToScript;
+        _nestedCommand = new CompoundCommand();
+    }
+
     public string Name => "Toggle Range Text";
 
     public bool Do()

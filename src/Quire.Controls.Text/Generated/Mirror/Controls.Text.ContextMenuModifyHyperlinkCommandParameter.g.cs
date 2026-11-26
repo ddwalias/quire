@@ -11,6 +11,4 @@ namespace Quire.Controls.Text;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Text.ContextMenuModifyHyperlinkCommandParameter, Ptc.Controls.Text")]
 public partial class ContextMenuModifyHyperlinkCommandParameter : global::Quire.Controls.Text.ModifyHyperlinkCommandParameter, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
 }

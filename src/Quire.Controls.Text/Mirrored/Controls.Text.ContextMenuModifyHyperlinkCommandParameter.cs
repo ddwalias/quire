@@ -7,6 +7,8 @@ namespace Quire.Controls.Text;
 
 public partial class ContextMenuModifyHyperlinkCommandParameter
 {
+    public event PropertyChangedEventHandler PropertyChanged;
+
     public ContextMenuModifyHyperlinkCommandParameter() : base(true, null, null)
     {
     }
