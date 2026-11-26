@@ -24,3 +24,14 @@
 - `Quire.Controls.Plots.Plot3D.View.PlotAxesWidget3D`: whole-type Release IL parity (including `PropertyNames`, all properties/methods, closures `<>c__DisplayClass25_0`, `<>c__DisplayClass25_1`, `<>c::__27_0`, `<>c__DisplayClass28_0`, `<>c__DisplayClass38_0`, iterator `<AllAxes>d__36`, and XAML `InitializeComponent`, `_CreateDelegate`, `IComponentConnector.Connect`).
 - Release IL report: `Release IL: PASS; 3858 checked` (`python tools/validation/release_il.py --base main --project Quire.Controls.Plots`).
 - Remaining in scope: `PlotAxis3D`.
+
+## Batch 4 — `PlotAxis3D`
+
+- Branch: `feature/agy-plots-axes3d-b4`.
+- `Quire.Controls.Plots.Plot3D.View.PlotAxis3D`: Release IL parity for all remaining members and closures (`PropertyNames`, `<>c__DisplayClass43_0`, `<RemoveAllLabelsFromViewport>b__66_0`, dependency properties, layout, label visuals, arrowhead and tickmark geometry), except two parked compiler-difference stubs.
+- Parked compiler differences (kept at exact Mathcad source slots with `MirrorStub.NotImplemented()`):
+  - `GetRelativeDistanceInWorld`: Mathcad emits three unreferenced locals (`[0] Vector3D, [1..2] Point4D`) and allocates the `(targetWorld - origin).Length` temporary in slot 3 before user locals `[4, 5]`; modern Roslyn strips unused locals and orders user locals before expression temporaries.
+  - `CreateTickmarkModelVisual3D`: Mathcad evaluates nested `MaterialGroup` and `GeometryModel3D` into locals `[0, 1]` before `dup`ing `ModelVisual3D` for `set_Content`; modern Roslyn emits `dup` immediately after `newobj ModelVisual3D` without locals.
+- Release IL report: `Release IL: PASS; 3940 checked` (`python tools/validation/release_il.py --base main --project Quire.Controls.Plots`).
+- Remaining in scope: none (all 5 claimed types landed; 2 compiler-difference stubs parked in `PlotAxis3D`).
+
