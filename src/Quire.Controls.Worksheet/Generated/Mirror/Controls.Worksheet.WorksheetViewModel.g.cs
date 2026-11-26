@@ -168,8 +168,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     public void FireRecalculateAll() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void CommitActive(global::Quire.Controls.Core.IWhiteboardItem activeItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void HandleRemoveAnnotations() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool FindOnce(string text, bool startFromCaret, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -228,8 +226,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     public void OnZombieInitializationComplete() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void RemoveZombiesFromPage(global::Quire.Controls.Worksheet.IWorksheetPage page) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void HandleItemsCollectionChanging(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleItemsCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -254,11 +250,7 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     private void HandleSelectedItemsChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HandleActiveDescendantChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void HandleActiveItemChanged(global::Quire.Controls.Core.IWhiteboardItem oldItem, global::Quire.Controls.Core.IWhiteboardItem newItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleActiveContainerPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandlePagesCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -311,8 +303,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     private void RemovePageBreakForPageResize(global::Quire.Controls.Core.IWorksheetPageBreak pageBreak) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandlePagebreaksChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetPagebreakVisualOffset(global::Quire.Controls.Core.IWorksheetPageBreak pagebreak) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Size FindSizeLimit(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -2297,4 +2297,116 @@ internal partial class WorksheetViewModel
             return null;
         }
     }
+    private static void CommitActive(IWhiteboardItem activeItem)
+    {
+        if (activeItem == null)
+        {
+            return;
+        }
+
+        if (activeItem is ICalculatable)
+        {
+            // The IL re-tests the type for the call; a pattern variable would add a local.
+            (activeItem as ICalculatable).Commit();
+            return;
+        }
+
+        if (activeItem is IWhiteboardControl)
+        {
+            CommitActive((activeItem as IWhiteboardControl).ActiveDescendant);
+            return;
+        }
+
+        if (activeItem is ICalculatableContainer)
+        {
+            foreach (ICalculatable calculatable in (activeItem as ICalculatableContainer).CalculatableChildren)
+            {
+                calculatable.Commit();
+            }
+        }
+    }
+
+    private static void RemoveZombiesFromPage(IWorksheetPage page)
+    {
+        if (page.HeaderZombie != null)
+        {
+            page.HeaderZombie.Dispose();
+            page.HeaderZombie = null;
+        }
+
+        if (page.FooterZombie != null)
+        {
+            page.FooterZombie.Dispose();
+            page.FooterZombie = null;
+        }
+
+        if (page.FirstPageHeaderZombie != null)
+        {
+            page.FirstPageHeaderZombie.Dispose();
+            page.FirstPageHeaderZombie = null;
+        }
+
+        if (page.FirstPageFooterZombie != null)
+        {
+            page.FirstPageFooterZombie.Dispose();
+            page.FirstPageFooterZombie = null;
+        }
+
+        page.Header = null;
+        page.Footer = null;
+    }
+
+    private void HandleActiveDescendantChanged()
+    {
+        if (IsContentActive)
+        {
+            IWhiteboardItem activeItem = ActiveItem;
+            IWhiteboardItem activeDescendant = ActiveDescendant;
+            if (activeItem != activeDescendant && ItemManager.IsItemLoaded(activeDescendant) && ItemManager.GetIsBringToView(activeItem))
+            {
+                _pageManager.ActivateDescendantParentIfNeeded(activeItem, activeDescendant);
+            }
+
+            UpdateIsRegionBorderShownState();
+            OnPropertyChanged("ActiveDescendant");
+        }
+    }
+
+    private void HandleActiveContainerPropertyChanged(object sender, PropertyChangedEventArgs e)
+    {
+        if (!IsContentActive)
+        {
+            return;
+        }
+
+        if (sender != ActiveItem)
+        {
+            return;
+        }
+
+        IHideFromCalculationButtonStatus status = sender as IHideFromCalculationButtonStatus;
+        if (status == null)
+        {
+            return;
+        }
+
+        if (e.PropertyName == "HideFromCalculationButtonEnabled")
+        {
+            HideFromCalculationButtonEnabled = status.HideFromCalculationButtonEnabled;
+            return;
+        }
+
+        if (e.PropertyName == "HideFromCalculationButtonChecked")
+        {
+            HideFromCalculationButtonChecked = status.HideFromCalculationButtonChecked;
+        }
+    }
+
+    private void SetPagebreakVisualOffset(IWorksheetPageBreak pagebreak)
+    {
+        Point location = WorksheetContent.GetItemLocation(pagebreak);
+        int pageIndex = GetPageIndex(location.Y);
+        double margin = (PageLayout.DisplayHeight - PageLayout.PageHeight) / 2.0;
+        pagebreak.VerticalPosition = PageLayout.DisplayHeight * pageIndex - margin - 2.0 * PageBreaks.IndexOf(pagebreak);
+    }
 }
