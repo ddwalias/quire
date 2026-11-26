@@ -489,7 +489,7 @@ public partial class RichTextBase
 
     private static bool _contextMenuOpening;
 
-    protected void SetStyleFromTextStyles(global::System.Collections.Generic.ICollection<global::Quire.TextStyleData> textStyles) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void SetStyleFromTextStyles(ICollection<TextStyleData> textStyles) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     private bool ClearTextFormatCanExecute(object parameter)
     {
@@ -988,7 +988,17 @@ public partial class RichTextBase
 
     protected global::Quire.Undo.CommandScope _pastingCommandScope;
 
-    protected virtual void PostPasting() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void PostPasting()
+    {
+        TextRangeExtension.FixAndCleanImportedHyperlinksData(TextRange, DataObjectExtensions.HasTextWithEmbeddedItemsInfo(_pasteDataObject) ? false : FixHyperlinkEmptyRuns);
+        global::System.Windows.Documents.TextRange range = new global::System.Windows.Documents.TextRange(GetPointerToInsertionPoint(PasteStartPositionOffset), CaretPosition);
+        EnumerateEmbeddedObjectsInRange(range).OfType<Image>().Each(image =>
+        {
+            RemoveBaselineOffsetFromImage(image);
+            CopyImageToTempBitmap(image);
+        });
+        CustomScriptRunBase.RecoverSubSuperscriptRunsInRange(range);
+    }
 
     internal virtual void CopyImageToTempBitmap(Image image)
     {
@@ -2073,4 +2083,5 @@ public partial class RichTextBase
             }
         }
     }
+
 }
