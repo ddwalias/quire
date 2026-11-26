@@ -709,3 +709,10 @@
 - Member: `ShowError` (positive `if (Error == null)` block, null-check invoke for the child lookup).
 - Open: `ConvertAnyFormattedMatrixToDisplayMatrix` stays a stub. Its IL reuses the matrix pattern variable's local slot for the united-value match; the `if` form and the one-section switch both miss the slot numbering, and the two-section switch reorders the calls.
 - Release IL after `ShowError`: PASS, 3989 checked, zero failures (`.mirror-cache/release-il-b798267649d3/release-il.json`).
+
+## Batch 102
+
+- Owner: haiku-equationcontrol-20261123; branch `haiku-equationcontrol-20261123-b100`.
+- Members: attached-property helpers (`GetOverrideLabelColor`, `SetOverrideLabelColor`, `ClearOverrideLabelColor`, `GetRootPadding`, `SetRootPadding`), `GetTransformBasedOnNumericNodeHeight`, `GetLabeledScreenInkBounds`, `IsUnitedMatrixUniform`, `GetDisplayMatrixCell`, `ConvertToEagerMatrix`, `GetFormatForVisualMatrix`, `GetMatrixPathFromRoot`, `ReApplyBackground`, `AddToDataObject`, `Accept`, `EditNode(string)`, `GetEquationSizesAsString_ForTestsOnly`, `HandleCalcIsDisabledChanged`, `SetRegionXmlNode`, the change handlers `HandleCanActivateChanged`, `HandleSynchronizationStatusChanged`, `HandleCalculatingStatusChanged`, `HandleDisplayNumberFormatChanged`, `HandleResultFormattingChanged`, `HandleResultMatrixFormatChanged`, `HandleLabeledIdFormatChanged`, the two symbolic-keyword handlers, and the IConvertible group with the closure-free identifier and help-context members.
+- Parked: `ConvertToDisplayMatrix` (Mathcad's `<=` test is materialised as `cgt; ldc.i4.0; ceq`; neither `!(a > b)` nor `(a > b) == false` reproduces it); `ConvertAnyFormattedMatrixToDisplayMatrix` (the switch expression was not tried; the `is not` form hoists the display class to method entry; the `if`, one-section switch and two-section switch miss the local slot or call order). `GetImeWindowPosition` (unused `Point` local in the reference), `EditNode(string, int)`, `GetRegionXmlNode`, `GetRegionPersistentData`, `SetRegionPersistentData`, `FocusViewAndUpdateNavigatorStateIfNeeded` (local function, closure).
+- Release IL: PASS, 4045 checked, zero failures.

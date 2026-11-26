@@ -942,7 +942,10 @@ public partial class EquationControl
     public event global::System.Action<string> SExpressionChanging;
     public event global::System.Action<global::Quire.Controls.Core.IEquationControl> ExpressionValueChanged;
     public EquationTypes EquationType => _model.EquationType;
-    public global::System.Windows.Media.ScaleTransform GetTransformBasedOnNumericNodeHeight(double desiredHeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::System.Windows.Media.ScaleTransform GetTransformBasedOnNumericNodeHeight(double desiredHeight)
+    {
+        return _view.GetTransformBasedOnNumericNodeHeight(desiredHeight);
+    }
 
     private void FireExpressionValueChanged()
     {
@@ -1092,7 +1095,25 @@ public partial class EquationControl
         }
     }
     public static global::System.Windows.RoutedEvent ChangedEvent;
-    public void SetRegionXmlNode(global::System.Xml.XmlNode value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SetRegionXmlNode(global::System.Xml.XmlNode value)
+    {
+        bool flag = false;
+        if (value.LocalName == "math")
+        {
+            EquationXmlNode = value.FirstChild;
+            flag = ResultManager.Instance.UpdateResultRef(value, this);
+            global::System.Xml.XmlElement xmlElement = value["resultFormat"];
+            SetRegionResultFormat(xmlElement, value.NamespaceURI);
+        }
+        else
+        {
+            EquationXmlNode = value;
+        }
+        if (!flag)
+        {
+            CreateFakeEngineResults();
+        }
+    }
     public global::System.Xml.XmlNode GetRegionXmlNode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -1140,7 +1161,10 @@ public partial class EquationControl
         }
     }
 
-    public void EditNode(string label) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void EditNode(string label)
+    {
+        EditNodeOnCaretSide(label, global::Quire.Direction.Indeterminate);
+    }
     public void EditNode(string label, int caretPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public void EditNodeOnCaretSide(string label, global::Quire.Direction caretSide)
     {
@@ -1393,7 +1417,16 @@ public partial class EquationControl
         }
         return false;
     }
-    public global::System.Windows.Rect GetLabeledScreenInkBounds(string nodeLabel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::System.Windows.Rect GetLabeledScreenInkBounds(string nodeLabel)
+    {
+        global::System.Windows.Rect result = global::System.Windows.Rect.Empty;
+        global::Quire.EquationEditor.Tree.MathNode mathNode = _model.Root.FindDescendant(nodeLabel);
+        if (mathNode != null)
+        {
+            result = _map.AssociateNode(mathNode).ScreenInkBounds;
+        }
+        return result;
+    }
 
     private void HookupToEvents()
     {
@@ -1888,8 +1921,17 @@ public partial class EquationControl
         FireContentChangedEvents();
     }
     private void UpdateSymbolicEvalKeywordsVisibility(bool showHideKeywords) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void SymbolicEvalKeywordsRegionActivatedEventHandler() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void SymbolicEvalKeywordsRegionDeactivatedEventHandler() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void SymbolicEvalKeywordsRegionActivatedEventHandler()
+    {
+        UpdateSymbolicEvalKeywordsVisibility(showHideKeywords: true);
+    }
+    private void SymbolicEvalKeywordsRegionDeactivatedEventHandler()
+    {
+        if (ErrorCount <= 0)
+        {
+            UpdateSymbolicEvalKeywordsVisibility(showHideKeywords: false);
+        }
+    }
     private void HandleSymCalculationErrorChanged(global::Quire.Wpf.PropertyChangedEventArgs<global::Quire.Calculation.Core.EngineError> eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public bool SymbolicEvalKeywordsVisibilityState
     {
@@ -2616,7 +2658,11 @@ public partial class EquationControl
         return format;
     }
 
-    internal global::Quire.Controls.Core.MatrixFormat GetFormatForVisualMatrix(global::Quire.EquationEditor.View.IVisualMatrixNode visualMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal global::Quire.Controls.Core.MatrixFormat GetFormatForVisualMatrix(global::Quire.EquationEditor.View.IVisualMatrixNode visualMatrix)
+    {
+        global::Quire.EquationEditor.Tree.MathNode node = _map.AssociateNode(visualMatrix);
+        return GetFormatForMatrix(node);
+    }
     internal void SetMatrixForResizeAdorner(global::Quire.EquationEditor.View.IVisualMatrixNode matrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     internal void UpdateMatrixForResizeAdorner(global::Quire.EquationEditor.View.IVisualMatrixNode matrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -2652,7 +2698,10 @@ public partial class EquationControl
         return areEqual;
     }
 
-    internal global::System.Collections.Generic.IList<int> GetMatrixPathFromRoot(global::Quire.EquationEditor.View.IVisualMatrixNode visualMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal global::System.Collections.Generic.IList<int> GetMatrixPathFromRoot(global::Quire.EquationEditor.View.IVisualMatrixNode visualMatrix)
+    {
+        return _map.AssociateNode(visualMatrix).PathFromEquationRoot();
+    }
 
     private IList<TableCoordinate> GetNestedPositionForMatrix(MathNode node)
     {
@@ -2718,16 +2767,50 @@ public partial class EquationControl
     private void CreateTemporaryResultMatrixFormat() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public void SetVisibleMatrixCellRange(int startRow, int startCol, int endRow, int endCol) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public global::Quire.Calculation.Core.EngineResult EngineResultForSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    private static bool IsUnitedMatrixUniform(global::Quire.Calculation.Core.IUnitedValueResultNode unitedElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static bool IsUnitedMatrixUniform(global::Quire.Calculation.Core.IUnitedValueResultNode unitedElement)
+    {
+        if (unitedElement.Value is LazyMatrixSimpleResultNode lazyMatrixSimpleResultNode)
+        {
+            return lazyMatrixSimpleResultNode.MatrixProxy.IsUniform;
+        }
+        return false;
+    }
     private static global::Quire.Calculation.Core.IResultNode ConvertAnyFormattedMatrixToDisplayMatrix(global::Quire.Calculation.Core.IResultNode resultNode, global::Quire.Controls.Core.MatrixFormat matrixFormat, bool useEagerMatrixForSmallMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     // Measured: closure ordinals count these fields after ConvertAnyFormattedMatrixToDisplayMatrix, not before ShowError.
     private bool _temporaryResultMatrixFormatShouldClear;
     private global::System.Collections.Generic.IList<global::Quire.TableCoordinate> _nestedMatrixPositionWhichFormatShouldClear;
     private static global::Quire.Calculation.Core.IMatrixResultNode ConvertToDisplayMatrix(global::Quire.Calculation.Core.IMatrixResultNode originalMatrix, global::Quire.Controls.Core.MatrixFormat matrixFormat, bool useEagerMatrixForSmallMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static global::Quire.Calculation.Core.IResultNode GetDisplayMatrixCell(global::Quire.Calculation.Core.IMatrixResultNode matrix, global::Quire.Controls.Core.MatrixFormat matrixFormat, int r, int c, bool useEagerMatrixForSmallMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static global::Quire.Calculation.Core.IMatrixResultNode ConvertToEagerMatrix(global::Quire.Calculation.Core.IMatrixResultNode originalMatrix, global::Quire.Controls.Core.MatrixFormat matrixFormat, bool useEagerMatrixForSmallMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static global::Quire.Calculation.Core.IResultNode GetDisplayMatrixCell(global::Quire.Calculation.Core.IMatrixResultNode matrix, global::Quire.Controls.Core.MatrixFormat matrixFormat, int r, int c, bool useEagerMatrixForSmallMatrix)
+    {
+        global::Quire.Calculation.Core.IResultNode resultNode = matrix[r, c];
+        global::Quire.Controls.Core.MatrixFormat matrixFormat2 = matrixFormat.NestedMatrixFormats[r, c];
+        if (matrixFormat2 != matrixFormat.NestedMatrixFormats.EmptyPosition)
+        {
+            return ConvertAnyFormattedMatrixToDisplayMatrix(resultNode, matrixFormat2, useEagerMatrixForSmallMatrix);
+        }
+        return resultNode;
+    }
+    private static global::Quire.Calculation.Core.IMatrixResultNode ConvertToEagerMatrix(global::Quire.Calculation.Core.IMatrixResultNode originalMatrix, global::Quire.Controls.Core.MatrixFormat matrixFormat, bool useEagerMatrixForSmallMatrix)
+    {
+        global::Quire.Calculation.Core.IEagerMatrixResultNode eagerMatrixResultNode = new global::Quire.Calculation.Core.SimpleResultNodeFactory().CreateEagerMatrixResultNode(originalMatrix.Rows, originalMatrix.Columns);
+        for (int row = 0; row < eagerMatrixResultNode.Rows; row++)
+        {
+            for (int column = 0; column < eagerMatrixResultNode.Columns; column++)
+            {
+                global::Quire.Calculation.Core.IResultNode displayMatrixCell = GetDisplayMatrixCell(originalMatrix, matrixFormat, row, column, useEagerMatrixForSmallMatrix);
+                eagerMatrixResultNode.SetElementAt(row, column, displayMatrixCell);
+            }
+        }
+        return eagerMatrixResultNode;
+    }
     public void HandleMathFormatChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void ReApplyBackground() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ReApplyBackground()
+    {
+        Background = _view.LhsOfDefinitionVisibility == global::System.Windows.Visibility.Visible
+            ? new global::System.Windows.Media.SolidColorBrush(MathFormat.HighlightColor.GetValueOrDefault())
+            : global::System.Windows.Media.Brushes.Transparent;
+        ((global::System.Windows.Freezable)Background).Freeze();
+    }
     public MathFormat MathFormat { get; private set; }
 
     public StaticMathFormat LocalMathFormatForXamlSerialization
@@ -2775,9 +2858,18 @@ public partial class EquationControl
         FirePropertyChanged(new System.ComponentModel.PropertyChangedEventArgs("IsCommitted"));
     }
 
-    public bool AddToDataObject(global::System.Windows.IDataObject dataObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void Accept(global::Quire.ISpecialCopyVisitor visitor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public string GetEquationSizesAsString_ForTestsOnly(int numDecimalPlaces) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public bool AddToDataObject(global::System.Windows.IDataObject dataObject)
+    {
+        return WpfClipboard.CopySExpressionToDataObject(dataObject, _model.EquationSExpression);
+    }
+    public void Accept(global::Quire.ISpecialCopyVisitor visitor)
+    {
+        visitor.Visit(this);
+    }
+    public string GetEquationSizesAsString_ForTestsOnly(int numDecimalPlaces)
+    {
+        return SizeList2String.WriteWrappedSizesToString(GetEquationSizes_ForTestsOnly(), numDecimalPlaces);
+    }
     public global::System.Collections.Generic.List<global::System.Windows.Size> GetEquationSizes_ForTestsOnly() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private static string CollectSizes_ForTestsOnly(global::Quire.Controls.Internal.VisualMathNode node, global::System.Collections.Generic.List<global::System.Windows.Size> output) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public IBookmarksManager BookmarksManager { get; set; }
@@ -2795,7 +2887,13 @@ public partial class EquationControl
     private static readonly global::System.Windows.DependencyProperty CurrentNestedResultMatrixPositionProperty;
     public static readonly global::System.Windows.DependencyProperty RootPaddingProperty;
     private static string _unitLabel;
-    private static void HandleCalcIsDisabledChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void HandleCalcIsDisabledChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e)
+    {
+        if (d is EquationControl equationControl)
+        {
+            equationControl.FireContentAndRegionChangedEvents(IORegionChangeType.CalcIsDisabledStatus);
+        }
+    }
 
     public bool CalcIsDisabled
     {
@@ -2827,11 +2925,26 @@ public partial class EquationControl
         set => SetValue(CurrentNestedResultMatrixPositionProperty, value);
     }
 
-    public static bool GetOverrideLabelColor(global::System.Windows.DependencyObject obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public static void SetOverrideLabelColor(global::System.Windows.DependencyObject obj, bool val) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public static void ClearOverrideLabelColor(global::System.Windows.DependencyObject obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public static global::System.Windows.Thickness GetRootPadding(global::System.Windows.DependencyObject obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public static void SetRootPadding(global::System.Windows.DependencyObject obj, object val) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static bool GetOverrideLabelColor(global::System.Windows.DependencyObject obj)
+    {
+        return (bool)obj.GetValue(MathFormatAttachedProperties.OverrideLabelColorProperty);
+    }
+    public static void SetOverrideLabelColor(global::System.Windows.DependencyObject obj, bool val)
+    {
+        obj.SetValue(MathFormatAttachedProperties.OverrideLabelColorProperty, (object)val);
+    }
+    public static void ClearOverrideLabelColor(global::System.Windows.DependencyObject obj)
+    {
+        obj.ClearValue(MathFormatAttachedProperties.OverrideLabelColorProperty);
+    }
+    public static global::System.Windows.Thickness GetRootPadding(global::System.Windows.DependencyObject obj)
+    {
+        return (global::System.Windows.Thickness)obj.GetValue(RootPaddingProperty);
+    }
+    public static void SetRootPadding(global::System.Windows.DependencyObject obj, object val)
+    {
+        obj.SetValue(RootPaddingProperty, val);
+    }
 
     static EquationControl()
     {
@@ -2871,14 +2984,86 @@ public partial class EquationControl
         ContentChangedEvent = CommonRoutedEvents.ContentChangedEvent.AddOwner(typeof(EquationControl));
     }
 
-    private static void HandleCanActivateChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static void HandleSynchronizationStatusChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static void HandleCalculatingStatusChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static void HandleDisplayNumberFormatChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void HandleResultFormattingChanged(string propertyName, object newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void HandleCanActivateChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e)
+    {
+        if (!(d is EquationControl equationControl))
+        {
+            return;
+        }
+        if (equationControl._matrixResizeAdorner != null)
+        {
+            equationControl._matrixResizeAdorner.CanActivate = (bool)e.NewValue;
+        }
+    }
+    private static void HandleSynchronizationStatusChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs args)
+    {
+        if (d is EquationControl equationControl)
+        {
+            equationControl.FirePropertyChanged(SyncStatusChangedEventArgs.GetArgs());
+        }
+    }
+    private static void HandleCalculatingStatusChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs args)
+    {
+        if (d is EquationControl equationControl)
+        {
+            equationControl.FirePropertyChanged(CalculatingStatusChangedEventArgs.GetArgs());
+        }
+    }
+    private static void HandleDisplayNumberFormatChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs args)
+    {
+        global::Quire.Controls.Core.NumberFormat numberFormat = args.OldValue as global::Quire.Controls.Core.NumberFormat;
+        global::Quire.Controls.Core.NumberFormat numberFormat2 = args.NewValue as global::Quire.Controls.Core.NumberFormat;
+        if (d is EquationControl equationControl)
+        {
+            if (numberFormat != null)
+            {
+                numberFormat.FormatChanged -= equationControl.HandleResultFormattingChanged;
+            }
+            if (numberFormat2 != null)
+            {
+                numberFormat2.FormatChanged += equationControl.HandleResultFormattingChanged;
+            }
+            equationControl.HandleResultFormattingChanged(string.Empty, null);
+            if (equationControl.EquationType == EquationTypes.Evaluation || equationControl.EquationType == EquationTypes.DefinitionToEvaluatedResult)
+            {
+                equationControl.CurrentNumberFormat = equationControl.DisplayNumberFormat;
+            }
+        }
+    }
+    private void HandleResultFormattingChanged(string propertyName, object newValue)
+    {
+        global::Quire.Controls.Core.NumberFormat numberFormat = (global::Quire.Controls.Core.NumberFormat)((global::System.Windows.DependencyObject)this).GetValue(DisplayNumberFormatProperty);
+        if (numberFormat != null && numberFormat != _model.ResultNumberFormat)
+        {
+            _model.ResultNumberFormat = numberFormat;
+        }
+    }
     private void HandleResultMatrixFormattingChanged(string propertyName, object newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static void HandleResultMatrixFormatChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static void HandleLabeledIdFormatChanged(global::System.Windows.DependencyObject depObj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void HandleResultMatrixFormatChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs args)
+    {
+        global::Quire.Controls.Core.MatrixFormat matrixFormat = args.OldValue as global::Quire.Controls.Core.MatrixFormat;
+        global::Quire.Controls.Core.MatrixFormat matrixFormat2 = args.NewValue as global::Quire.Controls.Core.MatrixFormat;
+        if (d is EquationControl equationControl)
+        {
+            if (matrixFormat != null)
+            {
+                matrixFormat.RemoveFormatChangedHandlerFromNestedMatrixFormat(equationControl.HandleResultMatrixFormattingChanged);
+            }
+            if (matrixFormat2 != null)
+            {
+                matrixFormat2.AddFormatChangedHandlerToNestedMatrixFormat(equationControl.HandleResultMatrixFormattingChanged);
+                if (matrixFormat2 != equationControl._model.ResultMatrixFormat)
+                {
+                    equationControl._model.ResultMatrixFormat = matrixFormat2;
+                }
+            }
+            equationControl.CurrentMatrixFormat = equationControl.ResultMatrixFormat;
+        }
+    }
+    private static void HandleLabeledIdFormatChanged(global::System.Windows.DependencyObject depObj, global::System.Windows.DependencyPropertyChangedEventArgs args)
+    {
+        ((global::System.Windows.DependencyObject)((EquationControl)(object)depObj)._view).SetValue(args.Property, args.NewValue);
+    }
     private static void HandleIOTagPropertyChanged(global::System.Windows.DependencyObject depObj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private static void HandleCurrentNestedResultMatrixPositionChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private static void IsSelectedChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
