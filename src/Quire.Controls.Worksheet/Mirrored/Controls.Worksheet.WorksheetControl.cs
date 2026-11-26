@@ -1069,4 +1069,41 @@ public partial class WorksheetControl
     {
         return FindResource(key);
     }
+
+    protected override void OnContextMenuOpening(global::System.Windows.Controls.ContextMenuEventArgs e)
+    {
+        base.OnContextMenuOpening(e);
+        global::System.Windows.Controls.ContextMenu contextMenu = ContextMenu;
+        if (contextMenu == null)
+        {
+            return;
+        }
+        for (int index = 0; index < contextMenu.Items.Count; index++)
+        {
+            object item = contextMenu.Items[index];
+            if (!(item is global::System.Windows.Controls.MenuItem))
+            {
+                continue;
+            }
+            global::System.Windows.Controls.MenuItem menuItem = item as global::System.Windows.Controls.MenuItem;
+            if (menuItem.Name == ToggleShowGridMenuItemName)
+            {
+                if (IsContentActive)
+                {
+                    menuItem.Header = DisplayGrid ? Resources["HideGridMenuItemHeader"] : Resources["ShowGridMenuItemHeader"];
+                }
+                else
+                {
+                    menuItem.Header = DisplayHFGrid ? Resources["HideGridMenuItemHeader"] : Resources["ShowGridMenuItemHeader"];
+                }
+            }
+            else if (menuItem.Name == ToggleHideFromCalculationContextMenuItemName)
+            {
+                menuItem.Header = _viewModel.HideFromCalculationButtonChecked
+                    ? Resources["EnableRegionMenuItemHeader"]
+                    : Resources["DisableRegionMenuItemHeader"];
+            }
+        }
+        WpfUtils.SetMostRecentInputDeviceToKeyboardDevice();
+    }
 }

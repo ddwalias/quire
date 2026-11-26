@@ -281,6 +281,198 @@ public partial class WorksheetControlDebugger
             DestroyPreviewWindow();
         }
 
+        private void OnPageManagerContentActivated()
+        {
+            foreach (IWorksheetPage page in WorksheetViewModelInst.Pages)
+            {
+                UpdatePageZombiesVisibility(page);
+            }
+            foreach (IWorksheetPage visiblePage in WorksheetViewModelInst.VisiblePages)
+            {
+                UpdatePageZombiesVisibility(visiblePage, toBeClipped: true);
+            }
+        }
+
+        private void UpdatePageZombiesVisibility(IWorksheetPage page, bool toBeClipped = false)
+        {
+            if (page == null)
+            {
+                return;
+            }
+            UpdateWorksheetItemsVisibilityAdorner(page.HeaderZombie, toBeClipped);
+            UpdateWorksheetItemsVisibilityAdorner(page.FooterZombie, toBeClipped);
+            if (page.FirstPageHeaderZombie != null)
+            {
+                UpdateWorksheetItemsVisibilityAdorner(page.FirstPageHeaderZombie, toBeClipped);
+            }
+            if (page.FirstPageFooterZombie != null)
+            {
+                UpdateWorksheetItemsVisibilityAdorner(page.FirstPageFooterZombie, toBeClipped);
+            }
+        }
+
+        private void SubscribeWorksheetItemsEvents()
+        {
+            if (WorksheetControlInst != null && WorksheetControlInst.WorksheetItems != null)
+            {
+                WorksheetControlInst.WorksheetItems.RangeChanged += WorksheetItemsCollectionChanged;
+                foreach (global::Quire.Controls.Core.IWhiteboardItem worksheetItem in WorksheetControlInst.WorksheetItems)
+                {
+                    AddItemIsOnVisiblePageChangedHandler(worksheetItem, OnWhiteboardItemVisibilityChange);
+                }
+                UpdateVisibleItemsCounter();
+            }
+        }
+
+        private void UnSubscribeWorksheetItemsEvents()
+        {
+            if (WorksheetControlInst != null && WorksheetControlInst.WorksheetItems != null)
+            {
+                WorksheetControlInst.WorksheetItems.RangeChanged -= WorksheetItemsCollectionChanged;
+                foreach (global::Quire.Controls.Core.IWhiteboardItem worksheetItem in WorksheetControlInst.WorksheetItems)
+                {
+                    RemoveItemIsOnVisiblePageChangedHandler(worksheetItem, OnWhiteboardItemVisibilityChange);
+                }
+            }
+        }
+
+        private void WorksheetItemsCollectionChanged(
+            object sender,
+            global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            global::System.Collections.IList newItems = e.NewItems;
+            global::System.Collections.IList oldItems = e.OldItems;
+            if (oldItems != null)
+            {
+                foreach (global::Quire.Controls.Core.IWhiteboardItem item in oldItems)
+                {
+                    RemoveItemIsOnVisiblePageChangedHandler(item, OnWhiteboardItemVisibilityChange);
+                    if (item is global::Quire.Controls.Core.Whiteboard.IWhiteboardControl)
+                    {
+                        (item as global::Quire.Controls.Core.Whiteboard.IWhiteboardControl).WhiteboardItems.RangeChanged -= WorksheetItemsCollectionChanged;
+                    }
+                }
+            }
+            if (newItems != null)
+            {
+                foreach (global::Quire.Controls.Core.IWhiteboardItem item in newItems)
+                {
+                    AddItemIsOnVisiblePageChangedHandler(item, OnWhiteboardItemVisibilityChange);
+                    if (item is global::Quire.Controls.Core.Whiteboard.IWhiteboardControl)
+                    {
+                        (item as global::Quire.Controls.Core.Whiteboard.IWhiteboardControl).WhiteboardItems.RangeChanged += WorksheetItemsCollectionChanged;
+                    }
+                }
+            }
+            UpdateVisibleItemsCounter();
+            DebugTools.DevAssert(oldItems != null || newItems != null, null);
+        }
+
+        private void OnWhiteboardItemVisibilityChange(object sender, DependencyPropertyChangedEventArgs args)
+        {
+            UpdateVisibleItemsCounter();
+        }
+
+        private void AddItemIsOnVisiblePageChangedHandler(
+            global::Quire.Controls.Core.IWhiteboardItem whiteboardItem,
+            DependencyPropertyChangedEventHandler handler)
+        {
+            WorksheetViewModel.ItemManager.AddItemIsOnVisiblePageChangedHandler(whiteboardItem, handler);
+        }
+
+        private void RemoveItemIsOnVisiblePageChangedHandler(
+            global::Quire.Controls.Core.IWhiteboardItem item,
+            DependencyPropertyChangedEventHandler handler)
+        {
+            WorksheetViewModel.ItemManager.RemoveItemIsOnVisiblePageChangedHandler(item, handler);
+        }
+
+        private void EnableAdornerUpdates()
+        {
+            WorksheetControlInst.PageManager.Pages.RangeChanged += PagesCollectionChanged;
+            foreach (IWorksheetPage page in WorksheetControlInst.PageManager.Pages)
+            {
+                page.WhiteboardItems.RangeChanged += PageWhiteboardItemsCollectionChanged;
+                foreach (global::Quire.Controls.Core.IWhiteboardItem whiteboardItem in page.WhiteboardItems)
+                {
+                    AddItemIsOnVisiblePageChangedHandler(whiteboardItem, OnPageWhiteboardItemVisibilityChange);
+                    UpdateWorksheetItemsVisibilityAdorner(whiteboardItem, WorksheetViewModel.ItemManager.GetItemIsOnVisiblePage(whiteboardItem));
+                }
+            }
+        }
+
+        private void DisableAdornerUpdates()
+        {
+            WorksheetControlInst.PageManager.Pages.RangeChanged -= PagesCollectionChanged;
+            foreach (IWorksheetPage page in WorksheetControlInst.PageManager.Pages)
+            {
+                page.WhiteboardItems.RangeChanged -= PageWhiteboardItemsCollectionChanged;
+                foreach (global::Quire.Controls.Core.IWhiteboardItem whiteboardItem in page.WhiteboardItems)
+                {
+                    UpdateWorksheetItemsVisibilityAdorner(whiteboardItem, isItemOnVisiblePage: false);
+                    RemoveItemIsOnVisiblePageChangedHandler(whiteboardItem, OnPageWhiteboardItemVisibilityChange);
+                }
+            }
+        }
+
+        private void PagesCollectionChanged(
+            object sender,
+            global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            global::System.Collections.IList newItems = e.NewItems;
+            global::System.Collections.IList oldItems = e.OldItems;
+            if (oldItems != null)
+            {
+                foreach (IWorksheetPage page in oldItems)
+                {
+                    page.WhiteboardItems.RangeChanged -= PageWhiteboardItemsCollectionChanged;
+                    foreach (global::Quire.Controls.Core.IWhiteboardItem whiteboardItem in page.WhiteboardItems)
+                    {
+                        UpdateWorksheetItemsVisibilityAdorner(whiteboardItem, isItemOnVisiblePage: false);
+                        RemoveItemIsOnVisiblePageChangedHandler(whiteboardItem, OnPageWhiteboardItemVisibilityChange);
+                    }
+                }
+            }
+            if (newItems != null)
+            {
+                foreach (IWorksheetPage page in newItems)
+                {
+                    page.WhiteboardItems.RangeChanged += PageWhiteboardItemsCollectionChanged;
+                    foreach (global::Quire.Controls.Core.IWhiteboardItem whiteboardItem in page.WhiteboardItems)
+                    {
+                        AddItemIsOnVisiblePageChangedHandler(whiteboardItem, OnPageWhiteboardItemVisibilityChange);
+                        UpdateWorksheetItemsVisibilityAdorner(whiteboardItem, WorksheetViewModel.ItemManager.GetItemIsOnVisiblePage(whiteboardItem));
+                    }
+                }
+            }
+            DebugTools.DevAssert(oldItems != null || newItems != null, null);
+        }
+
+        private void PageWhiteboardItemsCollectionChanged(
+            object sender,
+            global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            global::System.Collections.IList newItems = e.NewItems;
+            global::System.Collections.IList oldItems = e.OldItems;
+            if (oldItems != null)
+            {
+                foreach (global::Quire.Controls.Core.IWhiteboardItem item in oldItems)
+                {
+                    UpdateWorksheetItemsVisibilityAdorner(item, isItemOnVisiblePage: false);
+                    RemoveItemIsOnVisiblePageChangedHandler(item, OnPageWhiteboardItemVisibilityChange);
+                }
+            }
+            if (newItems != null)
+            {
+                foreach (global::Quire.Controls.Core.IWhiteboardItem item in newItems)
+                {
+                    AddItemIsOnVisiblePageChangedHandler(item, OnPageWhiteboardItemVisibilityChange);
+                    UpdateWorksheetItemsVisibilityAdorner(item, WorksheetViewModel.ItemManager.GetItemIsOnVisiblePage(item));
+                }
+            }
+            DebugTools.DevAssert(oldItems != null || newItems != null, null);
+        }
+
         private void OnPageWhiteboardItemVisibilityChange(
             object sender,
             DependencyPropertyChangedEventArgs args)
