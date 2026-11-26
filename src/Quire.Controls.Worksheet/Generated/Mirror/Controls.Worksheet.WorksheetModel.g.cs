@@ -75,8 +75,4 @@ internal partial class WorksheetModel : global::Quire.Controls.Worksheet.IWorksh
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IEnumerable<object> GetCalculatables() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void InitializeCalculation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Dispose() { }
 }

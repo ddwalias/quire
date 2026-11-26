@@ -169,6 +169,17 @@ partial class WorksheetModel
         }
     }
 
+    private void InitializeCalculation()
+    {
+        _childHider = new global::Quire.Calculation.Core.Support.CalculatableChildHider(GetCalculatables(), FireCalculatableAdded, FireCalculatableRemoved, FireCalculatableMoved, adoptCalculatableContainerChildren: true);
+        WhiteboardItems.RangeChanged += HandleCollectionChangedForCalculation;
+        _calculationBinder.BindTo(this);
+        FireStartEvaluating();
+    }
+    public void Dispose()
+    {
+        DisposeCalculationContext();
+    }
     public WorksheetModel()
     {
         _calculationBinder = new CalculationBinder();
