@@ -1,6 +1,7 @@
 #nullable disable
 #pragma warning disable
 
+using Quire.Calculation.Core;
 using Quire.Controls.Plots.Presenter;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -208,4 +209,52 @@ internal partial class PlotTraceModel3D
     }
 
     public bool IsInPrinting { get; set; }
+
+    internal TraceType3D TraceType
+    {
+        get
+        {
+            if (EngineResultParser == null)
+            {
+                return TraceType3D.Undefined;
+            }
+            return EngineResultParser.TraceType;
+        }
+    }
+
+    private string ScalingRl => GetReplacedRl(_traceEquation.EquationProxy.ScalingEquation, _traceEquation.EquationProxy.ScalingRl);
+
+    protected string NumberOfNodesRl => VectorFormatHelper.VectorRl(NumberOfNodesX, NumberOfNodesY);
+
+    internal double NumberOfNodesY => NumberOfPoints;
+
+    internal double NumberOfNodesX => NumberOfPoints;
+
+    internal Func<double, double, double, bool> Contains
+    {
+        get
+        {
+            return EngineResultParser.Contains;
+        }
+        set
+        {
+            EngineResultParser.Contains = value;
+        }
+    }
+
+    public override bool IsCommitted => _traceEquation.IsCommitted;
+
+    public double SymbolWeight { get; set; }
+
+    public EngineResult EngineResultForSerialization
+    {
+        get
+        {
+            if (!IsInPrinting)
+            {
+                return base.EngineResult;
+            }
+            return GetPrintResults(base.EngineResult);
+        }
+    }
 }
