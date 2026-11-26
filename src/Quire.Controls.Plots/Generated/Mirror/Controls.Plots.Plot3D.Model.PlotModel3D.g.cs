@@ -56,17 +56,7 @@ public partial class PlotModel3D : global::Quire.Controls.Plots.Model.PlotModelB
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> GetHiddenAndVisibleCalculatables() => base.GetHiddenAndVisibleCalculatables();
     [global::Quire.Mirror.MirrorStub]
-    private static bool AssertThatAxisAndAxisCalculatableIsNotNull(global::Quire.Controls.Plots.Presenter.IAxisModel axisModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void AttachAxisEventHandlers(global::Quire.Controls.Plots.Presenter.IAxisModel axisModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DetachAxisEventHandlers(global::Quire.Controls.Plots.Presenter.IAxisModel axisModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void AxisRangeChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void AttachOrDetachLimitEditorEventHandlers(global::Quire.Controls.Plots.Presenter.IAxisModel axisModel, string propertyName, bool attach) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void AxisPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs eArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateLimitsAndBounds() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
