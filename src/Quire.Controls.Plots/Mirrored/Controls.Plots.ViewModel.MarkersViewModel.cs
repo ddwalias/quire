@@ -2,6 +2,7 @@
 #pragma warning disable
 
 using System.Collections.ObjectModel;
+using Quire.Undo;
 using Quire.Controls.Core.AttachedBehavior;
 using Quire.Controls.Plots.Model;
 using Quire.Controls.Plots.Presenter;
@@ -11,6 +12,8 @@ namespace Quire.Controls.Plots.ViewModel;
 
 internal partial class MarkersViewModel
 {
+    private static readonly global::System.Type _typeOfThis;
+
     private readonly global::Quire.Controls.Plots.Presenter.IMarkersContainer _verticalRange;
 
     private readonly global::Quire.Controls.Plots.Presenter.IMarkersContainer _horizontalRange;
@@ -99,7 +102,18 @@ internal partial class MarkersViewModel
 
     public RoutedEventBindingCollection RoutedEventBindings => _routedEventBindings;
 
-    internal global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel AddVerticalMarker() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel AddVerticalMarker()
+    {
+        VerticalMarkerViewModel viewModel;
+        AxisMarker marker = CreateDefaultAxisMarker(_horizontalRange);
+        viewModel = CreateVerticalMarkerViewModel(marker);
+        CommandBuffer.Execute(new UndoableCommand("Add Vertical Marker", () =>
+        {
+            AddVerticalMarker(viewModel);
+            return true;
+        }, () => DeleteMarker(viewModel)), null);
+        return viewModel;
+    }
 
     private VerticalMarkerViewModel CreateVerticalMarkerViewModel(AxisMarker marker)
     {
@@ -109,7 +123,18 @@ internal partial class MarkersViewModel
         };
     }
 
-    internal global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel AddHorizontalMarker() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel AddHorizontalMarker()
+    {
+        HorizontalMarkerViewModel viewModel;
+        AxisMarker marker = CreateDefaultAxisMarker(_verticalRange);
+        viewModel = CreateHorizontalMarkerViewModel(marker);
+        CommandBuffer.Execute(new UndoableCommand("Add Horizontal Marker", () =>
+        {
+            AddHorizontalMarker(viewModel);
+            return true;
+        }, () => DeleteMarker(viewModel)), null);
+        return viewModel;
+    }
 
     private HorizontalMarkerViewModel CreateHorizontalMarkerViewModel(AxisMarker marker)
     {
@@ -374,5 +399,4 @@ internal partial class MarkersViewModel
         }
     }
 
-    private static readonly global::System.Type _typeOfThis;
 }
