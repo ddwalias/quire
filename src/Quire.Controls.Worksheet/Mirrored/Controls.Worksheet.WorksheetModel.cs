@@ -90,6 +90,81 @@ partial class WorksheetModel
         set => _lastVisibleCalculatable = value;
     }
 
+    public global::Quire.Calculation.Core.UnitSystems CustomBaseUnitSystem
+    {
+        get => _customBaseUnitSystem;
+        set => _customBaseUnitSystem = value;
+    }
+
+    public global::Quire.Calculation.Core.EngineError CurrentError
+    {
+        get
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    private static IWorksheetItemManager ItemManager => WorksheetViewModel.ItemManager;
+
+    public void HandleScriptingRunWorksheetRecalculate(bool flag) => FireCalculationOptionUpdated("RunScriptingOnRecalculate", flag);
+
+    private void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calc)
+    {
+        if (CalculatableAdded == null)
+        {
+            return;
+        }
+        CalculatableAdded(this, calc);
+    }
+
+    private void FireCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calc)
+    {
+        if (CalculatableRemoved != null)
+        {
+            CalculatableRemoved(calc);
+        }
+    }
+
+    private void FireCalculatableMoved(global::Quire.Calculation.Core.ICalculatable calc)
+    {
+        if (CalculatableMoved != null)
+        {
+            CalculatableMoved(calc);
+        }
+    }
+
+    private void FireStartEvaluating()
+    {
+        if (StartEvaluating != null)
+        {
+            StartEvaluating();
+        }
+    }
+
+    private void FireStopEvaluating()
+    {
+        if (StopEvaluating != null)
+        {
+            StopEvaluating();
+        }
+    }
+
+    private void FireStartAutoCalc()
+    {
+        if (StartAutoCalc != null)
+        {
+            StartAutoCalc();
+        }
+    }
+
+    private void FireStopAutoCalc()
+    {
+        if (StopAutoCalc != null)
+        {
+            StopAutoCalc();
+        }
+    }
+
     public WorksheetModel()
     {
         _calculationBinder = new CalculationBinder();
