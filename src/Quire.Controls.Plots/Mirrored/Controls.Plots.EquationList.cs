@@ -403,4 +403,100 @@ public partial class EquationList
     {
         SetMinMaxWidth(MaxListWidth, 0.0);
     }
+
+    private double GetEffectiveEquationWidth(IPlotEquation equation)
+    {
+        FrameworkElement frameworkElement = (FrameworkElement)equation;
+        if (Visibility != Visibility.Collapsed)
+        {
+            return frameworkElement.ActualWidth;
+        }
+        ForceMeasure(frameworkElement);
+        Size desiredSize = frameworkElement.DesiredSize;
+        return desiredSize.Width;
+    }
+
+    private static void ForceMeasure(FrameworkElement element)
+    {
+        element.Measure(InfiniteSize);
+    }
+
+    private bool CanNavigate(IPlotEquation equation, Direction direction)
+    {
+        if (equation.Equals(this[0]) && (direction == Direction.Left || direction == Direction.Up))
+        {
+            return false;
+        }
+        if (equation.Equals(this[EquationCount - 1]) && (direction == Direction.Right || direction == Direction.Down))
+        {
+            return false;
+        }
+        return true;
+    }
+
+    private void EquationControlNavigateOffOfEquation(Direction direction, bool isJumpNavigation)
+    {
+        if (!isJumpNavigation)
+        {
+            if (direction == Direction.Right && SelectedItemIndex != EquationCount - 1)
+            {
+                MoveToEquationStart(SelectedItemIndex + 1);
+            }
+            else if (direction == Direction.Left && SelectedItemIndex != 0)
+            {
+                MoveToEquationEnd(SelectedItemIndex - 1);
+            }
+            else if (direction == Direction.Up && SelectedItemIndex - Columns >= 0)
+            {
+                MoveToEquationStart(SelectedItemIndex - Columns);
+            }
+            else if (direction == Direction.Down && SelectedItemIndex + Columns <= EquationCount - 1)
+            {
+                MoveToEquationStart(SelectedItemIndex + Columns);
+            }
+        }
+    }
+
+    public void AddTraceToEquation(IPlotTrace trace, IPlotEquation plotEquation)
+    {
+        GetEquationListItem(plotEquation).AddTrace(trace);
+    }
+
+    public void AddTraceToEquation(IPlotTrace trace, IPlotEquation plotEquation, int index)
+    {
+        GetEquationListItem(plotEquation).AddTrace(trace, index);
+    }
+
+    public void RemoveTraceFromEquation(int traceIndex, IPlotEquation plotEquation)
+    {
+        GetEquationListItem(plotEquation).RemoveTrace(traceIndex);
+    }
+
+    public void AddEquation(string expression)
+    {
+        AddItem(expression);
+    }
+
+    public IPlotEquation AddEquation(XmlNode xmlNode)
+    {
+        return AddItem(xmlNode);
+    }
+
+    public IEquationListItem AddEquation(int index)
+    {
+        return AddItemToLegend(index, null, focus: false);
+    }
+
+    public EquationListItem AddEquationByPosition()
+    {
+        if (EquationCount == 0)
+        {
+            return AddItem(0);
+        }
+        if (this[SelectedItemIndex].AtLeftEdge && this[SelectedItemIndex].Expression.EquationSExpression != "@PLACEHOLDER")
+        {
+            return AddItem(SelectedItemIndex);
+        }
+        return AddItem(SelectedItemIndex + 1);
+    }
 }
