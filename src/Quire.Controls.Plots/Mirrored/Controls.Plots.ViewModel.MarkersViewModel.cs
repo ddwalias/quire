@@ -228,21 +228,89 @@ internal partial class MarkersViewModel
         }
     }
 
-    private void HandleRangeChanged(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel> markers, global::Quire.Controls.Plots.Presenter.IMarkersContainer markersContainer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleRangeChanged(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel> markers, global::Quire.Controls.Plots.Presenter.IMarkersContainer markersContainer)
+    {
+        if (!markersContainer.CanHaveMarkers)
+        {
+            foreach (AxisMarkerViewModel marker in markers.ToList())
+            {
+                DeleteMarker(marker);
+            }
+        }
+        foreach (AxisMarkerViewModel marker in markers)
+        {
+            SetCustomErrorIfMarkerOutOfRange(marker, markersContainer);
+        }
+    }
 
-    private static void HandleRangePropertyChanged(global::System.ComponentModel.PropertyChangedEventArgs e, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel> markers, global::Quire.Controls.Plots.Presenter.IMarkersContainer markersContainer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void HandleRangePropertyChanged(global::System.ComponentModel.PropertyChangedEventArgs e, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel> markers, global::Quire.Controls.Plots.Presenter.IMarkersContainer markersContainer)
+    {
+        if (e.PropertyName == "DisplayNumberFormat")
+        {
+            foreach (AxisMarkerViewModel marker in markers)
+            {
+                marker.DisplayNumberFormat = markersContainer.DisplayNumberFormat;
+            }
+        }
+    }
 
-    private void HorizontalMarkersCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HorizontalMarkersCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        HandleMarkersCollectionChanged(e, HorizontalMarkerPropertyChanged);
+    }
 
-    private void HorizontalMarkerPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HorizontalMarkerPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        MarkerPropertyChangedInCollection(sender, e, HorizontalMarkers, _verticalRange);
+    }
 
-    private void VerticalMarkersCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void VerticalMarkersCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        HandleMarkersCollectionChanged(e, VerticalMarkerPropertyChanged);
+    }
 
-    private void VerticalMarkerPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void VerticalMarkerPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        MarkerPropertyChangedInCollection(sender, e, VerticalMarkers, _horizontalRange);
+    }
 
-    private void MarkerPropertyChangedInCollection(object sender, global::System.ComponentModel.PropertyChangedEventArgs e, global::System.Collections.ObjectModel.ObservableCollection<global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel> markersCollection, global::Quire.Controls.Plots.Presenter.IMarkersContainer container) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void MarkerPropertyChangedInCollection(object sender, global::System.ComponentModel.PropertyChangedEventArgs e, global::System.Collections.ObjectModel.ObservableCollection<global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel> markersCollection, global::Quire.Controls.Plots.Presenter.IMarkersContainer container)
+    {
+        AxisMarkerViewModel marker = sender as AxisMarkerViewModel;
+        if (marker == null)
+        {
+            return;
+        }
+        switch (e.PropertyName)
+        {
+            case "Value":
+                SetCustomErrorIfMarkerOutOfRange(marker, container);
+                MoveToNewPlace(sender as AxisMarkerViewModel, markersCollection);
+                break;
+            case "Color":
+            case "LineStyle":
+            case "LineWeight":
+                if (ActiveMarker == marker)
+                {
+                    OnActiveMarkerStyleChanged();
+                }
+                break;
+        }
+        MarkerPropertyChanged(sender, e);
+    }
 
-    private void MarkerPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void MarkerPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        // The IL compares the literal on the left of ==.
+        if ("IsActive" == e.PropertyName)
+        {
+            BaseMarkerViewModel marker = (BaseMarkerViewModel)sender;
+            if (marker.IsActive || marker == ActiveMarker)
+            {
+                ActiveMarker = marker.IsActive ? marker : null;
+            }
+        }
+    }
 
     private static void MoveToNewPlace(AxisMarkerViewModel marker, ObservableCollection<AxisMarkerViewModel> markers)
     {
@@ -258,7 +326,11 @@ internal partial class MarkersViewModel
         }
     }
 
-    public void UpdateFromModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void UpdateFromModel()
+    {
+        UpdateHorizontalMarkersFromModel();
+        UpdateVerticalMarkersFromModel();
+    }
 
     private void UpdateVerticalMarkersFromModel()
     {
