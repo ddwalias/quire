@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Markup;
 using Quire.Controls.Core;
 using Quire.Controls.Plots.Presenter;
+using Quire.Controls.Plots.ViewModel;
 
 namespace Quire.Controls.Plots;
 
@@ -308,4 +309,62 @@ public partial class PlotControl
             FirePlotTitlePositionsIndexChanged();
         }
     }
+
+    public bool IsCalculating
+    {
+        get
+        {
+            return (bool)GetValue(IsCalculatingProperty);
+        }
+        set
+        {
+            SetValue(IsCalculatingProperty, value);
+        }
+    }
+
+    public IPlotAxisView RangeAxis => _rangeAxis;
+
+    public IPlotAxisView PrimaryResultAxis => _primaryResultAxis;
+
+    public IPlotLegend PlotLegend => _plotLegend;
+
+    public List<IPlotTrace> SelectedTraces
+    {
+        get
+        {
+            return (List<IPlotTrace>)GetValue(SelectedTracesProperty);
+        }
+        set
+        {
+            SetValue(SelectedTracesProperty, value);
+        }
+    }
+
+    public PlotViewType Type { get; set; }
+
+    internal double GraphMinHeight
+    {
+        get
+        {
+            double num = GridCellSize.Height * 4.0;
+            if (_plotLegend == null || !PlotLegend.ViewModel.ShowPlotLegend)
+            {
+                return num;
+            }
+            int plotLegendPositionIndex = _plotLegendPositionIndex;
+            if (plotLegendPositionIndex < 1 || plotLegendPositionIndex > 4)
+            {
+                return num;
+            }
+            return Math.Max(num, _plotLegend.MinHeight + _plotLegend.Margin.Top + _plotLegend.Margin.Bottom);
+        }
+    }
+
+    internal IPlotModel Model => _model;
+
+    internal Quire.Controls.Plots.ViewModel.PlotViewModel ViewModel => _viewModel;
+
+    public override int NumberOfPointsMin => 100;
+
+    public override int NumberOfPointsMax => 3000;
 }

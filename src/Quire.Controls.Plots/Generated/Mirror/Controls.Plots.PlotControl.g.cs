@@ -274,8 +274,6 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     [global::Quire.Mirror.MirrorStub]
     protected override global::Quire.Controls.Core.IWhiteboardItem FirstChildItem { get => base.FirstChildItem; }
     [global::Quire.Mirror.MirrorStub]
-    public bool IsCalculating { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Func<global::Quire.Controls.Plots.Presenter.ITraceModel, int> VisualOrder { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.ITraceModel> TraceModels { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -285,16 +283,6 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     private global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> InternalCalculatables { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildren { get => base.CalculatableChildren; }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Presenter.IPlotAxisView RangeAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Presenter.IPlotAxisView PrimaryResultAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Presenter.IPlotLegend PlotLegend { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<global::Quire.Controls.Plots.Presenter.IPlotTrace> SelectedTraces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Presenter.PlotViewType Type { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Plots.Presenter.IPlotTrace[] Traces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -322,17 +310,7 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     [global::Quire.Mirror.MirrorStub]
     internal double GraphMinWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    internal double GraphMinHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Controls.Plots.Presenter.IPlotModel Model { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Controls.Plots.ViewModel.PlotViewModel ViewModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private bool IsNumberOfPointsAvailable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override int NumberOfPointsMin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override int NumberOfPointsMax { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public override bool InCustomInitialization { get => base.InCustomInitialization; set => base.InCustomInitialization = value; }
     [global::Quire.Mirror.MirrorStub]
