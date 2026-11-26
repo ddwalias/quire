@@ -274,6 +274,13 @@ public partial class WorksheetControlDebugger
             DestroyPreviewWindow();
         }
 
+        private void OnPageWhiteboardItemVisibilityChange(
+            object sender,
+            DependencyPropertyChangedEventArgs args)
+        {
+            UpdateWorksheetItemsVisibilityAdorner(sender as global::Quire.Controls.Core.IWhiteboardItem, (bool)args.NewValue);
+        }
+
         private partial class IndicationVisibilityAdorner
         {
             private void UpdateOnScrollViewerChanged(object sender, System.EventArgs e)

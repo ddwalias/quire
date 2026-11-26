@@ -211,8 +211,6 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         [global::Quire.Mirror.MirrorStub]
         private void PageWhiteboardItemsCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
-        private void OnPageWhiteboardItemVisibilityChange(object sender, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         private void UpdateWorksheetItemsVisibilityAdorner(object uiElement, bool isItemOnVisiblePage, bool toBeClipped = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         private void InitializePreviewWindow() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
