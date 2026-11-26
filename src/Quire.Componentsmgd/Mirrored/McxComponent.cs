@@ -1,5 +1,9 @@
 using System;
+using System.Threading;
+using System.Windows.Forms;
 using Microsoft.Win32;
+using Quire.Automation;
+using Quire.Mpl.Run;
 using Quire.VSINTERFACESLib;
 
 namespace Quire.Components;
@@ -73,23 +77,151 @@ public partial class McxComponent
         return false;
     }
 
+    [global::Quire.Mirror.MirrorStub, global::Quire.Mirror.MirrorBlocked("Cross-assembly Mathcad.IMatrixValue mapping (interop.mathcad vs automationmgd) is maintained outside Componentsmgd.")]
     private bool FixInputs(ref object[] inputs, ref uint nInputs, ref uint nOutputs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private void CreateInputQueue(uint nInputs, ref McxInput[] minputs, object[] inputs, global::Quire.Automation.UnitAction action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void CreateInputQueue(uint nInputs, ref McxInput[] minputs, object[] inputs, UnitAction action)
+    {
+        for (uint i = 0; i < nInputs; i++)
+        {
+            minputs[i] = new McxInput(action);
+            minputs[i].Data = VSValueFactory.Instance.AutomationToVSData(inputs[i]) as VSDataValue;
+            executive.SetInput(i, minputs[i]);
+        }
+    }
 
-    private void CreateOutputQueue(uint nOutputs, ref McxOutput[] moutputs, global::Quire.Automation.UnitAction action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void CreateOutputQueue(uint nOutputs, ref McxOutput[] moutputs, UnitAction action)
+    {
+        for (uint i = 0; i < nOutputs; i++)
+        {
+            moutputs[i] = new McxOutput(action);
+            executive.SetOutput(i, moutputs[i]);
+        }
+    }
 
-    public void Initialize(object any) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void Initialize(object any)
+    {
+        if (any == null && executive != null)
+        {
+            Utilities.ReleaseAll(executive);
+        }
+        executive = (IVSObjectExec2)any;
+    }
 
-    public void McError(bool bSet) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void McError(bool bSet)
+    {
+        if (executive != null)
+        {
+            executive.Error(bSet ? 1 : 0);
+        }
+    }
 
-    public object[] Eval(object[] inputs, object reserved) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public object[] Eval(object[] inputs, object reserved)
+    {
+        lock (this)
+        {
+            if (running)
+            {
+                return null;
+            }
+            running = true;
+        }
+        lastError = null;
+        try
+        {
+            try
+            {
+                UnitAction action = ShouldScale() ? (reserved == null ? UnitAction.Normalize : UnitAction.Simplify) : UnitAction.None;
+                uint nInputs = 0;
+                uint nOutputs = 0;
+                executive.GetNumPorts(ref nInputs, ref nOutputs);
+                uint originalInputs = nInputs;
+                bool fixedInputs = FixInputs(ref inputs, ref nInputs, ref nOutputs);
+                try
+                {
+                    McxInput[] minputs = new McxInput[nInputs];
+                    GC.KeepAlive(minputs);
+                    CreateInputQueue(nInputs, ref minputs, inputs, action);
+                    McxOutput[] moutputs = new McxOutput[nOutputs];
+                    GC.KeepAlive(moutputs);
+                    CreateOutputQueue(nOutputs, ref moutputs, action);
+                    key = 1;
+                    executive.StateChange(VSAPPSTATE.VSAPPSTATE_RUNNING);
+                    try
+                    {
+                        executive.Step(ref key);
+                        while (key > 0)
+                        {
+                            if (MultiThreaded)
+                            {
+                                Thread.Sleep(0);
+                            }
+                            else
+                            {
+                                Application.DoEvents();
+                            }
+                        }
+                    }
+                    finally
+                    {
+                        Interlocked.Decrement(ref key);
+                        executive.StateChange(VSAPPSTATE.VSAPPSTATE_STOPPED);
+                    }
+                    if (nOutputs == 0)
+                    {
+                        return null;
+                    }
+                    object[] outputs = new object[nOutputs];
+                    for (uint i = 0; i < nOutputs; i++)
+                    {
+                        outputs[i] = VSValueFactory.Instance.VSDataToAutomation(moutputs[i].Data);
+                        if (outputs[i] == null)
+                        {
+                            throw new Exception("null pointer");
+                        }
+                    }
+                    return outputs;
+                }
+                finally
+                {
+                    if (fixedInputs)
+                    {
+                        executive.SetNumPorts(originalInputs, nOutputs, false);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                if (lastError == null)
+                {
+                    lastError = ex;
+                }
+                throw lastError;
+            }
+        }
+        finally
+        {
+            running = false;
+        }
+    }
 
-    public void Stepped(global::Quire.VSINTERFACESLib.IVSObject lpVSObject, ref int lpKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void Stepped(IVSObject lpVSObject, ref int lpKey)
+    {
+        key = lpKey = 0;
+    }
 
-    public void GetAppState(global::Quire.VSINTERFACESLib.IVSObject lpVSObject, ref global::Quire.VSINTERFACESLib.VSAPPSTATE pState) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void GetAppState(IVSObject lpVSObject, ref VSAPPSTATE pState)
+    {
+        pState = VSAPPSTATE.VSAPPSTATE_RUNNING;
+    }
 
-    public void Error(global::Quire.VSINTERFACESLib.IVSObject lpVSObject, string pcszError) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void Error(IVSObject lpVSObject, string pcszError)
+    {
+        McError(true);
+        lastError = new AppException(pcszError);
+    }
 
-    public void SetAppState(global::Quire.VSINTERFACESLib.IVSObject lpVSObject, global::Quire.VSINTERFACESLib.VSAPPSTATE vsState) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SetAppState(IVSObject lpVSObject, VSAPPSTATE vsState)
+    {
+    }
 }
