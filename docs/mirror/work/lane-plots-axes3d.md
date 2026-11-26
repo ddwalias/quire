@@ -17,3 +17,10 @@
 - `Quire.Controls.Plots.PlotGraphControl`: whole-type Release IL parity (all remaining generated stubs, `.cctor`, closure `<>c__DisplayClass62_0`, gridline and layout methods).
 - Release IL report: `Release IL: PASS; 3786 checked` (`python tools/validation/release_il.py --base main --project Quire.Controls.Plots`).
 - Remaining in scope: `PlotAxesWidget3D`, `PlotAxis3D`.
+
+## Batch 3 — `PlotAxesWidget3D`
+
+- Branch: `feature/agy-plots-axes3d-b3`.
+- `Quire.Controls.Plots.Plot3D.View.PlotAxesWidget3D`: whole-type Release IL parity (including `PropertyNames`, all properties/methods, closures `<>c__DisplayClass25_0`, `<>c__DisplayClass25_1`, `<>c::__27_0`, `<>c__DisplayClass28_0`, `<>c__DisplayClass38_0`, iterator `<AllAxes>d__36`, and XAML `InitializeComponent`, `_CreateDelegate`, `IComponentConnector.Connect`).
+- Release IL report: `Release IL: PASS; 3858 checked` (`python tools/validation/release_il.py --base main --project Quire.Controls.Plots`).
+- Remaining in scope: `PlotAxis3D`.
