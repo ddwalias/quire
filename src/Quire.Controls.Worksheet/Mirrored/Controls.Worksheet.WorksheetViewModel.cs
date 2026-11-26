@@ -16,6 +16,7 @@ using Quire.Controls.Text;
 using Quire.Controls.Worksheet.Printing;
 using Quire.Undo;
 using Quire.Controls.Core.Whiteboard;
+using Quire.Controls.Include;
 using Quire.Controls.Mathboard;
 using Quire.Controls.Plots;
 using Quire.Controls.Plots.View;
@@ -2204,5 +2205,22 @@ internal partial class WorksheetViewModel
         }
 
         SetEqResizable(item);
+    }
+    public IIncludeWorksheetControl CreateIncludeControl(string filePath)
+    {
+        IIncludeWorksheetControl includeControl;
+        using (new CommandScope("CreateIncludeControl"))
+        {
+            includeControl = ControlCreator.CreateIncludeControl();
+            AddItemAtInsertionPointAndActivate(includeControl, "Add IncludeControl");
+            includeControl.IncludedFilePath = filePath;
+        }
+
+        return includeControl;
+    }
+
+    public IIncludeWorksheetControl CreateIncludeControl()
+    {
+        return CreateIncludeControl("");
     }
 }

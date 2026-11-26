@@ -128,10 +128,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Mathboard.IAggregateMathboardControl CreateChartComponentControl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Include.IIncludeWorksheetControl CreateIncludeControl(string filePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Include.IIncludeWorksheetControl CreateIncludeControl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.ISpecTableControl CreateSpecTableControl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool CanMoveInDirection(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
