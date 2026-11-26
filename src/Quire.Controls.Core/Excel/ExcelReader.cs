@@ -1,10 +1,13 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.IO.Packaging;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Xml;
 using DocumentFormat.OpenXml.Packaging;
+using Quire.IO;
 using Quire.Mirror;
 
 namespace Quire.Controls.Core.Excel;
@@ -50,6 +53,26 @@ public partial class ExcelReader
             text = text.Substring(0, length) + char.ConvertFromUtf32(c + 1);
         }
         return text;
+    }
+
+    private string GetSharedString(string sharedStringId)
+    {
+        if (_sharedStringDoc == null)
+        {
+            Uri uri = _doc.WorkbookPart.SharedStringTablePart.Uri;
+            PackagePart part = _doc.Package.GetPart(uri);
+            _sharedStringDoc = new XmlDocument();
+            _sharedStringDoc.Load(part.GetStream());
+        }
+        string result = string.Empty;
+        int num = Convert.ToInt32(sharedStringId);
+        string xpath = string.Format("//s:sst/s:si[{0}]", num + 1);
+        XmlNode xmlNode = _sharedStringDoc.SelectSingleNode(xpath, _nsManager);
+        if (xmlNode != null)
+        {
+            result = xmlNode.InnerText;
+        }
+        return result;
     }
 
     private ExcelCell CreateExcelCel(XmlElement element)
@@ -177,6 +200,36 @@ public partial class ExcelReader
             Columns = columns,
             Name = name
         };
+    }
+
+    public void LoadExcelBook(string fileName)
+    {
+        using Stream stream = PackageOperationsProvider.OpenFileStreamForReadWithFullShare(fileName);
+        using (_doc = SpreadsheetDocument.Open(stream, isEditable: false))
+        {
+            List<ExcelSheet> list = new List<ExcelSheet>();
+            PackagePart part = _doc.Package.GetPart(_doc.WorkbookPart.Uri);
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(part.GetStream());
+            XmlNodeList xmlNodeList = xmlDocument.SelectNodes("s:workbook/s:sheets/s:sheet", _nsManager);
+            if (xmlNodeList != null)
+            {
+                foreach (XmlElement item in xmlNodeList)
+                {
+                    string attribute = item.GetAttribute("r:id");
+                    string attribute2 = item.GetAttribute("name");
+                    OpenXmlPart partById = _doc.WorkbookPart.GetPartById(attribute);
+                    PackagePart part2 = _doc.Package.GetPart(partById.Uri);
+                    XmlDocument xmlDocument2 = new XmlDocument();
+                    xmlDocument2.Load(part2.GetStream());
+                    list.Add(CreateExcelSheet(xmlDocument2.DocumentElement, attribute2));
+                }
+            }
+            WorkBook = new ExcelBook
+            {
+                Sheets = list
+            };
+        }
     }
 
     public ExcelReader()

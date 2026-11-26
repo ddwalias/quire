@@ -11,8 +11,4 @@ namespace Quire.Controls.Core.Excel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.Excel.ExcelReader, Ptc.Controls.Core")]
 public partial class ExcelReader
 {
-    [global::Quire.Mirror.MirrorStub]
-    private string GetSharedString(string sharedStringId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void LoadExcelBook(string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

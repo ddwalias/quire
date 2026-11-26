@@ -915,9 +915,15 @@
 ## Batch 120 — parked small-file blockers
 
 - Parked `RtfHelper.FixHyperlinksRtfSerialization`: the reference body requires `nrtftree-library`/NRtfTree APIs and additional helper members not present in the current hand-written partial. A linked reference to the Mathcad install is available under D27, but the member is deferred as a larger dependency batch.
-- Parked `Excel.ExcelReader.GetSharedString` and `LoadExcelBook`: Mathcad's DocumentFormat.OpenXml 2.17.1.0 body accesses `SpreadsheetDocument.Package` and `PackagePart`; the current project uses OpenXml 3.5.1, where that public package API is absent. A `GetStream()` substitution compiles but fails exact Release IL at the Uri/PackagePart call sequence.
+- `Excel.ExcelReader.GetSharedString` and `LoadExcelBook` were parked here because OpenXml 3.5.1 lacks Mathcad's `SpreadsheetDocument.Package` API; resolved in Batch 121 after `main` pinned OpenXml 2.17.1.
 - Parked `Ole.OleContainer<TViewModel,TModel,TIPublicModel,TPersistentData>` members `StorageFileNameForXamlSerialization`, `StartOleCloseOperation`, `TrySavingBitmapForPrint`, and `GetOlePersistentData`: the current source placement assigns closure ordinals 50, 75, 87 and 88, while Mathcad requires 55, 31, 69 and 84. The Release IL gate reports generated callback names and ordinals differ; the attempted bodies were reverted.
 - Current project Release IL stub count after landed batches: 1,532.
+
+## Batch 122 — ExcelReader OpenXml package access
+
+- Owner: dispatched worker; branch `feature/excel-namespace-20261126`.
+- Members: `Excel.ExcelReader.GetSharedString`, `LoadExcelBook`; implemented using the restored OpenXml 2.17.1 `Package` API and `PackagePart` access.
+- Release IL: PASS (`3,381 checked`; `.mirror-cache/release-il-f2ec0987f0a9/release-il.json`); both changed methods exact; no remaining mismatches in this batch.
 
 ## Batch 121 — FrameworkElementFacade and ExtendedFont stubs
 

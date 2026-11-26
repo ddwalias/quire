@@ -1,7 +1,7 @@
 # Lane controls-core — classification of Quire.Controls.Core stubs
 
 - Owner: dispatched worker, Orca task `task_113b76a9ec27`; branch `feature/controls-core-claude` (worktree `C:/Users/DuyDang/orca/workspaces/Quire/controls-core-claude`), based on `main`.
-- Scope: every `[MirrorStub]` member in `src/Quire.Controls.Core/Generated/Mirror/*.g.cs` (1,108 members in 39 files). Step 1 classification only.
+- Scope: every `[MirrorStub]` member in `src/Quire.Controls.Core/Generated/Mirror/*.g.cs` (1,106 members in 39 files after ExcelReader batch 121). Step 1 classification only.
 - Reference IL: `tools/reference/reference.py <Ptc.Type> --assembly Ptc.Controls.Core --il` (`--assembly` takes the name without `.dll`; with the suffix the tool looks for `….dll.dll`). Cached under the ignored `.mirror-cache/Ptc.Controls.Core/`.
 - Method: each stub is matched by name to its Mathcad member in the reference IL (`get_`/`set_` for properties, `.ctor`, operator names, explicit-interface names, generic arity removed). The member body is scanned for: closure/lambda markers (`<>c`, `<>9__`, `DisplayClass`, `b__`/`g__`), XAML (`InitializeComponent`, `LoadComponent`, BAML), and native/COM (P/Invoke, `Marshal`, `InteropServices`, `calli`). Quire-side declarations are checked for `global::Quire.*` type references; all resolve to existing source types, so no member is blocked on a missing type.
 - Status: `unblocked` = no closure, XAML or native marker and not in a touched group (IL shape not yet tested; the gate decides). `blocked` = a reason above, or a checkpoint record. `deferred` = in a type group that lane N already claimed or landed members in (`docs/mirror/work/lane-n.md`); this lane is limited to untouched groups, so these stay for the maintainer.
@@ -9,7 +9,7 @@
 - Type-map ownership: `docs/mirror/type-map.csv` maps `Ptc.Controls.Core.dll` types; all 39 stubbed Mathcad types have a row in that map (checked).
 - Static constructors with lambdas (`CalculationOptions`, `CustomScriptRunBase`): their static members are ordinal-sensitive; they are marked unblocked and the gate decides.
 
-**Totals:** 1108 stubs — unblocked 901, blocked 90, deferred (touched groups) 117.
+**Totals:** 1106 stubs — unblocked 901, blocked 88, deferred (touched groups) 117.
 
 ## Summary by type
 
@@ -21,7 +21,7 @@
 | `AttachedProperties` | 6 | 0 | 0 | 6 | - |
 | `CommonDragger` | 29 | 29 | 0 | 0 | - |
 | `DummyWorksheetPropertiesSource` | 23 | 23 | 0 | 0 | - |
-| `Excel.ExcelReader` | 2 | 0 | 0 | 2 | - |
+| `Excel.ExcelReader` | 0 | 0 | 0 | 0 | - |
 | `ExtendedFont` | 38 | 38 | 0 | 0 | - |
 | `FrameworkElementFacade` | 22 | 21 | 1 | 0 | closure/lambda 1 |
 | `IEquationControl` | 1 | 0 | 0 | 1 | - |
@@ -178,8 +178,6 @@ These are excluded from this lane by the `untouched groups only` scope. Each row
 | `AttachedProperties` | `AttachedProperties.OnCanActivateChanged` | touched group: lane N batches 118-119 (AttachedProperties); checkpoint blocked: closure: lambda, display class 32 (batch 118) |
 | `AttachedProperties` | `AttachedProperties.SetIsBringToView` | touched group: lane N batches 118-119 (AttachedProperties); checkpoint blocked: IL shape: callvirt vs call on DependencyObject.SetValue (batch 119) |
 | `AttachedProperties` | `AttachedProperties.GetIsBringToView` | touched group: lane N batches 118-119 (AttachedProperties); checkpoint blocked: IL shape: callvirt vs call on DependencyObject.GetValue (batch 119) |
-| `Excel.ExcelReader` | `ExcelReader.GetSharedString` | touched group: lane N batches 59, 101 (ExcelReader); checkpoint blocked: library: OpenXml 3.x dropped the public package API (batch 101) |
-| `Excel.ExcelReader` | `ExcelReader.LoadExcelBook` | touched group: lane N batches 59, 101 (ExcelReader); checkpoint blocked: library: OpenXml 3.x dropped the public package API (batch 101) |
 | `IEquationControl` | `IEquationControl.Changed` | touched group: lane N batch 87 (IEquationControl); checkpoint blocked: type conflict: RoutedEventHandler vs Quire EventHandler (batch 87) |
 | `Ole.OleContainer_4` | `OleContainer._snappableHelper` | touched group: lane N batches 110-113, 119 (OleContainer) |
 | `Ole.OleContainer_4` | `OleContainer._prePrintingZoom` | touched group: lane N batches 110-113, 119 (OleContainer) |
