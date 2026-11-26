@@ -11,4 +11,6 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.IRtfItemBase, Ptc.Controls.Core")]
 public partial interface IRtfItemBase
 {
+    [global::Quire.Mirror.MirrorStub]
+    void AddItemToDocument(global::Net.Sgoliver.NRtfTree.Core.RtfTreeNode node, global::System.Windows.Point offset, bool onePageContent, global::Net.Sgoliver.NRtfTree.Core.RtfMerger merger) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

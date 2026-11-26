@@ -239,7 +239,7 @@ public sealed class Mapper
                     return null;
             }
         }
-        if (n.Assembly == "nrtftree-library") { reason = $"pending D7: NRtfTree ({n.Name})"; return null; }
+        if (n.Assembly == "nrtftree-library") return new NamedSig(n.Assembly, n.Name);
         if (n.Assembly.StartsWith("DevComponents."))
         {
             if (Substitutes.TryGetValue(n.Name, out var s)) return new NamedSig(s.Asm, s.Name);

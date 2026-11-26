@@ -54,9 +54,13 @@ public partial class RtfItemWrapperHelper
     [global::Quire.Mirror.MirrorStub]
     public bool CopyItemAsImageToDataObject(global::System.Windows.DataObject dataObject, global::Quire.Controls.Core.IWhiteboardItem item, global::Quire.Controls.Core.RegionImageSettings imageSettings) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    public global::Net.Sgoliver.NRtfTree.Core.RtfTree PrepareRtf(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IRtfItemBase> items, bool isSavingWholeDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Rect CalculateItemMeaningfulPartBounds(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem, global::System.Windows.Rect cloneBounds, global::System.Windows.Size rtfContentFullSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Windows.Size ClipToCloneBounds(global::System.Windows.Rect originalBounds, global::System.Windows.Rect cloneBounds, global::System.Windows.Size rtfContentFullSize, global::System.Windows.Rect clipRectGeometry) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Media.Imaging.BitmapSource CreateImage(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem, global::Quire.Controls.Core.RegionImageSettings imageSettings, out global::System.Windows.Rect cloneBounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    public global::Net.Sgoliver.NRtfTree.Core.RtfTree CreateText(global::Quire.Controls.Core.IRichTextWithEmbeddedItem richText) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

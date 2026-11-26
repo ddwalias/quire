@@ -11,4 +11,8 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.RtfItemBase, Ptc.Controls.Worksheet")]
 public abstract partial class RtfItemBase : global::Quire.Controls.Core.IRtfItemBase
 {
+    [global::Quire.Mirror.MirrorStub]
+    public void AddItemToDocument(global::Net.Sgoliver.NRtfTree.Core.RtfTreeNode node, global::System.Windows.Point offset, bool onePageContent, global::Net.Sgoliver.NRtfTree.Core.RtfMerger merger) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    protected abstract void AddItemToDocumentInternal(global::Net.Sgoliver.NRtfTree.Core.RtfTreeNode node, global::System.Windows.Rect clippingRect, bool relativeToCaret, global::Net.Sgoliver.NRtfTree.Core.RtfMerger merger);
 }

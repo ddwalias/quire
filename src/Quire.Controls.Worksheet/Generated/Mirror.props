@@ -10,6 +10,7 @@
     <ProjectReference Include="..\Quire.Controls.Include\Quire.Controls.Include.csproj" />
     <ProjectReference Include="..\Quire.Controls.Whiteboard\Quire.Controls.Whiteboard.csproj" />
     <ProjectReference Include="..\Quire.Engine\Quire.Engine.csproj" />
+    <PackageReference Include="nrtftree-library" Version="0.4.0" />
     <InternalsVisibleTo Include="$(AssemblyName).Tests" />
     <InternalsVisibleTo Include="Quire.Mirror.Tests" />
     <InternalsVisibleTo Include="Quire.Differential.Tests" />

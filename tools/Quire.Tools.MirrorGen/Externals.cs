@@ -19,6 +19,8 @@ public sealed class Externals
         ["JetBrains.Annotations"] = new("JetBrains.Annotations", "2024.3.0", "netstandard2.0"),
         // Mathcad ships 2.17.1, which has no separate Framework assembly and still exposes SpreadsheetDocument.Package.
         ["DocumentFormat.OpenXml"] = new("DocumentFormat.OpenXml", "2.17.1", "netstandard2.0"),
+        // Mathcad ships nrtftree-library 0.4.0 (LGPL, D7); the NuGet package of the same name is that version.
+        ["nrtftree-library"] = new("nrtftree-library", "0.4.0", "net40"),
         ["Python.Runtime"] = new("pythonnet", "3.0.5", "netstandard2.0"),
         ["ClearScript.Core"] = new("Microsoft.ClearScript.Windows", "7.4.5", "net5.0"),
         ["ClearScript.Windows"] = new("Microsoft.ClearScript.Windows", "7.4.5", "net5.0"),

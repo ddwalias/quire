@@ -369,6 +369,6 @@ mode, which supersedes D25's parking for functions that a `/GL` build reproduces
 
 - **D6:** Commercial-component replacements remain undecided: Fluent.Ribbon/AvalonDock,
   IPOPT/NLopt, and MathNet.Numerics are candidates listed in [scope](scope.md).
-- **D7:** Acceptance of copyleft dependency obligations remains undecided.
+- **D7:** Acceptance of copyleft dependency obligations remains undecided, except NRtfTree: on 2026-11-26 the user chose to depend on the public NuGet package `nrtftree-library` 0.4.0 (LGPL, the version Mathcad ships), referenced as a normal package and so linked dynamically.
 
 These choices do not add steps to a managed IL mirroring batch.

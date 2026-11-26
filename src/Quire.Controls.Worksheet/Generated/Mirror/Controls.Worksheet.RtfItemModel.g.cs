@@ -12,6 +12,8 @@ namespace Quire.Controls.Worksheet;
 public partial class RtfItemModel : global::Quire.Controls.Worksheet.RtfItemBase
 {
     [global::Quire.Mirror.MirrorStub]
+    private readonly global::Net.Sgoliver.NRtfTree.Core.RtfTree _model;
+    [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Windows.Media.Brush _background;
     [global::Quire.Mirror.MirrorStub]
     private readonly bool _hasBorder;
@@ -20,5 +22,7 @@ public partial class RtfItemModel : global::Quire.Controls.Worksheet.RtfItemBase
     [global::Quire.Mirror.MirrorStub]
     public string Rtf { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    private RtfItemModel() { }
+    public RtfItemModel(global::Net.Sgoliver.NRtfTree.Core.RtfTree model, global::System.Windows.Size size, global::System.Windows.Media.Brush background, bool hasBorder, global::System.Windows.Media.Brush borderColor, bool noLeftOffset = false) { }
+    [global::Quire.Mirror.MirrorStub]
+    protected override void AddItemToDocumentInternal(global::Net.Sgoliver.NRtfTree.Core.RtfTreeNode node, global::System.Windows.Rect clippingRect, bool relativeToCaret, global::Net.Sgoliver.NRtfTree.Core.RtfMerger merger) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
