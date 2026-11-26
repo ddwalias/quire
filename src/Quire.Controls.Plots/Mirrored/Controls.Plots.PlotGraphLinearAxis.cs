@@ -61,13 +61,49 @@ internal partial class PlotGraphLinearAxis
 
     private void InitializeColOrRowIndexProperties() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private void Splitter_DragCompleted(object sender, global::System.Windows.Controls.Primitives.DragCompletedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void Splitter_DragCompleted(object sender, global::System.Windows.Controls.Primitives.DragCompletedEventArgs e)
+    {
+        int tickNumber;
+        Grid grid = (Grid)Splitter.Parent;
+        if (Orientation == Orientation.Vertical)
+        {
+            double width = grid.ColumnDefinitions[ColOrRowIndex1].ActualWidth;
+            tickNumber = OtherLinearAxis.OffsetToTickNumber(width);
+        }
+        else
+        {
+            double height = grid.RowDefinitions[ColOrRowIndex1].ActualHeight;
+            tickNumber = OtherLinearAxis.OffsetToTickNumber(height);
+        }
+        ApplyTickNumber(tickNumber, false);
+    }
 
     internal void MoveRowOrCol(int tickNumber) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private double GetGridSplitPosition(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private double GetGridSplitPosition(int index)
+    {
+        Grid grid = (Grid)Splitter.Parent;
+        if (Orientation != Orientation.Vertical)
+        {
+            return grid.RowDefinitions[index].ActualHeight;
+        }
+        return grid.ColumnDefinitions[index].ActualWidth;
+    }
 
-    private static void AdjustSnap(ref double snapOffset, ref double index2SnapOffset, double totalWidthOrHeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void AdjustSnap(ref double snapOffset, ref double index2SnapOffset, double totalWidthOrHeight)
+    {
+        if (snapOffset < 0)
+        {
+            snapOffset = 0;
+            index2SnapOffset = totalWidthOrHeight;
+            return;
+        }
+        if (index2SnapOffset < 0)
+        {
+            snapOffset = totalWidthOrHeight;
+            index2SnapOffset = 0;
+        }
+    }
 
     private void Splitter_DragDelta(object sender, global::System.Windows.Controls.Primitives.DragDeltaEventArgs e)
     {
@@ -78,7 +114,18 @@ internal partial class PlotGraphLinearAxis
         }
     }
 
-    private void UpdateOffset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void UpdateOffset()
+    {
+        Grid grid = (Grid)Splitter.Parent;
+        if (Orientation == Orientation.Vertical)
+        {
+            Offset = grid.ColumnDefinitions[ColOrRowIndex1].ActualWidth;
+        }
+        else
+        {
+            Offset = grid.RowDefinitions[ColOrRowIndex1].ActualHeight;
+        }
+    }
 
     private void PlotGraphAxis_SizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -150,7 +197,39 @@ internal partial class PlotGraphLinearAxis
         set => Dispatch(() => SetValue(PositionProperty, value));
     }
 
-    private void CalcPositionTickMark(global::Quire.Controls.Plots.Presenter.Positions newPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void CalcPositionTickMark(global::Quire.Controls.Plots.Presenter.Positions newPosition)
+    {
+        if (HasOriginPositioning)
+        {
+            int tickNumber = 0;
+            OtherLinearAxis.FindClosestTickValueToZero(ref tickNumber);
+            PositionTickMark = tickNumber;
+        }
+        else
+        {
+            switch (newPosition)
+            {
+                case Positions.Bottom:
+                case Positions.Left:
+                    PositionTickMark = -1;
+                    break;
+                case Positions.Top:
+                case Positions.Right:
+                    PositionTickMark = OtherLinearAxis.TickMarks;
+                    break;
+                case Positions.Origin:
+                case Positions.TickNumberLock:
+                    if (OtherLinearAxis.IsEffectAxis)
+                    {
+                        PositionTickMark = -1;
+                    }
+                    break;
+            }
+        }
+        MoveRowOrCol(PositionTickMark);
+        FireChanged();
+        SetupAxisArrowHeadsDisplay();
+    }
 
     private void SetupAxisArrowHeadsDisplay() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -205,7 +284,25 @@ internal partial class PlotGraphLinearAxis
 
     private bool HasZeroInRange(ref int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public override bool FindClosestTickValueToZero(ref int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public override bool FindClosestTickValueToZero(ref int index)
+    {
+        if (IsDiscrete)
+        {
+            index = -1;
+            return false;
+        }
+        if (TickMarksValues != null)
+        {
+            if (HasZeroInRange(ref index))
+            {
+                return true;
+            }
+            index = TickMarksValues[0] > 0 ? -1 : TickMarks;
+            return false;
+        }
+        index = (int)Math.Floor(TickMarks / 2.0);
+        return true;
+    }
 
     public override int PositionValue
     {
