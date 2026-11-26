@@ -82,8 +82,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     private void UpdateFirstPageHeaderFooter() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void HandleTabOutOfText(global::Quire.Wpf.CustomRoutedEventArgs<global::System.Windows.Input.FocusNavigationDirection> eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void TraverseWhiteboardItems(global::System.Func<global::Quire.Controls.Core.IWhiteboardItem, bool, bool> function) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ApplyWorksheetData(global::Quire.PersistentData.IWorksheetPersistentData worksheetData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -111,8 +109,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     public global::Quire.Controls.Core.IImageControl CreateImageControl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IImageControl CreateImageControl(string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Core.TextFormat GetCurrentTextFormatClone(global::Quire.Core.TextFormat inputTextFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IRichTextBase CreateTextboxControl(string text = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -231,8 +227,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     private bool CanCreateInputControlOfType<T>(global::System.Nullable<global::Quire.Controls.Core.InputControlTypes> inputControlTypes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool CanCreateControlOfType<T>(global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainer containerControl = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool ForbidsCreatingControls(global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainer containerControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainer GetAddableContainerControl(bool isExcludeWorksheetControlContent = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

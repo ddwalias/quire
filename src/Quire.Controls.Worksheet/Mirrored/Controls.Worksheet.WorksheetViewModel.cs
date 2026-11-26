@@ -1843,4 +1843,29 @@ internal partial class WorksheetViewModel
         Size sizeLimit = FindSizeLimit((IWhiteboardItem)whiteBoard);
         whiteBoard.UpdateSizeLimits(new Size(sizeLimit.Width, sizeLimit.Height));
     }
+
+    public TextFormat GetCurrentTextFormatClone(TextFormat inputTextFormat)
+    {
+        TextFormat textFormat = inputTextFormat.Clone();
+        if (textFormat.StyleKey == "areaLayoutStyle" || textFormat.StyleKey == "headerLayoutStyle" || textFormat.StyleKey == "footerLayoutStyle")
+        {
+            textFormat.StyleKey = "Normal";
+        }
+        return textFormat;
+    }
+
+    private bool ForbidsCreatingControls(IWhiteboardItemContainer containerControl)
+    {
+        if (!(containerControl is IWhiteboardControl whiteboardControl))
+        {
+            return false;
+        }
+        return !whiteboardControl.CanAddItems;
+    }
+
+    public void HandleTabOutOfText(CustomRoutedEventArgs<FocusNavigationDirection> eventArgs)
+    {
+        eventArgs.Handled = true;
+        HandleTab(eventArgs.Parameter);
+    }
 }
