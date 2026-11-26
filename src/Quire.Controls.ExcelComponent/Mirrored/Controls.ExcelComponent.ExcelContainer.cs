@@ -13,6 +13,7 @@ using Quire.Controls.Core.Ole;
 using Quire.Controls.ExcelComponent.Model;
 using Quire.Controls.ExcelComponent.View;
 using Quire.Controls.ExcelComponent.ViewModel;
+using Quire.Core;
 using Quire.PersistentData;
 using Quire.Serialization;
 
@@ -21,28 +22,6 @@ namespace Quire.Controls.ExcelComponent;
 public partial class ExcelContainer
 {
     private static readonly Type _typeOfThis;
-
-    IExcelContainerViewModel IExcelContainer.ViewModel
-    {
-        get
-        {
-            return ViewModel;
-        }
-    }
-
-    public bool? IsAsIconForXamlSerialization
-    {
-        get => ViewModel.IsAsIcon;
-        set => ViewModel.IsAsIcon = value;
-    }
-
-    public override ICalculationComponent Component
-    {
-        get
-        {
-            return PublicModel;
-        }
-    }
 
     static ExcelContainer()
     {
@@ -61,6 +40,14 @@ public partial class ExcelContainer
         AttachedProperties.SetRegisterCommandBindings(this, ViewModel.CommandBindings);
     }
 
+    IExcelContainerViewModel IExcelContainer.ViewModel
+    {
+        get
+        {
+            return ViewModel;
+        }
+    }
+
     protected override bool ShouldSerializeProperty(DependencyProperty property)
     {
         if (Control.TemplateProperty.Equals(property))
@@ -75,6 +62,33 @@ public partial class ExcelContainer
         double height = double.IsNaN(Height) ? constraint.Height / 2.0 : Height;
         double width = double.IsNaN(Width) ? constraint.Width : Width;
         return ViewModel.Measure(new Size(width, height));
+    }
+
+    public bool? IsAsIconForXamlSerialization
+    {
+        get => ViewModel.IsAsIcon;
+        set => ViewModel.IsAsIcon = value;
+    }
+
+    public bool SetValues(IEnumerable<Pair<string, object>> valuesToSet, bool forceRun)
+    {
+        return PublicModel.DoActionWithLock(() =>
+        {
+            valuesToSet.Each((Pair<string, object> pair) =>
+            {
+                PublicModel.SetValue(pair.First, pair.Second, forceRun);
+            });
+        });
+    }
+
+    public object[] GetValues(string[] cellIdxs, bool forceRun)
+    {
+        List<object> results = new List<object>();
+        PublicModel.DoActionWithLock(() =>
+        {
+            results.AddRange(cellIdxs.Select((string cellIdx) => (dynamic)PublicModel.GetRange(cellIdx, forceRun).get_Value(Type.Missing)));
+        });
+        return results.ToArray();
     }
 
     protected override void OnCreationError()
@@ -109,4 +123,13 @@ public partial class ExcelContainer
         }
         return olePersistentData;
     }
+
+    public override ICalculationComponent Component
+    {
+        get
+        {
+            return PublicModel;
+        }
+    }
+
 }

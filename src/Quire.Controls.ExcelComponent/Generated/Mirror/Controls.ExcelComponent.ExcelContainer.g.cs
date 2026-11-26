@@ -11,8 +11,4 @@ namespace Quire.Controls.ExcelComponent;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.ExcelComponent.ExcelContainer, Ptc.Controls.ExcelComponent")]
 public partial class ExcelContainer : global::Quire.Controls.ExcelComponent.View.OleContainerItem<global::Quire.Controls.ExcelComponent.ViewModel.ExcelContainerViewModel, global::Quire.Controls.ExcelComponent.Model.ExcelContainerModel, global::Quire.Controls.ExcelComponent.Model.IPublicExcelContainerModel, global::Quire.PersistentData.excelContainerType>, global::Quire.Controls.ExcelComponent.IExcelContainer, global::Quire.Controls.ExcelComponent.View.IOleContainerItem, global::Quire.Controls.Core.Ole.IOleContainer, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Serialization.IPersistentDataProvider
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool SetValues(global::System.Collections.Generic.IEnumerable<global::Quire.Pair<string, object>> valuesToSet, bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object[] GetValues(string[] cellIdxs, bool forceRun) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
