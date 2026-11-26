@@ -46,22 +46,6 @@ public partial class PlotModel3D : global::Quire.Controls.Plots.Model.PlotModelB
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.CameraType3D _plotCameraType;
     [global::Quire.Mirror.MirrorStub]
-    internal global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D> Equations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D> Traces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.SynchronizationStatus SynchronizationStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Presenter.IAxisModel XAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Presenter.IAxisModel YAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.Presenter.IAxisModel ZAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Media3D.Transform3D CameraTransform { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.CameraType3D PlotCameraType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D, int> TraceInserted;
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Action<global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D> TraceRemoved;
