@@ -314,6 +314,20 @@ public partial class WorksheetControlDebugger
             DestroyPreviewWindow();
         }
 
+        protected override void SubscribeEvents()
+        {
+            SubscribePagesEvents();
+            SubscribeWorksheetItemsEvents();
+            EnableAdornerUpdates();
+        }
+
+        protected override void UnSubscribeEvents()
+        {
+            UnsSubscribePagesEvents();
+            UnSubscribeWorksheetItemsEvents();
+            DisableAdornerUpdates();
+        }
+
         private void RemoveStatusBarItemFromStatusBar()
         {
             if (_indicationStatusBarItem != null && _statusBar.Items.Contains(_indicationStatusBarItem))
@@ -368,6 +382,46 @@ public partial class WorksheetControlDebugger
             UpdateWorksheetItemsVisibilityAdorner(
                 ((global::System.Windows.Controls.Grid)(object)ScrollViewerInst.Parent).Children[1],
                 isItemOnVisiblePage: false);
+        }
+
+        private void InitializePreviewWindow()
+        {
+            if (_win2 == null)
+            {
+                _grid2 = new global::System.Windows.Controls.Grid
+                {
+                    Background = WorksheetControlInst.TryFindResource("WorksheetBackgroundBrush") as global::System.Windows.Media.LinearGradientBrush,
+                    HorizontalAlignment = global::System.Windows.HorizontalAlignment.Center,
+                    VerticalAlignment = global::System.Windows.VerticalAlignment.Top
+                };
+                _grid2.RowDefinitions.Add(new global::System.Windows.Controls.RowDefinition());
+                _grid2.RowDefinitions.Add(new global::System.Windows.Controls.RowDefinition());
+                global::System.Windows.Controls.ScrollViewer content = new global::System.Windows.Controls.ScrollViewer
+                {
+                    Background = global::System.Windows.Media.Brushes.Gray,
+                    HorizontalAlignment = global::System.Windows.HorizontalAlignment.Stretch,
+                    VerticalAlignment = global::System.Windows.VerticalAlignment.Stretch,
+                    VerticalScrollBarVisibility = global::System.Windows.Controls.ScrollBarVisibility.Auto,
+                    HorizontalScrollBarVisibility = global::System.Windows.Controls.ScrollBarVisibility.Auto,
+                    Content = _grid2
+                };
+                _win2 = new global::System.Windows.Window
+                {
+                    Content = content,
+                    HorizontalAlignment = global::System.Windows.HorizontalAlignment.Stretch,
+                    SizeToContent = global::System.Windows.SizeToContent.Width,
+                    Title = "Preview",
+                    Topmost = true,
+                    ShowActivated = false,
+                    ResizeMode = global::System.Windows.ResizeMode.CanResizeWithGrip,
+                    Height = 731.0,
+                    MinWidth = 200.0,
+                    MaxWidth = 600.0
+                };
+                _win2.Show();
+                _win2.Closed += WorksheetPreviewClosed;
+                _win2.SizeChanged += OnWin2SizeChanged;
+            }
         }
 
         private void WorksheetControlSizeChanged(object sender, SizeChangedEventArgs e)

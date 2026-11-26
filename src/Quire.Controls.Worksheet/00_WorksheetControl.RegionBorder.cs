@@ -72,10 +72,25 @@ partial class WorksheetControl
     public void HandleCustomBaseDerivedUnitsSystemChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private static void HandleSimplifyUnitSystemToggled(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs eArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private static void HandleWorksheetNameChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs eArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public static double GetWorksheetTop(global::System.Windows.DependencyObject depObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public static void SetWorksheetTop(global::System.Windows.DependencyObject depObj, double newTop) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public static double GetWorksheetLeft(global::System.Windows.DependencyObject depObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public static void SetWorksheetLeft(global::System.Windows.DependencyObject depObj, double newLeft) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static double GetWorksheetTop(global::System.Windows.DependencyObject depObj)
+    {
+        return (double)depObj.GetValue(WorksheetTopProperty);
+    }
+
+    public static void SetWorksheetTop(global::System.Windows.DependencyObject depObj, double newTop)
+    {
+        depObj.SetValue(WorksheetTopProperty, (object)newTop);
+    }
+
+    public static double GetWorksheetLeft(global::System.Windows.DependencyObject depObj)
+    {
+        return (double)depObj.GetValue(WorksheetLeftProperty);
+    }
+
+    public static void SetWorksheetLeft(global::System.Windows.DependencyObject depObj, double newLeft)
+    {
+        depObj.SetValue(WorksheetLeftProperty, (object)newLeft);
+    }
     public string GetEngineVersion() => _model.EngineVersion;
     public void BringFirstTagItemIntoView(string tag)
     {

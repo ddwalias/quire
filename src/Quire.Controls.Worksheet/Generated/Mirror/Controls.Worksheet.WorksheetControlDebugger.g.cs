@@ -153,10 +153,6 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         [global::Quire.Mirror.MirrorStub]
         public VisibleObjects(object spiritMainWindow, global::System.Windows.DependencyProperty activeDocumentProperty) : base(default(object), default(global::System.Windows.DependencyProperty)) { }
         [global::Quire.Mirror.MirrorStub]
-        protected override void SubscribeEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        protected override void UnSubscribeEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         private T TryFindVisualChild<T>(global::System.Windows.DependencyObject parent) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         private void AddStatusBarItemToStatusBar() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -166,8 +162,6 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         private void UpdateVisibleItemsCounter() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         private void UpdateWorksheetItemsVisibilityAdorner(object uiElement, bool isItemOnVisiblePage, bool toBeClipped = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void InitializePreviewWindow() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         private void UpdatePreviewVisual() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
