@@ -54,22 +54,6 @@ internal partial class PlotTraceModel3D : global::Quire.Controls.Plots.Model.Plo
     [global::Quire.Mirror.MirrorStub]
     public PlotTraceModel3D(global::Quire.Controls.Plots.Plot3D.Model.IPlotEquationModel3D plotEquationModel3D) { }
     [global::Quire.Mirror.MirrorStub]
-    private void AttachCleanErrorsToExpressionValueChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DetachCleanErrorsFromExpressionValueChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnPropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ResetOnRemoval() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool ChangeSymbol(global::Quire.Controls.Plots.Presenter.TraceSymbol value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool ChangeLineStyle(global::Quire.Controls.Plots.Presenter.LineStyle value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Nullable<global::Quire.Controls.Plots.Presenter.TraceStyleState> DoStyleChangeCommand() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UndoStyleChangeCommand(global::System.Nullable<global::Quire.Controls.Plots.Presenter.TraceStyleState> doData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.trace3DType GetDataObject(global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetDataObject(global::Quire.PersistentDataObjects.trace3DType traceData, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

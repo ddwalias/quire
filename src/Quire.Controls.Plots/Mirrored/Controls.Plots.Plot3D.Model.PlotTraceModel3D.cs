@@ -257,4 +257,61 @@ internal partial class PlotTraceModel3D
             return GetPrintResults(base.EngineResult);
         }
     }
+
+    private void AttachCleanErrorsToExpressionValueChanged()
+    {
+        if (_traceEquation.EquationProxy != null)
+        {
+            AttachOnTraceEquationSExpressionChanged(_traceEquation.EquationProxy);
+        }
+    }
+
+    private void DetachCleanErrorsFromExpressionValueChanged()
+    {
+        if (_traceEquation.EquationProxy != null)
+        {
+            DetachOnTraceEquationSExpressionChanged(_traceEquation.EquationProxy);
+        }
+    }
+
+    private void OnPropertyChanged(string propertyName)
+    {
+        switch (propertyName)
+        {
+            case "Color":
+            case "CalculatingStatus":
+            case "SynchronizationStatus":
+                UpdateRenderColor();
+                break;
+        }
+    }
+
+    public void ResetOnRemoval()
+    {
+        SetSynchronizationStatus(SynchronizationStatus.Synchronized);
+        SetCalculatingStatus(CalculatingStatus.Idle);
+        EngineResultParser = EngineTrace3DResultParser.CreateUnknownParser();
+    }
+
+    public bool ChangeSymbol(TraceSymbol value)
+    {
+        Symbol = value;
+        return Symbol == value;
+    }
+
+    public bool ChangeLineStyle(LineStyle value)
+    {
+        LineStyle = value;
+        return LineStyle == value;
+    }
+
+    public TraceStyleState? DoStyleChangeCommand()
+    {
+        return null;
+    }
+
+    public void UndoStyleChangeCommand(TraceStyleState? doData)
+    {
+        DebugTools.DevAssert(!doData.HasValue, null);
+    }
 }
