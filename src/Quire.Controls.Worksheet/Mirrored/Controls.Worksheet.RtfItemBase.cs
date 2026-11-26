@@ -1,5 +1,6 @@
 #nullable disable
 using System.Windows;
+using Net.Sgoliver.NRtfTree.Core;
 using Quire.Controls.Core;
 
 namespace Quire.Controls.Worksheet;
@@ -25,6 +26,15 @@ public abstract partial class RtfItemBase : IRtfItemBase
         TopRectClippingSize = clippingRect.Size;
         AutoWidth = autoWidth;
     }
+
+    public void AddItemToDocument(RtfTreeNode node, Point offset, bool onePageContent, RtfMerger merger)
+    {
+        Rect clippingRect = new Rect(TopLeft, onePageContent ? FullSize : TopRectClippingSize);
+        clippingRect.Offset(-offset.X, -offset.Y);
+        AddItemToDocumentInternal(node, clippingRect, onePageContent, merger);
+    }
+
+    protected abstract void AddItemToDocumentInternal(RtfTreeNode node, Rect clippingRect, bool relativeToCaret, RtfMerger merger);
 
     protected RtfHelper.LocationFlags GetLocationFlags(bool relativeToCaret)
     {
