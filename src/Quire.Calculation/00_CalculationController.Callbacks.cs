@@ -35,8 +35,48 @@ partial class CalculationController
     public static void Dispose() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public static void UNITTEST_InitBuilder(global::Quire.Calculation.EngineBuilder engineBuilder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void HookupAndInitializeEngine() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void HookupContextEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void UnhookFromContextEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HookupContextEvents()
+    {
+        _context.GetEngineVersion += HandleGetEngineVersion;
+        _context.StartEvaluating += HandleStartEvaluating;
+        _context.StopEvaluating += HandleStopEvaluating;
+        _context.ContextUnloaded += HandleContextUnloaded;
+        _context.RecalculateAllRequested += HandleRecalculateAll;
+        _context.CalculateNowRequested += HandleCalculateNow;
+        _context.StartAutoCalc += HandleStartAutoCalc;
+        _context.StopAutoCalc += HandleStopAutoCalc;
+        _context.CommitAndNotifyDependentCalculatables += HandleCommitAndNotifyDependentCalculatables;
+        _context.UnitSystemUpdated += HandleUnitSystemUpdated;
+        _context.SimplifyUnitsFlagUpdated += HandleSimplifyUnitSystemUpdated;
+        _context.CalculationOptionUpdated += HandleCalculationOptionUpdated;
+        _context.SystemVariableUpdated += HandleSystemVariableUpdated;
+        _context.WaitForCalculationIdle += HandleWaitForCalculationIdle;
+        _context.CalculatableAdded += HandleCalculatableAdded;
+        _context.CalculatableRemoved += HandleCalculatableRemoved;
+        _context.CalculatableMoved += HandleCalculatableMoved;
+        _context.GetEngineOption += HandleGetEngineOption;
+    }
+    private void UnhookFromContextEvents()
+    {
+        _context.GetEngineVersion -= HandleGetEngineVersion;
+        _context.StartEvaluating -= HandleStartEvaluating;
+        _context.StopEvaluating -= HandleStopEvaluating;
+        _context.ContextUnloaded -= HandleContextUnloaded;
+        _context.RecalculateAllRequested -= HandleRecalculateAll;
+        _context.CalculateNowRequested -= HandleCalculateNow;
+        _context.StartAutoCalc -= HandleStartAutoCalc;
+        _context.StopAutoCalc -= HandleStopAutoCalc;
+        _context.CommitAndNotifyDependentCalculatables -= HandleCommitAndNotifyDependentCalculatables;
+        _context.UnitSystemUpdated -= HandleUnitSystemUpdated;
+        _context.SimplifyUnitsFlagUpdated -= HandleSimplifyUnitSystemUpdated;
+        _context.CalculationOptionUpdated -= HandleCalculationOptionUpdated;
+        _context.SystemVariableUpdated -= HandleSystemVariableUpdated;
+        _context.WaitForCalculationIdle -= HandleWaitForCalculationIdle;
+        _context.CalculatableAdded -= HandleCalculatableAdded;
+        _context.CalculatableRemoved -= HandleCalculatableRemoved;
+        _context.CalculatableMoved -= HandleCalculatableMoved;
+        _context.GetEngineOption -= HandleGetEngineOption;
+    }
     private void HandleEngineUpToDate(bool isUpToDate)
     {
         try
