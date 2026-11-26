@@ -11,36 +11,6 @@ namespace Quire.Controls.Plots.Contour.Model;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Contour.Model.ContourPlotModel, Ptc.Controls.Plots")]
 public sealed partial class ContourPlotModel : global::Quire.Controls.Plots.Model.PlotModelBase, global::Quire.Controls.Plots.Contour.Model.IContourPlotModel, global::Quire.Controls.Plots.Model.IPlotModelBase, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.Contour.ColorScheme _colorScheme;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.Presenter.LineStyle _lineStyle;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Color _contourColor;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _showLabels;
-    [global::Quire.Mirror.MirrorStub]
-    private double _lineWeight;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _hasOriginPositioning;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Plots.Contour.Model.ContourCalculatable _contourCalculatable;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.Contour.Model.ContourLogicalDataCollection _logicalContoursDataCollection;
-    [global::Quire.Mirror.MirrorStub]
-    public ContourPlotModel(global::Quire.Controls.Plots.Presenter.IAxisModel xAxisModel, global::Quire.Controls.Plots.Presenter.IAxisModel yAxisModel, global::Quire.Controls.Plots.Presenter.IAxisModel zAxisModel) { }
-    [global::Quire.Mirror.MirrorStub]
-    public override bool SetDataObject(global::Quire.Serialization.IDeS11NProvider de11NProvider, global::Quire.PersistentDataObjects.plotType dataObject, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.PersistentDataObjects.plotType GetDataObject(global::Quire.Serialization.IS11NProvider s11NProvider, global::Quire.Calculation.Core.IResultManager resultManager, bool hideFromCalculationContext) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetContourDataObject(global::Quire.PersistentDataObjects.contourPlotTypeContour contour, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.contourPlotTypeContour GetContourDataObject(global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ZAxisModelRangeChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> GetHiddenAndVisibleCalculatables() => base.GetHiddenAndVisibleCalculatables();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Contour.Model.ContourPlotModel+PropertyNames, Ptc.Controls.Plots")]
     internal sealed partial class PropertyNames : global::Quire.Controls.Plots.Model.PlotModelBase.PropertyNames

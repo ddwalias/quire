@@ -13,6 +13,8 @@ namespace Quire.Controls.Plots.Contour.Model;
 
 public sealed partial class ContourPlotModel
 {
+    private global::Quire.Controls.Plots.Contour.ColorScheme _colorScheme;
+
     public ColorScheme ColorScheme
     {
         get
@@ -28,6 +30,8 @@ public sealed partial class ContourPlotModel
             }
         }
     }
+
+    private global::Quire.Controls.Plots.Presenter.LineStyle _lineStyle;
 
     public LineStyle LineStyle
     {
@@ -61,6 +65,10 @@ public sealed partial class ContourPlotModel
         }
     }
 
+    private global::System.Windows.Media.Color _contourColor;
+
+    private bool _showLabels;
+
     public bool ShowLabels
     {
         get
@@ -76,6 +84,8 @@ public sealed partial class ContourPlotModel
             }
         }
     }
+
+    private double _lineWeight;
 
     public double LineWeight
     {
@@ -93,6 +103,8 @@ public sealed partial class ContourPlotModel
         }
     }
 
+    private bool _hasOriginPositioning;
+
     public bool HasOriginPositioning
     {
         get
@@ -109,6 +121,21 @@ public sealed partial class ContourPlotModel
         }
     }
 
+    public ContourPlotModel(global::Quire.Controls.Plots.Presenter.IAxisModel xAxisModel, global::Quire.Controls.Plots.Presenter.IAxisModel yAxisModel, global::Quire.Controls.Plots.Presenter.IAxisModel zAxisModel) { }
+
+    private void ContourCalculatableError(object sender, EngineErrorEventArgs e)
+    {
+        OnPlotCalculatableError(e);
+    }
+
+    public override bool SetDataObject(global::Quire.Serialization.IDeS11NProvider de11NProvider, global::Quire.PersistentDataObjects.plotType dataObject, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public override global::Quire.PersistentDataObjects.plotType GetDataObject(global::Quire.Serialization.IS11NProvider s11NProvider, global::Quire.Calculation.Core.IResultManager resultManager, bool hideFromCalculationContext) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public void SetContourDataObject(global::Quire.PersistentDataObjects.contourPlotTypeContour contour, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public global::Quire.PersistentDataObjects.contourPlotTypeContour GetContourDataObject(global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
     private IAxisModel XAxisModel { get; set; }
 
     private IAxisModel YAxisModel { get; set; }
@@ -116,6 +143,10 @@ public sealed partial class ContourPlotModel
     private IAxisModel ZAxisModel { get; set; }
 
     public ICalculatable ContourGraphCalculatable => _contourCalculatable;
+
+    private readonly global::Quire.Controls.Plots.Contour.Model.ContourCalculatable _contourCalculatable;
+
+    private global::Quire.Controls.Plots.Contour.Model.ContourLogicalDataCollection _logicalContoursDataCollection;
 
     public ContourLogicalDataCollection LogicalContoursDataCollection
     {
@@ -129,16 +160,6 @@ public sealed partial class ContourPlotModel
             UpdateLevels();
             OnPropertyChanged("LogicalContoursDataCollection");
         }
-    }
-
-    private void ContourCalculatableError(object sender, EngineErrorEventArgs e)
-    {
-        OnPlotCalculatableError(e);
-    }
-
-    public void InitializeZEquation(IPlotEquation zEquation)
-    {
-        _contourCalculatable.PlotEquation = zEquation;
     }
 
     private void UpdateLevels()
@@ -180,6 +201,8 @@ public sealed partial class ContourPlotModel
         return limitExpression.CalculatedValue;
     }
 
+    private void ZAxisModelRangeChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
     private void SetDefaultLevels()
     {
         _contourCalculatable.Levels = new Levels
@@ -205,5 +228,12 @@ public sealed partial class ContourPlotModel
                 HasError = _contourCalculatable.Error != null;
                 break;
         }
+    }
+
+    public override global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> GetHiddenAndVisibleCalculatables() => base.GetHiddenAndVisibleCalculatables();
+
+    public void InitializeZEquation(IPlotEquation zEquation)
+    {
+        _contourCalculatable.PlotEquation = zEquation;
     }
 }
