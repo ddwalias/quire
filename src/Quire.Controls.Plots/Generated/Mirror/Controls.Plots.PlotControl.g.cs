@@ -324,23 +324,9 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     [global::Quire.Mirror.MirrorStub]
     private static void HandleContainedInCollapsedWhiteboardChanged(global::System.Windows.DependencyObject sender, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void HandleMinWidthChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void HandleMinHeightChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public PlotControl() { }
     [global::Quire.Mirror.MirrorStub]
     internal PlotControl(global::Quire.Controls.Plots.Presenter.PlotType type, global::Quire.Controls.Plots.IPlotStrategy strategy) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleMinHeightChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleMinWidthChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void GraphTraceRemoved(global::Quire.Controls.Plots.PlotTrace trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void GraphTraceAdded(global::Quire.Controls.Plots.PlotTrace newTrace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void IsResizingChanged(global::System.Windows.DependencyObject sender, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void PlotControlLoaded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -361,8 +347,6 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     protected override global::System.Collections.Generic.List<global::Quire.Controls.EquationControl> CreateTickMarksAndMarkersList() => base.CreateTickMarksAndMarkersList();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnTraversedFocusEvent(object sender, global::Quire.Wpf.CustomRoutedEventArgs<global::System.Windows.Input.FocusNavigationDirection> args) => base.OnTraversedFocusEvent(sender, args);
-    [global::Quire.Mirror.MirrorStub]
-    private static void HandleShowAxisExpressionsChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SwitchExpressionsVisibility(global::System.Windows.Visibility visibility) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -447,12 +431,6 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     private static void CommitAllEquationListWithoutEvent(global::Quire.Controls.Plots.EquationList equationList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OnRequestMoveAndResize(object sender, global::Quire.Controls.Core.ResizeEventMouseArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool TraceCanIncrease(global::Quire.Controls.Plots.Presenter.IPlotTrace trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool TraceCanDecrease(global::Quire.Controls.Plots.Presenter.IPlotTrace trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool AnySelectedTrace(global::System.Func<global::Quire.Controls.Plots.Presenter.IPlotTrace, bool> predicate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void TogglePlotTitleCommandCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

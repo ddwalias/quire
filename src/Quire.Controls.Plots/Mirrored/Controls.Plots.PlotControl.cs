@@ -6,10 +6,12 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using Quire.Controls.Core;
+using Quire.Wpf;
 using Quire.Controls.Plots.Presenter;
 using Quire.Controls.Plots.ViewModel;
 
@@ -367,4 +369,104 @@ public partial class PlotControl
     public override int NumberOfPointsMin => 100;
 
     public override int NumberOfPointsMax => 3000;
+
+    private static void HandleMinWidthChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+    {
+        ((PlotControl)obj).HandleMinWidthChanged();
+    }
+
+    private static void HandleMinHeightChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
+    {
+        ((PlotControl)obj).HandleMinHeightChanged();
+    }
+
+    private void HandleMinHeightChanged()
+    {
+        if (Height < MinHeight)
+        {
+            Height = MinHeight;
+        }
+    }
+
+    private void HandleMinWidthChanged()
+    {
+        if (Width < MinWidth)
+        {
+            Width = MinWidth;
+        }
+    }
+
+    private void GraphTraceRemoved(PlotTrace trace)
+    {
+        trace.ErrorChanged -= TraceErrorChanged;
+        trace.CalculatingStatusChangedEvent -= HandleTraceCalculatingStatusChanged;
+        DependencyPropertyChangeManager.RemovePropertyChangedHandler(PlotTrace.XMinGapProperty, trace, XMinGapPropertyChanged);
+        DependencyPropertyChangeManager.RemovePropertyChangedHandler(PlotTrace.YMinGapProperty, trace, YMinGapPropertyChanged);
+        DependencyPropertyChangeManager.RemovePropertyChangedHandler(PlotTrace.HasEquationErrorProperty, trace, HasEquationErrorPropertyChanged);
+        trace.SetAxis(null, null);
+        AttachedProperties.ClearContainedInCollapsedWhiteboard(trace);
+    }
+
+    private void GraphTraceAdded(PlotTrace newTrace)
+    {
+        AttachedProperties.SetContainedInCollapsedWhiteboard(newTrace, AttachedProperties.GetContainedInCollapsedWhiteboard(this));
+    }
+
+    private static void IsResizingChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
+    {
+        if (!(sender is PlotControl plotControl))
+        {
+            DebugTools.DevAssert(false, null);
+        }
+        else
+        {
+            plotControl.Graph.SetIsResizing(plotControl.IsResizing);
+        }
+    }
+
+    private static void HandleShowAxisExpressionsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (!(d is PlotControl plotControl))
+        {
+            return;
+        }
+        if (!(bool)e.NewValue)
+        {
+            if (!plotControl.IsActiveRegion)
+            {
+                plotControl.SwitchExpressionsVisibility(HiddenExpressionsVisibility);
+            }
+        }
+        else
+        {
+            plotControl.SwitchExpressionsVisibility(Visibility.Visible);
+        }
+    }
+
+    private static bool TraceCanIncrease(IPlotTrace trace)
+    {
+        if (trace.IsNumOfPointsMutable)
+        {
+            return trace.NumberOfPoints < 3000;
+        }
+        return false;
+    }
+
+    private static bool TraceCanDecrease(IPlotTrace trace)
+    {
+        if (trace.IsNumOfPointsMutable)
+        {
+            return trace.NumberOfPoints > 100;
+        }
+        return false;
+    }
+
+    private bool AnySelectedTrace(Func<IPlotTrace, bool> predicate)
+    {
+        if (SelectedTraces != null)
+        {
+            return SelectedTraces.Any(predicate);
+        }
+        return false;
+    }
 }
