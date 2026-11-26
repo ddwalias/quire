@@ -701,12 +701,59 @@ public partial class WorksheetControlContent
         public abstract void Redo();
     }
 
+    internal partial class DeleteSelectedItemsCommand
+    {
+        public override void Redo()
+        {
+            WorksheetContent.FireActivated();
+            Do();
+        }
+    }
+
     internal partial class MoveItemsCommand
     {
         public bool AssertOnRestrictedItemLocations
         {
             get => _assertOnRestrictedItemLocations;
             set => _assertOnRestrictedItemLocations = value;
+        }
+
+        public override void Redo()
+        {
+            WorksheetContent.FireActivated();
+            Do();
+        }
+
+        private void MoveItemsToPositions(Dictionary<IWhiteboardItem, Point> itemsAtNewLocations)
+        {
+            foreach (KeyValuePair<IWhiteboardItem, Point> itemAtLocation in itemsAtNewLocations)
+            {
+                IWhiteboardItem item = itemAtLocation.Key;
+                Point location = itemAtLocation.Value;
+                WorksheetItemManager.SetShouldAssertOnLocation(item, AssertOnRestrictedItemLocations);
+                _worksheetContent.SetItemLocation(item, location);
+                WorksheetItemManager.ClearShouldAssertOnLocation(item);
+            }
+
+            WorksheetItemManager.BlockUntilLoaded();
+        }
+    }
+
+    internal partial class AddItemsCommand
+    {
+        public override void Redo()
+        {
+            WorksheetContent.FireActivated();
+            Do();
+        }
+    }
+
+    internal partial class PasteItemsCommand
+    {
+        public override void Redo()
+        {
+            WorksheetContent.FireActivated();
+            Do();
         }
     }
 

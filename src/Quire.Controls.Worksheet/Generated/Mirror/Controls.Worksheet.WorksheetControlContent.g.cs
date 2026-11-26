@@ -70,8 +70,6 @@ public partial class WorksheetControlContent : global::Quire.Controls.Worksheet.
         public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlContent+MoveItemsCommand, Ptc.Controls.Worksheet")]
@@ -95,10 +93,6 @@ public partial class WorksheetControlContent : global::Quire.Controls.Worksheet.
         public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void MoveItemsToPositions(global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> itemsWithLocations) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlContent+AddItemsCommand, Ptc.Controls.Worksheet")]
@@ -112,8 +106,6 @@ public partial class WorksheetControlContent : global::Quire.Controls.Worksheet.
         public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlContent+PasteItemsCommand, Ptc.Controls.Worksheet")]
@@ -131,8 +123,6 @@ public partial class WorksheetControlContent : global::Quire.Controls.Worksheet.
         public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Redo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlContent+ResizeItemCommand, Ptc.Controls.Worksheet")]
