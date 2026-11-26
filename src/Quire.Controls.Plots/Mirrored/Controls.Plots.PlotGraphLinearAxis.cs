@@ -69,7 +69,14 @@ internal partial class PlotGraphLinearAxis
 
     private static void AdjustSnap(ref double snapOffset, ref double index2SnapOffset, double totalWidthOrHeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private void Splitter_DragDelta(object sender, global::System.Windows.Controls.Primitives.DragDeltaEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void Splitter_DragDelta(object sender, global::System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+    {
+        UpdateOffset();
+        if (MouseMoveAdorner != null)
+        {
+            MouseMoveAdorner.InvalidateVisual();
+        }
+    }
 
     private void UpdateOffset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -114,11 +121,26 @@ internal partial class PlotGraphLinearAxis
         CalcOriginPositioning();
     }
 
-    protected override void PositionTickMarkChanged(int tickNumber) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected override void PositionTickMarkChanged(int tickNumber)
+    {
+        if (OtherLinearAxis == null)
+        {
+            return;
+        }
+        CalcNewPosition(tickNumber);
+        MoveRowOrCol(tickNumber);
+    }
 
     private void CalcNewPosition(int tickNumber) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private static void PositionPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void PositionPropertyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e)
+    {
+        PlotGraphLinearAxis axis = d as PlotGraphLinearAxis;
+        if (axis != null)
+        {
+            axis.CalcPositionTickMark((Positions)e.NewValue);
+        }
+    }
 
     public static readonly global::System.Windows.DependencyProperty PositionProperty;
 
@@ -132,9 +154,21 @@ internal partial class PlotGraphLinearAxis
 
     private void SetupAxisArrowHeadsDisplay() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private void CalcOriginPositioning() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void CalcOriginPositioning()
+    {
+        if (OtherLinearAxis != null)
+        {
+            FireCalcPositionTickMarkNeeded(OtherLinearAxis.Position);
+        }
+    }
 
-    private void FireCalcPositionTickMarkNeeded(global::Quire.Controls.Plots.Presenter.Positions newPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void FireCalcPositionTickMarkNeeded(global::Quire.Controls.Plots.Presenter.Positions newPosition)
+    {
+        if (CalcPositionTickMarkNeeded != null)
+        {
+            CalcPositionTickMarkNeeded(newPosition);
+        }
+    }
 
     protected override void HandleDiscreteChanged()
     {
@@ -142,7 +176,10 @@ internal partial class PlotGraphLinearAxis
         CalcOriginPositioning();
     }
 
-    public override void UpdateAxisOriginPositions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public override void UpdateAxisOriginPositions()
+    {
+        CalcOriginPositioning();
+    }
 
     protected override void TickMarksChanged()
     {
@@ -155,9 +192,16 @@ internal partial class PlotGraphLinearAxis
 
     private MouseMoveRTDataAdorner MouseMoveAdorner { get; set; }
 
-    private global::System.Windows.Media.LineGeometry GetTickLineByTickNumber(int totalTickNumber) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private global::System.Windows.Media.LineGeometry GetTickLineByTickNumber(int totalTickNumber)
+    {
+        return GetTickLine(GetTickPositionByTickNumber(totalTickNumber), 2);
+    }
 
-    private bool HasZeroInRange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private bool HasZeroInRange()
+    {
+        int index = 0;
+        return FindClosestTickValueToZero(ref index);
+    }
 
     private bool HasZeroInRange(ref int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -248,19 +292,66 @@ internal partial class PlotGraphLinearAxis
 
     public void DrawTickLineAndValue(int tickNumber, global::System.Windows.Media.DrawingContext drawingContext, global::System.Windows.Media.Brush fill, global::System.Windows.Media.Brush stroke, double strokeThickness) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public override void MoveToValue(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public override void MoveToValue(double value)
+    {
+        double screen = OtherAxis.Point2Screen(value);
+        ApplyTickNumber(OtherLinearAxis.OffsetToTickNumber(screen), false);
+    }
 
-    public override void MoveByValue(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public override void MoveByValue(double value)
+    {
+        double point = OtherAxis.Screen2Point(Offset);
+        double screen = OtherAxis.Point2Screen(point + value);
+        ApplyTickNumber(OtherLinearAxis.OffsetToTickNumber(screen), false);
+    }
 
-    protected override void ApplyTickNumber(int tickNumber, bool hasOriginPositioning) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected override void ApplyTickNumber(int tickNumber, bool hasOriginPositioning)
+    {
+        if (tickNumber != PositionTickMark)
+        {
+            new PlotCommands.AxisSetTickNumberCommand(this, tickNumber, hasOriginPositioning).Execute();
+        }
+        else
+        {
+            MoveRowOrCol(tickNumber);
+        }
+    }
 
     private int OffsetToTickNumber(double offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    protected void AddAdorner() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void AddAdorner()
+    {
+        RemoveAdorner();
+        MouseMoveAdorner = new MouseMoveRTDataAdorner(OtherAxis);
+        AdornerLayer.GetAdornerLayer(OtherAxis).Add(MouseMoveAdorner);
+    }
 
-    private void RemoveAdorner() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void RemoveAdorner()
+    {
+        if (MouseMoveAdorner == null)
+        {
+            return;
+        }
+        AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(OtherAxis);
+        if (adornerLayer != null)
+        {
+            adornerLayer.Remove(MouseMoveAdorner);
+        }
+        MouseMoveAdorner = null;
+        if (OtherAxis != null)
+        {
+            OtherAxis.IsHitTestVisible = true;
+        }
+    }
 
-    internal void FixateSize(double savedLength) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal void FixateSize(double savedLength)
+    {
+        _savedLength = savedLength;
+        if (Splitter != null)
+        {
+            FixateSizeOfRowsInner();
+        }
+    }
 
     internal bool SizeFrozen { get; private set; }
 
