@@ -173,7 +173,16 @@ partial class WorksheetModel
 
     // Original unfinished members retain the two constructor closure ordinals.
     private void HandleCollectionChangedForCalculation(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void HandleItemMoved(object item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleItemMoved(object item)
+    {
+        CommitItemIfNeeded(item as global::Quire.Controls.Core.IWhiteboardItem);
+        _childHider.ChildMoved(item);
+        if (item is global::Quire.Controls.Core.IORegions.IIORegion region)
+        {
+            InputOutputRegionManager.HandleElementRemovedFromParentContainer(region);
+            InputOutputRegionManager.HandleElementAddedToParentContainer(region);
+        }
+    }
     private void HandleItemRemoved(object item)
     {
         _childHider.ChildRemoved(item);
@@ -199,7 +208,10 @@ partial class WorksheetModel
             CommitAndNotifyDependentCalculatables(toBeCommitted);
         }
     }
-    public void FireWaitForCalculationIdle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void FireWaitForCalculationIdle()
+    {
+        FireWaitForCalculationIdle(60, global::Quire.Calculation.Core.CalcResultsProcessingPriorities.DefaultResultDispatchPriority_Background);
+    }
     public void FireWaitForCalculationIdle(int seconds, global::System.Windows.Threading.DispatcherPriority priority) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void FireBinOctHexModeOptionUpdated(string binOctHexMode, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void FireCalculationOptionUpdated(string name, object value)
@@ -220,7 +232,20 @@ partial class WorksheetModel
             UnitSystemUpdated(unitSystem, null, null);
         }
     }
-    private void HandleUnitSystemUpdated() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleUnitSystemUpdated()
+    {
+        if (UnitSystemUpdated != null)
+        {
+            if (_defaultUnitSystem == global::Quire.Calculation.Core.UnitSystems.Custom)
+            {
+                UnitSystemUpdated(_customBaseUnitSystem, CustomBaseUnitDescriptors, CustomDerivedUnitDescriptors);
+            }
+            else
+            {
+                UnitSystemUpdated(_defaultUnitSystem, null, null);
+            }
+        }
+    }
     private void FireSimplifyUnitsFlagChanged(bool simplifyUnitSystem)
     {
         if (SimplifyUnitsFlagUpdated != null)
@@ -242,7 +267,19 @@ partial class WorksheetModel
             CalculateNowRequested(LastVisibleCalculatable);
         }
     }
-    public void FireCalculateRegionNow(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void FireCalculateRegionNow(global::Quire.Controls.Core.IWhiteboardItem item)
+    {
+        if (item is global::Quire.Calculation.Core.ICalculatable || (item is global::Quire.Calculation.Core.ICalculatableContainer && !(item is global::Quire.Calculation.Core.ICalculatableAggregate)))
+        {
+            if (item is global::Quire.Controls.Core.IHasPreCalculationAction hasPreCalculationAction)
+            {
+                hasPreCalculationAction.PreCalculationAction();
+            }
+            FireStopEvaluating();
+            CommitItem(item);
+            FireStartEvaluating();
+        }
+    }
     private void DisposeCalculationContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void FirePropertyChanged(string propertyName)
     {
@@ -251,7 +288,13 @@ partial class WorksheetModel
             PropertyChanged(this, new global::System.ComponentModel.PropertyChangedEventArgs(propertyName));
         }
     }
-    private void Initialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void Initialize()
+    {
+        WhiteboardItems = new global::Quire.Controls.Core.WhiteboardItemsCollection();
+        PageBreaks = new global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Core.IWorksheetPageBreak>();
+        _itemPositionComparer = new global::Quire.Controls.Worksheet.WorksheetItemPositionComparer();
+        InitializeCalculation();
+    }
     private void HandleShadowCalculatableCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public void RemoveItem(global::Quire.Controls.Core.IWhiteboardItem item)
     {
