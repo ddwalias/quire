@@ -2150,4 +2150,31 @@ internal partial class WorksheetViewModel
     {
         HandlePageWideSizableHeightChanged(item, oldSize, newSize);
     }
+    private void RemoveItemAndSetInsertionPoint(IWhiteboardItem item, Direction deleteDirection)
+    {
+        if (item == ActiveItem)
+        {
+            DeleteActiveItem();
+        }
+    }
+
+    private void CheckFlagsAndSplitItemIfNeeded(IWhiteboardItem item, bool isOnVisiblePage)
+    {
+        if (isOnVisiblePage && ItemManager.GetItemSplitCheckIsRequired(item))
+        {
+            PageManager.ExecuteOrScheduleSplitAttempt(item, null, false);
+        }
+    }
+
+    private void AddSizeChangedHandlerToItemMap(IWhiteboardItem item, WhiteboardItemSizeChangedEventHandler eventHandler)
+    {
+        IList<WhiteboardItemSizeChangedEventHandler> handlers;
+        if (!_itemSizeChangedHandlerMap.TryGetValue(item, out handlers))
+        {
+            handlers = new List<WhiteboardItemSizeChangedEventHandler>();
+            _itemSizeChangedHandlerMap.Add(item, handlers);
+        }
+
+        handlers.Add(eventHandler);
+    }
 }
