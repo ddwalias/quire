@@ -13,7 +13,7 @@ namespace Quire.Controls.Plots.Contour.Model;
 
 public sealed partial class ContourPlotModel
 {
-    private global::Quire.Controls.Plots.Contour.ColorScheme _colorScheme;
+    private global::Quire.Controls.Plots.Contour.ColorScheme _colorScheme = global::Quire.Controls.Plots.Contour.ColorScheme.Default;
 
     public ColorScheme ColorScheme
     {
@@ -31,7 +31,7 @@ public sealed partial class ContourPlotModel
         }
     }
 
-    private global::Quire.Controls.Plots.Presenter.LineStyle _lineStyle;
+    private global::Quire.Controls.Plots.Presenter.LineStyle _lineStyle = global::Quire.Controls.Plots.Presenter.LineStyle.Solid;
 
     public LineStyle LineStyle
     {
@@ -65,7 +65,7 @@ public sealed partial class ContourPlotModel
         }
     }
 
-    private global::System.Windows.Media.Color _contourColor;
+    private global::System.Windows.Media.Color _contourColor = global::System.Windows.Media.Brushes.Black.Color;
 
     private bool _showLabels;
 
@@ -85,7 +85,7 @@ public sealed partial class ContourPlotModel
         }
     }
 
-    private double _lineWeight;
+    private double _lineWeight = 1.0;
 
     public double LineWeight
     {
@@ -121,7 +121,23 @@ public sealed partial class ContourPlotModel
         }
     }
 
-    public ContourPlotModel(global::Quire.Controls.Plots.Presenter.IAxisModel xAxisModel, global::Quire.Controls.Plots.Presenter.IAxisModel yAxisModel, global::Quire.Controls.Plots.Presenter.IAxisModel zAxisModel) { }
+    public ContourPlotModel(global::Quire.Controls.Plots.Presenter.IAxisModel xAxisModel, global::Quire.Controls.Plots.Presenter.IAxisModel yAxisModel, global::Quire.Controls.Plots.Presenter.IAxisModel zAxisModel)
+    {
+        XAxisModel = xAxisModel;
+        YAxisModel = yAxisModel;
+        ZAxisModel = zAxisModel;
+        _contourCalculatable = new ContourCalculatable();
+        XAxisModel.RangeChanged += XAxisModelRangeChanged;
+        YAxisModel.RangeChanged += YAxisModelRangeChanged;
+        ZAxisModel.RangeChanged += ZAxisModelRangeChanged;
+        _contourCalculatable.PropertyChanged += (sender, e) => ContourCalculatablePropertyChanged(e);
+        XAxisModel.Position = global::Quire.Controls.Plots.Presenter.Positions.TickNumberLock;
+        YAxisModel.Position = global::Quire.Controls.Plots.Presenter.Positions.TickNumberLock;
+        XAxisModel.PositionTickMark = 0;
+        YAxisModel.PositionTickMark = 0;
+        _contourCalculatable.PlotCalculatableError += ContourCalculatableError;
+        SetDefaultLevels();
+    }
 
     private void ContourCalculatableError(object sender, EngineErrorEventArgs e)
     {
