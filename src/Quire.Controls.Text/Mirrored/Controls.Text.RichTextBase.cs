@@ -1269,7 +1269,34 @@ public partial class RichTextBase
 
     private global::System.Collections.Generic.List<global::System.ValueTuple<int, int>> _cacheSelectedScriptElementsOffsets;
 
-    private void ExecuteTextChangedAndReactivateCommand(global::System.Windows.Controls.TextChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ExecuteTextChangedAndReactivateCommand(global::System.Windows.Controls.TextChangedEventArgs args)
+    {
+        bool isActiveItem = IsActive;
+        IUndoableCommand textChangedCmd = CreateTextChangedCommand(args);
+        if (GetIsInSerialization())
+        {
+            _textChangeCounter++;
+        }
+        CommandBuffer.Execute(new UndoableCommandWithSideEffects(
+            "text changed and reactivate if needed",
+            () =>
+            {
+                ClearTextFormatCache();
+                return true;
+            },
+            () =>
+            {
+                textChangedCmd.Undo();
+                Activate(isActiveItem);
+                ClearTextFormatCache();
+            },
+            () =>
+            {
+                textChangedCmd.Redo();
+                Activate(isActiveItem);
+                ClearTextFormatCache();
+            }), null);
+    }
 
     private void ClearTextFormatCache()
     {
