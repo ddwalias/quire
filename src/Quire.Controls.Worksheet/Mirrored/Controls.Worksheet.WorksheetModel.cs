@@ -1,3 +1,5 @@
+using System.Linq;
+using Quire.Core;
 using Quire.Calculation;
 using Quire.Controls.Core;
 using System.Windows;
@@ -172,7 +174,24 @@ partial class WorksheetModel
     }
 
     // Original unfinished members retain the two constructor closure ordinals.
-    private void HandleCollectionChangedForCalculation(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleCollectionChangedForCalculation(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    {
+        switch (e.Action)
+        {
+            case global::System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+                e.NewItems.Cast<object>().Each(HandleItemAdded);
+                break;
+            case global::System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
+                e.OldItems.Cast<object>().Each(HandleItemRemoved);
+                break;
+            case global::System.Collections.Specialized.NotifyCollectionChangedAction.Move:
+                e.NewItems.Cast<object>().Each(HandleItemMoved);
+                break;
+            default:
+                global::Quire.DebugTools.FailAssertion("Unsupported action: {0}", e.Action);
+                break;
+        }
+    }
     private void HandleItemMoved(object item)
     {
         CommitItemIfNeeded(item as global::Quire.Controls.Core.IWhiteboardItem);
@@ -280,7 +299,19 @@ partial class WorksheetModel
             FireStartEvaluating();
         }
     }
-    private void DisposeCalculationContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void DisposeCalculationContext()
+    {
+        ContextUnloaded();
+        WhiteboardItems.RangeChanged -= HandleCollectionChangedForCalculation;
+        if (_docCalculationOptions != null)
+        {
+            _docCalculationOptions.CalculationOptionChanged -= FireCalculationOptionUpdated;
+        }
+        if (_docCalculationVariables != null)
+        {
+            _docCalculationVariables.CalculationVariableChanged -= FireSystemVariableUpdated;
+        }
+    }
     private void FirePropertyChanged(string propertyName)
     {
         if (PropertyChanged != null)
