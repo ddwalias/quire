@@ -252,6 +252,11 @@ public partial class WorksheetControlDebugger
             }
         }
 
+        private void UpdateDebugWindowCell(PropertyName propertyName, CoordinateSystemName coordinateSystemName, string text)
+        {
+            throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        }
+
         private void UpdateWindowCellWorksheetItemsCanvas(PropertyName propertyName, string text)
         {
             UpdateDebugWindowCell(propertyName, CoordinateSystemName.WorksheetItems, text);
@@ -275,6 +280,16 @@ public partial class WorksheetControlDebugger
         private void UpdateDebugWindowCellHeaderFooter(PropertyName propertyName, string text)
         {
             UpdateDebugWindowCell(propertyName, CoordinateSystemName.HeaderFooter, text);
+        }
+
+        private void OnHeaderActivated()
+        {
+            throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        }
+
+        private void OnFooterActivated()
+        {
+            throw global::Quire.Mirror.MirrorStub.NotImplemented();
         }
 
         private void UpdateDebugWindowCellsAll(PropertyName propertyName, string text)
@@ -594,6 +609,36 @@ public partial class WorksheetControlDebugger
 
         private partial class IndicationVisibilityAdorner
         {
+            public global::System.Windows.UIElement Child
+            {
+                get => _child;
+                set
+                {
+                    AddVisualChild(value);
+                    _child = value;
+                }
+            }
+
+            protected override int VisualChildrenCount => _child != null ? 1 : 0;
+
+            protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize)
+            {
+                if (_child != null)
+                {
+                    _child.Arrange(new global::System.Windows.Rect(finalSize));
+                }
+                return finalSize;
+            }
+
+            protected override global::System.Windows.Media.Visual GetVisualChild(int index)
+            {
+                if (index == 0 && _child != null)
+                {
+                    return _child;
+                }
+                return base.GetVisualChild(index);
+            }
+
             private void UpdateOnScrollViewerChanged(object sender, System.EventArgs e)
             {
                 if (_toBeClipped && AdornedElement.Clip != null)

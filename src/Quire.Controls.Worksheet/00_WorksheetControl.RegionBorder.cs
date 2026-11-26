@@ -76,13 +76,42 @@ partial class WorksheetControl
     public static void SetWorksheetTop(global::System.Windows.DependencyObject depObj, double newTop) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public static double GetWorksheetLeft(global::System.Windows.DependencyObject depObj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public static void SetWorksheetLeft(global::System.Windows.DependencyObject depObj, double newLeft) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public string GetEngineVersion() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void BringFirstTagItemIntoView(string tag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public string GetEngineVersion() => _model.EngineVersion;
+    public void BringFirstTagItemIntoView(string tag)
+    {
+        global::Quire.Controls.Core.IWhiteboardItem whiteboardItem = TraverseWhiteboardItemsForBookmarkTag(WorksheetItems, tag);
+        if (whiteboardItem != null)
+        {
+            _viewModel.VisualHelper.BringIntoView(whiteboardItem);
+        }
+    }
     public global::Quire.Controls.Core.IWhiteboardItem TraverseWhiteboardItemsForBookmarkTag(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemCollection, string valueTag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected void FireChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void FireChanged(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private bool FireCopyWhiteboardItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> whiteboardItems) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static void SetupServiceProviders() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void FireChanged()
+    {
+        RaiseEvent(new global::System.Windows.RoutedEventArgs(ChangedEvent));
+    }
+
+    private void FireChanged(object sender, global::System.EventArgs e)
+    {
+        FireChanged();
+    }
+
+    private bool FireCopyWhiteboardItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> whiteboardItems)
+    {
+        global::Quire.Wpf.CustomRoutedEventArgs<global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem>> args =
+            new global::Quire.Wpf.CustomRoutedEventArgs<global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem>>(
+                global::Quire.Controls.Core.CommonRoutedEvents.CopyWhiteboardItemsEvent,
+                whiteboardItems);
+        RaiseEvent(args);
+        return args.Handled;
+    }
+    private static void SetupServiceProviders()
+    {
+        global::Quire.Services.AppServiceRegistry.AddService<global::Quire.Controls.Worksheet.IWorksheetItemManager>(new global::Quire.Controls.Worksheet.WorksheetItemManager());
+        global::Quire.Services.AppServiceRegistry.AddService<global::Quire.Controls.Worksheet.IControlFactory>(new global::Quire.Controls.Worksheet.ControlFactory());
+        global::Quire.Services.AppServiceRegistry.AddService<global::Quire.Controls.Core.Whiteboard.IContainerItemManager>(new global::Quire.Controls.Core.Whiteboard.ContainerItemManager());
+    }
+
     private void VisiblePagesControlSizeChangedHandler(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void OnPageLayoutPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void OnDragSelectBeyondBorder(global::System.Windows.Rect rect, global::Quire.Controls.Whiteboard.WhiteboardControl control) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -152,12 +181,34 @@ partial class WorksheetControl
     private void SetPageOrientation(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void SetPageSize(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void SetPageBackgroundColor(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private bool IsDisplayFilePathAvailable() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void CanExecuteFilePathCommands(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private bool IsDisplayFilePathAvailable() => DisplayFilePath.IsNotEmpty();
+    private void CanExecuteFilePathCommands(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args)
+    {
+        args.CanExecute = IsDisplayFilePathAvailable();
+    }
+
     private void CopyFilePathToClipboard(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    internal string GetContainingFolderPath() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    internal string GetContainingFolderPath()
+    {
+        if (DebugTools.DevAssert(IsDisplayFilePathAvailable(), null).Failed)
+        {
+            return "";
+        }
+        string? directoryName = global::System.IO.Path.GetDirectoryName(DisplayFilePath);
+        DebugTools.DevAssert(directoryName.IsNotEmpty(), null);
+        return directoryName;
+    }
+
     private void HandleOpenContainingFolder(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static void ConvertedFromMC14SetStatusSynchronized(global::System.Windows.DependencyObject control, bool isAutoCalcOn) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void ConvertedFromMC14SetStatusSynchronized(global::System.Windows.DependencyObject control, bool isAutoCalcOn)
+    {
+        if (global::Quire.Controls.Core.Serialization.SerializationHelperUtils.IsConvertedFromMathcad14(control) & isAutoCalcOn)
+        {
+            SetStatusSynchronized(control);
+        }
+    }
+
     private static void SetStatusSynchronized(object control) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public void ApplyWorksheetData(global::Quire.PersistentData.IWorksheetPersistentData worksheetData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void HandleDisableScriptableControls(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

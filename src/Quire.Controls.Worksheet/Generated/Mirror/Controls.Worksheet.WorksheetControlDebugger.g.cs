@@ -60,13 +60,7 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         [global::Quire.Mirror.MirrorStub]
         private void InitializeDebugWindow() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
-        private void UpdateDebugWindowCell(global::Quire.Controls.Worksheet.WorksheetControlDebugger.WorksheetControlUI.PropertyName propertyName, global::Quire.Controls.Worksheet.WorksheetControlDebugger.WorksheetControlUI.CoordinateSystemName coordinateSystemName, string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         private void OnWorksheetContentInsertionPointSet() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void OnHeaderActivated() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void OnFooterActivated() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         private void OnScrollViewerChanged(object sender, global::System.Windows.Controls.ScrollChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
@@ -185,15 +179,7 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
             [global::Quire.Mirror.MirrorStub]
             private global::System.Windows.UIElement _child;
             [global::Quire.Mirror.MirrorStub]
-            public global::System.Windows.UIElement Child { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-            [global::Quire.Mirror.MirrorStub]
-            protected override int VisualChildrenCount { get => base.VisualChildrenCount; }
-            [global::Quire.Mirror.MirrorStub]
             public IndicationVisibilityAdorner(global::System.Windows.UIElement adornedElement, global::System.Windows.Controls.ScrollViewer scrollViewerInst, bool toBeClipped) : base(default(global::System.Windows.UIElement)) { }
-            [global::Quire.Mirror.MirrorStub]
-            protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
-            [global::Quire.Mirror.MirrorStub]
-            protected override global::System.Windows.Media.Visual GetVisualChild(int index) => base.GetVisualChild(index);
             [global::Quire.Mirror.MirrorStub]
             protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
         }
