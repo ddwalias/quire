@@ -2322,35 +2322,140 @@ public partial class EquationControl
     {
         ClearResultFormat();
     }
-    public global::System.TypeCode GetTypeCode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public bool ToBoolean(global::System.IFormatProvider provider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public char ToChar(global::System.IFormatProvider provider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public sbyte ToSByte(global::System.IFormatProvider provider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public byte ToByte(global::System.IFormatProvider provider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public short ToInt16(global::System.IFormatProvider provider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public ushort ToUInt16(global::System.IFormatProvider provider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public int ToInt32(global::System.IFormatProvider provider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public uint ToUInt32(global::System.IFormatProvider provider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public long ToInt64(global::System.IFormatProvider provider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public ulong ToUInt64(global::System.IFormatProvider provider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public float ToSingle(global::System.IFormatProvider provider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public double ToDouble(global::System.IFormatProvider provider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public decimal ToDecimal(global::System.IFormatProvider provider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public global::System.DateTime ToDateTime(global::System.IFormatProvider provider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public string ToString(global::System.IFormatProvider provider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public object ToType(global::System.Type conversionType, global::System.IFormatProvider provider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void ClearKeyStrokesCache() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::System.TypeCode GetTypeCode()
+    {
+        return global::System.TypeCode.Object;
+    }
+    public bool ToBoolean(global::System.IFormatProvider provider)
+    {
+        throw new NotImplementedException();
+    }
+    public char ToChar(global::System.IFormatProvider provider)
+    {
+        throw new NotImplementedException();
+    }
+    public sbyte ToSByte(global::System.IFormatProvider provider)
+    {
+        throw new NotImplementedException();
+    }
+    public byte ToByte(global::System.IFormatProvider provider)
+    {
+        throw new NotImplementedException();
+    }
+    public short ToInt16(global::System.IFormatProvider provider)
+    {
+        throw new NotImplementedException();
+    }
+    public ushort ToUInt16(global::System.IFormatProvider provider)
+    {
+        throw new NotImplementedException();
+    }
+    public int ToInt32(global::System.IFormatProvider provider)
+    {
+        throw new NotImplementedException();
+    }
+    public uint ToUInt32(global::System.IFormatProvider provider)
+    {
+        throw new NotImplementedException();
+    }
+    public long ToInt64(global::System.IFormatProvider provider)
+    {
+        throw new NotImplementedException();
+    }
+    public ulong ToUInt64(global::System.IFormatProvider provider)
+    {
+        throw new NotImplementedException();
+    }
+    public float ToSingle(global::System.IFormatProvider provider)
+    {
+        throw new NotImplementedException();
+    }
+    public double ToDouble(global::System.IFormatProvider provider)
+    {
+        throw new NotImplementedException();
+    }
+    public decimal ToDecimal(global::System.IFormatProvider provider)
+    {
+        throw new NotImplementedException();
+    }
+    public global::System.DateTime ToDateTime(global::System.IFormatProvider provider)
+    {
+        throw new NotImplementedException();
+    }
+    public string ToString(global::System.IFormatProvider provider)
+    {
+        return EquationSExpression;
+    }
+    public object ToType(global::System.Type conversionType, global::System.IFormatProvider provider)
+    {
+        if (conversionType == _model.GetType())
+        {
+            return _model;
+        }
+        if (conversionType.IsInstanceOfType(this))
+        {
+            return this;
+        }
+        return null;
+    }
+    public void ClearKeyStrokesCache()
+    {
+        _view.ClearKeyStrokesCache();
+        if (!_model.NavigatorState.Equals(global::Quire.EquationEditor.Tree.Navigation.NavigatorState.Empty))
+        {
+            _model.FireNavigatorStateChanged();
+        }
+    }
     public void ClearResultFormat() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public bool HighlightAll(string text, global::Quire.Controls.Core.FindOptions options) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public bool FindOncePrivate(string text, bool startFromCaret, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public virtual string GetHelpContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public string GetCurrentNodeIdentifier() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual string GetHelpContext()
+    {
+        string text = "EquationControl.";
+        if (_model.CurrentModeNavigatorState.Current.IsIdentifier || _model.CurrentModeNavigatorState.Current.IsLiteral)
+        {
+            string text2 = _model.CurrentModeNavigatorState.Current.DescriptorName[0].ToString().ToUpper();
+            text2 += _model.CurrentModeNavigatorState.Current.DescriptorName.Substring(1).ToLower();
+            text = text + text2 + "." + _model.CurrentModeNavigatorState.Current.NodeInfoValueAsString;
+        }
+        else
+        {
+            text = text + "Operator." + _model.CurrentModeNavigatorState.Current.DescriptorName;
+        }
+        System.Text.RegularExpressions.Match match = System.Text.RegularExpressions.Regex.Match(text, "\\.").NextMatch();
+        string value = text.Substring(match.Index + 1);
+        if (CurrentNodeLabel != null && EquationControlConstants.specialIdentifiers.Contains(value) && _unitLabel == CurrentNodeLabel.ToLower())
+        {
+            text = text.Insert(match.Index + 1, global::System.Globalization.CultureInfo.CurrentCulture.TextInfo.ToTitleCase(_unitLabel) + ".");
+        }
+        return text;
+    }
+    public string GetCurrentNodeIdentifier()
+    {
+        if (!_model.CurrentModeNavigatorState.Current.IsIdentifier)
+        {
+            return null;
+        }
+        string helpContext = GetHelpContext();
+        DebugTools.AssertNotNull(helpContext.StartsWith(EquationControlConstants.GetEquationIdentifierHelpContext()), null);
+        return helpContext.Substring(EquationControlConstants.GetEquationIdentifierHelpContext().Length + 1);
+    }
     internal global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.View.IVisualComboBoxControlNode> GetAllComboBoxControlsFromEquation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public int WarningsCount => _model.Warnings?.Count ?? 0;
     internal List<(RedefinitionWarning parsedWarning, MathNode warningNode, global::Quire.EquationEditor.View.IVisualMathNode visualMathNode)> Warnings => _model.Warnings?.Select(((RedefinitionWarning parsedWarning, MathNode warningNode) warning) => (parsedWarning: warning.parsedWarning, warningNode: warning.warningNode, _map.AssociateNode(warning.warningNode))).ToList();
 
-    internal global::Quire.EquationEditor.View.IVisualMathNode CurrentVisualMathNode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public bool ContainsError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal global::Quire.EquationEditor.View.IVisualMathNode CurrentVisualMathNode()
+    {
+        return _map.AssociateNode(CurrentNode);
+    }
+    public bool ContainsError(global::Quire.Calculation.Core.EngineError error)
+    {
+        if (!Equals(error.ErrorSource))
+        {
+            return CalculatableChildren.Contains(error.ErrorSource);
+        }
+        return true;
+    }
     public void ShowError(global::Quire.Calculation.Core.EngineError error)
     {
         if (!IsKeyboardFocusWithin)
@@ -2432,8 +2537,14 @@ public partial class EquationControl
         }
     }
 
-    public global::System.Collections.Generic.IList<string> GetDefinedIdentifierSExpressions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public string GetEvalIdentifierSExpression() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::System.Collections.Generic.IList<string> GetDefinedIdentifierSExpressions()
+    {
+        return _model.GetDefinedIdentifierSExpressions(includeFunctions: true);
+    }
+    public string GetEvalIdentifierSExpression()
+    {
+        return string.Empty;
+    }
     public event global::System.Action<global::Quire.Calculation.Core.IResultNode> ResultChanged;
 
     private void HandleNumericResultChanged(IResultNode resultValue)
@@ -2442,12 +2553,24 @@ public partial class EquationControl
         ResultChanged?.Invoke(resultValue);
     }
 
-    public double GetRealResult() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public double GetRealUnitedResult(string unitsOfResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public double GetRealResult()
+    {
+        return _model.GetRealResult();
+    }
+    public double GetRealUnitedResult(string unitsOfResult)
+    {
+        throw new NotImplementedException();
+    }
     public void ActivateAndScopeResultPrivate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public string GetEvaluationSExp(bool getDefineForDefineEval) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public string GetEvaluationSExp(bool getDefineForDefineEval)
+    {
+        return _model.GetEvaluationSExp(getDefineForDefineEval);
+    }
     public event global::System.Action<global::System.Windows.DependencyObject, global::Quire.Controls.Core.IORegions.IORegionChangeType> IORegionChanged;
-    public global::System.Windows.FrameworkElement GetAdornedElement() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::System.Windows.FrameworkElement GetAdornedElement()
+    {
+        return _view;
+    }
 
     private MatrixFormat GetFormatForMatrix(MathNode node)
     {
