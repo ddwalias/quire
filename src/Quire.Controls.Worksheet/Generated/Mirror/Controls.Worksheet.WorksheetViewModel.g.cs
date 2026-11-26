@@ -274,8 +274,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     private void HandleProtectedStateChanged(global::Quire.Controls.Core.Protection.IProtectableControl control) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HandleActivatePartContainingChildRequested(global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainer wbContainer, global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void HandleItemSplitRequest(global::Quire.Controls.Core.ICustomSplitItem customSplitItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void NavigateOutsideMovingAreaDownIfNeeded(global::Quire.Controls.Core.ICollapsibleAreaControl area, global::Quire.Direction direction, bool moveDown) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -359,8 +357,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     private void HandlePagebreaksChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetPagebreakVisualOffset(global::Quire.Controls.Core.IWorksheetPageBreak pagebreak) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RequestMaximumSizeHandler(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl whiteboard) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Size FindSizeLimit(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

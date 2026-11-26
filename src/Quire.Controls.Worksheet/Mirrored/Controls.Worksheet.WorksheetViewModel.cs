@@ -2072,4 +2072,28 @@ internal partial class WorksheetViewModel
 
         UpdateNonprintableSpaceIndicatorWhenAreaHeightChanged(item);
     }
+    private void HandleActivatePartContainingChildRequested(IWhiteboardItemContainer wbContainer, IWhiteboardItem item)
+    {
+        IWhiteboardItem whiteboardItem = wbContainer as IWhiteboardItem;
+        if (whiteboardItem != null && ItemManager.IsItemLoaded(item) && ItemManager.GetIsBringToView(item))
+        {
+            _pageManager.ActivateDescendantParentIfNeeded(whiteboardItem, item);
+        }
+    }
+
+    private void RequestMaximumSizeHandler(IWhiteboardControl whiteboard)
+    {
+        IWhiteboardItem item = whiteboard as IWhiteboardItem;
+        if (item == null)
+        {
+            return;
+        }
+
+        Size sizeLimit = FindSizeLimit(item);
+        whiteboard.UpdateSizeLimits(new Size(sizeLimit.Width, double.PositiveInfinity));
+        if (!(whiteboard is IPageWideSizable))
+        {
+            whiteboard.ForbidGrowingMovementRight = OverlapsRightMargin(item);
+        }
+    }
 }
