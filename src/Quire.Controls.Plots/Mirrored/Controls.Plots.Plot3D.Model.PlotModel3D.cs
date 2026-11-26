@@ -127,7 +127,24 @@ public partial class PlotModel3D
         }
     }
 
-    private void UpdateLimitsAndBounds() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void UpdateLimitsAndBounds()
+    {
+        UpdateCommonTraceBounds();
+        _xStart = AxisLimitEditorCalculatedValue(XAxis.StartExpression);
+        _xEnd = AxisLimitEditorCalculatedValue(XAxis.EndExpression);
+        _yStart = AxisLimitEditorCalculatedValue(YAxis.StartExpression);
+        _yEnd = AxisLimitEditorCalculatedValue(YAxis.EndExpression);
+        _zStart = AxisLimitEditorCalculatedValue(ZAxis.StartExpression);
+        _zEnd = AxisLimitEditorCalculatedValue(ZAxis.EndExpression);
+        foreach (IPlotTraceModel3D trace in _traces)
+        {
+            trace.SetUserDefinedLimits(_xStart, _xEnd, _yStart, _yEnd, _zStart, _zEnd, out bool limitsChanged);
+            if (limitsChanged)
+            {
+                trace.Commit();
+            }
+        }
+    }
 
     private static double AxisLimitEditorCalculatedValue(IAxisLimitEditor axisLimitEditor)
     {
