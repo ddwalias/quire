@@ -1047,6 +1047,11 @@ public partial class WorksheetControl
         }
     }
 
+    private void DoActivate(object sender = null, global::System.Windows.RoutedEventArgs e = null)
+    {
+        _viewModel.Activate(this);
+    }
+
     public void InitializeComponent()
     {
         if (_contentLoaded)
