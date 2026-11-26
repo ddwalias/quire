@@ -54,8 +54,6 @@ internal partial class MarkersViewModel : global::Quire.Controls.Core.ViewModelB
     [global::Quire.Mirror.MirrorStub]
     private void OnMarkerDeleted(global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void OnActiveMarkerStyleChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel AddVerticalMarker() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Plots.ViewModel.VerticalMarkerViewModel CreateVerticalMarkerViewModel(global::Quire.Controls.Plots.Model.AxisMarker marker) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -105,10 +103,6 @@ internal partial class MarkersViewModel : global::Quire.Controls.Core.ViewModelB
     private static void MoveToNewPlace(global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel marker, global::System.Collections.ObjectModel.ObservableCollection<global::Quire.Controls.Plots.ViewModel.AxisMarkerViewModel> markers) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void UpdateFromModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateVerticalMarkersFromModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateHorizontalMarkersFromModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleMarkersCollectionChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e, global::System.ComponentModel.PropertyChangedEventHandler handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 

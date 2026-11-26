@@ -3,6 +3,7 @@
 
 using System.Collections.ObjectModel;
 using Quire.Controls.Core.AttachedBehavior;
+using Quire.Controls.Plots.Model;
 using Quire.Controls.Plots.Presenter;
 using Quire.Wpf;
 
@@ -56,6 +57,32 @@ internal partial class MarkersViewModel
         if (CalculatableRemoved != null)
         {
             CalculatableRemoved(calculatable);
+        }
+    }
+
+    private void OnActiveMarkerStyleChanged()
+    {
+        if (ActiveMarkerStyleChanged != null)
+        {
+            ActiveMarkerStyleChanged();
+        }
+    }
+
+    private void UpdateVerticalMarkersFromModel()
+    {
+        VerticalMarkers.Clear();
+        foreach (AxisMarker marker in _horizontalRange.Markers)
+        {
+            VerticalMarkers.Add(CreateVerticalMarkerViewModel(marker));
+        }
+    }
+
+    private void UpdateHorizontalMarkersFromModel()
+    {
+        HorizontalMarkers.Clear();
+        foreach (AxisMarker marker in _verticalRange.Markers)
+        {
+            HorizontalMarkers.Add(CreateHorizontalMarkerViewModel(marker));
         }
     }
 }
