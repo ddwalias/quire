@@ -132,31 +132,7 @@ public partial class PlotViewModelBase<TModel>
         {
             return CalcIsDisabled;
         }
-        set
-        {
-            if ((CalcIsDisabled != value) == true)
-            {
-                CompoundCommand cmd = new CompoundCommand();
-                DelegateFunction0<bool> doMethod = () =>
-                {
-                    CalcIsDisabled = value;
-                    using (new CommandScope(cmd))
-                    {
-                        foreach (ICalculatable calculatable in CollectHiddenAndVisibleCalculatables())
-                        {
-                            ((ICalculationHideableChild)calculatable).HideFromCalculationContext = value;
-                        }
-                    }
-                    return true;
-                };
-                Delegate0 undoMethod = () =>
-                {
-                    cmd.Undo();
-                    CalcIsDisabled = !value;
-                };
-                CommandBuffer.Execute(new UndoableCommand("Change HideFromCalculationContext", doMethod, undoMethod), null);
-            }
-        }
+        set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     public bool PendingActivation
