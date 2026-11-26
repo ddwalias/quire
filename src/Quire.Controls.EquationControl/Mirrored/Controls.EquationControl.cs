@@ -669,7 +669,10 @@ public partial class EquationControl
             RootNodeChanged();
         }
     }
-    object global::System.ICloneable.Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    object global::System.ICloneable.Clone()
+    {
+        return Clone();
+    }
     public global::Quire.Controls.EquationControl Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void OnTraversedFocusEvent(object sender, global::Quire.Wpf.CustomRoutedEventArgs<global::System.Windows.Input.FocusNavigationDirection> args)
     {
@@ -965,7 +968,43 @@ public partial class EquationControl
     public EngineResult EngineResult { get; set; }
     public bool InterceptAndUpdateResult => false;
     public bool UseICalculatableToRestoreResult => false;
-    public void RestoreResult() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void RestoreResult()
+    {
+        if (EngineResult.IsEmpty())
+        {
+            return;
+        }
+        EngineResult saved = EngineResult;
+        UpdateAggregateFromModel();
+        if (_model.HasNumericEvaluation)
+        {
+            int num = _model.GetRlIndexForNumericResult();
+            if (IsScriptableControl || num < 1)
+            {
+                num = _calculatableChildren.Count;
+            }
+            _calculatableChildren[num - 1].SetResult(saved.ResultNode);
+        }
+        global::Quire.Calculation.Core.EngineError error = null;
+        if (saved.Errors != null)
+        {
+            error = saved.Errors.FirstOrDefault();
+        }
+        _model.HandleError(error);
+        if (saved.Warnings.IsNotEmpty())
+        {
+            _model.SetRedefinitionWarnings(saved.Warnings);
+        }
+        SetSynchronizationStatus(saved.SynchronizationStatus);
+        if (!CalculatableChildren.IsNullOrEmpty())
+        {
+            CalculatableChildren.Each((global::Quire.Calculation.Core.ICalculatable child) =>
+            {
+                child.SetSynchronizationStatus(saved.SynchronizationStatus);
+            });
+        }
+        UpdateSynchronizationStatus();
+    }
     public event global::System.Action<string> SExpressionChanging;
     public event global::System.Action<global::Quire.Controls.Core.IEquationControl> ExpressionValueChanged;
     public EquationTypes EquationType => _model.EquationType;
@@ -1743,7 +1782,54 @@ public partial class EquationControl
         }
         return null;
     }
-    private void UpdateWidth(bool widthNotSet) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void UpdateWidth(bool widthNotSet)
+    {
+        if (!IsArrangeValid)
+        {
+            return;
+        }
+        if (IsResizable && _model.EvaluationRoot != null)
+        {
+            global::Quire.EquationEditor.Tree.MathNode mathNode = _model.EvaluationRoot;
+            while (mathNode[0].IsEvaluation)
+            {
+                mathNode = mathNode[0];
+            }
+            global::Quire.EquationEditor.Tree.MathNode modelNode = mathNode[mathNode.ChildCount - 1];
+            global::Quire.Controls.Internal.VisualMathNode leftMostVisualResult = _map.AssociateNode(modelNode) as global::Quire.Controls.Internal.VisualMathNode;
+            global::System.Action action = () =>
+            {
+                double num = leftMostVisualResult.TranslatePoint(new global::System.Windows.Point(0.0, 0.0), _view).X;
+                double val2 = num + RecommendedSymbolicResultsWidth;
+                MinWidth = num + ResizeIndicatorWidth;
+                MaxWidth = ViewFullWidth + ResizeIndicatorWidth;
+                if (widthNotSet)
+                {
+                    double val3 = 0.0;
+                    if (_model.Mode == global::Quire.EquationEditor.EquationEditModeEnum.Normal)
+                    {
+                        val3 = XFromNavigatorState(_model.NavigatorState);
+                    }
+                    else if (_model.Mode == global::Quire.EquationEditor.EquationEditModeEnum.Scope)
+                    {
+                        val3 = XFromNavigatorState(_model.GetNavigatorStateFromScoperCaretSide());
+                    }
+                    Width = Math.Max(val3, val2) + ResizeIndicatorWidth;
+                }
+                else if (ViewClippedWidth + ResizeIndicatorWidth < Width)
+                {
+                    Width = ViewClippedWidth + ResizeIndicatorWidth;
+                }
+            };
+            global::Quire.Services.AppServiceRegistry.GetService<global::Quire.Controls.Core.IFrameworkElementFacade>().ExecuteOnLayoutUpdated(leftMostVisualResult, action);
+        }
+        else
+        {
+            MinWidth = IsScriptableControl ? MinWidth : 0.0;
+            MaxWidth = double.PositiveInfinity;
+            Width = double.NaN;
+        }
+    }
     internal double ViewFullWidth => _view.ActualWidth;
     internal double ViewClippedWidth => _view.DesiredSize.Width;
     private void BringCurrentNodeIntoView(MathNode currentNode)
@@ -2631,7 +2717,10 @@ public partial class EquationControl
         };
         CommandBuffer.Execute("Clear DisplayNumberFormat - EQUATION CONTROL", doMethod, undoMethod);
     }
-    public bool HighlightAll(string text, global::Quire.Controls.Core.FindOptions options) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public bool HighlightAll(string text, global::Quire.Controls.Core.FindOptions options)
+    {
+        throw new NotImplementedException();
+    }
     public bool FindOncePrivate(string text, bool startFromCaret, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public virtual string GetHelpContext()
     {
