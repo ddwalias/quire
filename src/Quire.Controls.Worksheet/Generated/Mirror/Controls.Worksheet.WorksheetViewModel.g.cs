@@ -156,8 +156,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     public void HandleEnter() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void HandleGoToPage(object pageNumber) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnPropertyChanged(string propertyName) => base.OnPropertyChanged(propertyName);
     [global::Quire.Mirror.MirrorStub]
     public bool HandlePreviewMouseDown(object originalSource, global::System.Windows.Point position, bool mouseDoubleClicked, bool rightButton) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

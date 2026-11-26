@@ -2106,4 +2106,12 @@ internal partial class WorksheetViewModel
     {
         CommandBuffer.ExecuteAndAttach(new MoveItemsCommandWithSideEffects(this, new Vector(0.0, offset), itemsToOffset.ToList()));
     }
+    public void HandleGoToPage(object pageNumber)
+    {
+        int pageNum = 1;
+        if (int.TryParse(pageNumber.ToString(), out pageNum) && pageNum > 0 && pageNum <= PageManager.Pages.Count)
+        {
+            PageManager.GoToPage(PageManager.Pages[pageNum - 1]);
+        }
+    }
 }
