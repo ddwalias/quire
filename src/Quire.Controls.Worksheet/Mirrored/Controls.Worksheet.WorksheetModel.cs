@@ -20,6 +20,76 @@ partial class WorksheetModel
     public global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Core.IWorksheetPageBreak> PageBreaks { get; private set; }
     public global::Quire.Controls.Core.BookmarkTags.IBookmarksManager BookmarksManager { get; set; }
 
+    private bool _isCalculating;
+    private bool _isCalculationsEnabled;
+    private global::Quire.Calculation.Core.ICalculatable _lastVisibleCalculatable;
+
+    public bool IsCalculating
+    {
+        get => _isCalculating;
+        set
+        {
+            if (_isCalculating != value)
+            {
+                _isCalculating = value;
+                FirePropertyChanged(nameof(IsCalculating));
+            }
+        }
+    }
+
+    public string EngineVersion
+    {
+        get
+        {
+            if (GetEngineVersion != null)
+            {
+                return GetEngineVersion();
+            }
+            return "No Attached Engine";
+        }
+    }
+
+    public bool SimplifyUnitSystem
+    {
+        get => _simplifyUnitSystem;
+        set
+        {
+            if (_simplifyUnitSystem == value)
+            {
+                return;
+            }
+            _simplifyUnitSystem = value;
+            FireSimplifyUnitsFlagChanged(SimplifyUnitSystem);
+        }
+    }
+
+    public bool IsCalculationsEnabled
+    {
+        get => _isCalculationsEnabled;
+        set
+        {
+            if (_isCalculationsEnabled == value)
+            {
+                return;
+            }
+            _isCalculationsEnabled = value;
+            if (!_isCalculationsEnabled)
+            {
+                FireStopEvaluating();
+            }
+            else
+            {
+                FireStartEvaluating();
+            }
+        }
+    }
+
+    public global::Quire.Calculation.Core.ICalculatable LastVisibleCalculatable
+    {
+        get => _lastVisibleCalculatable;
+        set => _lastVisibleCalculatable = value;
+    }
+
     public WorksheetModel()
     {
         _calculationBinder = new CalculationBinder();

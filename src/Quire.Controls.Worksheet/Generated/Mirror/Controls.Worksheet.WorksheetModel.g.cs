@@ -14,8 +14,6 @@ internal partial class WorksheetModel : global::Quire.Controls.Worksheet.IWorksh
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.Support.CalculatableChildHider _childHider;
     [global::Quire.Mirror.MirrorStub]
-    private bool _isCalculating;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.CalculationOptions _docCalculationOptions;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.CalculationVariables _docCalculationVariables;
@@ -23,10 +21,6 @@ internal partial class WorksheetModel : global::Quire.Controls.Worksheet.IWorksh
     private global::Quire.Calculation.Core.UnitSystems _defaultUnitSystem;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.UnitSystems _customBaseUnitSystem;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isCalculationsEnabled;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.ICalculatable _lastVisibleCalculatable;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Worksheet.WorksheetItemPositionComparer _itemPositionComparer;
     [global::Quire.Mirror.MirrorStub]
@@ -36,10 +30,6 @@ internal partial class WorksheetModel : global::Quire.Controls.Worksheet.IWorksh
     [global::Quire.Mirror.MirrorStub]
     public bool ContainsSymbolicEvaluation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool IsCalculating { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string EngineVersion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.CalculationOptions DocCalculationOptions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.CalculationVariables DocCalculationVariables { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -47,12 +37,6 @@ internal partial class WorksheetModel : global::Quire.Controls.Worksheet.IWorksh
     public global::Quire.Calculation.Core.UnitSystems DefaultUnitSystem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.UnitSystems CustomBaseUnitSystem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool SimplifyUnitSystem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsCalculationsEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.ICalculatable LastVisibleCalculatable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Worksheet.SymbolicEngine SymbolicEngine { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
