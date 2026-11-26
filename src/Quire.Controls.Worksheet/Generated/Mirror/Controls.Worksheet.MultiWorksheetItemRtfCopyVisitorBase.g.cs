@@ -11,24 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.MultiWorksheetItemRtfCopyVisitorBase, Ptc.Controls.Worksheet")]
 public partial class MultiWorksheetItemRtfCopyVisitorBase : global::Quire.Controls.Worksheet.IWorksheetItemCopyVisitor, global::Quire.ISpecialCopyVisitor
 {
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly global::System.Collections.Generic.List<global::Quire.Controls.Worksheet.RtfItemBase> RtfItems;
-    [global::Quire.Mirror.MirrorStub]
-    protected readonly global::Quire.Controls.Worksheet.RtfItemWrapperHelper Helper;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.RegionImageSettings GenericImageSettings { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected MultiWorksheetItemRtfCopyVisitorBase(global::Quire.Controls.Worksheet.RtfItemWrapperHelper helper) { }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Visit(global::Quire.Controls.Core.IRichTextWithEmbeddedItem textBox) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void VisitGeneric(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Visit(global::Quire.Controls.Core.IEquationControl equation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void Visit(global::Quire.Controls.Core.ICollapsibleAreaControl area) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ConvertItemsToRtfFormat(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void VisitAll(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

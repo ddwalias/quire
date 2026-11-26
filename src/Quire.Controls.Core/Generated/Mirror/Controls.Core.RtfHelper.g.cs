@@ -12,26 +12,6 @@ namespace Quire.Controls.Core;
 public static partial class RtfHelper
 {
     [global::Quire.Mirror.MirrorStub]
-    public static void AddRichTextbox(this global::Net.Sgoliver.NRtfTree.Core.RtfTreeNode node, global::Net.Sgoliver.NRtfTree.Core.RtfTree rtfModel, global::System.Windows.Media.Brush background, global::System.Windows.Rect clippingRect, global::Quire.Controls.Core.RtfHelper.LocationFlags flags, global::Net.Sgoliver.NRtfTree.Core.RtfMerger merger, bool hasBorder, global::System.Windows.Media.Brush borderColor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void ApplyBackgroundColor(this global::Net.Sgoliver.NRtfTree.Core.RtfTreeNode node, global::System.Windows.Media.Brush background, int insertIndex, bool hasBorder, global::System.Windows.Media.Brush borderColor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void InsertFrameBorder(this global::Net.Sgoliver.NRtfTree.Core.RtfTreeNode node, string orientationTag, int width, int color, int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void InsertTextBoxFrameBorder(this global::Net.Sgoliver.NRtfTree.Core.RtfTreeNode node, string orientationTag, int borderThickness, int borderColor, int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Net.Sgoliver.NRtfTree.Core.RtfTree TextboxToRtf(global::Quire.Controls.Core.IRichTextWithEmbeddedItem richText, int embeddedItems) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Net.Sgoliver.NRtfTree.Core.RtfTree TextToRtfTree(global::System.Action<global::System.IO.Stream> saveRtfAction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static int ReplaceBaselineTextTagForRtfTag(this global::Net.Sgoliver.NRtfTree.Core.RtfTreeNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool FixHyperlinksRtfSerialization(ref string rtfStr, global::System.Windows.Documents.TextRange range) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool FixHyperlinksRtfSerialization(global::Net.Sgoliver.NRtfTree.Core.RtfTree tree, global::System.Collections.Generic.List<global::System.Windows.Documents.Hyperlink> links) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.ValueTuple<string, global::Net.Sgoliver.NRtfTree.Core.RtfNodeCollection> GenerateRtfKeyValueAddressFixPair(global::System.Windows.Documents.Hyperlink source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Collections.Generic.IEnumerable<global::Net.Sgoliver.NRtfTree.Core.RtfTreeNode> ToEnumerable(this global::Net.Sgoliver.NRtfTree.Core.RtfNodeCollection collection) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.RtfHelper+LocationFlags, Ptc.Controls.Core")]

@@ -1,10 +1,13 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Windows;
+using Net.Sgoliver.NRtfTree.Core;
 using Quire.Mirror;
-using Color = System.Drawing.Color;
+using Point = System.Windows.Point;
+using Size = System.Windows.Size;
 
 namespace Quire.Controls.Core;
 
@@ -30,6 +33,8 @@ public partial class RtfDocConstructor
 
     public static Dictionary<int, Color> ImprovedColorMatchingDictionary;
 
+    public static bool IsRtfCopyEnabled { get; set; }
+
     static RtfDocConstructor()
     {
         IsRtfCopyEnabled = true;
@@ -40,11 +45,36 @@ public partial class RtfDocConstructor
         ImprovedColorMatchingDictionary.Add(Color.FromArgb(255, 246, 136, 31).ToArgb(), Color.FromArgb(255, 128, 128, 128));
     }
 
-    [MirrorVerified("PtcControlsCoreRtfDocConstructorMechanicalDifferentialTests")]
-    public static bool IsRtfCopyEnabled { get; set; }
+    [MirrorStub]
+    public static RtfTree PrepareRtf(IEnumerable<IRtfItemBase> rtfItems, Size pageSize, Size pageBodySize, bool isSavingWholeDocument)
+        => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    [MirrorVerified("PtcControlsCoreRtfDocConstructorMechanicalDifferentialTests")]
-    private bool IsOnePageContent { get; set; }
+    private static RtfTree InitTree()
+    {
+        RtfTree tree = new RtfTree();
+        tree.LoadRtfText("{\\rtf1\\ansi\\deff0 {\\colortbl }{\\fonttbl {\\f0\\fnil Tahoma;}}{\\stylesheet}}");
+        return tree;
+    }
+
+    private RtfDocConstructor(IEnumerable<IRtfItemBase> rtfItems, Size pageSize, Size pageBodySize, bool isSavingWholeDocument)
+    {
+        _orderedRtfItems = rtfItems.OrderBy(item => item.TopLeft.Y).ThenBy(item => item.TopLeft.X).ToList();
+        _pageBodySize = pageBodySize;
+        _isSavingWholeDocument = isSavingWholeDocument;
+        _startingPageIndex = isSavingWholeDocument ? 0 : _orderedRtfItems.First().PageIndex;
+        ComputeIsOnePageContent();
+        _pageSize = pageSize;
+        if (isSavingWholeDocument)
+        {
+            _leftTrim = 0.0;
+        }
+        else
+        {
+            IEnumerable<double> leftPositions = _orderedRtfItems.Where(item => !item.NoLeftOffset).Select(item => item.TopLeft.X);
+            _leftTrim = leftPositions.IsNullOrEmpty() ? 0.0 : leftPositions.Min();
+        }
+        _contentWidth = rtfItems.Max(item => item.TopLeft.X + item.FullSize.Width) - _leftTrim;
+    }
 
     private void ComputeIsOnePageContent()
     {
@@ -57,4 +87,47 @@ public partial class RtfDocConstructor
 
         IsOnePageContent = contentBottom - firstTop < _pageBodySize.Height;
     }
+
+    private bool IsOnePageContent { get; set; }
+
+    private RtfTree PopulateRtfTree(RtfTree tree)
+    {
+        RtfMerger merger = new RtfMerger(tree);
+        RtfTreeNode root = tree.RootNode.FirstChild;
+        root.SetPageSize(_contentWidth, _pageSize, _isSavingWholeDocument);
+        if (_isSavingWholeDocument || !IsOnePageContent)
+        {
+            if (!_isSavingWholeDocument)
+            {
+                root.AddPageBreak();
+            }
+            int pageIndex = _startingPageIndex;
+            foreach (IRtfItemBase item in _orderedRtfItems)
+            {
+                for (; pageIndex < item.PageIndex; pageIndex++)
+                {
+                    root.AddPageBreak();
+                }
+                Point offset;
+                offset = new Point(item.NoLeftOffset ? 0.0 : _leftTrim, _pageBodySize.Height * (double)item.PageIndex);
+                item.AddItemToDocument(root, offset, onePageContent: false, merger);
+            }
+            if (!_isSavingWholeDocument)
+            {
+                root.AddPageBreak();
+            }
+        }
+        else
+        {
+            Point offset = new Point(_leftTrim, _orderedRtfItems.First().TopLeft.Y);
+            root.AddParagraph();
+            _orderedRtfItems.Each(item => item.AddItemToDocument(root, offset, onePageContent: true, merger));
+        }
+        merger.Merge(removeLastPar: true);
+        NormalizeHighlightColor(tree);
+        return tree;
+    }
+
+    public void NormalizeHighlightColor(RtfTree tree)
+        => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

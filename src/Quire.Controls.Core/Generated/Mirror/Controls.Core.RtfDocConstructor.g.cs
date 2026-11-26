@@ -11,14 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.RtfDocConstructor, Ptc.Controls.Core")]
 public partial class RtfDocConstructor
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Net.Sgoliver.NRtfTree.Core.RtfTree PrepareRtf(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IRtfItemBase> rtfItems, global::System.Windows.Size pageSize, global::System.Windows.Size pageBodySize, bool isSavingWholeDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Net.Sgoliver.NRtfTree.Core.RtfTree InitTree() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private RtfDocConstructor(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IRtfItemBase> rtfItems, global::System.Windows.Size pageSize, global::System.Windows.Size pageBodySize, bool isSavingWholeDocument) { }
-    [global::Quire.Mirror.MirrorStub]
-    private global::Net.Sgoliver.NRtfTree.Core.RtfTree PopulateRtfTree(global::Net.Sgoliver.NRtfTree.Core.RtfTree tree) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void NormalizeHighlightColor(global::Net.Sgoliver.NRtfTree.Core.RtfTree tree) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -19,8 +19,4 @@ public partial class RtfItemModel : global::Quire.Controls.Worksheet.RtfItemBase
     private readonly bool _hasBorder;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Windows.Media.Brush _borderColor;
-    [global::Quire.Mirror.MirrorStub]
-    public string Rtf { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void AddItemToDocumentInternal(global::Net.Sgoliver.NRtfTree.Core.RtfTreeNode node, global::System.Windows.Rect clippingRect, bool relativeToCaret, global::Net.Sgoliver.NRtfTree.Core.RtfMerger merger) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
