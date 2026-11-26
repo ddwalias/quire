@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Threading;
 using Quire.Calculation.Core;
 using Quire.Engine;
+using Quire.Services;
 using Quire.Wpf;
 namespace Quire.Calculation;
 
@@ -155,7 +158,41 @@ partial class CalculationController
         _engine.SetSynchronousCallbacks(false);
     }
     private string DumpGetHandleToCalculatableMap(global::System.Collections.Generic.Dictionary<int, global::Quire.Calculation.Core.ICalculatable> handleToICalculatableMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void HandleContextUnloaded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleContextUnloaded()
+    {
+        if (_engineBuilder == null)
+        {
+            throw new InvalidOperationException("Logic Error: Unloading context and _engineBuilder is null. Did you call CalculationController.Dispose first?");
+        }
+        UnhookFromContextEvents();
+        int failures = 0;
+        using (IEnumerator<ICalculatable> enumerator = _context.CalculatableChildren.GetEnumerator())
+        {
+            while (enumerator.MoveNext())
+            {
+                ICalculatable child = enumerator.Current;
+                try
+                {
+                    HandleCalculatableRemoved(child);
+                }
+                catch (Exception)
+                {
+                    failures++;
+                }
+            }
+        }
+        _engine.SetSynchronousCallbacks(true);
+        _engine.OnBusy -= HandleEngineBusy;
+        _engine.OnUpToDate -= HandleEngineUpToDate;
+        _engine.Dispose();
+        _waitForCalc.Dispose();
+        _interruptWaitForCalc.Dispose();
+        _boundControllers.Remove(this);
+        if (failures > 0)
+        {
+            AppServiceRegistry.GetService<IApplicationLogger>().WriteToLog("CalcControllerWarning", string.Format("There were {0} calculatable children left in the context when it was being unloaded, and {1} of them had an issue when we attempted to remove them from the engine during ContextUnloaded", _context.CalculatableChildren.Count(), failures));
+        }
+    }
     private void HandleRecalculateAll()
     {
         if (!_evaluatingEnabled)
