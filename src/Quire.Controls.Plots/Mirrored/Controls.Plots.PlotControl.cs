@@ -3,11 +3,14 @@
 
 using System;
 using System.CodeDom.Compiler;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
+using Quire.Controls.Core;
+using Quire.Controls.Plots.Presenter;
 
 namespace Quire.Controls.Plots;
 
@@ -40,5 +43,269 @@ public partial class PlotControl
     void IComponentConnector.Connect(int connectionId, object target)
     {
         _contentLoaded = true;
+    }
+
+    protected bool IsResizing => ResizableElementAttachedProperties.GetIsResizing(this);
+
+    public override Size PlotGraphSize
+    {
+        get
+        {
+            return _model.GraphSize;
+        }
+    }
+
+    public override PlotType PlotType
+    {
+        get
+        {
+            return (PlotType)GetValue(PlotTypeProperty);
+        }
+        protected set
+        {
+            SetValue(PlotTypeProperty, value);
+        }
+    }
+
+    private EquationList RightMostEquationList
+    {
+        get
+        {
+            switch (_resultLegendPositionIndex)
+            {
+            case 0:
+                return _rangeEquations;
+            case 1:
+                return _resultEquations;
+            case 2:
+            case 4:
+                switch (_rangeLegendPositionIndex)
+                {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                    return _rangeEquations;
+                case 4:
+                case 5:
+                    return _resultEquations;
+                }
+                break;
+            case 3:
+            case 5:
+                switch (_rangeLegendPositionIndex)
+                {
+                case 2:
+                case 3:
+                    return _rangeEquations;
+                case 0:
+                case 1:
+                case 4:
+                case 5:
+                    return _resultEquations;
+                }
+                break;
+            }
+            throw new Exception("not valid y legend position");
+        }
+    }
+
+    private EquationList LeftMostEquationList
+    {
+        get
+        {
+            if (RightMostEquationList == _rangeEquations)
+            {
+                return _resultEquations;
+            }
+            return _rangeEquations;
+        }
+    }
+
+    public bool IsInPrinting => (bool)GetValue(IsInPrintingProperty);
+
+    public double PlotXMinGap
+    {
+        get
+        {
+            return (double)GetValue(PlotXMinGapProperty);
+        }
+        private set
+        {
+            SetValue(PlotXMinGapPropertyKey, value);
+        }
+    }
+
+    public double PlotYMinGap
+    {
+        get
+        {
+            return (double)GetValue(PlotYMinGapProperty);
+        }
+        private set
+        {
+            SetValue(PlotYMinGapPropertyKey, value);
+        }
+    }
+
+    public double XLegendWidthForXamlSerialization
+    {
+        get
+        {
+            return RangeAxis.LegendActualWidth;
+        }
+        set
+        {
+            RangeAxis.LegendActualWidth = value;
+        }
+    }
+
+    public double YLegendWidthForXamlSerialization
+    {
+        get
+        {
+            return PrimaryResultAxis.LegendActualWidth;
+        }
+        set
+        {
+            PrimaryResultAxis.LegendActualWidth = value;
+        }
+    }
+
+    public bool SnapToGrid
+    {
+        get
+        {
+            return (bool)GetValue(SnapToGridProperty);
+        }
+        set
+        {
+            SetValue(SnapToGridProperty, value);
+        }
+    }
+
+    internal PlotItemPlaceholder[] XLegendsPositions => _rangeLegendsPositions;
+
+    internal PlotItemPlaceholder[] YLegendsPositions => _resultLegendsPositions;
+
+    internal PlotItemPlaceholder[] PlotTitlePositions => _plotTitlePositions;
+
+    internal PlotItemPlaceholder[] PlotLegendPositions => _plotLegendPositions;
+
+    internal PlotItemPlaceholder XAxisTitlePlaceholder { get; set; }
+
+    internal PlotItemPlaceholder YAxisTitlePlaceholder { get; set; }
+
+    public int TraceCount => Graph.Count;
+
+    public string TraceLineStyle
+    {
+        get
+        {
+            return (string)GetValue(TraceLineStyleProperty);
+        }
+        set
+        {
+            SetValue(TraceLineStyleProperty, value);
+        }
+    }
+
+    public double? TraceLineWeight
+    {
+        get
+        {
+            return (double?)GetValue(TraceLineWeightProperty);
+        }
+        set
+        {
+            SetValue(TraceLineWeightProperty, value);
+        }
+    }
+
+    public string TraceSymbol
+    {
+        get
+        {
+            return (string)GetValue(TraceSymbolProperty);
+        }
+        set
+        {
+            SetValue(TraceSymbolProperty, value);
+        }
+    }
+
+    public global::Quire.Calculation.Core.Trace2DResults.TraceType? SelectedTraceType
+    {
+        get
+        {
+            return (global::Quire.Calculation.Core.Trace2DResults.TraceType?)GetValue(SelectedTraceTypeProperty);
+        }
+        set
+        {
+            SetValue(SelectedTraceTypeProperty, value);
+        }
+    }
+
+    private List<IPlotTrace> SelectedTracesClone => new List<IPlotTrace>(SelectedTraces);
+
+    public int XLegendPositionIndex
+    {
+        get
+        {
+            return _rangeLegendPositionIndex;
+        }
+        set
+        {
+            if (XLegendsPositions != null)
+            {
+                PlotItemPlaceholder plotItemPlaceholderAtOldPosition = XLegendsPositions[_rangeLegendPositionIndex];
+                PlotItemPlaceholder plotItemPlaceholderAtNewPosition = XLegendsPositions[value];
+                _rangeEquations.Move(plotItemPlaceholderAtNewPosition, plotItemPlaceholderAtOldPosition);
+            }
+            _rangeLegendPositionIndex = value;
+            FireXLegendPositionsIndexChanged();
+        }
+    }
+
+    public int YLegendPositionIndex
+    {
+        get
+        {
+            return _resultLegendPositionIndex;
+        }
+        set
+        {
+            if (YLegendsPositions != null)
+            {
+                PlotItemPlaceholder plotItemPlaceholderAtOldPosition = YLegendsPositions[_resultLegendPositionIndex];
+                PlotItemPlaceholder plotItemPlaceholderAtNewPosition = YLegendsPositions[value];
+                _resultEquations.Move(plotItemPlaceholderAtNewPosition, plotItemPlaceholderAtOldPosition);
+            }
+            _resultLegendPositionIndex = value;
+            FireYLegendPositionsIndexChanged();
+        }
+    }
+
+    public int PlotTitlePositionIndex
+    {
+        get
+        {
+            return _plotTitlePositionIndex;
+        }
+        set
+        {
+            if (_plotTitle == null)
+            {
+                return;
+            }
+            if (PlotTitlePositions != null)
+            {
+                PlotItemPlaceholder plotItemPlaceholderAtOldPosition = PlotTitlePositions[_plotTitlePositionIndex];
+                PlotItemPlaceholder plotItemPlaceholderAtNewPosition = PlotTitlePositions[value];
+                _plotTitle.Move(plotItemPlaceholderAtNewPosition, plotItemPlaceholderAtOldPosition);
+            }
+            _plotTitlePositionIndex = value;
+            FirePlotTitlePositionsIndexChanged();
+        }
     }
 }
