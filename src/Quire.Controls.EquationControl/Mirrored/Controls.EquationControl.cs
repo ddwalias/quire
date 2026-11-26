@@ -1249,16 +1249,68 @@ public partial class EquationControl
             CreateFakeEngineResults();
         }
     }
-    public global::System.Xml.XmlNode GetRegionXmlNode() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::System.Xml.XmlNode GetRegionXmlNode()
+    {
+        DebugTools.DevAssert(_isForEngineCalculation, null);
+        global::System.Xml.XmlDocument xmlDocument = new global::System.Xml.XmlDocument();
+        global::System.Xml.XmlElement xmlElement = xmlDocument.CreateElement("math", global::Quire.Xml.XmlWorksheetData.McdxNameSpaceManager.LookupNamespace(string.Empty));
+        global::System.Xml.XmlNode equationXmlNode = EquationXmlNode;
+        if (equationXmlNode != null)
+        {
+            global::System.Xml.XmlNode newChild = xmlDocument.ImportNode(equationXmlNode, deep: true);
+            xmlElement.AppendChild(newChild);
+        }
+        if (!AllowExpressionsOnly)
+        {
+            bool flag = global::Quire.Wpf.WpfUtils.HasLocalValue(this, DisplayNumberFormatProperty);
+            bool flag2 = global::Quire.Wpf.WpfUtils.HasLocalValue(this, ResultMatrixFormatProperty);
+            if (flag | flag2)
+            {
+                using global::Quire.Xml.XmlNodeWriter writer = new global::Quire.Xml.XmlNodeWriter(xmlElement);
+                new global::Quire.Controls.Core.ResultFormat(flag ? DisplayNumberFormat : null, flag2 ? ResultMatrixFormat : null, xmlElement.NamespaceURI).WriteXml(writer);
+            }
+        }
+        if (IsMathFormatHandledLocally && MathFormat.AreAnyPropertiesSet)
+        {
+            using global::Quire.Xml.XmlNodeWriter writer2 = new global::Quire.Xml.XmlNodeWriter(xmlElement);
+            new global::Quire.Controls.Core.Serialization.MathFormatSerializer("formattingOverride", xmlElement.NamespaceURI, MathFormat).WriteXml((global::System.Xml.XmlWriter)writer2);
+        }
+        return xmlElement;
+    }
     public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider)
+    {
+        int num = global::Quire.Calculation.Core.ResultManager.Instance.CreateResultRefId(this);
+        global::System.Xml.XmlNodeList childNodes = GetRegionXmlNode().ChildNodes;
+        global::System.Xml.XmlNode[] array = new global::System.Xml.XmlNode[childNodes.Count];
+        for (int num2 = 0; num2 < childNodes.Count; num2++)
+        {
+            array[num2] = childNodes[num2];
+        }
+        global::Quire.PersistentDataObjects.mathType mathType2 = new global::Quire.PersistentDataObjects.mathType
+        {
+            InnerXml = array,
+            disablecalc = HideFromCalculationContext
+        };
+        if (global::Quire.Calculation.Core.IResultManagerHelper.IsResultRefIdSpecified(num))
+        {
+            mathType2.resultRefSpecified = true;
+            mathType2.resultRef = num;
+        }
+        mathType2.visibilityLhsOfDefinition = (global::Quire.PersistentDataObjects.LhsOfDefinitionVisibility)VisibleLhsOfDefinition;
+        mathType2.symbolicEvalKeywordsVisibilityState = SymbolicEvalKeywordsVisibilityState;
+        return mathType2;
+    }
     public string TypeoverSExpression => _model.TypeoverSExpression;
     public string[] History { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     public int GetRegionHistoryCount()
     {
         return History.Length;
     }
-    public void Restore(int historyIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void Restore(int historyIndex)
+    {
+        _model.RestoreFromHistory(historyIndex);
+    }
 
     public string CurrentNodeLabel
     {
@@ -1522,7 +1574,29 @@ public partial class EquationControl
             return ((MatrixNodeInfo)matrix.NodeInfo).ViewportSize.Columns;
         }
     }
-    public void GetResultMatrixHeadingIndices(out string[] rowIndices, out string[] columnIndices) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void GetResultMatrixHeadingIndices(out string[] rowIndices, out string[] columnIndices)
+    {
+        global::Quire.EquationEditor.View.IVisualMathNode visualMathNode = null;
+        foreach (global::Quire.EquationEditor.Tree.MathNode item in _model.Root.WalkSubTree())
+        {
+            if (item.DescriptorName == "MATRIX" || item.DescriptorName == "ScriptableControl1")
+            {
+                visualMathNode = _map.AssociateNode(item);
+                break;
+            }
+        }
+        if (visualMathNode != null)
+        {
+            global::Quire.EquationEditor.View.IVisualMatrixNode visualMatrixNode = (global::Quire.EquationEditor.View.IVisualMatrixNode)visualMathNode;
+            rowIndices = visualMatrixNode.MatrixHeadingRowIndices;
+            columnIndices = visualMatrixNode.MatrixHeadingColumnIndices;
+        }
+        else
+        {
+            rowIndices = new string[0];
+            columnIndices = new string[0];
+        }
+    }
     public void SetResultMatrixSize(int rows, int columns)
     {
         MatrixFormat matrixFormat = _model.ResultMatrixFormat.Clone();
@@ -2093,7 +2167,12 @@ public partial class EquationControl
         }
     }
 
-    private void ChangeAlgorithm(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ChangeAlgorithm(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        Algorithm = e.Parameter as string;
+        ResetAlgorithmOptionIfNeeded();
+        FireAlgorithmChanged();
+    }
     private bool IsAlgorithmSupportOptions()
     {
         return EquationControlConstants.EnabledAlgorithmsForOptions.Contains(Algorithm);
@@ -2237,7 +2316,15 @@ public partial class EquationControl
         args.Handled = true;
     }
     private void OnSetNumberFormatField(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnSetMatrixFormatField(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnSetMatrixFormatField(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args)
+    {
+        if (((global::System.Windows.DependencyObject)this).ReadLocalValue(ResultMatrixFormatProperty).Equals(global::System.Windows.DependencyProperty.UnsetValue))
+        {
+            ResultMatrixFormat = ResultMatrixFormat != null ? ResultMatrixFormat.Clone() : new global::Quire.Controls.Core.MatrixFormat();
+        }
+        global::Quire.Controls.Core.SetPropertyValueCommandParameter setPropertyValueCommandParameter = (global::Quire.Controls.Core.SetPropertyValueCommandParameter)args.Parameter;
+        ((global::Quire.Controls.Core.MatrixFormat)setPropertyValueCommandParameter.TargetObject).SetPropertyValueWithCommand(setPropertyValueCommandParameter);
+    }
     private void OnToggleUnitIdLabel(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
     {
         _view.FireToggleUnitIdLabel();
@@ -2347,7 +2434,18 @@ public partial class EquationControl
     {
         _view.FireInsertSymbolicEvaluation();
     }
-    private void OnInsertValue(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnInsertValue(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        if (!(e.Parameter is string text))
+        {
+            return;
+        }
+        string text2 = text;
+        foreach (char c2 in text2)
+        {
+            _view.FireKeypress(c2);
+        }
+    }
     private void OnInsertId(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void OnInsertString(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
     {
@@ -3132,7 +3230,32 @@ public partial class EquationControl
             }
         }
     }
-    public void SetVisibleMatrixCellRange(int startRow, int startCol, int endRow, int endCol) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SetVisibleMatrixCellRange(int startRow, int startCol, int endRow, int endCol)
+    {
+        global::Quire.EquationEditor.Tree.MathNode mathNode = _model.CurrentModeNavigatorState.Current;
+        if (mathNode.DescriptorName != "MATRIX")
+        {
+            mathNode = mathNode.GetNearestAncestor("MATRIX");
+        }
+        if (mathNode != null)
+        {
+            global::Quire.EquationEditor.Tree.MatrixNodeInfo matrixNodeInfo = (global::Quire.EquationEditor.Tree.MatrixNodeInfo)mathNode.NodeInfo;
+            if (!matrixNodeInfo.IsInResult)
+            {
+                global::Quire.TableCoordinate viewportOffset = matrixNodeInfo.ViewportOffset;
+                global::Quire.TableSize viewportSize = new global::Quire.TableSize(endRow - startRow + 1, endCol - startCol + 1);
+                global::Quire.TableCoordinate viewportOffset2 = new global::Quire.TableCoordinate(startRow, startCol);
+                if (startRow > viewportOffset.Row || startCol > viewportOffset.Column)
+                {
+                    matrixNodeInfo.ViewportOffset = new global::Quire.TableCoordinate(startRow > viewportOffset.Row ? startRow : viewportOffset.Row, startCol > viewportOffset.Column ? startCol : viewportOffset.Column);
+                }
+                matrixNodeInfo.ViewportSize = viewportSize;
+                matrixNodeInfo.ViewportOffset = viewportOffset2;
+                return;
+            }
+        }
+        throw new InvalidOperationException("Property is valid only for Matrices!");
+    }
     public global::Quire.Calculation.Core.EngineResult EngineResultForSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     private static bool IsUnitedMatrixUniform(global::Quire.Calculation.Core.IUnitedValueResultNode unitedElement)
     {

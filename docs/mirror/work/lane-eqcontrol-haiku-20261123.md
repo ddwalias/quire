@@ -731,3 +731,11 @@
 - Landed: batch 104 (result-format region helpers, `CreateFakeEngineResults`, `NavigateIntoItem`, command routing, `HandleResultMatrixFormattingChanged`); batch 105 (`ClearResultFormat` with closure ordinal 579, `SetupInputGestures`, `ActivateAndScopeResultPrivate`, `GetAllComboBoxControlsFromEquation`); batch 106 (`HighlightAll`, `ICloneable.Clone`, `RestoreResult`, `UpdateWidth` with closure ordinal 412, whose lambda folds the `Point` temporary into `double num = ...X`).
 - Batch 107 (this commit): `GetNestedPositionForVisualMatrix`, `IsSelectedChanged`, `IsActiveChanged`, `HandleMathFormatChanged`. Release IL: PASS, 4080 checked, zero failures.
 - Parked (not matched): `InputControlOnEquationActivated` (switch lowering differs at one branch), `ConvertToDisplayMatrix`, `ConvertAnyFormattedMatrixToDisplayMatrix`, `ToggleAlgorithmOption`, `UpdateMatrixForResizeAdorner`.
+
+## Batches 108-109
+
+- Owner: haiku-equationcontrol-20261123; branch `haiku-equationcontrol-20261123-b100-next`.
+- Batch 108: `Restore`, `ChangeAlgorithm`, `GetResultMatrixHeadingIndices`, `OnSetMatrixFormatField`, `OnInsertValue`.
+- Batch 109: `GetRegionXmlNode`, `SetVisibleMatrixCellRange`, `GetRegionPersistentData`.
+- Shapes learned: `WpfUtils.HasLocalValue` is a static call on `this` in Mathcad IL, so the reference's `(DependencyObject)(object)this` cast is not emitted; call it statically with `this`.
+- Release IL: PASS, 4088 checked, zero failures.
