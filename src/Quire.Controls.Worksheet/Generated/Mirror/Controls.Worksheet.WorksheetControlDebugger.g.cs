@@ -151,6 +151,8 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         [global::Quire.Mirror.MirrorStub]
         private const int InitialWinHeight = 731;
         [global::Quire.Mirror.MirrorStub]
+        public VisibleObjects(object spiritMainWindow, global::System.Windows.DependencyProperty activeDocumentProperty) : base(default(object), default(global::System.Windows.DependencyProperty)) { }
+        [global::Quire.Mirror.MirrorStub]
         private T TryFindVisualChild<T>(global::System.Windows.DependencyObject parent) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         private void AddStatusBarItemToStatusBar() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -160,6 +162,7 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         private void UpdateVisibleItemsCounter() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         private void UpdateWorksheetItemsVisibilityAdorner(object uiElement, bool isItemOnVisiblePage, bool toBeClipped = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
         [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlDebugger+VisibleObjects+IndicationVisibilityAdorner, Ptc.Controls.Worksheet")]
         private partial class IndicationVisibilityAdorner : global::System.Windows.Documents.Adorner
         {
