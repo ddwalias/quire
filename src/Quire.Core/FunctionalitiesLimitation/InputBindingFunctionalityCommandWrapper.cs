@@ -24,14 +24,9 @@ public partial class InputBindingFunctionalityCommandWrapper
         {
             behaviorKey = GetFunctionalityBehaviorAccordingParameter(parameter, NestedCommand as Quire.Wpf.IHasFunctionalityKeyAccordingToParameter);
         }
-        if ((uint)behaviorKey <= 1u)
-        {
-            goto CanExecute;
-        }
-        if (behaviorKey != EnumFunctionalityBehaviorKey.FreemiumBehavior)
-        {
-            goto InvalidBehavior;
-        }
+        // Release IL requires the unsigned range test and a separate invalid behavior block.
+        if ((uint)behaviorKey <= 1u) goto CanExecute;
+        if (behaviorKey != EnumFunctionalityBehaviorKey.FreemiumBehavior) goto InvalidBehavior;
         return false;
     CanExecute:
         return true;

@@ -231,16 +231,7 @@ public static partial class WpfUtils
         EventHandler handler = null;
         handler = delegate
         {
-            if (element.IsMeasureValid)
-            {
-                if (element.IsArrangeValid)
-                {
-                    goto InvokeAction;
-                }
-            }
-            return;
-
-        InvokeAction:
+            if (!element.IsMeasureValid || !element.IsArrangeValid) return;
             action();
             element.LayoutUpdated -= handler;
             return;

@@ -21,6 +21,7 @@ public partial class DateFormatConverter
         {
             return string.Format("{0:" + text + "}", value);
         }
+        // Release IL requires a shared DateTime return block.
         if (value is DateTime) goto DateTimeValue;
         return string.Empty;
 

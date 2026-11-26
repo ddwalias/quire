@@ -304,13 +304,7 @@ public partial class CommandBuffer
 
     public static void RemoveTopUndo()
     {
-        if (_currentInstance != null && _currentInstance._undoStack.Count != 0)
-        {
-            goto PopTopUndo;
-        }
-        return;
-
-    PopTopUndo:
+        if (_currentInstance == null || _currentInstance._undoStack.Count == 0) return;
         _currentInstance._undoStack.Pop();
         return;
     }
