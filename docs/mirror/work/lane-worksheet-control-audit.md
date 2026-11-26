@@ -1,6 +1,6 @@
 # WorksheetControl and WorksheetControlDebugger checkpoint
 
-- Owner: current worker; branch `feature/worksheet-control-audit`, based on main `b56ec9e63`.
+- Owner: current worker; branch `feature/worksheet-control-audit-next`, based on main `a24bfa4ce`.
 - Claimed: `Quire.Controls.Worksheet.WorksheetControl` and `WorksheetControlDebugger`.
 - Baseline Release IL: PASS, 1455 checked, 0 failures (`.mirror-cache/release-il-c21f14f35d22/release-il.json`).
 - Batch 1 (`WorksheetControl`): exact straightforward accessors and forwarders; 64 method accessors changed from generated stub to exact. Release IL PASS, 1525 checked, 0 failures (`.mirror-cache/release-il-b3e96063c6d5/release-il.json`).
@@ -64,3 +64,4 @@
 - Batch 46 (WorksheetControlDebugger.WorksheetControlUI): OnWorksheetViewModelPropertyChanged updates worksheet height, active page number, and page count. Release IL PASS, 1868 checked, 0 failures (.mirror-cache/release-il-bdd8b1a5240d/release-il.json).
 - Batch 47 (WorksheetControlDebugger.VisibleObjects and WorksheetControl): mirrored page-zombie visibility, worksheet-item/page collection subscriptions, their change handlers, and context-menu header updates. Release IL PASS, 1881 checked, 0 failures (.mirror-cache/release-il-3720f6eef4cd/release-il.json).
 - Batch 48 (`WorksheetControlDebugger.WorksheetControlUI` and `VisibleObjects`): implemented eight exact visibility, status-bar, subscription, collection-change, size-change, and preview-destruction methods; parked `InitializeDebugWindow`, `OnPageLayoutPropertyChanged`, `OnScrollViewerChanged`, `OnWorksheetContentInsertionPointSet`, and `WorksheetVisiblePagesCollectionChanged` after focused IL mismatches. Release IL PASS, 1889 checked, 0 failures (`.mirror-cache/release-il-d65f5bd61c79/release-il.json`).
+- Batch 49 (`WorksheetControl` and `WorksheetControlDebugger.VisibleObjects.IndicationVisibilityAdorner`): exact `GetEngineVersion`, `BringFirstTagItemIntoView`, file-path availability/copy-folder helpers, change/copy event helpers, service-provider setup, converted-from-MC14 synchronization, adorner child accessors, child count, arrange override, and visual-child access. Kept the seven IL mismatches as placeholders; Release IL PASS, 1905 checked, 0 failures (`.mirror-cache/release-il-67d87341d52a/release-il.json`, base `a24bfa4ce`).
