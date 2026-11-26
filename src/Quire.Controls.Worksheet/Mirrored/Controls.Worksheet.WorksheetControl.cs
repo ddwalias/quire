@@ -1001,6 +1001,25 @@ public partial class WorksheetControl
         return false;
     }
 
+    private static void HandleBookmarksManagerChanged(
+        DependencyObject dObject,
+        DependencyPropertyChangedEventArgs args)
+    {
+        WorksheetControl worksheetControl = dObject as WorksheetControl;
+        if (worksheetControl == null)
+        {
+            return;
+        }
+        if (global::Quire.DebugTools.DevAssert(
+            (global::Quire.Controls.Core.BookmarkTags.IBookmarksManager)args.OldValue == null,
+            null).Failed)
+        {
+            worksheetControl.BookmarksManager.DataChanged -= worksheetControl.FireChanged;
+        }
+        worksheetControl._model.BookmarksManager = worksheetControl.BookmarksManager;
+        worksheetControl.BookmarksManager.DataChanged += worksheetControl.FireChanged;
+    }
+
     object IWorksheetControl.FindResource(object key)
     {
         return FindResource(key);
