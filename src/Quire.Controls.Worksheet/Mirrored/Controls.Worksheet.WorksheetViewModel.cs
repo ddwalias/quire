@@ -2177,4 +2177,32 @@ internal partial class WorksheetViewModel
 
         handlers.Add(eventHandler);
     }
+    public IRichTextBase CreateTextboxControl(string text = default)
+    {
+        IRichTextBase textbox = ControlCreator.CreateTextboxControl(GetCurrentTextFormatClone(GetCurrentTextFormat()), CurrentProofingLanguage, text, DataFormats.Text, false, _textStylesManager.TextStyleChangedHandler, false);
+        AddItemAtInsertionPointAndActivate(textbox, "Add Textbox");
+        return textbox;
+    }
+
+    public IParagraphControl CreateTextBlockControl(string text = default)
+    {
+        IParagraphControl textBlock = ControlCreator.CreateTextBlockControl(GetCurrentTextFormatClone(ContentTextFormat), CurrentProofingLanguage, text, DataFormats.Text, _textStylesManager.TextStyleChangedHandler);
+        AddItemAtInsertionPointAndActivate(textBlock, "Add TextBlock");
+        return textBlock;
+    }
+
+    private void HandleItemSizeChanged(IWhiteboardItem item, Size oldSize, Size newSize)
+    {
+        if (!ItemManager.IsResizingItem(item))
+        {
+            _pageManager.HandleItemSizeChanged(item, oldSize, newSize);
+        }
+
+        if (item == ActiveItem || ItemManager.IsResizingItem(item))
+        {
+            ChangePageLayoutAndGridAreaIfNeeded(item);
+        }
+
+        SetEqResizable(item);
+    }
 }
