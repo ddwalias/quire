@@ -70,8 +70,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     public WorksheetViewModel(global::Quire.Controls.Worksheet.IWorksheetModel model, global::System.Windows.ResourceDictionary resourceDictionary, global::Quire.Controls.Core.ITextStylesManager textStylesManager) { }
     [global::Quire.Mirror.MirrorStub]
-    public int DisplayMessageId(global::Quire.PersistentDataObjects.worksheetMessageIdType messageId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void SetStyleValues(global::Quire.Core.TextFormat textFormat, global::Quire.ITextStyle style) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void Initialize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

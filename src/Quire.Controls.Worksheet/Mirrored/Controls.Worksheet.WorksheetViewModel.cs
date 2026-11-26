@@ -1949,4 +1949,27 @@ internal partial class WorksheetViewModel
         AddItemAtInsertionPointAndActivate(plotControl, "Add PolarPlot");
         return plotControl;
     }
+
+    public int DisplayMessageId(worksheetMessageIdType messageId)
+    {
+        // Button locals come first so Release local slots match Mathcad.
+        string[] buttonsKey;
+        string defaultButtonKey;
+        string cancelButtonKey;
+        CheckBoxData[] checkBoxesData = null;
+        string empty = string.Empty;
+        if (messageId == worksheetMessageIdType.ScriptableWarning)
+        {
+            empty = (string)_pasteHandler.WorksheetMessages["WorksheetMessages.ContainsScriptableObjects"];
+            empty = empty.Replace("\\n", "\n");
+            buttonsKey = new string[2] { "Yes", "No" };
+            defaultButtonKey = "Yes";
+            cancelButtonKey = "No";
+        }
+        else
+        {
+            return -1;
+        }
+        return VisualHelper.DisplayMessage(empty, MessageBoxImage.Exclamation, checkBoxesData, buttonsKey, defaultButtonKey, cancelButtonKey);
+    }
 }
