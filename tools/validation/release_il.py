@@ -840,12 +840,16 @@ def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vc
             raise RuntimeError(f'production project missing from comparison: {missing[0]}')
         if targets:
             # One clean (--no-incremental) build of every project and its references, into one directory: a separate
-            # build per project rebuilt the shared reference closure each time, with the same outputs.
+            # build per project rebuilt the shared reference closure each time, with the same outputs. (Measured: an
+            # incremental build was no faster, 108s against 103s after a one-file edit, so it is not used.)
+            # -nodeReuse:false makes MSBuild's worker nodes exit with the build, so many gates at once do not leave
+            # hundreds of idle nodes holding the machine's memory.
+            env['MSBUILDDISABLENODEREUSE'] = '1'
             solution = work / 'build.slnx'
             solution.parent.mkdir(parents=True, exist_ok=True)
             solution.write_text('<Solution>\n' + ''.join(f'  <Project Path={quoteattr(str(t.resolve()))} />\n' for t in targets)
                                 + '</Solution>\n', encoding='utf-8')
-            build_solution([dotnet, 'build', solution, '-c', 'Release', '--no-incremental', '-o', assemblies,
+            build_solution([dotnet, 'build', solution, '-c', 'Release', '--no-incremental', '-nodeReuse:false', '-o', assemblies,
                             '-nologo', '-v:q', '-p:EnableSourceControlManagerQueries=false',
                             '-p:ShouldUnsetParentConfigurationAndPlatform=false'], root, log, timeout, env)
         for project in projects:
