@@ -38,33 +38,11 @@ public partial class EquationList : global::Quire.Controls.Plots.PlotItem, globa
     [global::Quire.Mirror.MirrorStub]
     public EquationList() { }
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.EquationListItem AddItem(int addedItemIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private global::Quire.Controls.Plots.Presenter.IPlotEquation GetNewEquation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Controls.Plots.Presenter.IEquationListItem AddItemToLegend(int index, global::Quire.Controls.Plots.Presenter.IEquationListItem equationListItem, bool focus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.Presenter.IPlotEquation GetNewEquation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RegisterToEvents(global::Quire.Controls.Plots.Presenter.IEquationListItem equationListItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UnregisterFromEvents(global::Quire.Controls.Plots.Presenter.IEquationListItem equationListItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ScalingChanged(global::Quire.Controls.Plots.Presenter.IPlotEquationScaled eq) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void OnIsKeyboardFocusWithinChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireActiveEquationChanged(global::Quire.Controls.Plots.Presenter.IPlotEquation equationControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void AddItem(string sExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.Presenter.IPlotEquation AddItem(global::System.Xml.XmlNode xmlNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireRequestAddEquation(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void EquationListItemItemChange(global::Quire.Controls.Plots.EquationListItem equationListItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ChangeSelectedItem(global::Quire.Controls.Plots.EquationListItem equationListItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int IndexOf(global::Quire.Controls.Plots.Presenter.IPlotEquation plotEquation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void RequestRemoveItem(global::Quire.Controls.Plots.EquationListItem equationListItem, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

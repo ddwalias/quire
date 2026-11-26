@@ -5,11 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Xml;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using Quire;
 using Quire.Controls.Core;
 using Quire.Controls.Plots.Presenter;
+using Quire.Controls.Plots.ViewModel;
 
 namespace Quire.Controls.Plots;
 
@@ -223,5 +226,113 @@ public partial class EquationList
             return;
         }
         equationList.Columns = equationList.EquationListGrid.AdjustNumberOfColumnsToWidth(newWidth);
+    }
+
+    private EquationListItem AddItem(int addedItemIndex)
+    {
+        FireRequestAddEquation(addedItemIndex);
+        return SelectedItem;
+    }
+
+    private void RegisterToEvents(IEquationListItem equationListItem)
+    {
+        IPlotEquation equation = equationListItem.Equation;
+        equationListItem.ItemChange += EquationListItemItemChange;
+        if (equation != null)
+        {
+            equation.RequestRemove += EquationControlRequestRemove;
+            if (equation is IPlotEquationScaled plotEquationScaled)
+            {
+                plotEquationScaled.ScalingChanged += ScalingChanged;
+            }
+        }
+        if (equationListItem.Equation is FrameworkElement frameworkElement)
+        {
+            frameworkElement.SizeChanged += EquationControlSizeChanged;
+            frameworkElement.IsKeyboardFocusWithinChanged += OnIsKeyboardFocusWithinChanged;
+        }
+    }
+
+    private void UnregisterFromEvents(IEquationListItem equationListItem)
+    {
+        IPlotEquation equation = equationListItem.Equation;
+        equationListItem.ItemChange -= EquationListItemItemChange;
+        if (equation != null)
+        {
+            equation.RequestRemove -= EquationControlRequestRemove;
+            if (equation is IPlotEquationScaled plotEquationScaled)
+            {
+                plotEquationScaled.ScalingChanged -= ScalingChanged;
+            }
+        }
+        if (equationListItem.Equation is FrameworkElement frameworkElement)
+        {
+            frameworkElement.SizeChanged -= EquationControlSizeChanged;
+            frameworkElement.IsKeyboardFocusWithinChanged -= OnIsKeyboardFocusWithinChanged;
+        }
+    }
+
+    private void ScalingChanged(IPlotEquationScaled eq)
+    {
+        eq?.ShowOrHideScaling(IsKeyboardFocusWithin);
+    }
+
+    private void FireActiveEquationChanged(IPlotEquation equationControl)
+    {
+        if (ActiveEquationChanged != null)
+        {
+            ActiveEquationChanged(equationControl);
+        }
+    }
+
+    private void AddItem(string sExpression)
+    {
+        EquationListItem equationListItem = AddEquationByPosition();
+        if (!string.IsNullOrEmpty(sExpression))
+        {
+            equationListItem.Equation.EquationSExpression = sExpression;
+        }
+    }
+
+    private IPlotEquation AddItem(XmlNode xmlNode)
+    {
+        EquationListItem equationListItem = AddItem(EquationCount);
+        if (xmlNode != null)
+        {
+            equationListItem.Equation.SetRegionXmlNode(xmlNode);
+        }
+        return equationListItem.Equation;
+    }
+
+    private void FireRequestAddEquation(int index)
+    {
+        if (RequestAddEquation != null)
+        {
+            RequestAddEquation(index, SelectedItemIndex);
+        }
+    }
+
+    private void EquationListItemItemChange(EquationListItem equationListItem)
+    {
+        ChangeSelectedItem(equationListItem);
+    }
+
+    private void ChangeSelectedItem(EquationListItem equationListItem)
+    {
+        SelectedItemIndex = EquationListGrid.Children.IndexOf(equationListItem);
+    }
+
+    public int IndexOf(IPlotEquation plotEquation)
+    {
+        UIElementCollection children = EquationListGrid.Children;
+        int count = children.Count;
+        for (int num = 0; num < count; num++)
+        {
+            if (children[num] is IEquationListItem equationListItem && equationListItem.Equation == plotEquation)
+            {
+                return num;
+            }
+        }
+        return -1;
     }
 }
