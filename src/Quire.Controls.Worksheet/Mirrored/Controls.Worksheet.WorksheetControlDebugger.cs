@@ -211,6 +211,13 @@ public partial class WorksheetControlDebugger
             }
         }
 
+        private void OnWorksheetViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            UpdateWindowCellWorksheet(PropertyName.WorksheetHeight, WorksheetViewModelInst.WorksheetHeight.ToString("0.00"));
+            UpdateDebugWindowCellsAll(PropertyName.ActivePageNumber, WorksheetViewModelInst.CurrentPageNumber.ToString());
+            UpdateDebugWindowCellsAll(PropertyName.PagesCount, WorksheetControlInst.PageManager.Pages.Count.ToString());
+        }
+
         private void WorksheetControlUIDebugClosed(object sender, EventArgs e)
         {
             AskCloseInstance();

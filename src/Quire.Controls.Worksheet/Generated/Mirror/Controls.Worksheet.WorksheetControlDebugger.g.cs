@@ -62,8 +62,6 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         [global::Quire.Mirror.MirrorStub]
         private void UpdateDebugWindowCell(global::Quire.Controls.Worksheet.WorksheetControlDebugger.WorksheetControlUI.PropertyName propertyName, global::Quire.Controls.Worksheet.WorksheetControlDebugger.WorksheetControlUI.CoordinateSystemName coordinateSystemName, string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
-        private void OnWorksheetViewModelPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         private void OnWorksheetContentInsertionPointSet() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         private void OnHeaderActivated() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
