@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using Quire.Controls.Core;
 using Quire.Calculation.Core.Trace2DResults;
 using Quire.Undo;
@@ -359,11 +360,106 @@ internal partial class PlotPresenter
         SetResultAxisCommonRange(traces, yAxis);
     }
 
-    private void AxisModelLimitsValueChanged(global::Quire.Controls.Plots.Presenter.IAxisModel axisModel, bool isStart, bool isEnd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void AxisModelLimitsValueChanged(IAxisModel axisModel, bool isStart, bool isEnd)
+    {
+        DebugTools.DevAssert(!isStart || !isEnd, null);
+        if (isStart)
+        {
+            axisModel.StartValueChanged();
+        }
+        AxesType type = axisModel.Type;
+        AxesIndex axesIndex = AxesTypeToIndex.Index(type);
+        IEnumerable<ITraceModel> enumerable = _model.Traces.Where((ITraceModel trace) => trace.GetAxis(axesIndex) == axisModel);
+        switch (axesIndex)
+        {
+            case AxesIndex.Range:
+                if (isStart | isEnd)
+                {
+                    enumerable.Each((ITraceModel trace) =>
+                    {
+                        trace.RangeAxisLimitValueChanged();
+                    });
+                }
+                SetRangeAxisCommonRange(enumerable, axisModel);
+                break;
+            case AxesIndex.Result:
+                if (isStart | isEnd)
+                {
+                    enumerable.Each((ITraceModel trace) =>
+                    {
+                        trace.ResultAxisLimitValueChanged();
+                    });
+                }
+                SetResultAxisCommonRange(enumerable, axisModel);
+                break;
+        }
+    }
 
-    private static void SetRangeAxisCommonRange(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.ITraceModel> traces, global::Quire.Controls.Plots.Presenter.IAxisModel xAxis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void SetRangeAxisCommonRange(IEnumerable<ITraceModel> traces, IAxisModel xAxis)
+    {
+        Func<ITraceModel, double?> minSelector;
+        if (xAxis.Scaling == AxisScaling.Linear)
+        {
+            minSelector = (ITraceModel trace) =>
+            {
+                // The IL re-reads TopLeft after the NaN check.
+                Point topLeft = trace.TopLeft;
+                if (!double.IsNaN(topLeft.X))
+                {
+                    topLeft = trace.TopLeft;
+                    return topLeft.X;
+                }
+                return (double?)null;
+            };
+        }
+        else
+        {
+            minSelector = (ITraceModel trace) => trace.MinPositiveX;
+        }
+        SetCommonRange(traces, xAxis, minSelector, (ITraceModel trace) =>
+        {
+            Point bottomRight = trace.BottomRight;
+            if (!double.IsNaN(bottomRight.X))
+            {
+                bottomRight = trace.BottomRight;
+                return bottomRight.X;
+            }
+            return (double?)null;
+        });
+    }
 
-    private static void SetResultAxisCommonRange(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.ITraceModel> traces, global::Quire.Controls.Plots.Presenter.IAxisModel yAxis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void SetResultAxisCommonRange(IEnumerable<ITraceModel> traces, IAxisModel yAxis)
+    {
+        Func<ITraceModel, double?> minSelector;
+        if (yAxis.Scaling == AxisScaling.Linear)
+        {
+            minSelector = (ITraceModel trace) =>
+            {
+                // The IL re-reads TopLeft after the NaN check.
+                Point topLeft = trace.TopLeft;
+                if (!double.IsNaN(topLeft.Y))
+                {
+                    topLeft = trace.TopLeft;
+                    return topLeft.Y;
+                }
+                return (double?)null;
+            };
+        }
+        else
+        {
+            minSelector = (ITraceModel trace) => trace.MinPositiveY;
+        }
+        SetCommonRange(traces, yAxis, minSelector, (ITraceModel trace) =>
+        {
+            Point bottomRight = trace.BottomRight;
+            if (!double.IsNaN(bottomRight.Y))
+            {
+                bottomRight = trace.BottomRight;
+                return bottomRight.Y;
+            }
+            return (double?)null;
+        });
+    }
 
     private static void SetCommonRange(IEnumerable<ITraceModel> traces, IAxisModel axis, Func<ITraceModel, double?> minSelector, Func<ITraceModel, double?> maxSelector)
     {
