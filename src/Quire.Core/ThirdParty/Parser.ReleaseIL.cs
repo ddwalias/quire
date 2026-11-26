@@ -270,6 +270,7 @@ public sealed partial class Parser
                         }
                         else
                         {
+                            // Release IL requires this shared assignment block and branch polarity.
                             if (text.Length <= 1 + text2.Length || text[1 + text2.Length] != ':')
                                 goto ValueWithoutColon;
                             value = text.Substring(text2.Length + 2);

@@ -9,6 +9,7 @@ public static partial class EnumerableExtensions
 {
     public static bool IsNullOrEmpty<T>(this IEnumerable<T> items)
     {
+        // Release IL reorders the blocks for the idiomatic type-pattern switch.
         if (items == null)
         {
             goto NullItems;

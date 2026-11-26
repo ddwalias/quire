@@ -61,6 +61,7 @@ public partial class WpfClipboard
             canPasteIntoTextRegion = itemsCount < 2;
             dataObject.SetData(_canPasteIntoTextRegion, canPasteIntoTextRegion);
             success = true;
+            // Release IL requires the shared success return after the catch handlers.
             goto Success;
         }
         catch (System.Reflection.TargetInvocationException exception)
@@ -110,6 +111,7 @@ public partial class WpfClipboard
             bitmapSource = Quire.Wpf.ImageUtils.CreatePngFromElement(element);
             dataObject.SetImage(bitmapSource);
             result = true;
+            // Release IL requires the shared success return after the catch handler.
             goto Success;
         }
         catch

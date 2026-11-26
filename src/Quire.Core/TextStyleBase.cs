@@ -571,6 +571,7 @@ public partial class TextStyleBase
                 }
                 else
                 {
+                    // Release IL requires this branch join after the type-specific comparison.
                     if (setterValue is TextDecorationCollection textDecorationCollection)
                     {
                         flag = textDecorationCollection.Count != ((TextDecorationCollection)item.Value).Count;

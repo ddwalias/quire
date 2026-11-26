@@ -220,6 +220,7 @@ public static partial class TextElementAttachedProperties
                     paragraph = element.Parent as Paragraph;
                     if (paragraph == null || textStyle.IsModifyProperty(Paragraph.TextIndentProperty.Name, paragraph.GetValue(Paragraph.TextIndentProperty)))
                     {
+                        // Release IL requires the original local slot and branch join.
                         goto AfterTextIndent;
                     }
                 }

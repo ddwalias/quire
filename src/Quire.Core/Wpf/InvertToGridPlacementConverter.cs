@@ -40,6 +40,7 @@ public partial class InvertToGridPlacementConverter : global::System.Windows.Dat
                     goto DefaultNumber;
             }
         }
+        // Release IL requires the shared default and return blocks for this switch.
     DefaultNumber:
         num = -1;
     ReturnNumber:
