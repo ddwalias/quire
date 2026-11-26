@@ -137,7 +137,22 @@ public partial class PlotModel3D
         return axisLimitEditor.CalculatedValue;
     }
 
-    private void UpdateCommonTraceBounds() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void UpdateCommonTraceBounds()
+    {
+        Rect3D commonTraceBounds = GetCommonTraceBounds();
+        Rect3D commonRange = CalculateInitialCommonRange(commonTraceBounds);
+        IAxisModel[] axes = new IAxisModel[] { _xAxis, _yAxis, _zAxis };
+        axes.Each(axis => axis.RangeChanged -= AxisRangeChanged);
+        try
+        {
+            SetRangeOnAxes(commonRange);
+        }
+        finally
+        {
+            axes.Each(axis => axis.RangeChanged += AxisRangeChanged);
+        }
+        AxisRangeChanged();
+    }
 
     private void AxisExpressionHasErrorsChanged()
     {
@@ -153,7 +168,10 @@ public partial class PlotModel3D
         return true;
     }
 
-    private void SetAxesHaveMinMaxErrors(bool axesHaveErrors) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void SetAxesHaveMinMaxErrors(bool axesHaveErrors)
+    {
+        _traces.Each(trace => trace.AxesHaveMinMaxErrors = axesHaveErrors);
+    }
 
     public IAxisModel XAxis
     {
