@@ -1,7 +1,11 @@
 #nullable disable
 #pragma warning disable
 
+using System.Windows;
 using Quire.Calculation.Core;
+using Quire.Controls.Core;
+using Quire.Controls.Plots.Model;
+using Quire.Media3D;
 using Quire.Controls.Plots.Presenter;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -313,5 +317,104 @@ internal partial class PlotTraceModel3D
     public void UndoStyleChangeCommand(TraceStyleState? doData)
     {
         DebugTools.DevAssert(!doData.HasValue, null);
+    }
+
+    private void UpdateRenderColor()
+    {
+        RenderColor = ((CalculatingStatus == CalculatingStatus.Calculating || SynchronizationStatus == SynchronizationStatus.Pending || !IsCommitted) ? _disabledColor : Color);
+    }
+
+    public override void Commit()
+    {
+        _traceEquation.Commit();
+    }
+
+    public override void SetResult(IResultNode result)
+    {
+        EngineResultParser = CreateParser(result);
+    }
+
+    internal virtual IEngineTrace3DResultParser CreateParser(IResultNode result)
+    {
+        if (!(result is IUnitedValueResultNode))
+        {
+            return EngineTrace3DResultParser.CreateParser(result);
+        }
+        return EngineTrace3DResultParser.CreatePrintParser(result);
+    }
+
+    public void UpdateVisualData()
+    {
+        if (AxesHaveMinMaxErrors)
+        {
+            if (VisualData == null || VisualData.TraceType != TraceType3D.Undefined)
+            {
+                VisualData = PlotTraceVisualData3D.Undefined;
+            }
+            return;
+        }
+        VisualData = EngineResultParser.CreateVisualData(TransformForVisual(CommonRange));
+        EngineError engineError;
+        if (VisualData.HasNoData)
+        {
+            engineError = new EngineError
+            {
+                Message = NoDataFound
+            };
+        }
+        else if (EngineResultParser.Error != null)
+        {
+            engineError = EngineResultParser.Error;
+        }
+        else
+        {
+            engineError = Error;
+            if (engineError != null && FindChildWithMatchingId(engineError.NodeHandle) != null)
+            {
+                engineError = null;
+            }
+        }
+        OnPlotCalculatableError(new EngineErrorEventArgs(engineError));
+    }
+
+    private void UpdateStyle()
+    {
+        if (IsStyleAutomatic)
+        {
+            if (EngineResultParser.EngineTraceType == EngineTraceType3D.ScatteredData)
+            {
+                LineStyle = LineStyle.None;
+                Symbol = TraceSymbol.point;
+            }
+            else
+            {
+                LineStyle = LineStyle.Solid;
+                Symbol = TraceSymbol.none;
+            }
+        }
+    }
+
+    public void SetUserDefinedLimits(double xStart, double xEnd, double yStart, double yEnd, double zStart, double zEnd, out bool needsCommit)
+    {
+        UserDefinedLimits.Set(xStart, xEnd, yStart, yEnd, zStart, zEnd, out var xLimitsChanged, out var yLimitsChanged, out var _);
+        EngineTraceType3D engineTraceType = EngineResultParser.EngineTraceType;
+        needsCommit = (xLimitsChanged | yLimitsChanged) && (engineTraceType == EngineTraceType3D.NonParametricSurface || engineTraceType == EngineTraceType3D.Unknown);
+    }
+
+    private static Transform3D TransformForVisual(Rect3D bounds)
+    {
+        TranslateTransform3D value = new TranslateTransform3D(-Tools3D.BoxCenter(bounds));
+        ScaleTransform3D value2 = new ScaleTransform3D(Tools3D.InverseVector((Vector3D)bounds.Size));
+        Transform3DGroup transform3DGroup = new Transform3DGroup
+        {
+            Children =
+            {
+                (Transform3D)value,
+                (Transform3D)value2,
+                (Transform3D)PlotCommonConstants.Plot3DLogicalToVisualTransform
+            }
+        };
+        ((Freezable)transform3DGroup).Freeze();
+        return transform3DGroup;
     }
 }

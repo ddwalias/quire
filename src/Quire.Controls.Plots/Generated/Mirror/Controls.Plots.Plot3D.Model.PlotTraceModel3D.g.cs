@@ -58,25 +58,9 @@ internal partial class PlotTraceModel3D : global::Quire.Controls.Plots.Model.Plo
     [global::Quire.Mirror.MirrorStub]
     public void SetDataObject(global::Quire.PersistentDataObjects.trace3DType traceData, global::Quire.Calculation.Core.IResultManager resultManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void UpdateRenderColor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public override void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnPlotCalculatableError(global::Quire.Controls.Plots.Model.EngineErrorEventArgs args) => base.OnPlotCalculatableError(args);
     [global::Quire.Mirror.MirrorStub]
-    public override void SetResult(global::Quire.Calculation.Core.IResultNode result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal virtual global::Quire.Controls.Plots.Plot3D.Model.IEngineTrace3DResultParser CreateParser(global::Quire.Calculation.Core.IResultNode result) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UpdateVisualData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateStyle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void UserChangedStyle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetUserDefinedLimits(double xStart, double xEnd, double yStart, double yEnd, double zStart, double zEnd, out bool needsCommit) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Windows.Media.Media3D.Transform3D TransformForVisual(global::System.Windows.Media.Media3D.Rect3D bounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Calculation.Core.EngineResult GetPrintResults(global::Quire.Calculation.Core.EngineResult sourceResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
