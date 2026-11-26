@@ -11,81 +11,8 @@ namespace Quire.Controls.Plots.Base3D.ViewModel;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Base3D.ViewModel.Base3DAxisViewModel, Ptc.Controls.Plots")]
 public abstract partial class Base3DAxisViewModel : global::Quire.Controls.Core.ViewModelBase, global::Quire.Controls.Plots.Base3D.ViewModel.IPlotAxisViewModel3D, global::Quire.Controls.Plots.ViewModel.IAxisViewModel, global::System.ComponentModel.INotifyPropertyChanged
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.Presenter.IPlotAxisView _plotAxisView;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableAdded;
-    [global::Quire.Mirror.MirrorStub]
-    private double _height;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Controls.Plots.Presenter.IAxisModel PlotAxisModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Interval ClippingInterval { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Nullable<double> ResultStart { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected global::System.Nullable<double> ResultEnd { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsHighlighted { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.SizeChangedEventHandler ViewSizeChanged { private get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.ViewModel.AxisRangeForXamlSerialization AxisRangeForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string[] Labels { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal string[] MajorTickMarkLabels { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string[] FilteredLabels { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShowTicks { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ShowNumbers { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double Height { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action RangeChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<object> ValueToScreenChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Func<global::System.Windows.Input.FocusNavigationDirection, bool> CanTraverseEvent;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::System.Windows.Input.FocusNavigationDirection> HandleTraverseEvent;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action RequestFocus;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action TickMarkLabelsUpdated;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Interval GetTickInterval(int tickNumber) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected Base3DAxisViewModel(global::Quire.Controls.Plots.Presenter.AxesType axisType, global::Quire.Controls.Plots.Presenter.PlotType plotType) { }
-    [global::Quire.Mirror.MirrorStub]
-    private void StartExpressionValueChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateLineColor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void HookupView(global::Quire.Controls.Plots.Presenter.IPlotAxisView axisView) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void LimitEquationRequestFocus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal virtual void SetResultRange(global::System.Nullable<double> resultStart, global::System.Nullable<double> resultEnd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void LimitsExpressionValueChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Base3D.ViewModel.Base3DAxisViewModel+PropertyNames, Ptc.Controls.Plots")]
     public static partial class PropertyNames
     {
-        [global::Quire.Mirror.MirrorStub]
-        public const string Height = "Height";
-        [global::Quire.Mirror.MirrorStub]
-        public const string ShowTicks = "ShowTicks";
-        [global::Quire.Mirror.MirrorStub]
-        public const string ShowNumbers = "ShowNumbers";
-        [global::Quire.Mirror.MirrorStub]
-        public const string LineColor = "LineColor";
     }
 }
