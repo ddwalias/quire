@@ -24,36 +24,16 @@ public partial class CompoundCommand
     [MirrorVerified("Release IL")]
     public virtual bool Do()
     {
-        int index = 0;
-        goto LoopCheck;
-
-    DoCommand:
-        if (this[index].Do())
+        for (int index = 0; index < Count; index++)
         {
-            goto IncrementIndex;
-        }
-
-        int undoIndex = index - 1;
-        goto UndoCheck;
-
-    UndoCommand:
-        this[undoIndex].Undo();
-        undoIndex--;
-
-    UndoCheck:
-        if (undoIndex >= 0)
-        {
-            goto UndoCommand;
-        }
-        return false;
-
-    IncrementIndex:
-        index++;
-
-    LoopCheck:
-        if (index < Count)
-        {
-            goto DoCommand;
+            if (!this[index].Do())
+            {
+                for (int undoIndex = index - 1; undoIndex >= 0; undoIndex--)
+                {
+                    this[undoIndex].Undo();
+                }
+                return false;
+            }
         }
         return true;
     }

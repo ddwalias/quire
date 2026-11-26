@@ -14,17 +14,10 @@ public static partial class DependencyPropertyChangeManager
     private static readonly DependencyPropertyKey _propertyChangeNotifiersKey = DependencyProperty.RegisterAttachedReadOnly("PropertyChangeNotifiers", typeof(IDictionary<DependencyProperty, DependencyPropertyChangeNotifier>), _typeOfPropertyChangeManager, new PropertyMetadata((PropertyChangedCallback)null));
     public static void AddPropertyChangedHandler(DependencyProperty property, DependencyObject obj, DependencyPropertyChangedEventHandler handler)
     {
-        if (DebugTools.AssertNotNull(obj, null).Failed)
+        if (DebugTools.AssertNotNull(obj, null).Failed || DebugTools.AssertNotNull(property, null).Failed)
         {
-            goto Complete;
+            return;
         }
-        if (!DebugTools.AssertNotNull(property, null).Failed)
-        {
-            goto AddHandler;
-        }
-    Complete:
-        return;
-    AddHandler:
         IDictionary<DependencyProperty, DependencyPropertyChangeNotifier> propertyChangeNotifiers = GetPropertyChangeNotifiers(obj, create: true);
         if (!propertyChangeNotifiers.TryGetValue(property, out DependencyPropertyChangeNotifier value))
         {
@@ -36,35 +29,19 @@ public static partial class DependencyPropertyChangeManager
 
     public static void RemovePropertyChangedHandler(DependencyProperty property, DependencyObject obj, DependencyPropertyChangedEventHandler handler)
     {
-        if (DebugTools.AssertNotNull(obj, null).Failed)
-        {
-            goto InvalidArguments;
-        }
-        if (!DebugTools.AssertNotNull(property, null).Failed)
-        {
-            goto GetNotifiers;
-        }
+        // Release IL requires separate branch blocks for the null guards and notifier lookup.
+        if (DebugTools.AssertNotNull(obj, null).Failed) goto InvalidArguments;
+        if (!DebugTools.AssertNotNull(property, null).Failed) goto GetNotifiers;
     InvalidArguments:
         return;
     GetNotifiers:
         IDictionary<DependencyProperty, DependencyPropertyChangeNotifier> propertyChangeNotifiers = GetPropertyChangeNotifiers(obj, create: false);
-        if (propertyChangeNotifiers != null)
-        {
-            goto FindNotifier;
-        }
+        if (propertyChangeNotifiers != null) goto FindNotifier;
         return;
     FindNotifier:
-        if (propertyChangeNotifiers.TryGetValue(property, out DependencyPropertyChangeNotifier value))
-        {
-            goto RemoveHandler;
-        }
-        return;
-    RemoveHandler:
+        if (!propertyChangeNotifiers.TryGetValue(property, out DependencyPropertyChangeNotifier value)) return;
         value.SourcePropertyChanged -= handler;
-        if (value.HasSourcePropertyChangedHandlers())
-        {
-            goto Complete;
-        }
+        if (value.HasSourcePropertyChangedHandlers()) goto Complete;
         value.Dispose();
         propertyChangeNotifiers.Remove(property);
         if (propertyChangeNotifiers.IsNullOrEmpty())

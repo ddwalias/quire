@@ -17,19 +17,14 @@ public partial class FileUtils
         string[] array = mainDirPath.TrimEnd(Path.DirectorySeparatorChar).Split(Path.DirectorySeparatorChar);
         string[] array2 = absoluteFilePath.TrimEnd(Path.DirectorySeparatorChar).Split(Path.DirectorySeparatorChar);
         int i = 0;
-        goto LoopTest;
-    LoopBody:
-        if (!array[i].ToLower().Equals(array2[i].ToLower()))
+        while (i < Math.Min(array.Length, array2.Length))
         {
-            goto LoopDone;
+            if (!array[i].ToLower().Equals(array2[i].ToLower()))
+            {
+                break;
+            }
+            i++;
         }
-        i++;
-    LoopTest:
-        if (i < Math.Min(array.Length, array2.Length))
-        {
-            goto LoopBody;
-        }
-    LoopDone:
         if (i == 0)
         {
             return absoluteFilePath;
