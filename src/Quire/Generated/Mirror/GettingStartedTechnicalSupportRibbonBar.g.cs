@@ -18,7 +18,5 @@ public partial class GettingStartedTechnicalSupportRibbonBar : global::Fluent.Ri
     [global::Quire.Mirror.MirrorStub]
     public GettingStartedTechnicalSupportRibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
