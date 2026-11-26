@@ -60,17 +60,9 @@ public partial class PlotModel3D : global::Quire.Controls.Plots.Model.PlotModelB
     [global::Quire.Mirror.MirrorStub]
     private void UpdateLimitsAndBounds() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static double AxisLimitEditorCalculatedValue(global::Quire.Controls.Plots.Presenter.IAxisLimitEditor axisLimitEditor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void UpdateCommonTraceBounds() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void AxisExpressionHasErrorsChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool AxisHasMinMaxErrors(global::Quire.Controls.Plots.Presenter.IAxisModel axis) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void SetAxesHaveMinMaxErrors(bool axesHaveErrors) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void TracePlotCalculatableError(object sender, global::Quire.Controls.Plots.Model.EngineErrorEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void RemoveTrace(global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -78,13 +70,7 @@ public partial class PlotModel3D : global::Quire.Controls.Plots.Model.PlotModelB
     [global::Quire.Mirror.MirrorStub]
     private void TracePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void SetRangeOnAxes(global::System.Windows.Media.Media3D.Rect3D newRange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void SetRangeOnAxis(double start, double size, global::Quire.Controls.Plots.Presenter.IAxisModel axisModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Media.Media3D.Rect3D GetCommonTraceBounds() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetRangeOnTraces(global::System.Windows.Media.Media3D.Rect3D newRange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected global::System.Windows.Media.Media3D.Rect3D CalculateInitialCommonRange(global::System.Windows.Media.Media3D.Rect3D commonTraceBounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

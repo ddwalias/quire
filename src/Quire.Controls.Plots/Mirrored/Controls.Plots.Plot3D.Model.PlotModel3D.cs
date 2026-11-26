@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Windows.Media.Media3D;
 using Quire.Calculation.Core;
 using Quire.Controls.Core;
+using Quire.Controls.Plots.Model;
 using Quire.Controls.Plots.Presenter;
 
 namespace Quire.Controls.Plots.Plot3D.Model;
@@ -150,6 +151,55 @@ public partial class PlotModel3D
             case "EndExpression":
                 AttachOrDetachLimitEditorEventHandlers(axisModel, eArgs.PropertyName, attach: true);
                 break;
+        }
+    }
+
+    private static double AxisLimitEditorCalculatedValue(IAxisLimitEditor axisLimitEditor)
+    {
+        if (!HasValidUserDefinedValue(axisLimitEditor))
+        {
+            return double.NaN;
+        }
+        return axisLimitEditor.CalculatedValue;
+    }
+
+    private void AxisExpressionHasErrorsChanged()
+    {
+        SetAxesHaveMinMaxErrors(AxisHasMinMaxErrors(XAxis) || AxisHasMinMaxErrors(YAxis) || AxisHasMinMaxErrors(ZAxis));
+    }
+
+    private static bool AxisHasMinMaxErrors(IAxisModel axis)
+    {
+        if (!axis.StartExpression.HasErrors)
+        {
+            return axis.EndExpression.HasErrors;
+        }
+        return true;
+    }
+
+    private void TracePlotCalculatableError(object sender, EngineErrorEventArgs e)
+    {
+        OnPlotCalculatableError(e);
+    }
+
+    private void SetRangeOnAxes(Rect3D newRange)
+    {
+        SetRangeOnAxis(newRange.X, newRange.SizeX, XAxis);
+        SetRangeOnAxis(newRange.Y, newRange.SizeY, YAxis);
+        SetRangeOnAxis(newRange.Z, newRange.SizeZ, ZAxis);
+    }
+
+    private static void SetRangeOnAxis(double start, double size, IAxisModel axisModel)
+    {
+        double value = start + size;
+        axisModel.SetRange(start, value);
+    }
+
+    private void SetRangeOnTraces(Rect3D newRange)
+    {
+        foreach (IPlotTraceModel3D trace in _traces)
+        {
+            trace.CommonRange = newRange;
         }
     }
 }
