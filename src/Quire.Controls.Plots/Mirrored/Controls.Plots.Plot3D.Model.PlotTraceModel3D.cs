@@ -420,4 +420,9 @@ internal partial class PlotTraceModel3D
         ((Freezable)transform3DGroup).Freeze();
         return transform3DGroup;
     }
+
+    public void UserChangedStyle()
+    {
+        IsStyleAutomatic = EngineResultParser.EngineTraceType == EngineTraceType3D.ScatteredData ? LineStyle == LineStyle.None && Symbol == TraceSymbol.point : LineStyle == LineStyle.Solid && Symbol == TraceSymbol.none;
+    }
 }

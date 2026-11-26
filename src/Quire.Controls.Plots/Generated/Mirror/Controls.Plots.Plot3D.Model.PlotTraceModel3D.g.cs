@@ -60,8 +60,6 @@ internal partial class PlotTraceModel3D : global::Quire.Controls.Plots.Model.Plo
     [global::Quire.Mirror.MirrorStub]
     protected override void OnPlotCalculatableError(global::Quire.Controls.Plots.Model.EngineErrorEventArgs args) => base.OnPlotCalculatableError(args);
     [global::Quire.Mirror.MirrorStub]
-    public void UserChangedStyle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static global::Quire.Calculation.Core.EngineResult GetPrintResults(global::Quire.Calculation.Core.EngineResult sourceResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Plot3D.Model.PlotTraceModel3D+PropertyNames, Ptc.Controls.Plots")]
