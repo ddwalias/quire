@@ -128,13 +128,9 @@ public partial class PlotTrace : global::System.Windows.FrameworkElement, global
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
     [global::Quire.Mirror.MirrorStub]
-    private void DoOnRender(global::System.Windows.Media.DrawingContext drawingContext) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnMouseLeftButtonDown(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnMouseLeftButtonDown(e);
     [global::Quire.Mirror.MirrorStub]
     protected override bool ShouldSerializeProperty(global::System.Windows.DependencyProperty dp) => base.ShouldSerializeProperty(dp);
-    [global::Quire.Mirror.MirrorStub]
-    private static void IsInPrintingPropertyChanged(global::System.Windows.DependencyObject sender, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotTrace+CopiedImageRenderer, Ptc.Controls.Plots")]
     private partial struct CopiedImageRenderer

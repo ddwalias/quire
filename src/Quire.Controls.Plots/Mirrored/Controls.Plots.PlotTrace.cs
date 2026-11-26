@@ -956,4 +956,61 @@ public partial class PlotTrace
     {
         _contentLoaded = true;
     }
+
+    private static void IsInPrintingPropertyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs args)
+    {
+        PlotTrace plotTrace = sender as PlotTrace;
+        if (DebugTools.AssertNotNull(plotTrace, null).Passed)
+        {
+            bool flag = (bool)args.NewValue;
+            if (flag)
+            {
+                DebugTools.DevAssert(plotTrace._temporaryStorageHelper.StorageFileName.IsNullOrEmpty(), null);
+            }
+            else
+            {
+                plotTrace._temporaryStorageHelper.CleanStorage(deleteFile: true);
+            }
+            if (plotTrace.ViewModel != null)
+            {
+                plotTrace.ViewModel.ShouldNotCopyResults = flag && plotTrace.ViewModel.IsUsingDensityVisualization;
+            }
+        }
+    }
+
+    private void DoOnRender(DrawingContext drawingContext)
+    {
+        bool isUsingDensityVisualization = ViewModel != null && ViewModel.IsUsingDensityVisualization;
+        if (!IsResizing)
+        {
+            ClipToBounds = true;
+            if (RenderTransform != Transform.Identity)
+            {
+                RenderTransform = Transform.Identity;
+            }
+            if (isUsingDensityVisualization)
+            {
+                HasPoints = ImageRenderer != null;
+            }
+            else
+            {
+                _renderer.SetScreenPoints();
+                HasPoints = _renderer.HasPoints;
+                SetMinGap();
+            }
+        }
+        if (isUsingDensityVisualization)
+        {
+            if (ImageRenderer != null)
+            {
+                drawingContext.PushClip(ClippingGeometry);
+                drawingContext.DrawImage(ImageRenderer, ViewPortRect);
+                drawingContext.Pop();
+            }
+        }
+        else
+        {
+            _renderer.Render(drawingContext);
+        }
+    }
 }
