@@ -202,4 +202,110 @@ public partial class PlotModel3D
             trace.CommonRange = newRange;
         }
     }
+
+    private void RemoveTrace(IPlotTraceModel3D trace)
+    {
+        trace.ResetOnRemoval();
+        trace.PropertyChanged -= TracePropertyChanged;
+        trace.Changed -= OnChanged;
+        trace.PlotCalculatableError -= TracePlotCalculatableError;
+        DebugTools.DevAssert(_traces.Remove(trace), null);
+        FireTraceRemoved(trace);
+    }
+
+    protected Rect3D CalculateInitialCommonRange(Rect3D commonTraceBounds)
+    {
+        Interval commonInterval = GetCommonInterval(_xAxis, commonTraceBounds.X, commonTraceBounds.X + commonTraceBounds.SizeX);
+        Interval commonInterval2 = GetCommonInterval(_yAxis, commonTraceBounds.Y, commonTraceBounds.Y + commonTraceBounds.SizeY);
+        Interval commonInterval3 = GetCommonInterval(_zAxis, commonTraceBounds.Z, commonTraceBounds.Z + commonTraceBounds.SizeZ);
+        return new Rect3D
+        {
+            X = commonInterval.Lower,
+            SizeX = commonInterval.Width,
+            Y = commonInterval2.Lower,
+            SizeY = commonInterval2.Width,
+            Z = commonInterval3.Lower,
+            SizeZ = commonInterval3.Width
+        };
+    }
+
+    private Rect3D GetAxesRange()
+    {
+        return new Rect3D
+        {
+            X = _xAxis.LinearizedStart,
+            SizeX = _xAxis.LinearizedEnd - _xAxis.LinearizedStart,
+            Y = _yAxis.LinearizedStart,
+            SizeY = _yAxis.LinearizedEnd - _yAxis.LinearizedStart,
+            Z = _zAxis.LinearizedStart,
+            SizeZ = _zAxis.LinearizedEnd - _zAxis.LinearizedStart
+        };
+    }
+
+    private static Interval GetCommonInterval(IAxisModel axisModel, double lowerBoundOfTraces, double upperBoundOfTraces)
+    {
+        Interval result;
+        if (axisModel != null)
+        {
+            if (HasValidUserDefinedValue(axisModel.StartExpression))
+            {
+                result.Lower = axisModel.Start;
+            }
+            else if (double.IsNaN(lowerBoundOfTraces) || double.IsInfinity(lowerBoundOfTraces))
+            {
+                result.Lower = axisModel.StartDefault;
+            }
+            else
+            {
+                result.Lower = lowerBoundOfTraces;
+            }
+            if (HasValidUserDefinedValue(axisModel.EndExpression))
+            {
+                result.Upper = axisModel.End;
+            }
+            else if (double.IsNaN(upperBoundOfTraces) || double.IsInfinity(upperBoundOfTraces))
+            {
+                result.Upper = axisModel.EndDefault;
+            }
+            else
+            {
+                result.Upper = upperBoundOfTraces;
+            }
+        }
+        else
+        {
+            result.Lower = lowerBoundOfTraces;
+            result.Upper = upperBoundOfTraces;
+        }
+        if (result.Upper <= result.Lower)
+        {
+            result.Upper = result.Lower;
+        }
+        return result;
+    }
+
+    private static bool HasValidUserDefinedValue(IAxisLimitEditor axisLimitEditor)
+    {
+        if (axisLimitEditor != null && !axisLimitEditor.IsDefaultValue)
+        {
+            return axisLimitEditor.IsValueValid;
+        }
+        return false;
+    }
+
+    private void FireTraceInserted(IPlotTraceModel3D trace, int index)
+    {
+        if (TraceInserted != null)
+        {
+            TraceInserted(trace, index);
+        }
+    }
+
+    private void FireTraceRemoved(IPlotTraceModel3D trace)
+    {
+        if (TraceRemoved != null)
+        {
+            TraceRemoved(trace);
+        }
+    }
 }

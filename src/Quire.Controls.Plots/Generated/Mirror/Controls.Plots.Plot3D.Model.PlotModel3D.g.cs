@@ -64,27 +64,13 @@ public partial class PlotModel3D : global::Quire.Controls.Plots.Model.PlotModelB
     [global::Quire.Mirror.MirrorStub]
     private void SetAxesHaveMinMaxErrors(bool axesHaveErrors) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void RemoveTrace(global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void ComputeTotalTracesSynchronizationStatus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void TracePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Media.Media3D.Rect3D GetCommonTraceBounds() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected global::System.Windows.Media.Media3D.Rect3D CalculateInitialCommonRange(global::System.Windows.Media.Media3D.Rect3D commonTraceBounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Media3D.Rect3D GetAxesRange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Interval GetCommonInterval(global::Quire.Controls.Plots.Presenter.IAxisModel axisModel, double lowerBoundOfTraces, double upperBoundOfTraces) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool HasValidUserDefinedValue(global::Quire.Controls.Plots.Presenter.IAxisLimitEditor axisLimitEditor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void ComputeTotalTracesCalculationStatus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireTraceInserted(global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D trace, int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireTraceRemoved(global::Quire.Controls.Plots.Plot3D.Model.IPlotTraceModel3D trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void Dispose() { }
     [global::Quire.Mirror.MirrorStub]
