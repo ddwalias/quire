@@ -2266,4 +2266,35 @@ internal partial class WorksheetViewModel
         textFormat.FontWeight = style.FontWeight.Value;
         textFormat.TextDecorations = style.TextDecorations;
     }
+    public IAggregateMathboardControl CreateExcelComponentControl()
+    {
+        try
+        {
+            IAggregateMathboardControl control = ControlCreator.CreateExcelComponentControl(_worksheetGrid.GridCellSize);
+            AddItemAtInsertionPointAndActivate(control, "Add ExcelComponent");
+            control.Commit();
+            return control;
+        }
+        catch (ApplicationException ex)
+        {
+            VisualHelper.DisplayWarningMessage(ex.Message);
+            return null;
+        }
+    }
+
+    public IAggregateMathboardControl CreateChartComponentControl()
+    {
+        try
+        {
+            IAggregateMathboardControl control = ControlCreator.CreateChartComponentControl(_worksheetGrid.GridCellSize);
+            AddItemAtInsertionPointAndActivate(control, "Add ChartComponent");
+            control.Commit();
+            return control;
+        }
+        catch (ApplicationException ex)
+        {
+            VisualHelper.DisplayWarningMessage(ex.Message);
+            return null;
+        }
+    }
 }
