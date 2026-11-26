@@ -218,4 +218,13 @@ public partial class WorksheetControlDebugger
             return global::Quire.Controls.Whiteboard.WhiteboardViewModel.WhiteboardItemMgr.TranslatePoint(source, target, point);
         }
     }
+
+    private sealed partial class VisibleObjects
+    {
+        protected override void DestructUI()
+        {
+            RemoveStatusBarItemFromStatusBar();
+            DestroyPreviewWindow();
+        }
+    }
 }
