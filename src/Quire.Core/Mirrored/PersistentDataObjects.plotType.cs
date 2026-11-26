@@ -21,14 +21,7 @@ partial class plotType
                     annotations.AddRange(itemAnnotations);
                 }
             }
-            if (annotations.Count > 0)
-            {
-                goto HasAnnotations;
-            }
-            return null;
-
-        HasAnnotations:
-            return annotations;
+            return annotations.Count > 0 ? annotations : null;
         }
     }
 }

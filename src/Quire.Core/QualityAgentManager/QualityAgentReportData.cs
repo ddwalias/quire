@@ -134,10 +134,8 @@ public partial struct QualityAgentReportData
     {
         get
         {
-            if ((object)_licenseIssueDate is DateTime)
-            {
-                goto HasLicenseIssueDate;
-            }
+            // Release IL requires boxing the nullable date before testing its type.
+            if ((object)_licenseIssueDate is DateTime) goto HasLicenseIssueDate;
             return string.Empty;
 
         HasLicenseIssueDate:

@@ -51,10 +51,8 @@ public static partial class OleUtils
     public static Guid GetExcelSheetGuid(string excelSheetProgId)
     {
         Type type = Type.GetTypeFromProgID(excelSheetProgId);
-        if (null != type)
-        {
-            goto HasProgramId;
-        }
+        // Release IL requires this branch polarity and shared return block.
+        if (null != type) goto HasProgramId;
         return Guid.Empty;
     HasProgramId:
         return type.GUID;

@@ -9,14 +9,7 @@ partial class ProtectionDataType
     {
         get
         {
-            if (TimestampSpecified)
-            {
-                goto HasTimestamp;
-            }
-            return default(global::System.Nullable<global::System.DateTime>);
-
-        HasTimestamp:
-            return Timestamp;
+            return TimestampSpecified ? Timestamp : default(global::System.Nullable<global::System.DateTime>);
         }
         set
         {

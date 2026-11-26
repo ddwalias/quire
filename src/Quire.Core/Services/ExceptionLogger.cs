@@ -71,23 +71,11 @@ public partial class ExceptionLogger
 
     private static void GetElementData(XmlNode xmlNode, StringBuilder exceptionData, string elementType)
     {
-        if (xmlNode != null)
-        {
-            goto HasNode;
-        }
-        return;
-
-    HasNode:
+        if (xmlNode == null) return;
         exceptionData.AppendLine(string.Format("{0} Name: {1}", elementType, xmlNode.Name));
         string outerXml = xmlNode.OuterXml;
-        if (string.IsNullOrEmpty(outerXml))
-        {
-            goto Done;
-        }
-        exceptionData.AppendLine(string.Format("{0} {1} OuterXml: {2}", elementType, xmlNode.Name, outerXml));
-
-    Done:
-        return;
+        if (!string.IsNullOrEmpty(outerXml))
+            exceptionData.AppendLine(string.Format("{0} {1} OuterXml: {2}", elementType, xmlNode.Name, outerXml));
     }
 
     public string LogExceptions(IEnumerable<Exception> exceptions)

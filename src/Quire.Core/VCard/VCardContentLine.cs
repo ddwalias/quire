@@ -72,17 +72,7 @@ public partial class VCardContentLine
     [MirrorVerified("Release IL")]
     public string GetValue(int index)
     {
-        if (Values != null)
-        {
-            if (index < Values.Length)
-            {
-                goto ReturnValue;
-            }
-        }
-        return null;
-
-    ReturnValue:
-        return Values[index];
+        return Values != null && index < Values.Length ? Values[index] : null;
     }
 
     [MirrorVerified("Release IL")]
