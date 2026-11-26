@@ -305,4 +305,160 @@ public partial class SpiritMainWindow
 
         return false;
     }
+
+    public event global::System.Action<string, string, string, string> DocumentRenamed;
+    public event global::System.Action<string, string> DocumentClosed;
+    public event global::System.Action<global::Quire.Controls.Core.IEngineeringDocument> DocumentSaved;
+    public event global::System.Action<global::Quire.Controls.Core.IEngineeringDocument> DocumentModified;
+    public event global::System.Action<global::Quire.Controls.Core.IEngineeringDocument, global::System.Collections.Generic.List<string>, global::System.Collections.Generic.List<string>> DocumentInputsOutputsSelected;
+    public event global::System.Action<global::Quire.Controls.Core.IEngineeringDocument, global::Quire.Controls.Core.IORegions.IInputOutputItemsStates, global::Quire.Controls.IO.IInputOutputItemsConflicts> DocumentInputsOutputsStatesGeneratedWhenSave;
+    public event global::System.Action<global::Quire.Controls.Core.IEngineeringDocument, global::Quire.Controls.Core.IORegions.IInputOutputItemsStates, global::Quire.Controls.IO.IInputOutputItemsConflicts> DocumentInputsOutputsStatesGeneratingBeforeSave;
+    public event global::System.Action<global::Quire.Controls.Core.IEngineeringDocument, global::Quire.Controls.Core.IORegions.IValuesSetter> RequestToUpdateInputs;
+    public event global::System.Action OptionsAboutDialogOpening;
+    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+    public global::Quire.IntegrationCommands IntegrationCommands { get; set; }
+    public bool IsComInstance { get; set; }
+    public global::System.Collections.Generic.Dictionary<string, string> TemplatesFolderLocations { get; private set; }
+    public global::System.Windows.Input.CommandBinding HelpCommandBinding { get; private set; }
+    public string DefaultPathToDefaultTemplateForNewDocument { get; private set; }
+    public string DefaultMyTemplatesLocation { get; private set; }
+    public string DefaultSharedTemplatesLocation { get; private set; }
+    public string DefaultBuiltInTemplatesLocation { get; private set; }
+
+    public global::Quire.PageMarginSelectorType PageMarginSelectorType
+    {
+        get => (global::Quire.PageMarginSelectorType)GetValue(PageMarginSelectorTypeProperty);
+        set => SetValue(PageMarginSelectorTypeProperty, value);
+    }
+
+    public bool ShowLicenseError
+    {
+        get => (bool)GetValue(ShowLicenseErrorProperty);
+        set => SetValue(ShowLicenseErrorProperty, value);
+    }
+
+    public global::Quire.Controls.Core.IEngineeringDocument ActiveDocument
+    {
+        get => (global::Quire.Controls.Core.IEngineeringDocument)GetValue(ActiveDocumentProperty);
+        set => SetValue(ActiveDocumentProperty, value);
+    }
+
+    private bool IsDefaultTemplateNewDocExists =>
+        global::System.IO.File.Exists(GetPathToDefaultTemplateForNewDocument());
+
+    public global::Quire.MruFiles.MruFileManager MruFileManager { get; } = new global::Quire.MruFiles.MruFileManager();
+    internal global::Quire.Zoom ZoomControl => _zoomControl;
+    public global::Quire.InputOutputDesignationWindow WorksheetInputOutputWindow { get; set; }
+
+    internal bool UseDocumentTabs
+    {
+        get => _useDocumentTabs;
+        set => _useDocumentTabs = value;
+    }
+
+    internal global::Quire.Controls.Core.WarningsTypesToShow CurrentShowWarningsFilter
+    {
+        get => global::Quire.Controls.Core.AttachedProperties.GetWarningDisplayFilter((global::System.Windows.DependencyObject)this);
+        set
+        {
+            if (CurrentShowWarningsFilter == value)
+            {
+                return;
+            }
+            global::Quire.Controls.Core.AttachedProperties.SetWarningDisplayFilter((global::System.Windows.DependencyObject)this, value);
+        }
+    }
+
+    public global::Quire.FindUserProperties FindProperties => _findProperties;
+
+    public global::System.Nullable<global::System.Windows.Thickness> LastCustomMarginValueSetting
+    {
+        get => _lastCustomMarginValueSetting;
+        set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
+
+    public bool AnyDocumentRequestToUpdateInputsEnabled
+    {
+        get => _anyDocumentRequestToUpdateInputsEnabled;
+        private set
+        {
+            if (_anyDocumentRequestToUpdateInputsEnabled == value)
+            {
+                return;
+            }
+            _anyDocumentRequestToUpdateInputsEnabled = value;
+            FirePropertyChanged("AnyDocumentRequestToUpdateInputsEnabled");
+        }
+    }
+
+    public bool IsShowWarningsEnabled
+    {
+        get => _isShowWarningsEnabled;
+        private set
+        {
+            if (IsShowWarningsEnabled == value)
+            {
+                return;
+            }
+            _isShowWarningsEnabled = value;
+            global::Quire.Properties.Settings.Default.IsShowWarningsEnabled = value;
+            global::Quire.Properties.Settings.Default.Save();
+            FirePropertyChanged("IsShowWarningsEnabled");
+            UpdateCurrentShowWarningsFilter();
+        }
+    }
+
+    public global::Quire.Controls.Core.WarningsTypesToShow DisplayWarningsFilter
+    {
+        get => _displayWarningsFilter;
+        private set
+        {
+            if (DisplayWarningsFilter == value)
+            {
+                return;
+            }
+            _displayWarningsFilter = value;
+            global::Quire.Properties.Settings.Default.DisplayWarningsFilter = value.ToString();
+            global::Quire.Properties.Settings.Default.Save();
+            FirePropertyChanged("DisplayWarningsFilter");
+            UpdateCurrentShowWarningsFilter();
+        }
+    }
+
+    public global::Quire.Wpf.IMessageBoxManager MessageBoxManager =>
+        global::Quire.Services.AppServiceRegistry.GetService<global::Quire.Wpf.IMessageBoxManager>();
+
+    protected global::Quire.Wpf.IDialogManager DialogManager =>
+        global::Quire.Services.AppServiceRegistry.GetService<global::Quire.Wpf.IDialogManager>();
+
+    private static global::Quire.Services.IExceptionLogger ExLogger =>
+        global::Quire.Services.AppServiceRegistry.GetService<global::Quire.Controls.Core.IPrimeExceptionLogger>();
+
+    public global::System.Collections.Generic.IList<global::Quire.Controls.Core.IEngineeringDocument> OpenDocumentsList =>
+        _openDocumentsList;
+
+    private global::Quire.Controls.EngineeringDocument ActiveEngineeringDoc =>
+        ActiveDocument as global::Quire.Controls.EngineeringDocument;
+
+    [global::System.Diagnostics.DebuggerNonUserCode]
+    [global::System.CodeDom.Compiler.GeneratedCode("PresentationBuildTasks", "10.0.11.0")]
+    public void InitializeComponent()
+    {
+        if (_contentLoaded)
+        {
+            return;
+        }
+        _contentLoaded = true;
+        // Release IL uses the self-assembly pack URI spelling for this XAML resource locator.
+        global::System.Uri resourceLocator = new global::System.Uri("/<self>;component/spiritmainwindow.xaml", global::System.UriKind.Relative);
+        global::System.Windows.Application.LoadComponent(this, resourceLocator);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCode]
+    [global::System.CodeDom.Compiler.GeneratedCode("PresentationBuildTasks", "10.0.11.0")]
+    internal global::System.Delegate _CreateDelegate(global::System.Type delegateType, string handler)
+    {
+        return global::System.Delegate.CreateDelegate(delegateType, this, handler);
+    }
 }
