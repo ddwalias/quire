@@ -657,9 +657,29 @@ public partial class EquationControl
     public void Activate(bool isActive) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public global::System.Nullable<global::System.Windows.Vector> NavigateIntoItem(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public void SimulateMouseClick(global::System.Windows.Point location, int numberOfClicks) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public bool CanNavigate(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public bool CanReturn() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public bool CanTraverse(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public bool CanNavigate(global::Quire.Direction direction)
+    {
+        return _model.CanNavigate(direction);
+    }
+    public bool CanReturn()
+    {
+        bool canPerform = false;
+        _model.CanPerformLinearNaryOperations(ref canPerform);
+        return canPerform;
+    }
+    public bool CanTraverse(global::System.Windows.Input.FocusNavigationDirection direction)
+    {
+        bool canTraverse = false;
+        if ((int)direction == 0)
+        {
+            _model.OnCanTraverseForward(ref canTraverse);
+        }
+        else
+        {
+            _model.OnCanTraverseBackward(ref canTraverse);
+        }
+        return canTraverse;
+    }
 
     public bool IsEmbedded
     {
@@ -1562,88 +1582,314 @@ public partial class EquationControl
     private void SymbolicEvalKeywordsRegionDeactivatedEventHandler() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void HandleSymCalculationErrorChanged(global::Quire.Wpf.PropertyChangedEventArgs<global::Quire.Calculation.Core.EngineError> eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public bool SymbolicEvalKeywordsVisibilityState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    private void ExecuteClearMathFormat(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void ExecuteIncreaseFontSize(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void ExecuteDecreaseFontSize(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void ExecuteChangeFontColor(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void ExecuteChangeHighlightColor(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void CanNavigateUp(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void CanNavigateDown(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void CanNavigateRight(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void CanNavigateLeft(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ExecuteClearMathFormat(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        MathFormat.ClearFormat();
+    }
+    private void ExecuteIncreaseFontSize(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        MathFormat.IncreaseFontSize();
+    }
+    private void ExecuteDecreaseFontSize(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        MathFormat.DecreaseFontSize();
+    }
+    private void ExecuteChangeFontColor(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        MathFormat.ChangeFontColor((global::System.Windows.Media.Color)e.Parameter);
+    }
+    private void ExecuteChangeHighlightColor(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        MathFormat.ChangeHighlightColor((global::System.Windows.Media.Color?)e.Parameter);
+    }
+    private void CanNavigateUp(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = _model.CanNavigate(Direction.Up);
+    }
+    private void CanNavigateDown(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = _model.CanNavigate(Direction.Down);
+    }
+    private void CanNavigateRight(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = _model.CanNavigate(Direction.Right);
+    }
+    private void CanNavigateLeft(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = _model.CanNavigate(Direction.Left);
+    }
     private void CanClearResultFormat(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void CanClearMathFormat(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void CanClearMathFormat(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args)
+    {
+        args.CanExecute = CurrentMathFormat.AreAnyPropertiesSet;
+        args.Handled = true;
+    }
     private void OnSetNumberFormatField(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void OnSetMatrixFormatField(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnToggleUnitIdLabel(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnToggleIdLabel(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnUnsetIdLabel(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnSetIdLabel(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnToggleUnitIdLabel(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireToggleUnitIdLabel();
+    }
+    private void OnToggleIdLabel(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireToggleIdLabel();
+    }
+    private void OnUnsetIdLabel(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireUnsetIdLabel();
+    }
+    private void OnSetIdLabel(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireSetIdLabel((IdLabels)e.Parameter);
+    }
     private void CanPerformIdLabelOperations(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e) => _view.FireCanPerformIdLabelOperations(sender, e);
-    private void OnToggleHideFromCalculationContext(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnInsertPi(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnInsertInfinity(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnCopy(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnCut(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnPaste(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnToggleHideFromCalculationContext(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        HideFromCalculationContext = !HideFromCalculationContext;
+    }
+    private void OnInsertPi(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.OnPiCommand();
+    }
+    private void OnInsertInfinity(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.OnInfinityCommand();
+    }
+    private void OnCopy(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireCopy();
+    }
+    private void OnCut(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireCut();
+    }
+    private void OnPaste(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FirePaste();
+    }
     private void CanCopy(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e) => _view.FireCanCopy(sender, e);
     private void CanCut(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e) => _view.FireCanCut(sender, e);
     private void CanPaste(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e) => _view.FireCanPaste(sender, e);
-    private void OnBackspace(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnContractScope(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnDelete(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void PostDeleteNodeAction() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void CanReplace(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnReplace(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnExpandScope(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnFullyContractScope(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnFullyExpandScope(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnInsertOperator(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnSwitchToLineBreakOperator(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs executedRoutedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void CanSwitchToLineBreakOperator(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnInsertEvaluation(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnInsertSymbolicEvaluation(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnBackspace(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireDeleteLeft();
+        PostDeleteNodeAction();
+    }
+    private void OnContractScope(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireContractScope();
+    }
+    private void OnDelete(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireDeleteRight();
+        PostDeleteNodeAction();
+    }
+    private void PostDeleteNodeAction()
+    {
+        if (!IsScriptableControl && IsResizableInputControl)
+        {
+            IsResizableInputControl = false;
+        }
+    }
+    private void CanReplace(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = _view.FireCanPerformReplace(e.Parameter as FindReplaceQuery);
+    }
+    private void OnReplace(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireReplace(e.Parameter as FindReplaceQuery);
+    }
+    private void OnExpandScope(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireExpandScope();
+    }
+    private void OnFullyContractScope(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireFullyContractScope();
+    }
+    private void OnFullyExpandScope(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireFullyExpandScope();
+    }
+    private void OnInsertOperator(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        if (!(e.Parameter is string nodeName))
+        {
+            return;
+        }
+        _view.FireInsertOperator(nodeName);
+    }
+    private void OnSwitchToLineBreakOperator(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs executedRoutedEventArgs)
+    {
+        _view.FireSwitchLineBreakOperator();
+    }
+    private void CanSwitchToLineBreakOperator(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        _view.FireCanSwitchToLineBreakOperator(sender, e);
+    }
+    private void OnInsertEvaluation(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireInsertEvaluation();
+    }
+    private void OnInsertSymbolicEvaluation(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireInsertSymbolicEvaluation();
+    }
     private void OnInsertValue(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void OnInsertId(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnInsertString(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnInsertString(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        string text = e.Parameter as string;
+        _view.FireInsertString(text ?? string.Empty);
+    }
     private void OpenComboBoxEditingMode(global::Quire.EquationEditor.Tree.MathNode mathNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public void InputControlOnEquationActivated(object param) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void OnInsertInputControl(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void CanInsertInputControl(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void CanInsertInputControl(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        _view.FireCanInsertInputControl(sender, e);
+    }
     private void OnInsertMatrix(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void OnInsertFunction(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void CanInsertFunction(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs eArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnInsertKeyword(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void CanInsertKeywordOrModifier(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnInsertModifier(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void CanInsertFunction(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs eArgs)
+    {
+        _view.FireCanInsertFunction(sender, eArgs);
+    }
+    private void OnInsertKeyword(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        string text = e.Parameter as string;
+        if (text.IsNullOrEmpty())
+        {
+            return;
+        }
+        _view.FireInsertKeyword(text);
+    }
+    private void CanInsertKeywordOrModifier(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        _view.FireCanInsertKeyword(sender, e);
+    }
+    private void OnInsertModifier(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        string text = e.Parameter as string;
+        if (text.IsNullOrEmpty())
+        {
+            return;
+        }
+        _view.FireInsertModifier(text);
+    }
     private void CanPerformColumnOperations(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e) => _view.FireCanPerformColumnOperations(sender, e);
     private void CanPerformCearCellsOperation(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnInsertRow(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnInsertMatrixColumn(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnDeleteRow(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnDeleteMatrixColumn(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnClearCells(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnInsertRow(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        Direction direction = Direction.Indeterminate;
+        if (e.Parameter != null)
+        {
+            direction = (Direction)e.Parameter;
+        }
+        _view.FireInsertRow(direction);
+    }
+    private void OnInsertMatrixColumn(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        Direction direction = Direction.Indeterminate;
+        if (e.Parameter != null)
+        {
+            direction = (Direction)e.Parameter;
+        }
+        _view.FireInsertMatrixColumn(direction);
+    }
+    private void OnDeleteRow(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireDeleteRow();
+    }
+    private void OnDeleteMatrixColumn(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireDeleteMatrixColumn();
+    }
+    private void OnClearCells(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireClearCells();
+    }
     private void CanPerformLinearNaryOperations(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e) => _view.FireCanPerformLinearNaryOperations(sender, e);
     private void CanPerformRowOperations(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e) => _view.FireCanPerformRowOperations(sender, e);
-    private void OnSplitLinearNaryLine(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnNavigateUp(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnNavigateDown(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnNavigateLeft(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnNavigateLeftByTerm(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnNavigateRight(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnNavigateRightByTerm(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnNavigateToEndOfScope(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnSplitLinearNaryLine(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        if (FunctionalityServiceWrapper.Instance.IsFunctionalityEnabled(global::Quire.FunctionalitiesLimitation.EnumFunctionalityKey.ProgrammingOperatorsSplitLinearNaryLineCommand))
+        {
+            _view.FireSplitLinearNaryLine();
+        }
+    }
+    private void OnNavigateUp(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireNavigateUp();
+    }
+    private void OnNavigateDown(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireNavigateDown();
+    }
+    private void OnNavigateLeft(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireMoveLeft();
+    }
+    private void OnNavigateLeftByTerm(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireMoveLeftByTerm();
+    }
+    private void OnNavigateRight(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireMoveRight();
+    }
+    private void OnNavigateRightByTerm(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireMoveRightByTerm();
+    }
+    private void OnNavigateToEndOfScope(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireMoveToEnd();
+    }
     private void CanNavigateToOppositeOfScope(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e) => _view.FireCanNavigateToOppositeOfScope(sender, e);
-    private void OnNavigateToOppositeOfScope(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnNavigateToEquationEnd(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnNavigateToEquationStart(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnNavigateToStartOfScope(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnRegionHistory(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnScopeLeft(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnScopeRight(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnTransformCharacter(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnToggleSubscript(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnToggleVisibleLhsOfDefinition(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnNavigateToOppositeOfScope(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireMoveToOpposite();
+    }
+    private void OnNavigateToEquationEnd(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireMoveToRegionEnd();
+    }
+    private void OnNavigateToEquationStart(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireMoveToRegionStart();
+    }
+    private void OnNavigateToStartOfScope(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireMoveToStart();
+    }
+    private void OnRegionHistory(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireShowRegionHistory(sender, e);
+    }
+    private void OnScopeLeft(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireScopeLeft();
+    }
+    private void OnScopeRight(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireScopeRight();
+    }
+    private void OnTransformCharacter(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireGreek();
+    }
+    private void OnToggleSubscript(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireToggleSubscript();
+    }
+    private void OnToggleVisibleLhsOfDefinition(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        if (e.Parameter is Visibility paramVisibility)
+        {
+            _model.ToggleVisibleLhsOfDefinition(paramVisibility);
+        }
+    }
 
     public bool ShowLhsOfDefinitionForXamlSerialization
     {
@@ -1679,7 +1925,10 @@ public partial class EquationControl
     }
 
     private void UpdateLhsVisibleOnView() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnConvertToOperator(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnConvertToOperator(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        _view.FireConvertToOperator();
+    }
     private void OnCommit(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void CanTraverseForward(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void CanTraverseBackward(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
