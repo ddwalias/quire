@@ -116,8 +116,11 @@ The XAML compiler writes the building assembly's name into `InitializeComponent`
 collide with the Mathcad DLLs. MethodAudit therefore compares a string literal that starts with a pack URI
 naming the assembly holding it as `<self>` on both sides; the rest of the literal must match, and a URI
 naming another assembly is compared as written. Mirrored code names its own Quire assembly in such URIs.
-The resources behind them must be Quire-authored XAML built from Quire's own data, never Mathcad's XAML
-or BAML. On 2026-10-23 none exists yet: `defaultunitdescriptortable.xaml` (lane C, from `BuiltinUnits`),
+The resources behind them are source XAML in the Quire project, compiled by the WPF markup compiler.
+**Amended 2026-11-26 (user decision):** that XAML may be derived from Mathcad's XAML or BAML. Read the original
+`InitializeComponent`/`Connect`/`_CreateDelegate` IL as the spec, decode the BAML where useful, and write the XAML
+by hand to fit, then compare Release IL. Only the authored `.xaml` source is committed; BAML, decoded dumps and
+decompiled output stay in the ignored local cache (D15). On 2026-10-23 none existed yet: `defaultunitdescriptortable.xaml` (lane C, from `BuiltinUnits`),
 `engineerrormessages.xaml`, `redefinitionwarningsdictionary.xaml` and
 `functionalitieslimitation/functionalitieslimitationdictionary.xaml` still fail to load.
 
