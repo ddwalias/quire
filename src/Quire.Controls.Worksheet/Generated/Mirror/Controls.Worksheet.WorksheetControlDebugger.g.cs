@@ -58,10 +58,6 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         [global::Quire.Mirror.MirrorStub]
         private global::System.Windows.Controls.Grid _grid;
         [global::Quire.Mirror.MirrorStub]
-        protected override void SubscribeEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        protected override void UnSubscribeEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         private void InitializeDebugWindow() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         private void UpdateDebugWindowCell(global::Quire.Controls.Worksheet.WorksheetControlDebugger.WorksheetControlUI.PropertyName propertyName, global::Quire.Controls.Worksheet.WorksheetControlDebugger.WorksheetControlUI.CoordinateSystemName coordinateSystemName, string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

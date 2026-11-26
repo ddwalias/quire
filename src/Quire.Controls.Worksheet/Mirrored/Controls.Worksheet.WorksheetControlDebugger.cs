@@ -164,6 +164,53 @@ public partial class WorksheetControlDebugger
             DestroyDebugWindow();
         }
 
+        protected override void SubscribeEvents()
+        {
+            if (WorksheetControlInst.PageManager != null)
+            {
+                WorksheetControlInst.PageManager.VisiblePages.RangeChanged += OnVisiblePagesCollectionChanged;
+            }
+            if (WorksheetViewModelInst != null)
+            {
+                WorksheetViewModelInst.PropertyChanged += OnWorksheetViewModelPropertyChanged;
+                WorksheetViewModelInst.WorksheetContent.InsertionPointSet += OnWorksheetContentInsertionPointSet;
+                WorksheetViewModelInst.Header.Activated += OnHeaderActivated;
+                WorksheetViewModelInst.Footer.Activated += OnFooterActivated;
+                WorksheetViewModelInst.PageLayout.PropertyChanged += OnPageLayoutPropertyChanged;
+            }
+            if (ScrollViewerInst != null)
+            {
+                ScrollViewerInst.ScrollChanged += OnScrollViewerChanged;
+            }
+            OnHeaderActivated();
+            OnFooterActivated();
+            OnVisiblePagesCollectionChanged(null, null);
+            OnWorksheetViewModelPropertyChanged(null, null);
+            OnWorksheetContentInsertionPointSet();
+            OnScrollViewerChanged(null, null);
+            OnPageLayoutPropertyChanged(null, null);
+        }
+
+        protected override void UnSubscribeEvents()
+        {
+            if (WorksheetControlInst.PageManager != null)
+            {
+                WorksheetControlInst.PageManager.VisiblePages.RangeChanged -= OnVisiblePagesCollectionChanged;
+            }
+            if (WorksheetViewModelInst != null)
+            {
+                WorksheetViewModelInst.PropertyChanged -= OnWorksheetViewModelPropertyChanged;
+                WorksheetViewModelInst.WorksheetContent.InsertionPointSet -= OnWorksheetContentInsertionPointSet;
+                WorksheetViewModelInst.Header.Activated -= OnHeaderActivated;
+                WorksheetViewModelInst.Footer.Activated -= OnFooterActivated;
+                WorksheetViewModelInst.PageLayout.PropertyChanged -= OnPageLayoutPropertyChanged;
+            }
+            if (ScrollViewerInst != null)
+            {
+                ScrollViewerInst.ScrollChanged -= OnScrollViewerChanged;
+            }
+        }
+
         private void WorksheetControlUIDebugClosed(object sender, EventArgs e)
         {
             AskCloseInstance();
