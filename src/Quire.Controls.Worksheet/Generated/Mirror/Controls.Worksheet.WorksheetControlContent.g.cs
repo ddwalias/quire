@@ -50,31 +50,11 @@ public partial class WorksheetControlContent : global::Quire.Controls.Worksheet.
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlContent+AddItemsCommand, Ptc.Controls.Worksheet")]
     internal partial class AddItemsCommand : global::Quire.Controls.Worksheet.WorksheetControlContent.WorksheetContentCommand
     {
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> _itemsAtLocations;
-        [global::Quire.Mirror.MirrorStub]
-        public AddItemsCommand(global::Quire.Controls.Worksheet.IWorksheetContent content, global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> itemsAtLocations) : base(default(global::Quire.Controls.Worksheet.IWorksheetContent), default(string)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlContent+PasteItemsCommand, Ptc.Controls.Worksheet")]
     internal partial class PasteItemsCommand : global::Quire.Controls.Worksheet.WorksheetControlContent.WorksheetContentCommand
     {
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> _itemsAtLocation;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::Quire.Controls.Core.IWhiteboardItem _itemToActivate;
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::System.Windows.Point _savedInsertionPoint;
-        [global::Quire.Mirror.MirrorStub]
-        public PasteItemsCommand(global::Quire.Controls.Worksheet.IWorksheetContent content, global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> itemsAtLocations) : base(default(global::Quire.Controls.Worksheet.IWorksheetContent), default(string)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlContent+ResizeItemCommand, Ptc.Controls.Worksheet")]

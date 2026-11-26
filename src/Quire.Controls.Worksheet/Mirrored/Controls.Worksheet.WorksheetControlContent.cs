@@ -1020,6 +1020,35 @@ public partial class WorksheetControlContent
 
     internal partial class AddItemsCommand
     {
+        private readonly Dictionary<IWhiteboardItem, Point> _itemsAtLocations = new Dictionary<IWhiteboardItem, Point>();
+
+        public AddItemsCommand(IWorksheetContent content, Dictionary<IWhiteboardItem, Point> itemsAtLocations)
+            : base(content, "Add worksheet items")
+        {
+            _itemsAtLocations = itemsAtLocations;
+        }
+
+        public override bool Do()
+        {
+            if (_itemsAtLocations == null || _itemsAtLocations.Count == 0)
+            {
+                return false;
+            }
+            _itemsAtLocations.Each((KeyValuePair<IWhiteboardItem, Point> kv) =>
+            {
+                _worksheetContent.AddItemAtLocation(kv.Key, kv.Value);
+            });
+            return true;
+        }
+
+        public override void Undo()
+        {
+            WorksheetContent.FireActivated();
+            _itemsAtLocations.Keys.Each((IWhiteboardItem item) =>
+            {
+                _worksheetContent.WhiteboardItems.Remove(item);
+            });
+        }
         public override void Redo()
         {
             WorksheetContent.FireActivated();
@@ -1029,6 +1058,56 @@ public partial class WorksheetControlContent
 
     internal partial class PasteItemsCommand
     {
+        private readonly IDictionary<IWhiteboardItem, Point> _itemsAtLocation;
+
+        private readonly IWhiteboardItem _itemToActivate;
+
+        private readonly Point _savedInsertionPoint;
+
+        public PasteItemsCommand(IWorksheetContent content, IDictionary<IWhiteboardItem, Point> itemsAtLocations)
+            : base(content, "Paste worksheet items")
+        {
+            _itemsAtLocation = itemsAtLocations;
+            _savedInsertionPoint = _worksheetContent.InsertionPoint;
+            _itemToActivate = _itemsAtLocation.Keys.FirstOrDefault((IWhiteboardItem item) => WorksheetItemManager.IsItemActivated(item));
+        }
+
+        public override bool Do()
+        {
+            if (_itemsAtLocation == null || _itemsAtLocation.Count == 0)
+            {
+                return false;
+            }
+            _itemsAtLocation.Each((KeyValuePair<IWhiteboardItem, Point> kv) =>
+            {
+                _worksheetContent.AddItemAtLocation(kv.Key, kv.Value);
+            });
+            WorksheetItemManager.BlockUntilLoaded();
+            _itemsAtLocation.Keys.Each((IWhiteboardItem item) =>
+            {
+                WorksheetContent._model.CommitItem(item);
+            });
+            _worksheetContent.ClearSelection();
+            if (_itemToActivate != null)
+            {
+                _itemToActivate.Activate(isActive: true);
+            }
+            else
+            {
+                _worksheetContent.SelectItems(_itemsAtLocation.Keys);
+            }
+            return true;
+        }
+
+        public override void Undo()
+        {
+            WorksheetContent.FireActivated();
+            _itemsAtLocation.Keys.Each((IWhiteboardItem item) =>
+            {
+                _worksheetContent.WhiteboardItems.Remove(item);
+            });
+            WorksheetContent.SetInsertionPoint(_savedInsertionPoint, forceSet: true, global::Quire.Controls.Core.GridRestriction.Assert);
+        }
         public override void Redo()
         {
             WorksheetContent.FireActivated();
