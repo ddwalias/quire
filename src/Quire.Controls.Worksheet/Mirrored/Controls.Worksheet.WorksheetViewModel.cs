@@ -17,6 +17,7 @@ using Quire.Controls.Worksheet.Printing;
 using Quire.Undo;
 using Quire.Controls.Core.Whiteboard;
 using Quire.Controls.Include;
+using Quire.Controls.CollapsibleArea;
 using Quire.Controls.Mathboard;
 using Quire.Controls.Plots;
 using Quire.Controls.Plots.View;
@@ -2222,5 +2223,37 @@ internal partial class WorksheetViewModel
     public IIncludeWorksheetControl CreateIncludeControl()
     {
         return CreateIncludeControl("");
+    }
+    public bool HandlePreviewMouseUp(object originalSource)
+    {
+        return _worksheetMouseDownHandler.HandlePreviewMouseUp(originalSource);
+    }
+
+    public bool HandleMouseUp(object originalSource, Point position, bool rightButton)
+    {
+        return _worksheetMouseDownHandler.HandleMouseUp(originalSource, rightButton);
+    }
+
+    public bool HandleMouseDown(object originalSource, bool alreadyHandled)
+    {
+        return _worksheetMouseDownHandler.HandleMouseDown(originalSource, alreadyHandled);
+    }
+
+    public bool HandlePreviewMouseDown(object originalSource, Point position, bool mouseDoubleClicked, bool rightButton)
+    {
+        bool handled;
+        _worksheetMouseDownHandler.HandlePreviewMouseDown(originalSource, position, mouseDoubleClicked, rightButton, out handled);
+        return handled;
+    }
+
+    private static bool CanCreateInputControl(Type containerType, IWhiteboardItem control)
+    {
+        EquationControl equationControl = control as EquationControl;
+        if (equationControl != null && equationControl.IsScriptableControl && containerType != typeof(WorksheetControlContent) && containerType != typeof(CollapsibleAreaControl))
+        {
+            return false;
+        }
+
+        return true;
     }
 }

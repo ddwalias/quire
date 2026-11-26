@@ -150,14 +150,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     protected override void OnPropertyChanged(string propertyName) => base.OnPropertyChanged(propertyName);
     [global::Quire.Mirror.MirrorStub]
-    public bool HandlePreviewMouseDown(object originalSource, global::System.Windows.Point position, bool mouseDoubleClicked, bool rightButton) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool HandleMouseDown(object originalSource, bool alreadyHandled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool HandlePreviewMouseUp(object originalSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool HandleMouseUp(object originalSource, global::System.Windows.Point position, bool rightButton) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void OnRequestMoveAndResize(global::Quire.Controls.Worksheet.IWorksheetControl worksheetControl, global::Quire.Controls.Core.ResizeEventMouseArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void HandleCaretLeavesTextArea(global::Quire.Controls.Worksheet.IWorksheetControl worksheetControl, global::Quire.Controls.Core.CommonRoutedEvents.CaretLeavesTextRegionEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -199,8 +191,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     private global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainer GetAddableContainerControl(bool isExcludeWorksheetControlContent = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static bool CanCreateControlOfType(global::System.Type containerType, global::System.Type controlType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool CanCreateInputControl(global::System.Type containerType, global::Quire.Controls.Core.IWhiteboardItem control) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool CanCreateFileSpecificRegion<T>() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
