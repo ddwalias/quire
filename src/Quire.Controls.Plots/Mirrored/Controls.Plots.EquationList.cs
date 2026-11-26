@@ -13,6 +13,7 @@ using Quire;
 using Quire.Controls.Core;
 using Quire.Controls.Plots.Presenter;
 using Quire.Controls.Plots.ViewModel;
+using Quire.Undo;
 
 namespace Quire.Controls.Plots;
 
@@ -334,5 +335,72 @@ public partial class EquationList
             }
         }
         return -1;
+    }
+
+    internal void RequestRemoveItem(EquationListItem equationListItem, Direction direction)
+    {
+        if (EquationListGrid.Children.Count != 1)
+        {
+            int num = EquationListGrid.Children.IndexOf(equationListItem);
+            if ((direction == Direction.Left || num == EquationListGrid.Children.Count - 1) && SelectedItemIndex != 0)
+            {
+                FireEquationRemoved(equationListItem, num, num - 1, direction);
+            }
+            else
+            {
+                FireEquationRemoved(equationListItem, num, num, direction);
+            }
+        }
+        else if (!equationListItem.Equation.IsPlotEquationEmpty)
+        {
+            CommandBuffer.Execute(new ClearPlotEquationCommand(equationListItem.Equation));
+        }
+    }
+
+    private void EquationControlRequestRemove(object sender, Direction direction)
+    {
+        if (!(sender is IPlotEquation))
+        {
+            return;
+        }
+        EquationListItem equationListItem = GetEquationListItem((IPlotEquation)sender);
+        RequestRemoveItem(equationListItem, direction);
+    }
+
+    internal EquationListItem RemoveItemAt(int itemToDeleteIndex, int indexOfPreviousItem, Direction direction)
+    {
+        EquationListItem item = GetItem(itemToDeleteIndex);
+        UnregisterFromEvents(item);
+        EquationListGrid.Children.RemoveAt(itemToDeleteIndex);
+        SetMinMaxWidth();
+        ChangeSelectedItem(GetItem(indexOfPreviousItem));
+        this[indexOfPreviousItem].DelegateFocus();
+        if (direction == Direction.Left)
+        {
+            EquationCommands.NavigateToEquationEnd.Execute(Direction.Right, this[SelectedItemIndex]);
+        }
+        if (direction == Direction.Right)
+        {
+            EquationCommands.NavigateToEquationStart.Execute(null, this[SelectedItemIndex]);
+        }
+        return item;
+    }
+
+    private void FireEquationRemoved(EquationListItem equation, int deletedItemIndex, int priviousItemIndex, Direction direction)
+    {
+        if (EquationRemoved != null)
+        {
+            EquationRemoved(equation.Equation, deletedItemIndex, priviousItemIndex, direction);
+        }
+    }
+
+    private void EquationControlSizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        SetMinMaxWidth(e.PreviousSize.Width, e.NewSize.Width);
+    }
+
+    private void SetMinMaxWidth()
+    {
+        SetMinMaxWidth(MaxListWidth, 0.0);
     }
 }

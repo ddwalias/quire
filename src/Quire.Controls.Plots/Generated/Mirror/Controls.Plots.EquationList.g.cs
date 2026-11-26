@@ -44,18 +44,6 @@ public partial class EquationList : global::Quire.Controls.Plots.PlotItem, globa
     [global::Quire.Mirror.MirrorStub]
     private void OnIsKeyboardFocusWithinChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal void RequestRemoveItem(global::Quire.Controls.Plots.EquationListItem equationListItem, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void EquationControlRequestRemove(object sender, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Controls.Plots.EquationListItem RemoveItemAt(int itemToDeleteIndex, int indexOfPreviousItem, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FireEquationRemoved(global::Quire.Controls.Plots.EquationListItem equation, int deletedItemIndex, int priviousItemIndex, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void EquationControlSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetMinMaxWidth() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void ArrangeEquationsHorizontally() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetMinMaxWidth(double previousWidth, double newWidth) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
