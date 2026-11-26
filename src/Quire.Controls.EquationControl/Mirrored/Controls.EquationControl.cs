@@ -915,10 +915,29 @@ public partial class EquationControl
 
     public void EditNode(string label) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public void EditNode(string label, int caretPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void EditNodeOnCaretSide(string label, global::Quire.Direction caretSide) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void EditNodeOnNodeSide(string label, global::Quire.Direction nodeSide) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void ScopeTo(string label, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void ScopeLhs() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void EditNodeOnCaretSide(string label, global::Quire.Direction caretSide)
+    {
+        MathNode node = _model.Root.FindDescendant(label);
+        _model.EditNode(node, caretSide, Direction.Indeterminate);
+    }
+    public void EditNodeOnNodeSide(string label, global::Quire.Direction nodeSide)
+    {
+        MathNode node = _model.Root.FindDescendant(label);
+        _model.EditNode(node, Direction.Indeterminate, nodeSide);
+    }
+    public void ScopeTo(string label, global::Quire.Direction direction)
+    {
+        MathNode node = _model.Root.FindDescendant(label);
+        _model.SelectTo(node, Direction.Indeterminate, direction);
+    }
+    public void ScopeLhs()
+    {
+        MathNode mathNode = _model.Root?.Children?[0]?.Children?[0];
+        if (mathNode != null)
+        {
+            _model.SelectTo(mathNode, Direction.Indeterminate, Direction.Left);
+        }
+    }
     public void Cut() => _view.FireCut();
     public void Copy() => _view.FireCopy();
     public void Paste() => _view.FirePaste();
@@ -941,7 +960,13 @@ public partial class EquationControl
     public void NavigateRegionEnd() => _view.FireMoveToRegionEnd();
     public void NavigateRegionStart() => _view.FireMoveToRegionStart();
     public void Pi() => _view.AutomateKeypress('π');
-    public void Keypress(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void Keypress(string s)
+    {
+        foreach (char key in s)
+        {
+            _view.AutomateKeypress(key);
+        }
+    }
 
     public bool AllowExpressionsOnly
     {
@@ -1112,9 +1137,35 @@ public partial class EquationControl
         }
     }
     public void GetResultMatrixHeadingIndices(out string[] rowIndices, out string[] columnIndices) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void SetResultMatrixSize(int rows, int columns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void SetResultMatrixOffset(int rows, int columns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public bool IsResultMatrixFormatIndexVisible() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SetResultMatrixSize(int rows, int columns)
+    {
+        MatrixFormat matrixFormat = _model.ResultMatrixFormat.Clone();
+        matrixFormat.Size = new TableSize(rows, columns);
+        SetValue(ResultMatrixFormatProperty, matrixFormat);
+    }
+    public void SetResultMatrixOffset(int rows, int columns)
+    {
+        MatrixFormat matrixFormat = _model.ResultMatrixFormat.Clone();
+        matrixFormat.Offset = new TableCoordinate(rows, columns);
+        SetValue(ResultMatrixFormatProperty, matrixFormat);
+    }
+    public bool IsResultMatrixFormatIndexVisible()
+    {
+        global::Quire.EquationEditor.View.IVisualMathNode visualMathNode = null;
+        foreach (MathNode item in _model.Root.WalkSubTree())
+        {
+            if (item.DescriptorName == "MATRIX" || item.DescriptorName == "ScriptableControl1")
+            {
+                visualMathNode = _map.AssociateNode(item);
+                break;
+            }
+        }
+        if (visualMathNode != null && ((global::Quire.EquationEditor.View.IVisualMatrixNode)visualMathNode).HeadingsVisibility == Visibility.Visible)
+        {
+            return true;
+        }
+        return false;
+    }
     public global::System.Windows.Rect GetLabeledScreenInkBounds(string nodeLabel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     private void HookupToEvents()
@@ -1572,11 +1623,19 @@ public partial class EquationControl
     }
 
     private void ChangeAlgorithm(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private bool IsAlgorithmSupportOptions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private bool IsAlgorithmSupportOptions()
+    {
+        return EquationControlConstants.EnabledAlgorithmsForOptions.Contains(Algorithm);
+    }
     private void ResetAlgorithmOptionIfNeeded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void ToggleAlgorithmOption(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void SymbolicEvalKeywordsStateUndoRedoSupport() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void ToggleSymbolicKeywordsVisibility(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ToggleSymbolicKeywordsVisibility(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        SymbolicEvalKeywordsVisibilityState = !SymbolicEvalKeywordsVisibilityState;
+        SymbolicEvalKeywordsStateUndoRedoSupport();
+        FireContentChangedEvents();
+    }
     private void UpdateSymbolicEvalKeywordsVisibility(bool showHideKeywords) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void SymbolicEvalKeywordsRegionActivatedEventHandler() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void SymbolicEvalKeywordsRegionDeactivatedEventHandler() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

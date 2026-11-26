@@ -674,3 +674,10 @@
 - Shapes: `OnInsertOperator`, `OnInsertKeyword`, `OnInsertModifier` use guard returns (`if (!(e.Parameter is string n)) return;`, `if (text.IsNullOrEmpty()) return;`); the Release IL requires the guard form.
 - Release IL: PASS, 3929 checked, zero failures (`.mirror-cache/release-il-070f6ecb5c93/release-il.json`).
 - Open: `OnCommit`, `OnSetNumberFormatField`, `OnSetMatrixFormatField`, `OnInsertInputControl`, `OnInsertMatrix`, `OnInsertId`, `OnInsertFunction`, `OpenComboBoxEditingMode`, `CanClearResultFormat`, `CanToggleVisibleLhsOfDefinition` (cast-shaped bodies), not yet attempted or not matched.
+
+## Batch 97
+
+- Owner: haiku-equationcontrol-20261123; branch `haiku-equationcontrol-20261123-b97` (from main 2fcc0387d).
+- Members: `ScopeTo`, `ScopeLhs`, `Keypress`, `SetResultMatrixSize`, `SetResultMatrixOffset`, `ToggleSymbolicKeywordsVisibility`, `IsAlgorithmSupportOptions`, `EditNodeOnCaretSide`, `EditNodeOnNodeSide`, `IsResultMatrixFormatIndexVisible`.
+- Release IL: PASS, 3939 checked, zero failures (`.mirror-cache/release-il-eb9908eaaefa/release-il.json`).
+- Open: `FixCaretToRightMostPositionAfterClipping` stays a stub (one extra instruction in the Mathcad body, not matched by the temp-local or inline forms); `XFromNavigatorState`, `ToggleAlgorithmOption` (nested-if shape), and the rest of the remaining placeholders are not yet attempted.
