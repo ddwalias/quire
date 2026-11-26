@@ -204,7 +204,47 @@ internal partial class PlotGraphLinearAxis
         }
     }
 
-    protected override global::System.Windows.Media.HitTestResult HitTestCore(global::System.Windows.Media.PointHitTestParameters hitTestParameters) => base.HitTestCore(hitTestParameters);
+    protected override HitTestResult HitTestCore(PointHitTestParameters hitTestParameters)
+    {
+        if (OtherAxis != null)
+        {
+            Size size = Size.Empty;
+            if (PositionTickMark == 0)
+            {
+                size = OtherAxis._firstLabel.DesiredSize;
+            }
+            else if (PositionTickMark == 1)
+            {
+                size = OtherAxis._secondLabel.DesiredSize;
+            }
+            else if (PositionTickMark == OtherAxis.TickMarks)
+            {
+                size = OtherAxis._lastLabel.DesiredSize;
+            }
+            if (size != Size.Empty)
+            {
+                Rect rect = new Rect(size);
+                int tickMarkPosition = OtherAxis.PositionTickMark;
+                double tickPosition = GetTickPosition(GetMajorTickmaks(), tickMarkPosition);
+                if (Orientation == Orientation.Vertical)
+                {
+                    rect.X = -size.Width / 2.0;
+                    rect.Y = tickPosition + 3.0;
+                }
+                else
+                {
+                    rect.X = tickPosition - 3.0 - size.Width;
+                    rect.Y = -size.Height / 2.0;
+                }
+                if (rect.Contains(hitTestParameters.HitPoint))
+                {
+                    GeneralTransform transform = TransformToVisual(OtherAxis);
+                    return VisualTreeHelper.HitTest(OtherAxis, transform.Transform(hitTestParameters.HitPoint));
+                }
+            }
+        }
+        return base.HitTestCore(hitTestParameters);
+    }
 
     public void DrawTickLineAndValue(int tickNumber, global::System.Windows.Media.DrawingContext drawingContext, global::System.Windows.Media.Brush fill, global::System.Windows.Media.Brush stroke, double strokeThickness) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
