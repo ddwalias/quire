@@ -11,15 +11,4 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.RegionBorder, Ptc.Controls.Core")]
 public sealed partial class RegionBorder : global::System.Windows.Controls.ContentControl
 {
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.RegionBorder+RequestMoveAndResizeHandler, Ptc.Controls.Core")]
-    public delegate void RequestMoveAndResizeHandler(object sender, global::Quire.Controls.Core.ResizeEventMouseArgs e);
-
-    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.RegionBorder+ForceBorderType, Ptc.Controls.Core")]
-    public enum ForceBorderType
-    {
-        NoForce = 0,
-        BorderOnly = 1,
-        BorderAndHeader = 2,
-        HeaderOnly = 3,
-    }
 }

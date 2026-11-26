@@ -13,6 +13,18 @@ namespace Quire.Controls.Core;
 
 public partial class RegionBorder
 {
+    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.RegionBorder+RequestMoveAndResizeHandler, Ptc.Controls.Core")]
+    public delegate void RequestMoveAndResizeHandler(object sender, global::Quire.Controls.Core.ResizeEventMouseArgs e);
+
+    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.RegionBorder+ForceBorderType, Ptc.Controls.Core")]
+    public enum ForceBorderType
+    {
+        NoForce = 0,
+        BorderOnly = 1,
+        BorderAndHeader = 2,
+        HeaderOnly = 3,
+    }
+
     private const string PartLeftDragger = "LeftDragger";
     private const string PartRightDragger = "RightDragger";
     private const string PartBottomDragger = "BottomDragger";
@@ -289,13 +301,6 @@ public partial class RegionBorder
         set => SetValue(MoveDraggerVisibilityProperty, value);
     }
 
-    [MirrorVerified("PtcControlsCoreRegionBorderMechanicalDifferentialTests")]
-    private Shape _busyProgressBar;
-
-    [MirrorVerified("PtcControlsCoreRegionBorderMechanicalDifferentialTests")]
-    private void HideBusyStateElements() => _busyProgressBar.Visibility = (Visibility)2;
-
-
     private BorderDragger FindBorderDraggerByName(string name)
     {
         if (_draggers != null)
@@ -309,6 +314,8 @@ public partial class RegionBorder
     private BorderShape _border;
     private List<BorderDragger> _draggers;
     private BusyClock _busyClock;
+    [MirrorVerified("PtcControlsCoreRegionBorderMechanicalDifferentialTests")]
+    private Shape _busyProgressBar;
     private Rectangle _marchingAnts;
     private Rectangle _background;
     private Rectangle _foreground;
@@ -317,12 +324,6 @@ public partial class RegionBorder
     private Action _rightEdgeVisibilityChanged;
     private Action _bottomEdgeVisibilityChanged;
     private Action _cornerRadiusChanged;
-    // Compile-order device: 3 alignment fields to reach Mathcad closure ordinals 160, 166, 167, 168.
-    private int _closureAlignment1;
-    private int _closureAlignment2;
-    private int _closureAlignment3;
-
-
     public bool ShowBusy
     {
         get => (bool)GetValue(ShowBusyProperty);
@@ -598,6 +599,24 @@ public partial class RegionBorder
         }
     }
 
+    private void SetBackgroundActiveLook()
+    {
+        if (_foreground != null && _background != null)
+        {
+            _foreground.Opacity = 0.0;
+            _background.Opacity = ActiveRegionBackgroundOpacity;
+        }
+    }
+
+    private void SetBackgroundDefaultLook()
+    {
+        if (_foreground != null && _background != null)
+        {
+            _foreground.Opacity = 0.0;
+            _background.Opacity = 0.0;
+        }
+    }
+
     private void SetBorderLook()
     {
         if (_borderGrid == null)
@@ -781,24 +800,6 @@ public partial class RegionBorder
         });
     }
 
-    private void SetBackgroundActiveLook()
-    {
-        if (_foreground != null && _background != null)
-        {
-            _foreground.Opacity = 0.0;
-            _background.Opacity = ActiveRegionBackgroundOpacity;
-        }
-    }
-
-    private void SetBackgroundDefaultLook()
-    {
-        if (_foreground != null && _background != null)
-        {
-            _foreground.Opacity = 0.0;
-            _background.Opacity = 0.0;
-        }
-    }
-
     private void ShowBusyStateElements()
     {
         if (_borderGrid == null)
@@ -807,6 +808,9 @@ public partial class RegionBorder
         }
         _busyProgressBar.Visibility = Visibility.Visible;
     }
+
+    [MirrorVerified("PtcControlsCoreRegionBorderMechanicalDifferentialTests")]
+    private void HideBusyStateElements() => _busyProgressBar.Visibility = (Visibility)2;
 
     private void UpdateZIndex()
     {
