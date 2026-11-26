@@ -1916,7 +1916,25 @@ private static void RequestNavigateHandler(object sender, System.Windows.Navigat
         }
     }
 
-    public int GetEmbeddedObjectCaretOffset(object embeddedObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public int GetEmbeddedObjectCaretOffset(object embeddedObject)
+    {
+        TextElement textElement = null;
+        IWhiteboardItemInText whiteboardItem = embeddedObject as IWhiteboardItemInText;
+        DependencyObject dependencyObject = embeddedObject as DependencyObject;
+        if (whiteboardItem != null)
+        {
+            textElement = GetContainer(whiteboardItem);
+        }
+        else if (dependencyObject != null)
+        {
+            textElement = LogicalTreeHelper.GetParent(dependencyObject) as TextElement;
+        }
+        if (textElement == null)
+        {
+            return -1;
+        }
+        return GetInsertionPointAtPointer(textElement.ElementStart);
+    }
 
     private void CanBookmarkTag(object sender, CanExecuteRoutedEventArgs e)
     {

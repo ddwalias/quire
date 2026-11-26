@@ -1339,7 +1339,25 @@ public partial class RichTextBase
         }
     }
 
-    private void OnPreviewBackspace(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnPreviewBackspace(object sender, ExecutedRoutedEventArgs e)
+    {
+        Run run = null;
+        Run run2 = Selection.Start.Parent as Run;
+        int? num = run2?.ContentStart.GetOffsetToPosition(Selection.Start);
+        if (Selection.IsEmpty && num == 1 || !Selection.IsEmpty && num == 0)
+        {
+            run = run2;
+        }
+        else if (Selection.IsEmpty && num == 0 && Selection.Start.GetInsertionPosition(LogicalDirection.Backward).Parent is Run run3 && new DocumentTextRange(run3.ContentStart, Selection.Start).Text.Trim(new char[] { '\r', '\n' }).Length == 1)
+        {
+            run = run3;
+        }
+        if (run != null)
+        {
+            double item = run is ICustomFontSizeOwner customFontSizeOwner ? customFontSizeOwner.FontSizeForReport : run.FontSize;
+            _reviveScriptAfterBackspaceData = (CustomScriptServiceFunctions.RunTypeToScriptState(run), item);
+        }
+    }
 
     private void OnPreviewEnter(object sender, ExecutedRoutedEventArgs e)
     {
