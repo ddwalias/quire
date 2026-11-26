@@ -961,6 +961,22 @@ public partial class WorksheetControl
         global::Quire.Controls.ExcelComponent.View.ChartComponentUtils.WaitForChartImagesReady(WorksheetItems);
     }
 
+    private void HookupToViewModelEvents()
+    {
+        _viewModel.PropertyChanged += ViewModelPropertyChangedHandler;
+        _viewModel.CurrentElementChanged += SetCurrentElement;
+        _viewModel.Changed += FireChanged;
+        _viewModel.SetCopyWhiteboardItemsDelegate(FireCopyWhiteboardItems);
+    }
+
+    private void UnhookFromViewModelEvents()
+    {
+        _viewModel.PropertyChanged -= ViewModelPropertyChangedHandler;
+        _viewModel.CurrentElementChanged -= SetCurrentElement;
+        _viewModel.Changed -= FireChanged;
+        _viewModel.SetCopyWhiteboardItemsDelegate(null);
+    }
+
     object IWorksheetControl.FindResource(object key)
     {
         return FindResource(key);
