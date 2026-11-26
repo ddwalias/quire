@@ -1,0 +1,208 @@
+#nullable disable
+#pragma warning disable
+
+using Quire.Controls.Plots.Presenter;
+using System.Windows.Media;
+using System.Windows.Media.Media3D;
+
+namespace Quire.Controls.Plots.Plot3D.Model;
+
+internal partial class PlotTraceModel3D
+{
+    public PlotTraceVisualData3D VisualData
+    {
+        get
+        {
+            return _visualData;
+        }
+        private set
+        {
+            if (_visualData != value)
+            {
+                _visualData = value;
+                FirePropertyChanged("VisualData");
+            }
+        }
+    }
+
+    public TraceType3D VisualDataTypeOrDefault
+    {
+        get
+        {
+            if (VisualData == null)
+            {
+                return TraceType3D.Undefined;
+            }
+            return VisualData.TraceType;
+        }
+    }
+
+    public Rect3D CommonRange
+    {
+        get
+        {
+            return _commonRange;
+        }
+        set
+        {
+            bool flag = VisualDataTypeOrDefault == TraceType3D.Undefined;
+            if (_commonRange != value)
+            {
+                _commonRange = value;
+                FirePropertyChanged("CommonRange");
+                flag = true;
+            }
+            if (flag)
+            {
+                UpdateVisualData();
+            }
+        }
+    }
+
+    public Rect3D TraceBounds
+    {
+        get
+        {
+            return _traceBounds;
+        }
+        private set
+        {
+            if (value != _traceBounds)
+            {
+                _traceBounds = value;
+                FirePropertyChanged("TraceBounds");
+            }
+        }
+    }
+
+    public IPlotEquationModel3D TraceEquation => _traceEquation;
+
+    public double LineWeight
+    {
+        get
+        {
+            return _lineWeight;
+        }
+        set
+        {
+            _lineWeight = value;
+            FirePropertyChanged("LineWeight");
+        }
+    }
+
+    public bool IsStyleAutomatic
+    {
+        get
+        {
+            return _isStyleAutomatic;
+        }
+        private set
+        {
+            _isStyleAutomatic = value;
+            FirePropertyChanged("IsStyleAutomatic");
+        }
+    }
+
+    public LineStyle LineStyle
+    {
+        get
+        {
+            return _lineStyle;
+        }
+        set
+        {
+            if (_lineStyle != value)
+            {
+                _lineStyle = value;
+                FirePropertyChanged("LineStyle");
+            }
+        }
+    }
+
+    public TraceSymbol Symbol
+    {
+        get
+        {
+            return _symbol;
+        }
+        set
+        {
+            if (_symbol != value)
+            {
+                _symbol = value;
+                FirePropertyChanged("Symbol");
+            }
+        }
+    }
+
+    public Color? SurfaceFill
+    {
+        get
+        {
+            return _surfaceFill;
+        }
+        set
+        {
+            if (!(_surfaceFill == value))
+            {
+                _surfaceFill = value;
+                FirePropertyChanged("SurfaceFill");
+            }
+        }
+    }
+
+    public bool AxesHaveMinMaxErrors
+    {
+        private get
+        {
+            return _axesHaveMinMaxErrors;
+        }
+        set
+        {
+            if (_axesHaveMinMaxErrors != value)
+            {
+                _axesHaveMinMaxErrors = value;
+                if (_axesHaveMinMaxErrors)
+                {
+                    UpdateVisualData();
+                }
+            }
+        }
+    }
+
+    public UserDefinedLimits UserDefinedLimits { get; private set; }
+
+    public Color Color
+    {
+        get
+        {
+            return _color;
+        }
+        set
+        {
+            if (_color != value)
+            {
+                _color = value;
+                FirePropertyChanged("Color");
+            }
+        }
+    }
+
+    public Color RenderColor
+    {
+        get
+        {
+            return _renderColor;
+        }
+        private set
+        {
+            if (_renderColor != value)
+            {
+                _renderColor = value;
+                FirePropertyChanged("RenderColor");
+            }
+        }
+    }
+
+    public bool IsInPrinting { get; set; }
+}
