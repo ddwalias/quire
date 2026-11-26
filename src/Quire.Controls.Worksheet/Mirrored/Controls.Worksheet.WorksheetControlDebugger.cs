@@ -281,6 +281,19 @@ public partial class WorksheetControlDebugger
             UpdateWorksheetItemsVisibilityAdorner(sender as global::Quire.Controls.Core.IWhiteboardItem, (bool)args.NewValue);
         }
 
+        private void OnWin2SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            UpdatePreviewVisual();
+        }
+
+        private void WorksheetPreviewClosed(object sender, System.EventArgs e)
+        {
+            _win2.Closed -= WorksheetPreviewClosed;
+            _win2.SizeChanged -= OnWin2SizeChanged;
+            _grid2 = null;
+            _win2 = null;
+        }
+
         private partial class IndicationVisibilityAdorner
         {
             private void UpdateOnScrollViewerChanged(object sender, System.EventArgs e)
