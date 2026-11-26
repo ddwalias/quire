@@ -138,4 +138,29 @@ internal partial class PlotGraphLinearAxis
         }
         return GetTickRelativePosition(OtherAxis.PositionTickMark);
     }
+
+    protected override void SetOtherAxis(PlotGraphAxis value)
+    {
+        if (OtherLinearAxis != null)
+        {
+            OtherLinearAxis.CalcPositionTickMarkNeeded -= CalcPositionTickMark;
+            SizeChanged -= PlotGraphAxis_SizeChanged;
+        }
+        PlotGraphLinearAxis axis = value as PlotGraphLinearAxis;
+        if (axis != null)
+        {
+            axis.CalcPositionTickMarkNeeded += CalcPositionTickMark;
+            SizeChanged += PlotGraphAxis_SizeChanged;
+        }
+        base.SetOtherAxis(value);
+    }
+
+    protected override void OnRender(DrawingContext drawingContext)
+    {
+        base.OnRender(drawingContext);
+        if (MouseMoveAdorner != null)
+        {
+            MouseMoveAdorner.InvalidateVisual();
+        }
+    }
 }

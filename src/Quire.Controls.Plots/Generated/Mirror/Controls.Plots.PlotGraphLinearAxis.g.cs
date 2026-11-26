@@ -40,8 +40,6 @@ internal partial class PlotGraphLinearAxis : global::Quire.Controls.Plots.PlotGr
     [global::Quire.Mirror.MirrorStub]
     private void PlotGraphAxis_SizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override void SetOtherAxis(global::Quire.Controls.Plots.PlotGraphAxis value) => base.SetOtherAxis(value);
-    [global::Quire.Mirror.MirrorStub]
     protected override void PositionTickMarkChanged(int tickNumber) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void CalcNewPosition(int tickNumber) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -67,8 +65,6 @@ internal partial class PlotGraphLinearAxis : global::Quire.Controls.Plots.PlotGr
     public override bool FindClosestTickValueToZero(ref int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void MouseMoveDraw(global::System.Windows.Media.DrawingContext drawingContext) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => base.OnRender(drawingContext);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Media.HitTestResult HitTestCore(global::System.Windows.Media.PointHitTestParameters hitTestParameters) => base.HitTestCore(hitTestParameters);
     [global::Quire.Mirror.MirrorStub]
