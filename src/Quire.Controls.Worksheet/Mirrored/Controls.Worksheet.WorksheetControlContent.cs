@@ -21,9 +21,15 @@ public partial class WorksheetControlContent
 
     private global::Quire.Controls.Core.IWhiteboardItem _activeItem;
 
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorBlocked("closure ordinal anchor; body pending")]
-    public WorksheetControlContent(global::Quire.Controls.Worksheet.IWorksheetModel model, global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid alignmentGrid, global::Quire.Controls.Core.CustomSplitItemRenderSizeDelegate splitItemRenderSizeDelegate = default) { }
+    public WorksheetControlContent(global::Quire.Controls.Worksheet.IWorksheetModel model, global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid alignmentGrid, global::Quire.Controls.Core.CustomSplitItemRenderSizeDelegate splitItemRenderSizeDelegate = default)
+    {
+        _model = model;
+        _worksheetGrid = alignmentGrid;
+        _customSplitItemRenderSizeDelegate = splitItemRenderSizeDelegate;
+        _selectedItems = new ObservableRangeCollection<IWhiteboardItem>();
+        WhiteboardItems.RangeChanged += HandleItemsCollectionChanged;
+        SelectedItems.RangeChanged += HandleSelectedItemsChanged;
+    }
 
     private readonly global::Quire.Controls.Worksheet.IWorksheetModel _model;
 
@@ -463,7 +469,7 @@ public partial class WorksheetControlContent
 
     public event Action Activated;
 
-    public event Action<IWhiteboardItemContainer, IWhiteboardItem> RequestActivatePartContainingChild;
+    public event Action<IWhiteboardItemContainer, IWhiteboardItem> RequestActivatePartContainingChild = delegate { };
 
     public void SetCopyWhiteboardItemsDelegate(Func<IEnumerable<IWhiteboardItem>, bool> copyWhiteboardItems)
     {
@@ -553,15 +559,15 @@ public partial class WorksheetControlContent
 
     public void HandleDirectionalMove(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public event Action InsertionPointSet;
+    public event Action InsertionPointSet = () => { };
 
-    public event Action<IWhiteboardItem, IWhiteboardItem> ActiveItemChanged;
+    public event Action<IWhiteboardItem, IWhiteboardItem> ActiveItemChanged = delegate { };
 
-    public event Action ActiveDescendantChanged;
+    public event Action ActiveDescendantChanged = () => { };
 
-    public event Action SelectedDescendantsChanged;
+    public event Action SelectedDescendantsChanged = () => { };
 
-    public event Action<double> NonprintableSpaceWidthIncrease;
+    public event Action<double> NonprintableSpaceWidthIncrease = delegate { };
 
     public bool BoundDirectionalMoveByContentWidth { private get; set; }
 
