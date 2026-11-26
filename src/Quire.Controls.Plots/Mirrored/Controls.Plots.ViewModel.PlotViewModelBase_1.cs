@@ -260,9 +260,15 @@ public partial class PlotViewModelBase<TModel>
         GraphWidth = newSize.Width;
     }
 
-    public void SetDataObject(global::Quire.Serialization.IDeS11NProvider de11NProvider, global::Quire.PersistentDataObjects.plotType dataObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SetDataObject(global::Quire.Serialization.IDeS11NProvider de11NProvider, global::Quire.PersistentDataObjects.plotType dataObject)
+    {
+        HideFromCalculationContext = Model.SetDataObject(de11NProvider, dataObject, ResultManager.Instance);
+    }
 
-    public global::Quire.PersistentDataObjects.plotType GetDataObject(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::Quire.PersistentDataObjects.plotType GetDataObject(global::Quire.Serialization.IS11NProvider s11NProvider)
+    {
+        return Model.GetDataObject(s11NProvider, ResultManager.Instance, HideFromCalculationContext);
+    }
 
     private void FireCalculatableAdded(ICalculatable calc)
     {
