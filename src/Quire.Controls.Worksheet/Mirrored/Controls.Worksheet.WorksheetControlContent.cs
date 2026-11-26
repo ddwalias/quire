@@ -608,9 +608,12 @@ public partial class WorksheetControlContent
         }
     }
 
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorBlocked("closure ordinal anchor; body pending")]
-    private void ItemsRemoved(global::System.Collections.Generic.IList<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ItemsRemoved(IList<IWhiteboardItem> items)
+    {
+        UnSelectItems(items);
+        items.GetRegionsOfType<IOleBaseObjectControl>().Each(ole => ole.CloseOle());
+        items.GetRegionsOfType<ISpellCheckRegion>().Each(text => text.DisableSpellCheck());
+    }
 
     private readonly global::Quire.Controls.Core.CustomSplitItemRenderSizeDelegate _customSplitItemRenderSizeDelegate;
 
