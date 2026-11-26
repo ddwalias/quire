@@ -927,6 +927,61 @@ public partial class WorksheetControlContent
 
     internal partial class DeleteSelectedItemsCommand
     {
+        private readonly IDictionary<IWhiteboardItem, Point> _selectedItemsWithLocations = new Dictionary<IWhiteboardItem, Point>();
+
+        private Point _topMostItemLocation;
+
+        public DeleteSelectedItemsCommand(IWorksheetContent worksheetContent, string name)
+            : base(worksheetContent, name)
+        {
+            int topMostItemIndex = _worksheetContent.WhiteboardItems.Count;
+            _worksheetContent.SelectedItems.Each((IWhiteboardItem item) =>
+            {
+                Point itemLocation = _worksheetContent.GetItemLocation(item);
+                _selectedItemsWithLocations.Add(item, itemLocation);
+                int num = _worksheetContent.WhiteboardItems.IndexOf(item);
+                if (topMostItemIndex > num)
+                {
+                    topMostItemIndex = num;
+                    _topMostItemLocation = itemLocation;
+                }
+            });
+        }
+
+        public override bool Do()
+        {
+            global::Quire.Wpf.WpfUtils.DoWork(() =>
+            {
+                _worksheetContent.WhiteboardItems.RemoveRange(_selectedItemsWithLocations.Keys);
+                _worksheetContent.InsertionPoint = _topMostItemLocation;
+            });
+            return true;
+        }
+
+        public override void Undo()
+        {
+            global::Quire.DebugTools.LogData("DeleteSelectedItemsCommand.Undo: Enter");
+            WorksheetContent.FireActivated();
+            global::Quire.Wpf.WpfUtils.DoWork(() =>
+            {
+                global::Quire.DebugTools.LogData("DeleteSelectedItemsCommand.Undo: Start adding (and committing) items");
+                _selectedItemsWithLocations.Each((KeyValuePair<IWhiteboardItem, Point> item) =>
+                {
+                    _worksheetContent.AddItemAtLocation(item.Key, item.Value);
+                    _worksheetContent.CommitItem(item.Key);
+                });
+                global::Quire.DebugTools.LogData("DeleteSelectedItemsCommand.Undo: Finish adding, start selecting items");
+                WorksheetContent.SelectItems(_selectedItemsWithLocations.Keys);
+                WorksheetItemManager.BlockUntilLoaded();
+                IWhiteboardItem whiteboardItem = _selectedItemsWithLocations.Keys.LastOrDefault();
+                if (whiteboardItem != null)
+                {
+                    Size renderSize = WorksheetItemManager.GetRenderSize(whiteboardItem);
+                    WorksheetItemManager.BringIntoView(whiteboardItem, new Rect(default(Point), renderSize));
+                }
+            });
+            global::Quire.DebugTools.LogData("DeleteSelectedItemsCommand.Undo: Finish selecting items and exit");
+        }
         public override void Redo()
         {
             WorksheetContent.FireActivated();

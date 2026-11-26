@@ -22,16 +22,6 @@ public partial class WorksheetControlContent : global::Quire.Controls.Worksheet.
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlContent+DeleteSelectedItemsCommand, Ptc.Controls.Worksheet")]
     internal partial class DeleteSelectedItemsCommand : global::Quire.Controls.Worksheet.WorksheetControlContent.WorksheetContentCommand
     {
-        [global::Quire.Mirror.MirrorStub]
-        private readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> _selectedItemsWithLocations;
-        [global::Quire.Mirror.MirrorStub]
-        private global::System.Windows.Point _topMostItemLocation;
-        [global::Quire.Mirror.MirrorStub]
-        public DeleteSelectedItemsCommand(global::Quire.Controls.Worksheet.IWorksheetContent worksheetContent, string name) : base(default(global::Quire.Controls.Worksheet.IWorksheetContent), default(string)) { }
-        [global::Quire.Mirror.MirrorStub]
-        public override bool Do() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override void Undo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlContent+MoveItemsCommand, Ptc.Controls.Worksheet")]
