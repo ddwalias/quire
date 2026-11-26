@@ -977,6 +977,30 @@ public partial class WorksheetControl
         _viewModel.SetCopyWhiteboardItemsDelegate(null);
     }
 
+    private static bool CheckForScriptableControls(object item)
+    {
+        EquationControl equationControl = item as EquationControl;
+        if (equationControl != null && equationControl.IsScriptableControl != false)
+        {
+            return true;
+        }
+        IWhiteboardItemContainer whiteboardItemContainer = item as IWhiteboardItemContainer;
+        if (whiteboardItemContainer != null)
+        {
+            bool found = false;
+            foreach (IWhiteboardItem whiteboardItem in whiteboardItemContainer.WhiteboardItems)
+            {
+                found = CheckForScriptableControls(whiteboardItem);
+                if (found)
+                {
+                    break;
+                }
+            }
+            return found;
+        }
+        return false;
+    }
+
     object IWorksheetControl.FindResource(object key)
     {
         return FindResource(key);
