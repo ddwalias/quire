@@ -262,11 +262,7 @@ public partial class WorksheetItemManager
     {
         FrameworkElement frameworkElement = sender as FrameworkElement;
         IWhiteboardItem whiteboardItem = sender as IWhiteboardItem;
-        if (DebugTools.AssertNotNull(frameworkElement, "elem").Failed)
-        {
-            return;
-        }
-        if (DebugTools.AssertNotNull(whiteboardItem, "item").Failed)
+        if (DebugTools.AssertNotNull(frameworkElement, "elem").Failed || DebugTools.AssertNotNull(whiteboardItem, "item").Failed)
         {
             return;
         }
@@ -372,7 +368,11 @@ public partial class WorksheetItemManager
     }
     private void ProcessDispatchedSizeChangeNotifications(string operation)
     {
-        if (_dispatchingSizeChangeNotifications || DebugTools.DevAssert(_sizeChangedItemRefs.IsNotEmpty(), null).Failed)
+        if (_dispatchingSizeChangeNotifications)
+        {
+            return;
+        }
+        if (DebugTools.DevAssert(_sizeChangedItemRefs.IsNotEmpty(), null).Failed)
         {
             return;
         }
