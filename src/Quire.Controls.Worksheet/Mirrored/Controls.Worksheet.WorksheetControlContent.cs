@@ -459,7 +459,54 @@ public partial class WorksheetControlContent
         return renderSize;
     }
 
-    public global::System.Windows.Point GetNavigationStartLocation(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::System.Windows.Point GetNavigationStartLocation(global::Quire.Direction direction)
+    {
+        Point location = InsertionPoint;
+        if (ActiveItem != null)
+        {
+            if (ActiveItem is IWhiteboardControl whiteboardControl)
+            {
+                Point itemLocation = GetItemLocation(ActiveItem);
+                location = whiteboardControl.GetNavigationStartLocation(direction);
+                Size renderSize = WorksheetItemManager.GetRenderSize(whiteboardControl);
+                switch (direction)
+                {
+                    case global::Quire.Direction.Up:
+                        location = new Point(location.X, 0.0);
+                        break;
+                    case global::Quire.Direction.Left:
+                        location = new Point(0.0, location.Y);
+                        break;
+                    case global::Quire.Direction.Down:
+                        location = new Point(location.X, renderSize.Height);
+                        break;
+                    case global::Quire.Direction.Right:
+                        location = new Point(renderSize.Width, location.Y);
+                        break;
+                }
+                location = new TranslateTransform(itemLocation.X, itemLocation.Y).Transform(location);
+            }
+            else
+            {
+                Point itemLocation = GetItemLocation(ActiveItem);
+                Size itemRenderSize = GetItemRenderSize(ActiveItem);
+                location = itemLocation;
+                switch (direction)
+                {
+                    case global::Quire.Direction.Up:
+                        location.Offset(0.0, ActiveItem.VerticalAlignmentOffset);
+                        break;
+                    case global::Quire.Direction.Right:
+                        location.Offset(itemRenderSize.Width, 0.0);
+                        break;
+                    case global::Quire.Direction.Down:
+                        location.Offset(0.0, ActiveItem.VerticalAlignmentOffset + itemRenderSize.Height);
+                        break;
+                }
+            }
+        }
+        return location;
+    }
 
     public event Action<IWhiteboardControl, Rect> RequestScrollTo;
 
