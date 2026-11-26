@@ -604,7 +604,53 @@ public partial class WorksheetControlContent
         throw new NotImplementedException("The move command from the worksheet view model should be reviewed and placed here. For now this method cannot be used.");
     }
 
-    public void HandleDirectionalMove(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void HandleDirectionalMove(global::Quire.Direction direction)
+    {
+        Point nearestIntersectionInDirection = _worksheetGrid.GetNearestIntersectionInDirection(GetNavigationStartLocation(direction), direction);
+        if (!CanMoveToInsertionPoint(nearestIntersectionInDirection))
+        {
+            return;
+        }
+        if (global::Quire.DebugTools.DevAssert(SelectedItems.Count() == 0, null).Failed)
+        {
+            return;
+        }
+        IWhiteboardItem itemAtLocation = GetItemAtLocation(nearestIntersectionInDirection);
+        if (itemAtLocation is ICollapsibleAreaControl { IsCollapsed: not false })
+        {
+            global::Quire.DebugTools.FailAssertion(null, Array.Empty<object>());
+            nearestIntersectionInDirection = _worksheetGrid.GetNearestIntersectionInDirection(nearestIntersectionInDirection, direction);
+            InsertionPoint = nearestIntersectionInDirection;
+        }
+        else if (itemAtLocation != null)
+        {
+            if (itemAtLocation is IWhiteboardControl whiteboardControl)
+            {
+                Point itemLocation = GetItemLocation(itemAtLocation);
+                Point point = new TranslateTransform(-itemLocation.X, -itemLocation.Y).Transform(nearestIntersectionInDirection);
+                Vector? offset = whiteboardControl.NavigateInto(direction, point);
+                if (offset.HasValue)
+                {
+                    if (!BoundDirectionalMoveByContentWidth || (nearestIntersectionInDirection + offset.Value).X <= ContentAreaWidth)
+                    {
+                        InsertionPoint = nearestIntersectionInDirection + offset.Value;
+                    }
+                }
+            }
+            else
+            {
+                Vector? offset = itemAtLocation.NavigateIntoItem(direction);
+                if (offset.HasValue)
+                {
+                    InsertionPoint = nearestIntersectionInDirection + offset.Value;
+                }
+            }
+        }
+        else
+        {
+            InsertionPoint = nearestIntersectionInDirection;
+        }
+    }
 
     public event Action InsertionPointSet = () => { };
 
