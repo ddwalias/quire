@@ -34,26 +34,6 @@ public partial class WorksheetControlContent : global::Quire.Controls.Worksheet.
     [global::Quire.Mirror.MirrorStub]
     private global::System.Func<global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem>, bool> _copyWhiteboardItems;
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Controls.Core.Whiteboard.IWhiteboardControl, global::System.Windows.Rect> RequestScrollTo;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Controls.Core.Whiteboard.IWhiteboardControl, global::System.Windows.Size, global::System.Windows.Size> ChildTriggeredResize;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Controls.Core.Whiteboard.IWhiteboardControl> RequestMaximumSize;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action Activated;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainer, global::Quire.Controls.Core.IWhiteboardItem> RequestActivatePartContainingChild;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action InsertionPointSet;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IWhiteboardItem> ActiveItemChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action ActiveDescendantChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action SelectedDescendantsChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<double> NonprintableSpaceWidthIncrease;
-    [global::Quire.Mirror.MirrorStub]
     public WorksheetControlContent(global::Quire.Controls.Worksheet.IWorksheetModel model, global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid alignmentGrid, global::Quire.Controls.Core.CustomSplitItemRenderSizeDelegate splitItemRenderSizeDelegate = default) { }
     [global::Quire.Mirror.MirrorStub]
     public void SelectContiguous(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -66,11 +46,7 @@ public partial class WorksheetControlContent : global::Quire.Controls.Worksheet.
     [global::Quire.Mirror.MirrorStub]
     public bool CheckPotentialMove(global::System.Collections.Generic.Dictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Point> itemsAtNewLocationsRaw, bool preventRestrictedItemLocations) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HandleItemsCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void ItemsRemoved(global::System.Collections.Generic.IList<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleSelectedItemsChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.IWhiteboardItem GetItemAtLocation(global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 

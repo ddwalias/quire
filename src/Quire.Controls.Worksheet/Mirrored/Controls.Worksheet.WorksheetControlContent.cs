@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using System.Collections.Specialized;
 using System.Windows.Media;
 using Quire.Controls.Core;
 using Quire.Controls.Core.Whiteboard;
@@ -32,6 +33,26 @@ public partial class WorksheetControlContent
             throw new NotImplementedException();
         }
     }
+
+    public event Action<IWhiteboardControl, Rect> RequestScrollTo;
+
+    public event Action<IWhiteboardControl, Size, Size> ChildTriggeredResize;
+
+    public event Action<IWhiteboardControl> RequestMaximumSize;
+
+    public event Action Activated;
+
+    public event Action<IWhiteboardItemContainer, IWhiteboardItem> RequestActivatePartContainingChild;
+
+    public event Action InsertionPointSet;
+
+    public event Action<IWhiteboardItem, IWhiteboardItem> ActiveItemChanged;
+
+    public event Action ActiveDescendantChanged;
+
+    public event Action SelectedDescendantsChanged;
+
+    public event Action<double> NonprintableSpaceWidthIncrease;
 
     public Point GetItemGridPosition(IWhiteboardItem item)
     {
@@ -230,6 +251,32 @@ public partial class WorksheetControlContent
 
     public IEnumerable<IWhiteboardItem> RecursivelyEnumerateDescendantItemssBypassWhiteboard() =>
         global::Quire.Controls.Whiteboard.WhiteboardViewModel.RecursivelyEnumerateDescendantsIgnoringTypes(WhiteboardItems);
+
+    private void HandleItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
+    {
+        switch (args.Action)
+        {
+            case NotifyCollectionChangedAction.Add:
+                ItemsAdded(args.NewItems.OfType<IWhiteboardItem>().ToList());
+                break;
+            case NotifyCollectionChangedAction.Remove:
+                ItemsRemoved(args.OldItems.OfType<IWhiteboardItem>().ToList());
+                break;
+            default:
+                DebugTools.FailAssertion("Unsupported action: {0}", args.Action);
+                break;
+            case NotifyCollectionChangedAction.Move:
+                break;
+        }
+    }
+
+    private void HandleSelectedItemsChanged(object sender, NotifyCollectionChangedEventArgs args)
+    {
+        if (args.Action == NotifyCollectionChangedAction.Add && SelectedItems.Count() == args.NewItems.Count)
+        {
+            ActiveItem = null;
+        }
+    }
 
     private void ItemsAdded(IEnumerable<IWhiteboardItem> items)
     {
