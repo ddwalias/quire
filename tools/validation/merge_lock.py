@@ -170,6 +170,68 @@ def held(path=None, timeout=None):
                 fcntl.flock(handle, fcntl.LOCK_UN)
 
 
+DEFAULT_SLOTS = 4
+
+
+def slot_count(environ=os.environ):
+    return max(1, int(environ.get('QUIRE_VALIDATION_SLOTS', DEFAULT_SLOTS)))
+
+
+@contextlib.contextmanager
+def validation_slot(directory=None, slots=None, timeout=None, sleep=time.sleep, clock=time.monotonic):
+    """Hold one of QUIRE_VALIDATION_SLOTS (default 4) machine-wide validation slots for the `with` body. Every
+    validation builds the solution twice, so a dozen lanes validating at once exhaust memory and CPU and make every
+    one of them slower than running a few at a time. Polls the slot files (exclusive lock on the first byte of
+    quire-validate-<n>.lock beside the merge lock) and reports the wait every REPORT_EVERY seconds."""
+    directory = Path(directory) if directory else lock_path().parent
+    slots = slot_count() if slots is None else slots
+    timeout = timeout_seconds() if timeout is None else timeout
+    start = clock()
+    last_report = start
+    while True:
+        for number in range(slots):
+            handle = open(directory / f'quire-validate-{number}.lock', 'a+b')
+            if try_slot(handle):
+                try:
+                    yield number
+                finally:
+                    release_slot(handle)
+                    handle.close()
+                return
+            handle.close()
+        now = clock()
+        if now - start >= timeout:
+            raise TimeoutError(f'no validation slot free after {timeout:.0f}s ({slots} slots)')
+        if now - last_report >= REPORT_EVERY:
+            report(f'waiting for a validation slot ({now - start:.0f}s so far; {slots} slots)')
+            last_report = now
+        sleep(3)
+
+
+def try_slot(handle):
+    try:
+        handle.seek(0)
+        if os.name == 'nt':
+            import msvcrt
+            msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
+        else:
+            import fcntl
+            fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        return True
+    except OSError:
+        return False
+
+
+def release_slot(handle):
+    handle.seek(0)
+    if os.name == 'nt':
+        import msvcrt
+        msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
+    else:
+        import fcntl
+        fcntl.flock(handle, fcntl.LOCK_UN)
+
+
 def is_held(path=None):
     """Whether another holder has the lock now (tests, and a quick look before landing)."""
     with open(path or lock_path(), 'a+b') as handle:

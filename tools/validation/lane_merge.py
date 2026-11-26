@@ -25,7 +25,7 @@ import sys
 import time
 import uuid
 
-from merge_lock import held
+from merge_lock import held, validation_slot
 import il_merge
 import release_il
 
@@ -174,7 +174,8 @@ def attempt(args, main_dir, lane, number):
     tool_tests(lane, pin(args.branch), args.timeout)
     receipt = il_merge.ROOT / '.mirror-cache' / f'gate-il-{uuid.uuid4().hex[:12]}'
     args.base, args.apply, args.results = pin(args.branch), False, receipt
-    code = il_merge.gate(args)
+    with validation_slot():
+        code = il_merge.gate(args)
     if code:
         return code
     record = json.loads((receipt / 'gate.json').read_text(encoding='utf-8'))
