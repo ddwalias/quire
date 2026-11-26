@@ -163,4 +163,10 @@ internal partial class PlotGraphLinearAxis
             MouseMoveAdorner.InvalidateVisual();
         }
     }
+
+    public override Positions Position
+    {
+        get => (Positions)GetValue(PositionProperty);
+        set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
 }
