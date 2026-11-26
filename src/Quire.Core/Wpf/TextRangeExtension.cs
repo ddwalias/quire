@@ -25,7 +25,7 @@ public static partial class TextRangeExtension
 
     public static IEnumerable<Run> EnumerateRunsInRange(this global::System.Windows.Documents.TextRange range)
     {
-        // Match Mathcad's Release IL local slots and Run/Span branch layout.
+        // Pattern tests with continue emit 89 Release IL entries; Mathcad's 90-entry body preserves these cast locals and branches.
         IEnumerable<Run> runs;
         Hyperlink hyperlink;
         LogicalDirection direction;
@@ -112,64 +112,42 @@ public static partial class TextRangeExtension
         foreach (Block item in enumerable)
         {
             // Release IL allocates these two locals before the pattern variables; unassigned declarations emit no IL.
-            IEnumerable<Block> blocks3;
-            IEnumerable<Block> blocks2;
-            // Release IL tests Paragraph, Table, Section, List and BlockUIContainer before any body, and places the
-            // assertion path after the four bodies, so the tests and labels are kept in that order.
-            if (item is Paragraph paragraph)
+            IEnumerable<Block> tableBlocks;
+            IEnumerable<Block> listItemBlocks;
+            switch (item)
             {
-                goto ParagraphBlock;
+                case Paragraph paragraph:
+                    foreach (T nestedInline in range.EnumerateInlinesInRange<T>(paragraph.Inlines))
+                    {
+                        yield return nestedInline;
+                    }
+                    break;
+                case Table table:
+                    tableBlocks = table.RowGroups.SelectMany((TableRowGroup rowGroup) => rowGroup.Rows.SelectMany((TableRow row) => row.Cells.SelectMany((TableCell cell) => cell.Blocks)));
+                    foreach (T nestedInline in range.EnumerateInlinesInRange<T>(tableBlocks))
+                    {
+                        yield return nestedInline;
+                    }
+                    break;
+                case global::System.Windows.Documents.Section section:
+                    foreach (T nestedInline in range.EnumerateInlinesInRange<T>(section.Blocks))
+                    {
+                        yield return nestedInline;
+                    }
+                    break;
+                case global::System.Windows.Documents.List list:
+                    listItemBlocks = list.ListItems.SelectMany((ListItem listItem) => listItem.Blocks);
+                    foreach (T nestedInline in range.EnumerateInlinesInRange<T>(listItemBlocks))
+                    {
+                        yield return nestedInline;
+                    }
+                    break;
+                case BlockUIContainer:
+                    break;
+                default:
+                    DebugTools.FailAssertion(item?.GetType().Name);
+                    break;
             }
-            if (item is Table table)
-            {
-                goto TableBlock;
-            }
-            if (item is global::System.Windows.Documents.Section section)
-            {
-                goto SectionBlock;
-            }
-            if (item is global::System.Windows.Documents.List list)
-            {
-                goto ListBlock;
-            }
-            if (!(item is BlockUIContainer))
-            {
-                goto FailBlock;
-            }
-            continue;
-
-        ParagraphBlock:
-            foreach (T item5 in range.EnumerateInlinesInRange<T>(paragraph.Inlines))
-            {
-                yield return item5;
-            }
-            continue;
-
-        TableBlock:
-            blocks3 = table.RowGroups.SelectMany((TableRowGroup rowGroup) => rowGroup.Rows.SelectMany((TableRow row) => row.Cells.SelectMany((TableCell cell) => cell.Blocks)));
-            foreach (T item4 in range.EnumerateInlinesInRange<T>(blocks3))
-            {
-                yield return item4;
-            }
-            continue;
-
-        SectionBlock:
-            foreach (T item3 in range.EnumerateInlinesInRange<T>(section.Blocks))
-            {
-                yield return item3;
-            }
-            continue;
-
-        ListBlock:
-            blocks2 = list.ListItems.SelectMany((ListItem listItem) => listItem.Blocks);
-            foreach (T item2 in range.EnumerateInlinesInRange<T>(blocks2))
-            {
-                yield return item2;
-            }
-            continue;
-
-        FailBlock:
-            DebugTools.FailAssertion(item?.GetType().Name);
         }
     }
 
@@ -178,7 +156,7 @@ public static partial class TextRangeExtension
         List<Inline> intersectingInlines = inlines.Where(range.IntersectsWith).ToList();
         foreach (Inline inline in intersectingInlines)
         {
-            // Keep both yield sites in Mathcad's Release state-machine order.
+            // Explicit branch order keeps Mathcad's iterator wrap2/wrap3 fields and yield states.
             if (!(inline is T matchingInline))
             {
                 goto CheckSpan;

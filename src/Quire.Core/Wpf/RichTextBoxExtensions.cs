@@ -25,7 +25,7 @@ public static partial class RichTextBoxExtensions
         _textDecorations = textFormat.TextDecorations.Clone();
     }
 
-    // Release IL requires these ordered type branches to target their bodies and shared return directly.
+    // A type-pattern switch adds one Release IL entry (85 vs 84) and changes branch #41; Mathcad targets these bodies directly.
     public static void ClearTextFormatPropsRecursively(this Block block, global::Quire.DelegateFunction1<bool, TextElement> condition, params DependencyProperty[] props)
     {
         if (condition(block))
@@ -118,7 +118,7 @@ public static partial class RichTextBoxExtensions
         }
     }
 
-    // Release IL requires these ordered type branches to target their bodies and shared return directly.
+    // A type-pattern switch adds two Release IL entries (88 vs 86) and changes branch #31; Mathcad targets these bodies directly.
     public static void ClearTextFormatPropsRecursively(this Inline inline, global::Quire.DelegateFunction1<bool, TextElement> condition, params DependencyProperty[] props)
     {
         if (condition(inline))
@@ -178,7 +178,7 @@ public static partial class RichTextBoxExtensions
         return;
     }
 
-    // Release IL comparison requires these labels to preserve Mathcad's recursive branch order.
+    // A type-pattern switch changes branch #21 and shortens the Release IL (86 vs 94 entries); Mathcad uses these ordered bodies.
     public static bool Satisfy(this TextElement textElement, global::Quire.DelegateFunction1<bool, TextElement> condition)
     {
         if (!condition(textElement))
@@ -257,6 +257,7 @@ public static partial class RichTextBoxExtensions
         return result;
     }
 
+    // Switch and early-return forms change the Release IL local slot and branches (stloc.2 vs stloc.1; 68 vs 78 entries).
     public static bool Satisfy(this Block block, global::Quire.DelegateFunction1<bool, TextElement> condition)
     {
         if (!condition(block))
@@ -323,6 +324,7 @@ public static partial class RichTextBoxExtensions
         return result;
     }
 
+    // A type-pattern switch shortens the Release IL (53 vs 64 entries); Mathcad shares the result local and return block.
     public static bool Satisfy(this Inline inline, global::Quire.DelegateFunction1<bool, TextElement> condition)
     {
         if (!condition(inline))
