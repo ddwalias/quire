@@ -1972,4 +1972,19 @@ internal partial class WorksheetViewModel
         }
         return VisualHelper.DisplayMessage(empty, MessageBoxImage.Exclamation, checkBoxesData, buttonsKey, defaultButtonKey, cancelButtonKey);
     }
+    public void ActivateHeader()
+    {
+        WorksheetPageLayoutMode = PageLayoutMode.PageMode;
+        IHeaderFooterControl headerControl = IsFirstPageHeaderFooterDifferent && ActivePage?.PageNumber == 1 ? FirstPageHeader : Header;
+        ActivateSection(headerControl, ActivePage, null);
+        headerControl.RestoreVisualState();
+    }
+
+    public void ActivateFooter()
+    {
+        WorksheetPageLayoutMode = PageLayoutMode.PageMode;
+        IHeaderFooterControl footerControl = IsFirstPageHeaderFooterDifferent && ActivePage?.PageNumber == 1 ? FirstPageFooter : Footer;
+        ActivateSection(footerControl, ActivePage, null);
+        footerControl.RestoreVisualState();
+    }
 }
