@@ -33,7 +33,15 @@ partial class CalculationController
     }
     public static global::Quire.Calculation.CalculationController BindTo(global::Quire.Calculation.Core.ICalculatableContext context) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public static void Dispose() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public static void UNITTEST_InitBuilder(global::Quire.Calculation.EngineBuilder engineBuilder) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
+    public static void UNITTEST_InitBuilder(global::Quire.Calculation.EngineBuilder engineBuilder)
+    {
+        if (_engineBuilder != null)
+        {
+            _engineBuilder.Dispose();
+        }
+        _engineBuilder = engineBuilder;
+    }
     private void HookupAndInitializeEngine() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void HookupContextEvents()
     {
