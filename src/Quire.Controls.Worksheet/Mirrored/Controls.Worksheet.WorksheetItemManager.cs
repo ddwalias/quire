@@ -186,4 +186,70 @@ public partial class WorksheetItemManager
         itemWorksheetLocation.Offset(0.0, item.VerticalAlignmentOffset);
         return new Rect(itemWorksheetLocation, GetRenderSize(item));
     }
+
+    public long GetItemAddMoveRemoveTimestamp(IWhiteboardItem item)
+    {
+        return GetAddMoveRemoveTimestamp(FrameworkElementFacade.GetFrameworkElement(item));
+    }
+
+    public void SetItemAddMoveRemoveTimestamp(IWhiteboardItem item, long stamp)
+    {
+        SetAddMoveRemoveTimestamp(FrameworkElementFacade.GetFrameworkElement(item), stamp);
+    }
+
+    public bool GetItemSplitCheckIsRequired(IWhiteboardItem item)
+    {
+        return GetSplitCheckIsRequired(FrameworkElementFacade.GetFrameworkElement(item));
+    }
+
+    public void SetItemSplitCheckIsRequired(IWhiteboardItem item, bool required)
+    {
+        SetSplitCheckIsRequired(FrameworkElementFacade.GetFrameworkElement(item), required);
+    }
+
+    public bool GetShouldAssertOnLocation(IWhiteboardItem item)
+    {
+        return AttachedProperties.GetShouldAssertOnLocation(FrameworkElementFacade.GetFrameworkElement(item));
+    }
+
+    public void SetShouldAssertOnLocation(IWhiteboardItem item, bool value)
+    {
+        AttachedProperties.SetShouldAssertOnLocation(FrameworkElementFacade.GetFrameworkElement(item), value);
+    }
+
+    public void ClearShouldAssertOnLocation(IWhiteboardItem item)
+    {
+        AttachedProperties.ClearShouldAssertOnLocation(FrameworkElementFacade.GetFrameworkElement(item));
+    }
+
+    public IWhiteboardItem GetItemPrintView(IWhiteboardItem item)
+    {
+        return AttachedProperties.GetPrintView(FrameworkElementFacade.GetFrameworkElement(item));
+    }
+
+    public void HookupAreaBorderChanged(IWhiteboardItem item)
+    {
+        if (item is ICollapsibleAreaControl collapsibleAreaControl)
+        {
+            collapsibleAreaControl.BorderStateChanged += OnAreaBorderStateChanged;
+        }
+    }
+
+    public Geometry GetItemClipGeometry(IWhiteboardItem item)
+    {
+        UIElement uIElement = UIElementFacade.GetUIElement(item);
+        IWhiteboardItemPresenter itemPresenter = GetItemPresenter(item);
+        Geometry clip;
+        // Single exit through one local: Release IL shares one return slot across both branches.
+        if (itemPresenter != null)
+        {
+            DebugTools.DevAssert(uIElement.Clip == null, null);
+            clip = itemPresenter.Clip;
+        }
+        else
+        {
+            clip = uIElement.Clip;
+        }
+        return clip;
+    }
 }

@@ -30,17 +30,7 @@ public partial class WorksheetItemManager : global::Quire.Controls.Whiteboard.Wh
     [global::Quire.Mirror.MirrorStub]
     private bool _dispatchingSizeChangeNotifications;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Geometry GetItemClipGeometry(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> SortItemsByLocation(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items, bool descending) => base.SortItemsByLocation(items, descending);
-    [global::Quire.Mirror.MirrorStub]
-    public long GetItemAddMoveRemoveTimestamp(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetItemAddMoveRemoveTimestamp(global::Quire.Controls.Core.IWhiteboardItem item, long stamp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool GetItemSplitCheckIsRequired(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetItemSplitCheckIsRequired(global::Quire.Controls.Core.IWhiteboardItem item, bool required) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Rect GetDescendantBounds(object obj) => base.GetDescendantBounds(obj);
     [global::Quire.Mirror.MirrorStub]
@@ -68,17 +58,7 @@ public partial class WorksheetItemManager : global::Quire.Controls.Whiteboard.Wh
     [global::Quire.Mirror.MirrorStub]
     private void RemoveSizeChangedItem(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.FrameworkElement elem, string operation, bool attemptToClearList = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IWhiteboardItem GetItemPrintView(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool GetShouldAssertOnLocation(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetShouldAssertOnLocation(global::Quire.Controls.Core.IWhiteboardItem item, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ClearShouldAssertOnLocation(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> SmartDescendantsSatisfyingCondition(global::Quire.Controls.Core.IWhiteboardItem startItem, global::System.Predicate<global::Quire.Controls.Core.IWhiteboardItem> condition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void HookupAreaBorderChanged(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OnAreaBorderStateChanged(global::Quire.Controls.Core.ICollapsibleAreaControl area) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
