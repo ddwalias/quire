@@ -368,6 +368,42 @@ public partial class EquationControl
     public event global::System.Action<object, global::System.Windows.RoutedEventArgs> OnAdornedElementReady;
     public event global::System.Windows.RoutedEventHandler Changed;
 
+    [global::Quire.Mirror.MirrorOf("Ptc.Controls.EquationControl+EquationControlChildCalculatable, Ptc.Controls.EquationControl")]
+    private partial class EquationControlChildCalculatable : global::Quire.Calculation.Core.Support.SimpleCalculatable
+    {
+        private global::Quire.Controls.EquationControl _parent;
+        public EquationControlChildCalculatable(global::Quire.Controls.EquationControl parent) { }
+        public global::Quire.Controls.EquationControl.EquationControlChildCalculatable Clone(global::Quire.Controls.EquationControl newParent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public override void SetSynchronizationStatus(global::Quire.Calculation.Core.SynchronizationStatus syncStatus) => base.SetSynchronizationStatus(syncStatus);
+        public override void SetCalculatingStatus(global::Quire.Calculation.Core.CalculatingStatus computingStatus) => base.SetCalculatingStatus(computingStatus);
+        public override void SetResult(global::Quire.Calculation.Core.IResultNode result) => base.SetResult(result);
+        public override void SetError(global::Quire.Calculation.Core.EngineError error) => base.SetError(error);
+        public override void SetIdentifierLabels(global::System.Collections.Generic.IDictionary<global::Quire.Calculation.Core.ResolvedId, string[]> idLabelMap) => base.SetIdentifierLabels(idLabelMap);
+        public override void SetAutoSelectAlgorithm(global::System.Collections.Generic.IDictionary<int, string> autoAlgorithmMap) => base.SetAutoSelectAlgorithm(autoAlgorithmMap);
+    }
+
+    [global::Quire.Mirror.MirrorOf("Ptc.Controls.EquationControl+SizeList2String, Ptc.Controls.EquationControl")]
+    internal static partial class SizeList2String
+    {
+        public static string WriteWrappedSizesToString(global::System.Collections.Generic.List<global::System.Windows.Size> sizeData, int numDecimalPlaces = -1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public static global::System.Collections.Generic.List<global::System.Windows.Size> ReadWrappedSizesFromString(string sizesString) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
+
+    [global::Quire.Mirror.MirrorOf("Ptc.Controls.EquationControl+PropertyNames, Ptc.Controls.EquationControl")]
+    public static partial class PropertyNames
+    {
+        public const string CurrentNumberFormat = "CurrentNumberFormat";
+        public const string CurrentMatrixFormat = "CurrentMatrixFormat";
+        public const string CurrentIdLabel = "CurrentIdLabel";
+        public const string CurrentDisplayIdLabel = "CurrentDisplayIdLabel";
+        public const string IsCommitted = "IsCommitted";
+    }
+
+    [global::Quire.Mirror.MirrorOf("Ptc.Controls.EquationControl+TestHelper, Ptc.Controls.EquationControl")]
+    internal partial class TestHelper
+    {
+    }
+
     internal EquationControl(IEquationModel model)
     {
         ImeHandler.SetIsInputMethodSuspended(this);
