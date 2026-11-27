@@ -1943,7 +1943,18 @@ public partial class EquationControl
 
     private void HandleSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
-    private void FixCaretToRightMostPositionAfterClipping() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void FixCaretToRightMostPositionAfterClipping()
+    {
+        global::System.Nullable<double> midY = MidYFromCurrentMathNode(_model.NavigatorState);
+        if (!midY.HasValue)
+        {
+            global::Quire.DebugTools.FailAssertion(null, global::System.Array.Empty<object>());
+        }
+        else
+        {
+            SimulateMouseClick(new global::System.Windows.Point(ViewClippedWidth - 1.0, (double)midY.Value), 1);
+        }
+    }
     private void NavigateLeftIfNeccessary()
     {
         if (!ContainsSymbolicEvaluation)
@@ -3238,7 +3249,21 @@ public partial class EquationControl
             _matrixResizeAdorner.VisualMatrix = visualMatrixNode;
         }
     }
-    internal void UpdateMatrixForResizeAdorner(global::Quire.EquationEditor.View.IVisualMatrixNode matrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal void UpdateMatrixForResizeAdorner(global::Quire.EquationEditor.View.IVisualMatrixNode matrix)
+    {
+        if (_matrixResizeAdorner == null)
+        {
+            return;
+        }
+        if (((object)_matrixResizeAdorner.VisualMatrix).Equals(matrix))
+        {
+            return;
+        }
+        if (GetMatrixPathFromRoot(matrix).SequenceEqual(_matrixResizeAdorner.MatrixPathFromRoot))
+        {
+            _matrixResizeAdorner.VisualMatrix = matrix as global::Quire.Controls.Internal.VisualMatrixNode;
+        }
+    }
 
     private static bool AreTableCoordinateListsEqual(IList<TableCoordinate> oneNestedMatrixPosition, IList<TableCoordinate> theOtherNestedMatrixPosition)
     {
