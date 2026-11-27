@@ -146,17 +146,47 @@ public bool UNITTEST_CanCreateFileSpecificRegion<T>()
         Paste();
     }
 
-internal static global::Quire.Controls.Worksheet.IWorksheetItemManager ItemManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+internal static global::Quire.Controls.Worksheet.IWorksheetItemManager ItemManager
+    {
+        get
+        {
+            if (_itemManager == null || !_itemManager.IsConnected)
+            {
+                return _itemManager = AppServiceRegistry.GetService<IWorksheetItemManager>();
+            }
+            return _itemManager;
+        }
+    }
 
-internal static global::Quire.Controls.Worksheet.IControlFactory ControlCreator { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+internal static global::Quire.Controls.Worksheet.IControlFactory ControlCreator
+    {
+        get
+        {
+            if (_controlCreator == null || !_controlCreator.IsConnected)
+            {
+                return _controlCreator = AppServiceRegistry.GetService<IControlFactory>();
+            }
+            return _controlCreator;
+        }
+    }
 
 public bool HasScriptableControls { get; set; }
 
-internal static global::Quire.Services.IMouseFacade MouseFacadeService { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+internal static global::Quire.Services.IMouseFacade MouseFacadeService
+    {
+        get
+        {
+            if (_mouseFacadeService == null || !_mouseFacadeService.IsConnected)
+            {
+                return _mouseFacadeService = AppServiceRegistry.GetService<IMouseFacade>();
+            }
+            return _mouseFacadeService;
+        }
+    }
 
 static WorksheetViewModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-public global::Quire.Controls.Worksheet.IWorksheetPage ActivePage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+public global::Quire.Controls.Worksheet.IWorksheetPage ActivePage { get => _activePage; private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 
 private void CollapseIfPresent(IHeaderFooterZombie zombie)
     {
@@ -205,9 +235,19 @@ private void RestoreVisualBrushForAllPages()
         }));
     }
 
-private int LinesPerPage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+private int LinesPerPage => PageLayout.LinesPerPage;
 
-private global::Quire.Calculation.Core.EngineError CurrentError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+private global::Quire.Calculation.Core.EngineError CurrentError
+    {
+        get
+        {
+            if (ActiveItem is ICalculationErrorOwner calculationErrorOwner)
+            {
+                return calculationErrorOwner.CurrentError;
+            }
+            return null;
+        }
+    }
 
 private EngineError CurrentErrorChain { get; set; }
 
@@ -275,7 +315,7 @@ private void OnStyleCollectionChanged()
         FireChanged();
     }
 
-public global::Quire.Controls.Worksheet.IWorksheetVisualHelper VisualHelper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+public global::Quire.Controls.Worksheet.IWorksheetVisualHelper VisualHelper => _pageManager.VisualHelper;
 
 private void Initialize()
     {
@@ -356,9 +396,9 @@ public bool IsContentActive
         }
     }
 
-public bool IsFirstPageHeaderActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+public bool IsFirstPageHeaderActive => ActiveSection == FirstPageHeader;
 
-public bool IsFirstPageFooterActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+public bool IsFirstPageFooterActive => ActiveSection == FirstPageFooter;
 
 public bool IsHeaderActive
     {
@@ -396,9 +436,21 @@ public Point InsertionPoint
         }
     }
 
-public global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid WorksheetGrid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+public global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid WorksheetGrid => _worksheetGrid;
 
-public global::System.Windows.Markup.XmlLanguage CurrentProofingLanguage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+public global::System.Windows.Markup.XmlLanguage CurrentProofingLanguage
+    {
+        get => _currentProofingLanguage;
+        private set
+        {
+            if (!object.Equals(_currentProofingLanguage, value) && DebugTools.DevAssert(value != null && value != XmlLanguage.Empty, null).Passed)
+            {
+                _currentProofingLanguage = value;
+                OnPropertyChanged("CurrentProofingLanguage");
+                FireChanged();
+            }
+        }
+    }
 
 public IWhiteboardItem ActiveItem
     {
@@ -660,7 +712,7 @@ private void UpdateHeaderFooterTops()
         FooterTop = num + PageLayout.PageMargin.Top + PageLayout.PageBodyHeight;
     }
 
-public global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Core.IWorksheetPageBreak> PageBreaks { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+public global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Core.IWorksheetPageBreak> PageBreaks => WorksheetContent.PageBreaks;
 
 public void SetCopyWhiteboardItemsDelegate(Func<IEnumerable<IWhiteboardItem>, bool> copyWhiteboardItems)
     {
@@ -765,9 +817,9 @@ public void TraverseWhiteboardItems(IEnumerable<IWhiteboardItem> wbiCollection, 
         }
     }
 
-public global::Quire.Controls.Core.PageLayoutMode WorksheetPageLayoutMode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+public global::Quire.Controls.Core.PageLayoutMode WorksheetPageLayoutMode { get => _viewMode; set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 
-public global::Quire.Controls.Core.WorksheetPageLayout PageLayout { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+public global::Quire.Controls.Core.WorksheetPageLayout PageLayout => _pageManager.PageLayout;
 
 public double WorksheetPageLayoutDisplayHeight
     {
@@ -781,11 +833,11 @@ public double WorksheetPageLayoutDisplayHeight
         }
     }
 
-public global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Core.IWhiteboardItem> WorksheetItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+public global::Quire.Wpf.ObservableRangeCollection<global::Quire.Controls.Core.IWhiteboardItem> WorksheetItems => WorksheetContent.WhiteboardItems;
 
-public global::Quire.Wpf.INotifyCollectionRangeChanged<global::Quire.Controls.Core.IWhiteboardItem> SelectedItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+public global::Quire.Wpf.INotifyCollectionRangeChanged<global::Quire.Controls.Core.IWhiteboardItem> SelectedItems => ActiveSection.SelectedItems;
 
-public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> ActiveOrSelectedItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> ActiveOrSelectedItems => ActiveSection.ActiveOrSelectedItems;
 
 public bool CanDeleteVerticalSpace(Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -811,7 +863,7 @@ public double NonprintableSpaceButtonHeight
         }
     }
 
-public global::Quire.Core.TextFormat ContentTextFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+public global::Quire.Core.TextFormat ContentTextFormat { get => _contentTextFormat; set => _contentTextFormat = value; }
 
 public TextFormat HeaderTextFormat
     {
@@ -863,7 +915,7 @@ public TextFormat FirstPageFooterTextFormat
 
 public NumberFormat DisplayNumberFormat { get; set; }
 
-public global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> LabeledIdFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+public global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> LabeledIdFormat { get => WorksheetContent.LabeledIdFormat; set => WorksheetContent.LabeledIdFormat = value; }
 
 public MatrixFormat ResultMatrixFormat { get; set; }
 
@@ -993,7 +1045,18 @@ public bool UseHFMajorGridLines
         }
     }
 
-public global::System.Windows.Thickness NonprintableSpaceButtonPosition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+public global::System.Windows.Thickness NonprintableSpaceButtonPosition
+    {
+        get => _nonprintableSpaceButtonPosition;
+        set
+        {
+            if (!(_nonprintableSpaceButtonPosition == value))
+            {
+                _nonprintableSpaceButtonPosition = value;
+                OnPropertyChanged("NonprintableSpaceButtonPosition");
+            }
+        }
+    }
 
 public double WidthWithNonprintableSpace
     {
@@ -1223,7 +1286,7 @@ public StaticMathFormat ContentMathFormat
 
 public event global::System.Action CurrentElementChanged;
 
-public global::Quire.Controls.Worksheet.IWorksheetPageManager PageManager { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+public global::Quire.Controls.Worksheet.IWorksheetPageManager PageManager => _pageManager;
 
 public bool OleObjectAutoResize
     {
@@ -1804,7 +1867,7 @@ public Point GetWorksheetSectionItemLocation(IWhiteboardItem item)
 
 public DragMode CurrentDragMode { get; set; }
 
-public global::Quire.Controls.Worksheet.IWorksheetSection ActiveSection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+public global::Quire.Controls.Worksheet.IWorksheetSection ActiveSection { get => _activeSection; private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 
 protected override void OnPropertyChanged(string propertyName) => base.OnPropertyChanged(propertyName);
 
