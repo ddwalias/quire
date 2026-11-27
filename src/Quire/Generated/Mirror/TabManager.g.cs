@@ -32,8 +32,6 @@ public partial class TabManager : global::System.Windows.Controls.Primitives.Sel
     [global::Quire.Mirror.MirrorStub]
     public int SelectedViewIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.ObjectModel.ObservableCollection<global::Quire.WindowTabTupleData> ItemsCollection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Data.CollectionView CollectionView { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public TabManager() { }
@@ -59,8 +57,6 @@ public partial class TabManager : global::System.Windows.Controls.Primitives.Sel
     private void UpdateItemsOrder() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SwitchAdjacentTabs(int sourceId, int targetId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.ContentPresenter TabItemContainerAtIndex(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void PerformTabDragMove(global::Quire.TabManagerItem originalTab) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

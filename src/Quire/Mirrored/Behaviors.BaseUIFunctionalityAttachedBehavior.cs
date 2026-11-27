@@ -20,17 +20,17 @@ public partial class BaseUIFunctionalityAttachedBehavior
     protected static Image GetImage(object value)
     {
         Image image = value as Image;
-        if (image != null)
+        if (image == null)
         {
-            return image;
+            Panel panel = value as Panel;
+            if (panel != null)
+            {
+                return panel.Children.OfType<Image>().FirstOrDefault();
+            }
+
+            return null;
         }
 
-        Panel panel = value as Panel;
-        if (panel != null)
-        {
-            return panel.Children.OfType<Image>().FirstOrDefault();
-        }
-
-        return null;
+        return image;
     }
 }
