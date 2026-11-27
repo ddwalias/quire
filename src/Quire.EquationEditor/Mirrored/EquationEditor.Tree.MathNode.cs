@@ -183,6 +183,12 @@ public partial class MathNode
 
     public int NodeInfoValueLength => NodeInfoExtensions.ValueLength(NodeInfo, ValueType);
 
+    public int RLID
+    {
+        get => i__;
+        private set => i__ = value;
+    }
+
     public MathNode RootNode
     {
         get
