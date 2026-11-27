@@ -58,18 +58,6 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode[] LeftNeighbors { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool IsInEvaluationResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsInNumericPartOfEvaluationResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsInSymbolicResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ConsiderAsPrefixInInsertion { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsInherentChildOfParent { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsEffectiveInfix { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     internal MathNode(global::Quire.EquationEditor.Tree.MathNodeDescriptor A_0, global::Quire.EquationEditor.Tree.INodeInfo A_1, params global::Quire.EquationEditor.Tree.MathNode[] A_2) { }
     [global::Quire.Mirror.MirrorStub]
     internal MathNode(global::Quire.EquationEditor.Tree.MathNodeDescriptor A_0, global::Quire.EquationEditor.Tree.INodeInfo A_1, string A_2, params global::Quire.EquationEditor.Tree.MathNode[] A_3) { }

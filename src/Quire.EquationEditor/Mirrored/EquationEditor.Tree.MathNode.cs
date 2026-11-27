@@ -673,6 +673,22 @@ public partial class MathNode
         }
     }
 
+    public bool IsEffectiveInfix
+    {
+        get
+        {
+            if (IsInfix)
+            {
+                return true;
+            }
+            if (Fixity == Fixity.Special)
+            {
+                return global::Quire.Native.PtcEquationEditor.aw.a(this) == Fixity.Infix;
+            }
+            return false;
+        }
+    }
+
     public MathNode AdjacentSubexpression(Direction dir)
     {
         if (dir == Direction.Left)
@@ -905,6 +921,57 @@ public partial class MathNode
         return false;
     }
 
+    public bool IsInEvaluationResult
+    {
+        get
+        {
+            MathNode nearestEvaluationAncestor = GetNearestEvaluationAncestor();
+            if (nearestEvaluationAncestor != null && PathFromAncestor(nearestEvaluationAncestor)[0] == 1)
+            {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public bool IsInNumericPartOfEvaluationResult
+    {
+        get
+        {
+            MathNode nearestAncestor = GetNearestAncestor("RSCALE");
+            if (nearestAncestor != null && PathFromAncestor(nearestAncestor)[0] == 0)
+            {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public bool IsInSymbolicResult
+    {
+        get
+        {
+            MathNode nearestAncestor = GetNearestAncestor("SYMBOLIC_EVALUATION");
+            if (nearestAncestor != null && PathFromAncestor(nearestAncestor)[0] == 2)
+            {
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public bool ConsiderAsPrefixInInsertion
+    {
+        get
+        {
+            if (Fixity == Fixity.Special && NavigablePartCount == 1 && NavigablePartPositions[0] == 0 && IsNary)
+            {
+                return true;
+            }
+            return false;
+        }
+    }
+
     public bool ChildNotPrimal(int childIndex)
     {
         if (PrimalChildPosition.HasValue)
@@ -913,6 +980,8 @@ public partial class MathNode
         }
         return false;
     }
+
+    public bool IsInherentChildOfParent => Array.IndexOf(Parent.InherentChildren, IndexInParent) >= 0;
 
     [System.Runtime.CompilerServices.SkipLocalsInit]
     public MathNode GetContainerRoot(bool nonPrimalChildAsContainer)
