@@ -14,6 +14,9 @@ internal partial class r
     public MathNode b() => a("NaN", IdLabels.Constant);
 
     [MirrorVerified("Release IL")]
+    public MathNode b(string text) => a(text, (INodeInfo)null);
+
+    [MirrorVerified("Release IL")]
     public MathNode a(FormattedString formattedString) => a(formattedString, null);
 
     [MirrorVerified("Release IL")]

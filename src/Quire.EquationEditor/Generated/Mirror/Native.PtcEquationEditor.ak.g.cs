@@ -126,10 +126,6 @@ internal partial class ak
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Native.PtcEquationEditor.al b(global::Quire.Direction A_0, global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode> A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Native.PtcEquationEditor.al a(global::Quire.Direction A_0, params global::Quire.EquationEditor.Tree.MathNode[] A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Native.PtcEquationEditor.al a(global::Quire.Direction A_0, global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode> A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.EquationEditor.Tree.Navigation.NavigatorState b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
