@@ -9,6 +9,9 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class l
 {
     [MirrorVerified("Release IL")]
+    public l(Quire.EquationEditor.Equation.EquationModel model) : this(model, global::Quire.Native.PtcEquationEditor.f.a_) { }
+
+    [MirrorVerified("Release IL")]
     public override EquationEditModeEnum e() => EquationEditModeEnum.Normal;
 
     [MirrorVerified("Release IL")]

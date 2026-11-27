@@ -15,8 +15,6 @@ internal partial class l : global::Quire.EquationEditor.Equation.EquationModel.b
     [global::Quire.Mirror.MirrorName("b")]
     private readonly global::Quire.Native.PtcEquationEditor.f b__;
     [global::Quire.Mirror.MirrorStub]
-    public l(global::Quire.EquationEditor.Equation.EquationModel A_0) : base(default(global::Quire.EquationEditor.Equation.EquationModel)) { }
-    [global::Quire.Mirror.MirrorStub]
     public l(global::Quire.EquationEditor.Equation.EquationModel A_0, global::Quire.Native.PtcEquationEditor.f A_1) : base(default(global::Quire.EquationEditor.Equation.EquationModel)) { }
     [global::Quire.Mirror.MirrorStub]
     private void b(global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
