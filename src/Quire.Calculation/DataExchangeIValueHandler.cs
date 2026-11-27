@@ -1,6 +1,7 @@
 #nullable disable
 using System;
 using System.Windows.Threading;
+using IValue = Mathcad.IValue;
 
 namespace Quire.Calculation;
 

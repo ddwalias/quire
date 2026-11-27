@@ -2,6 +2,7 @@
 using System;
 using System.Windows.Threading;
 using Quire.Calculation.Core;
+using IValue = Mathcad.IValue;
 
 namespace Quire.Calculation;
 

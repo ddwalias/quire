@@ -5,6 +5,7 @@ using System.Windows.Threading;
 using Quire.Automation;
 using Quire.Calculation.Core;
 using Quire.Mpl.Run;
+using IValue = Mathcad.IValue;
 
 namespace Quire.Calculation;
 

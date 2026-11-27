@@ -16,7 +16,6 @@
 #        4  dropped field: deferred type
 #        4  hand-written base differs
 #        4  constructor declared internal
-#        3  dropped interface: keeps copies of public types from
 #        3  skipped indexed property: C# allows one indexer name per type
 #        3  hand-written access differs from Mathcad's
 #        2  dropped method: no substitute for
@@ -99,15 +98,6 @@
 
 [Quire.Automation] Quire.Automation.WorksheetReadonlyOptionNames  (Ptc.MathcadPrime.Automation.WorksheetReadonlyOptionNames, Ptc.MathcadPrime.Automation)
   not generated: hand-written Enum
-
-[Quire.Automation.Native] Quire.Automation.Wrappers.MatrixValue  (Automation.Wrappers.MatrixValue, automation)
-  dropped interface Mathcad.MatrixValue: keeps copies of public types from Quire.Interop.Mathcad (D22): Mathcad.MatrixValue
-
-[Quire.Automation.Native] Quire.Automation.Wrappers.NumericValue  (Automation.Wrappers.NumericValue, automation)
-  dropped interface Mathcad.NumericValue: keeps copies of public types from Quire.Interop.Mathcad (D22): Mathcad.NumericValue
-
-[Quire.Automation.Native] Quire.Automation.Wrappers.StringValue  (Automation.Wrappers.StringValue, automation)
-  dropped interface Mathcad.StringValue: keeps copies of public types from Quire.Interop.Mathcad (D22): Mathcad.StringValue
 
 [Quire.Automation.Native] Quire.Components.VSDataValue  (Mathcad.Components.VSDataValue, componentsmgd)
   interface accessor VSINTERFACESLib.IVSDataType.get_IsComplex has no property metadata; declared as an explicit property

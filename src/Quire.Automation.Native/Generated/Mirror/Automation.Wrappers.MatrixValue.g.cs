@@ -9,6 +9,6 @@
 namespace Quire.Automation.Wrappers;
 
 [global::Quire.Mirror.MirrorOf("Automation.Wrappers.MatrixValue, automation")]
-public partial class MatrixValue : global::Quire.IMatrixValue, global::Quire.IValue, global::System.Runtime.Serialization.ISerializable
+public partial class MatrixValue : global::Mathcad.MatrixValue, global::Mathcad.IMatrixValue, global::Mathcad.IValue, global::System.Runtime.Serialization.ISerializable
 {
 }

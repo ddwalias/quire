@@ -5,6 +5,7 @@ using System.IO;
 using System.Xml;
 using Quire.AutomationPrivate;
 using Quire.Mcd;
+using IValue = Mathcad.IValue;
 
 namespace Quire.Automation;
 

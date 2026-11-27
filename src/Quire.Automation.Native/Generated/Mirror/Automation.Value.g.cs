@@ -9,6 +9,6 @@
 namespace Quire.Automation;
 
 [global::Quire.Mirror.MirrorOf("Mathcad.Automation.Value, automationmgd")]
-public abstract partial class Value : global::System.MarshalByRefObject, global::Quire.AutomationPrivate.IValuePrivate, global::Quire.IValue, global::Quire.Automation.IAutomationValue
+public abstract partial class Value : global::System.MarshalByRefObject, global::Quire.AutomationPrivate.IValuePrivate, global::Mathcad.IValue, global::Quire.Automation.IAutomationValue
 {
 }

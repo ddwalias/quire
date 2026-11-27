@@ -6,7 +6,7 @@ namespace Quire { namespace Engine {
     ref class CachingWrapper : public IMathcadComponent2
     {
     private:
-        System::Collections::Generic::Dictionary<String^, Quire::IValue^>^ m_cache = gcnew System::Collections::Generic::Dictionary<String^, Quire::IValue^>();
+        System::Collections::Generic::Dictionary<String^, Mathcad::IValue^>^ m_cache = gcnew System::Collections::Generic::Dictionary<String^, Mathcad::IValue^>();
         IMathcadComponent^ m_component;
         bool m_locked;
         bool m_needs_commit;
@@ -54,11 +54,11 @@ namespace Quire { namespace Engine {
             }
         }
 
-        virtual void SetValue(String^ place, Quire::IValue^ value)
+        virtual void SetValue(String^ place, Mathcad::IValue^ value)
         {
             if (m_component->ShouldSkipUnchangedValue(place))
             {
-                Quire::IValue^ cached = nullptr;
+                Mathcad::IValue^ cached = nullptr;
                 if (m_cache->TryGetValue(place, cached) && cached->Equals(value))
                 {
                     return;
@@ -69,7 +69,7 @@ namespace Quire { namespace Engine {
             m_needs_commit = true;
         }
 
-        virtual Quire::IValue^ GetValue(String^ place)
+        virtual Mathcad::IValue^ GetValue(String^ place)
         {
             return m_component->GetValue(place);
         }

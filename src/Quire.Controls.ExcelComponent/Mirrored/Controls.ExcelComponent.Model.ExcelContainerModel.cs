@@ -13,6 +13,7 @@ using Quire.Core;
 using Quire.PersistentData;
 using Quire.Serialization;
 using Quire.OLE;
+using IValue = Mathcad.IValue;
 using System.Collections.Generic;
 namespace Quire.Controls.ExcelComponent.Model;
 
@@ -109,7 +110,7 @@ public partial class ExcelContainerModel
         SetValue(place, ConvertFromIValue(value), forceRun: true);
     }
 
-    public override global::Quire.IValue GetValue(string place)
+    public override global::Mathcad.IValue GetValue(string place)
     {
         CheckInstalledAndAvailable(forceRun: true);
         try
@@ -134,7 +135,7 @@ public partial class ExcelContainerModel
                         matrixValue.SetElement(i, j, ConvertToIValue(array[i + 1, j + 1], () => (dynamic)((global::Quire.Microsoft.Office.Interop.Excel.Range)(dynamic)range.get__Default(excelRow, excelCol)).Text));
                     }
                 }
-                return (global::Quire.IValue)matrixValue;
+                return (global::Mathcad.IValue)matrixValue;
             }
             return GetCellValue(range);
         }
@@ -144,7 +145,7 @@ public partial class ExcelContainerModel
         }
     }
 
-    private static global::Quire.IValue GetCellValue(global::Quire.Microsoft.Office.Interop.Excel.Range range)
+    private static global::Mathcad.IValue GetCellValue(global::Quire.Microsoft.Office.Interop.Excel.Range range)
     {
         return ConvertToIValue(range.get_Value(Type.Missing), () => (string)(dynamic)range.Text);
     }
@@ -272,7 +273,7 @@ public partial class ExcelContainerModel
         return false;
     }
 
-    private static global::Quire.IValue ConvertToIValue(object value, global::System.Func<string> getDefaultText) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static global::Mathcad.IValue ConvertToIValue(object value, global::System.Func<string> getDefaultText) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     private static object ConvertFromIValue(IValue value)
     {

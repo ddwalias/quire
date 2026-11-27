@@ -13,6 +13,7 @@
     <ProjectReference Include="..\Quire.Controls.EquationControl\Quire.Controls.EquationControl.csproj" />
     <ProjectReference Include="..\Quire.Controls.Whiteboard\Quire.Controls.Whiteboard.csproj" />
     <ProjectReference Include="..\Quire.Core\Quire.Core.csproj" />
+    <ProjectReference Include="..\Quire.Interop.Mathcad\Quire.Interop.Mathcad.csproj" EmbedInteropTypes="true" />
     <InternalsVisibleTo Include="$(AssemblyName).Tests" />
     <InternalsVisibleTo Include="Quire.Mirror.Tests" />
     <InternalsVisibleTo Include="Quire.Differential.Tests" />

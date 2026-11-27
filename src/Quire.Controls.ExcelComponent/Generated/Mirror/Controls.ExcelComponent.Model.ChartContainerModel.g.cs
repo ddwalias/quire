@@ -14,7 +14,7 @@ public partial class ChartContainerModel : global::Quire.Controls.ExcelComponent
     [global::Quire.Mirror.MirrorStub]
     public ChartContainerModel() : base(default(global::Quire.OLE.IOleSiteManager), default(bool)) { }
     [global::Quire.Mirror.MirrorStub]
-    private void SetTrace(uint traceId, global::Quire.IMatrixValue value, global::Quire.Calculation.IValueToIResultNodeTransform resultsTransform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void SetTrace(uint traceId, global::Mathcad.IMatrixValue value, global::Quire.Calculation.IValueToIResultNodeTransform resultsTransform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ClearTracesAndLimits() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

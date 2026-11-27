@@ -1,5 +1,5 @@
 import "oaidl.idl";
-[uuid(6B1F3B11-1111-4A2B-9C3D-0000000000AA), version(1.0)]
+[uuid(784C9004-0A1A-11E0-B354-11F8E2A8C36C), version(1.0)]
 library Mathcad
 {
     importlib("stdole2.tlb");

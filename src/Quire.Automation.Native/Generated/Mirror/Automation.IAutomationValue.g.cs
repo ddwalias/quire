@@ -9,6 +9,6 @@
 namespace Quire.Automation;
 
 [global::Quire.Mirror.MirrorOf("Mathcad.Automation.IAutomationValue, automationmgd")]
-public partial interface IAutomationValue : global::Quire.IValue, global::Quire.AutomationPrivate.IValuePrivate
+public partial interface IAutomationValue : global::Mathcad.IValue, global::Quire.AutomationPrivate.IValuePrivate
 {
 }

@@ -9,6 +9,6 @@
 namespace Quire.Automation.Wrappers;
 
 [global::Quire.Mirror.MirrorOf("Automation.Wrappers.StringValue, automation")]
-public partial class StringValue : global::Quire.IStringValue, global::Quire.IValue, global::System.Runtime.Serialization.ISerializable
+public partial class StringValue : global::Mathcad.StringValue, global::Mathcad.IStringValue, global::Mathcad.IValue, global::System.Runtime.Serialization.ISerializable
 {
 }

@@ -11,6 +11,8 @@ using Quire.OLE;
 using Quire.PersistentData;
 using Quire.Serialization;
 using Quire.Automation;
+using IMatrixValue = Mathcad.IMatrixValue;
+using IValue = Mathcad.IValue;
 using System.Runtime.InteropServices;
 using System.Windows;
 

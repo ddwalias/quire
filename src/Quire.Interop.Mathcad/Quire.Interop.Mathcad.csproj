@@ -1,6 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
+    <!-- TlbImp replaces the assembly after Roslyn builds it, so consumers (and the types they embed) read the replaced file. -->
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
     <MathcadMidl Condition="'$(MathcadMidl)' == ''">C:\Program Files (x86)\Windows Kits\10\bin\10.0.26100.0\x64\midl.exe</MathcadMidl>
     <MathcadCl Condition="'$(MathcadCl)' == ''">C:\BuildTools\VS17.8-msvc\VC\Tools\MSVC\14.38.33130\bin\Hostx64\x64\cl.exe</MathcadCl>
     <MathcadTlbImp Condition="'$(MathcadTlbImp)' == ''">C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.8 Tools\TlbImp.exe</MathcadTlbImp>

@@ -3,6 +3,8 @@ using System.IO;
 using System.Xml;
 using Quire.AutomationPrivate;
 using Quire.Mcd;
+using INumericValue = Mathcad.INumericValue;
+using IValue = Mathcad.IValue;
 
 namespace Quire.Automation;
 

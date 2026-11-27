@@ -60,9 +60,9 @@ public abstract partial class OleDataExchangeContainerModel<TPersistentData>
     {
     }
 
-    public abstract void SetValue(string place, global::Quire.IValue value, global::Quire.Calculation.IValueToIResultNodeTransform resultsTransform);
+    public abstract void SetValue(string place, global::Mathcad.IValue value, global::Quire.Calculation.IValueToIResultNodeTransform resultsTransform);
 
-    public abstract global::Quire.IValue GetValue(string place);
+    public abstract global::Mathcad.IValue GetValue(string place);
 
     public abstract void Commit();
 

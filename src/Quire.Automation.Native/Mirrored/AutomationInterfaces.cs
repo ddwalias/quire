@@ -21,7 +21,7 @@ namespace Quire.Automation
         object Symbolic { get; }
     }
 
-    public partial interface IAutomationValue : global::Quire.IValue, global::Quire.AutomationPrivate.IValuePrivate
+    public partial interface IAutomationValue : global::Mathcad.IValue, global::Quire.AutomationPrivate.IValuePrivate
     {
         object Core { get; set; }
         global::Quire.Mcd.Dim Dim { get; }
@@ -79,79 +79,6 @@ namespace Quire.Automation
     }
 }
 
-namespace Quire.AutomationPrivate
-{
-    public partial interface IFunctionValue
-    {
-        int Arity { get; }
-    }
-
-    public partial interface INumericValuePrivate
-    {
-        string UnitsXML(bool bSimplify = false);
-    }
-
-    public partial interface IMatrixValuePrivate
-    {
-        bool IsRange { get; }
-    }
-
-    public partial interface IValuePrivate
-    {
-        int Size { get; }
-        string XML(bool bSimplify = false);
-        void Save(global::Quire.AutomationPrivate.IStream pstm);
-        void Load(global::Quire.AutomationPrivate.IStream pstm);
-    }
-
-    public partial interface IValueFactory
-    {
-        object EngineToAutomation(object engVal);
-        object VariantToAutomation(object real, object imag);
-        object WrapperToAutomation(object wrapVal);
-        object VSDataToAutomation(object vsVal);
-        object AutomationToEngine(object o);
-        void AutomationToVariant(object o, out object pReal, out object pImag);
-        object AutomationToWrapper(object wrapVal);
-        object AutomationToVSData(object vsVal);
-    }
-}
-
-namespace Quire
-{
-    public partial interface IValue
-    {
-        string Type { get; }
-        string AsString { get; }
-    }
-
-    public partial interface IStringValue
-    {
-        string Type { get; }
-        string AsString { get; }
-        string Value { get; set; }
-    }
-
-    public partial interface INumericValue
-    {
-        string Type { get; }
-        string AsString { get; }
-        double Real { get; set; }
-        double Imag { get; set; }
-        int Integer { get; set; }
-    }
-
-    public partial interface IMatrixValue
-    {
-        string Type { get; }
-        string AsString { get; }
-        int Rows { get; }
-        int Cols { get; }
-        object GetElement(int row, int col);
-        void SetElement(int row, int col, object val);
-    }
-}
-
 namespace Quire.Engine
 {
     public partial interface IMathcadComponent
@@ -159,8 +86,8 @@ namespace Quire.Engine
         bool LockComponent();
         bool LockComponent(bool wait);
         void UnlockComponent();
-        void SetValue(string place, global::Quire.IValue value);
-        global::Quire.IValue GetValue(string place);
+        void SetValue(string place, global::Mathcad.IValue value);
+        global::Mathcad.IValue GetValue(string place);
         bool ShouldSkipUnchangedValue(string place);
         void Commit();
     }
@@ -170,8 +97,8 @@ namespace Quire.Engine
         bool LockComponent();
         bool LockComponent(bool wait);
         void UnlockComponent();
-        void SetValue(string place, global::Quire.IValue value);
-        global::Quire.IValue GetValue(string place);
+        void SetValue(string place, global::Mathcad.IValue value);
+        global::Mathcad.IValue GetValue(string place);
     }
 }
 

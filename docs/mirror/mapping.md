@@ -44,9 +44,12 @@ members to the target in the same change.
 
 **Duplicates.** Each project mirrors its original's metadata. If the original defines a type compiled from a shared
 header, the project defines it too (C++/CLI projects include the one shared header, so each compiles its own copy);
-if the original only references it, the project references the owner. The C# public duplicates `Mathcad.IValue` and
-`IMatrixValue` are embedded COM interop types. MirrorGen still applies the D2 rule (one copy per project when
-internal, one overall when public) to the D2 hosts; the per-original rule takes effect as each assembly splits.
+if the original only references it, the project references the owner. The C# public duplicates `Mathcad.IValue`,
+`IMatrixValue` and the `MathcadAutomationPrivate` interfaces are embedded COM interop types (D22): MirrorGen writes no
+copy, maps references to them onto the interop project's own type, and the embedding project references the interop
+project with `EmbedInteropTypes="true"`, so Roslyn emits the copy. MirrorGen still applies the D2 rule (one copy per
+project when internal, one overall when public) to the D2 hosts; the per-original rule takes effect as each assembly
+splits.
 
 **Support projects.** Projects with no Mathcad counterpart are an explicit list: `Quire.Mirror` (attributes and
 `MirrorStub`), `Quire.Mpl.Runtime` (`BuiltinUnits`, `AffineUnit`), and a home for `Quire.Engine`'s own interpreter

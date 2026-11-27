@@ -170,13 +170,27 @@ the `Quire` namespace (`Mathcad.IValue` is `Quire.IValue`). Hand-written declara
 MirrorGen writes no shell for a top-level type bound that way when hand-written code declares all its members.
 
 `automationmgd.dll` defines 8 `MathcadAutomationPrivate` interfaces as NoPIA copies (`[TypeIdentifier]`,
-`[CompilerGenerated]`, only the members it uses), so they are compiler output, not source. `automationmgd`,
-`Ptc.Calculation` and `Ptc.Controls.ExcelComponent` embed `Mathcad.IValue` and its relatives the same way. The end state builds them as Mathcad did:
-`Quire.Automation.Native` references `Quire.AutomationPrivate` with `EmbedInteropTypes`, which needs the original's
-assembly attributes (`ImportedFromTypeLib`, `Guid`, `TypeLibVersion`) in `Quire.AutomationPrivate`, and MirrorGen
-stops generating the 8 copies; the same applies to the embedded `Mathcad.*` types. Until that lands, the consumers
-keep their generated copies, and no project may reference two assemblies that define the same type, or the build
-fails with an ambiguous type.
+`[CompilerGenerated]`, only the members it uses), so they are compiler output, not source. `automationmgd`
+(`Mathcad.IValue`, `IMatrixValue`, `INumericValue`, `IStringValue`), `Ptc.Calculation` (`IValue`) and
+`Ptc.Controls.ExcelComponent` (`IValue`, `IMatrixValue`) embed `Mathcad.*` from `interop.mathcad` the same way, while
+`componentsmgd`, `iengine`, `mcfront12` and `automation` reference `interop.mathcad` directly. (The Excel and chart
+type libraries `ExcelComponent` embeds have no interop assembly here and are mirrored as source.) The build does what
+Mathcad's did: MirrorGen writes `<ProjectReference ... EmbedInteropTypes="true">` into a project's `Generated/Mirror.props`
+for each interop project whose types a hosted assembly embeds (`Quire.Automation.Native`: `Quire.Interop.Mathcad` and
+`Quire.AutomationPrivate`; `Quire.Calculation` and `Quire.Controls.ExcelComponent`: `Quire.Interop.Mathcad`), generates
+no copy of an embedded type, and maps every reference to such a type onto the interop project's own type
+(`Mathcad.IValue`, written with the type library's name because TlbImp does not rename). Roslyn embeds a reference only
+when its assembly carries the original's `Guid`, `ImportedFromTypeLib` and `TypeLibVersion` attributes: TlbImp writes
+them into `Quire.Interop.Mathcad` (from `Mathcad.reconstructed.idl`, whose library GUID is the original's), and
+`Quire.AutomationPrivate`, `Quire.Interop.MathcadOld` and `Quire.Interop.VSInterfacesLib` declare them in `AssemblyInfo.cs`.
+`Quire.Interop.Mathcad` produces no reference assembly, because TlbImp replaces its output after Roslyn builds it.
+Direct users (`Quire.Componentsmgd`, `Quire.Engine`, ...) reference the interop project normally.
+MethodAudit binds each embedded copy in a Quire assembly to the original's embedded copy in the Mathcad assembly the
+project mirrors (same name, or the type map's name for `Quire.AutomationPrivate.*`), so the member rows pair and a
+call through the copy names `[automationmgd]`, `[ptc.calculation]` or `[interop.mathcad]` as the original does; the
+gate counts a hand-written declaration that the embedded copy replaced as moved when its Mathcad member is now paired
+by a verified member. `Quire.Automation.Native` still hosts both `automation` (a direct reference) and `automationmgd`
+(an embedder) until `automationmgd` gets its own project.
 
 For `interop.mathcadautomationprivate`, Roslyn cannot express the remaining differences, so they are accepted: `runtime managed internalcall` on the 50
 interface members (Roslyn emits `cil managed`), `hidebysig` on the coclass constructor, the `instance` bit on 4

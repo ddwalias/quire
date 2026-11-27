@@ -1,8 +1,6 @@
-extern alias InteropMathcad;
 using System;
 using Quire.Automation;
 using Quire.Mcd;
-using IMatrixValue = InteropMathcad::Mathcad.IMatrixValue;
 
 namespace Quire.Components;
 

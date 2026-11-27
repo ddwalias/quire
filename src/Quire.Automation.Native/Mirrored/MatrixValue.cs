@@ -4,6 +4,8 @@ using System.IO;
 using System.Xml;
 using Quire.AutomationPrivate;
 using Quire.Mcd;
+using IMatrixValue = Mathcad.IMatrixValue;
+using IValue = Mathcad.IValue;
 
 namespace Quire.Automation;
 
