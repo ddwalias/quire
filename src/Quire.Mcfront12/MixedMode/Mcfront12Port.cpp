@@ -563,11 +563,11 @@ namespace Quire { namespace Engine {
             {
                 return nullptr;
             }
-            for each (System::Object^ key in dictionary2->Keys)
+            for each (System::Object^ key in rightDictionary->Keys)
             {
                 if (!dictionary->Contains(key))
                 {
-                    dictionary[key] = dictionary2[key];
+                    dictionary[key] = rightDictionary[key];
                 }
             }
             return dictionary;
