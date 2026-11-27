@@ -11,10 +11,4 @@ namespace Quire.AutomationServiceEngNote;
 [global::Quire.Mirror.MirrorOf("Spirit.AutomationServiceEngNote.AutomationSpiritOutputMatrixResult, MathcadPrime")]
 public partial class AutomationSpiritOutputMatrixResult : global::Quire.AutomationServiceEngNote.AutomationSpiritMatrixResult, global::Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResult
 {
-    [global::Quire.Mirror.MirrorStub]
-    int global::Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResult.ErrorCode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    global::Quire.EngNotebook.Automation.IMathcadPrimeMatrix global::Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResult.MatrixResult { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    string global::Quire.EngNotebook.Automation.IMathcadPrimeOutputMatrixResult.Units { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
