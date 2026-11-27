@@ -1927,7 +1927,13 @@ public bool CanReCalculateAll()
         return IsCalculationsEnabled;
     }
 
-public void FireRecalculateAll() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+public void FireRecalculateAll()
+    {
+        PreRecalculateAll = true;
+        CommitActive(ActiveItem);
+        WpfUtils.DoWork(() => _model.FireRecalculateAll());
+        PreRecalculateAll = false;
+    }
 
 public void FireCalculateNow()
     {
