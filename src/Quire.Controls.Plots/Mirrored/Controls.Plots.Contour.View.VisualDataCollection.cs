@@ -157,7 +157,57 @@ public partial class VisualDataCollection
     {
         return GetEnumerator();
     }
-    internal void PositionLabels() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal void PositionLabels()
+    {
+        Cursor overrideCursor = Mouse.OverrideCursor;
+        try
+        {
+            Mouse.OverrideCursor = Cursors.Wait;
+            if (Width <= 0.0 || Height <= 0.0 || _visualData.Length == 0)
+            {
+                return;
+            }
+            if (HorizontalValueToScreen == null || VerticalValueToScreen == null)
+            {
+                DebugTools.DevAssert(false, null);
+                return;
+            }
+            Rect bounds = _visualData[0].GeometryData.Bounds;
+            Point labelPosition = new Point(Width + 10.0, Height + 10.0);
+            List<Rect> list = new List<Rect>();
+            for (int num = _visualData.Length - 1; num >= 0; num--)
+            {
+                VisualData visualData = _visualData[num];
+                if (!string.IsNullOrEmpty(visualData.Label))
+                {
+                    Size labelSize = visualData.GetLabelSize();
+                    bool flag = false;
+                    int num2 = 0;
+                    while (!flag && num2 < visualData.PointsData.Length)
+                    {
+                        Point val = visualData.PointsData[num2];
+                        Point val2 = new Point(HorizontalValueToScreen.ValueToScreen(val.X), VerticalValueToScreen.ValueToScreen(val.Y));
+                        Rect val3 = new Rect(val2.X - labelSize.Width / 2.0, val2.Y, labelSize.Width, labelSize.Height);
+                        if (bounds.Contains(val3) && !list.Exists((Predicate<Rect>)((Rect)(object)val3).IntersectsWith))
+                        {
+                            visualData.LabelPosition = val3.TopLeft;
+                            list.Add(val3);
+                            flag = true;
+                        }
+                        num2++;
+                    }
+                    if (!flag)
+                    {
+                        visualData.LabelPosition = labelPosition;
+                    }
+                }
+            }
+        }
+        finally
+        {
+            Mouse.OverrideCursor = overrideCursor;
+        }
+    }
     public static readonly global::System.Windows.DependencyProperty LabelFormatterProperty;
     private bool _reversed;
     private global::Quire.Controls.Plots.Contour.View.VisualData[] _visualData = new VisualData[0];
@@ -267,7 +317,38 @@ public partial class VisualDataCollection
         }
     }
     public global::System.Collections.Generic.IEnumerator<global::Quire.Controls.Plots.Contour.View.VisualData> GetEnumerator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private global::Quire.Controls.Plots.Contour.View.VisualData CreateContourVisualData(global::Quire.Controls.Plots.Contour.Model.ContourLogicalData contourLogicalData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private global::Quire.Controls.Plots.Contour.View.VisualData CreateContourVisualData(global::Quire.Controls.Plots.Contour.Model.ContourLogicalData contourLogicalData)
+    {
+        VisualData visualData = CreateVisualDataRaw(contourLogicalData);
+        BindingOperations.SetBinding(binding: new Binding
+        {
+            Source = this,
+            Path = new PropertyPath(LabelFormatterProperty)
+        }, target: (DependencyObject)(object)visualData, dp: VisualData.LabelFormatterProperty);
+        BindingOperations.SetBinding(binding: new Binding
+        {
+            Source = this,
+            Path = new PropertyPath("Stroke")
+        }, target: (DependencyObject)(object)visualData, dp: VisualData.StrokeProperty);
+        BindingOperations.SetBinding((DependencyObject)(object)visualData, VisualData.DashStyleProperty, new Binding
+        {
+            Source = this,
+            Path = new PropertyPath("DashStyle")
+        });
+        BindingOperations.SetBinding((DependencyObject)(object)visualData, VisualData.StrokeThicknessProperty, new Binding
+        {
+            Source = this,
+            Path = new PropertyPath("LineWeight")
+        });
+        BindingOperations.SetBinding((DependencyObject)(object)visualData, VisualData.LabelVisibilityProperty, new Binding
+        {
+            Source = this,
+            Mode = BindingMode.OneWay,
+            Path = new PropertyPath(LabelVisibilityProperty)
+        });
+        visualData.LabelValue = contourLogicalData.ZLevel;
+        return visualData;
+    }
 
     private VisualData CreateVisualDataRaw(ContourLogicalData contourLogicalData)
     {
@@ -447,7 +528,7 @@ public partial class VisualDataCollection
             _model.LineWeight = value;
         }
     }
-    internal global::System.Windows.Input.CommandBindingCollection CommandBindings { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    internal global::System.Windows.Input.CommandBindingCollection CommandBindings => _viewModelHelper.CommandBindings;
     public event global::System.Collections.Specialized.NotifyCollectionChangedEventHandler CollectionChanged;
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     private void SetContoursLineStyle(object parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

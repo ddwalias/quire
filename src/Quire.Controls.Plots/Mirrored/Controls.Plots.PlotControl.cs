@@ -409,7 +409,34 @@ public partial class PlotControl
     public static readonly global::System.Windows.Input.RoutedUICommand AddVerticalMarkerCommand;
     public static readonly global::System.Windows.Input.RoutedUICommand AddHorizontalMarkerCommand;
     private void SwitchExpressionsVisibility(global::System.Windows.Visibility visibility) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void ShowHidePseudoErrorFrame(global::System.Windows.Visibility equationVisibility) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ShowHidePseudoErrorFrame(global::System.Windows.Visibility equationVisibility) {
+		if (equationVisibility == HiddenExpressionsVisibility)
+		{
+			if (ErrorCount() != 0)
+			{
+				return;
+			}
+			bool flag = false;
+			IPlotTrace[] traces = Traces;
+			for (int num = 0; num < traces.Length; num++)
+			{
+				flag = traces[num].HasEquationError;
+				if (flag)
+				{
+					break;
+				}
+			}
+			if (flag && PlotErrorFrame == null)
+			{
+				PlotErrorFrame = CreateErrorFrame(this);
+			}
+		}
+		else if (ErrorCount() == 0 && PlotErrorFrame != null)
+		{
+			PlotErrorFrame.Remove();
+			PlotErrorFrame = null;
+		}
+	}
 
     private void CanNavigateToYEquationList(object sender, CanExecuteRoutedEventArgs e)
     {
@@ -464,12 +491,228 @@ public partial class PlotControl
             MakeSureYEquationsNotOutsidePlot(_resultLegendsPositions[_resultLegendPositionIndex], _resultEquations);
         }
     }
-    private void PreserveGraphHeightAfterShowingBelowLegend() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void MakeSurePlotLegendNotOutsidePlot(bool changePlotSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void MakeSureXEquationsNotOutsidePlot(bool changePlotSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void MakeSureYEquationsNotOutsidePlot(global::Quire.Controls.Plots.PlotItemPlaceholder equationPlaceholder, global::Quire.Controls.Plots.EquationList equations) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void GraphSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnLayoutUpdated(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void PreserveGraphHeightAfterShowingBelowLegend() {
+		if (!double.IsNaN(_graphHeightBeforeShowingLegendBelow))
+		{
+			if (Graph == null || _plotLegend == null || PlotLegendPositionIndex != 0)
+			{
+				_graphHeightBeforeShowingLegendBelow = double.NaN;
+			}
+			else if (_doubleComparer.Compare(_plotLegend.MinHeight, 0.0) > 0 && _doubleComparer.Compare(_plotLegend.MaxItemWidth, 0.0) > 0 && _doubleComparer.Compare(Graph.ActualHeight, 0.0) > 0)
+			{
+				double num = _graphHeightBeforeShowingLegendBelow - Graph.ActualHeight;
+				Height += num;
+				_graphHeightBeforeShowingLegendBelow = double.NaN;
+			}
+		}
+	}
+    private void MakeSurePlotLegendNotOutsidePlot(bool changePlotSize)
+    {
+		if (_plotLegend == null || PlotLegendPositions == null || !PlotLegend.ViewModel.ShowPlotLegend || _plotGrid == null || !IsLoaded)
+		{
+			return;
+		}
+		PlotItemPlaceholder plotItemPlaceholder = PlotLegendPositions[_plotLegendPositionIndex];
+		int column = Grid.GetColumn(plotItemPlaceholder);
+		int columnSpan = Math.Max(Grid.GetColumnSpan(plotItemPlaceholder), 1);
+		double availableWidth = 0.0;
+		for (int columnOffset = 0; columnOffset < columnSpan; columnOffset++)
+		{
+			availableWidth += _plotGrid.ColumnDefinitions[column + columnOffset].ActualWidth;
+		}
+		int row = Grid.GetRow(plotItemPlaceholder);
+		int rowSpan = Math.Max(Grid.GetRowSpan(plotItemPlaceholder), 1);
+		double availableHeight = 0.0;
+		for (int rowOffset = 0; rowOffset < rowSpan; rowOffset++)
+		{
+			availableHeight += _plotGrid.RowDefinitions[row + rowOffset].ActualHeight;
+		}
+		double legendWidth = _plotLegend.ActualWidth + _plotLegend.Margin.Left + _plotLegend.Margin.Right + plotItemPlaceholder.Padding.Left + plotItemPlaceholder.Padding.Right;
+		double legendHeight = _plotLegend.ActualHeight + _plotLegend.Margin.Top + _plotLegend.Margin.Bottom + plotItemPlaceholder.Padding.Top + plotItemPlaceholder.Padding.Bottom;
+		double widthOverflow = legendWidth - availableWidth;
+		double heightOverflow = legendHeight - availableHeight;
+		if (_doubleComparer.Compare(widthOverflow, 0.0) <= 0 && _doubleComparer.Compare(heightOverflow, 0.0) <= 0)
+		{
+			return;
+		}
+		if (changePlotSize)
+		{
+			if (_doubleComparer.Compare(widthOverflow, 0.0) > 0)
+			{
+				Width += widthOverflow;
+			}
+			if (_doubleComparer.Compare(heightOverflow, 0.0) > 0)
+			{
+				Height += heightOverflow;
+			}
+		}
+		else if (_doubleComparer.Compare(widthOverflow, 0.0) > 0)
+		{
+			double val = _plotLegend.Width - widthOverflow;
+			_plotLegend.Width = Math.Max(val, _plotLegend.MinWidth);
+		}
+	}
+    private void MakeSureXEquationsNotOutsidePlot(bool changePlotSize) {
+		if (_expressionVisibilityChangeInProgress || (_rangeLegendPositionIndex != 0 && _rangeLegendPositionIndex != 1) || _plotGrid == null || !IsLoaded)
+		{
+			return;
+		}
+		PlotItemPlaceholder plotItemPlaceholder = XLegendsPositions[_rangeLegendPositionIndex];
+		int column = Grid.GetColumn(plotItemPlaceholder);
+		int columnSpan = Grid.GetColumnSpan(plotItemPlaceholder);
+		double availableWidth = 0.0;
+		for (int columnOffset = 0; columnOffset < columnSpan; columnOffset++)
+		{
+			availableWidth += _plotGrid.ColumnDefinitions[column + columnOffset].ActualWidth;
+		}
+		double widthOverflow = _rangeEquations.ActualWidth - availableWidth + _rangeEquations.Margin.Left + _rangeEquations.Margin.Right + plotItemPlaceholder.Padding.Left + plotItemPlaceholder.Padding.Right;
+		DebugTools.DevAssert(plotItemPlaceholder.Margin.Left == plotItemPlaceholder.Margin.Right && plotItemPlaceholder.Margin.Left == 0.0, null);
+		if (_doubleComparer.Compare(widthOverflow, 0.0) <= 0)
+		{
+			return;
+		}
+		if (changePlotSize)
+		{
+			_xEquationSizeChangingDueToPlotSizeChanged = false;
+			Width += widthOverflow;
+			return;
+		}
+		EquationList rightMostEquationList = RightMostEquationList;
+		EquationList leftMostEquationList = LeftMostEquationList;
+		if (_doubleComparer.Compare(rightMostEquationList.ActualWidth, rightMostEquationList.MinWidth) > 0)
+		{
+			if (rightMostEquationList == _rangeEquations)
+			{
+				_xEquationSizeChangingDueToPlotSizeChanged = true;
+			}
+			if (widthOverflow < rightMostEquationList.Width)
+			{
+				rightMostEquationList.Width -= widthOverflow;
+			}
+			else
+			{
+				rightMostEquationList.Width = rightMostEquationList.MinWidth;
+			}
+		}
+		else if (_doubleComparer.Compare(leftMostEquationList.ActualWidth, leftMostEquationList.MinWidth) > 0)
+		{
+			if (leftMostEquationList == _rangeEquations)
+			{
+				_xEquationSizeChangingDueToPlotSizeChanged = true;
+			}
+			if (widthOverflow < leftMostEquationList.Width)
+			{
+				leftMostEquationList.Width -= widthOverflow;
+			}
+			else
+			{
+				leftMostEquationList.Width = leftMostEquationList.MinWidth;
+			}
+		}
+	}
+    private void MakeSureYEquationsNotOutsidePlot(global::Quire.Controls.Plots.PlotItemPlaceholder equationPlaceholder, global::Quire.Controls.Plots.EquationList equations) {
+		if (_plotGrid != null && IsLoaded)
+		{
+			int row = Grid.GetRow(equationPlaceholder);
+			int rowSpan = Grid.GetRowSpan(equationPlaceholder);
+			double availableHeight = 0.0;
+			for (int rowOffset = 0; rowOffset < rowSpan; rowOffset++)
+			{
+				availableHeight += _plotGrid.RowDefinitions[row + rowOffset].ActualHeight;
+			}
+			double heightOverflow = equations.ActualHeight - availableHeight + equations.Margin.Top + equations.Margin.Bottom + equationPlaceholder.Padding.Top + equationPlaceholder.Padding.Bottom;
+			DebugTools.DevAssert(equationPlaceholder.Margin.Top == equationPlaceholder.Margin.Bottom && equationPlaceholder.Margin.Top == 0.0, null);
+			if (_doubleComparer.Compare(heightOverflow, 0.0) > 0 && equations.ActualHeight > heightOverflow)
+			{
+				Height += heightOverflow;
+			}
+		}
+	}
+	private void GraphSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e)
+	{
+		Size previousSize = e.PreviousSize;
+		if (previousSize.Height.IsEqualTo(0.0) && previousSize.Width.IsEqualTo(0.0))
+		{
+			return;
+		}
+		Size newSize = e.NewSize;
+		double heightChange = newSize.Height - previousSize.Height;
+		double widthChange = newSize.Width - previousSize.Width;
+		if (_plotSizeChanging)
+		{
+			_plotSizeChanging = false;
+			_resizeInProgress = false;
+			CorrectHeightIfXEquationSizeIsChanged(heightChange);
+			KeepGraphMinSize();
+		}
+		else if (Math.Abs(widthChange).IsGreaterThan(0.0, 1E-05) || Math.Abs(heightChange).IsGreaterThan(0.0, 1E-05))
+		{
+			double nextWidth = Width - widthChange;
+			double nextHeight = Height - heightChange;
+			if (PlotType == PlotType.Polar &&
+				((_plotTitle != null && _plotTitle.ViewModel.ShowTitle) ||
+				 (_plotLegend != null && _plotLegend.ViewModel.ShowPlotLegend)))
+			{
+				nextWidth = Width;
+			}
+			if (_expressionVisibilityChangeInProgress)
+			{
+				_expressionVisibilityChangeInProgress = false;
+				if (newSize.Width.IsEqualTo(0.0))
+				{
+					double expressionWidthChange = GetExpressionHorizontalExtent() - _expressionHorizontalExtentBeforeChange;
+					if (expressionWidthChange > Math.Abs(widthChange) + 1E-05)
+					{
+						nextWidth = Width + expressionWidthChange;
+					}
+				}
+			}
+			_resizeInProgress = true;
+			_plotSizeChanging = true;
+			if (nextWidth < 0.0 || nextHeight < 0.0)
+			{
+				DebugTools.FailAssertion(null, Array.Empty<object>());
+			}
+			else
+			{
+				Width = nextWidth;
+				Height = nextHeight;
+			}
+		}
+		_model.GraphSize = new Size(Graph.ActualWidth, Graph.ActualHeight);
+	}
+	private void OnLayoutUpdated(object sender, global::System.EventArgs e)
+	{
+		if (_plotSizeChanging)
+		{
+			_plotSizeChanging = false;
+			DebugTools.DevAssert(!_xEquationSizeChangingDueToPlotSizeChanged.HasValue, null);
+			KeepGraphMinSize();
+		}
+		if (!_referenceSizeForPostUnfixate.IsEmpty)
+		{
+			double widthChange = Width - _referenceSizeForPostUnfixate.Width;
+			double heightChange = Height - _referenceSizeForPostUnfixate.Height;
+			Size gridCellSize = GridCellSize;
+			if (Math.Abs(widthChange).IsGreaterThan(_numCells * gridCellSize.Width, 1E-05) ||
+				Math.Abs(heightChange).IsGreaterThan(_numCells * gridCellSize.Height, 1E-05))
+			{
+				double adjustedWidth = Width - widthChange;
+				double adjustedHeight = Height - heightChange;
+				if (adjustedWidth < 0.0 || adjustedHeight < 0.0)
+				{
+					DebugTools.FailAssertion(null, Array.Empty<object>());
+				}
+				else
+				{
+					Width = adjustedWidth;
+					Height = adjustedHeight;
+				}
+			}
+			_referenceSizeForPostUnfixate = Size.Empty;
+			_numCells = 0;
+		}
+	}
     private void CorrectHeightIfXEquationSizeIsChanged(double verticalChange) {
 		if (_xEquationSizeChangingDueToPlotSizeChanged.HasValue)
 		{
@@ -484,9 +727,52 @@ public partial class PlotControl
 			_xEquationSizeChangingDueToPlotSizeChanged = null;
 		}
 	}
-    private void KeepGraphMinSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private double GetExpressionHorizontalExtent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void PlotControlSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+	private void KeepGraphMinSize()
+	{
+		if (Graph.ActualWidth < GraphMinWidth)
+		{
+			bool keepPolarGraphWidth = PlotType == PlotType.Polar &&
+				_graphPlaceholder != null && Graph.ActualWidth < _graphPlaceholder.ActualWidth &&
+				((_plotTitle != null && _plotTitle.ViewModel.ShowTitle) ||
+				 (_plotLegend != null && _plotLegend.ViewModel.ShowPlotLegend));
+			if (keepPolarGraphWidth)
+			{
+				if (_graphPlaceholder.ActualWidth < GraphMinWidth)
+				{
+					Width += GraphMinWidth - _graphPlaceholder.ActualWidth;
+				}
+			}
+			else
+			{
+				Width += GraphMinWidth - Graph.ActualWidth;
+			}
+		}
+		if (Graph.ActualHeight < GraphMinHeight)
+		{
+			Height += GraphMinHeight - Graph.ActualHeight;
+		}
+	}
+    private double GetExpressionHorizontalExtent() {
+		double num = 0.0;
+		PlotItemPlaceholder plotItemPlaceholder = null;
+		if (_resultLegendsPositions != null && _resultLegendPositionIndex < _resultLegendsPositions.Length)
+		{
+			num += _resultLegendsPositions[_resultLegendPositionIndex]?.ActualWidth ?? 0.0;
+		}
+		return num;
+	}
+    private void PlotControlSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) {
+		if (!_resizeInProgress)
+		{
+			if (!_expressionVisibilityChangeInProgress)
+			{
+				_plotSizeChanging = true;
+			}
+			MakeSureXEquationsNotOutsidePlot(changePlotSize: false);
+			MakeSurePlotLegendNotOutsidePlot(changePlotSize: false);
+			PreserveGraphHeightAfterShowingBelowLegend();
+		}
+	}
     public static readonly global::System.Windows.Input.RoutedCommand AddPointMarkerCommand;
     public static readonly global::System.Windows.Input.RoutedUICommand DeleteMarkerCommand;
     public static readonly global::System.Windows.DependencyProperty IsCalculatingProperty;
@@ -572,11 +858,76 @@ public partial class PlotControl
 	}
     private void PlotTitlePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void PlotLegendPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    internal void UpdateStaticXPlaceholdersVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal void UpdateStaticXPlaceholdersVisibility() {
+		if (_rangeLegendsPositions == null || _plotTitlePositions == null || _plotTitle == null)
+		{
+			return;
+		}
+		bool showTitle = _plotTitleViewModel.ShowTitle;
+		int[] legendSlots = new int[2] { 0, 1 };
+		LegendPositions.PlotTitlePosition position = _plotTitleModel.Position;
+		if (!showTitle)
+		{
+			foreach (int legendSlot in legendSlots)
+			{
+				((DependencyObject)_rangeLegendsPositions[legendSlot]).ClearValue(UIElement.VisibilityProperty);
+			}
+			return;
+		}
+		switch (position)
+		{
+		case LegendPositions.PlotTitlePosition.PlotBoundaryTop:
+			if (_rangeLegendPositionIndex != 1)
+			{
+				_rangeLegendsPositions[1].Visibility = Visibility.Collapsed;
+				((DependencyObject)_rangeLegendsPositions[0]).ClearValue(UIElement.VisibilityProperty);
+				return;
+			}
+			break;
+		case LegendPositions.PlotTitlePosition.PlotBoundaryBottom:
+			if (_rangeLegendPositionIndex != 0)
+			{
+				_rangeLegendsPositions[0].Visibility = Visibility.Collapsed;
+				((DependencyObject)_rangeLegendsPositions[1]).ClearValue(UIElement.VisibilityProperty);
+				return;
+			}
+			break;
+		}
+		foreach (int legendSlot in legendSlots)
+		{
+			((DependencyObject)_rangeLegendsPositions[legendSlot]).ClearValue(UIElement.VisibilityProperty);
+		}
+	}
     private void UpdatePlotTitlePlaceholderVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void UpdatePlotLegendPlaceholderVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    internal void UpdateStaticYPlaceholderVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void UpdateAxisTitlePlaceholderVisibility(global::Quire.Controls.Plots.ViewModel.PlotTitleViewModel axisTitleViewModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void UpdatePlotLegendPlaceholderVisibility() {
+		if (PlotLegend != null && PlotLegendPositions != null)
+		{
+			PlotLegendPositions[_plotLegendPositionIndex].Visibility = ((!PlotLegend.ViewModel.ShowPlotLegend) ? Visibility.Collapsed : Visibility.Visible);
+		}
+	}
+    internal void UpdateStaticYPlaceholderVisibility() {
+		if (_resultLegendsPositions != null && YAxisTitlePlaceholder != null && YAxisTitle != null)
+		{
+			if (!YAxisTitle.ViewModel.ShowTitle)
+			{
+				((DependencyObject)_resultLegendsPositions[0]).ClearValue(UIElement.VisibilityProperty);
+			}
+			else if (_resultLegendPositionIndex != 0)
+			{
+				_resultLegendsPositions[0].Visibility = Visibility.Collapsed;
+			}
+		}
+	}
+    public void UpdateAxisTitlePlaceholderVisibility(global::Quire.Controls.Plots.ViewModel.PlotTitleViewModel axisTitleViewModel) {
+		if (axisTitleViewModel != null && XAxisTitlePlaceholder != null && YAxisTitlePlaceholder != null)
+		{
+			((axisTitleViewModel.TitleType == PlotTitleType.XAxis) ? XAxisTitlePlaceholder : YAxisTitlePlaceholder).Visibility = ((!axisTitleViewModel.ShowTitle) ? Visibility.Collapsed : Visibility.Visible);
+			if (axisTitleViewModel.TitleType == PlotTitleType.YAxis)
+			{
+				UpdateStaticYPlaceholderVisibility();
+			}
+		}
+	}
     private void CreatePlotItemAdorner(global::Quire.Controls.Plots.PlotItem plotItem) {
 		RemovePlotItemAdorner();
 		AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(this);
@@ -1214,7 +1565,29 @@ public partial class PlotControl
 
     public IPlotAxisView RangeAxis => _rangeAxis;
     private global::System.Windows.Media.SolidColorBrush GetSelectedTracesCommonColor() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private object GetSelectedTracesCommonValueForProperty(global::Quire.DelegateFunction1<object, global::Quire.Controls.Plots.Presenter.IPlotTrace> getPropertyForTrace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private object GetSelectedTracesCommonValueForProperty(global::Quire.DelegateFunction1<object, global::Quire.Controls.Plots.Presenter.IPlotTrace> getPropertyForTrace) {
+		if ((AssertionE)DebugTools.DevAssert(SelectedTraces != null, null) != AssertionE.Passed)
+		{
+			return null;
+		}
+		object obj = null;
+		if (SelectedTraces.Count > 0)
+		{
+			obj = getPropertyForTrace(SelectedTraces[0]);
+			for (int num = 1; num < SelectedTraces.Count; num++)
+			{
+				if (obj == null)
+				{
+					break;
+				}
+				if (!obj.Equals(getPropertyForTrace(SelectedTraces[num])))
+				{
+					obj = null;
+				}
+			}
+		}
+		return obj;
+	}
 
     public IPlotAxisView PrimaryResultAxis => _primaryResultAxis;
 
