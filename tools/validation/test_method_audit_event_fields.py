@@ -86,16 +86,16 @@ class EventFieldTests(unittest.TestCase):
         for member in ('add_ValueChanged', 'remove_ValueChanged', 'Fire'):
             self.assertTrue(rows[member]['exact_match'], rows[member])
 
-    def test_accessors_on_different_fields_are_rejected(self):
+    def test_accessors_on_different_fields_are_not_mapped(self):
         inventory, rows = self.audit('split', obfuscated('b', 'c'), QUIRE)
-        self.assertTrue(any('add accessor of N.T::ValueChanged uses [b] and the remove accessor [c]' in e
-                            for e in inventory['errors']), inventory['errors'])
+        self.assertEqual(inventory['errors'], [])  # not a field-like event in Mathcad: no mapping, no inventory error
         self.assertFalse(rows['add_ValueChanged']['exact_match'])
         self.assertFalse(rows['Fire']['exact_match'])
 
-    def test_two_events_on_one_original_field_are_rejected(self):
+    def test_two_events_on_one_original_field_are_not_both_mapped(self):
         inventory, rows = self.audit('shared', TWO_ORIGINAL, TWO_QUIRE)
-        self.assertTrue(any('is also the target of another field rename' in e for e in inventory['errors']), inventory['errors'])
+        self.assertEqual(inventory['errors'], [])
+        self.assertFalse(all(row['exact_match'] for row in rows.values()), rows)  # the second event stays unmapped
 
     def test_a_field_that_is_not_an_event_backing_field_is_unaffected(self):
         inventory, rows = self.audit('plain', obfuscated('b', 'b'), QUIRE)

@@ -409,18 +409,18 @@ foreach (var artifact in closure.Values)
         string claim = $"{artifact.Name}|{type}|{field} -> {bound[0]}::<{eventName} accessors>";
         if (EventFields.AccessorFields(mathcadAssembly.Metadata, mathcadAssembly.Pe, bound[0], eventName) is not var (adder, remover)) continue;
         if (adder.Count != 1 || remover.Count != 1 || adder[0] != remover[0] || adder[0].StartsWith('?'))
-        { errors.Add($"event field provenance: the add accessor of {bound[0]}::{eventName} uses [{string.Join(", ", adder)}] and the remove accessor [{string.Join(", ", remover)}], not one field of the type: {claim}"); continue; }
+        continue;  // not a field-like event in Mathcad: the member comparison decides
         string mathcadField = adder[0];
         var declared = declaring.Fields.SingleOrDefault(f => f.Name == field);
         var original = mathcadAssembly.Model.Types.SingleOrDefault(t => t.FullName == bound[0]);
         var target = original?.Fields.SingleOrDefault(f => f.Name == mathcadField);
         if (declared is null || target is null)
-        { errors.Add($"event field provenance: no field {bound[0]}::{mathcadField}: {claim}"); continue; }
+        continue;
         if (target.Static != declared.Static || target.Access != declared.Access
             || Canonical.Write(Corlib(Map(declared.Type))) != Canonical.Write(Corlib(target.Type)))
-        { errors.Add($"event field provenance: {type}::{field} differs from {bound[0]}::{mathcadField} in static, access or type: {claim}"); continue; }
+        continue;
         if (!claimed.Add((bound[1].ToLowerInvariant(), bound[0], mathcadField)))
-        { errors.Add($"event field provenance: {bound[0]}::{mathcadField} is also the target of another field rename: {claim}"); continue; }
+        continue;
         fieldRenames[(artifact.Name, type, field)] = mathcadField;
     }
 var originalKeys = new Dictionary<(Artifact Artifact, int Token), string>();
