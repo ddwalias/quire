@@ -59,7 +59,7 @@ Expected Release lowering inferred from references:
 * `McdUnitSystemUS.values::Update`: `ldsfld McdStaticUnitSystemUS.values::system`, `stsfld McdUnitSystemUS.values::system`, `ret`.
 * `McdUnitSystemUS.values::op_L(object)`: argument, static `mc_ft` field, `tail. call McdRun.values::times_unit`, `ret`.
 
-The field-pattern syntax above is only suggestive; the interface does not expose private field mappings or expression grammar. The methods' IL is evidence for expected output, not validation of these source strings. A proper proof requires a small Mpl parser/lowerer and an executable test. No such compiler/test project is committed by this research lane; the earlier scratch proof was a direct structured-emitter harness, not a source-to-IL compiler. This gap is an explicit remaining task, rather than an implied success.
+The field-pattern syntax above is only suggestive; the interface does not expose private field mappings or expression grammar. The methods' IL is evidence for expected output, not validation of these source strings. The follow-on prototype tests its own limited source syntax and lowering; it does not establish that these are Mathcad's original expressions.
 
 ## Proposed compiler, build, and gate shape
 
@@ -78,4 +78,12 @@ Planning range: 2–4 months for a robust extractor/recovery workflow and a usef
 - Owner: task `task_080923c9b603`; branch `feature/luna-mplc`.
 - Members: Mpl compiler research/prototype lane; no original module members changed.
 - Release IL report: reference samples inspected; prototype claims above point to prior cache-only scout results. No new compiler-to-IL exactness test was run in this branch.
-- Remaining: cache full interfaces for all 51 modules; reproducibly implement the Mpl source compiler proof for `Update`, `mlookupInv`, and `McdUnitSystemUS` operation; then design/test full output metadata and gate integration.
+- Remaining: general Mpl grammar/type checking, complete module metadata/interfaces and closure generation, expansion across module families, and normal per-project MSBuild/gate integration.
+
+## Reproducible subset compiler follow-on
+
+The follow-on lane added [Mpl language notes](mpl-language-notes.md), the interface dumper `tools/mpl/dump_interfaces.py`, and a deliberately narrow source compiler in `src/Quire.Mpl.Compiler`. The dumper was run against all 51 Mpl assemblies; it wrote 51 decoded interface strings and per-type declaration JSON under the ignored `.mirror-cache/mpl-interfaces/fae88e37629bc218/` (content-addressed by installed artifacts). The compiler reads its own small `.mpl` examples, builds standalone candidate assemblies through `Quire.Mpl.Emit`, and carries `MirrorOf` metadata so MethodAudit can pair methods with the installed types. It recognizes only these three forms; it is not a general Mpl parser or type checker.
+
+`python tools/mpl/test_prototype.py` builds in Release and runs MethodAudit against the original install. Result: **PASS**, two tests; exact Release IL for `Hashtable.values::Update`, `Hashtable.values::mlookupInv`, and `McdUnitSystemUS.values::op_L`. Source, compiler, and test are tracked; generated assembly outputs remain ignored. Original IL listings and decoded interface strings remain in `.mirror-cache`.
+
+Updated follow-on checkpoint: branch `feature/mpl-compiler-prototype-3`, rebased onto current `origin/main` after `fe390ec45` landed. Lint (`python tools/lint/lint.py --base origin/main`) passed; the Release prototype test passed.
