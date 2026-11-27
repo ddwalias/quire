@@ -4552,7 +4552,7 @@ private void HandleRemoveBookmarkTag()
         }
     }
 
-public void RequestNavigateHandler(IWorksheetControl worksheetControl, RequestNavigateEventArgs eventArgs)
+public void RequestNavigateHandler(IWorksheetControl worksheetControl, global::System.Windows.Navigation.RequestNavigateEventArgs eventArgs)
     {
         if (DebugTools.AssertNotNull(eventArgs, null).Failed || DebugTools.AssertNotNull(eventArgs.Uri, null).Failed || DebugTools.AssertNotNull(eventArgs.OriginalSource, null).Failed)
         {
