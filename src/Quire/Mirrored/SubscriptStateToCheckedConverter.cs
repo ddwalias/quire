@@ -17,12 +17,12 @@ public partial class SubscriptStateToCheckedConverter : IMultiValueConverter
             return false;
         }
 
-        if (values[1] is bool flag && flag)
+        if (values[1] is bool hasExplicitState && hasExplicitState)
         {
-            return values[2] is bool flag2 && flag2;
+            return values[2] is bool explicitStateChecked && explicitStateChecked;
         }
 
-        return values[0] is bool flag3 && flag3;
+        return values[0] is bool isChecked && isChecked;
     }
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

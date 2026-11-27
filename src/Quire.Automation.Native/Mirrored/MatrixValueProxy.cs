@@ -125,8 +125,8 @@ public partial class MatrixValueProxy : ValueProxy, IMatrixValueProxy, IValuePro
         {
             PlainDataTypes plainDataTypes = plain_type(a, n);
             List<double> list;
-            List<string> list2;
-            List<object> list3;
+            List<string> stringData;
+            List<object> objectData;
             if ((plainDataTypes & non_plain_mask) == 0)
             {
                 if ((plainDataTypes & ~double_mask) == 0)
@@ -140,19 +140,19 @@ public partial class MatrixValueProxy : ValueProxy, IMatrixValueProxy, IValuePro
                 }
                 if ((plainDataTypes & ~string_mask) == 0)
                 {
-                    list2 = new List<string>(string_data(a, n));
+                    stringData = new List<string>(string_data(a, n));
                     if ((plainDataTypes & PlainDataTypes.NaN) != 0)
                     {
-                        return list2.GetRange(0, list2.FindLastIndex((string s) => s != null) + 1);
+                        return stringData.GetRange(0, stringData.FindLastIndex((string s) => s != null) + 1);
                     }
-                    return list2;
+                    return stringData;
                 }
-                list3 = new List<object>(get_data(a, n));
+                objectData = new List<object>(get_data(a, n));
                 if ((plainDataTypes & PlainDataTypes.NaN) != 0)
                 {
-                    return list3.GetRange(0, list3.FindLastIndex(obj_not_nan) + 1);
+                    return objectData.GetRange(0, objectData.FindLastIndex(obj_not_nan) + 1);
                 }
-                return list3;
+                return objectData;
             }
             return null;
         }

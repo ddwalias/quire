@@ -9,17 +9,17 @@ public partial class MessageQueue<Owner, Data, Msg>
     {
         Tuple<WeakReference, Data, Mailbox<Msg>, OnInit, OnMessage, long> tuple = obj as Tuple<WeakReference, Data, Mailbox<Msg>, OnInit, OnMessage, long>;
         WeakReference item = tuple.Item1;
-        Data item2 = tuple.Item2;
-        Mailbox<Msg> item3 = tuple.Item3;
-        OnInit item4 = tuple.Item4;
-        OnMessage item5 = tuple.Item5;
+        Data messageData = tuple.Item2;
+        Mailbox<Msg> mailbox = tuple.Item3;
+        OnInit onInit = tuple.Item4;
+        OnMessage onMessage = tuple.Item5;
         void* ptr = (void*)tuple.Item6;
-        if (item4 != null)
+        if (onInit != null)
         {
             object target = item.Target;
             if (target != null)
             {
-                item4((Owner)target, item2);
+                onInit((Owner)target, messageData);
             }
         }
 
@@ -28,14 +28,14 @@ public partial class MessageQueue<Owner, Data, Msg>
         do
         {
             msg = default;
-            if (!item3.GetMessage(ref msg, ptr))
+            if (!mailbox.GetMessage(ref msg, ptr))
             {
                 break;
             }
 
             target2 = item.Target;
         }
-        while (target2 != null && item5((Owner)target2, item2, msg));
+        while (target2 != null && onMessage((Owner)target2, messageData, msg));
 
         if ((nint)ptr != -1L)
         {
@@ -84,8 +84,8 @@ public partial class MessageQueue<Owner, Data, Msg>
         {
             Thread thread = m_thread;
             string text = ")";
-            string text2 = owner.ToString();
-            string name = string.Concat("MsgLoop(" + text2, text);
+            string ownerName = owner.ToString();
+            string name = string.Concat("MsgLoop(" + ownerName, text);
             thread.Name = name;
         }
 
@@ -102,10 +102,10 @@ public partial class MessageQueue<Owner, Data, Msg>
             }
         }
 
-        Thread thread2 = m_thread;
+        Thread messageThread = m_thread;
         void* death_handle = m_death_handle;
         Tuple<WeakReference, Data, Mailbox<Msg>, OnInit, OnMessage, long> parameter = Tuple.Create(item3: m_mailbox, item1: new WeakReference(owner), item2: data, item4: oi, item5: om, item6: (long)(nint)death_handle);
-        thread2.Start(parameter);
+        messageThread.Start(parameter);
         GC.KeepAlive(this);
     }
 

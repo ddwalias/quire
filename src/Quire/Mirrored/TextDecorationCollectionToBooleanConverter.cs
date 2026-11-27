@@ -38,8 +38,8 @@ public partial class TextDecorationCollectionToBooleanConverter
             }
         }
 
-        string value2 = parameter.ToString();
-        return text.Equals(value2, StringComparison.InvariantCultureIgnoreCase);
+        string decorationName = parameter.ToString();
+        return text.Equals(decorationName, StringComparison.InvariantCultureIgnoreCase);
     }
 
     public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

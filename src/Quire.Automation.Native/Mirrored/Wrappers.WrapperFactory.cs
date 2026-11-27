@@ -6,17 +6,17 @@ public partial class WrapperFactory
 
     public override object AutomationToWrapper(object inner)
     {
-        if (inner is global::Quire.Automation.NumericValue inner2)
+        if (inner is global::Quire.Automation.NumericValue numericValue)
         {
-            return new NumericValue(inner2);
+            return new NumericValue(numericValue);
         }
-        if (inner is global::Quire.Automation.MatrixValue inner3)
+        if (inner is global::Quire.Automation.MatrixValue matrixValue)
         {
-            return new MatrixValue(inner3);
+            return new MatrixValue(matrixValue);
         }
-        if (inner is global::Quire.Automation.StringValue inner4)
+        if (inner is global::Quire.Automation.StringValue stringValue)
         {
-            return new StringValue(inner4);
+            return new StringValue(stringValue);
         }
         throw new global::System.InvalidCastException();
     }

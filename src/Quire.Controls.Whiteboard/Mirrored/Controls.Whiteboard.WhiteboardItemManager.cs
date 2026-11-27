@@ -70,14 +70,14 @@ public partial class WhiteboardItemManager : ContainerItemManager, IWhiteboardIt
             return result;
         }
         double num = getItemLeft(element);
-        double num2 = getItemTop(element);
-        if (double.IsNaN(num) || double.IsNaN(num2))
+        double top = getItemTop(element);
+        if (double.IsNaN(num) || double.IsNaN(top))
         {
             DebugTools.FailAssertion(null, Array.Empty<object>());
         }
         else
         {
-            result = new Point(num, num2);
+            result = new Point(num, top);
         }
         return result;
     }

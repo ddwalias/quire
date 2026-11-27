@@ -982,17 +982,17 @@ public partial class WhiteboardViewModel
         }
         else
         {
-            int num2 = WhiteboardItems.IndexOf(FirstSelectedItem ?? ActiveItem);
-            if (num2 < num)
+            int firstSelectedIndex = WhiteboardItems.IndexOf(FirstSelectedItem ?? ActiveItem);
+            if (firstSelectedIndex < num)
             {
-                num2.UpTo(num, (int i) =>
+                firstSelectedIndex.UpTo(num, (int i) =>
                 {
                     itemsToSelect.Add(WhiteboardItems[i]);
                 });
             }
             else
             {
-                num2.DownTo(num, (int i) =>
+                firstSelectedIndex.DownTo(num, (int i) =>
                 {
                     itemsToSelect.Add(WhiteboardItems[i]);
                 });
@@ -1005,7 +1005,7 @@ public partial class WhiteboardViewModel
     public void SelectRegionsInBounds(Rect rect)
     {
         List<IWhiteboardItem> list = new List<IWhiteboardItem>();
-        List<IWhiteboardItem> list2 = new List<IWhiteboardItem>();
+        List<IWhiteboardItem> deselectedItems = new List<IWhiteboardItem>();
         foreach (IWhiteboardItem whiteboardItem in _whiteboardModel.WhiteboardItems)
         {
             if (rect.IntersectsWith(GetItemRect(whiteboardItem)))
@@ -1014,11 +1014,11 @@ public partial class WhiteboardViewModel
             }
             else if (SelectedItems.Contains(whiteboardItem))
             {
-                list2.Add(whiteboardItem);
+                deselectedItems.Add(whiteboardItem);
             }
         }
 
-        UnSelectItems(list2);
+        UnSelectItems(deselectedItems);
         SelectItems(list);
     }
 
@@ -1271,8 +1271,8 @@ public partial class WhiteboardViewModel
             if (whiteboardControl != null)
             {
                 Point itemLocation = GetItemLocation(childItemFromLocation);
-                Point point2 = new TranslateTransform(-itemLocation.X, -itemLocation.Y).Transform(point);
-                result = whiteboardControl.NavigateInto(direction, point2);
+                Point itemPoint = new TranslateTransform(-itemLocation.X, -itemLocation.Y).Transform(point);
+                result = whiteboardControl.NavigateInto(direction, itemPoint);
             }
             else
             {
@@ -1347,12 +1347,12 @@ public partial class WhiteboardViewModel
                 case DragMode.ResizeRight:
                 case DragMode.ResizeBottom:
                 case DragMode.ResizeBottomRight:
-                    if (whiteboardControl is WhiteboardControl whiteboardControl2)
+                    if (whiteboardControl is WhiteboardControl concreteWhiteboard)
                     {
-                        Point startPosition = args.SourceElement.TranslatePoint(args.StartPoint, whiteboardControl2);
+                        Point startPosition = args.SourceElement.TranslatePoint(args.StartPoint, concreteWhiteboard);
                         bool preserveAspectRatio;
                         FrameworkElement resizableElement = FrameworkElementFacade.GetResizableElement(args.SourceElement, CurrentDragMode, out preserveAspectRatio);
-                        WhiteboardItemResizer whiteboardItemResizer = new WhiteboardItemResizer(whiteboardControl2, startPosition, CurrentDragMode, resizableElement, preserveAspectRatio, args.Automation);
+                        WhiteboardItemResizer whiteboardItemResizer = new WhiteboardItemResizer(concreteWhiteboard, startPosition, CurrentDragMode, resizableElement, preserveAspectRatio, args.Automation);
                         if (args.SourceElement is IWhiteboardControl whiteBoard)
                         {
                             UpdateSizeLimit(whiteBoard);
@@ -1439,32 +1439,32 @@ public partial class WhiteboardViewModel
 
     private Size FindSizeLimit(IWhiteboardItem item, IEnumerable<IWhiteboardItem> itemsToIgnore)
     {
-        double num = double.PositiveInfinity;
-        double num2 = double.PositiveInfinity;
+        double horizontalLimit = double.PositiveInfinity;
+        double verticalLimit = double.PositiveInfinity;
         Point itemLocation = GetItemLocation(item);
         Size renderSize = WhiteboardItemMgr.GetRenderSize(item);
         foreach (IWhiteboardItem whiteboardItem in WhiteboardItems)
         {
             if (item != whiteboardItem && !itemsToIgnore.Contains(whiteboardItem))
             {
-                Point itemLocation2 = GetItemLocation(whiteboardItem);
-                itemLocation2.Offset(0.0, whiteboardItem.VerticalAlignmentOffset);
-                Size renderSize2 = WhiteboardItemMgr.GetRenderSize(whiteboardItem);
-                if (renderSize2.Width + itemLocation2.X > itemLocation.X && itemLocation2.X < itemLocation.X + renderSize.Width && itemLocation2.Y + renderSize2.Height > itemLocation.Y)
+                Point otherItemLocation = GetItemLocation(whiteboardItem);
+                otherItemLocation.Offset(0.0, whiteboardItem.VerticalAlignmentOffset);
+                Size otherItemSize = WhiteboardItemMgr.GetRenderSize(whiteboardItem);
+                if (otherItemSize.Width + otherItemLocation.X > itemLocation.X && otherItemLocation.X < itemLocation.X + renderSize.Width && otherItemLocation.Y + otherItemSize.Height > itemLocation.Y)
                 {
-                    num2 = Math.Min(num2, Math.Max(0.0, itemLocation2.Y - itemLocation.Y));
+                    verticalLimit = Math.Min(verticalLimit, Math.Max(0.0, otherItemLocation.Y - itemLocation.Y));
                 }
-                if (renderSize2.Height + itemLocation2.Y > itemLocation.Y && itemLocation2.Y < itemLocation.Y + renderSize.Height && itemLocation2.X + renderSize2.Width > itemLocation.X)
+                if (otherItemSize.Height + otherItemLocation.Y > itemLocation.Y && otherItemLocation.Y < itemLocation.Y + renderSize.Height && otherItemLocation.X + otherItemSize.Width > itemLocation.X)
                 {
-                    num = Math.Min(num, itemLocation2.X - itemLocation.X);
+                    horizontalLimit = Math.Min(horizontalLimit, otherItemLocation.X - itemLocation.X);
                 }
-                if (itemLocation.X + renderSize.Width == itemLocation2.X && itemLocation.Y + renderSize.Height == itemLocation2.Y)
+                if (itemLocation.X + renderSize.Width == otherItemLocation.X && itemLocation.Y + renderSize.Height == otherItemLocation.Y)
                 {
-                    num2 = Math.Min(num2, Math.Max(0.0, itemLocation2.Y - itemLocation.Y));
+                    verticalLimit = Math.Min(verticalLimit, Math.Max(0.0, otherItemLocation.Y - itemLocation.Y));
                 }
             }
         }
-        return new Size(num, num2);
+        return new Size(horizontalLimit, verticalLimit);
     }
 
     private IEnumerable<IWhiteboardItem> GetOverlappingItems(IWhiteboardItem item)
@@ -1663,17 +1663,17 @@ public partial class WhiteboardViewModel
             return;
         }
 
-        IWhiteboardItem whiteboardItem2 = whiteboardItem;
-        while (!WhiteboardItems.Contains(whiteboardItem2) && whiteboardItem2 != sender)
+        IWhiteboardItem candidateItem = whiteboardItem;
+        while (!WhiteboardItems.Contains(candidateItem) && candidateItem != sender)
         {
-            whiteboardItem2 = (whiteboardItem2 as DependencyObject).TryFindVisualAncestor<IWhiteboardItem>();
-            if (whiteboardItem2 is IWhiteboardControl)
+            candidateItem = (candidateItem as DependencyObject).TryFindVisualAncestor<IWhiteboardItem>();
+            if (candidateItem is IWhiteboardControl)
             {
                 return;
             }
         }
 
-        if (!WhiteboardItems.Contains(whiteboardItem2))
+        if (!WhiteboardItems.Contains(candidateItem))
         {
             return;
         }
@@ -1686,12 +1686,12 @@ public partial class WhiteboardViewModel
                 return;
             }
 
-            ToggleItemSelection(whiteboardItem2, includeActiveItem: true);
+            ToggleItemSelection(candidateItem, includeActiveItem: true);
             eventArgs.Handled = true;
         }
         else if (((int)Keyboard.Modifiers & 4) > 0)
         {
-            SelectContiguous(whiteboardItem2);
+            SelectContiguous(candidateItem);
             eventArgs.Handled = true;
         }
         else
@@ -2439,28 +2439,28 @@ public partial class WhiteboardViewModel
     public double LimitOffsetBasedOnItemsToMove(IEnumerable<IWhiteboardItem> itemsToMove, double offsetY, Direction direction, Point insertionPointLocation)
     {
         double height = Grid.GridCellSize.Height;
-        double val = -offsetY;
-        double? num = itemsToMove.Any() ? new double?(itemsToMove.Min(item => GetItemTop(item))) : null;
+        double offsetLimit = -offsetY;
+        double? highestItemTop = itemsToMove.Any() ? new double?(itemsToMove.Min(item => GetItemTop(item))) : null;
         IEnumerable<IWhiteboardItem> source = WhiteboardItems.Except(itemsToMove);
-        double? num2 = source.Any() ? new double?(source.Max(item => GetItemBottom(item))) : null;
-        double num4;
-        double num3;
+        double? lowestItemBottom = source.Any() ? new double?(source.Max(item => GetItemBottom(item))) : null;
+        double upperBoundary;
+        double lowerBoundary;
         if (direction == Direction.Down)
         {
-            num3 = num2.HasValue ? Math.Max(insertionPointLocation.Y, num2.Value) : insertionPointLocation.Y;
-            num4 = num.HasValue ? num.Value : ContentHeight;
+            lowerBoundary = lowestItemBottom.HasValue ? Math.Max(insertionPointLocation.Y, lowestItemBottom.Value) : insertionPointLocation.Y;
+            upperBoundary = highestItemTop.HasValue ? highestItemTop.Value : ContentHeight;
         }
         else
         {
-            num3 = num2.HasValue ? num2.Value : 0.0;
-            num4 = num.HasValue ? Math.Min(insertionPointLocation.Y, num.Value) : insertionPointLocation.Y;
+            lowerBoundary = lowestItemBottom.HasValue ? lowestItemBottom.Value : 0.0;
+            upperBoundary = highestItemTop.HasValue ? Math.Min(insertionPointLocation.Y, highestItemTop.Value) : insertionPointLocation.Y;
         }
-        val = Math.Min(val, num4 - num3);
-        if (val.IsLessThan(0.0))
+        offsetLimit = Math.Min(offsetLimit, upperBoundary - lowerBoundary);
+        if (offsetLimit.IsLessThan(0.0))
         {
-            val = 0.0;
+            offsetLimit = 0.0;
         }
-        return -((val / height).Floor() * height);
+        return -((offsetLimit / height).Floor() * height);
     }
 
     protected virtual bool CanDeleteVerticalSpace(Direction direction)
@@ -2657,8 +2657,8 @@ public partial class WhiteboardViewModel
                 Dictionary<IWhiteboardItem, bool> shouldItemBeDeletedIfEmptyCache = new Dictionary<IWhiteboardItem, bool>(_itemsAtLocations.Count);
                 _itemsAtLocations.Each((KeyValuePair<IWhiteboardItem, Point> itemAtLocation) =>
                 {
-                    IWhiteboardItem key2 = itemAtLocation.Key;
-                    shouldItemBeDeletedIfEmptyCache.Add(key2, WhiteboardItemMgr.ShouldItemBeDeletedIfEmpty(key2));
+                    IWhiteboardItem item = itemAtLocation.Key;
+                    shouldItemBeDeletedIfEmptyCache.Add(item, WhiteboardItemMgr.ShouldItemBeDeletedIfEmpty(item));
                     WhiteboardItemMgr.SetShouldItemBeDeletedIfEmpty(itemAtLocation.Key, false);
                 });
                 IWhiteboardItem key = _itemsAtLocations.First().Key;
@@ -2672,11 +2672,11 @@ public partial class WhiteboardViewModel
                 }
                 shouldItemBeDeletedIfEmptyCache.Each((KeyValuePair<IWhiteboardItem, bool> itemAtLocation) =>
                 {
-                    IWhiteboardItem key2 = itemAtLocation.Key;
-                    WhiteboardItemMgr.ClearShouldItemBeDeletedIfEmpty(key2);
-                    if (WhiteboardItemMgr.ShouldItemBeDeletedIfEmpty(key2) != itemAtLocation.Value)
+                    IWhiteboardItem item = itemAtLocation.Key;
+                    WhiteboardItemMgr.ClearShouldItemBeDeletedIfEmpty(item);
+                    if (WhiteboardItemMgr.ShouldItemBeDeletedIfEmpty(item) != itemAtLocation.Value)
                     {
-                        WhiteboardItemMgr.SetShouldItemBeDeletedIfEmpty(key2, itemAtLocation.Value);
+                        WhiteboardItemMgr.SetShouldItemBeDeletedIfEmpty(item, itemAtLocation.Value);
                     }
                 });
             }
@@ -3202,9 +3202,9 @@ public partial class WhiteboardViewModel
                 {
                     if (checkVerticalOnlyItems != null && !checkVerticalOnlyItems.Contains(item, null))
                     {
-                        double y2 = itemRect.Y;
+                        double candidateY = itemRect.Y;
                         insertionPoint = _insertionPoint;
-                        if (y2.IsEqualTo(insertionPoint.Y))
+                        if (candidateY.IsEqualTo(insertionPoint.Y))
                         {
                             double x = itemRect.X;
                             insertionPoint = _insertionPoint;
@@ -3305,8 +3305,8 @@ public partial class WhiteboardViewModel
             if (numberOfLines > 1)
             {
                 _offset.Y = ((enumerable.Count() > 0) ? ((direction == Direction.Down) ? (_offset.Y = _viewModel.LimitOffsetBasedOnItemsToMove(enumerable, _offset.Y, direction, _viewModel.InsertionPoint)) : _offset.Y) : Math.Max(_offset.Y, LimitOffsetBasedOnMinimumHeight()));
-                double num2 = ((_direction == Direction.Down) ? (_viewModel.ContentHeight - _insertionPoint.Y) : _insertionPoint.Y);
-                _offset.Y = Math.Max(-num2, _offset.Y);
+                double availableOffset = ((_direction == Direction.Down) ? (_viewModel.ContentHeight - _insertionPoint.Y) : _insertionPoint.Y);
+                _offset.Y = Math.Max(-availableOffset, _offset.Y);
             }
             if (enumerable.Count() > 0 && _offset.Y != 0.0)
             {

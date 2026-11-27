@@ -137,9 +137,9 @@ public partial class FunctionBrowser
     {
         VisualFunctionDescriptor visualFunctionDescriptor = (VisualFunctionDescriptor)((DictionaryEntry)e.Item).Value;
         string text = visualFunctionDescriptor.DisplayName.ToLower();
-        string text2 = matchingTextBox.Text.ToLower();
-        string text3 = visualFunctionDescriptor.Description.ToLower();
-        e.Accepted = text.Contains(text2) || text3.Contains(text2) || ContainedInCategories(text2, visualFunctionDescriptor.Categories);
+        string searchText = matchingTextBox.Text.ToLower();
+        string description = visualFunctionDescriptor.Description.ToLower();
+        e.Accepted = text.Contains(searchText) || description.Contains(searchText) || ContainedInCategories(searchText, visualFunctionDescriptor.Categories);
     }
 
     private void SearchCommandExecuted(object sender, RoutedEventArgs e)

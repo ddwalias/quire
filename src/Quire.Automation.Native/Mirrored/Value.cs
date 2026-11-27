@@ -152,12 +152,12 @@ public abstract partial class Value : MarshalByRefObject, IValuePrivate, IValue,
     public static bool NearlyEqual(object x1, object x2, double fuzz)
     {
         Value value = x1 as Value;
-        Value value2 = x2 as Value;
-        if (value == null || value2 == null)
+        Value otherValue = x2 as Value;
+        if (value == null || otherValue == null)
         {
             return x1.Equals(x2);
         }
-        return DimVal.NearlyEqual(value.core, value2.core, fuzz);
+        return DimVal.NearlyEqual(value.core, otherValue.core, fuzz);
     }
 
     public override bool Equals(object other)

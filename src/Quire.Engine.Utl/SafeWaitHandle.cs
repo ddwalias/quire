@@ -73,20 +73,20 @@ public abstract partial class SafeWaitHandle
             return true;
         }
 
-        IntPtr module2 = NativeLibrary.Load("kernel32.dll");
+        IntPtr waitModule = NativeLibrary.Load("kernel32.dll");
         uint waitResult;
         try
         {
-            waitResult = ((delegate* unmanaged[Stdcall]<IntPtr, uint, uint>)NativeLibrary.GetExport(module2, "WaitForSingleObject"))((IntPtr)m_handle, (uint)A_0);
+            waitResult = ((delegate* unmanaged[Stdcall]<IntPtr, uint, uint>)NativeLibrary.GetExport(waitModule, "WaitForSingleObject"))((IntPtr)m_handle, (uint)A_0);
         }
         finally
         {
-            NativeLibrary.Free(module2);
+            NativeLibrary.Free(waitModule);
         }
 
-        bool num = waitResult != 258;
+        bool completed = waitResult != 258;
         GC.KeepAlive(this);
-        return num;
+        return completed;
     }
 
     public unsafe bool WaitTwoWithTimeout(void* A_0)
@@ -108,18 +108,18 @@ public abstract partial class SafeWaitHandle
         }
 
         IntPtr[] handles = { (IntPtr)m_handle, (IntPtr)A_0 };
-        IntPtr module2 = NativeLibrary.Load("kernel32.dll");
+        IntPtr waitModule = NativeLibrary.Load("kernel32.dll");
         uint waitResult;
         try
         {
             fixed (IntPtr* pHandles = handles)
             {
-                waitResult = ((delegate* unmanaged[Stdcall]<uint, IntPtr*, int, uint, uint>)NativeLibrary.GetExport(module2, "WaitForMultipleObjects"))(2u, pHandles, 0, uint.MaxValue);
+                waitResult = ((delegate* unmanaged[Stdcall]<uint, IntPtr*, int, uint, uint>)NativeLibrary.GetExport(waitModule, "WaitForMultipleObjects"))(2u, pHandles, 0, uint.MaxValue);
             }
         }
         finally
         {
-            NativeLibrary.Free(module2);
+            NativeLibrary.Free(waitModule);
         }
 
         if (waitResult == 0)

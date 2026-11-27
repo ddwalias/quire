@@ -71,14 +71,14 @@ public partial class Zoom
     private void ChangeZoom(object sender, ExecutedRoutedEventArgs e)
     {
         int num = (int)Math.Round(ZoomValue * 100.0);
-        int num2 = (int)Math.Round(slider.SmallChange * 100.0);
+        int stepPercent = (int)Math.Round(slider.SmallChange * 100.0);
         if (e.Parameter as ZoomType? == ZoomType.ZoomIn)
         {
-            ZoomValue = num % num2 == 0 ? ZoomValue + slider.SmallChange : ZoomValue + slider.SmallChange - ZoomValue % slider.SmallChange;
+            ZoomValue = num % stepPercent == 0 ? ZoomValue + slider.SmallChange : ZoomValue + slider.SmallChange - ZoomValue % slider.SmallChange;
         }
         else if (e.Parameter as ZoomType? == ZoomType.ZoomOut)
         {
-            ZoomValue = num % num2 == 0 ? ZoomValue - slider.SmallChange : ZoomValue - ZoomValue % slider.SmallChange;
+            ZoomValue = num % stepPercent == 0 ? ZoomValue - slider.SmallChange : ZoomValue - ZoomValue % slider.SmallChange;
         }
         else
         {

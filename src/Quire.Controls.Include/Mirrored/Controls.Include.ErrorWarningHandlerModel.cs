@@ -172,17 +172,17 @@ internal partial class ErrorWarningHandlerModel
         {
             return;
         }
-        IncludeWorksheetErrorWarningData includeWorksheetErrorWarningData2 = null;
+        IncludeWorksheetErrorWarningData previousWarning = null;
         foreach (IncludeWorksheetErrorWarningData item in list)
         {
             if (item.PathIndexes == pathIndexes && (IsResetCode(codes) || delegateFunction2(codes[0], item.Code)))
             {
-                includeWorksheetErrorWarningData2 = item;
+                previousWarning = item;
             }
         }
-        if (includeWorksheetErrorWarningData2 != null)
+        if (previousWarning != null)
         {
-            list.Remove(includeWorksheetErrorWarningData2);
+            list.Remove(previousWarning);
         }
         if (!IsResetCode(codes) && !IsCalculationSuccedErrorCode(codes))
         {
@@ -219,10 +219,10 @@ internal partial class ErrorWarningHandlerModel
         }
         else
         {
-            string text2 = _getCwd();
-            if (text2 != null)
+            string currentDirectory = _getCwd();
+            if (currentDirectory != null)
             {
-                text = FileUtils.EvaluateRelativePath(text2, first, stripSingleLeadingDot: true);
+                text = FileUtils.EvaluateRelativePath(currentDirectory, first, stripSingleLeadingDot: true);
             }
         }
         DebugTools.DevAssert(text != null, null);
@@ -327,12 +327,12 @@ internal partial class ErrorWarningHandlerModel
     {
         List<string> list = new List<string>();
         int num = 0;
-        int num2 = 0;
-        while (num2 >= 0)
+        int delimiterIndex = 0;
+        while (delimiterIndex >= 0)
         {
-            num2 = code.IndexOf("#", num);
-            list.Add((num2 > num) ? code.Substring(num, num2 - num) : code.Substring(num));
-            num = num2 + 1;
+            delimiterIndex = code.IndexOf("#", num);
+            list.Add((delimiterIndex > num) ? code.Substring(num, delimiterIndex - num) : code.Substring(num));
+            num = delimiterIndex + 1;
         }
         if (list.Count > 1)
         {

@@ -69,16 +69,16 @@ public partial class LabeledDictionary
                 return result;
             }
 
-            object result2 = LabelUtils.LookupPossiblyWild(text, m_table);
+            object matchingValue = LabelUtils.LookupPossiblyWild(text, m_table);
             GC.KeepAlive(this);
-            return result2;
+            return matchingValue;
         }
         set
         {
             OnChange();
             Hashtable table = m_table;
-            string key2 = LabelUtils.Canonicalize(key.ToString());
-            table[key2] = value;
+            string canonicalKey = LabelUtils.Canonicalize(key.ToString());
+            table[canonicalKey] = value;
             GC.KeepAlive(this);
         }
     }
@@ -136,8 +136,8 @@ public partial class LabeledDictionary
     {
         OnChange();
         Hashtable table = m_table;
-        string key2 = LabelUtils.Canonicalize(key.ToString());
-        table.Add(key2, value);
+        string canonicalKey = LabelUtils.Canonicalize(key.ToString());
+        table.Add(canonicalKey, value);
         GC.KeepAlive(this);
     }
 
@@ -158,9 +158,9 @@ public partial class LabeledDictionary
             return result;
         }
 
-        bool result2 = LabelUtils.LookupPossiblyWild(text, m_table) != null;
+        bool containsMatch = LabelUtils.LookupPossiblyWild(text, m_table) != null;
         GC.KeepAlive(this);
-        return result2;
+        return containsMatch;
     }
 
     public int Contains1(string s) => Contains(s) ? 1 : 0;
@@ -169,8 +169,8 @@ public partial class LabeledDictionary
     {
         OnChange();
         Hashtable table = m_table;
-        string key2 = LabelUtils.Canonicalize(key.ToString());
-        table.Remove(key2);
+        string canonicalKey = LabelUtils.Canonicalize(key.ToString());
+        table.Remove(canonicalKey);
         GC.KeepAlive(this);
     }
 

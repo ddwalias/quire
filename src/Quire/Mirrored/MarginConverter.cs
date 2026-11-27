@@ -17,21 +17,21 @@ internal partial class MarginConverter
 
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
-        PageSize key;
-        PageMarginType key2;
-        object obj = values[0];
-        if (obj is PageSize)
+        PageSize pageSize;
+        PageMarginType marginType;
+        object pageSizeValue = values[0];
+        if (pageSizeValue is PageSize)
         {
-            key = (PageSize)obj;
+            pageSize = (PageSize)pageSizeValue;
         }
         else
         {
-            key = PageSize.Letter;
+            pageSize = PageSize.Letter;
             DebugTools.DevAssert(values[0] == DependencyProperty.UnsetValue, values[0]?.GetType().Name ?? "");
         }
 
-        key2 = (PageMarginType)values[1];
-        return WorksheetPageLayout.BuiltInPageSizes[key].PageMargins[key2];
+        marginType = (PageMarginType)values[1];
+        return WorksheetPageLayout.BuiltInPageSizes[pageSize].PageMargins[marginType];
     }
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

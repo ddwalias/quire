@@ -70,8 +70,8 @@ public partial class WhiteboardItemsSeparator
                             currentItemRect.Offset(offset, 0.0);
                         }
                         Point pt = _grid.GetNearestIntersectionPointDisregardingBounds(new Point(currentItemRect.Left, currentTop), GridRestriction.Ignore, Direction.Right);
-                        double num5 = pt.X.IsEqualTo(currentItemRect.Left) ? 0.0 : (pt.X - currentItemRect.Left);
-                        currentItemRect.Offset(num5 + (num5.IsGreaterThanOrEqual(0.0) ? 0.0 : _grid.GridCellSize.Width), 0.0);
+                        double horizontalOffset = pt.X.IsEqualTo(currentItemRect.Left) ? 0.0 : (pt.X - currentItemRect.Left);
+                        currentItemRect.Offset(horizontalOffset + (horizontalOffset.IsGreaterThanOrEqual(0.0) ? 0.0 : _grid.GridCellSize.Width), 0.0);
                     }
                     else
                     {
@@ -92,9 +92,9 @@ public partial class WhiteboardItemsSeparator
                             currentItemRect.Offset(0.0, offset);
                         }
                         currentTop = currentItemRect.Top - item.VerticalAlignmentOffset;
-                        Point pt2 = _grid.GetNearestIntersectionPointDisregardingBounds(new Point(currentItemRect.Left, currentTop), GridRestriction.Ignore, Direction.Down);
-                        double num9 = pt2.Y.IsEqualTo(currentTop) ? 0.0 : (pt2.Y - currentTop);
-                        currentItemRect.Offset(0.0, num9 + (num9.IsGreaterThanOrEqual(0.0) ? 0.0 : _grid.GridCellSize.Height));
+                        Point gridPoint = _grid.GetNearestIntersectionPointDisregardingBounds(new Point(currentItemRect.Left, currentTop), GridRestriction.Ignore, Direction.Down);
+                        double verticalOffset = gridPoint.Y.IsEqualTo(currentTop) ? 0.0 : (gridPoint.Y - currentTop);
+                        currentItemRect.Offset(0.0, verticalOffset + (verticalOffset.IsGreaterThanOrEqual(0.0) ? 0.0 : _grid.GridCellSize.Height));
                     }
                     _newItemRectMap[item] = currentItemRect;
                 }
@@ -103,12 +103,12 @@ public partial class WhiteboardItemsSeparator
         IDictionary<IWhiteboardItem, Vector> itemsOffsetsMap = new Dictionary<IWhiteboardItem, Vector>();
         itemsToSeparate.Each(item =>
         {
-            Rect val = _oldItemRectMap[item];
-            Rect val2 = _newItemRectMap[item];
-            if (val != val2)
+            Rect oldItemRect = _oldItemRectMap[item];
+            Rect newItemRect = _newItemRectMap[item];
+            if (oldItemRect != newItemRect)
             {
-                Vector value = new Vector(val2.Left - val.Left, val2.Top - val.Top);
-                itemsOffsetsMap.Add(item, value);
+                Vector offset = new Vector(newItemRect.Left - oldItemRect.Left, newItemRect.Top - oldItemRect.Top);
+                itemsOffsetsMap.Add(item, offset);
             }
         });
         return itemsOffsetsMap;

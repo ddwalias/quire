@@ -74,7 +74,7 @@ internal partial class SolverAggregate
             _rl = "nil";
         string text = char.ToLowerInvariant(SolverName[0]) + SolverName.Substring(1);
         bool flag = text == "odesolve";
-        bool flag2 = text == "pdesolve";
+        bool isPdeSolve = text == "pdesolve";
         global::System.Text.StringBuilder solverRlBuilder = new global::System.Text.StringBuilder();
         solverRlBuilder.Append(LeftOfSolverApply);
         if (DefinedParams.IsNotEmpty())
@@ -83,7 +83,7 @@ internal partial class SolverAggregate
                 DefinedParams = DefinedParams.Substring(0, DefinedParams.Length - PrognExp.Length - 1);
             solverRlBuilder.Append(DefinedParams);
         }
-        if (!flag && !flag2)
+        if (!flag && !isPdeSolve)
             solverRlBuilder.Append("(subscript ");
         solverRlBuilder.Append("(solveblock").Append(SolverTag).Append(" %@ (")
             .Append(text)
@@ -94,7 +94,7 @@ internal partial class SolverAggregate
             solverRlBuilder.Append(" ").Append(arg);
         });
         solverRlBuilder.Append("))");
-        if (!flag && !flag2)
+        if (!flag && !isPdeSolve)
             solverRlBuilder.Append(" mc_ORIGIN)");
         if (DefinedParams.IsNotEmpty())
             solverRlBuilder.Append(")");
@@ -109,11 +109,11 @@ internal partial class SolverAggregate
             return SolvingAlgoToRL[string.Empty];
         string[] array = algorithmString.Split('-');
         string text = SolvingAlgoToRL.TryGetValue(array[0], out var value) ? value : SolvingAlgoToRL[string.Empty];
-        string text2 = string.Join(" ", from key in array.Skip(1)
+        string optionText = string.Join(" ", from key in array.Skip(1)
             where SolvingAlgoOptionsToRL.ContainsKey(key)
             select SolvingAlgoOptionsToRL[key]);
-        if (!string.IsNullOrEmpty(text2))
-            return text + " " + text2;
+        if (!string.IsNullOrEmpty(optionText))
+            return text + " " + optionText;
         return text;
     }
 

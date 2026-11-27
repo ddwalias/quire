@@ -251,9 +251,9 @@ internal partial class IncludeWorksheetModel : IDisposable, IMultiLevelInclusion
     private string CreateIncludedFullFilePath(string path)
     {
         string result = null;
-        if (Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out Uri result2))
+        if (Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out Uri parsedUri))
         {
-            if (result2.IsAbsoluteUri && result2.IsFile)
+            if (parsedUri.IsAbsoluteUri && parsedUri.IsFile)
             {
                 return path;
             }

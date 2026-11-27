@@ -58,39 +58,39 @@ public partial struct ColorInfo
         red /= 255.0;
         green /= 255.0;
         blue /= 255.0;
-        double num = global::System.Math.Max(red, global::System.Math.Max(green, blue));
-        double num2 = global::System.Math.Min(red, global::System.Math.Min(green, blue));
-        double num3 = num - num2;
-        lum = (float)(num + num2) / 2f;
+        double maximumChannel = global::System.Math.Max(red, global::System.Math.Max(green, blue));
+        double minimumChannel = global::System.Math.Min(red, global::System.Math.Min(green, blue));
+        double chroma = maximumChannel - minimumChannel;
+        lum = (float)(maximumChannel + minimumChannel) / 2f;
         sat = 0.0;
-        if ((double)lum < 1E-15 || num3 < 1E-15)
+        if ((double)lum < 1E-15 || chroma < 1E-15)
         {
             sat = 0.0;
         }
         else if (0f < lum && lum <= 0.5f)
         {
-            sat = num3 / (num + num2);
+            sat = chroma / (maximumChannel + minimumChannel);
         }
         else if ((double)lum > 0.5)
         {
-            sat = num3 / (2.0 - (num + num2));
+            sat = chroma / (2.0 - (maximumChannel + minimumChannel));
         }
         hue = 0.0;
-        if (num3 < 1E-15)
+        if (chroma < 1E-15)
         {
             hue = 0.0;
         }
-        else if (num - red < 1E-15)
+        else if (maximumChannel - red < 1E-15)
         {
-            hue = 60.0 * (green - blue) / num3;
+            hue = 60.0 * (green - blue) / chroma;
         }
-        else if (num - green < 1E-15)
+        else if (maximumChannel - green < 1E-15)
         {
-            hue = 60.0 * (blue - red) / num3 + 120.0;
+            hue = 60.0 * (blue - red) / chroma + 120.0;
         }
-        else if (num - blue < 1E-15)
+        else if (maximumChannel - blue < 1E-15)
         {
-            hue = 60.0 * (red - green) / num3 + 240.0;
+            hue = 60.0 * (red - green) / chroma + 240.0;
         }
         if (hue < 0.0)
         {
@@ -111,43 +111,43 @@ public partial struct ColorInfo
         hue = global::System.Math.Max(0.0, global::System.Math.Min(360.0, hue));
         sat = global::System.Math.Max(0.0, global::System.Math.Min(1.0, sat));
         lum = global::System.Math.Max(0.0, global::System.Math.Min(1.0, lum));
-        double num = ((lum < 0.5) ? (lum * (1.0 + sat)) : (lum + sat - lum * sat));
-        double num2 = 2.0 * lum - num;
-        double num3 = hue / 360.0;
+        double maximumChannel = ((lum < 0.5) ? (lum * (1.0 + sat)) : (lum + sat - lum * sat));
+        double minimumChannel = 2.0 * lum - maximumChannel;
+        double normalizedHue = hue / 360.0;
         // Release IL requires separate array element assignments rather than an array initializer
-        double[] array = new double[3];
-        array[0] = num3 + 1.0 / 3.0;
-        array[1] = num3;
-        array[2] = num3 - 1.0 / 3.0;
+        double[] hueChannels = new double[3];
+        hueChannels[0] = normalizedHue + 1.0 / 3.0;
+        hueChannels[1] = normalizedHue;
+        hueChannels[2] = normalizedHue - 1.0 / 3.0;
         for (int i = 0; i < 3; i++)
         {
-            if (array[i] < 0.0)
+            if (hueChannels[i] < 0.0)
             {
-                array[i]++;
+                hueChannels[i]++;
             }
-            if (array[i] > 1.0)
+            if (hueChannels[i] > 1.0)
             {
-                array[i]--;
+                hueChannels[i]--;
             }
-            if (array[i] * 6.0 < 1.0)
+            if (hueChannels[i] * 6.0 < 1.0)
             {
-                array[i] = num2 + (num - num2) * 6.0 * array[i];
+                hueChannels[i] = minimumChannel + (maximumChannel - minimumChannel) * 6.0 * hueChannels[i];
             }
-            else if (array[i] * 2.0 < 1.0)
+            else if (hueChannels[i] * 2.0 < 1.0)
             {
-                array[i] = num;
+                hueChannels[i] = maximumChannel;
             }
-            else if (array[i] * 3.0 < 2.0)
+            else if (hueChannels[i] * 3.0 < 2.0)
             {
-                array[i] = num2 + (num - num2) * (2.0 / 3.0 - array[i]) * 6.0;
+                hueChannels[i] = minimumChannel + (maximumChannel - minimumChannel) * (2.0 / 3.0 - hueChannels[i]) * 6.0;
             }
             else
             {
-                array[i] = num2;
+                hueChannels[i] = minimumChannel;
             }
         }
-        red = global::System.Math.Max(0.0, global::System.Math.Min(255.0, array[0] * 255.0));
-        green = global::System.Math.Max(0.0, global::System.Math.Min(255.0, array[1] * 255.0));
-        blue = global::System.Math.Max(0.0, global::System.Math.Min(255.0, array[2] * 255.0));
+        red = global::System.Math.Max(0.0, global::System.Math.Min(255.0, hueChannels[0] * 255.0));
+        green = global::System.Math.Max(0.0, global::System.Math.Min(255.0, hueChannels[1] * 255.0));
+        blue = global::System.Math.Max(0.0, global::System.Math.Min(255.0, hueChannels[2] * 255.0));
     }
 }

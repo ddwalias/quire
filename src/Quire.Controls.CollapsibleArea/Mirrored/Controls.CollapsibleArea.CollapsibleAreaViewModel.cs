@@ -362,7 +362,7 @@ public partial class CollapsibleAreaViewModel
         if (ProtectionData.ProtectionLevel().IsActivationProtected())
         {
             bool flag = false;
-            bool flag2 = false;
+            bool toggleButtonWasClicked = false;
             CollapsibleAreaControl collapsibleAreaControl = sender as CollapsibleAreaControl;
             if (DebugTools.AssertNotNull(collapsibleAreaControl, null).Failed)
             {
@@ -377,8 +377,8 @@ public partial class CollapsibleAreaViewModel
                 }
                 flag = regionBorder.GetDragMode(eventArgs).HasValue;
             }
-            flag2 = IsToggleButtonClicked(collapsibleAreaControl, eventArgs.OriginalSource);
-            if (!(flag | flag2))
+            toggleButtonWasClicked = IsToggleButtonClicked(collapsibleAreaControl, eventArgs.OriginalSource);
+            if (!(flag | toggleButtonWasClicked))
             {
                 return true;
             }

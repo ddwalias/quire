@@ -582,18 +582,18 @@ public partial class MathboardViewModel : WhiteboardViewModel, IMathboardViewMod
     protected Pair<double, double> IndicatorRange(IEnumerable<IWhiteboardItem> sbCalculatables)
     {
         IWhiteboardItem whiteboardItem = sbCalculatables.First();
-        IWhiteboardItem whiteboardItem2 = sbCalculatables.Last();
-        double num = 0.0;
+        IWhiteboardItem lastItem = sbCalculatables.Last();
+        double top = 0.0;
         if (whiteboardItem != null)
         {
-            num = WhiteboardViewModel.WhiteboardItemMgr.GetItemLocation(whiteboardItem).Y + whiteboardItem.VerticalAlignmentOffset;
+            top = WhiteboardViewModel.WhiteboardItemMgr.GetItemLocation(whiteboardItem).Y + whiteboardItem.VerticalAlignmentOffset;
         }
-        double num2 = ContentSize.Height;
-        if (whiteboardItem2 != null)
+        double bottom = ContentSize.Height;
+        if (lastItem != null)
         {
-            num2 = WhiteboardViewModel.WhiteboardItemMgr.GetItemLocation(whiteboardItem2).Y + WhiteboardViewModel.WhiteboardItemMgr.GetDesiredSize(whiteboardItem2).Height + whiteboardItem2.VerticalAlignmentOffset;
+            bottom = WhiteboardViewModel.WhiteboardItemMgr.GetItemLocation(lastItem).Y + WhiteboardViewModel.WhiteboardItemMgr.GetDesiredSize(lastItem).Height + lastItem.VerticalAlignmentOffset;
         }
-        return new Pair<double, double>(num, num2 - num);
+        return new Pair<double, double>(top, bottom - top);
     }
 
     protected virtual void UpdateHideFromCalculationButton()

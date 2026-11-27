@@ -181,13 +181,13 @@ public partial class DropDownSelector
 
     protected static bool MatchValueToItem(IDropDownSelectorItem childItem, object value)
     {
-        object value2 = childItem.Value;
-        if (value != null && value2 != null)
+        object childValue = childItem.Value;
+        if (value != null && childValue != null)
         {
-            return value.ToString().Equals(value2.ToString());
+            return value.ToString().Equals(childValue.ToString());
         }
 
-        return value == value2;
+        return value == childValue;
     }
 
     private static object Duplicate(object obj)

@@ -143,9 +143,9 @@ public partial class IncludeWorksheetFileManager : IS11NProvider, IBaseS11NProvi
                 }
                 Regions = _deserializationStrategy.Regions;
             }
-            using (Stream stream2 = _packageOpsProvider.GetCoreMetadataPartFromPackage(package).GetStream(FileMode.Open))
+            using (Stream metadataStream = _packageOpsProvider.GetCoreMetadataPartFromPackage(package).GetStream(FileMode.Open))
             {
-                using (StreamReader reader = new StreamReader(stream2))
+                using (StreamReader reader = new StreamReader(metadataStream))
                 {
                     new SpiritMetadataSerializer().Deserialize(reader, _metadataModel);
                 }

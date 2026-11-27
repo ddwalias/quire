@@ -230,9 +230,9 @@ internal partial class WhiteboardItemResizer : ItemResizerBase, IResizer
     private void HandleMouseUp(FrameworkElement element, Vector offset, bool changeWidth, bool changeHeight)
     {
         ResizeElementBasedOnOffset(element, offset, changeWidth, changeHeight);
-        Size arg = new Size(WidthIsAuto ? double.NaN : OriginalWidth, HeightIsAuto ? double.NaN : OriginalHeight);
-        Size arg2 = new Size(element.Width, element.Height);
-        DragDone(arg, arg2, WidthIsAuto, HeightIsAuto, _mode);
+        Size originalSize = new Size(WidthIsAuto ? double.NaN : OriginalWidth, HeightIsAuto ? double.NaN : OriginalHeight);
+        Size resizedSize = new Size(element.Width, element.Height);
+        DragDone(originalSize, resizedSize, WidthIsAuto, HeightIsAuto, _mode);
     }
 
     private void HandleMouseMove(FrameworkElement element, Vector offset, bool changeWidth, bool changeHeight, bool resizeInProgress = false)

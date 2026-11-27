@@ -29,7 +29,7 @@ public partial class LabelTrie
         s_lock.WaitReadLock();
         try
         {
-            LabelTrie labelTrie2 = s_root;
+            LabelTrie currentTrie = s_root;
             IEnumerator enumerator = labels.GetEnumerator();
             try
             {
@@ -37,18 +37,18 @@ public partial class LabelTrie
                 {
                     string text = (string)enumerator.Current;
                     labelTrie = null;
-                    if (!labelTrie2.m_map.TryGetValue(text, out labelTrie))
+                    if (!currentTrie.m_map.TryGetValue(text, out labelTrie))
                     {
                         s_lock.ReleaseReadLock();
                         s_lock.WaitWriteLock();
                         try
                         {
-                            if (!labelTrie2.m_map.TryGetValue(text, out labelTrie))
+                            if (!currentTrie.m_map.TryGetValue(text, out labelTrie))
                             {
-                                SortedStringSet sortedStringSet = new SortedStringSet(labelTrie2.m_labels);
+                                SortedStringSet sortedStringSet = new SortedStringSet(currentTrie.m_labels);
                                 sortedStringSet.Add(text);
                                 labelTrie = new LabelTrie(sortedStringSet);
-                                labelTrie2.m_map[text] = labelTrie;
+                                currentTrie.m_map[text] = labelTrie;
                             }
                         }
                         finally
@@ -58,19 +58,19 @@ public partial class LabelTrie
                         }
                     }
 
-                    labelTrie2 = labelTrie;
+                    currentTrie = labelTrie;
                 }
             }
             finally
             {
-                IEnumerator enumerator2 = enumerator;
+                IEnumerator currentEnumerator = enumerator;
                 if (enumerator is IDisposable disposable)
                 {
                     disposable.Dispose();
                 }
             }
 
-            return (!wild) ? labelTrie2.m_non_wild : labelTrie2.m_wild;
+            return (!wild) ? currentTrie.m_non_wild : currentTrie.m_wild;
         }
         finally
         {
@@ -92,29 +92,29 @@ public partial class LabelTrie
         s = s.Substring(num + 1);
         s = s.Trim(s_braces);
         string[] array = s.Split(s_comma);
-        int num2 = array.Length;
-        int num3 = 0;
-        if (0 < num2)
+        int labelCount = array.Length;
+        int labelIndex = 0;
+        if (0 < labelCount)
         {
             do
             {
-                string text = array[num3].Trim();
-                array[num3] = text;
-                if (array[num3].Length != 0)
+                string label = array[labelIndex].Trim();
+                array[labelIndex] = label;
+                if (array[labelIndex].Length != 0)
                 {
-                    if (array[num3].Equals("*"))
+                    if (array[labelIndex].Equals("*"))
                     {
                         wild = true;
                     }
                     else
                     {
-                        sortedStringSet.Add(array[num3]);
+                        sortedStringSet.Add(array[labelIndex]);
                     }
                 }
 
-                num3++;
+                labelIndex++;
             }
-            while (num3 < num2);
+            while (labelIndex < labelCount);
         }
 
         return Find(sortedStringSet, wild);

@@ -103,8 +103,8 @@ public partial class ErrorWarningHandler
         if (adornerLayer != null)
         {
             IList list;
-            IList list2;
-            list = (type == NodeMessageAdornerType.Error) ? (list2 = _errorsList) : (list2 = _warningsList);
+            IList messageList;
+            list = (type == NodeMessageAdornerType.Error) ? (messageList = _errorsList) : (messageList = _warningsList);
             RemoveAdorners(type);
             if (list != null && list.Count > 0)
             {

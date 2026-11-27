@@ -61,9 +61,9 @@ public partial class SortedStringSet
     {
         int count = m_strings.Count;
         GC.KeepAlive(this);
-        int count2 = other.m_strings.Count;
+        int otherCount = other.m_strings.Count;
         GC.KeepAlive(other);
-        if (count != count2)
+        if (count != otherCount)
         {
             GC.KeepAlive(this);
             return false;

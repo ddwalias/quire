@@ -32,22 +32,22 @@ public abstract partial class MathboardModel : WhiteboardModel, IMathboardModel,
     private void HandleItemsListChanged(object sender, NotifyCollectionChangedEventArgs e)
     {
         // IL requires local variables declared before switch to match local slots
-        IEnumerable<IWhiteboardItem> items1;
-        IEnumerable<IWhiteboardItem> items2;
-        IEnumerable<IWhiteboardItem> items3;
+        IEnumerable<IWhiteboardItem> addedItems;
+        IEnumerable<IWhiteboardItem> removedItems;
+        IEnumerable<IWhiteboardItem> movedItems;
         switch (e.Action)
         {
             case NotifyCollectionChangedAction.Add:
-                items1 = e.NewItems.Cast<IWhiteboardItem>();
-                AddItems(items1);
+                addedItems = e.NewItems.Cast<IWhiteboardItem>();
+                AddItems(addedItems);
                 break;
             case NotifyCollectionChangedAction.Remove:
-                items2 = e.OldItems.Cast<IWhiteboardItem>();
-                RemoveItems(items2);
+                removedItems = e.OldItems.Cast<IWhiteboardItem>();
+                RemoveItems(removedItems);
                 break;
             case NotifyCollectionChangedAction.Move:
-                items3 = e.NewItems.Cast<IWhiteboardItem>();
-                MoveItems(items3);
+                movedItems = e.NewItems.Cast<IWhiteboardItem>();
+                MoveItems(movedItems);
                 break;
             default:
                 DebugTools.FailAssertion("Unsupported action: {0}", e.Action);

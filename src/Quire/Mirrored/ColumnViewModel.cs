@@ -47,10 +47,10 @@ public partial class ColumnViewModel
 
         if (e.NewValue != null)
         {
-            INotifyCollectionChanged sortDescriptions2 = (INotifyCollectionChanged)((ListCollectionView)e.NewValue).SortDescriptions;
-            if (sortDescriptions2 != null)
+            INotifyCollectionChanged newSortDescriptions = (INotifyCollectionChanged)((ListCollectionView)e.NewValue).SortDescriptions;
+            if (newSortDescriptions != null)
             {
-                sortDescriptions2.CollectionChanged += columnViewModel.HandleCollectionSortOrderCleared;
+                newSortDescriptions.CollectionChanged += columnViewModel.HandleCollectionSortOrderCleared;
             }
         }
     }

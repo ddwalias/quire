@@ -110,7 +110,7 @@ public partial class ValueFactory : IValueFactory
             }
             MatVal matVal = new MatVal(rows, cols, imag != null);
             IEnumerator enumerator = ((real != null) ? (real as Array).GetEnumerator() : null);
-            IEnumerator enumerator2 = ((imag != null) ? (imag as Array).GetEnumerator() : null);
+            IEnumerator imaginaryEnumerator = ((imag != null) ? (imag as Array).GetEnumerator() : null);
             for (int i = 0; i < rows; i++)
             {
                 for (int j = 0; j < cols; j++)
@@ -121,9 +121,9 @@ public partial class ValueFactory : IValueFactory
                     }
                     if (imag != null)
                     {
-                        enumerator2.MoveNext();
+                        imaginaryEnumerator.MoveNext();
                     }
-                    matVal.set_2(i, j, VariantToEngine((real != null) ? enumerator.Current : ((object)0), (imag != null) ? enumerator2.Current : ((object)0)));
+                    matVal.set_2(i, j, VariantToEngine((real != null) ? enumerator.Current : ((object)0), (imag != null) ? imaginaryEnumerator.Current : ((object)0)));
                 }
             }
             return matVal;

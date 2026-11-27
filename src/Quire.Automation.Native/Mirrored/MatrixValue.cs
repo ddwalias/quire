@@ -89,10 +89,10 @@ public partial class MatrixValue : Value, IMatrixValue, IValue, IMatrixValuePriv
         {
             foreach (DictionaryEntry item in m.m_parr)
             {
-                MatVal m2 = item.Value as MatVal;
-                if (m2 != null)
+                MatVal nestedMatrix = item.Value as MatVal;
+                if (nestedMatrix != null)
                 {
-                    num += CountElements(m2);
+                    num += CountElements(nestedMatrix);
                 }
             }
         }

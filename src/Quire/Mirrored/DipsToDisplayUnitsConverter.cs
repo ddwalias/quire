@@ -21,8 +21,8 @@ internal partial class DipsToDisplayUnitsConverter
         if (values[0] is double numInDips && values[1] is PageSizeUnits pageSizeUnits)
         {
             double value = Math.Round(DisplayUnitsUtils.DipsToDisplayUnits(numInDips, pageSizeUnits), _numOfDigitsForRound);
-            string value2 = pageSizeUnits == PageSizeUnits.Inches ? "\"" : "mm";
-            result = $"{value}{value2}";
+            string unitSuffix = pageSizeUnits == PageSizeUnits.Inches ? "\"" : "mm";
+            result = $"{value}{unitSuffix}";
         }
         else
         {

@@ -97,10 +97,10 @@ public partial class AggregateMathboardViewModel : MathboardViewModel, IAggregat
     {
         base.HandleGridCellSizeChanged(oldSize, newSize);
         double num = newSize.Width / oldSize.Width;
-        double num2 = newSize.Height / oldSize.Height;
-        MaximumSize = new Size(MaximumSize.Width * num, MaximumSize.Height * num2);
-        MinimumSize = new Size(MinimumSize.Width * num, MinimumSize.Height * num2);
-        Size contentSize = new Size(ContentSize.Width * num, ContentSize.Height * num2);
+        double heightScale = newSize.Height / oldSize.Height;
+        MaximumSize = new Size(MaximumSize.Width * num, MaximumSize.Height * heightScale);
+        MinimumSize = new Size(MinimumSize.Width * num, MinimumSize.Height * heightScale);
+        Size contentSize = new Size(ContentSize.Width * num, ContentSize.Height * heightScale);
         ContentSize = contentSize;
     }
 
@@ -110,33 +110,33 @@ public partial class AggregateMathboardViewModel : MathboardViewModel, IAggregat
         Pair<double, double> pair;
         double height = ContentSize.Height;
         double num = height * 0.025;
-        for (uint num2 = 0u; num2 < verticalWhiteboardSections.BlockSectionCount; num2++)
+        for (uint sectionIndex = 0u; sectionIndex < verticalWhiteboardSections.BlockSectionCount; sectionIndex++)
         {
-            if (_sectionIndicators[num2].Readonly)
+            if (_sectionIndicators[sectionIndex].Readonly)
             {
                 continue;
             }
-            IEnumerable<IWhiteboardItem> blockSectionItems = verticalWhiteboardSections.GetBlockSectionItems(num2);
-            if (string.IsNullOrEmpty(_sectionIndicators[num2].Text))
+            IEnumerable<IWhiteboardItem> blockSectionItems = verticalWhiteboardSections.GetBlockSectionItems(sectionIndex);
+            if (string.IsNullOrEmpty(_sectionIndicators[sectionIndex].Text))
             {
-                _sectionIndicators[num2].Text = verticalWhiteboardSections.GetBlockSectionName(num2);
+                _sectionIndicators[sectionIndex].Text = verticalWhiteboardSections.GetBlockSectionName(sectionIndex);
             }
-            double minHeight = height * _sectionIndicators[num2].MinHeightRatio;
+            double minHeight = height * _sectionIndicators[sectionIndex].MinHeightRatio;
             if (blockSectionItems != null && blockSectionItems.Count() > 0)
             {
                 pair = IndicatorRange(blockSectionItems);
             }
             else
             {
-                double num3 = num;
-                for (int i = 0; i < num2; i++)
+                double top = num;
+                for (int i = 0; i < sectionIndex; i++)
                 {
-                    num3 += height * _sectionIndicators[i].MinHeightRatio + num;
+                    top += height * _sectionIndicators[i].MinHeightRatio + num;
                 }
-                pair = GetDefaultDimensions(num3, minHeight);
+                pair = GetDefaultDimensions(top, minHeight);
             }
-            _sectionIndicators[num2].Top = pair.First;
-            _sectionIndicators[num2].Height = pair.Second;
+            _sectionIndicators[sectionIndex].Top = pair.First;
+            _sectionIndicators[sectionIndex].Height = pair.Second;
         }
     }
 

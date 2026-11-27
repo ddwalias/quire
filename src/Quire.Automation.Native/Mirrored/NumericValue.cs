@@ -41,7 +41,7 @@ public partial class NumericValue : Value, INumericValue, IValue, INumericValueP
         get
         {
             double num = 0.0;
-            double num2 = 0.0;
+            double imaginaryPart = 0.0;
             string format;
             if (Real == 0.0 && Imag != 0.0)
             {
@@ -58,9 +58,9 @@ public partial class NumericValue : Value, INumericValue, IValue, INumericValueP
                 format = "{0:R}";
                 format += ((Imag >= 0.0) ? "+{1:R}i" : "{1:R}i");
                 num = Real;
-                num2 = Imag;
+                imaginaryPart = Imag;
             }
-            return string.Format(format, num, num2);
+            return string.Format(format, num, imaginaryPart);
         }
     }
 

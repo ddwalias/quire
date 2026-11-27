@@ -365,10 +365,10 @@ internal partial class IncludeWorksheetCalculatableHandler
         ICalculatableInfo calculatableInfo = null;
         foreach (IncludedCalculatableWrapper item in _allCalculatablesIncludedWrapped)
         {
-            ICalculatableInfo calculatableInfo2 = item.CalculatableInfo;
-            if (calculatableInfo2 != null && calculatableInfo2.Error != null)
+            ICalculatableInfo itemCalculationInfo = item.CalculatableInfo;
+            if (itemCalculationInfo != null && itemCalculationInfo.Error != null)
             {
-                calculatableInfo = calculatableInfo2;
+                calculatableInfo = itemCalculationInfo;
                 if (calculatableInfo.ErrorCode == "premium%_only")
                 {
                     break;

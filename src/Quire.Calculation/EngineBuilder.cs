@@ -48,12 +48,12 @@ public partial class EngineBuilder
     private static string GenerateUnitSystemCustomRL(UnitSystems unitSystem, List<UnitDescriptor> baseList, List<UnitDescriptor> derivedList)
     {
         string text = GenerateDimensionUnitRL(baseList);
-        string text2 = unitSystemEmptyDerivedRL;
+        string derivedUnitsText = unitSystemEmptyDerivedRL;
         if (derivedList?.Count > 0)
         {
-            text2 = string.Format(unitSystemDerivedRL, GenerateDimensionUnitRL(derivedList));
+            derivedUnitsText = string.Format(unitSystemDerivedRL, GenerateDimensionUnitRL(derivedList));
         }
-        return string.Format(unitSystemRL, text, text2);
+        return string.Format(unitSystemRL, text, derivedUnitsText);
     }
 
     public static string GenerateUnitSystemRL(UnitSystems unitSystem, List<UnitDescriptor> baseList, List<UnitDescriptor> derivedList)

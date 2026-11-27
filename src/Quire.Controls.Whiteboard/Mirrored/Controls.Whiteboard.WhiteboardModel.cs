@@ -112,14 +112,14 @@ public partial class WhiteboardModel : IWhiteboardModel, ICloneable, IDisposable
     {
         int num = WhiteboardItems.IndexOf(item);
         IWhiteboardItem whiteboardItem = WhiteboardItems.FirstOrDefault((IWhiteboardItem wbItem) => wbItem != item && PositionComparer.Compare(wbItem, item) > 0);
-        int num2 = WhiteboardItems.Count - 1;
+        int targetIndex = WhiteboardItems.Count - 1;
         if (whiteboardItem != null)
         {
-            num2 = WhiteboardItems.IndexOf(whiteboardItem) - ((num - WhiteboardItems.IndexOf(whiteboardItem) <= 0) ? 1 : 0);
+            targetIndex = WhiteboardItems.IndexOf(whiteboardItem) - ((num - WhiteboardItems.IndexOf(whiteboardItem) <= 0) ? 1 : 0);
         }
-        if (num != num2)
+        if (num != targetIndex)
         {
-            WhiteboardItems.Move(num, num2);
+            WhiteboardItems.Move(num, targetIndex);
         }
     }
 

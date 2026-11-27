@@ -30,18 +30,18 @@ internal partial class MatrixValueDataAccessorWrapper : IMatrixValueDataAccessor
 
     private static List<Quire.Calculation.Core.PlainDataTypes> ConvertPlainDataTypeList(IList<Quire.Automation.PlainDataTypes> list)
     {
-        List<Quire.Calculation.Core.PlainDataTypes> list2 = new List<Quire.Calculation.Core.PlainDataTypes>(list.Count);
+        List<Quire.Calculation.Core.PlainDataTypes> convertedTypes = new List<Quire.Calculation.Core.PlainDataTypes>(list.Count);
         foreach (Quire.Automation.PlainDataTypes item in list)
         {
             if (EnumHelper.TryParse<Quire.Calculation.Core.PlainDataTypes>(item, out var enumValue, EnumHelper.SettingsWithCacheAndAssert))
             {
-                list2.Add(enumValue);
+                convertedTypes.Add(enumValue);
                 continue;
             }
-            list2 = null;
+            convertedTypes = null;
             break;
         }
-        return list2;
+        return convertedTypes;
     }
 
     public IList<IList> GetColumnsPlainDataValues(int startIndex, int endIndex)

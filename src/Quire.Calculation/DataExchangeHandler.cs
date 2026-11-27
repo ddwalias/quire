@@ -79,7 +79,7 @@ internal abstract partial class DataExchangeHandler
     protected void ExecuteWithDispatcher(Action action)
     {
         Exception exception = null;
-        Action action2 = () =>
+        Action actionOnDispatcher = () =>
         {
             try
             {
@@ -97,14 +97,14 @@ internal abstract partial class DataExchangeHandler
         Dispatcher dispatcher = _dataExchangeModel.Dispatcher;
         if (dispatcher == null || dispatcher.CheckAccess())
         {
-            action2();
+            actionOnDispatcher();
         }
         else
         {
             DispatcherOperation val = null;
             try
             {
-                val = dispatcher.BeginInvoke(CalculationController.WaitForCalculationInterruptPriority_Send, action2);
+                val = dispatcher.BeginInvoke(CalculationController.WaitForCalculationInterruptPriority_Send, actionOnDispatcher);
                 _handleEngineNeedsUIThreadMessagesProcessed();
                 val.Wait();
             }
@@ -255,8 +255,8 @@ internal abstract partial class DataExchangeHandler
         {
             MatrixValue matrixValue = new MatrixValue();
             int length = array.GetLength(0);
-            int length2 = array.GetLength(1);
-            if (length2 == 0 || length == 0)
+            int columnCount = array.GetLength(1);
+            if (columnCount == 0 || length == 0)
             {
                 matrixValue.SetElement(0, 0, new NumericValue
                 {
@@ -267,7 +267,7 @@ internal abstract partial class DataExchangeHandler
             {
                 for (int i = 0; i < length; i++)
                 {
-                    for (int j = 0; j < length2; j++)
+                    for (int j = 0; j < columnCount; j++)
                     {
                         matrixValue.SetElement(i, j, ConvertToIValue(array[i, j]));
                     }
@@ -275,25 +275,25 @@ internal abstract partial class DataExchangeHandler
             }
             return matrixValue;
         }
-        if (value is object[] array2)
+        if (value is object[] vectorValues)
         {
-            MatrixValue matrixValue2 = new MatrixValue();
-            int num2 = array2.Length;
-            if (num2 == 0)
+            MatrixValue vectorMatrix = new MatrixValue();
+            int valueCount = vectorValues.Length;
+            if (valueCount == 0)
             {
-                matrixValue2.SetElement(0, 0, new NumericValue
+                vectorMatrix.SetElement(0, 0, new NumericValue
                 {
                     Real = double.NaN
                 });
             }
             else
             {
-                for (int k = 0; k < num2; k++)
+                for (int k = 0; k < valueCount; k++)
                 {
-                    matrixValue2.SetElement(k, 0, ConvertToIValue(array2[k]));
+                    vectorMatrix.SetElement(k, 0, ConvertToIValue(vectorValues[k]));
                 }
             }
-            return matrixValue2;
+            return vectorMatrix;
         }
         return new NumericValue
         {

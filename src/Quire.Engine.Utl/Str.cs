@@ -21,17 +21,17 @@ public partial class Str
                 }
 
                 StringBuilder stringBuilder = new StringBuilder(length);
-                int num2 = 0;
+                int index = 0;
                 do
                 {
-                    if (!p(s[num2]))
+                    if (!p(s[index]))
                     {
-                        stringBuilder.Append(s[num2]);
+                        stringBuilder.Append(s[index]);
                     }
 
-                    num2++;
+                    index++;
                 }
-                while (num2 < length);
+                while (index < length);
 
                 return stringBuilder.ToString();
             }

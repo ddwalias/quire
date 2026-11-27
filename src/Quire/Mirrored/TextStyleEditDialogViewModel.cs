@@ -95,7 +95,7 @@ public partial class TextStyleEditDialogViewModel
     private object ResetValue(object value, string propertyName)
     {
         object basedOnSetterValue = TextStyleBase.GetBasedOnSetterValue(_textStyle.Style, propertyName);
-        if ((basedOnSetterValue is TextDecorationCollection textDecorations && textDecorations.Count == ((TextDecorationCollection)value)?.Count) || (basedOnSetterValue is Brush brush && ((object)brush).ToString() == value?.ToString()) || (basedOnSetterValue is double value2 && value is double points && Math.Round(value2, 3).Equals(Math.Round(WpfUtils.PointsToDips(points), 3))) || (basedOnSetterValue != null && basedOnSetterValue.Equals(value)))
+        if ((basedOnSetterValue is TextDecorationCollection textDecorations && textDecorations.Count == ((TextDecorationCollection)value)?.Count) || (basedOnSetterValue is Brush brush && ((object)brush).ToString() == value?.ToString()) || (basedOnSetterValue is double originalValue && value is double points && Math.Round(originalValue, 3).Equals(Math.Round(WpfUtils.PointsToDips(points), 3))) || (basedOnSetterValue != null && basedOnSetterValue.Equals(value)))
         {
             return null;
         }

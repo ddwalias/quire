@@ -794,8 +794,8 @@ public partial class IncludeWorksheetControl : TextBox, ICalculatableContainer, 
     private static void IncludedFilePathChanged(DependencyObject d, DependencyPropertyChangedEventArgs args)
     {
         string text = args.OldValue as string;
-        string text2 = args.NewValue as string;
-        if (text2 != null && text2.Equals(text))
+        string newPath = args.NewValue as string;
+        if (newPath != null && newPath.Equals(text))
         {
             return;
         }
@@ -813,9 +813,9 @@ public partial class IncludeWorksheetControl : TextBox, ICalculatableContainer, 
             }
             if (includeWorksheetControl.IsTopLevel && !EnvironmentScope.IsCurrentlyInsideUndoOrRedo)
             {
-                CommandBuffer.Execute(new IncludeWorksheetFilePathChange(includeWorksheetControl, text2));
+                CommandBuffer.Execute(new IncludeWorksheetFilePathChange(includeWorksheetControl, newPath));
             }
-            includeWorksheetControl._model.IncludedFilePath = text2;
+            includeWorksheetControl._model.IncludedFilePath = newPath;
         }
     }
 
@@ -888,14 +888,14 @@ public partial class IncludeWorksheetControl : TextBox, ICalculatableContainer, 
         {
             GeneralTransform obj = ((_contentElement == null || FindCommonVisualAncestor(_contentElement) == null) ? Transform.Identity : _contentElement.TransformToAncestor(this));
             double top;
-            double num2;
+            double transformedTop;
             Thickness padding;
             Point val;
             double num = FontFamily.Baseline * FontSize;
             padding = Padding;
             top = padding.Top;
-            num2 = num + top;
-            val = obj.Transform(new Point(0.0, num2));
+            transformedTop = num + top;
+            val = obj.Transform(new Point(0.0, transformedTop));
             return -val.Y;
         }
     }

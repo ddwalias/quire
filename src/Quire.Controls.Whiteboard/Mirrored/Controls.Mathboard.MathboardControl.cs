@@ -498,9 +498,9 @@ public abstract partial class MathboardControl : WhiteboardControl, IMathboardCo
         });
         while (!flag && nodesToProcess.IsNotEmpty())
         {
-            (IWhiteboardItem item, Rect item2) = nodesToProcess.Dequeue();
+            (IWhiteboardItem item, Rect viewportRect) = nodesToProcess.Dequeue();
             Rect subViewPort;
-            flag = IsItemInViewPort(WhiteboardItemManager, item, item2, out subViewPort);
+            flag = IsItemInViewPort(WhiteboardItemManager, item, viewportRect, out subViewPort);
             if (!flag && item is IMathboardControl mathboardControl)
             {
                 mathboardControl.WhiteboardItems.Each((IWhiteboardItem subItem) =>

@@ -16,16 +16,16 @@ internal partial class DocNameToTabHeaderConverter
     {
         string text = value as string;
         IEngineeringDocument engineeringDocument = (IEngineeringDocument)parameter;
-        string text2 = null;
-        string text3 = (string.IsNullOrEmpty(engineeringDocument.FilePath) ? null : Path.GetExtension(engineeringDocument.FilePath));
-        if (engineeringDocument.IsDocumentATemplate || (text3 != null && text3.Equals(".mctx", StringComparison.OrdinalIgnoreCase)))
+        string templatePrefix = null;
+        string extension = (string.IsNullOrEmpty(engineeringDocument.FilePath) ? null : Path.GetExtension(engineeringDocument.FilePath));
+        if (engineeringDocument.IsDocumentATemplate || (extension != null && extension.Equals(".mctx", StringComparison.OrdinalIgnoreCase)))
         {
-            text2 = Application.Current.TryFindResource("Application.TabPrefixForTemplateFile") as string;
+            templatePrefix = Application.Current.TryFindResource("Application.TabPrefixForTemplateFile") as string;
         }
 
-        if (!string.IsNullOrEmpty(text2))
+        if (!string.IsNullOrEmpty(templatePrefix))
         {
-            return string.Join(" | ", [text2, text]);
+            return string.Join(" | ", [templatePrefix, text]);
         }
 
         return text;

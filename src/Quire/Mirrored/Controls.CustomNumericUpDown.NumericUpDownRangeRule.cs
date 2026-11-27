@@ -13,11 +13,11 @@ public partial class NumericUpDownRangeRule : ValidationRule
     {
         ValidationResult result = ValidationResult.ValidResult;
         string errorContent = "";
-        if (!uint.TryParse(value?.ToString(), out var result2))
+        if (!uint.TryParse(value?.ToString(), out var parsedValue))
         {
             result = new ValidationResult(false, errorContent);
         }
-        else if (Wrapper.MinValue > result2 || result2 > Wrapper.MaxValue)
+        else if (Wrapper.MinValue > parsedValue || parsedValue > Wrapper.MaxValue)
         {
             result = new ValidationResult(false, errorContent);
         }

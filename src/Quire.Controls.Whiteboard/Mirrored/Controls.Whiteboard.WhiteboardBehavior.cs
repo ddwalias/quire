@@ -66,9 +66,9 @@ public static partial class WhiteboardBehavior
             IWhiteboardViewModel whiteboardViewModel = viewModel;
             Size newSize = eventArgs.NewSize;
             whiteboardViewModel.ContentWidth = newSize.Width;
-            IWhiteboardViewModel whiteboardViewModel2 = viewModel;
+            IWhiteboardViewModel targetViewModel = viewModel;
             newSize = eventArgs.NewSize;
-            whiteboardViewModel2.ContentHeight = newSize.Height;
+            targetViewModel.ContentHeight = newSize.Height;
         };
         element.GotKeyboardFocus += (object sender, KeyboardFocusChangedEventArgs eventArgs) =>
         {

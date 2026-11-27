@@ -31,26 +31,26 @@ public partial struct LabelUtils
 
         s = s.Substring(num + 1);
         string[] array = s.Split(s_sharp);
-        int num2 = array.Length;
-        int num3 = num2 - 1;
-        if (array[num3].Equals("wild"))
+        int labelCount = array.Length;
+        int lastIndex = labelCount - 1;
+        if (array[lastIndex].Equals("wild"))
         {
             wild = true;
-            num3 = num2 - 1;
-            string[] array2 = new string[num3];
-            int num4 = 0;
-            num3 = num2 - 1;
-            if (0 < num3)
+            lastIndex = labelCount - 1;
+            string[] labelsWithoutWild = new string[lastIndex];
+            int labelIndex = 0;
+            lastIndex = labelCount - 1;
+            if (0 < lastIndex)
             {
                 do
                 {
-                    array2[num4] = array[num4];
-                    num4++;
+                    labelsWithoutWild[labelIndex] = array[labelIndex];
+                    labelIndex++;
                 }
-                while (num4 < num3);
+                while (labelIndex < lastIndex);
             }
 
-            array = array2;
+            array = labelsWithoutWild;
         }
 
         return LabelTrie.InternLabels(array, wild);
@@ -81,9 +81,9 @@ public partial struct LabelUtils
 
     public static string ForceWild(string s)
     {
-        LabelSet s2 = LabelTrie.InternLabels(s);
-        s2 = LabelTrie.WithWild(s2, bWild: true);
-        string text = s2.ToString();
+        LabelSet labels = LabelTrie.InternLabels(s);
+        labels = LabelTrie.WithWild(labels, bWild: true);
+        string text = labels.ToString();
         int num = s.IndexOf('{');
         return ((num != -1) ? s.Substring(0, num) : s) + text;
     }
@@ -92,8 +92,8 @@ public partial struct LabelUtils
     {
         int num = c.IndexOf('{');
         string obj = ((num != -1) ? c.Substring(0, num) : c);
-        int num2 = c_non_wild.IndexOf('{');
-        string value = ((num2 != -1) ? c_non_wild.Substring(0, num2) : c_non_wild);
+        int openingBraceIndex = c_non_wild.IndexOf('{');
+        string value = ((openingBraceIndex != -1) ? c_non_wild.Substring(0, openingBraceIndex) : c_non_wild);
         if (!obj.Equals(value))
         {
             return false;
@@ -121,9 +121,9 @@ public partial struct LabelUtils
             string value = SplitName(s);
             if (text.Equals(value))
             {
-                LabelSet labelSet2 = LabelTrie.InternLabels(s);
-                LabelSet labelSet3 = labelSet2;
-                if (labelSet.Unifies(labelSet2))
+                LabelSet candidateLabels = LabelTrie.InternLabels(s);
+                LabelSet candidateLabelAlias = candidateLabels;
+                if (labelSet.Unifies(candidateLabels))
                 {
                     return dictionaryEntry.Value;
                 }
@@ -141,15 +141,15 @@ public partial struct LabelUtils
         foreach (object item in d)
         {
             DictionaryEntry dictionaryEntry = (DictionaryEntry)item;
-            string text2 = dictionaryEntry.Key as string;
-            string value = SplitName(text2);
+            string keyName = dictionaryEntry.Key as string;
+            string value = SplitName(keyName);
             if (text.Equals(value))
             {
-                LabelSet labelSet2 = LabelTrie.InternLabels(text2);
-                LabelSet labelSet3 = labelSet2;
-                if (labelSet.Unifies(labelSet2))
+                LabelSet candidateLabels = LabelTrie.InternLabels(keyName);
+                LabelSet candidateLabelAlias = candidateLabels;
+                if (labelSet.Unifies(candidateLabels))
                 {
-                    return text2;
+                    return keyName;
                 }
             }
         }

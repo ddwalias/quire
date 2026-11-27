@@ -32,12 +32,12 @@ public partial class _Hex
         {
             do
             {
-                byte b2 = (byte)(b[num] >> 4);
-                int num2 = (((uint)b2 >= 10u) ? (b2 + 55) : (b2 + 48));
-                stringBuilder.Append((char)num2);
-                byte b3 = (byte)(b[num] % 16);
-                int num3 = (((uint)b3 >= 10u) ? (b3 + 55) : (b3 + 48));
-                stringBuilder.Append((char)num3);
+                byte highNibble = (byte)(b[num] >> 4);
+                int highDigit = (((uint)highNibble >= 10u) ? (highNibble + 55) : (highNibble + 48));
+                stringBuilder.Append((char)highDigit);
+                byte lowNibble = (byte)(b[num] % 16);
+                int lowDigit = (((uint)lowNibble >= 10u) ? (lowNibble + 55) : (lowNibble + 48));
+                stringBuilder.Append((char)lowDigit);
                 num++;
             }
             while (num < b.LongLength);
@@ -50,19 +50,19 @@ public partial class _Hex
     {
         int num = s.Length / 2;
         byte[] array = new byte[num];
-        int num2 = 0;
+        int index = 0;
         if (0 < num)
         {
             do
             {
-                int num3 = s[num2 * 2];
-                int num4 = (((uint)(num3 - 48) > 9u) ? (num3 - 55) : (num3 - 48));
-                int num5 = s[num2 * 2 + 1];
-                int num6 = (((uint)(num5 - 48) > 9u) ? (num5 - 55) : (num5 - 48));
-                array[num2] = (byte)(num4 * 16 + num6);
-                num2++;
+                int highCharacter = s[index * 2];
+                int highNibble = (((uint)(highCharacter - 48) > 9u) ? (highCharacter - 55) : (highCharacter - 48));
+                int lowCharacter = s[index * 2 + 1];
+                int lowNibble = (((uint)(lowCharacter - 48) > 9u) ? (lowCharacter - 55) : (lowCharacter - 48));
+                array[index] = (byte)(highNibble * 16 + lowNibble);
+                index++;
             }
-            while (num2 < num);
+            while (index < num);
         }
 
         return array;

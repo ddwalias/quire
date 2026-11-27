@@ -18,7 +18,7 @@ public partial class WhiteboardItemPositionComparer
         }
 
         Point itemLocation = WhiteboardViewModel.WhiteboardItemMgr.GetItemLocation(itemOne);
-        Point itemLocation2 = WhiteboardViewModel.WhiteboardItemMgr.GetItemLocation(itemTwo);
-        return Compare(itemLocation, itemLocation2);
+        Point secondItemLocation = WhiteboardViewModel.WhiteboardItemMgr.GetItemLocation(itemTwo);
+        return Compare(itemLocation, secondItemLocation);
     }
 }

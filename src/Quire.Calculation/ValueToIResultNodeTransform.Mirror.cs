@@ -89,13 +89,13 @@ public partial class ValueToIResultNodeTransform : IValueToIResultNodeTransform
         double realPart = scalar.RealPart;
         bool flag = realPart != 0.0;
         double imagPart = scalar.ImagPart;
-        bool flag2 = imagPart != 0.0;
+        bool hasImaginaryPart = imagPart != 0.0;
         IResultNode result;
-        if (flag & flag2)
+        if (flag & hasImaginaryPart)
         {
             result = _resultNodeFactory.CreateComplexResultNode(realPart, imagPart);
         }
-        else if (flag2)
+        else if (hasImaginaryPart)
         {
             result = _resultNodeFactory.CreateImaginaryResultNode(imagPart);
         }

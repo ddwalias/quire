@@ -33,14 +33,14 @@ public partial class LabelSet
 
         if (other.m_wild)
         {
-            bool result2 = other.m_labels.IsSubsetOf(m_labels);
+            bool isSubset = other.m_labels.IsSubsetOf(m_labels);
             GC.KeepAlive(this);
-            return result2;
+            return isSubset;
         }
 
-        bool result3 = m_labels.SetEquals(other.m_labels);
+        bool areEqual = m_labels.SetEquals(other.m_labels);
         GC.KeepAlive(this);
-        return result3;
+        return areEqual;
     }
 
     [return: MarshalAs(UnmanagedType.U1)]

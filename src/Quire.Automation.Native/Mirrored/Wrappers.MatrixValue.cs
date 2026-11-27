@@ -40,7 +40,7 @@ public partial class MatrixValue
 
     public void SetElement(int row, int col, object obj)
     {
-        object obj2 = WrapperFactory.Instance.WrapperToAutomation(obj);
-        _innerObject.SetElement(row, col, (obj2 != null) ? obj2 : obj);
+        object automationValue = WrapperFactory.Instance.WrapperToAutomation(obj);
+        _innerObject.SetElement(row, col, (automationValue != null) ? automationValue : obj);
     }
 }
