@@ -553,4 +553,81 @@ public partial class PlotControl
             SetSelectedTracesLineWeight((double)e.Parameter);
         }
     }
+
+    private void CanNavigateToYEquationList(object sender, CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = ((object)_rangeEquations).Equals((object)WpfUtils.GetFocusedAncestorOfTypeElement<EquationList>(this));
+    }
+
+    private void CanNavigateToXEquationList(object sender, CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = ((object)_resultEquations).Equals((object)WpfUtils.GetFocusedAncestorOfTypeElement<EquationList>(this));
+    }
+
+    private void NavigateToYEquationListStart(object sender, ExecutedRoutedEventArgs e)
+    {
+        _resultEquations.MoveToEquationStart(_resultEquations.EquationCount - 1);
+    }
+
+    private void NavigateToYEquationListEnd(object sender, ExecutedRoutedEventArgs e)
+    {
+        _resultEquations.MoveToEquationEnd(_resultEquations.EquationCount - 1);
+    }
+
+    private void NavigateToXEquationList(object sender, ExecutedRoutedEventArgs e)
+    {
+        _rangeEquations.MoveToEquationStart(0);
+    }
+
+    private void XEquationsSizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        EquationListOrPlotLegendSizeChanged();
+    }
+
+    private void YEquationsSizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        EquationListOrPlotLegendSizeChanged();
+    }
+
+    private void PlotLegendSizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        if (sender is PlotLegend)
+        {
+            EquationListOrPlotLegendSizeChanged();
+        }
+    }
+
+    protected override void IsActiveRegionChanged(bool newValue)
+    {
+        base.IsActiveRegionChanged(newValue);
+        if (newValue)
+        {
+            _isActivationPending = false;
+            return;
+        }
+        if (!ShowAxisExpressions)
+        {
+            SwitchExpressionsVisibility(HiddenExpressionsVisibility);
+        }
+        SelectAllTraces();
+    }
+
+    protected override void IsSelectedChanged(bool newValue)
+    {
+        base.IsSelectedChanged(newValue);
+        if (newValue)
+        {
+            SelectAllTraces();
+        }
+    }
+
+    private void EquationListOrPlotLegendSizeChanged()
+    {
+        MakeSureXEquationsNotOutsidePlot(changePlotSize: true);
+        MakeSurePlotLegendNotOutsidePlot(changePlotSize: true);
+        if (_resultLegendsPositions != null && (_resultLegendPositionIndex == 0 || _resultLegendPositionIndex == 1))
+        {
+            MakeSureYEquationsNotOutsidePlot(_resultLegendsPositions[_resultLegendPositionIndex], _resultEquations);
+        }
+    }
 }

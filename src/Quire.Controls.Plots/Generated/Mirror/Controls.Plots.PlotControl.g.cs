@@ -352,24 +352,6 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     [global::Quire.Mirror.MirrorStub]
     private void ShowHidePseudoErrorFrame(global::System.Windows.Visibility equationVisibility) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void CanNavigateToYEquationList(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CanNavigateToXEquationList(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void NavigateToYEquationListStart(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void NavigateToYEquationListEnd(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void NavigateToXEquationList(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void XEquationsSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void YEquationsSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void PlotLegendSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void EquationListOrPlotLegendSizeChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void PreserveGraphHeightAfterShowingBelowLegend() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void MakeSurePlotLegendNotOutsidePlot(bool changePlotSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -571,10 +553,6 @@ public partial class PlotControl : global::Quire.Controls.Plots.View.PlotControl
     public string Error() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal string ErrorText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void IsActiveRegionChanged(bool newValue) => base.IsActiveRegionChanged(newValue);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void IsSelectedChanged(bool newValue) => base.IsSelectedChanged(newValue);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotEquation> GetPlotEquations() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
