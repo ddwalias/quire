@@ -456,6 +456,94 @@ public partial class MathNode
 
     public bool JumpIntoChildren => d__.JumpIntoChildren;
 
+    public int[] NavigatablePartRows
+    {
+        get
+        {
+            if (IsPairNary)
+            {
+                int[] rows = new int[NavigablePartCount];
+                int index = 0;
+                int rowOffset = 0;
+                for (int elementIndex = 0; elementIndex < ElementsCount; elementIndex++)
+                {
+                    if (elementIndex == 0)
+                    {
+                        for (int partIndex = 0; partIndex < FirstElementDescriptor.NavigablePartCount; partIndex++)
+                        {
+                            rows[partIndex] = FirstElementDescriptor.NavigatablePartRows[partIndex];
+                        }
+                        index += FirstElementDescriptor.NavigablePartCount;
+                        rowOffset += FirstElementDescriptor.RowCount;
+                    }
+                    else if (HasLastElement && elementIndex == ElementsCount - 1)
+                    {
+                        for (int partIndex = 0; partIndex < LastElementDescriptor.NavigablePartCount; partIndex++)
+                        {
+                            rows[index + partIndex] = rowOffset + LastElementDescriptor.NavigatablePartRows[partIndex];
+                        }
+                    }
+                    else
+                    {
+                        for (int partIndex = 0; partIndex < ActualMiddleElementDescriptor.NavigablePartCount; partIndex++)
+                        {
+                            rows[index + partIndex] = rowOffset + ActualMiddleElementDescriptor.NavigatablePartRows[partIndex];
+                        }
+                        index += ActualMiddleElementDescriptor.NavigablePartCount;
+                        rowOffset += ActualMiddleElementDescriptor.RowCount;
+                    }
+                }
+                return rows;
+            }
+            return d__.NavigatablePartRows;
+        }
+    }
+
+    public int[] ChildrenRows
+    {
+        get
+        {
+            if (IsPairNary)
+            {
+                int[] rows = new int[ChildCount];
+                int index = 0;
+                int rowOffset = 0;
+                for (int elementIndex = 0; elementIndex < ElementsCount; elementIndex++)
+                {
+                    if (elementIndex == 0)
+                    {
+                        for (int childIndex = 0; childIndex < FirstElementDescriptor.ChildCount; childIndex++)
+                        {
+                            rows[childIndex] = FirstElementDescriptor.ChildrenRows[childIndex];
+                        }
+                        index += FirstElementDescriptor.ChildCount;
+                        rowOffset += FirstElementDescriptor.RowCount;
+                    }
+                    else if (HasLastElement && elementIndex == ElementsCount - 1)
+                    {
+                        for (int childIndex = 0; childIndex < LastElementDescriptor.ChildCount; childIndex++)
+                        {
+                            rows[index + childIndex] = rowOffset + LastElementDescriptor.ChildrenRows[childIndex];
+                        }
+                    }
+                    else
+                    {
+                        for (int childIndex = 0; childIndex < ActualMiddleElementDescriptor.ChildCount; childIndex++)
+                        {
+                            rows[index + childIndex] = rowOffset + ActualMiddleElementDescriptor.ChildrenRows[childIndex];
+                        }
+                        index += ActualMiddleElementDescriptor.ChildCount;
+                        rowOffset += ActualMiddleElementDescriptor.RowCount;
+                    }
+                }
+                return rows;
+            }
+            return d__.ChildrenRows;
+        }
+    }
+
+    public int[] ProhibitedAutoLabelIdDescendants => d__.ProhibitedAutoLabelIdDescendants;
+
     public bool HasContainerSlot => ContainerSlots.Length > 0;
 
     public bool IsFullContainer
