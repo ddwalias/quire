@@ -277,8 +277,7 @@ private void Initialize()
         _pageManager.ContentActivated += () => ActiveSection = WorksheetContent;
         WorksheetContent.NonprintableSpaceWidthIncrease += newWidth =>
         {
-            Size gridCellSize = _worksheetGrid.GridCellSize;
-            double widthWithNonprintableSpace = newWidth + 2.0 * gridCellSize.Width;
+            double widthWithNonprintableSpace = newWidth + 2.0 * _worksheetGrid.GridCellSize.Width;
             WidthWithNonprintableSpace = widthWithNonprintableSpace;
         };
         HookupCollectionChangedHandlers();
@@ -3137,14 +3136,7 @@ private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Co
 
 private global::Quire.Controls.Core.IWhiteboardItem FindNextItemForTabNavigation(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GetTabNavigatableItems(bool includingActiveItem = false)
-    {
-        if (includingActiveItem)
-        {
-            return WorksheetItems.Where(item => ItemManager.IsTabNavigatable(item) || item == ActiveItem);
-        }
-        return WorksheetItems.Where(item => ItemManager.IsTabNavigatable(item));
-    }
+private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GetTabNavigatableItems(bool includingActiveItem = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private void ActivateSection(global::Quire.Controls.Worksheet.IWorksheetSection section, global::Quire.Controls.Worksheet.IWorksheetPage page, global::System.Nullable<global::System.Windows.Point> position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
