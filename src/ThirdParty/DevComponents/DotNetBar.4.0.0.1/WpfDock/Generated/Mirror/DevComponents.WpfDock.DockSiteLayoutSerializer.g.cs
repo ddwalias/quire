@@ -18,53 +18,5 @@ internal partial class DockSiteLayoutSerializer : global::Quire.DevComponents.Wp
     [global::Quire.Mirror.MirrorStub]
     private bool m_IgnoreLoadLayoutElementNotFoundErrors;
     [global::Quire.Mirror.MirrorStub]
-    public string SaveLayout(global::Quire.DevComponents.WpfDock.DockSite ds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SaveFloatingWindowLayout(global::Quire.DevComponents.WpfDock.FloatingWindow fw, global::System.Xml.XmlElement xmlParent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Xml.XmlElement SaveSplitPanelLayout(global::Quire.DevComponents.WpfDock.SplitPanel sp, global::System.Xml.XmlElement xmlParent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SaveDockedControlLayout(global::System.Windows.FrameworkElement elem, global::System.Xml.XmlElement xmlSplitPanel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SaveDockWindowLayout(global::Quire.DevComponents.WpfDock.DockWindow dockWindow, global::System.Xml.XmlElement xmlParent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SaveDockWindowGroupLayout(global::Quire.DevComponents.WpfDock.DockWindowGroup dockGroup, global::System.Xml.XmlElement xmlParent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void LoadLayout(global::Quire.DevComponents.WpfDock.DockSite ds, string layout) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void LoadFloatingWindowLayout(global::Quire.DevComponents.WpfDock.DockSite ds, global::System.Xml.XmlElement xmlParent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfDock.DockWindowGroup LoadDockWindowGroupLayout(global::System.Xml.XmlElement elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void LoadSplitPanelLayout(global::Quire.DevComponents.WpfDock.DockSite ds, global::System.Xml.XmlElement elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void LoadSplitPanelLayout(global::Quire.DevComponents.WpfDock.SplitPanel parent, global::System.Xml.XmlElement elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void LoadChildren(global::Quire.DevComponents.WpfDock.SplitPanel parent, global::System.Xml.XmlElement xmlParent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void Detach(global::Quire.DevComponents.WpfDock.DockWindow dw) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void Detach(global::Quire.DevComponents.WpfDock.DockWindowGroup dg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void Detach(global::Quire.DevComponents.WpfDock.SplitPanel panel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.FrameworkElement LoadDockControlLayout(global::System.Xml.XmlElement elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.FrameworkElement FindDockControl(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfDock.DockWindow LoadDockWindowLayout(global::System.Xml.XmlElement elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfDock.DockWindow FindDockWindow(string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfDock.DockWindowGroup LoadDockWindowGroupLayout(global::Quire.DevComponents.WpfDock.SplitPanel sp, global::System.Xml.XmlElement elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Windows.Size ConvertSize(string size) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static string ConvertSize(global::System.Windows.Size sz) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Windows.Rect ConvertRect(string rect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static string ConvertRect(global::System.Windows.Rect r) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public DockSiteLayoutSerializer() { }
 }
