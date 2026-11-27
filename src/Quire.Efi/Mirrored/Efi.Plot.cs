@@ -40,11 +40,11 @@ public static partial class Plot
         Dim dim = Dim.Eq(obj.m_dim, dimVal.m_dim);
         uint num = Utl.as_pint(n, 3u);
         MatVal matVal = new MatVal((int)num);
-        double num2 = Math.Log10(d);
-        double num3 = (Math.Log10(d2) - num2) / (double)(num - 1);
+        double value = Math.Log10(d);
+        double otherValue = (Math.Log10(d2) - value) / (double)(num - 1);
         for (int i = 0; i < num; i++)
         {
-            matVal.set_1(i, Math.Pow(10.0, (double)i * num3 + num2));
+            matVal.set_1(i, Math.Pow(10.0, (double)i * otherValue + value));
         }
         matVal.m_dim = dim;
         return matVal;
@@ -53,16 +53,16 @@ public static partial class Plot
     public static object logpts(object min, object decades, object n)
     {
         double num = Utl.as_real(min, 1u);
-        uint num2 = Utl.as_pint(decades, 2u);
-        uint num3 = Utl.as_pint(n, 3u);
-        MatVal matVal = new MatVal((int)(num3 * num2));
-        for (int i = 0; i < num2; i++)
+        uint value = Utl.as_pint(decades, 2u);
+        uint otherValue = Utl.as_pint(n, 3u);
+        MatVal matVal = new MatVal((int)(otherValue * value));
+        for (int i = 0; i < value; i++)
         {
-            double num4 = Math.Pow(10.0, num + (double)i);
-            double num5 = num4 * 9.0 / (double)num3;
-            for (int j = 0; j < num3; j++)
+            double power = Math.Pow(10.0, num + (double)i);
+            double nextValue = power * 9.0 / (double)otherValue;
+            for (int j = 0; j < otherValue; j++)
             {
-                matVal.set_1((int)(j + i * num3), num4 + (double)j * num5);
+                matVal.set_1((int)(j + i * otherValue), power + (double)j * nextValue);
             }
         }
         matVal.m_dim = Dim.identity;

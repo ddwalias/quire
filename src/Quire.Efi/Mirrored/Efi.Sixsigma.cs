@@ -108,24 +108,24 @@ public partial struct Sixsigma
             }
             num = Math.Max(num, array[i - 1]);
         }
-        int num2 = A.Rows - 1;
-        if (num2 % num != 0)
+        int rowCount = A.Rows - 1;
+        if (rowCount % num != 0)
         {
             AppException.Raise("invalid blocking", 1u);
         }
-        int num3 = num2 / num;
+        int value = rowCount / num;
         for (int j = 1; j <= num; j++)
         {
-            for (int k = 0; k < num3; k++)
+            for (int k = 0; k < value; k++)
             {
-                int num4 = k + (j - 1) * num3;
-                if (array[num4] != j)
+                int otherValue = k + (j - 1) * value;
+                if (array[otherValue] != j)
                 {
                     AppException.Raise("invalid blocking", 1u);
                 }
             }
         }
-        return new int[2] { num, num3 };
+        return new int[2] { num, value };
     }
 
     public static bool is_Y_UniformScalar(MatVal Y)
@@ -174,18 +174,18 @@ public partial struct Sixsigma
         }
         int[] array = verifyBlocking(matVal);
         int num = array[0];
-        int num2 = array[1];
+        int value = array[1];
         for (int i = 0; i < num; i++)
         {
-            for (int j = 0; j < num2 - 1; j++)
+            for (int j = 0; j < value - 1; j++)
             {
-                int num3 = j + (int)(StatisticsExports.uniform() * (double)(num2 - j));
-                if (j == num3)
+                int otherValue = j + (int)(StatisticsExports.uniform() * (double)(value - j));
+                if (j == otherValue)
                 {
                     continue;
                 }
-                int i2 = 1 + j + i * num2;
-                int i3 = 1 + num3 + i * num2;
+                int i2 = 1 + j + i * value;
+                int i3 = 1 + otherValue + i * value;
                 for (int k = 0; k < matVal.Cols; k++)
                 {
                     if (k != 1)
@@ -214,14 +214,14 @@ public partial struct Sixsigma
             int[] array = new int[num];
             if (arg2 is NumVal)
             {
-                int num2 = (int)Utl.as_pint(arg2, 2u);
+                int value = (int)Utl.as_pint(arg2, 2u);
                 if (!DimVal.IsDimOf(arg2, Dim.identity))
                 {
                     AppException.Raise("must be dimless", 2u);
                 }
                 for (int i = 0; i < num; i++)
                 {
-                    array[i] = num2;
+                    array[i] = value;
                 }
             }
             else if (arg2 is MatVal)
@@ -257,11 +257,11 @@ public partial struct Sixsigma
     {
         MatVal matVal = verify2LCodedDMatrix(arg1);
         int num = matVal.Cols - 2;
-        int num2 = matVal.Rows - 1;
-        double num3 = Math.Log(Math.Pow(2.0, num) / (double)num2) / Math.Log(2.0);
-        int num4 = 1 << num - (int)num3;
-        int num5 = 1 << num - (int)(num3 + 0.5);
-        if (num3 == 0.0 || (num2 != num4 && num2 != num5))
+        int rowCount = matVal.Rows - 1;
+        double logarithm = Math.Log(Math.Pow(2.0, num) / (double)rowCount) / Math.Log(2.0);
+        int value = 1 << num - (int)logarithm;
+        int otherValue = 1 << num - (int)(logarithm + 0.5);
+        if (logarithm == 0.0 || (rowCount != value && rowCount != otherValue))
         {
             AppException.Raise("must be a fractional factorial design", 1u);
         }
@@ -290,17 +290,17 @@ public partial struct Sixsigma
             {
                 AppException.Raise("invalid argument", 2u);
             }
-            string[] array2 = text.Split(new char[5] { ' ', ',', '\t', ':', ';' }, StringSplitOptions.RemoveEmptyEntries);
-            int num6 = 0;
-            string[] array3 = array2;
-            foreach (string text2 in array3)
+            string[] names = text.Split(new char[5] { ' ', ',', '\t', ':', ';' }, StringSplitOptions.RemoveEmptyEntries);
+            int counter = 0;
+            string[] otherValues = names;
+            foreach (string label in otherValues)
             {
-                array2[num6++] = text2.ToUpper();
+                names[counter++] = label.ToUpper();
             }
             Utils utils = new Utils();
-            for (int l = 0; l < array2.Length; l++)
+            for (int l = 0; l < names.Length; l++)
             {
-                if (!utils.getGenIndices(array2[l], out var findx) || findx.Length > 1 || findx[0] >= matVal.Cols - 2)
+                if (!utils.getGenIndices(names[l], out var findx) || findx.Length > 1 || findx[0] >= matVal.Cols - 2)
                 {
                     AppException.Raise("invalid factor", 2u);
                 }
@@ -314,16 +314,16 @@ public partial struct Sixsigma
         for (int n = 1; n < matVal.Rows; n++)
         {
             matVal2.m_rarr[n] = n;
-            matVal2.m_rarr[n + num2] = n + num2;
+            matVal2.m_rarr[n + rowCount] = n + rowCount;
             matVal2.m_rarr[n + matVal2.Anr] = 1.0;
-            matVal2.m_rarr[n + num2 + matVal2.Anr] = 2.0;
+            matVal2.m_rarr[n + rowCount + matVal2.Anr] = 2.0;
         }
-        for (int num7 = 2; num7 < matVal.Cols; num7++)
+        for (int columnIndex = 2; columnIndex < matVal.Cols; columnIndex++)
         {
-            for (int num8 = 1; num8 < matVal.Rows; num8++)
+            for (int rowIndex = 1; rowIndex < matVal.Rows; rowIndex++)
             {
-                matVal2.m_rarr[num8 + num7 * matVal2.Anr] = matVal.get_real(num8, num7);
-                matVal2.m_rarr[num8 + num2 + num7 * matVal2.Anr] = (double)array[num7 - 2] * matVal2.m_rarr[num8 + num7 * matVal2.Anr];
+                matVal2.m_rarr[rowIndex + columnIndex * matVal2.Anr] = matVal.get_real(rowIndex, columnIndex);
+                matVal2.m_rarr[rowIndex + rowCount + columnIndex * matVal2.Anr] = (double)array[columnIndex - 2] * matVal2.m_rarr[rowIndex + columnIndex * matVal2.Anr];
             }
         }
         return matVal2;
@@ -362,12 +362,12 @@ public partial struct Sixsigma
             AppException.Raise("invalid argument", 1u);
         }
         FractFact fractFact = new FractFact(text, keepOldOrder: true);
-        string text2 = (arg2 as StrVal).m_string;
-        if (text2.Equals(""))
+        string label = (arg2 as StrVal).m_string;
+        if (label.Equals(""))
         {
             AppException.Raise("invalid argument", 2u);
         }
-        string[] array = text2.Split(new char[5] { ' ', ',', '\t', ':', ';' }, StringSplitOptions.RemoveEmptyEntries);
+        string[] array = label.Split(new char[5] { ' ', ',', '\t', ':', ';' }, StringSplitOptions.RemoveEmptyEntries);
         MatVal matVal = new MatVal(array.Length, 2);
         for (int i = 0; i < array.Length; i++)
         {

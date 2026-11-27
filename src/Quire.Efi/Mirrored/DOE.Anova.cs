@@ -154,8 +154,8 @@ public partial class Anova
         }
         string[] array = effects.Split(new char[5] { ' ', ',', '\t', ':', ';' }, StringSplitOptions.RemoveEmptyEntries);
         int num = 0;
-        string[] array2 = array;
-        foreach (string text in array2)
+        string[] names = array;
+        foreach (string text in names)
         {
             array[num++] = text.ToUpper();
         }
@@ -246,9 +246,9 @@ public partial class Anova
             FactorAnova factorAnova = (FactorAnova)m_factorInfo.GetValue(f[i]);
             num *= factorAnova.m_nlevels - 1;
         }
-        double num2 = effect_ssb(f);
-        double num3 = num2 / (double)num;
-        return new double[3] { num2, num, num3 };
+        double value = effect_ssb(f);
+        double otherValue = value / (double)num;
+        return new double[3] { value, num, otherValue };
     }
 
     private double[] anovaEffect(int[] f)
@@ -354,10 +354,10 @@ public partial class Anova
             AppException.Raise("Anova can not be computed. Unsupported design or insufficient resolution", 3u);
         }
         double num = runsmean(array) - m_gavg;
-        int[] array2 = new int[m_nfacts];
+        int[] indices = new int[m_nfacts];
         for (int i = 0; i < f.Length; i++)
         {
-            array2[f[i]] = i;
+            indices[f[i]] = i;
         }
         m_utils.getGenName(f, out var gen);
         Combinations combinations = new Combinations(gen.GetEnumerator());
@@ -367,16 +367,16 @@ public partial class Anova
             IEnumerator enumerator = ((Array)allCombinations.GetValue(j)).GetEnumerator();
             while (enumerator.MoveNext())
             {
-                string[] array3 = (string[])enumerator.Current;
+                string[] names = (string[])enumerator.Current;
                 for (int k = 0; k <= j; k++)
                 {
-                    m_utils.getGenIndices(array3[k], out var findx);
-                    int[] array4 = new int[findx.Length];
+                    m_utils.getGenIndices(names[k], out var findx);
+                    int[] otherValues = new int[findx.Length];
                     for (int m = 0; m < findx.Length; m++)
                     {
-                        array4[m] = l[array2[findx[m]]];
+                        otherValues[m] = l[indices[findx[m]]];
                     }
-                    num -= anova_effectn(findx, array4);
+                    num -= anova_effectn(findx, otherValues);
                 }
             }
         }
@@ -395,37 +395,37 @@ public partial class Anova
         }
         Permutations permutations = new Permutations(f.Length, array, keepOldOrder: true);
         double[,] allPermutations = permutations.getAllPermutations();
-        double num2 = 0.0;
+        double value = 0.0;
         for (int j = 0; j < allPermutations.GetLength(0); j++)
         {
             for (int k = 0; k < f.Length; k++)
             {
                 array[k] = (((int)allPermutations[j, k] == -1) ? 0 : ((int)allPermutations[j, k]));
             }
-            double num3 = anova_effectn(f, array);
-            num2 += num3 * num3;
+            double otherValue = anova_effectn(f, array);
+            value += otherValue * otherValue;
         }
-        int[] array2 = new int[m_nfacts];
+        int[] indices = new int[m_nfacts];
         for (int l = 0; l < m_nfacts; l++)
         {
-            array2[l] = 0;
+            indices[l] = 0;
         }
         for (int m = 0; m < f.Length; m++)
         {
-            array2[f[m]] = 1;
+            indices[f[m]] = 1;
         }
-        int num4 = 1;
+        int nextValue = 1;
         for (int n = 0; n < m_nfacts; n++)
         {
-            if (array2[n] == 0)
+            if (indices[n] == 0)
             {
                 FactorAnova factorAnova2 = (FactorAnova)m_factorInfo.GetValue(n);
-                num4 *= factorAnova2.m_nlevels;
+                nextValue *= factorAnova2.m_nlevels;
             }
         }
-        num2 *= (double)(num4 * m_nYdups);
-        double num5 = num2 / (double)num;
-        return new double[5] { num2, num, num5, 0.0, 0.0 };
+        value *= (double)(nextValue * m_nYdups);
+        double currentValue = value / (double)num;
+        return new double[5] { value, num, currentValue, 0.0, 0.0 };
     }
 
 }

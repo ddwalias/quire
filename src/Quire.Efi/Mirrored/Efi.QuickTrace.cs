@@ -79,30 +79,30 @@ internal partial class QuickTrace
         {
             num = (flag ? 0.0 : (-10.0));
         }
-        double num2 = (flag ? (Math.PI * 2.0) : 10.0);
-        double num3 = num;
+        double value = (flag ? (Math.PI * 2.0) : 10.0);
+        double otherValue = num;
         if (plot.X.ll != Util.MARKER)
         {
-            num3 = plot.X.ll;
+            otherValue = plot.X.ll;
         }
-        double num4 = num2;
+        double nextValue = value;
         if (plot.X.ul != Util.MARKER)
         {
-            num4 = plot.X.ul;
+            nextValue = plot.X.ul;
         }
-        xLow = num3;
-        xHigh = num4;
+        xLow = otherValue;
+        xHigh = nextValue;
         if (flag || IsParametric)
         {
-            if (num3 > num4)
+            if (otherValue > nextValue)
             {
-                xLow = Math.Min(num, num4);
-                xHigh = Math.Max(num3, num2);
+                xLow = Math.Min(num, nextValue);
+                xHigh = Math.Max(otherValue, value);
             }
             else
             {
-                xLow = Math.Min(num, num3);
-                xHigh = Math.Max(num4, num2);
+                xLow = Math.Min(num, otherValue);
+                xHigh = Math.Max(nextValue, value);
             }
         }
         AdjustDomain(plot.X, ref xLow, ref xHigh);
@@ -116,22 +116,22 @@ internal partial class QuickTrace
             return true;
         }
         double num = points.Array[points.Offset + 1].y - points.Array[points.Offset].y;
-        double num2 = points.Array[points.Offset + 2].y - points.Array[points.Offset + 1].y;
-        double num3 = points.Array[points.Offset + 3].y - points.Array[points.Offset + 2].y;
-        if (num3 == 0.0 || num2 == 0.0 || num == 0.0 || !Util.SameSign(num3, num) || Util.SameSign(num3, num2))
+        double offset = points.Array[points.Offset + 2].y - points.Array[points.Offset + 1].y;
+        double otherValue = points.Array[points.Offset + 3].y - points.Array[points.Offset + 2].y;
+        if (otherValue == 0.0 || offset == 0.0 || num == 0.0 || !Util.SameSign(otherValue, num) || Util.SameSign(otherValue, offset))
         {
             return false;
         }
         NumVal a_ = new NumVal(2);
         try
         {
-            double num4 = Util.ToDouble(Calculus.NthDerivative(lambda, a_, new NumVal(points.Array[points.Offset + 2].x)));
+            double nextValue = Util.ToDouble(Calculus.NthDerivative(lambda, a_, new NumVal(points.Array[points.Offset + 2].x)));
             double b = Util.ToDouble(Calculus.NthDerivative(lambda, a_, new NumVal(points.Array[points.Offset + 1].x)));
-            if (Util.SameSign(num4, b))
+            if (Util.SameSign(nextValue, b))
             {
                 return false;
             }
-            if (!Util.SameSign(num, b) || Util.SameSign(num3, num4))
+            if (!Util.SameSign(num, b) || Util.SameSign(otherValue, nextValue))
             {
                 return false;
             }
@@ -141,32 +141,32 @@ internal partial class QuickTrace
             return true;
         }
         int sAMPLE_POINTS = SAMPLE_POINTS;
-        double num5 = (points.Array[points.Offset + 2].x - points.Array[points.Offset + 1].x) / (double)(sAMPLE_POINTS + 1);
-        int num6 = sAMPLE_POINTS + 4;
-        Pair<double>[] array = new Pair<double>[num6];
+        double currentValue = (points.Array[points.Offset + 2].x - points.Array[points.Offset + 1].x) / (double)(sAMPLE_POINTS + 1);
+        int value = sAMPLE_POINTS + 4;
+        Pair<double>[] array = new Pair<double>[value];
         array[0] = points.Array[points.Offset];
         array[1] = points.Array[points.Offset + 1];
         for (int i = 2; i < sAMPLE_POINTS + 2; i++)
         {
-            double num7 = (xsing = array[i - 1].x + num5);
-            double num8 = Util.Evaluate(lambda, num7);
-            if (num8 == Util.MARKER)
+            double calculatedValue = (xsing = array[i - 1].x + currentValue);
+            double sampleValue = Util.Evaluate(lambda, calculatedValue);
+            if (sampleValue == Util.MARKER)
             {
                 return true;
             }
-            array[i] = new Pair<double>(num7, num8);
+            array[i] = new Pair<double>(calculatedValue, sampleValue);
             if (i > 2 && HasSingularity(new ArraySegment<Pair<double>>(array, i - 3, 4), lambda, depth - 1, ref xsing))
             {
                 return true;
             }
         }
-        array[num6 - 2] = points.Array[points.Offset + 2];
-        if (HasSingularity(new ArraySegment<Pair<double>>(array, num6 - 5, 4), lambda, depth - 1, ref xsing))
+        array[value - 2] = points.Array[points.Offset + 2];
+        if (HasSingularity(new ArraySegment<Pair<double>>(array, value - 5, 4), lambda, depth - 1, ref xsing))
         {
             return true;
         }
-        array[num6 - 1] = points.Array[points.Offset + 3];
-        if (HasSingularity(new ArraySegment<Pair<double>>(array, num6 - 4, 4), lambda, depth - 1, ref xsing))
+        array[value - 1] = points.Array[points.Offset + 3];
+        if (HasSingularity(new ArraySegment<Pair<double>>(array, value - 4, 4), lambda, depth - 1, ref xsing))
         {
             return true;
         }

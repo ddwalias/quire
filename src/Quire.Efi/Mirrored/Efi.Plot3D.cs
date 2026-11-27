@@ -133,12 +133,12 @@ public partial class Plot3D
         if (param != null)
         {
             m_param = param;
-            int num2 = 0;
+            int counter = 0;
             for (int i = 0; i < param.Length; i++)
             {
                 if (param[i] is RngVal)
                 {
-                    if (num2 == 0)
+                    if (counter == 0)
                     {
                         m_u = param[i] as RngVal;
                     }
@@ -147,9 +147,9 @@ public partial class Plot3D
                         m_v = param[i] as RngVal;
                     }
                     m_rngIdx.Add(i);
-                    num2++;
+                    counter++;
                 }
-                if (num2 > 2)
+                if (counter > 2)
                 {
                     AppException.Raise("plot3D more than 2 ranges found", 1u);
                 }
@@ -161,31 +161,31 @@ public partial class Plot3D
     private NumVal getSamplePoint(int nmb)
     {
         double num;
-        double num2;
+        double value;
         NumVal result;
         if (nmb == 0)
         {
             num = m_limits.get_real_mixed(0);
-            num2 = m_limits.get_real_mixed(1);
+            value = m_limits.get_real_mixed(1);
             result = new NumVal(-Math.PI / 7.0);
         }
         else
         {
             num = m_limits.get_real_mixed(2);
-            num2 = m_limits.get_real_mixed(3);
+            value = m_limits.get_real_mixed(3);
             result = new NumVal(Math.PI / 7.0);
         }
         if (!double.IsNaN(num))
         {
-            if (!double.IsNaN(num2))
+            if (!double.IsNaN(value))
             {
-                return new NumVal(num + Math.PI / 7.0 * (num2 - num));
+                return new NumVal(num + Math.PI / 7.0 * (value - num));
             }
             return new NumVal(num + 1.0);
         }
-        if (!double.IsNaN(num2))
+        if (!double.IsNaN(value))
         {
-            return new NumVal(num2 - 1.0);
+            return new NumVal(value - 1.0);
         }
         return result;
     }
@@ -200,13 +200,13 @@ public partial class Plot3D
                 return;
             }
             object obj = m_mdata.get_1(0);
-            object obj2 = m_mdata.get_1(1);
-            object obj3 = m_mdata.get_1(2);
-            if (obj is MatVal && obj2 is MatVal && obj3 is MatVal)
+            object value = m_mdata.get_1(1);
+            object otherValue = m_mdata.get_1(2);
+            if (obj is MatVal && value is MatVal && otherValue is MatVal)
             {
                 MatVal matVal = obj as MatVal;
-                MatVal matVal2 = obj2 as MatVal;
-                MatVal matVal3 = obj3 as MatVal;
+                MatVal matVal2 = value as MatVal;
+                MatVal matVal3 = otherValue as MatVal;
                 if (matVal.Cols != matVal2.Cols || matVal.Rows != matVal2.Rows)
                 {
                     AppException.Raise("plot3D inconsistent Create format", 1u);
@@ -234,12 +234,12 @@ public partial class Plot3D
                 }
                 m_plotType = 6;
             }
-            else if (obj is Function || obj2 is Function || obj3 is Function)
+            else if (obj is Function || value is Function || otherValue is Function)
             {
                 m_F = Function.VectorFunction(m_mdata);
                 testSimpleFunction();
             }
-            else if (obj is NumVal && obj2 is NumVal && obj3 is NumVal)
+            else if (obj is NumVal && value is NumVal && otherValue is NumVal)
             {
                 m_plotType = 3;
             }
@@ -297,25 +297,25 @@ public partial class Plot3D
     private void setLimits(MatVal Z, int idx)
     {
         double num = double.PositiveInfinity;
-        double num2 = double.NegativeInfinity;
+        double maximum = double.NegativeInfinity;
         Dim dim = Z.m_dim;
         for (int i = 0; i < Z.Cols; i++)
         {
             for (int j = 0; j < Z.Rows; j++)
             {
-                double num3 = Z.get_real_mixed(j, i);
-                if (num3 < num)
+                double value = Z.get_real_mixed(j, i);
+                if (value < num)
                 {
-                    num = num3;
+                    num = value;
                 }
-                if (num3 > num2)
+                if (value > maximum)
                 {
-                    num2 = num3;
+                    maximum = value;
                 }
             }
         }
         m_limits.set_1(idx, num, dim);
-        m_limits.set_1(idx + 1, num2, dim);
+        m_limits.set_1(idx + 1, maximum, dim);
     }
 
     protected MatVal explicitSurface_rangized()

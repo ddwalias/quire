@@ -23,12 +23,12 @@ public partial class Blocking
         int length2 = dmat.GetLength(0);
         if (blockDefaults.TryGetValue(length, out var value))
         {
-            if (value.TryGetValue(length2, out var value2))
+            if (value.TryGetValue(length2, out var otherValue))
             {
-                if (value2.TryGetValue(nblocks, out var value3))
+                if (otherValue.TryGetValue(nblocks, out var nextValue))
                 {
-                    m_bgens = new string[value3.m_gens.Length];
-                    value3.m_gens.CopyTo(m_bgens, 0);
+                    m_bgens = new string[nextValue.m_gens.Length];
+                    nextValue.m_gens.CopyTo(m_bgens, 0);
                     m_nblocks = nblocks;
                     m_dmat = dmat;
                 }
@@ -86,7 +86,7 @@ public partial class Blocking
         int[] array = new int[m_dmat.GetLength(0)];
         for (int i = 0; i < m_dmat.GetLength(0); i++)
         {
-            int[] array2 = new int[m_bgens.Length];
+            int[] indices = new int[m_bgens.Length];
             for (int j = 0; j < m_bgens.Length; j++)
             {
                 m_utils.getGenIndices(m_bgens[j], out var findx);
@@ -95,20 +95,20 @@ public partial class Blocking
                 {
                     num *= (int)m_dmat[i, findx[k]];
                 }
-                array2[j] = num;
+                indices[j] = num;
             }
             for (int l = 0; l < allPermutations.GetLength(0); l++)
             {
-                int num2 = 1;
+                int value = 1;
                 for (int m = 0; m < allPermutations.GetLength(1); m++)
                 {
-                    if (allPermutations[l, m] != (double)array2[m])
+                    if (allPermutations[l, m] != (double)indices[m])
                     {
-                        num2 = 0;
+                        value = 0;
                         break;
                     }
                 }
-                if (num2 == 1)
+                if (value == 1)
                 {
                     array[i] = l;
                 }

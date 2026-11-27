@@ -12,56 +12,56 @@ public partial class PlotTools
     public MatVal EliminateNearPoints(ref MatVal xs, ref MatVal ys, double dmax)
     {
         int[] array = HeapSort(xs);
-        short[] array2 = new short[xs.Rows];
+        short[] items = new short[xs.Rows];
         int num = 0;
-        int num2 = 0;
-        int num3 = 0;
+        int value = 0;
+        int counter = 0;
         do
         {
-            double num4 = xs.get_real_mixed(array[num]);
-            double num5 = ys.get_real_mixed(array[num]);
-            array2[num] = 1;
+            double otherValue = xs.get_real_mixed(array[num]);
+            double nextValue = ys.get_real_mixed(array[num]);
+            items[num] = 1;
             num++;
-            num2 = -num;
-            double num6 = xs.get_real_mixed(array[num]);
+            value = -num;
+            double currentValue = xs.get_real_mixed(array[num]);
             do
             {
-                if (!(num6 - num4 < dmax))
+                if (!(currentValue - otherValue < dmax))
                 {
                     continue;
                 }
-                if (array2[num] != -1)
+                if (items[num] != -1)
                 {
-                    double num7 = ys.get_real_mixed(array[num]);
-                    if (Math.Abs(num5 - num7) < dmax)
+                    double calculatedValue = ys.get_real_mixed(array[num]);
+                    if (Math.Abs(nextValue - calculatedValue) < dmax)
                     {
-                        array2[num] = -1;
-                        num3++;
+                        items[num] = -1;
+                        counter++;
                     }
-                    else if (num2 < 0)
+                    else if (value < 0)
                     {
-                        num2 = num;
+                        value = num;
                     }
                 }
                 if (++num == xs.Rows)
                 {
                     break;
                 }
-                num6 = xs.get_real_mixed(array[num]);
+                currentValue = xs.get_real_mixed(array[num]);
             }
-            while (num6 - num4 < dmax);
-            if (num2 > 0)
+            while (currentValue - otherValue < dmax);
+            if (value > 0)
             {
-                num = num2;
+                num = value;
             }
         }
         while (num < xs.Rows - 1);
-        int num8 = xs.Rows - num3;
-        MatVal matVal = MatVal.reserve(num8);
-        MatVal matVal2 = MatVal.reserve(num8);
+        int rowCount = xs.Rows - counter;
+        MatVal matVal = MatVal.reserve(rowCount);
+        MatVal matVal2 = MatVal.reserve(rowCount);
         for (int i = 0; i < xs.Rows; i++)
         {
-            if (array2[i] != -1)
+            if (items[i] != -1)
             {
                 matVal.PushRaw(xs.get_1(array[i]));
                 matVal2.PushRaw(ys.get_1(array[i]));
@@ -72,7 +72,7 @@ public partial class PlotTools
         MatVal matVal3 = MatVal.reserve(3);
         matVal3.PushRaw(matVal);
         matVal3.PushRaw(matVal2);
-        matVal3.PushRaw(num8);
+        matVal3.PushRaw(rowCount);
         return matVal3;
     }
 
@@ -103,21 +103,21 @@ public partial class PlotTools
     private void dmin_dmax(MatVal ys, out double dmin, out double dmax)
     {
         double num = double.PositiveInfinity;
-        double num2 = double.NegativeInfinity;
+        double maximum = double.NegativeInfinity;
         for (int i = 0; i < ys.Rows; i++)
         {
-            double num3 = ys.get_real_mixed(i);
-            if (num3 > num2)
+            double value = ys.get_real_mixed(i);
+            if (value > maximum)
             {
-                num2 = num3;
+                maximum = value;
             }
-            if (num3 < num)
+            if (value < num)
             {
-                num = num3;
+                num = value;
             }
         }
-        dmax = 0.2 * (num2 - num);
-        dmin = 0.005 * (num2 - num);
+        dmax = 0.2 * (maximum - num);
+        dmin = 0.005 * (maximum - num);
     }
 
 }

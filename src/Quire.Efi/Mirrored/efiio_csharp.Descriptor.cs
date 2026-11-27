@@ -124,8 +124,8 @@ public partial class Descriptor
             if (m_A1ref == null)
             {
                 string text = MakeA1Reference(m_Top, m_Left);
-                string text2 = MakeA1Reference(m_Bottom, m_Right);
-                m_A1ref = ((text == text2) ? text : string.Format("{0}:{1}", text, text2));
+                string label = MakeA1Reference(m_Bottom, m_Right);
+                m_A1ref = ((text == label) ? text : string.Format("{0}:{1}", text, label));
             }
             return m_A1ref;
         }
@@ -138,8 +138,8 @@ public partial class Descriptor
             if (m_R1C1ref == null)
             {
                 string text = MakeR1C1Reference(m_Top, m_Left);
-                string text2 = MakeR1C1Reference(m_Bottom, m_Right);
-                m_R1C1ref = ((text == text2) ? text : string.Format("{0}:{1}", text, text2));
+                string label = MakeR1C1Reference(m_Bottom, m_Right);
+                m_R1C1ref = ((text == label) ? text : string.Format("{0}:{1}", text, label));
             }
             return m_R1C1ref;
         }
@@ -165,10 +165,10 @@ public partial class Descriptor
         int num = descriptor.IndexOf('[');
         if (num >= 0)
         {
-            int num2 = descriptor.IndexOf(']');
-            if (num2 >= 0)
+            int value = descriptor.IndexOf(']');
+            if (value >= 0)
             {
-                string s = descriptor.Substring(num + 1, num2 - num - 1);
+                string s = descriptor.Substring(num + 1, value - num - 1);
                 m_SheetIndex = int.Parse(s);
                 if (m_SheetIndex > 0)
                 {
@@ -178,7 +178,7 @@ public partial class Descriptor
                 {
                     AppException.Raise(string.Format("bad sheet index", default(ReadOnlySpan<object>)), sheetarg);
                 }
-                descriptor = descriptor.Substring(num2 + 1);
+                descriptor = descriptor.Substring(value + 1);
             }
             else
             {
@@ -187,11 +187,11 @@ public partial class Descriptor
         }
         else
         {
-            int num3 = descriptor.LastIndexOf('!');
-            if (num3 >= 0)
+            int otherValue = descriptor.LastIndexOf('!');
+            if (otherValue >= 0)
             {
-                m_SheetName = descriptor.Substring(0, num3);
-                descriptor = descriptor.Substring(num3 + 1);
+                m_SheetName = descriptor.Substring(0, otherValue);
+                descriptor = descriptor.Substring(otherValue + 1);
             }
             else
             {

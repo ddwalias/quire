@@ -27,57 +27,57 @@ public partial class Plots
             m_cdim[i] = v.m_dim;
             v = MatVal.StripDimension(v);
             double num = (Data.percentile(v, new NumVal(0.25)) as NumVal).asReal();
-            double num2 = (Data.percentile(v, new NumVal(0.5)) as NumVal).asReal();
-            double num3 = (Data.percentile(v, new NumVal(0.75)) as NumVal).asReal();
-            double num4 = num3 - num;
-            double num5 = num - 1.5 * num4;
-            double num6 = num3 + 1.5 * num4;
-            int[] array2 = new int[v.Rows];
-            double[] array3 = new double[v.Rows];
-            int num7 = 0;
+            double value = (Data.percentile(v, new NumVal(0.5)) as NumVal).asReal();
+            double otherValue = (Data.percentile(v, new NumVal(0.75)) as NumVal).asReal();
+            double nextValue = otherValue - num;
+            double currentValue = num - 1.5 * nextValue;
+            double calculatedValue = otherValue + 1.5 * nextValue;
+            int[] indices = new int[v.Rows];
+            double[] values = new double[v.Rows];
+            int counter = 0;
             for (int j = 0; j < v.Rows; j++)
             {
-                array2[j] = j;
-                int num8 = v.m_offset + j;
-                if (v.m_rarr[num8] > num6 || v.m_rarr[num8] < num5)
+                indices[j] = j;
+                int sampleValue = v.m_offset + j;
+                if (v.m_rarr[sampleValue] > calculatedValue || v.m_rarr[sampleValue] < currentValue)
                 {
-                    array2[j] = -1;
-                    array3[num7++] = v.m_rarr[v.m_offset + j];
+                    indices[j] = -1;
+                    values[counter++] = v.m_rarr[v.m_offset + j];
                 }
             }
-            Array.Sort(array3, 0, num7);
-            int num9 = -1;
-            double num10 = 0.0;
-            double num11 = 0.0;
+            Array.Sort(values, 0, counter);
+            int limitValue = -1;
+            double coordinate = 0.0;
+            double measurement = 0.0;
             for (int k = 0; k < v.Rows; k++)
             {
-                if (array2[k] != -1)
+                if (indices[k] != -1)
                 {
-                    if (num9 == -1)
+                    if (limitValue == -1)
                     {
-                        num9 = v.m_offset + k;
-                        num10 = v.m_rarr[num9];
-                        num11 = v.m_rarr[num9];
+                        limitValue = v.m_offset + k;
+                        coordinate = v.m_rarr[limitValue];
+                        measurement = v.m_rarr[limitValue];
                     }
                     else
                     {
-                        num9 = v.m_offset + k;
-                        num10 = Math.Min(v.m_rarr[num9], num10);
-                        num11 = Math.Max(v.m_rarr[num9], num11);
+                        limitValue = v.m_offset + k;
+                        coordinate = Math.Min(v.m_rarr[limitValue], coordinate);
+                        measurement = Math.Max(v.m_rarr[limitValue], measurement);
                     }
                 }
             }
-            double[] array4 = new double[5 + num7];
-            array4[0] = num;
-            array4[1] = num2;
-            array4[2] = num3;
-            array4[3] = num10;
-            array4[4] = num11;
-            for (int l = 0; l < num7; l++)
+            double[] otherValues = new double[5 + counter];
+            otherValues[0] = num;
+            otherValues[1] = value;
+            otherValues[2] = otherValue;
+            otherValues[3] = coordinate;
+            otherValues[4] = measurement;
+            for (int l = 0; l < counter; l++)
             {
-                array4[l + 5] = array3[l];
+                otherValues[l + 5] = values[l];
             }
-            array.SetValue(array4, i);
+            array.SetValue(otherValues, i);
         }
         return csResult(array);
     }
@@ -148,14 +148,14 @@ public partial class Plots
             {
                 AppException.Raise("values in 2nd column must be positive", 1u);
             }
-            double num2 = matVal.get_real_mixed(i, 1);
-            num += num2;
+            double value = matVal.get_real_mixed(i, 1);
+            num += value;
         }
-        double num3 = 0.0;
+        double otherValue = 0.0;
         for (int j = 0; j < matVal.Rows; j++)
         {
-            num3 += 100.0 * (matVal.get_real_mixed(j, 1) / num);
-            matVal.set_2(j, 2, num3, Dim.identity);
+            otherValue += 100.0 * (matVal.get_real_mixed(j, 1) / num);
+            matVal.set_2(j, 2, otherValue, Dim.identity);
         }
         return matVal;
     }

@@ -564,12 +564,12 @@ public partial class XL
         int right = desc.Right;
         _ = desc.Fill;
         int num = worksheetNodes.GetUpperBound(0) + 1;
-        int num2 = right - left + 1;
-        MatVal matVal = new MatVal(num, num2);
+        int value = right - left + 1;
+        MatVal matVal = new MatVal(num, value);
         matVal.dv(Dim.identity);
         for (int i = 0; i < num; i++)
         {
-            for (int j = 0; j < num2; j++)
+            for (int j = 0; j < value; j++)
             {
                 string text = cellNodeContent(worksheetNodes[i, j], ref context);
                 if (text != null && text.Length > 0)

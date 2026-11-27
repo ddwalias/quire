@@ -118,11 +118,11 @@ public partial class Combinations
     private bool nextCombination()
     {
         int num = m_k;
-        for (int num2 = m_k - 1; num2 >= 0; num2--)
+        for (int index = m_k - 1; index >= 0; index--)
         {
-            if (m_curCmbIndices[num2] < m_n - m_k + num2)
+            if (m_curCmbIndices[index] < m_n - m_k + index)
             {
-                num = num2;
+                num = index;
                 break;
             }
         }
@@ -167,16 +167,16 @@ public partial class Combinations
         {
             initK();
             int length = Utils.combination(m_n, m_k);
-            Array array2 = Array.CreateInstance(typeof(string[]), length);
+            Array items = Array.CreateInstance(typeof(string[]), length);
             int num = 0;
             while (MoveNext())
             {
-                string[] array3 = (string[])Current;
-                string[] array4 = new string[m_k];
-                array3.CopyTo(array4, 0);
-                array2.SetValue(array4, num++);
+                string[] names = (string[])Current;
+                string[] otherValues = new string[m_k];
+                names.CopyTo(otherValues, 0);
+                items.SetValue(otherValues, num++);
             }
-            array.SetValue(array2, m_k - 1);
+            array.SetValue(items, m_k - 1);
         }
         return array;
     }

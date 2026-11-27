@@ -24,28 +24,28 @@ public partial class Interval
         }
         List<Interval> list = new List<Interval>();
         int num = startIndex + numberOfElements - 1;
-        int num2 = numberOfElements / numberOfIntervals;
-        int num3 = numberOfElements % numberOfIntervals;
-        int num4 = startIndex;
+        int value = numberOfElements / numberOfIntervals;
+        int counter = numberOfElements % numberOfIntervals;
+        int otherValue = startIndex;
         for (int i = 0; i < numberOfIntervals; i++)
         {
-            int num5 = num4 + num2 - 1;
-            if (num3 > 0)
+            int nextValue = otherValue + value - 1;
+            if (counter > 0)
             {
-                num5++;
-                num3--;
+                nextValue++;
+                counter--;
             }
-            if (num5 > num)
+            if (nextValue > num)
             {
-                num5 = num;
+                nextValue = num;
             }
             list.Add(new Interval
             {
-                index_start = num4,
-                index_end = num5
+                index_start = otherValue,
+                index_end = nextValue
             });
-            num4 = num5 + 1;
-            if (num4 > num)
+            otherValue = nextValue + 1;
+            if (otherValue > num)
             {
                 break;
             }

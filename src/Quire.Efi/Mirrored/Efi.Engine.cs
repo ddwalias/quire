@@ -189,10 +189,10 @@ internal partial class Engine
     public static MatVal CreateOutput(Engine yPlot, Engine y2Plot)
     {
         int num = yPlot.traces.Length;
-        int num2 = y2Plot.traces.Length;
-        int num3 = num + num2;
-        MatVal matVal = new MatVal(num3);
-        for (int i = 0; i < num3; i++)
+        int length = y2Plot.traces.Length;
+        int value = num + length;
+        MatVal matVal = new MatVal(value);
+        for (int i = 0; i < value; i++)
         {
             Trace trace = ((i < num) ? yPlot.traces[i] : y2Plot.traces[i - num]);
             matVal.set_1(i, CreateTraceVector(trace));

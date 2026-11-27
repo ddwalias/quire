@@ -35,17 +35,17 @@ public partial class FractFact
                 text += m_utils.icharMap[i];
                 text += ", ";
             }
-            int num2 = 0;
+            int counter = 0;
             string[] gens = m_gens;
-            foreach (string text2 in gens)
+            foreach (string label in gens)
             {
                 text += m_utils.icharMap[num++];
                 text += "=";
-                if (m_gens_sgn[num2++] == -1)
+                if (m_gens_sgn[counter++] == -1)
                 {
                     text += "-";
                 }
-                text += text2;
+                text += label;
                 text += ", ";
             }
             text = text.Remove(text.Length - 2);
@@ -107,9 +107,9 @@ public partial class FractFact
     {
         if (m_fractDefaults.TryGetValue(m_nfacts, out var value))
         {
-            if (value.TryGetValue(m_nruns, out var value2))
+            if (value.TryGetValue(m_nruns, out var otherValue))
             {
-                value2.m_gens.CopyTo(m_gens, 0);
+                otherValue.m_gens.CopyTo(m_gens, 0);
             }
             else
             {
@@ -139,8 +139,8 @@ public partial class FractFact
             combinations.Reset();
             while (combinations.MoveNext() && num < m_q)
             {
-                string[] array2 = (string[])combinations.Current;
-                m_gens[num] = string.Concat(array2);
+                string[] names = (string[])combinations.Current;
+                m_gens[num] = string.Concat(names);
                 num++;
             }
         }
@@ -171,9 +171,9 @@ public partial class FractFact
         {
             if (m_sdefRel.ContainsKey(i))
             {
-                List<string> list2 = m_sdefRel[i];
+                List<string> items = m_sdefRel[i];
                 Utils.StringComparer comparer = new Utils.StringComparer();
-                list2.Sort(comparer);
+                items.Sort(comparer);
             }
             else
             {
@@ -207,10 +207,10 @@ public partial class FractFact
         {
             array[i] = 0;
         }
-        foreach (string text2 in combs)
+        foreach (string label in combs)
         {
-            m_utils.getGenIndices(text2, out var findx);
-            for (int k = 0; k < text2.Length; k++)
+            m_utils.getGenIndices(label, out var findx);
+            for (int k = 0; k < label.Length; k++)
             {
                 array[findx[k]]++;
             }
@@ -308,21 +308,21 @@ public partial class FractFact
             }
         }
         int num = m_nfacts - m_gens.Length;
-        int num2 = 0;
+        int counter = 0;
         string[] gens = m_gens;
         foreach (string gen in gens)
         {
             m_utils.getGenIndices(gen, out var findx);
             for (int l = 0; l < m_nruns; l++)
             {
-                int num3 = 1;
+                int value = 1;
                 for (int m = 0; m < findx.Length; m++)
                 {
-                    num3 *= (int)array[l, findx[m]];
+                    value *= (int)array[l, findx[m]];
                 }
-                array[l, num] = m_gens_sgn[num2] * num3;
+                array[l, num] = m_gens_sgn[counter] * value;
             }
-            num2++;
+            counter++;
             num++;
         }
         return array;

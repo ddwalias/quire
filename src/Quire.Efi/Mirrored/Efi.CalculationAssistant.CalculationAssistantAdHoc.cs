@@ -219,7 +219,7 @@ public partial class CalculationAssistantAdHoc
         bool flag = false;
         while (num > 0)
         {
-            bool flag2 = m_queue.Wait(ms_waitTimeout);
+            bool isValid = m_queue.Wait(ms_waitTimeout);
             if (!flag)
             {
                 flag = Rts.IsCancellationRequested();
@@ -234,7 +234,7 @@ public partial class CalculationAssistantAdHoc
                     }
                 }
             }
-            if (!flag2 || !m_queue.getFromQueue(out var param))
+            if (!isValid || !m_queue.getFromQueue(out var param))
             {
                 continue;
             }

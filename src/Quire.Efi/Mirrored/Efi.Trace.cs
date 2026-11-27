@@ -84,13 +84,13 @@ internal abstract partial class Trace
     public virtual bool AddPoint(double x, double y, AxisOptions X, AxisOptions Y)
     {
         bool flag = Util.IsBad(x, X.isLog());
-        bool flag2 = Util.IsBad(y, Y.isLog());
+        bool isValid = Util.IsBad(y, Y.isLog());
         x = (flag ? Util.NEG_MARKER : x);
-        y = (flag2 ? Util.NEG_MARKER : y);
+        y = (isValid ? Util.NEG_MARKER : y);
         Points.Add(new Pair<double>(x, y));
         if (!flag)
         {
-            return !flag2;
+            return !isValid;
         }
         return false;
     }

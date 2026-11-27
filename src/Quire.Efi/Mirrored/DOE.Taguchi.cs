@@ -28,14 +28,14 @@ public partial class Taguchi
         init();
         m_nfacts = nfacts1 + nfacts2;
         string text = "_" + nfacts1 + "_" + nlevels1;
-        string text2 = "_" + nfacts2 + "_" + nlevels2;
-        if (m_designs.ContainsKey("L" + text + text2))
+        string label = "_" + nfacts2 + "_" + nlevels2;
+        if (m_designs.ContainsKey("L" + text + label))
         {
-            m_key = "L" + text + text2;
+            m_key = "L" + text + label;
         }
-        else if (m_designs.ContainsKey("L" + text2 + text))
+        else if (m_designs.ContainsKey("L" + label + text))
         {
-            m_key = "L" + text2 + text;
+            m_key = "L" + label + text;
         }
         else
         {

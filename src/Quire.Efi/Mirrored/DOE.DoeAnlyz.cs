@@ -125,35 +125,35 @@ public partial class DoeAnlyz
         Array.Copy(runs, array, m_nruns);
         Array.Sort(array);
         int num = 0;
-        double num2 = array[0];
+        double value = array[0];
         Dictionary<string, int> dictionary = new Dictionary<string, int>();
-        dictionary.Add(num2.ToString(), 0);
+        dictionary.Add(value.ToString(), 0);
         for (int i = 1; i < m_nruns; i++)
         {
-            if (array[i] != num2)
+            if (array[i] != value)
             {
-                num2 = array[i];
-                dictionary.Add(num2.ToString(), ++num);
+                value = array[i];
+                dictionary.Add(value.ToString(), ++num);
             }
         }
         effect.m_nlevels = num + 1;
         effect.m_levels = new double[num + 1];
-        num2 = array[0];
+        value = array[0];
         num = 0;
-        effect.m_levels[0] = num2;
+        effect.m_levels[0] = value;
         for (int j = 1; j < m_nruns; j++)
         {
-            if (array[j] != num2)
+            if (array[j] != value)
             {
-                num2 = array[j];
-                effect.m_levels[++num] = num2;
+                value = array[j];
+                effect.m_levels[++num] = value;
             }
         }
         effect.m_runlev = new int[m_nruns];
         for (int k = 0; k < m_nruns; k++)
         {
-            num2 = runs[k];
-            num = dictionary[num2.ToString()];
+            value = runs[k];
+            num = dictionary[value.ToString()];
             effect.m_runlev[k] = num;
         }
         effect.m_nrpl = new int[effect.m_nlevels];
@@ -174,14 +174,14 @@ public partial class DoeAnlyz
                 effect.m_avgRlev[n] = 0.0;
                 effect.m_sumRlev[n] = 0.0;
             }
-            for (int num3 = 0; num3 < m_nruns; num3++)
+            for (int index = 0; index < m_nruns; index++)
             {
-                effect.m_sumRlev[effect.m_runlev[num3]] += m_runInfo[num3].m_sum;
-                effect.m_avgRlev[effect.m_runlev[num3]] += m_runInfo[num3].m_avg;
+                effect.m_sumRlev[effect.m_runlev[index]] += m_runInfo[index].m_sum;
+                effect.m_avgRlev[effect.m_runlev[index]] += m_runInfo[index].m_avg;
             }
-            for (int num4 = 0; num4 < effect.m_nlevels; num4++)
+            for (int otherValue = 0; otherValue < effect.m_nlevels; otherValue++)
             {
-                effect.m_avgRlev[num4] /= effect.m_nrpl[num4];
+                effect.m_avgRlev[otherValue] /= effect.m_nrpl[otherValue];
             }
         }
     }
@@ -242,30 +242,30 @@ public partial class DoeAnlyz
         }
         MatVal matVal = new MatVal(Yij.Rows - num + dups.Count);
         matVal.m_dim = Yij.m_dim;
-        int[] array2 = new int[Yij.Rows];
+        int[] indices = new int[Yij.Rows];
         num = 0;
         for (int l = 0; l < Yij.Rows; l++)
         {
             if (!array[l])
             {
-                array2[l] = num++;
+                indices[l] = num++;
             }
         }
         ndata = 0;
         for (int m = 0; m < dups.Count; m++)
         {
-            List<int> list2 = dups[m] as List<int>;
+            List<int> items = dups[m] as List<int>;
             num = 0;
-            double num2 = 0.0;
-            foreach (int item in list2)
+            double value = 0.0;
+            foreach (int item in items)
             {
                 for (int n = 0; n < Yij.Cols; n++)
                 {
-                    double num3 = Yij.get_real_mixed(item, n);
-                    if (!double.IsNaN(num3))
+                    double otherValue = Yij.get_real_mixed(item, n);
+                    if (!double.IsNaN(otherValue))
                     {
                         num++;
-                        num2 += num3;
+                        value += otherValue;
                         ndata++;
                     }
                 }
@@ -274,23 +274,23 @@ public partial class DoeAnlyz
             {
                 AppException.Raise("nan", 2u);
             }
-            matVal.set_1(array2[list2[0]], num2 /= (double)num);
+            matVal.set_1(indices[items[0]], value /= (double)num);
         }
-        for (int num4 = 0; num4 < Yij.Rows; num4++)
+        for (int rowIndex = 0; rowIndex < Yij.Rows; rowIndex++)
         {
-            if (array[num4])
+            if (array[rowIndex])
             {
                 continue;
             }
             num = 0;
-            double num5 = 0.0;
-            for (int num6 = 0; num6 < Yij.Cols; num6++)
+            double nextValue = 0.0;
+            for (int columnIndex = 0; columnIndex < Yij.Cols; columnIndex++)
             {
-                double num7 = Yij.get_real_mixed(num4, num6);
-                if (!double.IsNaN(num7))
+                double currentValue = Yij.get_real_mixed(rowIndex, columnIndex);
+                if (!double.IsNaN(currentValue))
                 {
                     num++;
-                    num5 += num7;
+                    nextValue += currentValue;
                     ndata++;
                 }
             }
@@ -298,7 +298,7 @@ public partial class DoeAnlyz
             {
                 AppException.Raise("nan", 2u);
             }
-            matVal.set_1(array2[num4], num5 /= (double)num);
+            matVal.set_1(indices[rowIndex], nextValue /= (double)num);
         }
         return matVal;
     }

@@ -48,11 +48,11 @@ public partial class Effects
             effects = effects.Replace("BLOCKS", "");
         }
         string[] array = effects.Split(new char[5] { ' ', ',', '\t', ':', ';' }, StringSplitOptions.RemoveEmptyEntries);
-        int num2 = 0;
-        string[] array2 = array;
-        foreach (string text in array2)
+        int counter = 0;
+        string[] names = array;
+        foreach (string text in names)
         {
-            array[num2++] = text.ToUpper();
+            array[counter++] = text.ToUpper();
         }
         if (!m_utils.verifyGens(m_nfacts, array))
         {
@@ -90,17 +90,17 @@ public partial class Effects
         {
             AppException.Raise("this function supports at most 2 blocks", 1u);
         }
-        int num2 = 0;
+        int value = 0;
         if (m_nblocks == 2)
         {
-            num2 = 1;
+            value = 1;
         }
-        table = new MatVal(m_nfacts + num + 1 + num2, 4);
+        table = new MatVal(m_nfacts + num + 1 + value, 4);
         table.m_dim = Dim.identity;
         m_T = table;
         effectsTable(doMain: true);
         int idx = interactionsEffects(order);
-        if (num2 == 1)
+        if (value == 1)
         {
             addBlocksRow(idx);
         }
@@ -286,19 +286,19 @@ public partial class Effects
             matVal.set_2(1, 0, new StrVal("Blocks"));
             matVal.set_2(1, 1, matVal2);
         }
-        int num2 = num + 1;
-        string[] array2 = array;
-        foreach (string factor2 in array2)
+        int counter = num + 1;
+        string[] names = array;
+        foreach (string factor2 in names)
         {
             matVal2 = general_interaction_effect(factor2);
             if (matVal2.Rows != 1)
             {
-                matVal.set_2(num2, 0, new StrVal(FactorLabel(factor2)));
-                matVal.set_2(num2, 1, matVal2);
-                num2++;
+                matVal.set_2(counter, 0, new StrVal(FactorLabel(factor2)));
+                matVal.set_2(counter, 1, matVal2);
+                counter++;
             }
         }
-        matVal.Data.m_rows = num2;
+        matVal.Data.m_rows = counter;
         return matVal;
     }
 
@@ -363,7 +363,7 @@ public partial class Effects
         matVal.set_2(0, 0, new StrVal("Factor"));
         matVal.set_2(0, 1, new StrVal("Effects"));
         MatVal matVal2 = null;
-        int num2 = 1;
+        int counter = 1;
         for (int k = 0; k < order; k++)
         {
             IEnumerator enumerator = ((Array)allCombinations.GetValue(k)).GetEnumerator();
@@ -374,13 +374,13 @@ public partial class Effects
                 matVal2 = general_interaction_effect(name);
                 if (matVal2.Rows != 1)
                 {
-                    matVal.set_2(num2, 0, new StrVal(FactorLabel(name)));
-                    matVal.set_2(num2, 1, matVal2);
-                    num2++;
+                    matVal.set_2(counter, 0, new StrVal(FactorLabel(name)));
+                    matVal.set_2(counter, 1, matVal2);
+                    counter++;
                 }
             }
         }
-        matVal.Data.m_rows = num2;
+        matVal.Data.m_rows = counter;
         return matVal;
     }
 

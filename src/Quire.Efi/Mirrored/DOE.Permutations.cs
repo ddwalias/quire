@@ -85,11 +85,11 @@ public partial class Permutations
     private bool nextPermutation_2()
     {
         int num = m_nfacts;
-        for (int num2 = m_nfacts - 1; num2 >= 0; num2--)
+        for (int index = m_nfacts - 1; index >= 0; index--)
         {
-            if (m_currentPermut[num2] == 0)
+            if (m_currentPermut[index] == 0)
             {
-                num = num2;
+                num = index;
                 break;
             }
         }
@@ -108,11 +108,11 @@ public partial class Permutations
     private bool nextPermutation()
     {
         int num = m_nfacts;
-        for (int num2 = m_nfacts - 1; num2 >= 0; num2--)
+        for (int index = m_nfacts - 1; index >= 0; index--)
         {
-            if (m_currentPermut[num2] < m_levels[num2] - 1)
+            if (m_currentPermut[index] < m_levels[index] - 1)
             {
-                num = num2;
+                num = index;
                 break;
             }
         }
@@ -161,10 +161,10 @@ public partial class Permutations
         int num = 0;
         while (MoveNext())
         {
-            int[] array2 = (int[])Current;
+            int[] indices = (int[])Current;
             for (int i = 0; i < m_nfacts; i++)
             {
-                array[num, i] = array2[i];
+                array[num, i] = indices[i];
                 if (array[num, i] == 0.0 && m_2Level)
                 {
                     array[num, i] = -1.0;
@@ -176,15 +176,15 @@ public partial class Permutations
         {
             return array;
         }
-        double[,] array3 = new double[m_nruns, m_nfacts];
+        double[,] values = new double[m_nruns, m_nfacts];
         for (int j = 0; j < m_nfacts; j++)
         {
             for (num = 0; num < m_nruns; num++)
             {
-                array3[num, j] = array[num, m_nfacts - 1 - j];
+                values[num, j] = array[num, m_nfacts - 1 - j];
             }
         }
-        return array3;
+        return values;
     }
 
     internal override double[,] getDesignMatrix()
@@ -202,14 +202,14 @@ public partial class Permutations
             {
                 num *= m_levels[j];
             }
-            int num2 = 0;
-            while (num2 < m_nruns)
+            int counter = 0;
+            while (counter < m_nruns)
             {
                 for (int k = 0; k < m_levels[i]; k++)
                 {
                     for (int l = 0; l < num; l++)
                     {
-                        array[num2++, i] = k;
+                        array[counter++, i] = k;
                     }
                 }
             }

@@ -201,8 +201,8 @@ public partial class Polyfit
     {
         string[] array = polyterms.Split(new char[5] { ' ', ',', '\t', ':', ';' }, StringSplitOptions.RemoveEmptyEntries);
         int num = 0;
-        string[] array2 = array;
-        foreach (string text in array2)
+        string[] names = array;
+        foreach (string text in names)
         {
             array[num++] = text.ToUpper();
         }
@@ -221,8 +221,8 @@ public partial class Polyfit
             m_hpwr = Math.Max(m_hpwr, findx.Length);
             for (int j = 0; j < findx.Length; j++)
             {
-                double num2 = m_polymat.get_real(num, findx[j] + 1);
-                m_polymat.set_2(num, findx[j] + 1, num2 + 1.0);
+                double value = m_polymat.get_real(num, findx[j] + 1);
+                m_polymat.set_2(num, findx[j] + 1, value + 1.0);
                 m_polymat.set_2(num, 0, 1.0);
             }
         }
@@ -295,8 +295,8 @@ public partial class Polyfit
             }
             for (int k = 0; k < m_nterms; k++)
             {
-                double num2 = 1.0;
-                double num3 = 1.0;
+                double value = 1.0;
+                double otherValue = 1.0;
                 for (int l = 0; l < m_nfacts; l++)
                 {
                     double rp = (m_polymat.get_2(k, l + 1) as NumVal).Data.rp;
@@ -304,20 +304,20 @@ public partial class Polyfit
                     {
                         if (m_IsScaleOn)
                         {
-                            double[] array2 = m_scale.GetValue(l) as double[];
-                            num2 *= Math.Pow((array[l] - array2[0]) / array2[1], rp);
-                            num3 *= Math.Pow(array[l], rp);
+                            double[] values = m_scale.GetValue(l) as double[];
+                            value *= Math.Pow((array[l] - values[0]) / values[1], rp);
+                            otherValue *= Math.Pow(array[l], rp);
                         }
                         else
                         {
-                            num2 *= Math.Pow(array[l], rp);
+                            value *= Math.Pow(array[l], rp);
                         }
                     }
                 }
-                m_LHS.set_2(i, k, num2);
+                m_LHS.set_2(i, k, value);
                 if (m_IsScaleOn)
                 {
-                    m_LHS_ns.set_2(i, k, num3);
+                    m_LHS_ns.set_2(i, k, otherValue);
                 }
             }
         }
@@ -394,7 +394,7 @@ public partial class Polyfit
         double num = 0.0;
         for (int k = 0; k < m_nterms; k++)
         {
-            double num2 = (m_polymat.get_2(k, 0) as NumVal).Data.rp;
+            double value = (m_polymat.get_2(k, 0) as NumVal).Data.rp;
             for (int l = 0; l < m_nfacts; l++)
             {
                 double rp = (m_polymat.get_2(k, l + 1) as NumVal).Data.rp;
@@ -402,16 +402,16 @@ public partial class Polyfit
                 {
                     if (m_IsScaleOn)
                     {
-                        double[] array2 = m_scale.GetValue(l) as double[];
-                        num2 *= Math.Pow((m_work[l] - array2[0]) / array2[1], rp);
+                        double[] values = m_scale.GetValue(l) as double[];
+                        value *= Math.Pow((m_work[l] - values[0]) / values[1], rp);
                     }
                     else
                     {
-                        num2 *= Math.Pow(m_work[l], rp);
+                        value *= Math.Pow(m_work[l], rp);
                     }
                 }
             }
-            num += num2;
+            num += value;
         }
         return new NumVal(num, 0.0, m_Ydim);
     }
@@ -432,19 +432,19 @@ public partial class Polyfit
                 }
                 num += array[j].Data.rp;
             }
-            double num2 = num / (double)m_nruns;
-            double num3 = 0.0;
+            double value = num / (double)m_nruns;
+            double otherValue = 0.0;
             for (int k = 0; k < m_nruns; k++)
             {
-                double num4 = array[k].Data.rp - num2;
-                num3 += num4 * num4;
+                double nextValue = array[k].Data.rp - value;
+                otherValue += nextValue * nextValue;
             }
-            num3 = Math.Sqrt(num3 / (double)m_nruns);
-            if (num3 < 0.01)
+            otherValue = Math.Sqrt(otherValue / (double)m_nruns);
+            if (otherValue < 0.01)
             {
-                num3 = 0.01;
+                otherValue = 0.01;
             }
-            m_scale.SetValue(new double[2] { num2, num3 }, i);
+            m_scale.SetValue(new double[2] { value, otherValue }, i);
         }
     }
 
@@ -457,57 +457,57 @@ public partial class Polyfit
             {
                 AppException.Raise("internal error");
             }
-            double num2 = m_polymat.m_rarr[m_polymat.m_offset + num];
+            double value = m_polymat.m_rarr[m_polymat.m_offset + num];
             for (int i = 0; i < var_index; i++)
             {
                 double[] array = m_scale.GetValue(i) as double[];
-                double num3 = -array[0] / array[1];
+                double otherValue = -array[0] / array[1];
                 for (int j = 1; j <= S[i]; j++)
                 {
-                    num2 *= num3 * (double)(R[i] + j) / (double)j;
+                    value *= otherValue * (double)(R[i] + j) / (double)j;
                 }
             }
-            return num2;
+            return value;
         }
-        double num4 = 0.0;
+        double nextValue = 0.0;
         for (int k = 0; k <= deg_remainder; k++)
         {
             S[var_index] = k;
-            num4 += SumTail(R, S, deg_remainder - k, var_index + 1);
+            nextValue += SumTail(R, S, deg_remainder - k, var_index + 1);
         }
-        return num4;
+        return nextValue;
     }
 
     private void UnScale()
     {
         double[] array = new double[m_nterms];
-        int[] array2 = new int[m_nfacts];
-        int[] array3 = new int[m_nfacts];
+        int[] indices = new int[m_nfacts];
+        int[] otherValues = new int[m_nfacts];
         for (int i = 0; i < m_nfacts; i++)
         {
-            array2[i] = 0;
+            indices[i] = 0;
         }
         for (int j = 0; j < m_nterms; j++)
         {
             for (int k = 0; k < m_nfacts; k++)
             {
                 int num = m_polymat.m_offset + j + (k + 1) * m_polymat.Anr;
-                array3[k] = (int)m_polymat.m_rarr[num];
+                otherValues[k] = (int)m_polymat.m_rarr[num];
             }
-            int num2 = 0;
-            double num3 = 1.0;
+            int value = 0;
+            double otherValue = 1.0;
             for (int l = 0; l < m_nfacts; l++)
             {
-                double[] array4 = m_scale.GetValue(l) as double[];
-                double num4 = 1.0 / array4[1];
-                int num5 = array3[l];
-                num2 += num5;
-                for (int m = 0; m < num5; m++)
+                double[] values = m_scale.GetValue(l) as double[];
+                double nextValue = 1.0 / values[1];
+                int currentValue = otherValues[l];
+                value += currentValue;
+                for (int m = 0; m < currentValue; m++)
                 {
-                    num3 *= num4;
+                    otherValue *= nextValue;
                 }
             }
-            array[j] = num3 * SumTail(array3, array2, m_hpwr - num2, 0);
+            array[j] = otherValue * SumTail(otherValues, indices, m_hpwr - value, 0);
         }
         for (int n = 0; n < m_nterms; n++)
         {
@@ -524,17 +524,17 @@ public partial class Polyfit
         for (int i = 0; i < rows; i++)
         {
             string text = "";
-            int num2 = 0;
+            int value = 0;
             for (int j = 0; j < num; j++)
             {
-                int num3 = (P.get_2(i, j + 1) as NumVal).asInt();
-                num2 = Math.Max(num2, num3);
-                if (num3 > 0)
+                int otherValue = (P.get_2(i, j + 1) as NumVal).asInt();
+                value = Math.Max(value, otherValue);
+                if (otherValue > 0)
                 {
-                    string text2 = m_utils.icharMap[j];
-                    for (int k = 0; k < num3; k++)
+                    string label = m_utils.icharMap[j];
+                    for (int k = 0; k < otherValue; k++)
                     {
-                        text += text2;
+                        text += label;
                     }
                 }
             }
@@ -542,7 +542,7 @@ public partial class Polyfit
             {
                 text = "Intercept";
             }
-            list.Add(new TermInfo(text, num2));
+            list.Add(new TermInfo(text, value));
             m_TermLabel[i] = text;
         }
         StrngCompare comparer = new StrngCompare();
@@ -553,9 +553,9 @@ public partial class Polyfit
             {
                 if (m_TermLabel[m].Equals(list[l].label) && l != m)
                 {
-                    string text3 = m_TermLabel[m];
+                    string name = m_TermLabel[m];
                     m_TermLabel[m] = m_TermLabel[l];
-                    m_TermLabel[l] = text3;
+                    m_TermLabel[l] = name;
                     for (int n = 0; n < P.Cols; n++)
                     {
                         object x = P.get_2(l, n);
@@ -630,35 +630,35 @@ public partial class Polyfit
         {
             array[i] = false;
         }
-        int num2 = 0;
+        int value = 0;
         if (arrayList.Count > 0)
         {
             for (int j = 0; j < arrayList.Count; j++)
             {
                 List<int> list = arrayList[j] as List<int>;
-                num2 += list.Count;
-                double num3 = 0.0;
+                value += list.Count;
+                double otherValue = 0.0;
                 foreach (int item in list)
                 {
                     array[item] = true;
-                    num3 += m_RHS.get_real_mixed(item);
+                    otherValue += m_RHS.get_real_mixed(item);
                 }
-                num3 /= (double)list.Count;
-                foreach (int item2 in list)
+                otherValue /= (double)list.Count;
+                foreach (int nextValue in list)
                 {
                     for (int k = 0; k < m_Y.Cols; k++)
                     {
-                        double num4 = m_Y.get_real_mixed(item2, k);
-                        if (!double.IsNaN(num4))
+                        double currentValue = m_Y.get_real_mixed(nextValue, k);
+                        if (!double.IsNaN(currentValue))
                         {
-                            num += (num4 - num3) * (num4 - num3);
+                            num += (currentValue - otherValue) * (currentValue - otherValue);
                         }
                     }
                 }
             }
         }
-        int num5 = m_nruns - num2 + arrayList.Count;
-        dof_pe = m_nobsrv - num5;
+        int count = m_nruns - value + arrayList.Count;
+        dof_pe = m_nobsrv - count;
         if (m_Y.Cols > 1)
         {
             for (int l = 0; l < m_nruns; l++)
@@ -669,11 +669,11 @@ public partial class Polyfit
                 }
                 for (int m = 0; m < m_Y.Cols; m++)
                 {
-                    double num6 = m_Y.get_real_mixed(l, m);
-                    if (!double.IsNaN(num6))
+                    double calculatedValue = m_Y.get_real_mixed(l, m);
+                    if (!double.IsNaN(calculatedValue))
                     {
-                        double num7 = m_RHS.get_real_mixed(l);
-                        num += (num6 - num7) * (num6 - num7);
+                        double sampleValue = m_RHS.get_real_mixed(l);
+                        num += (calculatedValue - sampleValue) * (calculatedValue - sampleValue);
                     }
                 }
             }

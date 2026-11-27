@@ -256,17 +256,17 @@ public partial class Plot2D
         int cols = x.Cols;
         int cols2 = y.Cols;
         double num = double.PositiveInfinity;
-        double num2 = double.NegativeInfinity;
-        double num3 = double.PositiveInfinity;
-        double num4 = double.NegativeInfinity;
+        double maximum = double.NegativeInfinity;
+        double minimum = double.PositiveInfinity;
+        double otherValue = double.NegativeInfinity;
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < cols; j++)
             {
                 double r = x.get_real(i, j);
-                if (r > num2)
+                if (r > maximum)
                 {
-                    num2 = r;
+                    maximum = r;
                 }
                 if (r < num)
                 {
@@ -288,22 +288,22 @@ public partial class Plot2D
             for (int k = 0; k < cols2; k++)
             {
                 double r2 = y.get_real(i, k);
-                if (r2 > num4)
+                if (r2 > otherValue)
                 {
-                    num4 = r2;
+                    otherValue = r2;
                 }
-                if (r2 < num3)
+                if (r2 < minimum)
                 {
-                    num3 = r2;
+                    minimum = r2;
                 }
                 if (MatVal.IsPtrNan(ref r2))
                 {
-                    object obj2 = y.get_2(i, k);
-                    if (obj2 is RngVal)
+                    object value = y.get_2(i, k);
+                    if (value is RngVal)
                     {
                         y.set_2(i, k, MatVal.Singleton(NumVal.ZeroId));
                     }
-                    else if (obj2 is MatVal)
+                    else if (value is MatVal)
                     {
                         AppException.Raise("may not be nested");
                     }
@@ -317,10 +317,10 @@ public partial class Plot2D
         matVal.set_ptrs_1(0, x);
         matVal.set_ptrs_1(1, y);
         matVal.set_1(2, (num == double.PositiveInfinity) ? no_min_max : num);
-        matVal.set_1(3, (num2 == double.NegativeInfinity) ? no_min_max : num2);
+        matVal.set_1(3, (maximum == double.NegativeInfinity) ? no_min_max : maximum);
         matVal.set_1(4, 1.0, d);
-        matVal.set_1(5, (num3 == double.PositiveInfinity) ? no_min_max : num3);
-        matVal.set_1(6, (num4 == double.NegativeInfinity) ? no_min_max : num4);
+        matVal.set_1(5, (minimum == double.PositiveInfinity) ? no_min_max : minimum);
+        matVal.set_1(6, (otherValue == double.NegativeInfinity) ? no_min_max : otherValue);
         matVal.set_1(7, 1.0, d2);
         matVal.set_1(8, kind);
         return matVal;

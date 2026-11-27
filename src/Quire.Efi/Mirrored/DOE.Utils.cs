@@ -206,18 +206,18 @@ public partial class Utils
         }
         for (int k = 0; k < gens.Length - 1; k++)
         {
-            int[] array2 = array.GetValue(k) as int[];
+            int[] indices = array.GetValue(k) as int[];
             for (int l = k + 1; l < gens.Length; l++)
             {
-                int[] array3 = array.GetValue(l) as int[];
-                if (array2.Length != array3.Length)
+                int[] otherValues = array.GetValue(l) as int[];
+                if (indices.Length != otherValues.Length)
                 {
                     continue;
                 }
                 bool flag = true;
-                for (int m = 0; m < array2.Length; m++)
+                for (int m = 0; m < indices.Length; m++)
                 {
-                    if (array2[m] != array3[m])
+                    if (indices[m] != otherValues[m])
                     {
                         flag = false;
                         break;

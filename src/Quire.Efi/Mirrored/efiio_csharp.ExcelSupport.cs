@@ -87,21 +87,21 @@ public partial class ExcelSupport
             AppException.Raise("Null or empty row identifier");
         }
         int num = 1;
-        int num2 = 0;
-        int num3 = end - 1;
-        while (num3 >= start)
+        int value = 0;
+        int counter = end - 1;
+        while (counter >= start)
         {
-            char c = char.ToUpperInvariant(column_ref[num3]);
+            char c = char.ToUpperInvariant(column_ref[counter]);
             if (!char.IsLetter(c))
             {
                 AppException.Raise("Invalid char");
             }
-            int num4 = c - 65 + 1;
-            num2 += num4 * num;
-            num3--;
+            int otherValue = c - 65 + 1;
+            value += otherValue * num;
+            counter--;
             num *= 26;
         }
-        return num2;
+        return value;
     }
 
     public static string intToCol(int num)
@@ -109,17 +109,17 @@ public partial class ExcelSupport
         StringBuilder stringBuilder = new StringBuilder();
         while (num > 0)
         {
-            int num2 = num / 26;
-            int num3 = num % 26;
-            if (num3 == 0)
+            int value = num / 26;
+            int otherValue = num % 26;
+            if (otherValue == 0)
             {
-                num = num2 - 1;
+                num = value - 1;
                 stringBuilder.Append('Z');
             }
             else
             {
-                num = num2;
-                stringBuilder.Append((char)(64 + num3));
+                num = value;
+                stringBuilder.Append((char)(64 + otherValue));
             }
         }
         return reverse(stringBuilder).ToString();
@@ -128,12 +128,12 @@ public partial class ExcelSupport
     public static StringBuilder reverse(StringBuilder sb)
     {
         int num = sb.Length / 2;
-        int num2 = sb.Length;
+        int length = sb.Length;
         for (int i = 0; i < num; i++)
         {
             char value = sb[i];
-            sb[i] = sb[--num2];
-            sb[num2] = value;
+            sb[i] = sb[--length];
+            sb[length] = value;
         }
         return sb;
     }

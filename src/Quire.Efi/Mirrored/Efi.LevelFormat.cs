@@ -28,14 +28,14 @@ internal partial class LevelFormat
     private static void CalculateBetterTickmarksWhenZeroIsNotInRange(ref double start, ref double end, ref int n)
     {
         double num = (end - start) / (double)n;
-        double num2 = OrderFunction(num);
-        num = RoundWithOrder(num, 0.5 * num2);
+        double value = OrderFunction(num);
+        num = RoundWithOrder(num, 0.5 * value);
         if (num == 0.0)
         {
-            num = 0.5 * num2;
+            num = 0.5 * value;
         }
-        start = FloorWithOrder(start, 0.5 * num2);
-        end = CeilingWithOrder(end, 0.5 * num2);
+        start = FloorWithOrder(start, 0.5 * value);
+        end = CeilingWithOrder(end, 0.5 * value);
         n = (int)CeilingWithOrder((end - start) / num, 1.0);
         end = start + (double)n * num;
     }
@@ -46,24 +46,24 @@ internal partial class LevelFormat
         int val = (int)Math.Round((double)n * num / (1.0 + num));
         val = Math.Max(val, 1);
         val = Math.Min(val, n - 1);
-        int num2 = n - val;
-        double num3 = OrderFunction((-start) / (double)val);
-        double num4 = OrderFunction(end / (double)num2);
-        double num5 = Math.Min(num3, num4);
-        double val2 = RoundWithOrder((-start) / (double)val, 0.5 * num3);
-        double val3 = RoundWithOrder(end / (double)num2, 0.5 * num4);
-        double num6 = Math.Max(val2, val3);
-        if (num6 == 0.0)
+        int value = n - val;
+        double otherValue = OrderFunction((-start) / (double)val);
+        double nextValue = OrderFunction(end / (double)value);
+        double currentValue = Math.Min(otherValue, nextValue);
+        double calculatedValue = RoundWithOrder((-start) / (double)val, 0.5 * otherValue);
+        double sampleValue = RoundWithOrder(end / (double)value, 0.5 * nextValue);
+        double limitValue = Math.Max(calculatedValue, sampleValue);
+        if (limitValue == 0.0)
         {
-            num6 = 0.5 * num5;
+            limitValue = 0.5 * currentValue;
         }
-        start = FloorWithOrder(start, 0.5 * num5);
-        end = CeilingWithOrder(end, 0.5 * num5);
-        val = (int)CeilingWithOrder((-start) / num6, 1.0);
-        num2 = (int)CeilingWithOrder(end / num6, 1.0);
-        n = val + num2;
-        start = (double)(-val) * num6;
-        end = (double)num2 * num6;
+        start = FloorWithOrder(start, 0.5 * currentValue);
+        end = CeilingWithOrder(end, 0.5 * currentValue);
+        val = (int)CeilingWithOrder((-start) / limitValue, 1.0);
+        value = (int)CeilingWithOrder(end / limitValue, 1.0);
+        n = val + value;
+        start = (double)(-val) * limitValue;
+        end = (double)value * limitValue;
     }
 
     private static double OrderFunction(double step)

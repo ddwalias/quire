@@ -32,34 +32,34 @@ public partial class ContourMain
     private MatVal clipMatrixData(int origin, MatVal limits, MatVal data)
     {
         int num = 0;
-        int num2 = data.Rows - 1;
-        int num3 = 0;
-        int num4 = data.Cols - 1;
-        double num5 = limits.get_real(0);
-        if (!double.IsNaN(num5))
+        int rowCount = data.Rows - 1;
+        int value = 0;
+        int columnCount = data.Cols - 1;
+        double otherValue = limits.get_real(0);
+        if (!double.IsNaN(otherValue))
         {
-            num = (int)num5 - origin - 1;
+            num = (int)otherValue - origin - 1;
         }
-        num5 = limits.get_real(1);
-        if (!double.IsNaN(num5))
+        otherValue = limits.get_real(1);
+        if (!double.IsNaN(otherValue))
         {
-            num2 = (int)(Math.Ceiling(num5) + 0.001) - origin + 1;
+            rowCount = (int)(Math.Ceiling(otherValue) + 0.001) - origin + 1;
         }
-        num5 = limits.get_real(2);
-        if (!double.IsNaN(num5))
+        otherValue = limits.get_real(2);
+        if (!double.IsNaN(otherValue))
         {
-            num3 = (int)num5 - origin - 1;
+            value = (int)otherValue - origin - 1;
         }
-        num5 = limits.get_real(3);
-        if (!double.IsNaN(num5))
+        otherValue = limits.get_real(3);
+        if (!double.IsNaN(otherValue))
         {
-            num4 = (int)(Math.Ceiling(num5) + 0.001) - origin + 1;
+            columnCount = (int)(Math.Ceiling(otherValue) + 0.001) - origin + 1;
         }
-        if (num > data.Rows - 1 || num2 < 0)
+        if (num > data.Rows - 1 || rowCount < 0)
         {
             AppException.Raise("out of range clipping limits", 3u);
         }
-        if (num3 > data.Cols - 1 || num4 < 0)
+        if (value > data.Cols - 1 || columnCount < 0)
         {
             AppException.Raise("out of range clipping limits", 3u);
         }
@@ -67,29 +67,29 @@ public partial class ContourMain
         {
             num = 0;
         }
-        if (num3 < 0)
+        if (value < 0)
         {
-            num3 = 0;
+            value = 0;
         }
-        if (num2 > data.Rows - 1)
+        if (rowCount > data.Rows - 1)
         {
-            num2 = data.Rows - 1;
+            rowCount = data.Rows - 1;
         }
-        if (num4 > data.Cols - 1)
+        if (columnCount > data.Cols - 1)
         {
-            num4 = data.Cols - 1;
+            columnCount = data.Cols - 1;
         }
-        if (num2 <= num || num4 <= num3)
+        if (rowCount <= num || columnCount <= value)
         {
             AppException.Raise("out of range clipping limits", 3u);
         }
         limits.set_1(0, num);
-        limits.set_1(1, num2);
-        limits.set_1(2, num3);
-        limits.set_1(3, num4);
-        if (num > 0 || num2 < data.Rows - 1 || num3 > 0 || num4 < data.Cols - 1)
+        limits.set_1(1, rowCount);
+        limits.set_1(2, value);
+        limits.set_1(3, columnCount);
+        if (num > 0 || rowCount < data.Rows - 1 || value > 0 || columnCount < data.Cols - 1)
         {
-            return data.SubMatrix((uint)num, (uint)(num2 + 1), (uint)num3, (uint)(num4 + 1));
+            return data.SubMatrix((uint)num, (uint)(rowCount + 1), (uint)value, (uint)(columnCount + 1));
         }
         return data;
     }
@@ -99,12 +99,12 @@ public partial class ContourMain
         m_F = null;
         MatVal matVal = Utl.as_matrix(data_, 1u);
         int num = 0;
-        double num2 = double.MaxValue;
-        double num3 = double.MinValue;
-        double num4 = double.MaxValue;
-        double num5 = double.MinValue;
-        double num6 = double.MaxValue;
-        double num7 = double.MinValue;
+        double minimum = double.MaxValue;
+        double maximum = double.MinValue;
+        double otherValue = double.MaxValue;
+        double nextValue = double.MinValue;
+        double currentValue = double.MaxValue;
+        double calculatedValue = double.MinValue;
         shpPoint3D[] array = null;
         if (matVal.Cols == 1 || (matVal.Cols == 3 && matVal.Rows == 1))
         {
@@ -136,10 +136,10 @@ public partial class ContourMain
                 }
                 for (int i = 0; i < matVal2.Rows; i++)
                 {
-                    double num8 = matVal2.get_real(i, 0);
+                    double value = matVal2.get_real(i, 0);
                     for (int j = 1; j < matVal2.Cols; j++)
                     {
-                        if (Math.Abs(matVal2.get_real(i, j) - num8) > 1E-12)
+                        if (Math.Abs(matVal2.get_real(i, j) - value) > 1E-12)
                         {
                             flag = true;
                             break;
@@ -148,10 +148,10 @@ public partial class ContourMain
                 }
                 for (int k = 0; k < matVal3.Cols; k++)
                 {
-                    double num9 = matVal3.get_real(0, k);
+                    double sampleValue = matVal3.get_real(0, k);
                     for (int l = 1; l < matVal3.Rows; l++)
                     {
-                        if (Math.Abs(matVal3.get_real(l, k) - num9) > 1E-12)
+                        if (Math.Abs(matVal3.get_real(l, k) - sampleValue) > 1E-12)
                         {
                             flag = true;
                             break;
@@ -204,63 +204,63 @@ public partial class ContourMain
             Dim dim = m_mdata.m_dim;
             m_mdata = matVal4;
             m_mdata.m_dim = dim;
-            double num10 = limits.get_real(0);
-            double num11 = limits.get_real(1);
-            double num12 = limits.get_real(2);
-            double num13 = limits.get_real(3);
-            double num14 = Math.Abs(matVal2.get_real(1, 0) - matVal2.get_real(0, 0));
-            double num15 = Math.Abs(matVal3.get_real(0, 1) - matVal3.get_real(0, 0));
-            num10 -= num14;
-            num11 += num14;
-            num12 -= num15;
-            num13 += num15;
-            bool flag2 = true;
-            if (double.IsNaN(num10))
+            double limitValue = limits.get_real(0);
+            double coordinate = limits.get_real(1);
+            double measurement = limits.get_real(2);
+            double resultValue = limits.get_real(3);
+            double difference = Math.Abs(matVal2.get_real(1, 0) - matVal2.get_real(0, 0));
+            double adjustedValue = Math.Abs(matVal3.get_real(0, 1) - matVal3.get_real(0, 0));
+            limitValue -= difference;
+            coordinate += difference;
+            measurement -= adjustedValue;
+            resultValue += adjustedValue;
+            bool isValid = true;
+            if (double.IsNaN(limitValue))
             {
-                num10 = double.MinValue;
+                limitValue = double.MinValue;
             }
             else
             {
-                flag2 = false;
+                isValid = false;
             }
-            if (double.IsNaN(num11))
+            if (double.IsNaN(coordinate))
             {
-                num11 = double.MaxValue;
+                coordinate = double.MaxValue;
             }
             else
             {
-                flag2 = false;
+                isValid = false;
             }
-            if (double.IsNaN(num12))
+            if (double.IsNaN(measurement))
             {
-                num12 = double.MinValue;
+                measurement = double.MinValue;
             }
             else
             {
-                flag2 = false;
+                isValid = false;
             }
-            if (double.IsNaN(num13))
+            if (double.IsNaN(resultValue))
             {
-                num13 = double.MaxValue;
+                resultValue = double.MaxValue;
             }
             else
             {
-                flag2 = false;
+                isValid = false;
             }
-            if (!flag2)
+            if (!isValid)
             {
                 for (int m = 0; m < matVal2.Rows; m++)
                 {
-                    double num16 = matVal2.get_real(m, 0);
-                    if (num16 < num10 || num16 > num11)
+                    double derivedValue = matVal2.get_real(m, 0);
+                    if (derivedValue < limitValue || derivedValue > coordinate)
                     {
                         m_cols--;
                     }
                 }
                 for (int n = 0; n < matVal3.Cols; n++)
                 {
-                    double num17 = matVal3.get_real(0, n);
-                    if (num17 < num12 || num17 > num13)
+                    double remainingValue = matVal3.get_real(0, n);
+                    if (remainingValue < measurement || remainingValue > resultValue)
                     {
                         m_rows--;
                     }
@@ -271,24 +271,24 @@ public partial class ContourMain
                 AppException.Raise("out of range clipping limits", 3u);
             }
             array = new shpPoint3D[m_rows * m_cols];
-            for (int num18 = 0; num18 < m_rows; num18++)
+            for (int index = 0; index < m_rows; index++)
             {
-                for (int num19 = 0; num19 < m_cols; num19++)
+                for (int alternateValue = 0; alternateValue < m_cols; alternateValue++)
                 {
-                    double num20 = matVal3.get_real(num19, num18);
-                    if (!(num20 < num12) && !(num20 > num13))
+                    double selectedValue = matVal3.get_real(alternateValue, index);
+                    if (!(selectedValue < measurement) && !(selectedValue > resultValue))
                     {
-                        double num21 = matVal2.get_real(num19, num18);
-                        if (!(num21 < num10) && !(num21 > num11))
+                        double originalValue = matVal2.get_real(alternateValue, index);
+                        if (!(originalValue < limitValue) && !(originalValue > coordinate))
                         {
-                            num4 = ((num4 < num20) ? num4 : num20);
-                            num5 = ((num5 > num20) ? num5 : num20);
-                            num2 = ((num2 < num21) ? num2 : num21);
-                            num3 = ((num3 > num21) ? num3 : num21);
-                            double num22 = matVal4.get_real(num19, num18);
-                            num6 = ((num6 < num22) ? num6 : num22);
-                            num7 = ((num7 > num22) ? num7 : num22);
-                            array[num] = new shpPoint3D(num21, num20, num22);
+                            otherValue = ((otherValue < selectedValue) ? otherValue : selectedValue);
+                            nextValue = ((nextValue > selectedValue) ? nextValue : selectedValue);
+                            minimum = ((minimum < originalValue) ? minimum : originalValue);
+                            maximum = ((maximum > originalValue) ? maximum : originalValue);
+                            double finalValue = matVal4.get_real(alternateValue, index);
+                            currentValue = ((currentValue < finalValue) ? currentValue : finalValue);
+                            calculatedValue = ((calculatedValue > finalValue) ? calculatedValue : finalValue);
+                            array[num] = new shpPoint3D(originalValue, selectedValue, finalValue);
                             num++;
                         }
                     }
@@ -316,32 +316,32 @@ public partial class ContourMain
             {
                 AppException.Raise("invalid argument", 1u);
             }
-            num2 = limits.get_real(0) + (double)origin;
-            num3 = limits.get_real(1) + (double)origin;
-            num4 = limits.get_real(2) + (double)origin;
-            num5 = limits.get_real(3) + (double)origin;
-            num6 = double.MaxValue;
-            num7 = double.MinValue;
-            double num23 = 1.0;
-            double num24 = 1.0;
-            double num25 = num4;
+            minimum = limits.get_real(0) + (double)origin;
+            maximum = limits.get_real(1) + (double)origin;
+            otherValue = limits.get_real(2) + (double)origin;
+            nextValue = limits.get_real(3) + (double)origin;
+            currentValue = double.MaxValue;
+            calculatedValue = double.MinValue;
+            double boundaryValue = 1.0;
+            double total = 1.0;
+            double average = otherValue;
             array = new shpPoint3D[m_rows * m_cols];
-            for (int num26 = 0; num26 < m_mdata.Cols; num26++)
+            for (int columnIndex = 0; columnIndex < m_mdata.Cols; columnIndex++)
             {
-                double num27 = num2;
-                for (int num28 = 0; num28 < m_mdata.Rows; num28++)
+                double additionalValue = minimum;
+                for (int rowIndex = 0; rowIndex < m_mdata.Rows; rowIndex++)
                 {
-                    double num29 = m_mdata.get_real_mixed(num28, num26);
-                    num6 = ((num6 < num29) ? num6 : num29);
-                    num7 = ((num7 > num29) ? num7 : num29);
-                    array[num] = new shpPoint3D(num27, num25, num29);
-                    num27 += num23;
+                    double inputValue = m_mdata.get_real_mixed(rowIndex, columnIndex);
+                    currentValue = ((currentValue < inputValue) ? currentValue : inputValue);
+                    calculatedValue = ((calculatedValue > inputValue) ? calculatedValue : inputValue);
+                    array[num] = new shpPoint3D(additionalValue, average, inputValue);
+                    additionalValue += boundaryValue;
                     num++;
                 }
-                num25 += num24;
+                average += total;
             }
         }
-        m_rect = new LRect3(num2, num3, num4, num5, num6, num7);
+        m_rect = new LRect3(minimum, maximum, otherValue, nextValue, currentValue, calculatedValue);
         m_mesh = new glMesh(m_rect, m_rows, m_cols, array);
     }
 
@@ -354,26 +354,26 @@ public partial class ContourMain
         m_cols = (int)matVal.get_real(0);
         m_rows = (int)matVal.get_real(1);
         double num = limits.get_real(0);
-        double num2 = limits.get_real(1);
-        double num3 = limits.get_real(2);
-        double num4 = limits.get_real(3);
+        double value = limits.get_real(1);
+        double otherValue = limits.get_real(2);
+        double nextValue = limits.get_real(3);
         if (double.IsNaN(num))
         {
             num = -10.0;
         }
-        if (double.IsNaN(num2))
+        if (double.IsNaN(value))
         {
-            num2 = 10.0;
+            value = 10.0;
         }
-        if (double.IsNaN(num3))
+        if (double.IsNaN(otherValue))
         {
-            num3 = -10.0;
+            otherValue = -10.0;
         }
-        if (double.IsNaN(num4))
+        if (double.IsNaN(nextValue))
         {
-            num4 = 10.0;
+            nextValue = 10.0;
         }
-        if (num >= num2 || num3 >= num4)
+        if (num >= value || otherValue >= nextValue)
         {
             AppException.Raise("plot3D invalid limits vector", 3u);
         }
@@ -382,7 +382,7 @@ public partial class ContourMain
         double minZ = 0.0;
         double maxZ = 0.0;
         NumVal aa = new NumVal(num, 0.0, Dim.identity);
-        NumVal bb = new NumVal(num3, 0.0, Dim.identity);
+        NumVal bb = new NumVal(otherValue, 0.0, Dim.identity);
         object obj = m_F.Call(aa, bb);
         if (!(obj is NumVal))
         {
@@ -394,24 +394,24 @@ public partial class ContourMain
             obj = Plot.OpScaleInverse(obj, scaleFactor) as NumVal;
         }
         m_Fdim = Utl.as_scalar(obj).m_dim;
-        double num5 = 1.0;
+        double currentValue = 1.0;
         if (!Dim.IsDimensioned(dim) && scaleFactor != null && !Dim.IsDimensioned(Utl.as_scalar(scaleFactor).m_dim))
         {
-            num5 = Utl.as_scalar(scaleFactor).Real;
-            if (num5 == 0.0)
+            currentValue = Utl.as_scalar(scaleFactor).Real;
+            if (currentValue == 0.0)
             {
-                num5 = 1.0;
+                currentValue = 1.0;
             }
         }
-        if (!try_calc_mt_vertices(num, num2, num3, num4, dim, num5, int.MaxValue, ref ntries, ref minZ, ref maxZ, ref vertices))
+        if (!try_calc_mt_vertices(num, value, otherValue, nextValue, dim, currentValue, int.MaxValue, ref ntries, ref minZ, ref maxZ, ref vertices))
         {
             if (Rts.IsCancellationRequested())
             {
                 throw new AbortRequestedException();
             }
-            calculate_vertices_attempt(num, num2, num3, num4, dim, num5, int.MaxValue, ref ntries, ref minZ, ref maxZ, ref vertices);
+            calculate_vertices_attempt(num, value, otherValue, nextValue, dim, currentValue, int.MaxValue, ref ntries, ref minZ, ref maxZ, ref vertices);
         }
-        m_rect = new LRect3(num, num2, num3, num4, minZ, maxZ);
+        m_rect = new LRect3(num, value, otherValue, nextValue, minZ, maxZ);
         m_mesh = new glMesh(m_rect, m_rows, m_cols, vertices);
     }
 
@@ -445,22 +445,22 @@ public partial class ContourMain
         outExc = null;
         retVal = false;
         double num = (xmax - xmin) / (double)(cols - 1);
-        double num2 = (ymax - ymin) / (double)(rows - 1);
+        double value = (ymax - ymin) / (double)(rows - 1);
         minZ = double.MaxValue;
         maxZ = double.MinValue;
         NumVal numVal = new NumVal(xmin, 0.0, Dim.identity);
         NumVal numVal2 = new NumVal(ymin, 0.0, Dim.identity);
-        int num3 = startRow * cols;
-        double num4 = ymin + (double)startRow * num2;
-        int num5 = startRow;
-        while (num5 <= endRow && !token.IsCancellationRequested)
+        int counter = startRow * cols;
+        double otherValue = ymin + (double)startRow * value;
+        int nextValue = startRow;
+        while (nextValue <= endRow && !token.IsCancellationRequested)
         {
-            double num6 = xmin;
-            int num7 = 0;
-            while (num7 < cols && !token.IsCancellationRequested)
+            double currentValue = xmin;
+            int calculatedValue = 0;
+            while (calculatedValue < cols && !token.IsCancellationRequested)
             {
-                numVal.Data.rp = num6;
-                numVal2.Data.rp = num4;
+                numVal.Data.rp = currentValue;
+                numVal2.Data.rp = otherValue;
                 NumVal numVal3;
                 try
                 {
@@ -479,15 +479,15 @@ public partial class ContourMain
                 {
                     AppException.Raise("inconsistent units", 1u);
                 }
-                double num8 = Utl.as_real(numVal3) / pws;
-                minZ = ((minZ < num8) ? minZ : num8);
-                maxZ = ((maxZ > num8) ? maxZ : num8);
-                vertices[num3++] = new shpPoint3D(num6, num4, num8);
-                num7++;
-                num6 += num;
+                double sampleValue = Utl.as_real(numVal3) / pws;
+                minZ = ((minZ < sampleValue) ? minZ : sampleValue);
+                maxZ = ((maxZ > sampleValue) ? maxZ : sampleValue);
+                vertices[counter++] = new shpPoint3D(currentValue, otherValue, sampleValue);
+                calculatedValue++;
+                currentValue += num;
             }
-            num5++;
-            num4 += num2;
+            nextValue++;
+            otherValue += value;
         }
         retVal = true;
     }
@@ -570,36 +570,36 @@ public partial class ContourMain
             int count = allcontour.Count;
             num = ((num > count) ? num : count);
         }
-        int num2 = allcontours.Count;
-        double[] array = new double[num2 * num];
-        double[] array2 = new double[num2 * num];
-        double[] array3 = new double[num2];
-        int num3 = 0;
-        int num4 = 0;
+        int otherValue = allcontours.Count;
+        double[] array = new double[otherValue * num];
+        double[] values = new double[otherValue * num];
+        double[] otherValues = new double[otherValue];
+        int counter = 0;
+        int nextValue = 0;
         foreach (List<shpPoint3D> allcontour2 in allcontours)
         {
             if (allcontour2.Count < 3)
             {
-                num2--;
+                otherValue--;
                 continue;
             }
-            array3[num4++] = allcontour2[1].Z();
+            otherValues[nextValue++] = allcontour2[1].Z();
             foreach (shpPoint3D item in allcontour2)
             {
-                array[num3] = item.X();
-                array2[num3] = item.Y();
-                num3++;
+                array[counter] = item.X();
+                values[counter] = item.Y();
+                counter++;
             }
             for (int i = 0; i < num - allcontour2.Count; i++)
             {
-                array[num3] = double.NaN;
-                array2[num3] = double.NaN;
-                num3++;
+                array[counter] = double.NaN;
+                values[counter] = double.NaN;
+                counter++;
             }
         }
-        MatVal x = new MatVal(array, null, num, num2, num);
-        MatVal x2 = new MatVal(array2, null, num, num2, num);
-        MatVal x3 = new MatVal(array3);
+        MatVal x = new MatVal(array, null, num, otherValue, num);
+        MatVal x2 = new MatVal(values, null, num, otherValue, num);
+        MatVal x3 = new MatVal(otherValues);
         MatVal matVal = new MatVal(3);
         matVal.set_1(0, x);
         matVal.set_1(1, x2);
@@ -610,23 +610,23 @@ public partial class ContourMain
     private MatVal storeContours2(List<List<shpPoint3D>> allcontours)
     {
         double num = 1E-09;
-        int num2 = allcontours.Count;
+        int count = allcontours.Count;
         foreach (List<shpPoint3D> allcontour in allcontours)
         {
             if (allcontour.Count < 3 || allcontour[0].Z() < num)
             {
-                num2--;
+                count--;
             }
         }
-        if (num2 <= 0)
+        if (count <= 0)
         {
             AppException.Raise("no contours found", 1u);
         }
-        MatVal matVal = new MatVal(num2 + 3);
-        MatVal matVal2 = new MatVal(num2);
-        MatVal matVal3 = new MatVal(num2);
+        MatVal matVal = new MatVal(count + 3);
+        MatVal matVal2 = new MatVal(count);
+        MatVal matVal3 = new MatVal(count);
         ContourUtil contourUtil = new ContourUtil();
-        int num3 = 0;
+        int counter = 0;
         foreach (List<shpPoint3D> allcontour2 in allcontours)
         {
             if (allcontour2.Count < 3 || allcontour2[0].Z() < num)
@@ -634,18 +634,18 @@ public partial class ContourMain
                 continue;
             }
             double[] array = new double[2 * allcontour2.Count];
-            int num4 = 0;
+            int otherValue = 0;
             foreach (shpPoint3D item in allcontour2)
             {
-                array[num4] = item.X();
-                array[num4 + allcontour2.Count] = item.Y();
-                num4++;
+                array[otherValue] = item.X();
+                array[otherValue + allcontour2.Count] = item.Y();
+                otherValue++;
             }
             MatVal x = new MatVal(array, null, allcontour2.Count, 2, allcontour2.Count);
-            matVal.set_1(num3, x);
-            matVal2.set_1(num3, allcontour2[1].Z());
-            matVal3.set_1(num3, contourUtil.ContourGradient(allcontour2, m_mesh, m_F));
-            num3++;
+            matVal.set_1(counter, x);
+            matVal2.set_1(counter, allcontour2[1].Z());
+            matVal3.set_1(counter, contourUtil.ContourGradient(allcontour2, m_mesh, m_F));
+            counter++;
         }
         if (!Dim.Eq_b(m_Fdim, m_Ldim))
         {
@@ -655,14 +655,14 @@ public partial class ContourMain
         {
             matVal2.m_dim = m_Fdim;
         }
-        matVal.set_1(num3++, matVal2);
-        matVal.set_1(num3++, matVal3);
+        matVal.set_1(counter++, matVal2);
+        matVal.set_1(counter++, matVal3);
         MatVal matVal4 = new MatVal(4);
         matVal4.set_1(0, m_rect.xmin);
         matVal4.set_1(1, m_rect.xmax);
         matVal4.set_1(2, m_rect.ymin);
         matVal4.set_1(3, m_rect.ymax);
-        matVal.set_1(num3++, matVal4);
+        matVal.set_1(counter++, matVal4);
         return matVal;
     }
 }

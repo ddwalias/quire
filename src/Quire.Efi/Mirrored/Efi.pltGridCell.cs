@@ -295,17 +295,17 @@ internal partial class pltGridCell
     private void computeMapIndex()
     {
         int num = 0;
-        int num2 = 1;
+        int value = 1;
         if (myZavg < myLevel)
         {
             num = 1;
-            num2 = 0;
+            value = 0;
         }
-        int num3 = ((myLRz >= myLevel) ? num2 : num);
-        int num4 = ((myLLz >= myLevel) ? num2 : num);
-        int num5 = ((myULz >= myLevel) ? num2 : num);
-        int num6 = ((myURz >= myLevel) ? num2 : num);
-        myIndex = num3 | (num4 << 1) | (num5 << 2) | (num6 << 3);
+        int otherValue = ((myLRz >= myLevel) ? value : num);
+        int nextValue = ((myLLz >= myLevel) ? value : num);
+        int currentValue = ((myULz >= myLevel) ? value : num);
+        int calculatedValue = ((myURz >= myLevel) ? value : num);
+        myIndex = otherValue | (nextValue << 1) | (currentValue << 2) | (calculatedValue << 3);
     }
 
     private double X(double u, double v, double x0, double x1, double x2, double x3)

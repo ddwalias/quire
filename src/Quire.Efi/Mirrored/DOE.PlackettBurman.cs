@@ -35,10 +35,10 @@ public partial class PlackettBurman
             return m_pb28;
         }
         double[,] array = new double[m_nruns, m_nfacts];
-        int[] array2 = m_genvecs[m_nruns];
+        int[] indices = m_genvecs[m_nruns];
         for (int i = 0; i < m_nruns - 1; i++)
         {
-            array[i, 0] = array2[i];
+            array[i, 0] = indices[i];
         }
         array[m_nruns - 1, 0] = -1.0;
         for (int j = 1; j < m_nfacts; j++)
