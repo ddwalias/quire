@@ -404,9 +404,9 @@ namespace Quire { namespace mslisp {
             }
             if (m_tag != nullptr)
             {
-                System::String^ text2 = m_tag->ToString();
-                System::String^ text3 = ":";
-                text = System::String::Concat(text, System::String::Concat(text3, text2));
+                System::String^ tagName = m_tag->ToString();
+                System::String^ tagSeparator = ":";
+                text = System::String::Concat(text, System::String::Concat(tagSeparator, tagName));
             }
             System::GC::KeepAlive(this);
             return text;
@@ -938,9 +938,9 @@ namespace Quire { namespace mslisp {
                 return;
             }
             m_exprs = gcnew array<Expression^>(num);
-            for (int num2 = 0; num2 < num; num2++)
+            for (int expressionIndex = 0; expressionIndex < num; expressionIndex++)
             {
-                m_exprs[num2] = i->analyze(args->hd, e);
+                m_exprs[expressionIndex] = i->analyze(args->hd, e);
                 args = args->tl;
             }
         }
@@ -950,9 +950,9 @@ namespace Quire { namespace mslisp {
             if (m_exprs != nullptr)
             {
                 int num = m_exprs->Length;
-                for (int num2 = 0; num2 < num - 1; num2++)
+                for (int expressionIndex = 0; expressionIndex < num - 1; expressionIndex++)
                 {
-                    m_exprs[num2]->execute(e);
+                    m_exprs[expressionIndex]->execute(e);
                 }
                 System::Object^ result = m_exprs[num - 1]->execute(e);
                 System::GC::KeepAlive(this);
@@ -1010,10 +1010,10 @@ namespace Quire { namespace mslisp {
                 if (tl != nullptr && tl->hd != nullptr)
                 {
                     m_then = i->analyze(tl->hd, e);
-                    Quire::Engine::PCons^ tl2 = tl->tl;
-                    if (tl2 != nullptr && tl2->hd != nullptr)
+                    Quire::Engine::PCons^ elseArgs = tl->tl;
+                    if (elseArgs != nullptr && elseArgs->hd != nullptr)
                     {
-                        m_else = i->analyze(tl2->hd, e);
+                        m_else = i->analyze(elseArgs->hd, e);
                     }
                     else
                     {
@@ -1034,9 +1034,9 @@ namespace Quire { namespace mslisp {
                 System::GC::KeepAlive(this);
                 return result;
             }
-            System::Object^ result2 = m_else->execute(e);
+            System::Object^ elseResult = m_else->execute(e);
             System::GC::KeepAlive(this);
-            return result2;
+            return elseResult;
         }
 
         virtual System::String^ ToString() override
@@ -1286,7 +1286,7 @@ namespace Quire { namespace mslisp {
         {
             Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(params);
             System::Object^ obj = i->intern("lisp.&rest");
-            System::Object^ obj2 = i->intern("lisp.&optional");
+            System::Object^ optionalMarker = i->intern("lisp.&optional");
             bool flag = false;
             if (pCons != nullptr)
             {
@@ -1294,7 +1294,7 @@ namespace Quire { namespace mslisp {
                 {
                     if (pCons->hd != obj)
                     {
-                        if (pCons->hd == obj2)
+                        if (pCons->hd == optionalMarker)
                         {
                             flag = true;
                             pCons = pCons->tl;
@@ -1347,9 +1347,9 @@ namespace Quire { namespace mslisp {
             if (!m_has_rest && num > m_num_optional_args + m_num_required_args)
             {
                 System::ValueType^ vNum = num;
-                System::String^ tab2 = "\t";
+                System::String^ tabSeparator = "\t";
                 System::ValueType^ vMax = m_num_optional_args + m_num_required_args;
-                ::mslisp::Error::report(System::String::Concat(System::String::Concat(System::String::Concat(System::String::Concat("too_many_arguments", "\t"), vMax), tab2), vNum));
+                ::mslisp::Error::report(System::String::Concat(System::String::Concat(System::String::Concat(System::String::Concat("too_many_arguments", "\t"), vMax), tabSeparator), vNum));
             }
             if (!m_has_rest && m_num_optional_args == 0)
             {
@@ -1362,12 +1362,12 @@ namespace Quire { namespace mslisp {
             }
             array<System::Object^>^ res = gcnew array<System::Object^>(total);
             int i = 0;
-            for (int num4 = 0; num4 < m_num_required_args; i++, num4++)
+            for (int requiredIndex = 0; requiredIndex < m_num_required_args; i++, requiredIndex++)
             {
                 res[i] = args[i];
             }
-            int num5 = System::Math::Min(num - m_num_required_args, m_num_optional_args);
-            for (int num6 = 0; num6 < num5; i++, num6++)
+            int optionalCount = System::Math::Min(num - m_num_required_args, m_num_optional_args);
+            for (int optionalIndex = 0; optionalIndex < optionalCount; i++, optionalIndex++)
             {
                 res[i] = args[i];
             }
@@ -1408,8 +1408,8 @@ namespace Quire { namespace mslisp {
                 {
                     ::mslisp::Error::report("Lambda has no body");
                 }
-                Env^ e2 = gcnew Env(m_parent_env, argSpec->__identifier(params)());
-                m_body = PrognExpr::NewPrognExpr(i, e2, args->tl);
+                Env^ lambdaEnv = gcnew Env(m_parent_env, argSpec->__identifier(params)());
+                m_body = PrognExpr::NewPrognExpr(i, lambdaEnv, args->tl);
                 System::GC::KeepAlive(this);
             }
             else
@@ -1845,24 +1845,24 @@ namespace Quire { namespace mslisp {
         {
             array<System::Reflection::ConstructorInfo^>^ constructors = m_type->GetConstructors();
             short num = 0;
-            short num2 = -1;
-            short num3 = 0;
+            short matchingConstructorIndex = -1;
+            short constructorIndex = 0;
             if (0 < constructors->Length)
             {
                 do
                 {
-                    if (constructors[num3]->GetParameters()->Length == arity)
+                    if (constructors[constructorIndex]->GetParameters()->Length == arity)
                     {
                         num++;
-                        num2 = num3;
+                        matchingConstructorIndex = constructorIndex;
                     }
-                    num3++;
+                    constructorIndex++;
                 }
-                while (num3 < constructors->Length);
+                while (constructorIndex < constructors->Length);
                 if (num == 1)
                 {
-                    CodeGen::EmitLdargs(g, 0, arity, constructors[num2]->GetParameters());
-                    System::Reflection::ConstructorInfo^ con = constructors[num2];
+                    CodeGen::EmitLdargs(g, 0, arity, constructors[matchingConstructorIndex]->GetParameters());
+                    System::Reflection::ConstructorInfo^ con = constructors[matchingConstructorIndex];
                     g->Emit(System::Reflection::Emit::OpCodes::Newobj, con);
                     g->Emit(System::Reflection::Emit::OpCodes::Ret);
                     System::GC::KeepAlive(this);
@@ -2068,10 +2068,10 @@ namespace Quire { namespace mslisp {
                 }
                 else
                 {
-                    System::Type^ type2 = Quire::Engine::Reflection::FindType(m_sym->get_fullname());
-                    if ((System::Object^)type2 != nullptr)
+                    System::Type^ symbolType = Quire::Engine::Reflection::FindType(m_sym->get_fullname());
+                    if ((System::Object^)symbolType != nullptr)
                     {
-                        obj = gcnew Constructor(type2);
+                        obj = gcnew Constructor(symbolType);
                     }
                 }
                 if (obj == nullptr)
@@ -2166,8 +2166,8 @@ namespace Quire { namespace mslisp {
         virtual System::Object^ execute(Env^ e, int trace_level) override
         {
             System::Object^ a1 = m_arg1->execute(e);
-            System::Object^ a2 = m_arg2->execute(e);
-            System::Object^ result = m_func->Invoke(a1, a2);
+            System::Object^ secondArgument = m_arg2->execute(e);
+            System::Object^ result = m_func->Invoke(a1, secondArgument);
             System::GC::KeepAlive(this);
             return result;
         }
@@ -2197,9 +2197,9 @@ namespace Quire { namespace mslisp {
         virtual System::Object^ execute(Env^ e, int trace_level) override
         {
             System::Object^ a1 = m_arg1->execute(e);
-            System::Object^ a2 = m_arg2->execute(e);
-            System::Object^ a3 = m_arg3->execute(e);
-            System::Object^ result = m_func->Invoke(a1, a2, a3);
+            System::Object^ secondArgument = m_arg2->execute(e);
+            System::Object^ thirdArgument = m_arg3->execute(e);
+            System::Object^ result = m_func->Invoke(a1, secondArgument, thirdArgument);
             System::GC::KeepAlive(this);
             return result;
         }
@@ -2231,10 +2231,10 @@ namespace Quire { namespace mslisp {
         virtual System::Object^ execute(Env^ e, int trace_level) override
         {
             System::Object^ a1 = m_arg1->execute(e);
-            System::Object^ a2 = m_arg2->execute(e);
-            System::Object^ a3 = m_arg3->execute(e);
-            System::Object^ a4 = m_arg4->execute(e);
-            System::Object^ result = m_func->Invoke(a1, a2, a3, a4);
+            System::Object^ secondArgument = m_arg2->execute(e);
+            System::Object^ thirdArgument = m_arg3->execute(e);
+            System::Object^ fourthArgument = m_arg4->execute(e);
+            System::Object^ result = m_func->Invoke(a1, secondArgument, thirdArgument, fourthArgument);
             System::GC::KeepAlive(this);
             return result;
         }
@@ -2268,11 +2268,11 @@ namespace Quire { namespace mslisp {
         virtual System::Object^ execute(Env^ e, int trace_level) override
         {
             System::Object^ a1 = m_arg1->execute(e);
-            System::Object^ a2 = m_arg2->execute(e);
-            System::Object^ a3 = m_arg3->execute(e);
-            System::Object^ a4 = m_arg4->execute(e);
-            System::Object^ a5 = m_arg5->execute(e);
-            System::Object^ result = m_func->Invoke(a1, a2, a3, a4, a5);
+            System::Object^ secondArgument = m_arg2->execute(e);
+            System::Object^ thirdArgument = m_arg3->execute(e);
+            System::Object^ fourthArgument = m_arg4->execute(e);
+            System::Object^ fifthArgument = m_arg5->execute(e);
+            System::Object^ result = m_func->Invoke(a1, secondArgument, thirdArgument, fourthArgument, fifthArgument);
             System::GC::KeepAlive(this);
             return result;
         }
@@ -2308,12 +2308,12 @@ namespace Quire { namespace mslisp {
         virtual System::Object^ execute(Env^ e, int trace_level) override
         {
             System::Object^ a1 = m_arg1->execute(e);
-            System::Object^ a2 = m_arg2->execute(e);
-            System::Object^ a3 = m_arg3->execute(e);
-            System::Object^ a4 = m_arg4->execute(e);
-            System::Object^ a5 = m_arg5->execute(e);
-            System::Object^ a6 = m_arg6->execute(e);
-            System::Object^ result = m_func->Invoke(a1, a2, a3, a4, a5, a6);
+            System::Object^ secondArgument = m_arg2->execute(e);
+            System::Object^ thirdArgument = m_arg3->execute(e);
+            System::Object^ fourthArgument = m_arg4->execute(e);
+            System::Object^ fifthArgument = m_arg5->execute(e);
+            System::Object^ sixthArgument = m_arg6->execute(e);
+            System::Object^ result = m_func->Invoke(a1, secondArgument, thirdArgument, fourthArgument, fifthArgument, sixthArgument);
             System::GC::KeepAlive(this);
             return result;
         }
@@ -2859,27 +2859,27 @@ namespace Quire { namespace mslisp {
                 ::mslisp::Error::report("Cannot apply: ", args[0]);
             }
             int num = args->Length;
-            int num2 = num - 1;
-            Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(args[num2]);
+            int restArgumentIndex = num - 1;
+            Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(args[restArgumentIndex]);
             array<System::Object^>^ array = gcnew cli::array<System::Object^>(Quire::Engine::PCons::length(pCons) + (num - 2));
-            int num3 = 0;
-            int num4 = 1;
+            int expandedArgumentIndex = 0;
+            int argumentIndex = 1;
             if (1 < num - 1)
             {
                 do
                 {
-                    array[num3] = args[num4];
-                    num3++;
-                    num4++;
+                    array[expandedArgumentIndex] = args[argumentIndex];
+                    expandedArgumentIndex++;
+                    argumentIndex++;
                 }
-                while (num4 < num - 1);
+                while (argumentIndex < num - 1);
             }
             if (pCons != nullptr)
             {
                 do
                 {
-                    array[num3] = pCons->hd;
-                    num3++;
+                    array[expandedArgumentIndex] = pCons->hd;
+                    expandedArgumentIndex++;
                     pCons = pCons->tl;
                 }
                 while (pCons != nullptr);
@@ -2900,25 +2900,25 @@ namespace Quire { namespace mslisp {
         int isum(array<System::Object^>^ args, bool^ ok)
         {
             int num = 0;
-            int num2 = 1;
-            int num3 = 0;
-            int num4 = args->Length;
-            if (0 < num4)
+            int multiplier = 1;
+            int argumentIndex = 0;
+            int argumentCount = args->Length;
+            if (0 < argumentCount)
             {
                 do
                 {
-                    int^ i = dynamic_cast<int^>(args[num3]);
+                    int^ i = dynamic_cast<int^>(args[argumentIndex]);
                     if (i != nullptr)
                     {
-                        num += (*i) * num2;
-                        num2 = m_multiplier;
-                        num3++;
+                        num += (*i) * multiplier;
+                        multiplier = m_multiplier;
+                        argumentIndex++;
                         continue;
                     }
                     *ok = false;
                     return 0;
                 }
-                while (num3 < num4);
+                while (argumentIndex < argumentCount);
             }
             *ok = true;
             return num;
@@ -2927,32 +2927,32 @@ namespace Quire { namespace mslisp {
         double fsum(array<System::Object^>^ args)
         {
             double num = 0.0;
-            double num2 = 1.0;
-            int num3 = 0;
-            int num4 = args->Length;
-            if (0 < num4)
+            double multiplier = 1.0;
+            int argumentIndex = 0;
+            int argumentCount = args->Length;
+            if (0 < argumentCount)
             {
                 do
                 {
-                    double^ d = dynamic_cast<double^>(args[num3]);
+                    double^ d = dynamic_cast<double^>(args[argumentIndex]);
                     if (d == nullptr)
                     {
-                        int^ i = dynamic_cast<int^>(args[num3]);
+                        int^ i = dynamic_cast<int^>(args[argumentIndex]);
                         if (i == nullptr)
                         {
-                            ::mslisp::Error::report("Bad argument to +: ", args[num3]);
+                            ::mslisp::Error::report("Bad argument to +: ", args[argumentIndex]);
                             break;
                         }
-                        num = (double)(*i) * num2 + num;
+                        num = (double)(*i) * multiplier + num;
                     }
                     else
                     {
-                        num = (*d) * num2 + num;
+                        num = (*d) * multiplier + num;
                     }
-                    num2 = m_multiplier;
-                    num3++;
+                    multiplier = m_multiplier;
+                    argumentIndex++;
                 }
-                while (num3 < num4);
+                while (argumentIndex < argumentCount);
             }
             return num;
         }
@@ -3083,19 +3083,19 @@ namespace Quire { namespace mslisp {
             {
                 ::mslisp::Error::report("Bad first argument to mapcar: ", f);
             }
-            Quire::Engine::PCons^ pCons2 = nullptr;
+            Quire::Engine::PCons^ reversedResults = nullptr;
             array<System::Object^>^ array = gcnew cli::array<System::Object^>(1);
             if (pCons != nullptr)
             {
                 do
                 {
                     array[0] = pCons->hd;
-                    pCons2 = gcnew Quire::Engine::PCons(function->Invoke(array), pCons2);
+                    reversedResults = gcnew Quire::Engine::PCons(function->Invoke(array), reversedResults);
                     pCons = pCons->tl;
                 }
                 while (pCons != nullptr);
             }
-            return Quire::Engine::PCons::nreverse(pCons2);
+            return Quire::Engine::PCons::nreverse(reversedResults);
         }
 
         static System::Object^ every(System::Object^ f, System::Object^ l)
@@ -3160,18 +3160,18 @@ namespace Quire { namespace mslisp {
             {
                 ::mslisp::Error::report("Bad 1st argument to mapenum: ", f);
             }
-            System::Collections::IEnumerator^ enumerator2;
+            System::Collections::IEnumerator^ sourceEnumerator;
             System::Collections::IEnumerator^ enumerator = dynamic_cast<System::Collections::IEnumerator^>(o);
             if (enumerator != nullptr)
             {
-                enumerator2 = enumerator;
+                sourceEnumerator = enumerator;
             }
             else
             {
                 System::Collections::IEnumerable^ enumerable = dynamic_cast<System::Collections::IEnumerable^>(o);
                 if (enumerable != nullptr)
                 {
-                    enumerator2 = enumerable->GetEnumerator();
+                    sourceEnumerator = enumerable->GetEnumerator();
                 }
                 else
                 {
@@ -3180,7 +3180,7 @@ namespace Quire { namespace mslisp {
             }
             Quire::Engine::PCons^ pCons = nullptr;
             array<System::Object^>^ array = gcnew cli::array<System::Object^>(1);
-            if (enumerator2->MoveNext())
+            if (sourceEnumerator->MoveNext())
             {
                 do
                 {
@@ -3204,18 +3204,18 @@ namespace Quire { namespace mslisp {
             {
                 ::mslisp::Error::report("Bad 2nd argument to mapenumby: ", f);
             }
-            System::Collections::IEnumerator^ enumerator2;
+            System::Collections::IEnumerator^ sourceEnumerator;
             System::Collections::IEnumerator^ enumerator = dynamic_cast<System::Collections::IEnumerator^>(o);
             if (enumerator != nullptr)
             {
-                enumerator2 = enumerator;
+                sourceEnumerator = enumerator;
             }
             else
             {
                 System::Collections::IEnumerable^ enumerable = dynamic_cast<System::Collections::IEnumerable^>(o);
                 if (enumerable != nullptr)
                 {
-                    enumerator2 = enumerable->GetEnumerator();
+                    sourceEnumerator = enumerable->GetEnumerator();
                 }
                 else
                 {
@@ -3225,7 +3225,7 @@ namespace Quire { namespace mslisp {
             Quire::Engine::PCons^ pCons = nullptr;
             int num = 0;
             array<System::Object^>^ array = gcnew cli::array<System::Object^>(*val);
-            if (enumerator2->MoveNext())
+            if (sourceEnumerator->MoveNext())
             {
                 do
                 {
@@ -3261,7 +3261,7 @@ namespace Quire { namespace mslisp {
             {
                 ::mslisp::Error::report("Bad first argument to remove-if: ", f);
             }
-            Quire::Engine::PCons^ pCons2 = nullptr;
+            Quire::Engine::PCons^ filteredResults = nullptr;
             array<System::Object^>^ array = gcnew cli::array<System::Object^>(1);
             if (pCons != nullptr)
             {
@@ -3270,13 +3270,13 @@ namespace Quire { namespace mslisp {
                     array[0] = pCons->hd;
                     if (!::mslisp::is_true(function->Invoke(array)))
                     {
-                        pCons2 = gcnew Quire::Engine::PCons(pCons->hd, pCons2);
+                        filteredResults = gcnew Quire::Engine::PCons(pCons->hd, filteredResults);
                     }
                     pCons = pCons->tl;
                 }
                 while (pCons != nullptr);
             }
-            return Quire::Engine::PCons::nreverse(pCons2);
+            return Quire::Engine::PCons::nreverse(filteredResults);
         }
 
         static System::Object^ nth(System::Object^ n, System::Object^ l)
@@ -3326,20 +3326,20 @@ namespace Quire { namespace mslisp {
         {
             Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(l);
             System::Diagnostics::Trace::Assert(l == nullptr || pCons != nullptr, nullptr);
-            Quire::Engine::PCons^ pCons2 = nullptr;
+            Quire::Engine::PCons^ allButLast = nullptr;
             if (pCons != nullptr)
             {
                 do
                 {
                     if (pCons->tl != nullptr)
                     {
-                        pCons2 = gcnew Quire::Engine::PCons(pCons->hd, pCons2);
+                        allButLast = gcnew Quire::Engine::PCons(pCons->hd, allButLast);
                     }
                     pCons = pCons->tl;
                 }
                 while (pCons != nullptr);
             }
-            return Quire::Engine::PCons::nreverse(pCons2);
+            return Quire::Engine::PCons::nreverse(allButLast);
         }
 
         static System::Object^ eq(System::Object^ a, System::Object^ b)
@@ -3415,10 +3415,10 @@ namespace Quire { namespace mslisp {
             {
                 x = taggedSymbol->Base;
             }
-            TaggedSymbol^ taggedSymbol2 = dynamic_cast<TaggedSymbol^>(y);
-            if (taggedSymbol2 != nullptr)
+            TaggedSymbol^ yTaggedSymbol = dynamic_cast<TaggedSymbol^>(y);
+            if (yTaggedSymbol != nullptr)
             {
-                y = taggedSymbol2->Base;
+                y = yTaggedSymbol->Base;
             }
             return (x == y) ? True : nullptr;
         }
@@ -3496,16 +3496,16 @@ namespace Quire { namespace mslisp {
         static System::Object^ set_tag(System::Object^ x, System::Object^ tag)
         {
             Symbol^ symbol = dynamic_cast<Symbol^>(x);
-            Symbol^ symbol2 = dynamic_cast<Symbol^>(tag);
-            if (symbol != nullptr && symbol2 != nullptr)
+            Symbol^ tagSymbol = dynamic_cast<Symbol^>(tag);
+            if (symbol != nullptr && tagSymbol != nullptr)
             {
-                Symbol^ symbol3 = symbol;
+                Symbol^ baseSymbol = symbol;
                 TaggedSymbol^ taggedSymbol = dynamic_cast<TaggedSymbol^>(symbol);
                 if (taggedSymbol != nullptr)
                 {
-                    symbol3 = taggedSymbol->Base;
+                    baseSymbol = taggedSymbol->Base;
                 }
-                x = gcnew TaggedSymbol(symbol3, symbol2, symbol->Labels);
+                x = gcnew TaggedSymbol(baseSymbol, tagSymbol, symbol->Labels);
             }
             return x;
         }
@@ -3514,26 +3514,26 @@ namespace Quire { namespace mslisp {
         {
             Quire::Engine::PCons^ pCons = dynamic_cast<Quire::Engine::PCons^>(l);
             System::Diagnostics::Trace::Assert(l == nullptr || pCons != nullptr, nullptr);
-            Quire::Engine::PCons^ pCons2 = nullptr;
+            Quire::Engine::PCons^ combinedItems = nullptr;
             if (pCons != nullptr)
             {
                 do
                 {
-                    Quire::Engine::PCons^ pCons3 = dynamic_cast<Quire::Engine::PCons^>(pCons->hd);
-                    if (pCons3 != nullptr)
+                    Quire::Engine::PCons^ itemList = dynamic_cast<Quire::Engine::PCons^>(pCons->hd);
+                    if (itemList != nullptr)
                     {
                         do
                         {
-                            pCons2 = gcnew Quire::Engine::PCons(pCons3->hd, pCons2);
-                            pCons3 = pCons3->tl;
+                            combinedItems = gcnew Quire::Engine::PCons(itemList->hd, combinedItems);
+                            itemList = itemList->tl;
                         }
-                        while (pCons3 != nullptr);
+                        while (itemList != nullptr);
                     }
                     pCons = pCons->tl;
                 }
                 while (pCons != nullptr);
             }
-            return Quire::Engine::PCons::nreverse(pCons2);
+            return Quire::Engine::PCons::nreverse(combinedItems);
         }
 
         static System::Object^ _clr_vec(System::Object^ ll)
