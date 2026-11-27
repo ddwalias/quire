@@ -1,6 +1,17 @@
 #nullable disable
 #pragma warning disable
 
+using System;
+using System.ComponentModel;
+using System.IO;
+using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Threading;
+using Microsoft.Win32;
+using Quire.Controls.Core.Excel;
+
 namespace Quire;
 
 public partial class ImportExcel
@@ -13,6 +24,7 @@ public partial class ImportExcel
     public static readonly global::System.Windows.DependencyProperty SelectionValidProperty = global::System.Windows.DependencyProperty.Register("SelectionValid", typeof(bool), typeof(global::Quire.ImportExcel));
     public static readonly global::System.Windows.DependencyProperty FileLoadedProperty = global::System.Windows.DependencyProperty.Register("FileLoaded", typeof(bool), typeof(global::Quire.ImportExcel), new global::System.Windows.FrameworkPropertyMetadata(false));
     public static readonly global::System.Windows.DependencyProperty WorksheetHasDataProperty = global::System.Windows.DependencyProperty.Register("WorksheetHasData", typeof(bool), typeof(global::Quire.ImportExcel), new global::System.Windows.FrameworkPropertyMetadata(false));
+    private Thread _loadExcelThread;
 
     public string SelectedRange
     {
@@ -66,6 +78,121 @@ public partial class ImportExcel
     {
         InitializeComponent();
     }
+
+    private void OnBrowseClick(object sender, RoutedEventArgs e)
+    {
+        OpenFileDialog ofd = new OpenFileDialog
+        {
+            Title = Resources["ExcelOpenFileDialogTitle"] as string,
+            Filter = Resources["ExcelOpenFileDialogFilter"] as string
+        };
+        if (!string.IsNullOrEmpty(txtFileName.Text))
+        {
+            ofd.FileName = Path.GetFileName(txtFileName.Text);
+            ofd.InitialDirectory = Path.GetDirectoryName(txtFileName.Text);
+        }
+        SpiritMainWindow.Addons.CallAddonsOnOpenDialogOpening(ref ofd);
+        bool? dialogResult = ofd.ShowDialog();
+        SpiritMainWindow.Addons.CallAddonsOnOpenDialogClosing();
+        if (dialogResult == true)
+        {
+            string resolvedFileName = SpiritMainWindow.Addons.CallAddonsToGetResolvedFileNameForOpen(ofd.FileName);
+            Mouse.OverrideCursor = Cursors.AppStarting;
+            _mainGrid.IsEnabled = false;
+            _loadExcelThread = new Thread(LoadExcel)
+            {
+                IsBackground = true
+            };
+            _loadExcelThread.Start(resolvedFileName);
+        }
+    }
+
+    private void BeginInvoke(Action action)
+    {
+        Dispatcher.BeginInvoke(DispatcherPriority.Loaded, action);
+    }
+
+    private void BeginInvoke<T1, T2>(Action<T1, T2> action, T1 param1, T2 param2)
+    {
+        Dispatcher.BeginInvoke(DispatcherPriority.Loaded, action, param1, param2);
+    }
+
+    private void LoadExcel(object parameter)
+    {
+        try
+        {
+            string fileName = parameter as string;
+            if (AssertionE.Failed == DebugTools.DevAssert(fileName != null, null))
+            {
+                return;
+            }
+            ExcelReader excelReader = new ExcelReader();
+            excelReader.LoadExcelBook(fileName);
+            BeginInvoke(() =>
+            {
+                Mouse.OverrideCursor = Cursors.Wait;
+                _cancelButton.IsEnabled = false;
+            });
+            BeginInvoke(OnExcelLoaded, fileName, excelReader);
+            BeginInvoke(() =>
+            {
+                Mouse.OverrideCursor = null;
+                _cancelButton.IsEnabled = true;
+            });
+        }
+        catch (ThreadAbortException)
+        {
+            Thread.ResetAbort();
+            BeginInvoke(() =>
+            {
+                Mouse.OverrideCursor = null;
+            });
+        }
+        catch (Exception ex)
+        {
+            BeginInvoke(() =>
+            {
+                MessageBox.Show(ex.Message, Title, MessageBoxButton.OK, MessageBoxImage.Hand);
+            });
+        }
+    }
+
+    private void OnExcelLoaded(string resolvedFileName, ExcelReader er)
+    {
+        FileName = resolvedFileName;
+        preview.ItemsSource = er.WorkBook.Sheets;
+        preview.SelectedIndex = 0;
+        FileLoaded = true;
+        _mainGrid.IsEnabled = true;
+    }
+
+    protected override void OnClosing(CancelEventArgs e)
+    {
+        base.OnClosing(e);
+        if (_loadExcelThread == null || _loadExcelThread.ThreadState != ThreadState.Background)
+        {
+            return;
+        }
+        _loadExcelThread.Abort();
+        _loadExcelThread.Join();
+        _loadExcelThread = null;
+    }
+
+    private void OnInsertClick(object sender, RoutedEventArgs e)
+    {
+        DialogResult = true;
+    }
+
+    internal ImportExcel importExcel;
+    internal Grid _mainGrid;
+    internal TextBlock txtFileName;
+    internal TextBox txtColumns;
+    internal TextBox txtRows;
+    internal TextBlock txtRange;
+    internal global::Quire.Zoom zoom;
+    internal TabControl preview;
+    internal Button _cancelButton;
+    private bool _contentLoaded;
 
     [global::System.Diagnostics.DebuggerNonUserCode]
     public void InitializeComponent()
