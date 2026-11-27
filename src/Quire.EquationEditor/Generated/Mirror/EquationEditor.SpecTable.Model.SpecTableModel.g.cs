@@ -27,10 +27,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
     [global::Quire.Mirror.MirrorStub]
     private bool o;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn> Columns { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int ColumnCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public string SExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsRestrictedReadOnly { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

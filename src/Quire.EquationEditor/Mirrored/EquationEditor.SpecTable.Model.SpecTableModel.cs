@@ -5,6 +5,10 @@ namespace Quire.EquationEditor.SpecTable.Model;
 
 public partial class SpecTableModel
 {
+    public global::System.Collections.Generic.List<ISpecTableColumn> Columns => b__;
+
+    public int ColumnCount => b__.Count;
+
     [MirrorVerified("Release IL")]
     public SpecTableModel() : this(1, 1) { }
 
