@@ -77,29 +77,29 @@ public partial class Cylinder : ModelVisualBase
         indices.Clear();
         textures.Clear();
         Vector3D vector3D = Point2 - Point1;
-        Vector3D vector3D2;
+        Vector3D radialDirection;
         if (vector3D.X == 0.0 && vector3D.Y == 0.0)
         {
-            vector3D2 = new Vector3D(0.0, -1.0, 0.0);
+            radialDirection = new Vector3D(0.0, -1.0, 0.0);
         }
         else
         {
             rotate.Axis = Vector3D.CrossProduct(vector3D, new Vector3D(0.0, 0.0, 1.0));
             rotate.Angle = -90.0;
-            vector3D2 = vector3D * xform.Value;
-            vector3D2.Normalize();
+            radialDirection = vector3D * xform.Value;
+            radialDirection.Normalize();
         }
         rotate.Axis = -vector3D;
         int count;
         for (int i = 0; i <= EndStacks; i++)
         {
-            Vector3D vector3D3 = (double)i * Radius1 / (double)EndStacks * vector3D2;
+            Vector3D radialOffset = (double)i * Radius1 / (double)EndStacks * radialDirection;
             int num = i * (Slices + 1);
-            int num2 = (i + 1) * (Slices + 1);
+            int nextRingIndex = (i + 1) * (Slices + 1);
             for (int j = 0; j <= Slices; j++)
             {
                 rotate.Angle = (double)j * 360.0 / (double)Slices;
-                vertices.Add(Point1 + vector3D3 * xform.Value);
+                vertices.Add(Point1 + radialOffset * xform.Value);
                 normals.Add(-vector3D);
                 textures.Add(new Point((double)j / (double)Slices, Fold1 * (double)i / (double)EndStacks));
                 if (i < EndStacks && j < Slices)
@@ -107,62 +107,62 @@ public partial class Cylinder : ModelVisualBase
                     if (i != 0)
                     {
                         indices.Add(num + j);
-                        indices.Add(num2 + j);
+                        indices.Add(nextRingIndex + j);
                         indices.Add(num + j + 1);
                     }
                     indices.Add(num + j + 1);
-                    indices.Add(num2 + j);
-                    indices.Add(num2 + j + 1);
+                    indices.Add(nextRingIndex + j);
+                    indices.Add(nextRingIndex + j + 1);
                 }
             }
         }
         count = vertices.Count;
         for (int k = 0; k <= Stacks; k++)
         {
-            Vector3D vector3D4 = ((double)(Stacks - k) * Radius1 + (double)k * Radius2) / (double)Stacks * vector3D2;
+            Vector3D radialOffset = ((double)(Stacks - k) * Radius1 + (double)k * Radius2) / (double)Stacks * radialDirection;
             Point3D point3D = Point1 + (double)k * vector3D / (double)Stacks;
-            int num3 = count + k * (Slices + 1);
-            int num4 = count + (k + 1) * (Slices + 1);
+            int currentRingIndex = count + k * (Slices + 1);
+            int nextRingIndex = count + (k + 1) * (Slices + 1);
             for (int l = 0; l <= Slices; l++)
             {
                 rotate.Angle = (double)l * 360.0 / (double)Slices;
-                Vector3D vector3D5 = vector3D4 * xform.Value;
-                normals.Add(vector3D5);
-                vertices.Add(point3D + vector3D5);
+                Vector3D transformedRadialOffset = radialOffset * xform.Value;
+                normals.Add(transformedRadialOffset);
+                vertices.Add(point3D + transformedRadialOffset);
                 textures.Add(new Point((double)l / (double)Slices, Fold1 + (Fold2 - Fold1) * (double)k / (double)Stacks));
                 if (k < Stacks && l < Slices)
                 {
-                    indices.Add(num3 + l);
-                    indices.Add(num4 + l);
-                    indices.Add(num3 + l + 1);
-                    indices.Add(num3 + l + 1);
-                    indices.Add(num4 + l);
-                    indices.Add(num4 + l + 1);
+                    indices.Add(currentRingIndex + l);
+                    indices.Add(nextRingIndex + l);
+                    indices.Add(currentRingIndex + l + 1);
+                    indices.Add(currentRingIndex + l + 1);
+                    indices.Add(nextRingIndex + l);
+                    indices.Add(nextRingIndex + l + 1);
                 }
             }
         }
         count = vertices.Count;
         for (int m = 0; m <= EndStacks; m++)
         {
-            Vector3D vector3D6 = Radius2 * (1.0 - (double)m / (double)EndStacks) * vector3D2;
-            int num5 = count + m * (Slices + 1);
-            int num6 = count + (m + 1) * (Slices + 1);
+            Vector3D radialOffset = Radius2 * (1.0 - (double)m / (double)EndStacks) * radialDirection;
+            int currentRingIndex = count + m * (Slices + 1);
+            int nextRingIndex = count + (m + 1) * (Slices + 1);
             for (int n = 0; n <= Slices; n++)
             {
                 rotate.Angle = (double)n * 360.0 / (double)Slices;
-                vertices.Add(Point2 + vector3D6 * xform.Value);
+                vertices.Add(Point2 + radialOffset * xform.Value);
                 normals.Add(vector3D);
                 textures.Add(new Point((double)n / (double)Slices, Fold2 + (1.0 - Fold2) * (double)m / (double)EndStacks));
                 if (m < EndStacks && n < Slices)
                 {
-                    indices.Add(num5 + n);
-                    indices.Add(num6 + n);
-                    indices.Add(num5 + n + 1);
+                    indices.Add(currentRingIndex + n);
+                    indices.Add(nextRingIndex + n);
+                    indices.Add(currentRingIndex + n + 1);
                     if (m != EndStacks - 1)
                     {
-                        indices.Add(num5 + n + 1);
-                        indices.Add(num6 + n);
-                        indices.Add(num6 + n + 1);
+                        indices.Add(currentRingIndex + n + 1);
+                        indices.Add(nextRingIndex + n);
+                        indices.Add(nextRingIndex + n + 1);
                     }
                 }
             }

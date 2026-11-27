@@ -58,23 +58,23 @@ public abstract partial class PolyhedronMeshBase : FlatSurfaceMeshBase
             }
             for (int k = 0; k < faces.GetLength(1) - 1; k++)
             {
-                int count2 = vertices.Count;
-                int num2 = faces.GetLength(1) - 1;
+                int faceVertexStart = vertices.Count;
+                int faceVertexCount = faces.GetLength(1) - 1;
                 vertices.Add(faces[i, 0]);
                 vertices.Add(faces[i, k + 1]);
-                vertices.Add(faces[i, (k + 1) % num2 + 1]);
+                vertices.Add(faces[i, (k + 1) % faceVertexCount + 1]);
                 if (textureCoordinates != null && textureCoordinates.Count >= faces.GetLength(1))
                 {
                     textures.Add(textureCoordinates[num]);
                     textures.Add(textureCoordinates[num + k + 1]);
-                    textures.Add(textureCoordinates[num + (k + 1) % num2 + 1]);
+                    textures.Add(textureCoordinates[num + (k + 1) % faceVertexCount + 1]);
                 }
                 normals.Add(value);
                 normals.Add(value);
                 normals.Add(value);
-                indices.Add(count2);
-                indices.Add(count2 + 1);
-                indices.Add(count2 + 2);
+                indices.Add(faceVertexStart);
+                indices.Add(faceVertexStart + 1);
+                indices.Add(faceVertexStart + 2);
                 if (Slices > 1)
                 {
                     TriangleSubdivide(vertices, normals, indices, textures);

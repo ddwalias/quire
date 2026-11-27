@@ -788,10 +788,10 @@ internal partial class TextGenerator
 							PolyLineSegment polyLineSegment = segment as PolyLineSegment;
 							for (int j = 0; j < polyLineSegment.Points.Count; j++)
 							{
-								Point3D point3D2 = Convert(polyLineSegment.Points[j], pointOrigin);
+								Point3D convertedPoint = Convert(polyLineSegment.Points[j], pointOrigin);
 								lines.Add(value);
-								lines.Add(point3D2);
-								value = point3D2;
+								lines.Add(convertedPoint);
+								value = convertedPoint;
 							}
 						}
 					}

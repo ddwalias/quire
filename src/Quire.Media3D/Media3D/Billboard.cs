@@ -83,19 +83,19 @@ public partial class Billboard : ModelVisualBase
         indices.Clear();
         textures.Clear();
         Vector3D vector3D = (Vector3D)UpperLeft;
-        Vector3D vector3D2 = (Vector3D)UpperRight;
-        Vector3D vector3D3 = (Vector3D)LowerLeft;
-        Vector3D vector3D4 = (Vector3D)LowerRight;
+        Vector3D upperRight = (Vector3D)UpperRight;
+        Vector3D lowerLeft = (Vector3D)LowerLeft;
+        Vector3D lowerRight = (Vector3D)LowerRight;
         int num = Slices * Stacks;
         Point val = new Point(0.0, 0.0);
-        Vector val2 = (new Point(1.0, 0.0) - val) / (double)Slices;
-        Vector val3 = (new Point(0.0, 1.0) - val) / (double)Stacks;
+        Vector textureUOffset = (new Point(1.0, 0.0) - val) / (double)Slices;
+        Vector textureVOffset = (new Point(0.0, 1.0) - val) / (double)Stacks;
         for (int i = 0; i <= Stacks; i++)
         {
             for (int j = 0; j <= Slices; j++)
             {
-                vertices.Add((Point3D)(((Stacks - i) * (Slices - j) * vector3D + i * (Slices - j) * vector3D3 + (Stacks - i) * j * vector3D2 + i * j * vector3D4) / num));
-                textures.Add(val + (double)i * val3 + (double)j * val2);
+                vertices.Add((Point3D)(((Stacks - i) * (Slices - j) * vector3D + i * (Slices - j) * lowerLeft + (Stacks - i) * j * upperRight + i * j * lowerRight) / num));
+                textures.Add(val + (double)i * textureVOffset + (double)j * textureUOffset);
                 if (j < Slices && i < Stacks)
                 {
                     indices.Add((Slices + 1) * i + j);

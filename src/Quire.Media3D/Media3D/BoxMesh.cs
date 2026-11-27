@@ -108,126 +108,126 @@ public partial class BoxMesh : MeshGeneratorBase
             for (int n = 0; n <= Slices; n++)
             {
                 x = Width / 2.0 - (double)n * Width / (double)Slices;
-                Point3D point3D2 = new Point3D(x, y, z);
-                vertices.Add(point3D2);
-                normals.Add(point3D2 - new Point3D(x, y, 0.0));
+                Point3D vertex = new Point3D(x, y, z);
+                vertices.Add(vertex);
+                normals.Add(vertex - new Point3D(x, y, 0.0));
                 textures.Add(new Point((double)n / (double)Slices, (double)m / (double)Stacks));
             }
         }
-        for (int num2 = 0; num2 < Stacks; num2++)
+        for (int stackIndex = 0; stackIndex < Stacks; stackIndex++)
         {
-            for (int num3 = 0; num3 < Slices; num3++)
+            for (int sliceIndex = 0; sliceIndex < Slices; sliceIndex++)
             {
-                indices.Add(num + num2 * (Slices + 1) + num3);
-                indices.Add(num + (num2 + 1) * (Slices + 1) + num3);
-                indices.Add(num + num2 * (Slices + 1) + num3 + 1);
-                indices.Add(num + num2 * (Slices + 1) + num3 + 1);
-                indices.Add(num + (num2 + 1) * (Slices + 1) + num3);
-                indices.Add(num + (num2 + 1) * (Slices + 1) + num3 + 1);
+                indices.Add(num + stackIndex * (Slices + 1) + sliceIndex);
+                indices.Add(num + (stackIndex + 1) * (Slices + 1) + sliceIndex);
+                indices.Add(num + stackIndex * (Slices + 1) + sliceIndex + 1);
+                indices.Add(num + stackIndex * (Slices + 1) + sliceIndex + 1);
+                indices.Add(num + (stackIndex + 1) * (Slices + 1) + sliceIndex);
+                indices.Add(num + (stackIndex + 1) * (Slices + 1) + sliceIndex + 1);
             }
         }
         num = vertices.Count;
         x = -Width / 2.0;
-        for (int num4 = 0; num4 <= Stacks; num4++)
+        for (int stackIndex = 0; stackIndex <= Stacks; stackIndex++)
         {
-            y = Height / 2.0 - (double)num4 * Height / (double)Stacks;
-            for (int num5 = 0; num5 <= Layers; num5++)
+            y = Height / 2.0 - (double)stackIndex * Height / (double)Stacks;
+            for (int layerIndex = 0; layerIndex <= Layers; layerIndex++)
             {
-                z = -Depth / 2.0 + (double)num5 * Depth / (double)Layers;
-                Point3D point3D3 = new Point3D(x, y, z);
-                vertices.Add(point3D3);
-                normals.Add(point3D3 - new Point3D(0.0, y, z));
-                textures.Add(new Point((double)num5 / (double)Layers, (double)num4 / (double)Stacks));
+                z = -Depth / 2.0 + (double)layerIndex * Depth / (double)Layers;
+                Point3D vertex = new Point3D(x, y, z);
+                vertices.Add(vertex);
+                normals.Add(vertex - new Point3D(0.0, y, z));
+                textures.Add(new Point((double)layerIndex / (double)Layers, (double)stackIndex / (double)Stacks));
             }
         }
-        for (int num6 = 0; num6 < Stacks; num6++)
+        for (int stackIndex = 0; stackIndex < Stacks; stackIndex++)
         {
-            for (int num7 = 0; num7 < Layers; num7++)
+            for (int layerIndex = 0; layerIndex < Layers; layerIndex++)
             {
-                indices.Add(num + num6 * (Layers + 1) + num7);
-                indices.Add(num + (num6 + 1) * (Layers + 1) + num7);
-                indices.Add(num + num6 * (Layers + 1) + num7 + 1);
-                indices.Add(num + num6 * (Layers + 1) + num7 + 1);
-                indices.Add(num + (num6 + 1) * (Layers + 1) + num7);
-                indices.Add(num + (num6 + 1) * (Layers + 1) + num7 + 1);
+                indices.Add(num + stackIndex * (Layers + 1) + layerIndex);
+                indices.Add(num + (stackIndex + 1) * (Layers + 1) + layerIndex);
+                indices.Add(num + stackIndex * (Layers + 1) + layerIndex + 1);
+                indices.Add(num + stackIndex * (Layers + 1) + layerIndex + 1);
+                indices.Add(num + (stackIndex + 1) * (Layers + 1) + layerIndex);
+                indices.Add(num + (stackIndex + 1) * (Layers + 1) + layerIndex + 1);
             }
         }
         num = vertices.Count;
         x = Width / 2.0;
-        for (int num8 = 0; num8 <= Stacks; num8++)
+        for (int stackIndex = 0; stackIndex <= Stacks; stackIndex++)
         {
-            y = Height / 2.0 - (double)num8 * Height / (double)Stacks;
-            for (int num9 = 0; num9 <= Layers; num9++)
+            y = Height / 2.0 - (double)stackIndex * Height / (double)Stacks;
+            for (int layerIndex = 0; layerIndex <= Layers; layerIndex++)
             {
-                z = Depth / 2.0 - (double)num9 * Depth / (double)Layers;
-                Point3D point3D4 = new Point3D(x, y, z);
-                vertices.Add(point3D4);
-                normals.Add(point3D4 - new Point3D(0.0, y, z));
-                textures.Add(new Point((double)num9 / (double)Layers, (double)num8 / (double)Stacks));
+                z = Depth / 2.0 - (double)layerIndex * Depth / (double)Layers;
+                Point3D vertex = new Point3D(x, y, z);
+                vertices.Add(vertex);
+                normals.Add(vertex - new Point3D(0.0, y, z));
+                textures.Add(new Point((double)layerIndex / (double)Layers, (double)stackIndex / (double)Stacks));
             }
         }
-        for (int num10 = 0; num10 < Stacks; num10++)
+        for (int stackIndex = 0; stackIndex < Stacks; stackIndex++)
         {
-            for (int num11 = 0; num11 < Layers; num11++)
+            for (int layerIndex = 0; layerIndex < Layers; layerIndex++)
             {
-                indices.Add(num + num10 * (Layers + 1) + num11);
-                indices.Add(num + (num10 + 1) * (Layers + 1) + num11);
-                indices.Add(num + num10 * (Layers + 1) + num11 + 1);
-                indices.Add(num + num10 * (Layers + 1) + num11 + 1);
-                indices.Add(num + (num10 + 1) * (Layers + 1) + num11);
-                indices.Add(num + (num10 + 1) * (Layers + 1) + num11 + 1);
+                indices.Add(num + stackIndex * (Layers + 1) + layerIndex);
+                indices.Add(num + (stackIndex + 1) * (Layers + 1) + layerIndex);
+                indices.Add(num + stackIndex * (Layers + 1) + layerIndex + 1);
+                indices.Add(num + stackIndex * (Layers + 1) + layerIndex + 1);
+                indices.Add(num + (stackIndex + 1) * (Layers + 1) + layerIndex);
+                indices.Add(num + (stackIndex + 1) * (Layers + 1) + layerIndex + 1);
             }
         }
         num = vertices.Count;
         y = Height / 2.0;
-        for (int num12 = 0; num12 <= Layers; num12++)
+        for (int layerIndex = 0; layerIndex <= Layers; layerIndex++)
         {
-            z = -Depth / 2.0 + (double)num12 * Depth / (double)Layers;
-            for (int num13 = 0; num13 <= Slices; num13++)
+            z = -Depth / 2.0 + (double)layerIndex * Depth / (double)Layers;
+            for (int sliceIndex = 0; sliceIndex <= Slices; sliceIndex++)
             {
-                x = -Width / 2.0 + (double)num13 * Width / (double)Slices;
-                Point3D point3D5 = new Point3D(x, y, z);
-                vertices.Add(point3D5);
-                normals.Add(point3D5 - new Point3D(x, 0.0, z));
-                textures.Add(new Point((double)num13 / (double)Slices, (double)num12 / (double)Layers));
+                x = -Width / 2.0 + (double)sliceIndex * Width / (double)Slices;
+                Point3D vertex = new Point3D(x, y, z);
+                vertices.Add(vertex);
+                normals.Add(vertex - new Point3D(x, 0.0, z));
+                textures.Add(new Point((double)sliceIndex / (double)Slices, (double)layerIndex / (double)Layers));
             }
         }
-        for (int num14 = 0; num14 < Layers; num14++)
+        for (int layerIndex = 0; layerIndex < Layers; layerIndex++)
         {
-            for (int num15 = 0; num15 < Slices; num15++)
+            for (int sliceIndex = 0; sliceIndex < Slices; sliceIndex++)
             {
-                indices.Add(num + num14 * (Slices + 1) + num15);
-                indices.Add(num + (num14 + 1) * (Slices + 1) + num15);
-                indices.Add(num + num14 * (Slices + 1) + num15 + 1);
-                indices.Add(num + num14 * (Slices + 1) + num15 + 1);
-                indices.Add(num + (num14 + 1) * (Slices + 1) + num15);
-                indices.Add(num + (num14 + 1) * (Slices + 1) + num15 + 1);
+                indices.Add(num + layerIndex * (Slices + 1) + sliceIndex);
+                indices.Add(num + (layerIndex + 1) * (Slices + 1) + sliceIndex);
+                indices.Add(num + layerIndex * (Slices + 1) + sliceIndex + 1);
+                indices.Add(num + layerIndex * (Slices + 1) + sliceIndex + 1);
+                indices.Add(num + (layerIndex + 1) * (Slices + 1) + sliceIndex);
+                indices.Add(num + (layerIndex + 1) * (Slices + 1) + sliceIndex + 1);
             }
         }
         num = vertices.Count;
         y = -Height / 2.0;
-        for (int num16 = 0; num16 <= Layers; num16++)
+        for (int layerIndex = 0; layerIndex <= Layers; layerIndex++)
         {
-            z = Depth / 2.0 - (double)num16 * Depth / (double)Layers;
-            for (int num17 = 0; num17 <= Slices; num17++)
+            z = Depth / 2.0 - (double)layerIndex * Depth / (double)Layers;
+            for (int sliceIndex = 0; sliceIndex <= Slices; sliceIndex++)
             {
-                x = -Width / 2.0 + (double)num17 * Width / (double)Slices;
-                Point3D point3D6 = new Point3D(x, y, z);
-                vertices.Add(point3D6);
-                normals.Add(point3D6 - new Point3D(x, 0.0, z));
-                textures.Add(new Point((double)num17 / (double)Slices, (double)num16 / (double)Layers));
+                x = -Width / 2.0 + (double)sliceIndex * Width / (double)Slices;
+                Point3D vertex = new Point3D(x, y, z);
+                vertices.Add(vertex);
+                normals.Add(vertex - new Point3D(x, 0.0, z));
+                textures.Add(new Point((double)sliceIndex / (double)Slices, (double)layerIndex / (double)Layers));
             }
         }
-        for (int num18 = 0; num18 < Layers; num18++)
+        for (int layerIndex = 0; layerIndex < Layers; layerIndex++)
         {
-            for (int num19 = 0; num19 < Slices; num19++)
+            for (int sliceIndex = 0; sliceIndex < Slices; sliceIndex++)
             {
-                indices.Add(num + num18 * (Slices + 1) + num19);
-                indices.Add(num + (num18 + 1) * (Slices + 1) + num19);
-                indices.Add(num + num18 * (Slices + 1) + num19 + 1);
-                indices.Add(num + num18 * (Slices + 1) + num19 + 1);
-                indices.Add(num + (num18 + 1) * (Slices + 1) + num19);
-                indices.Add(num + (num18 + 1) * (Slices + 1) + num19 + 1);
+                indices.Add(num + layerIndex * (Slices + 1) + sliceIndex);
+                indices.Add(num + (layerIndex + 1) * (Slices + 1) + sliceIndex);
+                indices.Add(num + layerIndex * (Slices + 1) + sliceIndex + 1);
+                indices.Add(num + layerIndex * (Slices + 1) + sliceIndex + 1);
+                indices.Add(num + (layerIndex + 1) * (Slices + 1) + sliceIndex);
+                indices.Add(num + (layerIndex + 1) * (Slices + 1) + sliceIndex + 1);
             }
         }
     }

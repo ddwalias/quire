@@ -69,13 +69,13 @@ public partial class TorusMesh : MeshGeneratorBase
             Point3D point3D = new Point3D(x, y, 0.0);
             for (int j = 0; j <= Slices; j++)
             {
-                double num2 = (double)(j * 2) * Math.PI / (double)Slices + Math.PI;
-                double x2 = (Radius + TubeRadius * Math.Cos(num2)) * Math.Sin(num);
-                double y2 = (Radius + TubeRadius * Math.Cos(num2)) * Math.Cos(num);
-                double z = -TubeRadius * Math.Sin(num2);
-                Point3D point3D2 = new Point3D(x2, y2, z);
-                vertices.Add(point3D2);
-                normals.Add(point3D2 - point3D);
+                double tubeAngle = (double)(j * 2) * Math.PI / (double)Slices + Math.PI;
+                double vertexX = (Radius + TubeRadius * Math.Cos(tubeAngle)) * Math.Sin(num);
+                double vertexY = (Radius + TubeRadius * Math.Cos(tubeAngle)) * Math.Cos(num);
+                double z = -TubeRadius * Math.Sin(tubeAngle);
+                Point3D vertex = new Point3D(vertexX, vertexY, z);
+                vertices.Add(vertex);
+                normals.Add(vertex - point3D);
                 textures.Add(new Point((double)j / (double)Slices, (double)i / (double)Stacks));
             }
         }

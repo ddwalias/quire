@@ -64,25 +64,25 @@ public partial class TubeMesh : CylindricalMeshBase
             for (int i = 0; i <= EndStacks; i++)
             {
                 double length = Length;
-                double num2 = Radius + (double)(num * i) * Thickness / 2.0 / (double)EndStacks;
-                int num3 = count + i * (Slices + 1);
-                int num4 = count + (i + 1) * (Slices + 1);
+                double ringRadius = Radius + (double)(num * i) * Thickness / 2.0 / (double)EndStacks;
+                int currentRingIndex = count + i * (Slices + 1);
+                int nextRingIndex = count + (i + 1) * (Slices + 1);
                 for (int j = 0; j <= Slices; j++)
                 {
-                    double num5 = (double)(j * 2) * Math.PI / (double)Slices;
-                    double x = -num2 * Math.Sin(num5);
-                    double z = -num2 * Math.Cos(num5);
+                    double angle = (double)(j * 2) * Math.PI / (double)Slices;
+                    double x = -ringRadius * Math.Sin(angle);
+                    double z = -ringRadius * Math.Cos(angle);
                     vertices.Add(new Point3D(x, length, z));
                     normals.Add(new Vector3D(0.0, num, 0.0));
                     textures.Add(new Point((double)j / (double)Slices, Fold * (double)i / (double)EndStacks));
                     if (i < EndStacks && j < Slices)
                     {
-                        indices.Add(num3 + j);
-                        indices.Add(num4 + j);
-                        indices.Add(num3 + j + 1);
-                        indices.Add(num3 + j + 1);
-                        indices.Add(num4 + j);
-                        indices.Add(num4 + j + 1);
+                        indices.Add(currentRingIndex + j);
+                        indices.Add(nextRingIndex + j);
+                        indices.Add(currentRingIndex + j + 1);
+                        indices.Add(currentRingIndex + j + 1);
+                        indices.Add(nextRingIndex + j);
+                        indices.Add(nextRingIndex + j + 1);
                     }
                 }
             }
@@ -90,50 +90,50 @@ public partial class TubeMesh : CylindricalMeshBase
             for (int k = 0; k <= Stacks; k++)
             {
                 double y = Length - (double)k * Length / (double)Stacks;
-                int num6 = count + k * (Slices + 1);
-                int num7 = count + (k + 1) * (Slices + 1);
+                int currentRingIndex = count + k * (Slices + 1);
+                int nextRingIndex = count + (k + 1) * (Slices + 1);
                 for (int l = 0; l <= Slices; l++)
                 {
-                    double num8 = (double)(l * 2) * Math.PI / (double)Slices;
-                    double num9 = -(Radius + (double)num * Thickness / 2.0) * Math.Sin(num8);
-                    double num10 = -(Radius + (double)num * Thickness / 2.0) * Math.Cos(num8);
-                    vertices.Add(new Point3D(num9, y, num10));
-                    normals.Add(new Vector3D((double)num * num9, 0.0, (double)num * num10));
+                    double angle = (double)(l * 2) * Math.PI / (double)Slices;
+                    double x = -(Radius + (double)num * Thickness / 2.0) * Math.Sin(angle);
+                    double z = -(Radius + (double)num * Thickness / 2.0) * Math.Cos(angle);
+                    vertices.Add(new Point3D(x, y, z));
+                    normals.Add(new Vector3D((double)num * x, 0.0, (double)num * z));
                     textures.Add(new Point((double)l / (double)Slices, Fold + (1.0 - 2.0 * Fold) * (double)k / (double)Stacks));
                     if (k < Stacks && l < Slices)
                     {
-                        indices.Add(num6 + l);
-                        indices.Add(num7 + l);
-                        indices.Add(num6 + l + 1);
-                        indices.Add(num6 + l + 1);
-                        indices.Add(num7 + l);
-                        indices.Add(num7 + l + 1);
+                        indices.Add(currentRingIndex + l);
+                        indices.Add(nextRingIndex + l);
+                        indices.Add(currentRingIndex + l + 1);
+                        indices.Add(currentRingIndex + l + 1);
+                        indices.Add(nextRingIndex + l);
+                        indices.Add(nextRingIndex + l + 1);
                     }
                 }
             }
             count = vertices.Count;
             for (int m = 0; m <= EndStacks; m++)
             {
-                double y2 = 0.0;
-                double num11 = Radius + (double)num * Thickness / 2.0 * (1.0 - (double)m / (double)EndStacks);
-                int num12 = count + m * (Slices + 1);
-                int num13 = count + (m + 1) * (Slices + 1);
+                double y = 0.0;
+                double ringRadius = Radius + (double)num * Thickness / 2.0 * (1.0 - (double)m / (double)EndStacks);
+                int currentRingIndex = count + m * (Slices + 1);
+                int nextRingIndex = count + (m + 1) * (Slices + 1);
                 for (int n = 0; n <= Slices; n++)
                 {
-                    double num14 = (double)(n * 2) * Math.PI / (double)Slices;
-                    double x2 = -num11 * Math.Sin(num14);
-                    double z2 = -num11 * Math.Cos(num14);
-                    vertices.Add(new Point3D(x2, y2, z2));
+                    double angle = (double)(n * 2) * Math.PI / (double)Slices;
+                    double x = -ringRadius * Math.Sin(angle);
+                    double z = -ringRadius * Math.Cos(angle);
+                    vertices.Add(new Point3D(x, y, z));
                     normals.Add(new Vector3D(0.0, -num, 0.0));
                     textures.Add(new Point((double)n / (double)Slices, 1.0 - Fold + Fold * (double)m / (double)EndStacks));
                     if (m < EndStacks && n < Slices)
                     {
-                        indices.Add(num12 + n);
-                        indices.Add(num13 + n);
-                        indices.Add(num12 + n + 1);
-                        indices.Add(num12 + n + 1);
-                        indices.Add(num13 + n);
-                        indices.Add(num13 + n + 1);
+                        indices.Add(currentRingIndex + n);
+                        indices.Add(nextRingIndex + n);
+                        indices.Add(currentRingIndex + n + 1);
+                        indices.Add(currentRingIndex + n + 1);
+                        indices.Add(nextRingIndex + n);
+                        indices.Add(nextRingIndex + n + 1);
                     }
                 }
             }

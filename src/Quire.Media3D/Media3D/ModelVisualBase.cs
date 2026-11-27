@@ -135,9 +135,9 @@ public abstract partial class ModelVisualBase : ModelVisual3D
             {
                 verticesPreTransform.Add(item);
             }
-            foreach (Vector3D item2 in normals)
+            foreach (Vector3D normal in normals)
             {
-                normalsPreTransform.Add(item2);
+                normalsPreTransform.Add(normal);
             }
         }
         if (args.Property == AlgorithmicTransformsProperty)
@@ -145,13 +145,13 @@ public abstract partial class ModelVisualBase : ModelVisual3D
             positions.Clear();
             normals.Clear();
             normalsAsPoints.Clear();
-            foreach (Point3D item3 in verticesPreTransform)
+            foreach (Point3D vertex in verticesPreTransform)
             {
-                positions.Add(item3);
+                positions.Add(vertex);
             }
-            foreach (Vector3D item4 in normalsPreTransform)
+            foreach (Vector3D normal in normalsPreTransform)
             {
-                normalsAsPoints.Add((Point3D)item4);
+                normalsAsPoints.Add((Point3D)normal);
             }
         }
         if (args.Property != IsWireFrameProperty)
@@ -180,11 +180,11 @@ public abstract partial class ModelVisualBase : ModelVisual3D
         }
         else
         {
-            MeshGeometry3D geometry2 = Geometry;
-            geometry2.TextureCoordinates = textureCoordinates;
-            geometry2.TriangleIndices = triangleIndices;
-            geometry2.Normals = normals;
-            geometry2.Positions = positions;
+            MeshGeometry3D geometry = Geometry;
+            geometry.TextureCoordinates = textureCoordinates;
+            geometry.TriangleIndices = triangleIndices;
+            geometry.Normals = normals;
+            geometry.Positions = positions;
         }
     }
 

@@ -65,12 +65,12 @@ public partial class SphereMesh : MeshGeneratorBase
         {
             double num = Math.PI / 2.0 - (double)i * Math.PI / (double)Stacks;
             double y = Radius * Math.Sin(num);
-            double num2 = -Radius * Math.Cos(num);
+            double ringRadius = -Radius * Math.Cos(num);
             for (int j = 0; j <= Slices; j++)
             {
-                double num3 = (double)(j * 2) * Math.PI / (double)Slices;
-                double x = num2 * Math.Sin(num3);
-                double z = num2 * Math.Cos(num3);
+                double angle = (double)(j * 2) * Math.PI / (double)Slices;
+                double x = ringRadius * Math.Sin(angle);
+                double z = ringRadius * Math.Cos(angle);
                 Vector3D vector3D = new Vector3D(x, y, z);
                 normals.Add(vector3D);
                 vertices.Add(vector3D + Center);

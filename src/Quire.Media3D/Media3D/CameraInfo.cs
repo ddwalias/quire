@@ -109,11 +109,11 @@ public partial class CameraInfo : Animatable
             ProjectionCamera projectionCamera = camera as ProjectionCamera;
             Vector3D vector3D = -projectionCamera.LookDirection;
             vector3D.Normalize();
-            Vector3D vector3D2 = Vector3D.CrossProduct(projectionCamera.UpDirection, vector3D);
-            vector3D2.Normalize();
-            Vector3D vector = Vector3D.CrossProduct(vector3D, vector3D2);
-            Vector3D vector2 = (Vector3D)projectionCamera.Position;
-            result = new Matrix3D(vector3D2.X, vector.X, vector3D.X, 0.0, vector3D2.Y, vector.Y, vector3D.Y, 0.0, vector3D2.Z, vector.Z, vector3D.Z, 0.0, -Vector3D.DotProduct(vector3D2, vector2), -Vector3D.DotProduct(vector, vector2), -Vector3D.DotProduct(vector3D, vector2), 1.0);
+            Vector3D rightDirection = Vector3D.CrossProduct(projectionCamera.UpDirection, vector3D);
+            rightDirection.Normalize();
+            Vector3D vector = Vector3D.CrossProduct(vector3D, rightDirection);
+            Vector3D cameraPosition = (Vector3D)projectionCamera.Position;
+            result = new Matrix3D(rightDirection.X, vector.X, vector3D.X, 0.0, rightDirection.Y, vector.Y, vector3D.Y, 0.0, rightDirection.Z, vector.Z, vector3D.Z, 0.0, -Vector3D.DotProduct(rightDirection, cameraPosition), -Vector3D.DotProduct(vector, cameraPosition), -Vector3D.DotProduct(vector3D, cameraPosition), 1.0);
         }
         else if (camera != null)
         {
@@ -139,23 +139,23 @@ public partial class CameraInfo : Animatable
             double num = 2.0 / orthographicCamera.Width;
             double m = num * aspectRatio;
             double nearPlaneDistance = orthographicCamera.NearPlaneDistance;
-            double num2 = orthographicCamera.FarPlaneDistance;
-            if (double.IsPositiveInfinity(num2))
+            double farPlaneDistance = orthographicCamera.FarPlaneDistance;
+            if (double.IsPositiveInfinity(farPlaneDistance))
             {
-                num2 = 10000000000.0;
+                farPlaneDistance = 10000000000.0;
             }
-            result = new Matrix3D(num, 0.0, 0.0, 0.0, 0.0, m, 0.0, 0.0, 0.0, 0.0, 1.0 / (nearPlaneDistance - num2), 0.0, 0.0, 0.0, nearPlaneDistance / (nearPlaneDistance - num2), 1.0);
+            result = new Matrix3D(num, 0.0, 0.0, 0.0, 0.0, m, 0.0, 0.0, 0.0, 0.0, 1.0 / (nearPlaneDistance - farPlaneDistance), 0.0, 0.0, 0.0, nearPlaneDistance / (nearPlaneDistance - farPlaneDistance), 1.0);
         }
         else if (cam is PerspectiveCamera)
         {
             PerspectiveCamera perspectiveCamera = cam as PerspectiveCamera;
-            double num3 = 1.0 / Math.Tan(Math.PI * perspectiveCamera.FieldOfView / 360.0);
-            double m2 = num3 * aspectRatio;
-            double nearPlaneDistance2 = perspectiveCamera.NearPlaneDistance;
+            double verticalScale = 1.0 / Math.Tan(Math.PI * perspectiveCamera.FieldOfView / 360.0);
+            double horizontalScale = verticalScale * aspectRatio;
+            double nearPlaneDistance = perspectiveCamera.NearPlaneDistance;
             double farPlaneDistance = perspectiveCamera.FarPlaneDistance;
-            double num4 = ((farPlaneDistance == double.PositiveInfinity) ? (-1.0) : (farPlaneDistance / (nearPlaneDistance2 - farPlaneDistance)));
-            double offsetZ = nearPlaneDistance2 * num4;
-            result = new Matrix3D(num3, 0.0, 0.0, 0.0, 0.0, m2, 0.0, 0.0, 0.0, 0.0, num4, -1.0, 0.0, 0.0, offsetZ, 0.0);
+            double depthScale = ((farPlaneDistance == double.PositiveInfinity) ? (-1.0) : (farPlaneDistance / (nearPlaneDistance - farPlaneDistance)));
+            double offsetZ = nearPlaneDistance * depthScale;
+            result = new Matrix3D(verticalScale, 0.0, 0.0, 0.0, 0.0, horizontalScale, 0.0, 0.0, 0.0, 0.0, depthScale, -1.0, 0.0, 0.0, offsetZ, 0.0);
         }
         else if (cam != null)
         {

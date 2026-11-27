@@ -138,26 +138,26 @@ public partial class Sphere : ModelVisualBase
         double radius = Radius;
         Point3D center = Center;
         double num = Math.Max(LatitudeFrom, LatitudeTo);
-        double num2 = Math.Min(LatitudeFrom, LatitudeTo);
+        double minimumLatitude = Math.Min(LatitudeFrom, LatitudeTo);
         double longitudeFrom = LongitudeFrom;
         double longitudeTo = LongitudeTo;
         for (int i = 0; i <= stacks; i++)
         {
-            double num3 = num - (double)i * (num - num2) / (double)stacks;
-            double num4 = Math.PI * num3 / 180.0;
-            double y = radius * Math.Sin(num4);
-            double num5 = Math.Cos(num4);
+            double latitude = num - (double)i * (num - minimumLatitude) / (double)stacks;
+            double latitudeRadians = Math.PI * latitude / 180.0;
+            double y = radius * Math.Sin(latitudeRadians);
+            double latitudeCosine = Math.Cos(latitudeRadians);
             for (int j = 0; j <= slices; j++)
             {
-                double num6 = longitudeTo - longitudeFrom;
-                if (num6 < 0.0)
+                double longitudeSpan = longitudeTo - longitudeFrom;
+                if (longitudeSpan < 0.0)
                 {
-                    num6 += 360.0;
+                    longitudeSpan += 360.0;
                 }
-                num3 = longitudeFrom + (double)j * num6 / (double)slices;
-                num4 = Math.PI * num3 / 180.0;
-                double x = radius * num5 * Math.Sin(num4);
-                double z = radius * num5 * Math.Cos(num4);
+                latitude = longitudeFrom + (double)j * longitudeSpan / (double)slices;
+                latitudeRadians = Math.PI * latitude / 180.0;
+                double x = radius * latitudeCosine * Math.Sin(latitudeRadians);
+                double z = radius * latitudeCosine * Math.Cos(latitudeRadians);
                 Vector3D vector3D = new Vector3D(x, y, z);
                 vertices.Add(center + vector3D);
                 normals.Add(vector3D);
@@ -166,16 +166,16 @@ public partial class Sphere : ModelVisualBase
         }
         for (int k = 0; k < stacks; k++)
         {
-            int num7 = k * (slices + 1);
-            int num8 = num7 + slices + 1;
+            int rowStartIndex = k * (slices + 1);
+            int nextRowStartIndex = rowStartIndex + slices + 1;
             for (int l = 0; l < slices; l++)
             {
-                indices.Add(num7 + l);
-                indices.Add(num8 + l);
-                indices.Add(num8 + l + 1);
-                indices.Add(num7 + l);
-                indices.Add(num8 + l + 1);
-                indices.Add(num7 + l + 1);
+                indices.Add(rowStartIndex + l);
+                indices.Add(nextRowStartIndex + l);
+                indices.Add(nextRowStartIndex + l + 1);
+                indices.Add(rowStartIndex + l);
+                indices.Add(nextRowStartIndex + l + 1);
+                indices.Add(rowStartIndex + l + 1);
             }
         }
     }

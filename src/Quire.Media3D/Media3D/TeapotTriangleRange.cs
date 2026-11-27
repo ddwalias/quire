@@ -51,9 +51,9 @@ public partial class TeapotTriangleRange : Animatable
     {
         string[] array = str.Split(' ', ',');
         int num = 0;
-        int[] array2 = new int[2];
-        string[] array3 = array;
-        foreach (string text in array3)
+        int[] rangeBounds = new int[2];
+        string[] tokens = array;
+        foreach (string text in tokens)
         {
             if (text.Length > 0)
             {
@@ -61,14 +61,14 @@ public partial class TeapotTriangleRange : Animatable
                 {
                     throw new FormatException("Too many tokens in string.");
                 }
-                array2[num++] = int.Parse(text);
+                rangeBounds[num++] = int.Parse(text);
             }
         }
         if (num != 2)
         {
             throw new FormatException("Not enough tokens in string.");
         }
-        return new TeapotTriangleRange(array2[0], array2[1]);
+        return new TeapotTriangleRange(rangeBounds[0], rangeBounds[1]);
     }
 
     public override string ToString()

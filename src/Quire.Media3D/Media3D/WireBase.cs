@@ -114,9 +114,9 @@ public abstract partial class WireBase : ModelVisual3D, IDisposable
 
     private static void ThicknessChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
     {
-        WireBase obj2 = obj as WireBase;
-        obj2.NeedRecalculation = true;
-        obj2.Recalculate();
+        WireBase wire = obj as WireBase;
+        wire.NeedRecalculation = true;
+        wire.Recalculate();
     }
 
     private static void RecalcPropertyChanged(DependencyObject obj, DependencyPropertyChangedEventArgs args)
@@ -181,15 +181,15 @@ public abstract partial class WireBase : ModelVisual3D, IDisposable
         for (int i = 0; i < count - 1; i += 2)
         {
             Point3D point3D = lineCollection[i];
-            Point3D point3D2 = lineCollection[i + 1];
-            DoLine(point3D, point3D2, point3DCollection, int32Collection, ref indicesBase);
+            Point3D nextPoint = lineCollection[i + 1];
+            DoLine(point3D, nextPoint, point3DCollection, int32Collection, ref indicesBase);
             if (i == 0 && (ArrowEnds & ArrowEnds.Start) == ArrowEnds.Start)
             {
-                DoArrow(point3D2, point3D, point3DCollection, int32Collection, ref indicesBase);
+                DoArrow(nextPoint, point3D, point3DCollection, int32Collection, ref indicesBase);
             }
             if (i > lineCollection.Count - 4 && (ArrowEnds & ArrowEnds.End) == ArrowEnds.End)
             {
-                DoArrow(point3D, point3D2, point3DCollection, int32Collection, ref indicesBase);
+                DoArrow(point3D, nextPoint, point3DCollection, int32Collection, ref indicesBase);
             }
         }
         meshGeometry3D.TriangleIndices = int32Collection;
@@ -199,15 +199,15 @@ public abstract partial class WireBase : ModelVisual3D, IDisposable
     private void DoArrow(Point3D pt1, Point3D pt2, Point3DCollection points, Int32Collection indices, ref int indicesBase)
     {
         Point3D point3D = pt1 * matxVisualToScreen;
-        Point3D point3D2 = pt2 * matxVisualToScreen;
-        Vector val = new Vector(point3D.X - point3D2.X, point3D.Y - point3D2.Y);
+        Point3D screenPoint = pt2 * matxVisualToScreen;
+        Vector val = new Vector(point3D.X - screenPoint.X, point3D.Y - screenPoint.Y);
         val.Normalize();
         val *= ArrowLength;
-        Matrix val2 = default(Matrix);
-        val2.Rotate(ArrowAngle / 2.0);
-        Point3D pt3 = Widen(pt2, val * val2);
-        val2.Rotate(-ArrowAngle);
-        Point3D pt4 = Widen(pt2, val * val2);
+        Matrix rotation = default(Matrix);
+        rotation.Rotate(ArrowAngle / 2.0);
+        Point3D pt3 = Widen(pt2, val * rotation);
+        rotation.Rotate(-ArrowAngle);
+        Point3D pt4 = Widen(pt2, val * rotation);
         DoLine(pt2, pt3, points, indices, ref indicesBase);
         DoLine(pt2, pt4, points, indices, ref indicesBase);
     }

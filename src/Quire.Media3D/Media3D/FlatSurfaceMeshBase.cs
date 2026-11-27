@@ -52,10 +52,10 @@ public abstract partial class FlatSurfaceMeshBase : MeshGeneratorBase
             double wt = (double)j / (double)Slices;
             Point3D one = Point3DWeight(verticesBase[0], verticesBase[1], wt);
             Point3D two = Point3DWeight(verticesBase[0], verticesBase[2], wt);
-            Vector3D one2 = Vector3DWeight(normalsBase[0], normalsBase[1], wt);
-            Vector3D two2 = Vector3DWeight(normalsBase[0], normalsBase[2], wt);
-            Point one3 = PointWeight(texturesBase[0], texturesBase[1], wt);
-            Point two3 = PointWeight(texturesBase[0], texturesBase[2], wt);
+            Vector3D secondNormal = Vector3DWeight(normalsBase[0], normalsBase[1], wt);
+            Vector3D thirdNormal = Vector3DWeight(normalsBase[0], normalsBase[2], wt);
+            Point secondTexture = PointWeight(texturesBase[0], texturesBase[1], wt);
+            Point thirdTexture = PointWeight(texturesBase[0], texturesBase[2], wt);
             for (int k = 0; k <= j; k++)
             {
                 wt = (double)k / (double)j;
@@ -64,28 +64,28 @@ public abstract partial class FlatSurfaceMeshBase : MeshGeneratorBase
                     wt = 0.0;
                 }
                 vertices.Add(Point3DWeight(one, two, wt));
-                normals.Add(Vector3DWeight(one2, two2, wt));
-                textures.Add(PointWeight(one3, two3, wt));
+                normals.Add(Vector3DWeight(secondNormal, thirdNormal, wt));
+                textures.Add(PointWeight(secondTexture, thirdTexture, wt));
             }
         }
         for (int l = 0; l < Slices; l++)
         {
             int num = (l + 1) * l / 2;
-            int num2 = num + l + 1;
+            int nextRowIndex = num + l + 1;
             for (int m = 0; m <= 2 * l; m++)
             {
-                int num3 = m / 2;
+                int halfColumnIndex = m / 2;
                 if ((m & 1) == 0)
                 {
-                    indices.Add(count + num + num3);
-                    indices.Add(count + num2 + num3);
-                    indices.Add(count + num2 + num3 + 1);
+                    indices.Add(count + num + halfColumnIndex);
+                    indices.Add(count + nextRowIndex + halfColumnIndex);
+                    indices.Add(count + nextRowIndex + halfColumnIndex + 1);
                 }
                 else
                 {
-                    indices.Add(count + num + num3);
-                    indices.Add(count + num2 + num3 + 1);
-                    indices.Add(count + num + num3 + 1);
+                    indices.Add(count + num + halfColumnIndex);
+                    indices.Add(count + nextRowIndex + halfColumnIndex + 1);
+                    indices.Add(count + num + halfColumnIndex + 1);
                 }
             }
         }

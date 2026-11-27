@@ -36,39 +36,39 @@ public partial class PathGeometry3D : Animatable
         point = default;
         tangent = default;
         double num = 0.0;
-        double num2 = 0.0;
+        double distanceAlongPath = 0.0;
         foreach (PathFigure3D figure in Figures)
         {
             PathFigure3D flattenedPathFigure = figure.GetFlattenedPathFigure();
             Point3D point3D = flattenedPathFigure.StartPoint;
             foreach (PathSegment3D segment in flattenedPathFigure.Segments)
             {
-                foreach (Point3D point2 in (segment as PolyLineSegment3D).Points)
+                foreach (Point3D polylinePoint in (segment as PolyLineSegment3D).Points)
                 {
-                    num += (point2 - point3D).Length;
-                    point3D = point2;
+                    num += (polylinePoint - point3D).Length;
+                    point3D = polylinePoint;
                 }
             }
         }
-        foreach (PathFigure3D figure2 in Figures)
+        foreach (PathFigure3D figure in Figures)
         {
-            PathFigure3D flattenedPathFigure2 = figure2.GetFlattenedPathFigure();
-            Point3D point3D2 = flattenedPathFigure2.StartPoint;
-            foreach (PathSegment3D segment2 in flattenedPathFigure2.Segments)
+            PathFigure3D flattenedFigure = figure.GetFlattenedPathFigure();
+            Point3D previousPoint = flattenedFigure.StartPoint;
+            foreach (PathSegment3D segment in flattenedFigure.Segments)
             {
-                foreach (Point3D point3 in (segment2 as PolyLineSegment3D).Points)
+                foreach (Point3D pathPoint in (segment as PolyLineSegment3D).Points)
                 {
-                    tangent = point3 - point3D2;
+                    tangent = pathPoint - previousPoint;
                     double length = tangent.Length;
-                    num2 += length;
-                    if (num2 / num >= progress)
+                    distanceAlongPath += length;
+                    if (distanceAlongPath / num >= progress)
                     {
-                        double num3 = (num2 / num - progress) / (length / num);
-                        double num4 = 1.0 - num3;
-                        point = (Point3D)(num3 * (Vector3D)point3D2 + num4 * (Vector3D)point3);
+                        double segmentProgress = (distanceAlongPath / num - progress) / (length / num);
+                        double remainingProgress = 1.0 - segmentProgress;
+                        point = (Point3D)(segmentProgress * (Vector3D)previousPoint + remainingProgress * (Vector3D)pathPoint);
                         return;
                     }
-                    point3D2 = point3;
+                    previousPoint = pathPoint;
                 }
             }
         }

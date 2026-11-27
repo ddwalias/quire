@@ -29,13 +29,13 @@ public static partial class Tools3D
             pt2 = Correct3DPointCoordinates(pt1);
         }
         Point3D point3D = pt1 * matxVisualToScreen;
-        Point3D point3D2 = pt2 * matxVisualToScreen;
-        if ((point3D2 - point3D).X == 0.0 && (point3D2 - point3D).Y == 0.0)
+        Point3D screenPoint = pt2 * matxVisualToScreen;
+        if ((screenPoint - point3D).X == 0.0 && (screenPoint - point3D).Y == 0.0)
         {
             pt2 = Correct3DPointCoordinates(pt2);
-            point3D2 = pt2 * matxVisualToScreen;
+            screenPoint = pt2 * matxVisualToScreen;
         }
-        Vector3D vector3D = point3D2 - point3D;
+        Vector3D vector3D = screenPoint - point3D;
         vector3D.Z = 0.0;
         vector3D.Normalize();
         Vector val = thickness / 2.0 * new Vector(-vector3D.Y, vector3D.X);

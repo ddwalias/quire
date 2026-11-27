@@ -122,8 +122,8 @@ public partial class ViewportInfo : Animatable
     public static Point Point3DtoPoint2D(Viewport3D viewport, Point3D point)
     {
         Matrix3D totalTransform = GetTotalTransform(viewport);
-        Point3D point2 = totalTransform.Transform(point);
-        return new Point(point2.X, point2.Y);
+        Point3D viewportPoint = totalTransform.Transform(point);
+        return new Point(viewportPoint.X, viewportPoint.Y);
     }
 
     public static bool Point2DtoPoint3D(Viewport3D viewport, Point ptIn, out LineRange range)
@@ -142,12 +142,12 @@ public partial class ViewportInfo : Animatable
         }
         viewportTransform.Invert();
         cameraTransform.Invert();
-        Point3D point2 = viewportTransform.Transform(point);
-        point2.Z = 0.01;
-        Point3D point3 = cameraTransform.Transform(point2);
-        point2.Z = 0.99;
-        Point3D point4 = cameraTransform.Transform(point2);
-        range = new LineRange(point3, point4);
+        Point3D viewportPoint = viewportTransform.Transform(point);
+        viewportPoint.Z = 0.01;
+        Point3D nearCameraPoint = cameraTransform.Transform(viewportPoint);
+        viewportPoint.Z = 0.99;
+        Point3D farCameraPoint = cameraTransform.Transform(viewportPoint);
+        range = new LineRange(nearCameraPoint, farCameraPoint);
         return true;
     }
 
@@ -178,14 +178,14 @@ public partial class ViewportInfo : Animatable
     public static double GetZValueForHitTesting(Camera camera, Matrix3D matxCamera, Rect3D box)
     {
         double z = matxCamera.Transform(new Point3D(box.X, box.Y, box.Z)).Z;
-        double z2 = matxCamera.Transform(new Point3D(box.X, box.Y + box.SizeY, box.Z)).Z;
-        double z3 = matxCamera.Transform(new Point3D(box.X + box.SizeX, box.Y, box.Z)).Z;
-        double z4 = matxCamera.Transform(new Point3D(box.X + box.SizeX, box.Y + box.SizeY, box.Z)).Z;
-        double z5 = matxCamera.Transform(new Point3D(box.X, box.Y, box.Z + box.SizeZ)).Z;
-        double z6 = matxCamera.Transform(new Point3D(box.X, box.Y + box.SizeY, box.Z + box.SizeZ)).Z;
-        double z7 = matxCamera.Transform(new Point3D(box.X + box.SizeX, box.Y, box.Z + box.SizeZ)).Z;
-        double z8 = matxCamera.Transform(new Point3D(box.X + box.SizeX, box.Y + box.SizeY, box.Z + box.SizeZ)).Z;
-        double result = ((camera is PerspectiveCamera) ? Math.Min(z, Math.Min(z2, Math.Min(z3, Math.Min(z4, Math.Min(z5, Math.Min(z6, Math.Min(z7, z8))))))) : Math.Max(z, Math.Max(z2, Math.Max(z3, Math.Max(z4, Math.Max(z5, Math.Max(z6, Math.Max(z7, z8))))))));
+        double depth2 = matxCamera.Transform(new Point3D(box.X, box.Y + box.SizeY, box.Z)).Z;
+        double depth3 = matxCamera.Transform(new Point3D(box.X + box.SizeX, box.Y, box.Z)).Z;
+        double depth4 = matxCamera.Transform(new Point3D(box.X + box.SizeX, box.Y + box.SizeY, box.Z)).Z;
+        double depth5 = matxCamera.Transform(new Point3D(box.X, box.Y, box.Z + box.SizeZ)).Z;
+        double depth6 = matxCamera.Transform(new Point3D(box.X, box.Y + box.SizeY, box.Z + box.SizeZ)).Z;
+        double depth7 = matxCamera.Transform(new Point3D(box.X + box.SizeX, box.Y, box.Z + box.SizeZ)).Z;
+        double depth8 = matxCamera.Transform(new Point3D(box.X + box.SizeX, box.Y + box.SizeY, box.Z + box.SizeZ)).Z;
+        double result = ((camera is PerspectiveCamera) ? Math.Min(z, Math.Min(depth2, Math.Min(depth3, Math.Min(depth4, Math.Min(depth5, Math.Min(depth6, Math.Min(depth7, depth8))))))) : Math.Max(z, Math.Max(depth2, Math.Max(depth3, Math.Max(depth4, Math.Max(depth5, Math.Max(depth6, Math.Max(depth7, depth8))))))));
         DebugTools.DevAssert(camera is PerspectiveCamera || camera is OrthographicCamera, null);
         return result;
     }

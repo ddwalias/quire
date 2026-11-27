@@ -18,16 +18,16 @@ public partial class WireDashes : WireLines
     private void AddDashedLine(Point3D start, Point3D end, Point3DCollection resultVertices)
     {
         double num = Math.Abs((end - start).Length);
-        double num2 = num / Pitch;
-        int num3 = (int)Math.Floor(num2);
+        double exactDashCount = num / Pitch;
+        int dashCount = (int)Math.Floor(exactDashCount);
         Vector3D vector3D = (end - start) / num * Pitch;
         resultVertices.Add(start);
-        for (int i = 0; i < num3; i++)
+        for (int i = 0; i < dashCount; i++)
         {
             resultVertices.Add(start + vector3D * i);
         }
         resultVertices.Add(end);
-        bool isExact = (double)num3 - Math.Ceiling(num2) == 0.0;
+        bool isExact = (double)dashCount - Math.Ceiling(exactDashCount) == 0.0;
         if (!isExact)
         {
             resultVertices.Add(end);

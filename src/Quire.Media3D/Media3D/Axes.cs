@@ -103,13 +103,13 @@ public partial class Axes : WireBase
         for (int i = (int)(-10.0 * Extent); i <= (int)(10.0 * Extent); i++)
         {
             double num = (i % 10 == 0) ? LargeTick : SmallTick;
-            double num2 = (double)i / 10.0;
-            lines.Add(new Point3D(num2, -num, 0.0));
-            lines.Add(new Point3D(num2, num, 0.0));
-            lines.Add(new Point3D(-num, num2, 0.0));
-            lines.Add(new Point3D(num, num2, 0.0));
-            lines.Add(new Point3D(0.0, -num, num2));
-            lines.Add(new Point3D(0.0, num, num2));
+            double tickValue = (double)i / 10.0;
+            lines.Add(new Point3D(tickValue, -num, 0.0));
+            lines.Add(new Point3D(tickValue, num, 0.0));
+            lines.Add(new Point3D(-num, tickValue, 0.0));
+            lines.Add(new Point3D(num, tickValue, 0.0));
+            lines.Add(new Point3D(0.0, -num, tickValue));
+            lines.Add(new Point3D(0.0, num, tickValue));
             txtgen.Font = Font;
             txtgen.FontSize = FontSize;
             txtgen.Thickness = Thickness;
@@ -118,38 +118,38 @@ public partial class Axes : WireBase
             txtgen.UpDirection = new Vector3D(0.0, 1.0, 0.0);
             if (i != 0 && i % 10 == 0)
             {
-                string text = ((int)num2).ToString();
+                string text = ((int)tickValue).ToString();
                 bool flag = i == (int)(-10.0 * Extent) || i == (int)(10.0 * Extent);
-                string text2 = (i == (int)(-10.0 * Extent)) ? "-" : "+";
+                string labelSign = (i == (int)(-10.0 * Extent)) ? "-" : "+";
                 if (flag && Labels != null)
                 {
-                    text = text2 + Labels.Substring(0, Labels.Length / 3);
+                    text = labelSign + Labels.Substring(0, Labels.Length / 3);
                 }
                 if (flag || ShowNumbers)
                 {
-                    txtgen.Origin = new Point3D(num2, -num * 1.25, 0.0);
+                    txtgen.Origin = new Point3D(tickValue, -num * 1.25, 0.0);
                     txtgen.HorizontalAlignment = HorizontalAlignment.Center;
                     txtgen.VerticalAlignment = VerticalAlignment.Top;
                     txtgen.Generate(lines, text);
                 }
                 if (flag)
                 {
-                    text = text2 + Labels.Substring(Labels.Length / 3, Labels.Length / 3);
+                    text = labelSign + Labels.Substring(Labels.Length / 3, Labels.Length / 3);
                 }
                 if (flag || ShowNumbers)
                 {
-                    txtgen.Origin = new Point3D(num * 1.25, num2, 0.0);
+                    txtgen.Origin = new Point3D(num * 1.25, tickValue, 0.0);
                     txtgen.HorizontalAlignment = HorizontalAlignment.Left;
                     txtgen.VerticalAlignment = VerticalAlignment.Center;
                     txtgen.Generate(lines, text);
                 }
                 if (flag)
                 {
-                    text = text2 + Labels.Substring(2 * Labels.Length / 3);
+                    text = labelSign + Labels.Substring(2 * Labels.Length / 3);
                 }
                 if (flag || ShowNumbers)
                 {
-                    txtgen.Origin = new Point3D(0.0, -num * 1.25, num2);
+                    txtgen.Origin = new Point3D(0.0, -num * 1.25, tickValue);
                     txtgen.BaselineDirection = new Vector3D(0.0, 0.0, 1.0);
                     txtgen.HorizontalAlignment = HorizontalAlignment.Center;
                     txtgen.VerticalAlignment = VerticalAlignment.Top;

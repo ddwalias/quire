@@ -38,42 +38,42 @@ public partial class PolygonMesh : FlatSurfaceMeshBase
         Vector3D value = new Vector3D(0.0, 0.0, 1.0);
         double num = Math.PI * 2.0 / (double)Sides;
         _ = Length / 2.0 / Math.Sin(num / 2.0);
-        double num2 = 4.71238898038469 + num / 2.0;
-        double num3 = 0.0;
-        double num4 = 0.0;
-        double num5 = 0.0;
-        double num6 = 0.0;
+        double angle = 4.71238898038469 + num / 2.0;
+        double minimumX = 0.0;
+        double maximumX = 0.0;
+        double minimumY = 0.0;
+        double maximumY = 0.0;
         for (int i = 0; i < Sides; i++)
         {
-            double val = Math.Cos(num2);
-            double val2 = Math.Sin(num2);
-            num3 = Math.Min(num3, val);
-            num4 = Math.Max(num4, val);
-            num5 = Math.Min(num5, val2);
-            num6 = Math.Max(num6, val2);
-            num2 += num;
+            double val = Math.Cos(angle);
+            double sine = Math.Sin(angle);
+            minimumX = Math.Min(minimumX, val);
+            maximumX = Math.Max(maximumX, val);
+            minimumY = Math.Min(minimumY, sine);
+            maximumY = Math.Max(maximumY, sine);
+            angle += num;
         }
-        num2 = 4.71238898038469 + num / 2.0;
+        angle = 4.71238898038469 + num / 2.0;
         for (int j = 0; j < Sides; j++)
         {
             vertices.Add(new Point3D(0.0, 0.0, 0.0));
-            textures.Add(new Point(-num3 / (num4 - num3), num6 / (num6 - num5)));
+            textures.Add(new Point(-minimumX / (maximumX - minimumX), maximumY / (maximumY - minimumY)));
             normals.Add(value);
-            double num7 = Math.Cos(num2);
-            double num8 = Math.Sin(num2);
-            vertices.Add(new Point3D(num7, num8, 0.0));
-            textures.Add(new Point((num7 - num3) / (num4 - num3), (num6 - num8) / (num6 - num5)));
+            double x = Math.Cos(angle);
+            double y = Math.Sin(angle);
+            vertices.Add(new Point3D(x, y, 0.0));
+            textures.Add(new Point((x - minimumX) / (maximumX - minimumX), (maximumY - y) / (maximumY - minimumY)));
             normals.Add(value);
-            num2 += num;
-            num7 = Math.Cos(num2);
-            num8 = Math.Sin(num2);
-            vertices.Add(new Point3D(num7, num8, 0.0));
-            textures.Add(new Point((num7 - num3) / (num4 - num3), (num6 - num8) / (num6 - num5)));
+            angle += num;
+            x = Math.Cos(angle);
+            y = Math.Sin(angle);
+            vertices.Add(new Point3D(x, y, 0.0));
+            textures.Add(new Point((x - minimumX) / (maximumX - minimumX), (maximumY - y) / (maximumY - minimumY)));
             normals.Add(value);
-            int num9 = vertices.Count - 3;
-            indices.Add(num9);
-            indices.Add(num9 + 1);
-            indices.Add(num9 + 2);
+            int firstTriangleIndex = vertices.Count - 3;
+            indices.Add(firstTriangleIndex);
+            indices.Add(firstTriangleIndex + 1);
+            indices.Add(firstTriangleIndex + 2);
             if (Slices > 1)
             {
                 TriangleSubdivide(vertices, normals, indices, textures);

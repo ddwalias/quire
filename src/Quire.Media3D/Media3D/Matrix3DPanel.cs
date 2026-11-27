@@ -64,10 +64,10 @@ public partial class Matrix3DPanel : FrameworkElement
             stackPanel.Orientation = Orientation.Vertical;
             stackPanel.Margin = new Thickness(12.0);
             unigrid.Children.Add(stackPanel);
-            StackPanel stackPanel2 = new StackPanel();
-            stackPanel2.Orientation = Orientation.Horizontal;
-            stackPanel2.HorizontalAlignment = HorizontalAlignment.Center;
-            stackPanel.Children.Add(stackPanel2);
+            StackPanel transformPanel = new StackPanel();
+            transformPanel.Orientation = Orientation.Horizontal;
+            transformPanel.HorizontalAlignment = HorizontalAlignment.Center;
+            stackPanel.Children.Add(transformPanel);
             ScrollBar scrollBar = new ScrollBar();
             scrollBar.Orientation = Orientation.Horizontal;
             scrollBar.Value = (i % 5 == 0) ? 1 : 0;
@@ -86,13 +86,13 @@ public partial class Matrix3DPanel : FrameworkElement
             scrollBar.SetBinding(RangeBase.MaximumProperty, binding);
             TextBlock element = new TextBlock();
             element.Text = array[i] + " = ";
-            stackPanel2.Children.Add(element);
+            transformPanel.Children.Add(element);
             binding = new Binding("Value");
             binding.Source = scrollBar;
             binding.Mode = BindingMode.OneWay;
             element = new TextBlock();
             element.SetBinding(TextBlock.TextProperty, binding);
-            stackPanel2.Children.Add(element);
+            transformPanel.Children.Add(element);
         }
         AddHandler(RangeBase.ValueChangedEvent, new RoutedEventHandler(ScrollBarOnValueChanged));
     }

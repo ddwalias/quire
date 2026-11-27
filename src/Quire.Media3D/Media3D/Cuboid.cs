@@ -103,73 +103,73 @@ public partial class Cuboid : ModelVisualBase
         }
         for (int k = 0; k <= Stacks; k++)
         {
-            double y2 = Origin.Y + Height - (double)k * Height / (double)Stacks;
+            double rowY = Origin.Y + Height - (double)k * Height / (double)Stacks;
             for (int l = 0; l <= Slices; l++)
             {
-                double x2 = Origin.X + Width - (double)l * Width / (double)Slices;
-                vertices.Add(new Point3D(x2, y2, Origin.Z));
+                double columnX = Origin.X + Width - (double)l * Width / (double)Slices;
+                vertices.Add(new Point3D(columnX, rowY, Origin.Z));
             }
         }
         for (int m = 0; m <= Stacks; m++)
         {
-            double y3 = Origin.Y + Height - (double)m * Height / (double)Stacks;
+            double rowY = Origin.Y + Height - (double)m * Height / (double)Stacks;
             for (int n = 0; n <= Slivers; n++)
             {
                 double z = Origin.Z + (double)n * Depth / (double)Slivers;
-                vertices.Add(new Point3D(Origin.X, y3, z));
+                vertices.Add(new Point3D(Origin.X, rowY, z));
             }
         }
         for (int num = 0; num <= Stacks; num++)
         {
-            double y4 = Origin.Y + Height - (double)num * Height / (double)Stacks;
-            for (int num2 = 0; num2 <= Slivers; num2++)
+            double rowY = Origin.Y + Height - (double)num * Height / (double)Stacks;
+            for (int depthIndex = 0; depthIndex <= Slivers; depthIndex++)
             {
-                double z2 = Origin.Z + Depth - (double)num2 * Depth / (double)Slivers;
-                vertices.Add(new Point3D(Origin.X + Width, y4, z2));
+                double depth = Origin.Z + Depth - (double)depthIndex * Depth / (double)Slivers;
+                vertices.Add(new Point3D(Origin.X + Width, rowY, depth));
             }
         }
-        for (int num3 = 0; num3 <= Slivers; num3++)
+        for (int depthIndex = 0; depthIndex <= Slivers; depthIndex++)
         {
-            double z3 = Origin.Z + (double)num3 * Depth / (double)Slivers;
-            for (int num4 = 0; num4 <= Slices; num4++)
+            double depth = Origin.Z + (double)depthIndex * Depth / (double)Slivers;
+            for (int sliceIndex = 0; sliceIndex <= Slices; sliceIndex++)
             {
-                double x3 = Origin.X + (double)num4 * Width / (double)Slices;
-                vertices.Add(new Point3D(x3, Origin.Y + Height, z3));
+                double x = Origin.X + (double)sliceIndex * Width / (double)Slices;
+                vertices.Add(new Point3D(x, Origin.Y + Height, depth));
             }
         }
-        for (int num5 = 0; num5 <= Slivers; num5++)
+        for (int depthIndex = 0; depthIndex <= Slivers; depthIndex++)
         {
-            double z4 = Origin.Z + Depth - (double)num5 * Depth / (double)Slivers;
-            for (int num6 = 0; num6 <= Slices; num6++)
+            double depth = Origin.Z + Depth - (double)depthIndex * Depth / (double)Slivers;
+            for (int sliceIndex = 0; sliceIndex <= Slices; sliceIndex++)
             {
-                double x4 = Origin.X + (double)num6 * Width / (double)Slices;
-                vertices.Add(new Point3D(x4, Origin.Y, z4));
+                double x = Origin.X + (double)sliceIndex * Width / (double)Slices;
+                vertices.Add(new Point3D(x, Origin.Y, depth));
             }
         }
-        for (int num7 = 0; num7 < 6; num7++)
+        for (int faceIndex = 0; faceIndex < 6; faceIndex++)
         {
-            for (int num8 = 0; num8 <= Stacks; num8++)
+            for (int stackIndex = 0; stackIndex <= Stacks; stackIndex++)
             {
-                double num9 = (double)num8 / (double)Stacks;
-                for (int num10 = 0; num10 <= Slices; num10++)
+                double textureV = (double)stackIndex / (double)Stacks;
+                for (int sliceIndex = 0; sliceIndex <= Slices; sliceIndex++)
                 {
-                    double num11 = (double)num10 / (double)Slices;
-                    textures.Add(new Point(num11, num9));
+                    double textureU = (double)sliceIndex / (double)Slices;
+                    textures.Add(new Point(textureU, textureV));
                 }
             }
         }
-        for (int num12 = 0; num12 < 6; num12++)
+        for (int faceIndex = 0; faceIndex < 6; faceIndex++)
         {
-            for (int num13 = 0; num13 < Stacks; num13++)
+            for (int stackIndex = 0; stackIndex < Stacks; stackIndex++)
             {
-                for (int num14 = 0; num14 < Slices; num14++)
+                for (int sliceIndex = 0; sliceIndex < Slices; sliceIndex++)
                 {
-                    indices.Add(num12 * (Slices + 1) * (Stacks + 1) + num13 * (Slices + 1) + num14);
-                    indices.Add(num12 * (Slices + 1) * (Stacks + 1) + (num13 + 1) * (Slices + 1) + num14);
-                    indices.Add(num12 * (Slices + 1) * (Stacks + 1) + num13 * (Slices + 1) + num14 + 1);
-                    indices.Add(num12 * (Slices + 1) * (Stacks + 1) + num13 * (Slices + 1) + num14 + 1);
-                    indices.Add(num12 * (Slices + 1) * (Stacks + 1) + (num13 + 1) * (Slices + 1) + num14);
-                    indices.Add(num12 * (Slices + 1) * (Stacks + 1) + (num13 + 1) * (Slices + 1) + num14 + 1);
+                    indices.Add(faceIndex * (Slices + 1) * (Stacks + 1) + stackIndex * (Slices + 1) + sliceIndex);
+                    indices.Add(faceIndex * (Slices + 1) * (Stacks + 1) + (stackIndex + 1) * (Slices + 1) + sliceIndex);
+                    indices.Add(faceIndex * (Slices + 1) * (Stacks + 1) + stackIndex * (Slices + 1) + sliceIndex + 1);
+                    indices.Add(faceIndex * (Slices + 1) * (Stacks + 1) + stackIndex * (Slices + 1) + sliceIndex + 1);
+                    indices.Add(faceIndex * (Slices + 1) * (Stacks + 1) + (stackIndex + 1) * (Slices + 1) + sliceIndex);
+                    indices.Add(faceIndex * (Slices + 1) * (Stacks + 1) + (stackIndex + 1) * (Slices + 1) + sliceIndex + 1);
                 }
             }
         }

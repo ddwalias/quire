@@ -76,10 +76,10 @@ public partial class PathFigure3D : Animatable
             }
             else if (segment is PolyLineSegment3D)
             {
-                foreach (Point3D point2 in (segment as PolyLineSegment3D).Points)
+                foreach (Point3D polylinePoint in (segment as PolyLineSegment3D).Points)
                 {
-                    points.Add(point2);
-                    point = point2;
+                    points.Add(polylinePoint);
+                    point = polylinePoint;
                 }
             }
             else if (segment is BezierSegment3D)
