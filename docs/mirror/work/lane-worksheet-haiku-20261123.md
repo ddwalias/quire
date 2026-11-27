@@ -252,3 +252,13 @@
   - `UNITTEST_CanCreate*`: depend on the closure-based private `CanCreate*`, so they wait for the compile-order layout.
 - Blocked on compile-order layout (closure ordinals): the 72 closure-bearing members need a whole-type hand-written partial in Mathcad IL order before they can match. Handed to the Luna worker.
 - Release IL gate for batch 69: PASS, 2193 checked, 0 failures. Batch 68 gate: PASS, 2061 checked, 0 failures.
+
+## Luna WorksheetViewModel layout and closure batch
+
+- Landed `b82102e94` (Mathcad IL-order hand-written layout) and `df8843934` (closure batch); `SetupCommandBindings` now emits its 151 handler lambdas at the calibrated ordinal. The lane merge Release IL gate passed 2,396 checked with zero failures, preserving all previously exact members.
+- `Initialize`'s width callback was shaped with an explicit `this` receiver to match its lambda IL. `SetupDefaultPageLayout` remains a placeholder after the simple grid-cell callbacks were aligned; the nested size-change callback retains a compiler delegate-cache mismatch.
+- Parked diff for `SetupDefaultPageLayout`: in `WorksheetViewModel+<>c__DisplayClass532_1::<SetupDefaultPageLayout>b__5`, Quire loads `<>9__6` (cached `Action<WhiteboardItemSizeChangedEventHandler>`) at #10 where Mathcad loads the `area` field; Quire has one conditional branch and Mathcad zero; first instruction difference is #22 (Quire 68 entries, Mathcad 58). An explicit `new Action<T>(delegate { ... })` still produced the cache; the handler was reverted to its unmarked placeholder.
+
+## Luna WorksheetViewModel remaining members — batch 1
+
+- Implemented 27 remaining utility, selection, navigation, input, and event handlers in the hand-written partial; final Release IL results follow after validation.
