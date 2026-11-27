@@ -110,17 +110,17 @@ namespace Quire { namespace Engine {
                 while (pCons != nullptr);
             }
             cli::array<Object^>^ array = gcnew cli::array<Object^>(num);
-            int num2 = 0;
-            PCons^ pCons2 = this;
+            int arrayIndex = 0;
+            PCons^ currentNode = this;
             if (this != nullptr)
             {
                 do
                 {
-                    array[num2] = pCons2->hd;
-                    num2++;
-                    pCons2 = pCons2->tl;
+                    array[arrayIndex] = currentNode->hd;
+                    arrayIndex++;
+                    currentNode = currentNode->tl;
                 }
-                while (pCons2 != nullptr);
+                while (currentNode != nullptr);
             }
             return array;
         }
@@ -193,29 +193,29 @@ namespace Quire { namespace Engine {
         static PCons^ shallowCopy(const PCons^ l)
         {
             PCons^ pCons = nullptr;
-            const PCons^ pCons2 = l;
+            const PCons^ sourceNode = l;
             if (l != nullptr)
             {
                 do
                 {
-                    pCons = gcnew PCons(pCons2->hd, pCons);
-                    pCons2 = pCons2->tl;
+                    pCons = gcnew PCons(sourceNode->hd, pCons);
+                    sourceNode = sourceNode->tl;
                 }
-                while (pCons2 != nullptr);
+                while (sourceNode != nullptr);
             }
-            PCons^ pCons3 = pCons;
+            PCons^ currentNode = pCons;
             PCons^ result = nullptr;
             if (pCons != nullptr)
             {
-                PCons^ pCons4;
+                PCons^ nextNode;
                 do
                 {
-                    pCons4 = pCons3->tl;
-                    pCons3->tl = result;
-                    result = pCons3;
-                    pCons3 = pCons4;
+                    nextNode = currentNode->tl;
+                    currentNode->tl = result;
+                    result = currentNode;
+                    currentNode = nextNode;
                 }
-                while (pCons4 != nullptr);
+                while (nextNode != nullptr);
             }
             return result;
         }
@@ -241,15 +241,15 @@ namespace Quire { namespace Engine {
         static PCons^ reverse(const PCons^ a)
         {
             PCons^ pCons = nullptr;
-            const PCons^ pCons2 = a;
+            const PCons^ sourceNode = a;
             if (a != nullptr)
             {
                 do
                 {
-                    pCons = gcnew PCons(pCons2->hd, pCons);
-                    pCons2 = pCons2->tl;
+                    pCons = gcnew PCons(sourceNode->hd, pCons);
+                    sourceNode = sourceNode->tl;
                 }
-                while (pCons2 != nullptr);
+                while (sourceNode != nullptr);
             }
             return pCons;
         }
@@ -387,7 +387,7 @@ namespace Quire { namespace Engine {
         Object^ read_string(::Quire::Native::EngutilsMgd::PushbackReader^ t, TagFunction^ tf)
         {
             String^ text = nullptr;
-            String^ text2 = nullptr;
+            String^ tag = nullptr;
             StringBuilder^ stringBuilder = gcnew StringBuilder();
             int num = t->Read();
             if (num != 34)
@@ -412,33 +412,33 @@ namespace Quire { namespace Engine {
                 }
                 while (num != 34);
             }
-            int num2 = t->Read();
-            if (num2 == 123)
+            int delimiter = t->Read();
+            if (delimiter == 123)
             {
                 text = read_labels(t, tf);
-                int num3 = t->Read();
-                if (num3 == 58)
+                int tagDelimiter = t->Read();
+                if (tagDelimiter == 58)
                 {
-                    text2 = read_tag(t, tf);
+                    tag = read_tag(t, tf);
                 }
                 else
                 {
-                    t->Unread(num3);
+                    t->Unread(tagDelimiter);
                 }
             }
-            else if (num2 == 58)
+            else if (delimiter == 58)
             {
-                text2 = read_tag(t, tf);
+                tag = read_tag(t, tf);
             }
             else
             {
-                t->Unread(num2);
+                t->Unread(delimiter);
             }
-            if ((text == nullptr && text2 == nullptr) || m_intern_func_labeled == nullptr)
+            if ((text == nullptr && tag == nullptr) || m_intern_func_labeled == nullptr)
             {
                 return stringBuilder->ToString();
             }
-            return m_intern_func_labeled("\"" + stringBuilder->ToString() + "\"", text, text2);
+            return m_intern_func_labeled("\"" + stringBuilder->ToString() + "\"", text, tag);
         }
 
         String^ read_labels(::Quire::Native::EngutilsMgd::PushbackReader^ t, TagFunction^ tf)
@@ -508,8 +508,8 @@ namespace Quire { namespace Engine {
               m_macro_places(gcnew cli::array<bool>(256)),
               m_macro_table(gcnew System::Collections::Generic::Dictionary<int, ReaderMacro^>())
         {
-            ReadFunction^ f2 = gcnew ReadFunction(this, &Reader::read_list);
-            add_reader_macro(40, gcnew ReaderMacro(f2, true));
+            ReadFunction^ listReader = gcnew ReadFunction(this, &Reader::read_list);
+            add_reader_macro(40, gcnew ReaderMacro(listReader, true));
             add_reader_macro(41, gcnew ReaderMacro(nullptr, true));
         }
 
