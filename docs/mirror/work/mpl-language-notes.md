@@ -16,7 +16,7 @@ module Example (identity, Box(..)) where
 
 ## Executable prototype subset
 
-`src/Quire.Mpl.Compiler` is a deliberately tiny source-to-IL compiler experiment on `Quire.Mpl.Emit`. Its input grammar is only:
+`tools/mpl/Quire.Mpl.Compiler` is a deliberately tiny source-to-IL compiler experiment on `Quire.Mpl.Emit`. Its input grammar is only:
 
 ```text
 module <name> (<exports...>) where

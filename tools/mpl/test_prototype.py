@@ -33,13 +33,13 @@ class MplPrototypeTests(unittest.TestCase):
     def setUpClass(cls):
         if not INSTALL.is_dir():
             raise AssertionError(f"Mathcad install not found: {INSTALL}; set MATHCAD_DIR")
-        run("dotnet", "build", "src/Quire.Mpl.Compiler/Quire.Mpl.Compiler.csproj", "-c", "Release",
+        run("dotnet", "build", "tools/mpl/Quire.Mpl.Compiler/Quire.Mpl.Compiler.csproj", "-c", "Release",
             "-o", str(COMPILER_OUT), "-v", "quiet")
         ASSEMBLIES.mkdir(parents=True, exist_ok=True)
         compiler = COMPILER_OUT / "Quire.Mpl.Compiler.dll"
         for source, assembly in (("Hashtable.mpl", "Quire.Mpl.Modules.dll"),
                                  ("McdUnitSystemUS.mpl", "Quire.McdUnitSystemUS.dll")):
-            run("dotnet", str(compiler), str(ROOT / "src/Quire.Mpl.Compiler/examples" / source),
+            run("dotnet", str(compiler), str(ROOT / "tools/mpl/Quire.Mpl.Compiler/examples" / source),
                 str(ASSEMBLIES / assembly), str(INSTALL))
         run("dotnet", "build", "tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj",
             "-c", "Release", "-o", str(METHOD_AUDIT_OUT), "-v", "quiet")
