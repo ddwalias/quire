@@ -15,17 +15,7 @@ public partial class SpecTableCalculatableWrapper : global::Quire.Calculation.Co
     [global::Quire.Mirror.MirrorName("a")]
     private global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn a__;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<global::Quire.Calculation.Core.ICalculatable> b;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Func<global::Quire.Calculation.Core.ICalculatable, string, global::Quire.Calculation.Core.IResultNode> c;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<global::Quire.Calculation.Core.ICalculatable> d;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.ComponentModel.PropertyChangedEventHandler e;
-    [global::Quire.Mirror.MirrorStub]
     private bool h;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.EventHandler<global::Quire.Calculation.Core.RequestShowErrorEventArgs> j;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn Column { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

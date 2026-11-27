@@ -15,12 +15,6 @@ public partial class InputScriptableWithInputNodeInfo : global::Quire.EquationEd
     [global::Quire.Mirror.MirrorName("a")]
     private object a__;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<global::Quire.DelegateFunction0<bool>, string> c;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action d;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.EventHandler<global::Quire.EquationEditor.Tree.RequestRestoreInsertionPointEventArgs> e;
-    [global::Quire.Mirror.MirrorStub]
     public bool IsInputsAreaShown { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsInputsExists { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

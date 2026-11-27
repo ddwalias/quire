@@ -21,30 +21,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
     [global::Quire.Mirror.MirrorName("c")]
     private readonly global::System.Collections.Generic.Dictionary<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn, global::Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper> c__;
     [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("d")]
-    private global::Quire.Delegate1<global::Quire.EquationEditor.IEquationModel> d__;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("e")]
-    private global::Quire.Delegate0 e__;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("f")]
-    private global::Quire.Delegate1<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn> f__;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("g")]
-    private global::Quire.Delegate1<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn> g__;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("h")]
-    private global::Quire.Delegate0 h__;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("i")]
-    private global::System.Action i__;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<int, int> j;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action k;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<bool> l;
-    [global::Quire.Mirror.MirrorStub]
     private bool m;
     [global::Quire.Mirror.MirrorStub]
     private static readonly string n;

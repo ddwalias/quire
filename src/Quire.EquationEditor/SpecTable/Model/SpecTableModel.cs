@@ -30,9 +30,9 @@ public partial class SpecTableModel
         {
             column.SetRestrictedReadonly(m);
         }
-        if (l != null)
+        if (RestrictedReadonlyChanged != null)
         {
-            l(m);
+            RestrictedReadonlyChanged(m);
         }
     }
 
