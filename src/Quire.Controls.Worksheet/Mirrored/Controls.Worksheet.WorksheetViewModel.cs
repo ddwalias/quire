@@ -94,28 +94,6 @@ private static global::Quire.Services.IMouseFacade _mouseFacadeService;
 
 private int _startingPageNumber;
 
-private int _offset;
-
-private bool _isDifferentFirstPage;
-
-private double _worksheetHeight;
-
-private double _headerTop;
-
-private double _footerTop;
-
-private global::Quire.Controls.Worksheet.WorksheetDragger _worksheetDragHandler;
-
-private bool _preRecalculateAll;
-
-private global::System.Windows.ResourceDictionary Resources;
-
-private readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Collections.Generic.IList<global::Quire.Controls.Core.Whiteboard.WhiteboardItemSizeChangedEventHandler>> _itemSizeChangedHandlerMap;
-
-private string _textCache;
-
-private bool _headerFooterZombiesReady;
-
 public WorksheetViewModel(global::Quire.Controls.Worksheet.IWorksheetModel model, global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid grid, global::Quire.Controls.Worksheet.IWorksheetContent content, global::Quire.Controls.Worksheet.IWorksheetPageManager pageManager, global::Quire.Controls.Worksheet.IWorksheetPasteHandler pasteHandler) { }
 
 public bool UNITTEST_CanCreateControlOfType<T>() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -310,6 +288,26 @@ private void Initialize()
         SetupDisplayFormats();
         HookupDraggerHandlers();
     }
+
+private int _offset;
+
+private bool _isDifferentFirstPage;
+
+private double _worksheetHeight;
+
+private double _headerTop;
+
+private double _footerTop;
+
+private global::Quire.Controls.Worksheet.WorksheetDragger _worksheetDragHandler;
+
+private bool _preRecalculateAll;
+
+private global::System.Windows.ResourceDictionary Resources;
+
+private readonly global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Collections.Generic.IList<global::Quire.Controls.Core.Whiteboard.WhiteboardItemSizeChangedEventHandler>> _itemSizeChangedHandlerMap;
+
+private string _textCache;
 
 private void HandleModelPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
@@ -1288,6 +1286,8 @@ private void RemoveRegionOfType<T>()
         });
     }
 
+private bool _headerFooterZombiesReady;
+
 public IPlotControl CreateXYPlotControl(string xSExpression, string ySExpression)
     {
         IPlotControl plotControl = ControlCreator.CreateXYPlotControl(GetCurrentTextFormatClone(GetCurrentTextFormat()));
@@ -1981,36 +1981,6 @@ public void FireRecalculateAll()
         PreRecalculateAll = false;
     }
 
-private global::Quire.Core.TextFormat _contentTextFormat;
-
-private readonly global::Quire.Controls.Worksheet.IWorksheetModel _model;
-
-private readonly global::Quire.Controls.Worksheet.WorksheetViewModel.WorksheetMouseDownHandler _worksheetMouseDownHandler;
-
-private readonly global::Quire.Controls.Worksheet.IWorksheetPageManager _pageManager;
-
-private readonly global::Quire.Controls.Worksheet.IWorksheetPasteHandler _pasteHandler;
-
-private int _pageCount;
-
-private readonly global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid _worksheetGrid;
-
-private global::Quire.Controls.Core.PageLayoutMode _viewMode;
-
-private global::Quire.Controls.Worksheet.IWorksheetSection _activeSection;
-
-private bool _isContentActive;
-
-private global::Quire.Controls.Worksheet.IWorksheetPage _activePage;
-
-private double _widthWithNonprintableSpace;
-
-private global::System.Windows.Thickness _nonprintableSpaceButtonPosition;
-
-private double _nonprintableSpaceButtonHeight;
-
-private bool _displayGrid;
-
 public void FireCalculateNow()
     {
         if (IsAutoCalcOn || IsCalculating)
@@ -2501,6 +2471,8 @@ private void HandlePageWideSizableDeletion(global::System.Collections.Generic.IE
             });
         }
     }
+
+private global::Quire.Core.TextFormat _contentTextFormat;
 
 private void UpdateItemPositionsAfterPageWideSizableRemoved(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> companionItems) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -3335,6 +3307,34 @@ private void SetupDisplayFormats()
     }
 
 private void HookupDraggerHandlers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+private readonly global::Quire.Controls.Worksheet.IWorksheetModel _model;
+
+private readonly global::Quire.Controls.Worksheet.WorksheetViewModel.WorksheetMouseDownHandler _worksheetMouseDownHandler;
+
+private readonly global::Quire.Controls.Worksheet.IWorksheetPageManager _pageManager;
+
+private readonly global::Quire.Controls.Worksheet.IWorksheetPasteHandler _pasteHandler;
+
+private int _pageCount;
+
+private readonly global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid _worksheetGrid;
+
+private global::Quire.Controls.Core.PageLayoutMode _viewMode;
+
+private global::Quire.Controls.Worksheet.IWorksheetSection _activeSection;
+
+private bool _isContentActive;
+
+private global::Quire.Controls.Worksheet.IWorksheetPage _activePage;
+
+private double _widthWithNonprintableSpace;
+
+private global::System.Windows.Thickness _nonprintableSpaceButtonPosition;
+
+private double _nonprintableSpaceButtonHeight;
+
+private bool _displayGrid;
 
 private void HandleItemsOverlapWithPageWideSizables(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
