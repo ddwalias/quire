@@ -1085,3 +1085,18 @@
   - `EvaluativeEquationControl`: 5 dependency-property callbacks remain parked in `EvaluativeEquationControl.g.cs` per Batch 122 (Roslyn 10 `dup` vs legacy `stloc`).
 - Release IL: PASS; 4302 checked; 0 failures.
 - Remaining parked stubs in assigned types: `AxisModel.SetXmlNode`, `EvaluativeEquationControl.{IsUserSetValueChanged,RealResultValueChanged,IsActiveChanged,ErrorChanged,FontSizeChanged}`.
+
+## Batch 127 — PlotGraphAxis (haiku worker, branch `feature/haiku-plot-axis2`)
+
+- Owner: Orca task `task_4099d2e1085e`. Hand-written: `Mirrored/Controls.Plots.PlotGraphAxis.cs` (whole class in Mathcad IL order); `Point2ScreenHelper.Contains` stub removed from `Generated/Mirror/Controls.Plots.PlotGraphAxis.g.cs`.
+- Members (about 50): static `.cctor` (all DependencyProperty registrations); `.ctor`; DP-backed accessors (`Orientation`, `Start`, `End`, `Labels`, `TickMarksValues`, `IsDiscrete`, `DisplayNumberFormat`, `Offset` setter, `Scaling`, `PositionTickMark`, `PositionValue`, `HasOriginPositioning`); static and instance callbacks (`PositionTickMarkChanged`, `ShowNumbersPropertyChanged` x2, `CreateOrientationPropertyMetadata`, `RegisterHandleTickmarksFormattingChanged`); `LinearizeStartEnd`, `GetAxisEndPosition`, `CreateDoubleAnimation`, `ClearDisplayNumberFormatWithCommand`, `PositionToTickNumber`, `CoerceScreenValue`, `GetPlotAxis`, `SetPlotAxis`, `HandleAncestorLostFocus`, `GetVisibilityBinding`, `LimitExpressionEqnPreviewGotKeyboardFocus`, `BindCommands`, `HookToViewModel`, `UnhookFromViewModel`, `ActivateAxisExpression`, `ActivateSecondOrBoundaryTick`, the three `*NavigateOffOfEquation` methods, `GetVisualChild`, `VisualChildrenCount`, `MeasureOverride`, `this[int]`, `OtherAxis`, `AxisTitle` getter, `IsLinearizedRangeAssertEnabled` getter, `CollectElementsForTraversal` (iterator), `LegendWidthChanged` add/remove.
+- Shapes:
+  - Closure ordinals: `_typeOfThis` must be declared after the `set_ShowNumbers` setter (its earlier position shifted the display classes of `set_ShowTicks`..`set_ShowNumbers` by one). `_pendingWidth` must sit between `CollectElementsForTraversal` and `set_PositionTickMark`.
+  - Static constructor placed at token `0x0600047c` (after `get_LinearizedEnd`). Method-group caches use `<>O` and match once `.ctor` binds `LimitExpressionEqnPreviewGotKeyboardFocus`.
+  - `GetPlotAxis` calls `HasLocalValue` on `axisView as DependencyObject`; the `is ... ? ... : null` cast form emitted an extra `castclass`.
+- Release IL (`release_il.py --base main --project Quire.Controls.Plots --type Quire.Controls.Plots.PlotGraphAxis`): 4494 checked; no new failures against main; 53 base failures fixed; 5 remaining in `PlotGraphAxis`, all unchanged placeholders.
+- Remaining mismatches / parked:
+  - `IPlotAxisView.LegendActualWidth` setter: closure name is `<Quire.Controls.Plots.Presenter.IPlotAxisView.set_LegendActualWidth>b__0`; Mathcad's is `<Ptc.Controls.Plots...>`. Gate name mapping does not rewrite lambda names inside explicit-interface members. Parked (placeholder).
+  - `AxisTitle` setter and `IsLinearizedRangeAssertEnabled` setter: Mathcad uses `bne.un.s` over a `br.s` for the reference and nullable `!=`; Roslyn emits `beq.s`/`brtrue.s`, and `if (a == b) { } else { ... }` gives the same IL. Parked (placeholders).
+  - `GetMajorTickmaks`: the `||` condition chain is 6 bytes shorter than Mathcad's. Parked (placeholder).
+  - Auto-property placeholders (`MirrorBlocked`) are unchanged.

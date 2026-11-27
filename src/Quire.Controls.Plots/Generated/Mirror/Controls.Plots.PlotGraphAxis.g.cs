@@ -14,7 +14,5 @@ public abstract partial class PlotGraphAxis : global::Quire.Controls.Plots.PlotG
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.PlotGraphAxis+Point2ScreenHelper, Ptc.Controls.Plots")]
     public partial class Point2ScreenHelper
     {
-        [global::Quire.Mirror.MirrorStub]
-        internal virtual bool Contains(double coordinate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }
