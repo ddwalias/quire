@@ -11,40 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetPasteHandler, Ptc.Controls.Worksheet")]
 public partial class WorksheetPasteHandler : global::Quire.Controls.Worksheet.IWorksheetPasteHandler
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.ResourceDictionary _resourceDictionary;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.ITextStyleChangedHandler _textStyleChangedHandler;
-    [global::Quire.Mirror.MirrorStub]
-    private static byte[] _clipboardPrimeObjectHash;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.Core.IWhiteboardItemInText _clipboardPrimeObject;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.IWhiteboardItemInText SingleEmbeddableItemForTextFromClipboard { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public WorksheetPasteHandler(global::System.Windows.ResourceDictionary resourceDictionary, global::Quire.ITextStyleChangedHandler textStyleChangedHandler) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Vector> ProcessClipboardContents(global::System.Windows.Markup.XmlLanguage proofingLanguage, global::Quire.Core.TextFormat currentTextFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IWhiteboardItemInText ProcessSingleEmbeddableItemForTextInClipboard() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Vector> ProcessXamlObject(object xamlObject, global::Quire.ITextStyleChangedHandler textStyleChangedHandler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static string ConvertToValidSExpressionIfANegativeNumber(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Vector> ProcessImage(global::System.Windows.Media.ImageSource imageSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Vector> ProcessPrimeXml(string primeXml, global::Quire.ITextStyleChangedHandler textStyleChangedHandler = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IEnumerable<global::Quire.Serialization.IRegionPersistentData> DeserializeIRegions(global::System.Collections.Generic.IEnumerable<global::Quire.PersistentDataObjects.IRegionType> regionTypes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Serialization.IRegionPersistentData DeserializeIRegion(global::Quire.PersistentDataObjects.IRegionType regionType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Vector> ProcessRegionPersistentDataList(global::System.Collections.Generic.IEnumerable<global::Quire.Serialization.IRegionPersistentData> dataList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.Controls.Core.IEquationControl EquationFromSExpression(string sexp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Vector> ProcessSExpression(string sexp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IWhiteboardItem, global::System.Windows.Vector> ProcessText(global::Quire.Core.TextFormat currentTextFormat, string formattedText, string dataFormat, global::System.Windows.Markup.XmlLanguage proofingLanguage, bool hasMultipleLines, global::Quire.ITextStyleChangedHandler textStyleChangedHandler = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
