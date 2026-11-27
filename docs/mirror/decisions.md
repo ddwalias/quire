@@ -1,5 +1,25 @@
 # Current project decisions
 
+## D33: ribbon/dock components come from the Mathcad install (2026-11-27)
+
+D6 is resolved for mirroring: what Quire used before is obsolete and does not constrain the mirror. DevComponents
+DotNetBar (`DevComponents.WpfRibbon`, `DevComponents.WpfDock`) is a commercial component, not open source (a search found
+no repository or open licence). The install ships both DLLs, so under D27 the build references them from the install
+(`MATHCAD_DIR`) and the windows/connectors that derive from them (FunctionBrowserWindow, InputOutputDesignationWindow,
+ButtonEx/ButtonDropDown connectors) are mirrored against the real types. They are never committed (D15).
+
+## D34: Ptc.OleInterop is in scope (2026-11-27)
+
+The user lifted D5's deferral of `Ptc.OleInterop`. It is mirrored now as a C++/CLI project in its original language
+(D20) with the pinned MSVC 19.51.36246 (D19). `Ptc.License.Plpf` stays deferred.
+
+## D35: Mpl-compiled assemblies are investigated through Quire.Mpl.Emit (2026-11-27)
+
+`Quire.Mcd` and `Quire.Mpl.Modules` hold Mpl-compiled members whose Mathcad IL uses `.maxstack 48` and `tail.` calls, which
+Roslyn cannot emit. Mathcad does not build them with C++/CLI (mcdepman is the exception, D32). The user chose to investigate
+`Quire.Mpl.Emit` as the route to exact IL; a scout (lane-mpl-emit-scout.md) reports before any worker is assigned to these
+types. Engine.Native types that originate from C++/CLI follow D20 (C++/CLI projects), not C# stand-ins.
+
 ## D32: mcdepman C++/CLI migration (2026-11-10)
 
 The mcdepman members move from their C# host in `Quire.Mcd` to the C++/CLI project
