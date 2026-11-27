@@ -544,6 +544,28 @@ public partial class MathNode
 
     public int[] ProhibitedAutoLabelIdDescendants => d__.ProhibitedAutoLabelIdDescendants;
 
+    public int RowCount
+    {
+        get
+        {
+            if (IsPairNary)
+            {
+                int count = 0;
+                int elementsCount = ElementsCount;
+                count += FirstElementDescriptor.RowCount;
+                elementsCount--;
+                if (HasLastElement)
+                {
+                    count += LastElementDescriptor.RowCount;
+                    elementsCount--;
+                }
+                count += ActualMiddleElementDescriptor.RowCount * elementsCount;
+                return count;
+            }
+            return d__.RowCount;
+        }
+    }
+
     public bool HasContainerSlot => ContainerSlots.Length > 0;
 
     public bool IsFullContainer
