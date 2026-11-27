@@ -591,10 +591,11 @@ public partial class PlotControl
 
     private void PlotLegendSizeChanged(object sender, SizeChangedEventArgs e)
     {
-        if (sender is PlotLegend)
+        if (!(sender is PlotLegend))
         {
-            EquationListOrPlotLegendSizeChanged();
+            return;
         }
+        EquationListOrPlotLegendSizeChanged();
     }
 
     protected override void IsActiveRegionChanged(bool newValue)
