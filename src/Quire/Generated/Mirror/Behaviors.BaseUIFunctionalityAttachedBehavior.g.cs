@@ -32,8 +32,6 @@ public partial class BaseUIFunctionalityAttachedBehavior : global::Microsoft.Xam
     [global::Quire.Mirror.MirrorStub]
     protected override void OnAttached() => base.OnAttached();
     [global::Quire.Mirror.MirrorStub]
-    protected static global::System.Windows.Controls.Image GetImage(object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected virtual void OnLoaded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void GetLockImages(global::System.Windows.FrameworkElement uiElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -57,10 +55,6 @@ public partial class BaseUIFunctionalityAttachedBehavior : global::Microsoft.Xam
     protected void UpdateUIToolTip(global::System.Windows.FrameworkElement element, global::Quire.FunctionalitiesLimitation.EnumFunctionalityBehaviorKey functionalityBehaviorKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void SetStackPanelChildrenVisibility(global::System.Windows.Controls.StackPanel toolTipStackPanel, global::System.Windows.Visibility visibilityOriginalToolTip, global::System.Windows.Visibility visibilityTrialToolTip, global::System.Windows.Visibility visibilityFreemiumToolTip) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.FunctionalitiesLimitation.EnumFunctionalityBehaviorKey GetUIFunctionalityBehaviorKey(global::System.Windows.DependencyObject d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected static void SetUIFunctionalityBehaviorKey(global::System.Windows.DependencyObject d, global::Quire.FunctionalitiesLimitation.EnumFunctionalityBehaviorKey functionalityBehaviorKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public BaseUIFunctionalityAttachedBehavior() { }
 

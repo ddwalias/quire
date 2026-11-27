@@ -16,3 +16,9 @@
 - Landed members (20 method and accessor rows): MathcadPrimeComServerManager Instance, PrimeApp, PrimeWindow, IsInitialized, ListOfControlledWorksheets, AddWorksheet, RemoveWorksheet, GetDialogManager, GetMessageBoxManager, DisableMessageBoxManager, Succeeded, plus auto-property accessors for CallsCounter, RuntimeKey and RuntimeKeyHex; AddonsProperties GetAddonsProperties, GetAddonPath, CheckIfAddonsShouldBeLoaded; AddonsCollection CopyViewable, CallAddonsToGeneratePdfFile; TabManager IsIndexInCollectionRange.
 - Gate: none of the changed members fails; project failures are the pre-existing SpiritMainWindow stubs (18).
 - Parked (unchanged): the AddonsProperties registry literals and resource URI, the Addon renamed-export members, GetDisplayTitle, CallAddonsWhenDocument*.
+
+## TabManager blockers (coordinator question, 2026-11-27)
+
+- `DebugTools.DevAssert`: present in Quire.Core (`DebugTools.cs:62`, `(bool, string, params object[])`, returns `AssertionResult`); not a missing member. The IL-level difference, if any, is in the call shape of the members that use it, not the signature.
+- `WpfUtils.ExecuteOnLayoutUpdated`: present in Quire.Core (`Wpf/WpfUtils.cs:229`, `(UIElement, Action)`); not a missing member.
+- DockWindow (DevComponents.WpfDock): stays parked (D6).

@@ -42,8 +42,6 @@ public partial class TabManager : global::System.Windows.Controls.Primitives.Sel
     [global::Quire.Mirror.MirrorStub]
     public int GetTabIndexForWindow(global::AvalonDock.Layout.LayoutAnchorable wnd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public override void OnApplyTemplate() => base.OnApplyTemplate();
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnSelectionChanged(global::System.Windows.Controls.SelectionChangedEventArgs e) => base.OnSelectionChanged(e);
     [global::Quire.Mirror.MirrorStub]
     private void HandleTabManagerItemClicked(object sender, global::Quire.TabManagerItemClickedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
