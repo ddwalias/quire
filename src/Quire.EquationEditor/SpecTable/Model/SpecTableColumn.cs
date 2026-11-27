@@ -45,7 +45,7 @@ public partial class SpecTableColumn
 
     [global::Quire.Mirror.MirrorStub]
     [global::Quire.Mirror.MirrorBlocked("unfinished: constructor stores before the base call")]
-    public SpecTableColumn(Delegate1<IEquationModel> cellCreatedCallback, int dataCells, bool inCustomInitialization = false) => throw MirrorStub.NotImplemented();
+    public SpecTableColumn(Delegate1<IEquationModel> cellCreatedCallback, int dataCells, bool inCustomInitialization = false) { }
 
     [MirrorVerified("Release IL")]
     public IColumnMemento CreateMemento() => new ColumnMemento(this);
@@ -368,7 +368,7 @@ public partial class SpecTableColumn
 
         [global::Quire.Mirror.MirrorStub]
         [global::Quire.Mirror.MirrorBlocked("unfinished: iterator")]
-        public e_(int state) => throw MirrorStub.NotImplemented();
+        public e_(int state) { }
 
         [global::Quire.Mirror.MirrorStub]
         [global::Quire.Mirror.MirrorBlocked("unfinished")]
