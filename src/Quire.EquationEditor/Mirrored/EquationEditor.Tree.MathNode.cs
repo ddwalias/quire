@@ -364,7 +364,31 @@ public partial class MathNode
 
     public bool PostFenceNavigatable => d__.PostFenceNavigatable;
 
+    public int? PrimalChildPosition => d__.PrimalChildPosition;
+
+    public bool AllowVerticalNavigation => d__.AllowVerticalNavigation;
+
+    public bool IsLeafOperator => d__.IsLeafOperator;
+
+    public bool JumpIntoChildren => d__.JumpIntoChildren;
+
     public bool HasContainerSlot => ContainerSlots.Length > 0;
+
+    public bool IsPairNary => d__.IsPairNary;
+
+    public string FirstElementDescriptorName => d__.FirstElementDescriptorName;
+
+    public string MiddleElementDescriptorName => d__.MiddleElementDescriptorName;
+
+    public string LastElementDescriptorName => d__.LastElementDescriptorName;
+
+    public string AlternateMiddleElementDescriptorName => d__.AlternateMiddleElementDescriptorName;
+
+    public string AlternateOperatorSExpName => d__.AlternateOperatorSExpName;
+
+    public bool IsPairNarySubElement => d__.IsPairNarySubElement;
+
+    public string ParentPairNaryDescriptorName => d__.ParentPairNaryDescriptorName;
 
     public bool IsFullContainer
     {
