@@ -9,7 +9,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Markup;
+using Quire.Calculation.Core.Trace2DResults;
 using Quire.Controls.Core;
 using Quire.Wpf;
 using Quire.Controls.Plots.Presenter;
@@ -468,5 +471,86 @@ public partial class PlotControl
             return SelectedTraces.Any(predicate);
         }
         return false;
+    }
+
+    private void RemovePlotItemAdorner()
+    {
+        if (_plotItemAdorner != null)
+        {
+            AdornerLayer.GetAdornerLayer(this).Remove(_plotItemAdorner);
+            _plotItemAdorner = null;
+        }
+    }
+
+    public static void SetIsDropTarget(UIElement element, bool value)
+    {
+        ((DependencyObject)element).SetValue(IsDropTargetProperty, value);
+    }
+
+    public static bool GetIsDropTarget(UIElement element)
+    {
+        return (bool)((DependencyObject)element).GetValue(IsDropTargetProperty);
+    }
+
+    private static void CommitAllEquationListWithoutEvent(EquationList equationList)
+    {
+        for (int i = 0; i < equationList.EquationCount; i++)
+        {
+            equationList[i].Commit(fireEvent: false);
+        }
+    }
+
+    private void TogglePlotTitleCommandCanExecute(object sender, CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = _plotTitle != null;
+    }
+
+    private void AddRowCommandExecute(object sender, ExecutedRoutedEventArgs e)
+    {
+        EquationCommands.InsertRow.Execute(null, ActivePlotEquation);
+    }
+
+    private void DeleteTraceCommandExecute(object sender, ExecutedRoutedEventArgs e)
+    {
+        EquationList equationList = ActivePlotEquation == _rangeEquations.SelectedItem.Equation ? _rangeEquations : _resultEquations;
+        equationList.RequestRemoveItem(equationList.SelectedItem, Direction.Right);
+    }
+
+    private void ChangeTraceTypeCommandExecute(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (AssertionE.Failed == (AssertionE)DebugTools.DevAssert(e.Parameter is TraceType, null))
+        {
+            return;
+        }
+        TraceType traceType = (TraceType)e.Parameter;
+        SetTraceType(traceType);
+    }
+
+    private void ChangeTraceSymbolCommandExecute(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (AssertionE.Failed == (AssertionE)DebugTools.DevAssert(e.Parameter is TraceSymbol, null))
+        {
+            return;
+        }
+        TraceSymbol traceSymbol = (TraceSymbol)e.Parameter;
+        SetTraceSymbol(traceSymbol);
+    }
+
+    private void ChangeTraceLineCommandExecute(object sender, ExecutedRoutedEventArgs e)
+    {
+        if (AssertionE.Failed == (AssertionE)DebugTools.DevAssert(e.Parameter is LineStyle, null))
+        {
+            return;
+        }
+        LineStyle lineStyle = (LineStyle)e.Parameter;
+        SetTraceLineStyle(lineStyle);
+    }
+
+    private void ChangeTraceWeightCommandExecute(object sender, ExecutedRoutedEventArgs e)
+    {
+        if ((AssertionE)DebugTools.DevAssert(e.Parameter is double, null) == AssertionE.Passed)
+        {
+            SetSelectedTracesLineWeight((double)e.Parameter);
+        }
     }
 }
