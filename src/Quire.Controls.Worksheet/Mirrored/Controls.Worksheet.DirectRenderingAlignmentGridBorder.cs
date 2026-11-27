@@ -289,10 +289,10 @@ public partial class DirectRenderingAlignmentGridBorder
                 drawingContext.DrawLine(minorLinePen, new Point(minorLineX, 0.0), new Point(minorLineX, borderSize.Height));
             }
         }
-        for (double num3 = 0.0; num3 <= borderSize.Height; num3 += majorGridLines)
+        for (double majorLineY = 0.0; majorLineY <= borderSize.Height; majorLineY += majorGridLines)
         {
-            double nextMajorLineY = Math.Min(num3 + majorGridLines, borderSize.Height);
-            for (double minorLineY = num3 + gridCellSize.Height; minorLineY.IsLessThan(nextMajorLineY); minorLineY += gridCellSize.Height)
+            double nextMajorLineY = Math.Min(majorLineY + majorGridLines, borderSize.Height);
+            for (double minorLineY = majorLineY + gridCellSize.Height; minorLineY.IsLessThan(nextMajorLineY); minorLineY += gridCellSize.Height)
             {
                 drawingContext.DrawLine(minorLinePen, new Point(0.0, minorLineY), new Point(borderSize.Width, minorLineY));
             }

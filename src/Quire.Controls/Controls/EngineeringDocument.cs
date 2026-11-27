@@ -1674,10 +1674,10 @@ public partial class EngineeringDocument
                     }
                 }
             }
-            catch (IOException innerException2)
+            catch (IOException packageIOException)
             {
-                NetworkDriveEnsureStreamRelease(FilePath, ref innerException2);
-                throw new FileIsUsedByAnotherProcessException(innerException2);
+                NetworkDriveEnsureStreamRelease(FilePath, ref packageIOException);
+                throw new FileIsUsedByAnotherProcessException(packageIOException);
             }
         }
         catch (Exception ex4)
@@ -1777,15 +1777,15 @@ public partial class EngineeringDocument
             }
             using (new DitaWriter.Worksheet(ditaWriter))
             {
-                foreach (UIElement region2 in Regions)
+                foreach (UIElement region in Regions)
                 {
-                    if (region2 is ImageControl)
+                    if (region is ImageControl)
                     {
-                        ditaWriter.WriteImageControlML(region2 as ImageControl);
+                        ditaWriter.WriteImageControlML(region as ImageControl);
                     }
-                    if (region2 is IDitaRegion)
+                    if (region is IDitaRegion)
                     {
-                        ditaWriter.WriteRegionML(region2);
+                        ditaWriter.WriteRegionML(region);
                     }
                 }
             }
@@ -1960,9 +1960,9 @@ public partial class EngineeringDocument
                     temporaryXpsPath = Path.GetTempFileName();
                     SaveXpsDocument(temporaryXpsPath);
                 }
-                catch (IOException innerException2)
+                catch (IOException printIOException)
                 {
-                    ex = new PrintToFileException(null, innerException2, PrintFileErrorCode.TakeInnerExceptionByOS);
+                    ex = new PrintToFileException(null, printIOException, PrintFileErrorCode.TakeInnerExceptionByOS);
                 }
                 if (ex == null)
                 {
@@ -1974,9 +1974,9 @@ public partial class EngineeringDocument
                     }
                 }
             }
-            catch (Exception innerException3)
+            catch (Exception printException)
             {
-                ex = new PrintToFileException("Unexpected error when saving document: " + filePath, innerException3, PrintFileErrorCode.Unknown, filePath);
+                ex = new PrintToFileException("Unexpected error when saving document: " + filePath, printException, PrintFileErrorCode.Unknown, filePath);
             }
             finally
             {

@@ -126,9 +126,9 @@ public partial class WorksheetPasteHandler
                     exceptions.Add(new Exception(ErrorResourceKeyToMessage("WorksheetMessages.SExpression")));
                 }
             }
-            catch (Exception innerException2)
+            catch (Exception sExpressionException)
             {
-                exceptions.Add(new Exception(ErrorResourceKeyToMessage("WorksheetMessages.SExpression"), innerException2));
+                exceptions.Add(new Exception(ErrorResourceKeyToMessage("WorksheetMessages.SExpression"), sExpressionException));
             }
         }
         if (result == null && clipboard.HasXMLSpreadsheet())
@@ -145,9 +145,9 @@ public partial class WorksheetPasteHandler
                     }
                 }
             }
-            catch (Exception innerException3)
+            catch (Exception xmlSpreadsheetException)
             {
-                exceptions.Add(new Exception(ErrorResourceKeyToMessage("WorksheetMessages.XMLSpreadsheet"), innerException3));
+                exceptions.Add(new Exception(ErrorResourceKeyToMessage("WorksheetMessages.XMLSpreadsheet"), xmlSpreadsheetException));
             }
         }
         if (result == null && clipboard.HasText())
@@ -179,9 +179,9 @@ public partial class WorksheetPasteHandler
                     }
                 }
             }
-            catch (Exception innerException4)
+            catch (Exception textPasteException)
             {
-                exceptions.Add(new Exception(ErrorResourceKeyToMessage("WorksheetMessages.Text"), innerException4));
+                exceptions.Add(new Exception(ErrorResourceKeyToMessage("WorksheetMessages.Text"), textPasteException));
             }
         }
         if (result == null && clipboard.HasImage())
@@ -194,9 +194,9 @@ public partial class WorksheetPasteHandler
                     exceptions.Add(new Exception(ErrorResourceKeyToMessage("WorksheetMessages.Image")));
                 }
             }
-            catch (Exception innerException5)
+            catch (Exception imagePasteException)
             {
-                exceptions.Add(new Exception(ErrorResourceKeyToMessage("WorksheetMessages.Image"), innerException5));
+                exceptions.Add(new Exception(ErrorResourceKeyToMessage("WorksheetMessages.Image"), imagePasteException));
             }
         }
         foreach (Exception exception in exceptions)
