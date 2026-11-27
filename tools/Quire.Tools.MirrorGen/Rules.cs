@@ -90,7 +90,6 @@ public sealed class Rules
             return "deferred: PTC Creo platform (D5)";
         if (stem.StartsWith("mkl_") || stem is "libimalloc" or "libiomp5md") return "substitute: MathNet.Numerics for Intel oneMKL (D6)";
         if (stem.StartsWith("clearscript.")) return "dependency: Microsoft.ClearScript";
-        if (stem.StartsWith("devcomponents.")) return "substitute: Fluent.Ribbon / Dirkster.AvalonDock for DevComponents (D6)";
         if (stem.StartsWith("system.servicemodel.")) return "dependency: System.ServiceModel (dotnet/wcf)";
         return stem switch
         {

@@ -7,6 +7,7 @@
     <ProjectReference Include="..\Quire.Controls.Core\Quire.Controls.Core.csproj" />
     <ProjectReference Include="..\Quire.EquationEditor\Quire.EquationEditor.csproj" />
     <ProjectReference Include="..\Quire.Calculation.Core\Quire.Calculation.Core.csproj" />
+    <ProjectReference Include="..\Quire.DevComponents.WpfRibbon\Quire.DevComponents.WpfRibbon.csproj" />
   </ItemGroup>
   <Import Project="Generated\Mirror.props" />
 </Project>

@@ -5,5 +5,8 @@
     <AssemblyName>Quire.DevComponents.WpfRibbon</AssemblyName>
     <RootNamespace>Quire.DevComponents.WpfRibbon</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Quire.Core\Quire.Core.csproj" />
+  </ItemGroup>
   <Import Project="Generated\Mirror.props" />
 </Project>

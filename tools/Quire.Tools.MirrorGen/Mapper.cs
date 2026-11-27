@@ -162,24 +162,6 @@ public sealed class Mapper
         return Rules.MapNamespace(ns, asm) + "." + string.Join("+", encoded);
     }
 
-    private static readonly Dictionary<string, (string Asm, string Name)> Substitutes = new()
-    {
-        // D6: DevComponents → Fluent.Ribbon / AvalonDock
-        ["DevComponents.WpfRibbon.RibbonBar"] = ("Fluent", "Fluent.RibbonGroupBox"),
-        ["DevComponents.WpfRibbon.ButtonDropDown"] = ("Fluent", "Fluent.DropDownButton"),
-        ["DevComponents.WpfRibbon.ButtonEx"] = ("Fluent", "Fluent.Button"),
-        ["DevComponents.WpfRibbon.ApplicationMenu"] = ("Fluent", "Fluent.ApplicationMenu"),
-        ["DevComponents.WpfRibbon.RibbonTab"] = ("Fluent", "Fluent.RibbonTabItem"),
-        ["DevComponents.WpfRibbon.Qat"] = ("Fluent", "Fluent.QuickAccessToolBar"),
-        ["DevComponents.WpfRibbon.RibbonWindow"] = ("Fluent", "Fluent.RibbonWindow"),
-        ["DevComponents.WpfRibbon.Gallery"] = ("Fluent", "Fluent.Gallery"),
-        ["DevComponents.WpfRibbon.GroupPanel"] = ("PresentationFramework", "System.Windows.Controls.Panel"),
-        ["DevComponents.WpfRibbon.RibbonBarPanel"] = ("PresentationFramework", "System.Windows.Controls.Panel"),
-        ["DevComponents.WpfDock.DockWindow"] = ("AvalonDock", "AvalonDock.Layout.LayoutAnchorable"),
-        ["DevComponents.WpfDock.DockSite"] = ("AvalonDock", "AvalonDock.DockingManager"),
-        ["DevComponents.WpfDock.DockRoutedEventArgs"] = ("PresentationCore", "System.Windows.RoutedEventArgs"),
-    };
-
     /// <summary>Maps a Mathcad-side signature type to Quire. Returns null with a reason when it has no counterpart.</summary>
     public TypeSig? Map(TypeSig sig, string fromProject, out string? reason)
     {
@@ -246,12 +228,6 @@ public sealed class Mapper
             }
         }
         if (n.Assembly == "nrtftree-library") return new NamedSig(n.Assembly, n.Name);
-        if (n.Assembly.StartsWith("DevComponents."))
-        {
-            if (Substitutes.TryGetValue(n.Name, out var s)) return new NamedSig(s.Asm, s.Name);
-            reason = $"no substitute for {n.Name}";
-            return null;
-        }
         if (n.Assembly == "System.Windows.Interactivity")
             return new NamedSig("Microsoft.Xaml.Behaviors", "Microsoft.Xaml.Behaviors." + n.Name["System.Windows.Interactivity.".Length..]);
         return n;

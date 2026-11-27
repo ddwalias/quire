@@ -17,6 +17,8 @@
     <Project Path="src/Quire.Controls.Worksheet/Quire.Controls.Worksheet.csproj" />
     <Project Path="src/Quire.Controls/Quire.Controls.csproj" />
     <Project Path="src/Quire.Core/Quire.Core.csproj" />
+    <Project Path="src/Quire.DevComponents.WpfDock/Quire.DevComponents.WpfDock.csproj" />
+    <Project Path="src/Quire.DevComponents.WpfRibbon/Quire.DevComponents.WpfRibbon.csproj" />
     <Project Path="src/Quire.Efi/Quire.Efi.csproj" />
     <Project Path="src/Quire.EngNotebook.Automation/Quire.EngNotebook.Automation.csproj" />
     <Project Path="src/Quire.EngNotebookPlus.Automation/Quire.EngNotebookPlus.Automation.csproj" />

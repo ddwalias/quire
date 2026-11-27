@@ -13,6 +13,7 @@
     <ProjectReference Include="..\Quire.Core\Quire.Core.csproj" />
     <ProjectReference Include="..\Quire.EquationEditor\Quire.EquationEditor.csproj" />
     <ProjectReference Include="..\Quire.Calculation.Core\Quire.Calculation.Core.csproj" />
+    <ProjectReference Include="..\Quire.DevComponents.WpfRibbon\Quire.DevComponents.WpfRibbon.csproj" />
     <ProjectReference Include="..\Quire.Calculation\Quire.Calculation.csproj" />
     <ProjectReference Include="..\Quire.Controls.CollapsibleArea\Quire.Controls.CollapsibleArea.csproj" />
   </ItemGroup>
