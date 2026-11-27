@@ -207,3 +207,17 @@
 - Release IL: PASS; 435 checked; 0 failures.
 - Landed commit: (in-progress)
 - Remaining mismatches: none in this batch (2205 stubs remaining in Quire.Controls.Worksheet).
+
+### Batch 13 (Current)
+- Owner: task_e0a06d4d4305
+- Branch: feature/agy-ws-small
+- Members implemented (180 exact methods/closures across 4 types):
+  - `Quire.Controls.Worksheet.WorksheetDragger`: all 58 methods/closures exact (`0` stubs remaining).
+  - `Quire.Controls.Worksheet.WorksheetItemSplitter`: all 44 methods/closures exact (`0` stubs remaining).
+  - `Quire.Controls.Worksheet.WorksheetPasteHandler`: 24 exact methods/closures (`ProcessClipboardContents`, `ProcessPrimeXml`, `ProcessSExpression`, `ProcessText`, `ProcessImage`, `DeserializeIRegions`, `DeserializeIRegion`, `ProcessRegionPersistentDataList`, `EquationFromSExpression`, properties, `.ctor`, etc.); `ProcessXamlObject` parked as `[MirrorStub]` + `[MirrorBlocked]` closure ordinal anchor.
+  - `Quire.Controls.Worksheet.WorksheetVisualHelper`: 54 exact methods/closures (`Find*`, `Translate*`, `ScrollToPage`, `LoadActivePage`, `CreatePageSnapshot`, `CreateHeaderFooterSnapshot`, `IsInScrollViewport`, `ScrollIntoView`, `GetScrollViewerRect`, `BringIntoView`, `BringItemsBoundingBoxIntoView`, `TransformBounds`, `ExecuteCommandOnItem`, etc.); `IsItemInView` parked as `[MirrorStub]` + `[MirrorBlocked]` closure ordinal anchor.
+- Release IL: PASS; 2153 checked; 0 failures; `.mirror-cache/release-il-e2a39f2a210b/release-il.json`.
+- Parked members:
+  - `WorksheetPasteHandler.ProcessXamlObject`: modern Roslyn `StackOptimizer` elides single-use `prevLocation` local across `ClearPreviousLocation` in `<ProcessXamlObject>g__GetPastedItemLocation|20_0` (`32` vs `34` IL instructions).
+  - `WorksheetVisualHelper.IsItemInView`: modern Roslyn emits `newobj Rect(Size)` instead of `ldloca`/`call Rect(Size)` in ternary initializer (`calls differ at #15`) and elides `Point` temp in zombie branch.
+- Remaining mismatches: none (0 failures; 547 generated stubs + 2 parked `[MirrorBlocked]` anchors in `Quire.Controls.Worksheet`).

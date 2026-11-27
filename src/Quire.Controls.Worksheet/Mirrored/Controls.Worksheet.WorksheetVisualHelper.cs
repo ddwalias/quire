@@ -503,6 +503,10 @@ internal partial class WorksheetVisualHelper
         return rect.IntersectsWith(scrollViewPort);
     }
 
+    [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorBlocked("closure ordinal anchor; Modern Roslyn emits newobj Rect(Size) instead of in-place call Rect(Size) in ternary")]
+    public bool IsItemInView(IWhiteboardItem item, IWorksheetControl parentWorksheet) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
     public Point TranslateWorksheetItemsCanvasPointToWorksheet(Point point, IWorksheetViewModel worksheetViewModel, Direction? direction = null)
     {
         if (worksheetViewModel.WorksheetPageLayoutMode == PageLayoutMode.DraftMode)

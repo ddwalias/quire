@@ -11,6 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetVisualHelper, Ptc.Controls.Worksheet")]
 internal partial class WorksheetVisualHelper : global::Quire.Controls.Worksheet.IWorksheetVisualHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsItemInView(global::Quire.Controls.Core.IWhiteboardItem item, global::Quire.Controls.Worksheet.IWorksheetControl parentWorksheet) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
