@@ -88,6 +88,18 @@ public partial class MathNode
         set => g = value;
     }
 
+    public int IndexInParent
+    {
+        get
+        {
+            if (a__ != null)
+            {
+                return a__.Children.IndexOf(this);
+            }
+            return -1;
+        }
+    }
+
     public bool IsEquationRoot
     {
         get
