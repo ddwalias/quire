@@ -746,3 +746,38 @@
 - Landed (gate PASS, 4095 exact): `CanClearResultFormat`, `FindOncePrivate`, `HandleSizeChanged(Vector, ...)`, `SetRegionPersistentData`, `FocusViewAndUpdateNavigatorStateIfNeeded` (local-function closure).
 - Parked after one or more gate runs (IL shape not reproduced): `OnInsertId` (first branch offset: `brfalse.s 4` in Mathcad, `brfalse.s 11` in ours, for `is`, `as` and nested forms), `OnSetNumberFormatField` (string-compare order against `CoerceDecimalPlaces` calls), `GetImeWindowPosition` (Mathcad constructs the unused `Point` with `call .ctor` on a local address, not `newobj`), `XFromNavigatorState` (ternary branch sense), `UpdateLhsVisibleOnView` (`bne.un` layout), `SetMatrixForResizeAdorner` (`brfalse` layout), `FixCaretToRightMostPositionAfterClipping` (`conv.r8` on the clip width), `CreateWithTextInput` (`ldarg.0` order), `ExecuteOnRootLoaded` (lambda `brtrue` layout), `HideFromCalculationContext` (setter compares with `ceq`).
 - Release IL: PASS for the landed members, 4095 exact.
+
+## Wrap-up: remaining placeholders
+
+- Owner: haiku-equationcontrol-20261123; landed through batch 110 (`e6c2a41ae` on main).
+- Hand-written placeholders remaining in `Controls.EquationControl.cs`: 29. Each line gives the blocking shape or why it was not attempted.
+
+- `HideFromCalculationContext` (property): the setter's `CalcIsDisabled != value` is `beq` in ours, `ceq` in Mathcad.
+- `ComponentCookieMultiThreaded` (property): auto-property shape not reproduced; not attempted further.
+- `EquationControlChildCalculatable.Clone(newParent)` (nested): not attempted; reference not checked.
+- `WriteWrappedSizesToString` (static): reference body not located in the decompiled source; not attempted.
+- `ReadWrappedSizesFromString` (static): reference body not located in the decompiled source; not attempted.
+- `Clone()` (public): not attempted; reference not checked.
+- `CreateWithTextInput`: Mathcad loads `this` (`ldarg.0`) at IL #10 where ours loads the local `equationControl` first.
+- `GetImeWindowPosition`: Mathcad builds the unused `Point` with `call .ctor` on a local address; ours emits `newobj`.
+- `ExecuteOnRootLoaded`: the `if (_view.RootNode == null)` branch is `brtrue.s` in Mathcad, `brfalse.s` in ours, in the lambda body.
+- `History` (property): reference body not located; not attempted.
+- `EditNode(string, int)`: reference body not located (only the one-argument overload was found); not attempted.
+- `HandleSizeChanged(object, SizeChangedEventArgs)` (private): reference body not checked; not attempted.
+- `FixCaretToRightMostPositionAfterClipping`: Mathcad has `conv.r8` after the `ViewClippedWidth - 1.0` arithmetic; ours does not.
+- `XFromNavigatorState`: the `IVisualIdNode` ternary branch sense is `brfalse` in Mathcad, `brtrue` in ours.
+- `SetNavigatorStateFromLabel(string, int)`: reference body not located (the three-argument overload is implemented); not attempted.
+- `ToggleAlgorithmOption`: Mathcad calls the string comparison before reading `AlgorithmOptions`; both if-chain orderings miss (batch 103).
+- `OnSetNumberFormatField`: Mathcad compares `"decrease"` (`op_Equality`) before the `CoerceDecimalPlaces` calls; ours reaches `CoerceDecimalPlaces` first.
+- `OnInsertId`: the first null/type test branches to `brfalse.s 4` in Mathcad and `brfalse.s 11` in ours (`is`, `as` and nested forms all tried).
+- `InputControlOnEquationActivated`: switch lowering differs at one branch (batches 104-107).
+- `UpdateLhsVisibleOnView`: the `!=` guard branches `bne.un` in Mathcad, `beq` in ours, at IL #58.
+- `SetMatrixForResizeAdorner`: the early `DevAssert` return is laid out with `brfalse.s 4` in Mathcad, `brfalse.s 42` in ours.
+- `UpdateMatrixForResizeAdorner`: guard form matches one branch; the other branch differs (batch 103).
+- `EngineResultForSerialization` (property): not attempted; the getter's `is` pattern and conditional expression not reproduced.
+- `ConvertAnyFormattedMatrixToDisplayMatrix`: `is not` and switch-expression forms tried once each; display-class allocation hoisted to method entry.
+- `ConvertToDisplayMatrix`: Roslyn's `<=` materialises as `cgt; ldc.i4.0; ceq` in Mathcad; no source spelling reproduced it.
+- `GetEquationSizes_ForTestsOnly`: not attempted; depends on `CollectSizes_ForTestsOnly`.
+- `CollectSizes_ForTestsOnly`: not attempted; Mathcad's bottom-tested `for` with `continue` loop shape not reproduced.
+- `IsSelectedChanged(bool)` (instance): not attempted; batch 107 covered the static `DependencyObject` handler only.
+- `IsActiveChanged(bool)` (instance): not attempted; batch 107 covered the static `DependencyObject` handler only.
