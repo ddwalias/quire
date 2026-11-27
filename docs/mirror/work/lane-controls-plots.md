@@ -1112,3 +1112,8 @@
 
 - After declaration reordering and the second placeholder-only lambda build, these anchors match Mathcad: `get_Equations` b36, `AddItemToLegend` b60, `OnIsKeyboardFocusWithinChanged` b73, `ArrangeEquationsHorizontally` b87, and `SetMinMaxWidth(double,double)` b88.
 - Remaining anchor deltas: `GetEquationListItem` candidate b97 vs Mathcad b96 (+1); `HandleInsertItemToLegendCommand` candidate b107 vs Mathcad b108 (-1). Keep these two members as placeholders until their ordinals are aligned; calibration used dummy lambdas and does not verify the member bodies.
+
+## Orca task `task_3b0fb5d1b5ec` — VisualDataCollection closure calibration
+
+- Two placeholder-only calibration rounds did not align the closure shapes. Round 1 anchors: `UpdateVisualPoints` b15 vs Mathcad b20 (+5); `LogicalDataChanged` DisplayClass17 vs DisplayClass22 (+5); `GetEnumerator` d__51 vs d__54 (+3); `Initialize` b82 vs b80 (-2); `SetContoursLineStyle` b98 vs b105 (+7); `SetColorScheme` b99 vs b106 (+7); `SetLineWeight` b100 vs b107 (+7); `SetContoursLineColor` b101 vs b108 (+7).
+- Round 2 after moving `CommandBindings` to the first declaration: `UpdateVisualPoints` b17 vs b20 (+3); `GetEnumerator` d__53 vs d__54 (+1). The temporary lambdas for `LogicalDataChanged`, `Initialize`, and the four setters did not match Mathcad's closure/delegate signatures, so those generated names did not provide comparable ordinal anchors; keep these members as placeholders pending another layout change.
