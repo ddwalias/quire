@@ -880,4 +880,73 @@ public partial class EquationModel
 
     [MirrorVerified("Release IL")]
     public void HookupDescendantsMatrixFormatChanged() => HookupDescendantsMatrixFormatChanged(EquationRoot);
+
+    [MirrorVerified("Release IL")]
+    public void MoveToRegionExtreme(Direction direction)
+    {
+        switch (direction)
+        {
+            case Direction.Left:
+                MoveToRegionStart();
+                break;
+            case Direction.Right:
+                MoveToRegionEnd();
+                break;
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public bool SetEquationSExpressionWithAutoLabeling(string sExpression) => sExpression == Root.SExpression || a(sExpression, true);
+
+    [MirrorVerified("Release IL")]
+    public void SwitchLineBreakOperator()
+    {
+        MathNode node = v();
+        if (node != null)
+        {
+            InsertOperator(node.SplitOposite);
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public void CanNavigateToOppositeOfScope(ref bool canNavigateToOppositeOfScope)
+    {
+        if (Mode == EquationEditModeEnum.Scope)
+        {
+            canNavigateToOppositeOfScope = true;
+        }
+        else
+        {
+            canNavigateToOppositeOfScope = false;
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public void InsertValue(string valueToInsert)
+    {
+        FormattedString formatted;
+        if (Mode == EquationEditModeEnum.Normal && NavigatorState.CaretInsertionType == CaretInsertionTypes.Subscript)
+        {
+            formatted = FormattedString.CreateEditable();
+            formatted.Insert(0, valueToInsert, 1);
+        }
+        else
+        {
+            formatted = FormattedString.CreateEditable(valueToInsert);
+        }
+
+        a(formatted);
+    }
+
+    [MirrorVerified("Release IL")]
+    public void EditNode(MathNode node, int position)
+    {
+        if (node == null)
+        {
+            throw new ArgumentNullException("node");
+        }
+
+        NavigatorState state = new NavigatorState(node, position);
+        NavigatorState = state;
+    }
 }

@@ -149,8 +149,6 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     [global::Quire.Mirror.MirrorStub]
     public bool AtEdge(global::Quire.Direction dir) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool SetEquationSExpressionWithAutoLabeling(string sExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private bool a(string A_0, bool A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.EquationEditor.Tree.MathNode b(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.Native.PtcEquationEditor.aq A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -245,8 +243,6 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     [global::Quire.Mirror.MirrorStub]
     private bool a(ref string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void SwitchLineBreakOperator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.EquationEditor.Tree.MathNode v() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool CanToggleLineBreakOperator(out bool isToggled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -281,8 +277,6 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     [global::Quire.Mirror.MirrorStub]
     public void CanPerformClearCellsOperation(ref bool canPerformClearCellsOperation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void CanNavigateToOppositeOfScope(ref bool canNavigateToOppositeOfScope) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public bool IsMatrixCellClearable(global::Quire.EquationEditor.Tree.MathNode cell) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ClearCells() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -295,15 +289,11 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     [global::Quire.Mirror.MirrorStub]
     public void DragIntoMatrixHiddenPart(global::Quire.EquationEditor.Tree.MathNode matrix, int rowShift, int columnShift) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void InsertValue(string valueToInsert) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void a(global::Quire.EquationEditor.Tree.FormattedString A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InsertId(global::Quire.EquationEditor.Tree.FormattedString name, global::System.Nullable<global::Quire.Controls.Core.IdLabels> label) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InsertKeyword(string sExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void MoveToRegionExtreme(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ProcessEqualsKey() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -364,8 +354,6 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     public void InsertFunction(global::Quire.EquationEditor.Tree.FormattedString functionName, int numberOfArguments, global::System.Nullable<global::Quire.Controls.Core.IdLabels> label) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InsertFunctionWithArgs(global::Quire.EquationEditor.Tree.FormattedString functionName, int numArgs, global::System.Nullable<global::Quire.Controls.Core.IdLabels> label, string[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void EditNode(global::Quire.EquationEditor.Tree.MathNode node, int position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void EditNode(global::Quire.EquationEditor.Tree.MathNode node, global::Quire.Direction caretSide, global::Quire.Direction nodeSide) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
