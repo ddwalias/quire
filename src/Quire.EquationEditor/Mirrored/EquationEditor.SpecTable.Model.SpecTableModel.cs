@@ -1,7 +1,11 @@
 #nullable disable
 using System.Linq;
+using System.Xml;
+using Quire.Calculation.Core;
 using Quire.Core;
 using Quire.Mirror;
+using Quire.PersistentDataObjects;
+using Quire.Undo;
 
 namespace Quire.EquationEditor.SpecTable.Model;
 
@@ -123,6 +127,90 @@ public partial class SpecTableModel
     {
         c__.TryGetValue(column, out SpecTableCalculatableWrapper wrapper);
         return wrapper;
+    }
+
+    public mathType[] GetColumnsRegionPersistentData()
+    {
+        IList<mathType> serializedColumns = new List<mathType>();
+        foreach (ISpecTableColumn column in Columns)
+        {
+            mathType serializedColumn = new()
+            {
+                InnerXml = new XmlNode[] { column.EquationXmlNode },
+                InnerXmlForXamlSerialization = new XmlNode[] { column.EquationXmlNode }
+            };
+            int resultRefId = ResultManager.Instance.CreateResultRefId(GetColumnWrapper(column));
+            if (IResultManagerHelper.IsResultRefIdSpecified(resultRefId))
+            {
+                serializedColumn.resultRefSpecified = true;
+                serializedColumn.resultRef = resultRefId;
+            }
+
+            serializedColumns.Add(serializedColumn);
+        }
+
+        return serializedColumns.ToArray();
+    }
+
+    public void SetColumnsRegionPersistentData(mathType[] columns)
+    {
+        c();
+        foreach (mathType serializedColumn in columns)
+        {
+            ISpecTableColumn column = new SpecTableColumn(e, 0, InCustomInitialization)
+            {
+                EquationXmlNode = serializedColumn.InnerXml != null
+                    ? serializedColumn.InnerXml[0]
+                    : serializedColumn.InnerXmlForXamlSerialization[0]
+            };
+            column.SetRestrictedReadonly(IsRestrictedReadOnly);
+            SpecTableCalculatableWrapper wrapper = g(column);
+            if (serializedColumn.resultRefSpecified)
+            {
+                ResultManager.Instance.SetResultByRefId(serializedColumn.resultRef, wrapper);
+            }
+
+            d(column);
+        }
+
+        b();
+    }
+
+    public void RestoreMemento(SpecTableMemento modelMemento)
+    {
+        if (DebugTools.AssertNotNull(modelMemento, null).Failed)
+        {
+            return;
+        }
+
+        c();
+        foreach (ISpecTableColumn column in modelMemento.RestoreData())
+        {
+            column.SetRestrictedReadonly(IsRestrictedReadOnly);
+            g(column);
+            d(column);
+        }
+
+        b();
+    }
+
+    public bool SubstituteAndCommitInputValue(
+        string sExprId,
+        string valueSExpr,
+        string scalingSExpr,
+        bool shouldMoveFocus = false)
+    {
+        if (valueSExpr.IsNullOrEmpty() || sExprId.IsNullOrEmpty())
+        {
+            return false;
+        }
+
+        return CommandBuffer.Execute(new a_(this, sExprId, valueSExpr, scalingSExpr, shouldMoveFocus));
+    }
+
+    public void Commit()
+    {
+        c__.Values.Each(wrapper => wrapper.Commit());
     }
 
     [MirrorVerified("Release IL")]

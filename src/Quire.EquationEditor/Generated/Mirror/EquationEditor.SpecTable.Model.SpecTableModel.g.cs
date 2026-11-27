@@ -59,16 +59,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
     [global::Quire.Mirror.MirrorStub]
     public SpecTableModel(int dataRows, int columns) { }
     [global::Quire.Mirror.MirrorStub]
-    public void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.PersistentDataObjects.mathType[] GetColumnsRegionPersistentData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetColumnsRegionPersistentData(global::Quire.PersistentDataObjects.mathType[] columns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RestoreMemento(global::Quire.EquationEditor.SpecTable.Model.SpecTableMemento modelMemento) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool SubstituteAndCommitInputValue(string sExprId, string valueSExpr, string scalingSExpr, bool shouldMoveFocus = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static bool a(global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Undo.CompoundCommand f() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

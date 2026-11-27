@@ -25,3 +25,9 @@
 - Added `IsEmpty` with its predicate; removed its generated stub.
 - Release IL report: pending in the lane gate; lint passes.
 - Remaining: other SpecTableModel members and nested/closure types.
+
+## Batch 5 — persistence and commit entry points
+
+- Added `GetColumnsRegionPersistentData`, `SetColumnsRegionPersistentData`, `RestoreMemento`, `SubstituteAndCommitInputValue`, and `Commit`; removed their generated stubs.
+- Release IL comparison is deferred per coordinator instruction until the MethodAudit hotfix reaches `origin/main`; lint passes.
+- Remaining: other SpecTableModel members and nested/closure types.
