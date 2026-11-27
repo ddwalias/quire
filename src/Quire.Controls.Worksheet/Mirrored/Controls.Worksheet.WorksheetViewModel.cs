@@ -2381,13 +2381,9 @@ private bool CanDeleteActiveOrSelectedItems()
 
 private bool CanTogglePageLayout(object param)
     {
-        if (param is PageLayoutMode)
+        if (param is PageLayoutMode && (PageLayoutMode)param != PageLayoutMode.PageMode)
         {
-            PageLayoutMode pageLayoutMode = (PageLayoutMode)param;
-            if (pageLayoutMode != PageLayoutMode.PageMode)
-            {
-                return true;
-            }
+            return true;
         }
         if (ActiveItem == null)
         {
@@ -2544,9 +2540,8 @@ private bool CanCreateParagraphControl()
         {
             return false;
         }
-        IWhiteboardControl whiteboardControl = ActiveItem as IWhiteboardControl;
         Point insertionPoint;
-        if (whiteboardControl != null)
+        if (ActiveItem is IWhiteboardControl whiteboardControl)
         {
             insertionPoint = whiteboardControl.InsertionPoint;
             return insertionPoint.X <= PageLayout.PageBodyWidth;
