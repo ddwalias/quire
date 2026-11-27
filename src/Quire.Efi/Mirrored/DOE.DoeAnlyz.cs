@@ -223,6 +223,47 @@ public partial class DoeAnlyz
         return true;
     }
 
+    public MatVal removeDuplicateRuns(MatVal A, ArrayList dups)
+    {
+        if (dups.Count == 0)
+        {
+            return A;
+        }
+        bool[] array = new bool[A.Rows];
+        for (int i = 0; i < A.Rows; i++)
+        {
+            array[i] = false;
+        }
+        int num = 0;
+        for (int j = 0; j < dups.Count; j++)
+        {
+            List<int> list = dups[j] as List<int>;
+            num += list.Count;
+            for (int k = 1; k < list.Count; k++)
+            {
+                array[list[k]] = true;
+            }
+        }
+        MatVal matVal = new MatVal(A.Rows - num + dups.Count, A.Cols);
+        matVal.m_dim = A.m_dim;
+        // The Mathcad IL keeps num2 in a nested scope, after the loop slots; a bare block gives the same slot order.
+        {
+            int num2 = 0;
+            for (int l = 0; l < A.Rows; l++)
+            {
+                if (!array[l])
+                {
+                    for (int m = 0; m < A.Cols; m++)
+                    {
+                        matVal.set_2(num2, m, A.get_2(l, m));
+                    }
+                    num2++;
+                }
+            }
+        }
+        return matVal;
+    }
+
     public MatVal averageDuplicateRuns(MatVal Yij, ArrayList dups, out int ndata)
     {
         bool[] array = new bool[Yij.Rows];

@@ -15,8 +15,6 @@ public partial class DoeAnlyz : global::Quire.DOE.DoeBase
     protected void BlocksInfo() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.ArrayList FindDuplicates(global::Quire.Mcd.MatVal A) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Mcd.MatVal removeDuplicateRuns(global::Quire.Mcd.MatVal A, global::System.Collections.ArrayList dups) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("DOE.DoeAnlyz+FactorInfo, efisixsigma_")]
     public partial class FactorInfo

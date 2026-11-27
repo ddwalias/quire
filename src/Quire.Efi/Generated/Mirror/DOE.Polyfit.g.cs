@@ -12,17 +12,7 @@ namespace Quire.DOE;
 public partial class Polyfit : global::Quire.DOE.DoeAnlyz
 {
     [global::Quire.Mirror.MirrorStub]
-    private void CheckDmatType(global::Quire.Mcd.MatVal A, global::Quire.Mcd.MatVal Y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void dofitting(global::Quire.DOE.Polyfit.m_fittype ftyp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public Polyfit(global::Quire.Mcd.MatVal A, global::Quire.Mcd.MatVal Y) { }
-    [global::Quire.Mirror.MirrorStub]
-    private int NumCumulativeMonomials(int nVars, int degree) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private int CreateCumulativeMonomials(int row, int nVars, int degree) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private int CoefIndex(int[] R, int[] S, int var_index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.MatVal Multidfit(global::Quire.Mcd.MatVal P, global::Quire.Mpl.Run.Function F) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

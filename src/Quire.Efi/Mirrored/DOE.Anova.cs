@@ -146,6 +146,41 @@ public partial class Anova
         }
     }
 
+    private void analizeDesignMarix()
+    {
+        m_is_2level = true;
+        m_is_fullfact = true;
+        int levels = 1;
+        for (int i = 0; i < m_nfacts; i++)
+        {
+            FactorAnova factorAnova = (FactorAnova)m_factorInfo.GetValue(i);
+            if (factorAnova.m_nlevels > 2)
+            {
+                m_is_2level = false;
+            }
+            levels *= factorAnova.m_nlevels;
+        }
+        if (m_nruns != levels)
+        {
+            m_is_fullfact = false;
+            if (!m_is_2level)
+            {
+                AppException.Raise("unsupported design. must be full factorial with more than 2 levels", 1u);
+                return;
+            }
+            // The Mathcad IL keeps these three locals in a nested scope, after the loop slots; a bare block gives the same slot order.
+            {
+                double log2Runs = Math.Log(Math.Pow(2.0, m_nfacts) / (double)m_nruns) / Math.Log(2.0);
+                int fullRuns = 1 << (m_nfacts - (int)log2Runs);
+                int fractionRuns = 1 << (m_nfacts - (int)(log2Runs + 0.5));
+                if (m_nruns != fullRuns && m_nruns != fractionRuns)
+                {
+                    AppException.Raise("unsupported design. must be full or fractional factorial", 1u);
+                }
+            }
+        }
+    }
+
     public bool anovaTable(out MatVal table, string effects)
     {
         if (!m_is_2level && !m_is_fullfact)

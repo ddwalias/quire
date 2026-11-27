@@ -12,8 +12,6 @@ namespace Quire.DOE;
 public partial class Anova : global::Quire.DOE.DoeAnlyz
 {
     [global::Quire.Mirror.MirrorStub]
-    private void analizeDesignMarix() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void anovaTable(int key) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private int[] l2rmap(int[] f, int[] l) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

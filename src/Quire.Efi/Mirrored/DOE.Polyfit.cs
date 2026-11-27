@@ -271,6 +271,151 @@ public partial class Polyfit
         dofitting(ftyp);
     }
 
+    private void CheckDmatType(MatVal A, MatVal Y)
+    {
+        // Mathcad keeps the observation flag and the run averages in the first two local slots.
+        bool hasObservations;
+        double[] array;
+        if (A.get_2(0, 0) is StrVal)
+        {
+            m_nfacts = A.Cols - 2;
+            m_nruns = A.Rows - 1;
+            m_A = A.SubMatrix(1u, (uint)A.Rows, 2u, (uint)A.Cols);
+        }
+        else
+        {
+            m_nfacts = A.Cols;
+            m_nruns = A.Rows;
+            m_A = A;
+        }
+        if (m_A.IsUniformScalar)
+        {
+            m_Adim = new Dim[m_A.Cols];
+            for (int i = 0; i < m_A.Cols; i++)
+            {
+                m_Adim[i] = m_A.m_dim;
+            }
+        }
+        else
+        {
+            m_Adim = m_A.RowDimArray(0);
+        }
+        if (m_A.Rows != Y.Rows)
+        {
+            AppException.Raise("must have same number of runs", 2u);
+        }
+        m_Y = Y;
+        if (!analyzeObservations(out hasObservations))
+        {
+            AppException.Raise("must have at least one observation per run", 2u);
+        }
+        array = new double[m_nruns];
+        for (int j = 0; j < m_nruns; j++)
+        {
+            array[j] = m_runInfo[j].m_avg;
+        }
+        m_RHS = new MatVal(array);
+        m_RHS.m_dim = m_Ydim;
+    }
+
+    private int NumCumulativeMonomials(int nVars, int degree)
+    {
+        int i;
+        double result = 1.0;
+        if (1 == degree)
+        {
+            return nVars + 1;
+        }
+        for (i = 1; i <= degree; i++)
+        {
+            result *= i;
+        }
+        result = 1.0 / result;
+        for (i = nVars + degree - 1; i >= nVars; i--)
+        {
+            result *= i;
+        }
+        result *= (double)(nVars + degree) / nVars;
+        return (int)(result + 0.5);
+    }
+
+    private int CreateCumulativeMonomials(int row, int nVars, int degree)
+    {
+        int count = NumCumulativeMonomials(nVars, degree - 1);
+        int i;
+        int index;
+        if (1 == nVars)
+        {
+            for (i = 0; i <= degree; i++)
+            {
+                index = i + row + m_polymat.m_offset + m_polymat.Anr;
+                m_polymat.m_rarr[index] += i;
+            }
+            return 0;
+        }
+        if (1 == degree)
+        {
+            for (i = 0; i < nVars; i++)
+            {
+                index = i + row + m_polymat.m_offset + (i + 1) * m_polymat.Anr;
+                m_polymat.m_rarr[index]++;
+            }
+            return 0;
+        }
+        for (i = 0; i < count; i++)
+        {
+            index = i + row + m_polymat.m_offset + nVars * m_polymat.Anr;
+            m_polymat.m_rarr[index]++;
+        }
+        CreateCumulativeMonomials(row, nVars, degree - 1);
+        CreateCumulativeMonomials(row + count, nVars - 1, degree);
+        return 0;
+    }
+
+    private int CoefIndex(int[] R, int[] S, int var_index)
+    {
+        int j;
+        for (int i = 0; i < m_nterms; i++)
+        {
+            for (j = 0; j < m_nfacts; j++)
+            {
+                int num = m_polymat.m_offset + i + (j + 1) * m_polymat.Anr;
+                if (m_polymat.m_rarr[num] != (double)(R[j] + ((j < var_index) ? S[j] : 0)))
+                {
+                    break;
+                }
+            }
+            if (j == m_nfacts)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private void dofitting(m_fittype ftyp)
+    {
+        sortPolyMat(m_polymat);
+        if (ftyp == m_fittype.LS)
+        {
+            if (m_IsScaleOn)
+            {
+                getScaling();
+            }
+            constructLHS();
+            MatVal dim2 = IntelMKL.lsolve(m_LHS, m_RHS) as MatVal;
+            setDim(dim2);
+            return;
+        }
+        if (ftyp == m_fittype.LM)
+        {
+            m_IsScaleOn = false;
+            constructLHS();
+            MatVal dim = Fitting.polylmfit(m_tol, m_A, m_RHS, m_polymat);
+            setDim(dim);
+        }
+    }
+
     private void constructLHS()
     {
         m_LHS = new MatVal(m_nruns, m_nterms);
