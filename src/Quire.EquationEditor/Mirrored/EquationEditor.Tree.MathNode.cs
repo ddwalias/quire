@@ -403,6 +403,29 @@ public partial class MathNode
         }
     }
 
+    public int[] NavigablePartPositions
+    {
+        get
+        {
+            if (IsPairNary)
+            {
+                int[] positions = new int[NavigablePartCount];
+                int count = 0;
+                for (int childIndex = 0; childIndex < ChildCount; childIndex++)
+                {
+                    MathNodeDescriptor descriptor = d__;
+                    int position = a(childIndex, ref descriptor);
+                    if (Array.IndexOf(descriptor.NavigablePartPositions, position) >= 0)
+                    {
+                        positions[count++] = childIndex;
+                    }
+                }
+                return positions;
+            }
+            return d__.NavigablePartPositions;
+        }
+    }
+
     public int? PrimalChildPosition => d__.PrimalChildPosition;
 
     public bool AllowVerticalNavigation => d__.AllowVerticalNavigation;
@@ -774,6 +797,28 @@ public partial class MathNode
             return 0;
         }
         return (childIndex - FirstElementDescriptor.ChildCount) / ActualMiddleElementDescriptor.ChildCount + 1;
+    }
+
+    [System.Runtime.CompilerServices.SkipLocalsInit]
+    private int a(int childIndex, ref MathNodeDescriptor descriptor)
+    {
+        if (IsPairNary)
+        {
+            if (childIndex < FirstElementDescriptor.ChildCount)
+            {
+                descriptor = FirstElementDescriptor;
+                return childIndex;
+            }
+            if (childIndex == ChildCount - 1 && (childIndex + 1 - FirstElementDescriptor.ChildCount) % ActualMiddleElementDescriptor.ChildCount != 0)
+            {
+                descriptor = LastElementDescriptor;
+                return 0;
+            }
+            descriptor = ActualMiddleElementDescriptor;
+            return childIndex % 2;
+        }
+        descriptor = Descriptor;
+        return childIndex;
     }
 
     public void MakeEditable()
