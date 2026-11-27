@@ -1,11 +1,20 @@
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
+using System.Text.RegularExpressions;
 using MplAssemblyBuilder = System.Reflection.Emit.Quire.Mpl.AssemblyBuilder;
+
+if (args.Length == 5 && args[0] == "--interface")
+{
+    CompileInterfaceModule(Path.GetFullPath(args[1]), Path.GetFullPath(args[2]),
+        Path.GetFullPath(args[3]), args[4]);
+    return 0;
+}
 
 if (args.Length != 3)
 {
-    Console.Error.WriteLine("usage: Quire.Mpl.Compiler <source.mpl> <output.dll> <Mathcad install>");
+    Console.Error.WriteLine("usage: Quire.Mpl.Compiler <source.mpl> <output.dll> <Mathcad install>\n"
+        + "   or: Quire.Mpl.Compiler --interface <source.mpl> <output.dll> <Mathcad install> <Quire project>");
     return 2;
 }
 
@@ -28,6 +37,104 @@ switch (program.Module)
         throw new NotSupportedException($"Prototype compiler does not support module {program.Module}.");
 }
 return 0;
+
+static void CompileInterfaceModule(string sourcePath, string outputPath, string install, string project)
+{
+    if (!project.StartsWith("Quire.", StringComparison.Ordinal))
+        throw new ArgumentException("Interface output project names start with Quire.", nameof(project));
+    var source = File.ReadAllText(sourcePath, Encoding.UTF8).Replace("\r\n", "\n", StringComparison.Ordinal)
+        .Replace('\r', '\n');
+    const string authoredComment = "-- Interface-only module source: exported declarations define this module contract.\n";
+    if (!source.StartsWith(authoredComment, StringComparison.Ordinal))
+        throw new InvalidDataException("Expected the interface-only source header comment.");
+    var interfaceText = source[authoredComment.Length..];
+    if (!interfaceText.EndsWith('\n'))
+        throw new InvalidDataException("Interface source must end with one file newline.");
+    interfaceText = interfaceText[..^1];
+    var moduleName = ParseInterfaceModuleName(interfaceText);
+    var originalType = moduleName + ".values";
+    var outputType = project + ".values";
+
+    var runtime = Assembly.LoadFrom(Path.Combine(install, "mplrun.dll"));
+    var moduleTextCtor = runtime.GetType("Mpl.Run.ModuleTextAttribute", throwOnError: true)!
+        .GetConstructor([typeof(string)]) ?? throw new MissingMethodException("ModuleTextAttribute..ctor(string)");
+    var moduleInterfaceCtor = runtime.GetType("Mpl.Run.ModuleInterfaceAttribute", throwOnError: true)!
+        .GetConstructor([typeof(string)]) ?? throw new MissingMethodException("ModuleInterfaceAttribute..ctor(string)");
+
+    var assembly = CreateAssembly(project);
+    var module = assembly.DefineDynamicModule(Path.GetFileName(outputPath));
+    var values = module.DefineType(outputType, TypeAttributes.Public | TypeAttributes.Class);
+    SetStringAttribute(values, moduleTextCtor, "");
+    SetStringAttribute(values, moduleInterfaceCtor, interfaceText);
+    AddMirrorOf(values, originalType + ", " + moduleName);
+
+    var update = values.DefineMethod("Update", MethodAttributes.Public | MethodAttributes.Static,
+        typeof(void), Type.EmptyTypes);
+    update.GetILGenerator().Emit(OpCodes.Ret);
+
+    var initializer = values.DefineConstructor(MethodAttributes.Public | MethodAttributes.Static,
+        CallingConventions.Standard, Type.EmptyTypes);
+    var initializerIl = initializer.GetILGenerator();
+    initializerIl.Emit(OpCodes.Call, update);
+    initializerIl.Emit(OpCodes.Ret);
+
+    // TypeBuilder appends the object constructor from CreateType after Update and .cctor, matching Mpl order.
+    values.CreateType();
+    Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+    assembly.Save(outputPath);
+}
+
+static void SetStringAttribute(System.Reflection.Emit.Quire.Mpl.TypeBuilder type,
+    ConstructorInfo constructor, string value)
+{
+    var bytes = Encoding.UTF8.GetBytes(value);
+    using var blob = new MemoryStream();
+    blob.WriteByte(1);
+    blob.WriteByte(0);
+    if (bytes.Length < 0x80)
+    {
+        blob.WriteByte((byte)bytes.Length);
+    }
+    else if (bytes.Length < 0x4000)
+    {
+        blob.WriteByte((byte)((bytes.Length >> 8) | 0x80));
+        blob.WriteByte((byte)bytes.Length);
+    }
+    else if (bytes.Length <= 0x1fffffff)
+    {
+        blob.WriteByte((byte)((bytes.Length >> 24) | 0xc0));
+        blob.WriteByte((byte)(bytes.Length >> 16));
+        blob.WriteByte((byte)(bytes.Length >> 8));
+        blob.WriteByte((byte)bytes.Length);
+    }
+    else
+    {
+        throw new InvalidDataException("Custom-attribute string exceeds the CLI length limit.");
+    }
+    blob.Write(bytes);
+    type.SetCustomAttribute(constructor, blob.ToArray());
+}
+
+static string ParseInterfaceModuleName(string interfaceText)
+{
+    var match = Regex.Match(interfaceText, "\\Amodule ([A-Za-z_][A-Za-z0-9_]*) \\(", RegexOptions.CultureInvariant);
+    if (!match.Success || !interfaceText.Contains(" where\n{\n", StringComparison.Ordinal)
+        || !interfaceText.EndsWith("\n}", StringComparison.Ordinal))
+        throw new InvalidDataException("Expected a brace-bodied Mpl module interface.");
+    var declarations = interfaceText.Split('\n').Skip(2).SkipLast(1)
+        .Select(line => line.Trim()).Where(line => line.Length > 0).ToList();
+    if (declarations.Any(line => !line.StartsWith("import ", StringComparison.Ordinal)
+        && !line.StartsWith("data ", StringComparison.Ordinal)
+        && !line.StartsWith("|", StringComparison.Ordinal)
+        && !line.Contains(" :: ", StringComparison.Ordinal)))
+        throw new InvalidDataException("Interface-only sources support imports, data declarations, and signatures only.");
+    if (declarations.Any(line => line.Contains(" = ", StringComparison.Ordinal)
+        && !line.StartsWith("data ", StringComparison.Ordinal)))
+        throw new InvalidDataException("Interface-only modules cannot contain value definitions.");
+    if (!declarations.Any(line => line.Contains(" :: ", StringComparison.Ordinal)))
+        throw new InvalidDataException("Interface-only source must declare at least one signature.");
+    return match.Groups[1].Value;
+}
 
 static void CompileHashtable(MplModule program, string output)
 {

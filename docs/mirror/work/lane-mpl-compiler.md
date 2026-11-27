@@ -193,3 +193,46 @@ Updated follow-on checkpoint: branch `feature/mpl-compiler-prototype-3`, rebased
 - Members: Step 1 research and reproducible analyzers only; no mapped module code changed.
 - Evidence: all 51 interfaces and IL scans are regenerated into `.mirror-cache`; report totals are above. No source-body compiler work was started.
 - Remaining: land this evidence report, then build the interface-only declaration emitter in a separate Step 2 batch. Do not infer real-body compilation capability from this census.
+
+## Step 2: interface-only module compiler batch
+
+`tools/mpl/Quire.Mpl.Compiler` now has an `--interface` path. It accepts a brace-bodied module declaration source, validates the interface shell and rejects value definitions, preserves the interface text as the `ModuleInterfaceAttribute` payload, emits an empty `ModuleTextAttribute`, and writes the `values` type with methods in Mpl order (`Update`, `.cctor`, `.ctor`). The emitted constructor and static initializer use the same object base and `Update` call shape as the interface-only originals; the existing Mpl emitter supplies the 48 stack floor. This is a declarations-only backend and does not compile any of the remaining real method bodies.
+
+Ten smallest true interface-only modules were authored under `tools/mpl/interface-sources/`: `EfiAffine`, `EfiFourier`, `EfiSpecial`, `EfiFinance`, `EfiBessel`, `EfiSixsigma`, `EfiData`, `EfiIO`, `EfiWavelets`, and `EfiSignal`. Their declaration text is the ModuleInterface source available for these assemblies; the `.mpl` files include a short authored comment and preserve the declaration payload so the compiler can round-trip the attribute byte-for-byte. The acceptance runner compiles candidate assemblies into ignored `tools/mpl/output/` and keeps compiler/audit scratch products under `.mirror-cache`.
+
+`python tools/mpl/test_interface_modules.py` passed for all ten assemblies (30 methods). For each candidate, MethodAudit reported `Update`, `.cctor`, and `.ctor` exact against Release IL. The runner also compared ordered type names, the three method names in metadata order, absence of fields, and the ModuleText/ModuleInterface attribute names, order, and raw serialized blobs. The candidate adds one `Quire.Mirror.MirrorOfAttribute` marker so the current MethodAudit type map can pair its `Quire.<Module>.values` type to `<Module>.values`; the two Mpl attributes remain the first two attributes and exactly match. This validates the compiler's audit shape and Mpl metadata contract, not byte-for-byte PE identity or assembly-level metadata equality. No shared gate/tool files were changed.
+
+### Construct families still present
+
+The family classifier in the Step 1 analyzer is an exclusive IL-shape heuristic, not a source AST census. Across the 50 assemblies other than `EfiAffine`, it classifies 3,047 method bodies: 1,754 thin wrapper/init bodies (2–6 opcodes) and 1,293 longer bodies. These longer bodies fall into the following families:
+
+| Remaining family (exclusive heuristic) | Bodies in other 50 assemblies |
+|---|---:|
+| Field access | 421 |
+| Conditional branches | 265 |
+| Switch dispatch | 198 |
+| Calls | 194 |
+| Array construction/access | 139 |
+| Loops | 39 |
+| Exception handling | 15 |
+| Arithmetic | 9 |
+| Allocation | 8 |
+| Other straight-line | 5 |
+
+The ten interface-only modules in this batch account for 30 thin bodies and no longer bodies. Across the 41 assemblies not covered by the interface-only batch, the same 1,293 longer bodies remain and the thin wrapper/init count is 1,727. The interface emitter therefore unlocks whole assemblies without reducing the real-code construct families; those still require a body compiler and authored source recovery.
+
+### Exact integration changes proposed for shared gates
+
+These are proposals only; this batch does not edit MirrorGen, `release_il.py`, MethodAudit, or product project maps.
+
+1. **MirrorGen and project registration:** treat `language: Mpl` in `assembly-map.json` as an alternate source compiler. For each eventual `src/Quire.<Module>` project, register its one original assembly and `.mpl` source set; suppress generated C# stubs for those types, but keep the reviewed type-map rows and `MirrorOf` identity. An Mpl project must produce exactly one mapped assembly candidate and fail if a source or output is missing.
+2. **MSBuild and `release_il.py`:** add one Mpl build target per D20 project that invokes `Quire.Mpl.Compiler` in Release and writes `$(TargetPath)` before the product is staged. The target must own the assembly output so a later Roslyn compile cannot replace it. Have `release_il.py` consume the normal staged project output; do not treat the original install DLL or a cache-only assembly as the candidate. Track compiler version, source file list, and compiler options as build inputs so cache invalidation and reproducibility work as for C#.
+3. **MethodAudit:** accept the emitted project assembly and use `MirrorOf` to bind each source type to its original module/type. Keep the existing exact method signature/flags/body checks, and add type-level checks for TypeDef/FieldDef/MethodDef order, type flags/base, custom-attribute order and serialized blobs, and assembly references. Require `ModuleTextAttribute` and `ModuleInterfaceAttribute` payloads to match the original bytes; permit only the known compiler identity marker as an extra `MirrorOf` custom attribute on candidate types (with its extra `Quire.Mirror` reference called out in the comparison). Report missing original members and extra candidate members as failures.
+4. **Gate result:** include the Mpl assembly as the built product per D20 and run the same Release comparison with no exemption. MirrorGen decides the mapped source project; MSBuild produces the candidate; `release_il.py` stages it; MethodAudit proves method and metadata parity. The proof belongs to the module project, not a disconnected test DLL, when the later production project is introduced.
+
+## Revised Step 2 checkpoint
+
+- Owner: task `task_c969696e91de`; branch `feature/mpl-interface-only` based on landed evidence commit `cdee4c692`.
+- Members: declarations-only compiler path plus ten authored interface sources and the acceptance runner; no `src/` project or shared tool was changed.
+- Validation: `python tools/mpl/test_interface_modules.py` passed; all 30 methods are exact by MethodAudit, and the Mpl custom-attribute payloads and member order match.
+- Remaining: add production per-module projects/MSBuild integration after gate changes are approved; extend the compiler to real bodies only in a later phase.
