@@ -28,9 +28,12 @@ DECLARATION = re.compile(rf'(?:^|[({{;,]|\b(?:foreach|for|using|out|ref|else|do)
                          rf'\s*(?:=(?!=)|;|\bin\b)|\bout\s+{TYPE}\s+{NAME}\b')
 MODIFIERS = re.compile(r'^\s*(?:public|private|protected|internal|static|readonly|extern|unsafe|volatile|override'
                        r'|virtual|abstract|sealed|partial)\b')
+# Cheap prefilters: the declaration pattern backtracks, so it only runs on lines that contain a candidate name.
+QUICK_NAME = re.compile(r'(?:num|text|array|value|list|flag|val|result|obj|item|count)[1-9]')
 GOTO = re.compile(r'\bgoto\b')
 LABEL = re.compile(r'^\s*(?!default\b|case\b|else\b)[A-Za-z_]\w*:(?!:)\s*$')
 IGNORE = re.compile(r'//\s*lint-ok\b')
+BLOCK = re.compile(r'/\*.*?\*/')
 STRINGS = re.compile(r'@?"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'')
 
 
@@ -46,8 +49,10 @@ def code_of(line, in_block):
         if '*/' not in line:
             return '', True
         line = line.split('*/', 1)[1]
-    line = STRINGS.sub('""', line)
-    line = re.sub(r'/\*.*?\*/', '', line)
+    if '"' in line or "'" in line:
+        line = STRINGS.sub('""', line)
+    if '/*' in line:
+        line = BLOCK.sub('', line)
     if '/*' in line:
         return line.split('/*', 1)[0].split('//', 1)[0], True
     return line.split('//', 1)[0], False
@@ -60,9 +65,9 @@ def violations(text):
         code, in_block = code_of(line, in_block)
         if IGNORE.search(line) or not code.strip():
             continue
-        if not MODIFIERS.match(code) and DECLARATION.search(code):
+        if QUICK_NAME.search(code) and not MODIFIERS.match(code) and DECLARATION.search(code):
             found.append((number, 'ilspy-name', line.strip()))
-        if GOTO.search(code) or LABEL.match(code):
+        if ('goto' in code or ':' in code) and (GOTO.search(code) or LABEL.match(code)):
             previous = lines[number - 2].strip() if number > 1 else ''
             if '//' not in line and not previous.startswith('//'):
                 found.append((number, 'goto', line.strip()))
