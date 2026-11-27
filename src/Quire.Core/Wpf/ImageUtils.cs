@@ -187,11 +187,11 @@ public partial class ImageUtils
         {
             for (int j = 0; j < pixelWidth; j += num)
             {
-                int num2 = Math.Min(num, pixelWidth - j);
-                Int32Rect sourceRect = new Int32Rect(j, i, num2, 1);
-                int num3 = BytesNeeded(num2 * bitsPerPixel);
-                source.CopyPixels(sourceRect, array, num3, 0);
-                target.Write(array, 0, num3);
+                int rowPixelCount = Math.Min(num, pixelWidth - j);
+                Int32Rect sourceRect = new Int32Rect(j, i, rowPixelCount, 1);
+                int rowByteCount = BytesNeeded(rowPixelCount * bitsPerPixel);
+                source.CopyPixels(sourceRect, array, rowByteCount, 0);
+                target.Write(array, 0, rowByteCount);
             }
         }
         target.Flush();
@@ -272,10 +272,10 @@ public partial class ImageUtils
         sourceStream.Position = 0L;
         targetStream.Position = 0L;
         int num;
-        int num2;
-        while ((num = sourceStream.ReadByte()) != -1 && (num2 = targetStream.ReadByte()) != -1)
+        int targetByte;
+        while ((num = sourceStream.ReadByte()) != -1 && (targetByte = targetStream.ReadByte()) != -1)
         {
-            if (num != num2)
+            if (num != targetByte)
             {
                 return false;
             }
@@ -325,8 +325,8 @@ public partial class ImageUtils
             return null;
         }
         int num = ((imageSize <= 0) ? icon.Width : imageSize);
-        int num2 = ((imageSize <= 0) ? icon.Height : imageSize);
-        return Imaging.CreateBitmapSourceFromHIcon(icon.Handle, new Int32Rect(0, 0, num, num2), BitmapSizeOptions.FromEmptyOptions());
+        int iconHeight = ((imageSize <= 0) ? icon.Height : imageSize);
+        return Imaging.CreateBitmapSourceFromHIcon(icon.Handle, new Int32Rect(0, 0, num, iconHeight), BitmapSizeOptions.FromEmptyOptions());
     }
 
     [MirrorVerified("Release IL")]

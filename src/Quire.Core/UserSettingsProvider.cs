@@ -132,12 +132,12 @@ public partial class UserSettingsProvider
     {
         bool result = prop.Attributes[typeof(SettingsManageabilityAttribute)] != null;
         bool flag = prop.Attributes[typeof(ApplicationScopedSettingAttribute)] != null;
-        bool flag2 = prop.Attributes[typeof(UserScopedSettingAttribute)] != null;
-        if (flag2 & flag)
+        bool isUserScoped = prop.Attributes[typeof(UserScopedSettingAttribute)] != null;
+        if (isUserScoped & flag)
         {
             DebugTools.FailAssertion((string)null);
         }
-        else if (!flag2 && !flag)
+        else if (!isUserScoped && !flag)
         {
             DebugTools.FailAssertion((string)null);
         }
@@ -147,7 +147,7 @@ public partial class UserSettingsProvider
         }
         if (attributeType == typeof(UserScopedSettingAttribute))
         {
-            return flag2;
+            return isUserScoped;
         }
         if (attributeType == typeof(SettingsManageabilityAttribute))
         {

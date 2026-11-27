@@ -84,7 +84,7 @@ public partial class ApplicationLogger
         StringBuilder environmentData = new StringBuilder();
         string value = string.Format("{0} was executed with following command line arguments:", FullProductName);
         string[] commandLineArgs = Environment.GetCommandLineArgs();
-        string value2 = string.Format("Dump of system environment variables: ", default(ReadOnlySpan<object>));
+        string environmentVariablesHeader = string.Format("Dump of system environment variables: ", default(ReadOnlySpan<object>));
         IDictionary environmentVariables = Environment.GetEnvironmentVariables();
         if (commandLineArgs.Length > 1)
         {
@@ -96,7 +96,7 @@ public partial class ApplicationLogger
         }
         if (environmentVariables.Count > 0)
         {
-            environmentData.AppendLine(value2);
+            environmentData.AppendLine(environmentVariablesHeader);
             environmentVariables.Cast<DictionaryEntry>().Each((DictionaryEntry entry) =>
             {
                 environmentData.AppendLine(string.Format("{0}={1}", entry.Key, entry.Value));

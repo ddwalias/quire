@@ -18,11 +18,11 @@ public partial class ImageUtils
     private static BitmapSource CreateBitmapFromElement(FrameworkElement element, double dpiX, double dpiY, AdornerDecorator decoratorAncestor, Visual rootVisual, Rect? bounds)
     {
         UIElement uIElement;
-        Rect val3;
+        Rect bitmapBounds;
         Rect val;
         UIElement uIElement2;
         Rect? nullableBounds;
-        Rect val2;
+        Rect decoratorBounds;
         AdornerLayer adornerLayer;
         Adorner[] adorners;
         Adorner[] array;
@@ -37,7 +37,7 @@ public partial class ImageUtils
         }
         if (decoratorAncestor != null)
         {
-            val2 = element.TransformToAncestor(decoratorAncestor).TransformBounds(val);
+            decoratorBounds = element.TransformToAncestor(decoratorAncestor).TransformBounds(val);
             adornerLayer = AdornerLayer.GetAdornerLayer(element);
             if (adornerLayer != null && adornerLayer.IsDescendantOf(decoratorAncestor))
             {
@@ -51,28 +51,28 @@ public partial class ImageUtils
                         Adorner obj = array[i];
                         descendantBounds = VisualTreeHelper.GetDescendantBounds(obj);
                         descendantBounds = obj.TransformToAncestor(decoratorAncestor).TransformBounds(descendantBounds);
-                        val2.Union(descendantBounds);
+                        decoratorBounds.Union(descendantBounds);
                         i++;
                     }
                 }
             }
             if (decoratorAncestor.Clip != null)
             {
-                val2.Intersect(decoratorAncestor.Clip.Bounds);
+                decoratorBounds.Intersect(decoratorAncestor.Clip.Bounds);
             }
             uIElement = decoratorAncestor;
-            val3 = val2;
+            bitmapBounds = decoratorBounds;
         }
         else
         {
             uIElement = element;
-            val3 = val;
+            bitmapBounds = val;
         }
         uIElement2 = uIElement.TryFindVisualAncestor<UIElement>();
         return CreateBitmapFromVisual(
             dpiX,
             dpiY,
-            uIElement2 == null ? val3 : uIElement.TransformToAncestor(uIElement2).TransformBounds(val3),
+            uIElement2 == null ? bitmapBounds : uIElement.TransformToAncestor(uIElement2).TransformBounds(bitmapBounds),
             uIElement,
             element is IMaybeHasPointThatSnapsToPixel && (element as IMaybeHasPointThatSnapsToPixel).HasPointThatSnapsToPixel(),
             rootVisual == null ? null : uIElement2 == null ? uIElement.TransformToAncestor(rootVisual) : uIElement2.TransformToAncestor(rootVisual));
@@ -95,19 +95,19 @@ public partial class ImageUtils
                 global::System.Drawing.Point point = new global::System.Drawing.Point((box.TopLeft.X * dpiX / 96.0).IntFloor(), (box.TopLeft.Y * dpiY / 96.0).IntFloor());
                 global::System.Drawing.Point point2 = new global::System.Drawing.Point((box.BottomRight.X * dpiX / 96.0).IntCeiling(), (box.BottomRight.Y * dpiY / 96.0).IntCeiling());
                 size = new global::System.Drawing.Size(point2.X - point.X, point2.Y - point.Y);
-                Point val3 = new Point((double)point.X * 96.0 / dpiX, (double)point.Y * 96.0 / dpiY);
-                Point val4 = new Point((double)point2.X * 96.0 / dpiX, (double)point2.Y * 96.0 / dpiY);
-                box = new Rect(val3, val4);
+                Point pixelAlignedTopLeft = new Point((double)point.X * 96.0 / dpiX, (double)point.Y * 96.0 / dpiY);
+                Point pixelAlignedBottomRight = new Point((double)point2.X * 96.0 / dpiX, (double)point2.Y * 96.0 / dpiY);
+                box = new Rect(pixelAlignedTopLeft, pixelAlignedBottomRight);
                 if (DebugTools.IsDebug && transformToRoot == null)
                 {
                     GeneralTransform transformToRootVisual = global::Quire.Native.PtcCore.SnapToRootVisualUtils.GetTransformToRootVisual(visual);
                     if (DebugTools.AssertNotNull(transformToRootVisual, null).Passed)
                     {
-                        Rect val5 = transformToRootVisual.TransformBounds(box);
-                        Point val6 = new Point(val5.TopLeft.X * dpiX / 96.0, val5.TopLeft.Y * dpiY / 96.0);
-                        DebugTools.DevAssert(val6.X.Equals(val6.X.Round()), null);
-                        DebugTools.DevAssert(val6.Y.Equals(val6.Y.Round()), null);
-                        DebugTools.DevAssert(box.Size == val5.Size, null);
+                        Rect rootBounds = transformToRootVisual.TransformBounds(box);
+                        Point rootTopLeft = new Point(rootBounds.TopLeft.X * dpiX / 96.0, rootBounds.TopLeft.Y * dpiY / 96.0);
+                        DebugTools.DevAssert(rootTopLeft.X.Equals(rootTopLeft.X.Round()), null);
+                        DebugTools.DevAssert(rootTopLeft.Y.Equals(rootTopLeft.Y.Round()), null);
+                        DebugTools.DevAssert(box.Size == rootBounds.Size, null);
                     }
                 }
             }

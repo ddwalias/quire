@@ -231,11 +231,11 @@ public partial class CommandBuffer
     public static bool Execute(IUndoableCommand command, CompoundCommand attachToCommand = null)
     {
         bool flag = false;
-        bool flag2 = attachToCommand != null;
+        bool hasAttachedCommand = attachToCommand != null;
         CommandEventArgs args = new CommandEventArgs(command, CommandEventArgs.ActionTypeEnum.Do);
         FireCommandEvent(_currentInstance.BeforeCommand, args);
         ICollectableCommand collectableCommand = command as ICollectableCommand;
-        if (!flag2 && collectableCommand != null && GetTopCommand(NextUndoCommand) is ICollectableCommand collectableCommand2 && collectableCommand2.CollectNewCommand(collectableCommand))
+        if (!hasAttachedCommand && collectableCommand != null && GetTopCommand(NextUndoCommand) is ICollectableCommand collectableCommand2 && collectableCommand2.CollectNewCommand(collectableCommand))
         {
             flag = true;
         }
@@ -245,7 +245,7 @@ public partial class CommandBuffer
             flag = compoundCommand != null;
             if (flag)
             {
-                if (!flag2)
+                if (!hasAttachedCommand)
                 {
                     CurrentInstance.PushCommand(compoundCommand);
                 }

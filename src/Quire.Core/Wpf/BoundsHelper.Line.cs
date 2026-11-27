@@ -23,9 +23,9 @@ public static partial class BoundsHelper
     public static global::System.Windows.Point FindCenter(global::System.Windows.Rect rect)
     {
         double num = rect.Width / 2.0;
-        double num2 = rect.Height / 2.0;
+        double halfHeight = rect.Height / 2.0;
         global::System.Windows.Point topLeft = rect.TopLeft;
-        topLeft.Offset(num, num2);
+        topLeft.Offset(num, halfHeight);
         return topLeft;
     }
 
@@ -86,12 +86,12 @@ public static partial class BoundsHelper
         private static double CalculateSlope(global::System.Windows.Point start, global::System.Windows.Point end)
         {
             double num = end.X - start.X;
-            double num2 = end.Y - start.Y;
+            double deltaY = end.Y - start.Y;
             if (num == 0.0)
             {
                 return double.NaN;
             }
-            return num2 / num;
+            return deltaY / num;
         }
 
         public global::System.Windows.Point NPoint(double gradient)
@@ -101,19 +101,19 @@ public static partial class BoundsHelper
                 double num = gradient * Length();
                 return new global::System.Windows.Point(Begin.X, Begin.Y + num);
             }
-            double num2 = End.X - Begin.X;
-            double num3 = Begin.X + gradient * num2;
-            double num4 = CalculateY(num3);
-            return new global::System.Windows.Point(num3, num4);
+            double deltaX = End.X - Begin.X;
+            double x = Begin.X + gradient * deltaX;
+            double y = CalculateY(x);
+            return new global::System.Windows.Point(x, y);
         }
 
         public bool Contains(global::System.Windows.Point p)
         {
             double num = global::System.Math.Min(Begin.X, End.X);
-            double num2 = global::System.Math.Max(Begin.X, End.X);
-            double num3 = global::System.Math.Min(Begin.Y, End.Y);
-            double num4 = global::System.Math.Max(Begin.Y, End.Y);
-            if (num <= p.X && p.X <= num2 && num3 <= p.Y && p.Y <= num4)
+            double right = global::System.Math.Max(Begin.X, End.X);
+            double top = global::System.Math.Min(Begin.Y, End.Y);
+            double bottom = global::System.Math.Max(Begin.Y, End.Y);
+            if (num <= p.X && p.X <= right && top <= p.Y && p.Y <= bottom)
             {
                 return true;
             }
@@ -132,23 +132,23 @@ public static partial class BoundsHelper
                 return new global::System.Windows.Point(double.NaN, double.NaN);
             }
             double num;
-            double num2;
+            double intersectionY;
             if (double.IsNaN(l1.Slope))
             {
                 num = l1.Begin.X;
-                num2 = l2.Slope * num + l2.YItercept;
+                intersectionY = l2.Slope * num + l2.YItercept;
             }
             else if (double.IsNaN(l2.Slope))
             {
                 num = l2.Begin.X;
-                num2 = l1.Slope * num + l1.YItercept;
+                intersectionY = l1.Slope * num + l1.YItercept;
             }
             else
             {
                 num = (l2.YItercept - l1.YItercept) / (l1.Slope - l2.Slope);
-                num2 = l1.Slope * num + l1.YItercept;
+                intersectionY = l1.Slope * num + l1.YItercept;
             }
-            return new global::System.Windows.Point(num, num2);
+            return new global::System.Windows.Point(num, intersectionY);
         }
     }
 }

@@ -8,10 +8,10 @@ partial class UserSettingsProvider
     private static string GetSectionName(string sectionGroupName, global::System.Configuration.SettingsContext context)
     {
         string text = (string)context["GroupName"];
-        string text2 = (string)context["SettingsKey"];
-        if (!string.IsNullOrEmpty(text2))
+        string settingsKey = (string)context["SettingsKey"];
+        if (!string.IsNullOrEmpty(settingsKey))
         {
-            text = text + "." + text2;
+            text = text + "." + settingsKey;
         }
         return sectionGroupName + "/" + global::System.Xml.XmlConvert.EncodeLocalName(text);
     }

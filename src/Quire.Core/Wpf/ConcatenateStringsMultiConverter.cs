@@ -11,12 +11,12 @@ public partial class ConcatenateStringsMultiConverter
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
         string text = string.Empty;
-        string text2 = parameter.ToString();
+        string separator = parameter.ToString();
         foreach (object obj in values)
         {
             if (text != string.Empty)
             {
-                text += text2;
+                text += separator;
             }
             text += obj.ToString();
         }

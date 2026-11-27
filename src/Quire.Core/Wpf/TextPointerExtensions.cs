@@ -50,15 +50,15 @@ public static partial class TextPointerExtensions
         }
         int num = skipNChars > 0 ? skipNChars : -skipNChars;
         LogicalDirection logicalDirection = skipNChars > 0 ? LogicalDirection.Forward : LogicalDirection.Backward;
-        int num2 = 0;
-        while (num2 < num && textPointer != null)
+        int traversedCharacterCount = 0;
+        while (traversedCharacterCount < num && textPointer != null)
         {
             TextPointer textPointer2 = textPointer.GetNextInsertionPosition(logicalDirection);
-            if (textPointer2 == null && num2 < num && logicalDirection == LogicalDirection.Forward)
+            if (textPointer2 == null && traversedCharacterCount < num && logicalDirection == LogicalDirection.Forward)
             {
                 textPointer2 = textPointer.DocumentEnd;
             }
-            num2 = textPointer2 == null ? num2 : num2 + new global::System.Windows.Documents.TextRange(textPointer, textPointer2).Text.Length;
+            traversedCharacterCount = textPointer2 == null ? traversedCharacterCount : traversedCharacterCount + new global::System.Windows.Documents.TextRange(textPointer, textPointer2).Text.Length;
             textPointer = textPointer2;
         }
         if (!global::Quire.DebugTools.DevAssert(new global::System.Windows.Documents.TextRange(startPointer, textPointer).Text.Length == skipNChars, null).Passed)

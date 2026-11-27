@@ -111,24 +111,24 @@ public partial class TextRangeExtended
             this.EnumerateRunsInRange().Each((Run run) =>
             {
                 string text = TextElementAttachedProperties.GetStyleKey(run) ?? (string)run.Tag;
-                string text2 = (run is ICustomFontSizeOwner)
+                string elementName = (run is ICustomFontSizeOwner)
                     ? (run.GetType().Namespace + ":" + run.GetType().Name)
                     : run.GetType().Name;
-                string text3 = "<" + text2;
-                j = xamlText.IndexOf(text3, j + 1, StringComparison.Ordinal);
+                string openingElement = "<" + elementName;
+                j = xamlText.IndexOf(openingElement, j + 1, StringComparison.Ordinal);
                 while (xamlText.Substring(j, "<Run> </Run>".Length) == "<Run> </Run>" && run.Text != " ")
                 {
-                    j = xamlText.IndexOf(text3, j + 1, StringComparison.Ordinal);
+                    j = xamlText.IndexOf(openingElement, j + 1, StringComparison.Ordinal);
                 }
                 if (!text.IsNullOrEmpty() && DebugTools.DevAssert(j > -1, null).Passed)
                 {
-                    string text4 = " style=\"" + text + "\"";
-                    sb.Insert(j + jOffset + text3.Length, text4);
-                    jOffset += text4.Length;
+                    string styleAttribute = " style=\"" + text + "\"";
+                    sb.Insert(j + jOffset + openingElement.Length, styleAttribute);
+                    jOffset += styleAttribute.Length;
                 }
                 if (isConversion && DebugTools.DevAssert(j > -1, null).Passed)
                 {
-                    WriteExplicitFontAttributes(sb, xamlText, run, text3, j, ref jOffset);
+                    WriteExplicitFontAttributes(sb, xamlText, run, openingElement, j, ref jOffset);
                 }
             });
             using (StreamWriter streamWriter = new StreamWriter(part.GetStream(FileMode.Create, FileAccess.Write)))
@@ -158,15 +158,15 @@ public partial class TextRangeExtended
         string text = xamlText.Substring(j, num - j + 1);
         if (!text.Contains("FontFamily="))
         {
-            string text2 = " FontFamily=\"" + run.FontFamily.Source + "\"";
-            sb.Insert(j + jOffset + runString.Length, text2);
-            jOffset += text2.Length;
+            string fontFamilyAttribute = " FontFamily=\"" + run.FontFamily.Source + "\"";
+            sb.Insert(j + jOffset + runString.Length, fontFamilyAttribute);
+            jOffset += fontFamilyAttribute.Length;
         }
         if (!text.Contains("FontSize="))
         {
-            string text3 = $" FontSize=\"{run.FontSize}\"";
-            sb.Insert(j + jOffset + runString.Length, text3);
-            jOffset += text3.Length;
+            string fontSizeAttribute = $" FontSize=\"{run.FontSize}\"";
+            sb.Insert(j + jOffset + runString.Length, fontSizeAttribute);
+            jOffset += fontSizeAttribute.Length;
         }
     }
 }

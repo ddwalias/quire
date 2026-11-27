@@ -407,12 +407,12 @@ public partial class TextFormat
     {
         mixed = false;
         List list = global::Quire.Wpf.WpfUtils.FindLogicalAncestor<List>(textRange.Start.Parent);
-        List list2 = global::Quire.Wpf.WpfUtils.FindLogicalAncestor<List>(textRange.End.Parent);
+        List endList = global::Quire.Wpf.WpfUtils.FindLogicalAncestor<List>(textRange.End.Parent);
         if (textRange.End.Parent is FlowDocument flowDocument)
         {
-            list2 = flowDocument.Blocks.LastBlock as List;
+            endList = flowDocument.Blocks.LastBlock as List;
         }
-        if (list?.MarkerStyle != list2?.MarkerStyle)
+        if (list?.MarkerStyle != endList?.MarkerStyle)
         {
             mixed = true;
             return TextMarkerStyle.None;

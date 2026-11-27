@@ -15,11 +15,11 @@ public partial class FileUtils
     public static string EvaluateRelativePath(string mainDirPath, string absoluteFilePath, bool stripSingleLeadingDot)
     {
         string[] array = mainDirPath.TrimEnd(Path.DirectorySeparatorChar).Split(Path.DirectorySeparatorChar);
-        string[] array2 = absoluteFilePath.TrimEnd(Path.DirectorySeparatorChar).Split(Path.DirectorySeparatorChar);
+        string[] absolutePathSegments = absoluteFilePath.TrimEnd(Path.DirectorySeparatorChar).Split(Path.DirectorySeparatorChar);
         int i = 0;
-        while (i < Math.Min(array.Length, array2.Length))
+        while (i < Math.Min(array.Length, absolutePathSegments.Length))
         {
-            if (!array[i].ToLower().Equals(array2[i].ToLower()))
+            if (!array[i].ToLower().Equals(absolutePathSegments[i].ToLower()))
             {
                 break;
             }
@@ -34,16 +34,16 @@ public partial class FileUtils
         {
             text = text + Path.DirectorySeparatorChar + "..";
         }
-        for (int k = i; k < array2.Length; k++)
+        for (int k = i; k < absolutePathSegments.Length; k++)
         {
-            text = text + Path.DirectorySeparatorChar + array2[k];
+            text = text + Path.DirectorySeparatorChar + absolutePathSegments[k];
         }
         if (stripSingleLeadingDot)
         {
-            string text2 = "." + Path.DirectorySeparatorChar;
-            if (text.StartsWith(text2))
+            string relativePathPrefix = "." + Path.DirectorySeparatorChar;
+            if (text.StartsWith(relativePathPrefix))
             {
-                text = text.Substring(text2.Length);
+                text = text.Substring(relativePathPrefix.Length);
             }
         }
         return text;
@@ -86,8 +86,8 @@ public partial class FileUtils
         }
         IFileOperationsProvider fileOperationsProvider = new FileOperationsProvider();
         string text = numberIsLastExtension ? string.Empty : fileOperationsProvider.GetExtension(baseFileName);
-        string text2 = "." + number + text;
-        return baseFileName.Remove(baseFileName.Length - text.Length) + text2;
+        string numberedSuffix = "." + number + text;
+        return baseFileName.Remove(baseFileName.Length - text.Length) + numberedSuffix;
     }
 
     [MirrorVerified("Release IL")]
@@ -109,13 +109,13 @@ public partial class FileUtils
         {
             text = GetProductNamePerVariant();
         }
-        string text2 = Path.Combine(Path.Combine(appDataPathBase, company), text);
+        string appDataPath = Path.Combine(Path.Combine(appDataPathBase, company), text);
         if (useAssemblyVersionInConfigPath)
         {
             string version = ((AssemblyVersionAttribute)Attribute.GetCustomAttribute(element, typeof(AssemblyVersionAttribute))).Version;
-            text2 = Path.Combine(text2, version);
+            appDataPath = Path.Combine(appDataPath, version);
         }
-        return text2;
+        return appDataPath;
     }
 
     [MirrorVerified("PtcIOFileUtilsMechanicalDifferentialTests")]

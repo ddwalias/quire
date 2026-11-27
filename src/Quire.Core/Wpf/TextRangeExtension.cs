@@ -258,12 +258,12 @@ public static partial class TextRangeExtension
         {
             return false;
         }
-        int num2 = range.End.CompareTo(element.ContentStart);
-        if (num2 < 0)
+        int endVsContentStart = range.End.CompareTo(element.ContentStart);
+        if (endVsContentStart < 0)
         {
             return false;
         }
-        if (num2 == 0 && IsNotEmptyElement())
+        if (endVsContentStart == 0 && IsNotEmptyElement())
         {
             return false;
         }

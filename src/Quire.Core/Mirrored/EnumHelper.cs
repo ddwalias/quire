@@ -71,10 +71,10 @@ static partial class EnumHelper
         TOutputEnum enumValue;
         string[] array = flagsEnumString.ToString().Split(new string[1] { ", " }, global::System.StringSplitOptions.RemoveEmptyEntries);
         list = new global::System.Collections.Generic.List<TOutputEnum>();
-        string[] array2 = array;
-        for (int i = 0; i < array2.Length; i++)
+        string[] values = array;
+        for (int i = 0; i < values.Length; i++)
         {
-            if (!TryParse<TOutputEnum>(array2[i], out enumValue, enumSettings))
+            if (!TryParse<TOutputEnum>(values[i], out enumValue, enumSettings))
             {
                 return null;
             }

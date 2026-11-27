@@ -180,10 +180,10 @@ public static partial class WpfUtils
             {
                 return val;
             }
-            T val2 = FindVisualDescendant<T>(child);
-            if (val2 != null)
+            T descendant = FindVisualDescendant<T>(child);
+            if (descendant != null)
             {
-                return val2;
+                return descendant;
             }
         }
         return default;

@@ -51,12 +51,12 @@ public partial class Discrete2DCoordinateConverter
                 return null;
             }
             string[] array = text.Split(',');
-            if (!int.TryParse(array[0], out var result) || !int.TryParse(array[1], out var result2))
+            if (!int.TryParse(array[0], out var result) || !int.TryParse(array[1], out var secondCoordinate))
             {
                 return null;
             }
             discrete2DCoordinate.First = result;
-            discrete2DCoordinate.Second = result2;
+            discrete2DCoordinate.Second = secondCoordinate;
             return discrete2DCoordinate;
         }
         return null;

@@ -24,9 +24,9 @@ public partial class SettersToStringConverter
         {
             List<string> list = new List<string>();
             object obj = TextStyleBase.GetSetterValue(style, TextElement.FontFamilyProperty.Name);
-            object obj2 = TextStyleBase.GetSetterValue(style, TextElement.FontSizeProperty.Name);
-            object obj3 = TextStyleBase.GetSetterValue(style, TextElement.FontWeightProperty.Name);
-            object obj4 = TextStyleBase.GetSetterValue(style, TextElement.FontStyleProperty.Name);
+            object fontSize = TextStyleBase.GetSetterValue(style, TextElement.FontSizeProperty.Name);
+            object fontWeight = TextStyleBase.GetSetterValue(style, TextElement.FontWeightProperty.Name);
+            object fontStyle = TextStyleBase.GetSetterValue(style, TextElement.FontStyleProperty.Name);
             if (obj == null)
             {
                 obj = TextStyleBase.GetBasedOnSetterValue(style, TextElement.FontFamilyProperty.Name) ?? "Tahoma";
@@ -39,35 +39,35 @@ public partial class SettersToStringConverter
                     obj = source.Substring(source.IndexOf(EmbedFontDelimiter, StringComparison.Ordinal) + 1);
                 }
             }
-            if (obj2 == null)
+            if (fontSize == null)
             {
-                obj2 = TextStyleBase.GetBasedOnSetterValue(style, TextElement.FontSizeProperty.Name);
+                fontSize = TextStyleBase.GetBasedOnSetterValue(style, TextElement.FontSizeProperty.Name);
             }
-            if (obj2 == null)
+            if (fontSize == null)
             {
-                obj2 = 11.0;
+                fontSize = 11.0;
             }
             else
             {
-                obj2 = WpfUtils.DipsToPoints((double)obj2).Round();
+                fontSize = WpfUtils.DipsToPoints((double)fontSize).Round();
             }
-            if (obj3 == null)
+            if (fontWeight == null)
             {
-                obj3 = TextStyleBase.GetBasedOnSetterValue(style, TextElement.FontWeightProperty.Name);
+                fontWeight = TextStyleBase.GetBasedOnSetterValue(style, TextElement.FontWeightProperty.Name);
             }
-            if (obj4 == null)
+            if (fontStyle == null)
             {
-                obj4 = TextStyleBase.GetBasedOnSetterValue(style, TextElement.FontStyleProperty.Name);
+                fontStyle = TextStyleBase.GetBasedOnSetterValue(style, TextElement.FontStyleProperty.Name);
             }
             list.Add(obj.ToString());
-            list.Add(obj2.ToString());
-            if (obj3 != null && obj3.ToString() != FontWeights.Normal.ToString())
+            list.Add(fontSize.ToString());
+            if (fontWeight != null && fontWeight.ToString() != FontWeights.Normal.ToString())
             {
-                list.Add(obj3.ToString());
+                list.Add(fontWeight.ToString());
             }
-            if (obj4 != null && obj4.ToString() != FontStyles.Normal.ToString())
+            if (fontStyle != null && fontStyle.ToString() != FontStyles.Normal.ToString())
             {
-                list.Add(obj4.ToString());
+                list.Add(fontStyle.ToString());
             }
             return string.Join(", ", list);
         }

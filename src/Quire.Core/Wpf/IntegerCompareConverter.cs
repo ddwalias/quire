@@ -47,24 +47,24 @@ public partial class IntegerCompareConverter
     [MirrorVerified("Release IL")]
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        if (!ToInt(value, out var num) || !ToInt(parameter, out var num2))
+        if (!ToInt(value, out var currentValue) || !ToInt(parameter, out var comparedValue))
         {
             return false;
         }
         switch (CompareOperator)
         {
             case CompareOperators.GreaterThan:
-                return num > num2;
+                return currentValue > comparedValue;
             case CompareOperators.GreaterThanOrEquals:
-                return num >= num2;
+                return currentValue >= comparedValue;
             case CompareOperators.LessThan:
-                return num < num2;
+                return currentValue < comparedValue;
             case CompareOperators.LessThanOrEquals:
-                return num <= num2;
+                return currentValue <= comparedValue;
             case CompareOperators.EqualsTo:
-                return num == num2;
+                return currentValue == comparedValue;
             case CompareOperators.NotEqualsTo:
-                return num != num2;
+                return currentValue != comparedValue;
             default:
                 throw new NotImplementedException();
         }

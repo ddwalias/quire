@@ -35,10 +35,10 @@ partial class FileUtils
                 path = global::System.IO.Path.GetExtension(path).TrimStart('.');
                 try
                 {
-                    int num2 = baseFileName.Equals(global::System.IO.Path.GetFileName(file)) ? 0 : int.Parse(path);
-                    if (num2 > num)
+                    int parsedNumber = baseFileName.Equals(global::System.IO.Path.GetFileName(file)) ? 0 : int.Parse(path);
+                    if (parsedNumber > num)
                     {
-                        num = num2;
+                        num = parsedNumber;
                         foundFileName = file;
                     }
                 }

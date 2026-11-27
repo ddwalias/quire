@@ -10,8 +10,8 @@ static partial class ArrayExtension
         global::System.Text.StringBuilder stringBuilder = new();
         foreach (object item in array)
         {
-            global::System.Array array2 = item as global::System.Array;
-            string arg = array2 != null ? array2.ToStringFormatted() : item.ToString();
+            global::System.Array itemArray = item as global::System.Array;
+            string arg = itemArray != null ? itemArray.ToStringFormatted() : item.ToString();
             stringBuilder.AppendFormat("{0},", arg);
         }
 

@@ -18,8 +18,8 @@ public partial class EnumMatchToBooleanConverter
             return false;
         }
         string text = value.ToString();
-        string value2 = parameter.ToString();
-        return text.Equals(value2, StringComparison.InvariantCultureIgnoreCase);
+        string expectedValue = parameter.ToString();
+        return text.Equals(expectedValue, StringComparison.InvariantCultureIgnoreCase);
     }
 
     [MirrorVerified("Release IL")]
@@ -30,10 +30,10 @@ public partial class EnumMatchToBooleanConverter
             return null;
         }
         bool flag = (bool)value;
-        string value2 = parameter.ToString();
+        string enumValue = parameter.ToString();
         if (flag)
         {
-            return Enum.Parse(targetType, value2);
+            return Enum.Parse(targetType, enumValue);
         }
         return null;
     }

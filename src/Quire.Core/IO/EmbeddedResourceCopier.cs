@@ -19,14 +19,14 @@ public static partial class EmbeddedResourceCopier
         {
             byte[] array = new byte[stream.Length];
             stream.Read(array, 0, (int)stream.Length);
-            char[] array2 = new char[stream.Length];
+            char[] resourceCharacters = new char[stream.Length];
             int i;
             for (i = 0; i < stream.Length; i++)
             {
-                array2[i] = (char)array[i];
+                resourceCharacters[i] = (char)array[i];
             }
             using StreamWriter streamWriter = new StreamWriter(destinationFilePath);
-            streamWriter.Write(array2);
+            streamWriter.Write(resourceCharacters);
             streamWriter.Flush();
             return;
         }

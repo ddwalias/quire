@@ -116,16 +116,16 @@ public static partial class ColorUtilities
     public static List<Color> DistributeColors(List<List<Color>> colorsTable)
     {
         int count = colorsTable.Count;
-        int count2 = colorsTable[0].Count;
-        List<Color> list = new List<Color>(count2 * count);
+        int colorsPerRow = colorsTable[0].Count;
+        List<Color> list = new List<Color>(colorsPerRow * count);
         for (int i = 0; i < 4; i++)
         {
             for (int j = i; j < 6; j++)
             {
                 for (int k = 0; k < count; k++)
                 {
-                    int num = k * count2 / count;
-                    list.Add(colorsTable[k][(i + num + j * 4) % count2]);
+                    int colorOffset = k * colorsPerRow / count;
+                    list.Add(colorsTable[k][(i + colorOffset + j * 4) % colorsPerRow]);
                 }
             }
         }

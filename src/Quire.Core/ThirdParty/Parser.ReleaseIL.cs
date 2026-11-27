@@ -38,8 +38,8 @@ public sealed partial class Parser
     {
         ArgumentHelpStrings[] allHelpStrings = GetAllHelpStrings();
         int num = 0;
-        int num3;
-        int num2;
+        int helpColumn;
+        int paddedSyntaxWidth;
         string newLine;
         global::System.Text.StringBuilder stringBuilder;
         ArgumentHelpStrings[] array = allHelpStrings;
@@ -51,15 +51,15 @@ public sealed partial class Parser
             argumentHelpStrings = array[i];
             num = global::System.Math.Max(num, argumentHelpStrings.syntax.Length);
         }
-        num2 = num + 2;
+        paddedSyntaxWidth = num + 2;
         screenWidth = global::System.Math.Max(screenWidth, 15);
-        if (screenWidth < num2 + 10)
+        if (screenWidth < paddedSyntaxWidth + 10)
         {
-            num3 = 5;
+            helpColumn = 5;
         }
         else
         {
-            num3 = num2;
+            helpColumn = paddedSyntaxWidth;
         }
         newLine = global::System.Environment.NewLine;
         stringBuilder = new global::System.Text.StringBuilder();
@@ -70,32 +70,32 @@ public sealed partial class Parser
             int length = argumentHelpStrings2.syntax.Length;
             stringBuilder.Append(argumentHelpStrings2.syntax);
             int currentColumn = length;
-            if (length >= num3)
+            if (length >= helpColumn)
             {
                 stringBuilder.Append(newLine);
                 currentColumn = 0;
             }
-            int num4 = screenWidth - num3;
+            int availableHelpWidth = screenWidth - helpColumn;
             int j = 0;
             while (j < argumentHelpStrings2.help.Length)
             {
-                stringBuilder.Append(' ', num3 - currentColumn);
-                currentColumn = num3;
-                int num5 = j + num4;
-                if (num5 >= argumentHelpStrings2.help.Length)
+                stringBuilder.Append(' ', helpColumn - currentColumn);
+                currentColumn = helpColumn;
+                int lineEnd = j + availableHelpWidth;
+                if (lineEnd >= argumentHelpStrings2.help.Length)
                 {
-                    num5 = argumentHelpStrings2.help.Length;
+                    lineEnd = argumentHelpStrings2.help.Length;
                 }
                 else
                 {
-                    num5 = argumentHelpStrings2.help.LastIndexOf(' ', num5 - 1, global::System.Math.Min(num5 - j, num4));
-                    if (num5 <= j)
+                    lineEnd = argumentHelpStrings2.help.LastIndexOf(' ', lineEnd - 1, global::System.Math.Min(lineEnd - j, availableHelpWidth));
+                    if (lineEnd <= j)
                     {
-                        num5 = j + num4;
+                        lineEnd = j + availableHelpWidth;
                     }
                 }
-                stringBuilder.Append(argumentHelpStrings2.help, j, num5 - j);
-                j = num5;
+                stringBuilder.Append(argumentHelpStrings2.help, j, lineEnd - j);
+                j = lineEnd;
                 AddNewLine(newLine, stringBuilder, ref currentColumn);
                 for (; j < argumentHelpStrings2.help.Length && argumentHelpStrings2.help[j] == ' '; j++)
                 {
@@ -247,7 +247,7 @@ public sealed partial class Parser
             foreach (string text in args)
             {
                 int num;
-                string text2;
+                string argumentName;
                 string value;
                 Argument argument;
                 string[] args2;
@@ -263,24 +263,24 @@ public sealed partial class Parser
                     case '/':
                     {
                         num = text.IndexOfAny(new char[3] { ':', '+', '-' }, 1);
-                        text2 = text.Substring(1, (num == -1) ? (text.Length - 1) : (num - 1));
-                        if (text2.Length + 1 == text.Length)
+                        argumentName = text.Substring(1, (num == -1) ? (text.Length - 1) : (num - 1));
+                        if (argumentName.Length + 1 == text.Length)
                         {
                             value = null;
                         }
                         else
                         {
                             // Release IL requires this shared assignment block and branch polarity.
-                            if (text.Length <= 1 + text2.Length || text[1 + text2.Length] != ':')
+                            if (text.Length <= 1 + argumentName.Length || text[1 + argumentName.Length] != ':')
                                 goto ValueWithoutColon;
-                            value = text.Substring(text2.Length + 2);
+                            value = text.Substring(argumentName.Length + 2);
                             goto ValueAssigned;
                         ValueWithoutColon:
-                            value = text.Substring(text2.Length + 1);
+                            value = text.Substring(argumentName.Length + 1);
                         ValueAssigned:
                             ;
                         }
-                        argument = (Argument)argumentMap[text2];
+                        argument = (Argument)argumentMap[argumentName];
                         if (argument == null)
                         {
                             ReportUnrecognizedArgument(text);
@@ -633,18 +633,18 @@ public sealed partial class Parser
                 return false;
             }
             seenValue = true;
-            if (!ParseValue(ValueType, value, out object value2))
+            if (!ParseValue(ValueType, value, out object parsedValue))
             {
                 return false;
             }
             if (IsCollection)
             {
-                if (Unique && collectionValues.Contains(value2))
+                if (Unique && collectionValues.Contains(parsedValue))
                 {
                     ReportDuplicateArgumentValue(value);
                     return false;
                 }
-                collectionValues.Add(value2);
+                collectionValues.Add(parsedValue);
             }
             else if (validValues != "")
             {
@@ -655,11 +655,11 @@ public sealed partial class Parser
                     ReportInvalidValue(value);
                     return false;
                 }
-                fieldInfo.SetValue(destination, value2);
+                fieldInfo.SetValue(destination, parsedValue);
             }
             else
             {
-                fieldInfo.SetValue(destination, value2);
+                fieldInfo.SetValue(destination, parsedValue);
             }
             return true;
         }
@@ -743,8 +743,8 @@ public sealed partial class Parser
         private string GetValidValues()
         {
             string text = "";
-            string text2 = validValues;
-            foreach (object obj in text2)
+            string validValueList = validValues;
+            foreach (object obj in validValueList)
             {
                 text += string.Format("\"{0}\" ", obj.ToString());
             }

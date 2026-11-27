@@ -220,8 +220,8 @@ public partial class ChunkedMemoryStream
         _position += count;
         while (count > 0)
         {
-            byte[] chunk = GetChunk(chunkIndex++, out int count2);
-            int num = Math.Min(count2 - offset2, count);
+            byte[] chunk = GetChunk(chunkIndex++, out int chunkLength);
+            int num = Math.Min(chunkLength - offset2, count);
             Array.Copy(chunk, offset2, buffer, offset, num);
             count -= num;
             offset += num;
@@ -260,12 +260,12 @@ public partial class ChunkedMemoryStream
         _length = Math.Max(_length, _position);
         while (count > 0)
         {
-            int count2;
-            byte[] chunk = GetChunk(chunkIndex++, out count2);
-            int num = Math.Min(count2 - offset2, count);
-            Array.Copy(buffer, offset, chunk, offset2, num);
-            count -= num;
-            offset += num;
+            int chunkLength;
+            byte[] chunk = GetChunk(chunkIndex++, out chunkLength);
+            int bytesToCopy = Math.Min(chunkLength - offset2, count);
+            Array.Copy(buffer, offset, chunk, offset2, bytesToCopy);
+            count -= bytesToCopy;
+            offset += bytesToCopy;
             offset2 = 0;
         }
     }
@@ -342,11 +342,11 @@ public partial class ChunkedMemoryStream
         }
         else if (index >= _chunks.Length)
         {
-            int num2;
-            for (num2 = _chunks.Length * 2; num2 <= index; num2 *= 2)
+            int resizedChunkCount;
+            for (resizedChunkCount = _chunks.Length * 2; resizedChunkCount <= index; resizedChunkCount *= 2)
             {
             }
-            Array.Resize(ref _chunks, num2);
+            Array.Resize(ref _chunks, resizedChunkCount);
         }
         byte[] result = _chunks[index] ?? (_chunks[index] = new byte[ChunkSize]);
         count = ChunkSize;
@@ -419,14 +419,14 @@ public partial class ChunkedMemoryStream
     public void WriteTo(System.IO.Stream stream)
     {
         long num = _length;
-        int num2 = 0;
+        int chunkIndex = 0;
         while (num > 0)
         {
             int count;
-            byte[] chunk = GetChunk(num2++, out count);
-            int num3 = (int)Math.Min(num, count);
-            stream.Write(chunk, 0, num3);
-            num -= num3;
+            byte[] chunk = GetChunk(chunkIndex++, out count);
+            int bytesToWrite = (int)Math.Min(num, count);
+            stream.Write(chunk, 0, bytesToWrite);
+            num -= bytesToWrite;
         }
     }
 

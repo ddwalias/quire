@@ -94,16 +94,16 @@ public partial class WindowLocatedRelativelyToPositionProvider
     private ItemQuarterLocationInOwnerWindow GetPositionProviderQuarterPosition(global::System.Windows.Point positionProviderRelativePointFromOwner)
     {
         bool flag = positionProviderRelativePointFromOwner.Y <= Owner.ActualHeight / 2.0;
-        bool flag2 = positionProviderRelativePointFromOwner.X <= Owner.ActualWidth / 2.0;
+        bool isLeftHalf = positionProviderRelativePointFromOwner.X <= Owner.ActualWidth / 2.0;
         if (!flag)
         {
-            if (!flag2)
+            if (!isLeftHalf)
             {
                 return ItemQuarterLocationInOwnerWindow.BottomRight;
             }
             return ItemQuarterLocationInOwnerWindow.BottomLeft;
         }
-        if (!flag2)
+        if (!isLeftHalf)
         {
             return ItemQuarterLocationInOwnerWindow.TopRight;
         }
@@ -122,12 +122,12 @@ public partial class WindowLocatedRelativelyToPositionProvider
             global::System.Windows.Point val = new global::System.Windows.Point(popupLocationPoint.X, popupLocationPoint.Y);
             int length = global::System.Enum.GetValues(typeof(ItemQuarterLocationInOwnerWindow)).Length;
             int num = (int)positionProviderQuarterPosition;
-            int num2 = (num + 1) % length;
-            while (!popupLocationAndVisibility && num2 != num)
+            int nextPosition = (num + 1) % length;
+            while (!popupLocationAndVisibility && nextPosition != num)
             {
-                global::Quire.EnumHelper.TryParse<ItemQuarterLocationInOwnerWindow>(num2, out ItemQuarterLocationInOwnerWindow enumValue);
+                global::Quire.EnumHelper.TryParse<ItemQuarterLocationInOwnerWindow>(nextPosition, out ItemQuarterLocationInOwnerWindow enumValue);
                 popupLocationAndVisibility = GetPopupLocationAndVisibility(positionProviderScreenBounds, enumValue, out popupLocationPoint);
-                num2 = (num2 + 1) % length;
+                nextPosition = (nextPosition + 1) % length;
             }
             if (!popupLocationAndVisibility)
             {

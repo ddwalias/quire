@@ -14,8 +14,8 @@ public partial class NumberMatchToBooleanConverter
             return false;
         }
         double num = NumberOrStringToDouble(value, culture);
-        double num2 = NumberOrStringToDouble(parameter, culture);
-        return num == num2;
+        double expectedNumber = NumberOrStringToDouble(parameter, culture);
+        return num == expectedNumber;
     }
 
     [MirrorVerified("Release IL")]

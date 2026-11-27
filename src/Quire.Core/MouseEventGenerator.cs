@@ -26,19 +26,19 @@ public partial class MouseEventGenerator
         User32.GetCursorPos(ref pt);
         NormalizeCoordinates(new Point(pt.x, pt.y), out var x2, out var y2);
         int num = System.Math.Max(System.Math.Abs(x - x2), System.Math.Abs(y - y2));
-        int num2 = 1;
+        int stepCount = 1;
         if (num > 50)
         {
-            num2 = System.Math.Min(100, num / 50);
+            stepCount = System.Math.Min(100, num / 50);
         }
-        int num3 = num / num2 - 1;
-        double num4 = (double)(x - x2) / (double)num3;
-        double num5 = (double)(y - y2) / (double)num3;
-        for (int i = 0; i < num3; i++)
+        int intermediatePointCount = num / stepCount - 1;
+        double xIncrement = (double)(x - x2) / (double)intermediatePointCount;
+        double yIncrement = (double)(y - y2) / (double)intermediatePointCount;
+        for (int i = 0; i < intermediatePointCount; i++)
         {
-            int x3 = x2 + (int)((double)i * num4);
-            int y3 = y2 + (int)((double)i * num5);
-            SendMouseInput(x3, y3, SendMouseInputFlags.Move | SendMouseInputFlags.Absolute | SendMouseInputFlags.VirtualDesk);
+            int interpolatedX = x2 + (int)((double)i * xIncrement);
+            int interpolatedY = y2 + (int)((double)i * yIncrement);
+            SendMouseInput(interpolatedX, interpolatedY, SendMouseInputFlags.Move | SendMouseInputFlags.Absolute | SendMouseInputFlags.VirtualDesk);
             Quire.Wpf.WpfUtils.DoEvents();
         }
         SendMouseInput(x, y, SendMouseInputFlags.Move | SendMouseInputFlags.Absolute | SendMouseInputFlags.VirtualDesk);
@@ -57,10 +57,10 @@ public partial class MouseEventGenerator
     [MirrorVerified("Release IL")]
     public static void GenerateMouseClick(Point wpfScreenPoint, int clickCount)
     {
-        NormalizeCoordinates(wpfScreenPoint, out int num, out int num2);
+        NormalizeCoordinates(wpfScreenPoint, out int normalizedX, out int normalizedY);
         for (int i = 0; i < clickCount; i++)
         {
-            MouseClickFromNormalizedCoordinates(num, num2);
+            MouseClickFromNormalizedCoordinates(normalizedX, normalizedY);
         }
         Quire.Wpf.WpfUtils.DoEvents();
         System.Threading.Thread.Sleep(unchecked((int)(User32.GetDoubleClickTime() + 1)));
@@ -112,13 +112,13 @@ public partial class MouseEventGenerator
     [MirrorVerified("Release IL")]
     private static void NormalizeCoordinates(Point rawPoint, out int x, out int y)
     {
-        int num = User32.GetSystemMetrics(78);
-        int num2 = User32.GetSystemMetrics(79);
-        int num3 = User32.GetSystemMetrics(76);
-        int num4 = User32.GetSystemMetrics(77);
-        double num5 = (rawPoint.X - (double)num3) * 65536.0 / (double)num + (double)(65536 / (num * 2));
-        double num6 = (rawPoint.Y - (double)num4) * 65536.0 / (double)num2 + (double)(65536 / (num2 * 2));
-        x = (int)num5;
-        y = (int)num6;
+        int virtualScreenWidth = User32.GetSystemMetrics(78);
+        int virtualScreenHeight = User32.GetSystemMetrics(79);
+        int virtualScreenLeft = User32.GetSystemMetrics(76);
+        int virtualScreenTop = User32.GetSystemMetrics(77);
+        double normalizedX = (rawPoint.X - (double)virtualScreenLeft) * 65536.0 / (double)virtualScreenWidth + (double)(65536 / (virtualScreenWidth * 2));
+        double normalizedY = (rawPoint.Y - (double)virtualScreenTop) * 65536.0 / (double)virtualScreenHeight + (double)(65536 / (virtualScreenHeight * 2));
+        x = (int)normalizedX;
+        y = (int)normalizedY;
     }
 }

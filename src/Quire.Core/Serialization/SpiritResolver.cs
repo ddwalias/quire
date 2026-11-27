@@ -10,7 +10,7 @@ public partial class SpiritResolver
         string[] segments = absoluteUri.Segments;
         int num = segments.Length - 1;
         string text = segments[num];
-        string text2 = string.Empty;
+        string namespaceName = string.Empty;
         if ("EN" == text)
         {
             text = "XMLSchema.dtd";
@@ -22,21 +22,21 @@ public partial class SpiritResolver
         }
         else if ("Math50.xsd" == text || "units10.xsd" == text || "provenance10.xsd" == text || "worksheet50.xsd" == text || "SimpleTypes.xsd" == text || "calculation10.xsd" == text)
         {
-            text2 = "Mathcad";
+            namespaceName = "Mathcad";
         }
-        if (string.Empty == text2)
+        if (string.Empty == namespaceName)
         {
             if (num > 0)
             {
-                text2 = segments[num - 1].Trim("/".ToCharArray());
+                namespaceName = segments[num - 1].Trim("/".ToCharArray());
             }
             else
             {
                 DebugTools.DevAssert(false, "Unknown schema filename - if new schema file was added, add its path here...");
-                text2 = "W3C";
+                namespaceName = "W3C";
             }
         }
-        text = string.Format("{0}.{1}", text2, text);
+        text = string.Format("{0}.{1}", namespaceName, text);
         return text;
     }
 
