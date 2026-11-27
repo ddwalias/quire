@@ -29,9 +29,9 @@ public partial class VisualTableContents
         {
             baselinedVisual.MeasureOverideCompleted += InvalidateMeasure;
         }
-        if (visualRemoved is IBaselinedVisual baselinedVisual2)
+        if (visualRemoved is IBaselinedVisual removedBaselinedVisual)
         {
-            baselinedVisual2.MeasureOverideCompleted -= InvalidateMeasure;
+            removedBaselinedVisual.MeasureOverideCompleted -= InvalidateMeasure;
         }
     }
 

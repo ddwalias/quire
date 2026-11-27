@@ -38,11 +38,11 @@ public abstract partial class DeserializationStrategy : IDeserializationStrategy
         {
             return true;
         }
-        if (item is textType textType2)
+        if (item is textType textData)
         {
-            if (textType2.Regions != null)
+            if (textData.Regions != null)
             {
-                return !textType2.Regions.Any();
+                return !textData.Regions.Any();
             }
             return true;
         }

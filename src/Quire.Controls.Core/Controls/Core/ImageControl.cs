@@ -321,11 +321,11 @@ public partial class ImageControl
 
     public IList<IRegionPersistentData> SetRegionPersistentData(IDeS11NProvider d11NProvider, object data)
     {
-        if (data is pictureType pictureType2)
+        if (data is pictureType pictureData)
         {
-            if (pictureType2.InnerXml != null)
+            if (pictureData.InnerXml != null)
             {
-                XmlNode xmlNode = pictureType2.InnerXml[0];
+                XmlNode xmlNode = pictureData.InnerXml[0];
                 if (xmlNode != null)
                 {
                     string attribute = ((XmlElement)xmlNode).GetAttribute("item-idref");

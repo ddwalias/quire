@@ -29,13 +29,13 @@ public abstract partial class VisualAdornerBase : VisibilityAwareAdorner
         {
             return;
         }
-        if (adorner.Parent is AdornerLayer adornerLayer2)
+        if (adorner.Parent is AdornerLayer parentAdornerLayer)
         {
-            if (adornerLayer2 == adornerLayer)
+            if (parentAdornerLayer == adornerLayer)
             {
                 return;
             }
-            adornerLayer2.Remove(adorner);
+            parentAdornerLayer.Remove(adorner);
         }
         adornerLayer.Add(adorner);
     }

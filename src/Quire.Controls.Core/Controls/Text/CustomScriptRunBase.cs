@@ -216,7 +216,7 @@ public abstract partial class CustomScriptRunBase : Run, ICustomFontSizeOwner
                 CustomScriptServiceFunctions.SplitRun(positionAtOffset);
             }
             TextPointer endPosition = flowDocument.ContentEnd.GetPositionAtOffset(endOffset);
-            if (endPosition?.Parent is Run run2 && run2.ContentEnd.CompareTo(endPosition) > 0)
+            if (endPosition?.Parent is Run endRun && endRun.ContentEnd.CompareTo(endPosition) > 0)
             {
                 CustomScriptServiceFunctions.SplitRun(endPosition);
             }
