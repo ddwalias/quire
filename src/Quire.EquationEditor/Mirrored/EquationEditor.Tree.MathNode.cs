@@ -1191,3 +1191,17 @@ public partial class MathNode
         }
     }
 }
+
+public partial class MathNode
+{
+    private sealed partial class a_
+    {
+        public int Count => a___.Count;
+
+        public int IndexOf(MathNode item) => a___.IndexOf(item);
+
+        public MathNode[] ToArray() => a___.ToArray();
+
+        public System.Collections.IEnumerator GetEnumerator() => a___.GetEnumerator();
+    }
+}
