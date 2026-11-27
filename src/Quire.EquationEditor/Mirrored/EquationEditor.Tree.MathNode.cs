@@ -203,6 +203,126 @@ public partial class MathNode
         }
     }
 
+    public Direction[] PrimalChildTypeoverExtendDirections => d__.PrimalChildTypeoverExtendDirections;
+
+    public string DescriptorName => d__.DescriptorName;
+
+    public Fixity Fixity => d__.Fixity;
+
+    public Associativity Associativity => d__.Associativity;
+
+    public bool IsInfix => d__.IsInfix;
+
+    public bool IsUnary => d__.IsUnary;
+
+    public int Precedence => d__.Precedence;
+
+    public Type InfoType => d__.InfoType;
+
+    public char? OperatorSymbol => d__.OperatorSymbol;
+
+    public SymbolMargin OperatorSymbolMargin => d__.OperatorSymbolMargin;
+
+    public string OperatorSExpName => d__.OperatorSExpName;
+
+    public string OperatorVisualRepresentation => d__.OperatorVisualRepresentation;
+
+    public string RLFormat => d__.RLFormat;
+
+    public string XMLFormat => d__.XMLFormat;
+
+    public string SplitOposite => d__.SplitOposite;
+
+    public bool IsLineSplit => d__.LineSpan == LineSpan.SplitLine;
+
+    public bool IsMonoLine => d__.LineSpan == LineSpan.MonoLine;
+
+    public LineSpan LineSpan => d__.LineSpan;
+
+    public string[] Alternates => d__.Alternates;
+
+    public NodeValueType ValueType => d__.ValueType;
+
+    public bool CarriesValue => d__.CarriesValue;
+
+    public bool HasCaretPositions => d__.HasCaretPositions;
+
+    public int[] ChildrenToRemoveOnDelete => d__.ChildrenToRemoveOnDelete;
+
+    public bool AllChildSlotsAreContainerSlots => d__.AllChildSlotsAreContainerSlots;
+
+    public bool IgnoreOperandsOnOvertype => d__.IgnoreOperandsOnOvertype;
+
+    public bool IsPlaceholder => d__.IsPlaceholder;
+
+    public bool IsEvaluatable => d__.IsEvaluatable;
+
+    public bool IsNary => d__.IsNary;
+
+    public bool IsLinearNary => d__.IsLinearNary;
+
+    public bool IsScopingBoundary => d__.IsScopingBoundary;
+
+    public bool JumpThrough => d__.JumpThrough;
+
+    public Regex ValidValueRegex => d__.ValidValueRegex;
+
+    public Regex MatchRegex => d__.MatchRegex;
+
+    public IValueCleaner ValueFixer => d__.ValueFixer;
+
+    public bool AlsoRemoveParent => d__.AlsoRemoveParent;
+
+    public bool HasVisualRepresentation => d__.HasVisualRepresentation;
+
+    public bool AllowCaretOnLeft => d__.AllowCaretOnLeft;
+
+    public bool AllowCaretOnRight => d__.AllowCaretOnRight;
+
+    public bool RestrictFromNavigation => d__.RestrictFromNavigation;
+
+    public bool RestrictsDescendants => d__.RestrictsDescendants;
+
+    public bool ProhibitsDescendants => d__.ProhibitsDescendants;
+
+    public bool RestrictsAncestors => d__.RestrictsAncestors;
+
+    public bool DeleteParentInsteadOfNode => d__.DeleteParentInsteadOfNode;
+
+    public bool Temporal => d__.Temporal;
+
+    public bool MustScopeParent => d__.MustScopeParent;
+
+    public bool ShowOnlyWhenFocused => d__.ShowOnlyWhenFocused;
+
+    public bool IsSkipGenerateVisual => d__.IsSkipGenerateVisual;
+
+    public int? ReplaceWithChildOnDelete => d__.ReplaceWithChildOnDelete;
+
+    public IDictionary<int, string> DefaultNodeOverrides => d__.DefaultNodeOverrides;
+
+    public bool IsImplicit => d__.IsImplicit;
+
+    public string SExpFormat => d__.SExpFormat;
+
+    public bool DistinctNodeEdges => d__.DistinctNodeEdges;
+
+    public bool ExplicitValue => d__.ExplicitValue;
+
+    public OperatorFamily? Family => d__.Family;
+
+    public MathNodeGroups? Group => d__.Group;
+
+    public bool IsLiteral => d__.IsLiteral;
+
+    public bool IsIdentifier => d__.IsIdentifier;
+
+    public bool NoLogicOnlyVisual => d__.NoLogicOnlyVisual;
+
+    public bool PreFenceNavigatable => d__.PreFenceNavigatable;
+
+    public bool PostFenceNavigatable => d__.PostFenceNavigatable;
+
     public bool HasContainerSlot => ContainerSlots.Length > 0;
 
     public bool HasLastElement
