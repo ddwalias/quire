@@ -359,6 +359,13 @@ def compare(before, after, types=(), methods=(), everything=False):
             continue
         if row.get('shape_matches') is not True or not (row.get('exact_match') is True or row.get('declaration_only') is True):
             failures.append({'method': key, 'reason': difference(row)})
+    def original_token(row):
+        origin = row.get('original') or {}
+        return (origin['assembly'], origin['sha256'], origin['token']) if all(origin.get(k) for k in ('assembly', 'sha256', 'token')) else None
+    verified_originals = {}
+    for row in new.values():
+        if verified(row) and (token := original_token(row)) is not None:
+            verified_originals.setdefault(token, set()).add((row.get('project'), row['type'], row.get('declaration_only') is True))
     for key in old.keys() - new.keys():
         # Moved to another project (popped above): its new row was checked there.
         if place(old[key]) not in moved:
@@ -380,6 +387,14 @@ def compare(before, after, types=(), methods=(), everything=False):
                and row.get('shape_matches') is True
                and (row.get('exact_match') is True or row.get('declaration_only') is True)
                for row in new.values()):
+            continue
+        # The same Mathcad member in another type: a compiler-embedded interop copy (D22) replaces the declaration a project
+        # once wrote by hand, so its type and signature name the interop type, but it pairs with the very same Mathcad
+        # method and is verified. The obligation moved with the original. A declaration has no body to regress, so one that
+        # only renamed a type in its own signature (Quire.IValue -> Mathcad.IValue) is the same member in the same type.
+        declaration = removed.get('declaration_only') is True
+        if any((project, type_) != (removed.get('project'), removed['type']) or (declaration and bodyless)
+               for project, type_, bodyless in verified_originals.get(original_token(removed), ())):
             continue
         failures.append({'method': key, 'reason': 'method removed'})
     # A Mathcad member without a Quire member is unfinished, like a stub: only a completeness audit fails on it.

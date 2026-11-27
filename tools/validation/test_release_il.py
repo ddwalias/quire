@@ -156,6 +156,31 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         self.assertTrue(compare(inventory(removed), inventory(moved))['passed'])
         self.assertFalse(compare(inventory(removed), inventory())['passed'])
 
+    def test_removed_member_moves_with_its_mathcad_original_to_the_embedded_interop_copy(self):
+        # D22: a hand-written interop declaration gives way to the compiler-embedded copy. The copy is named like the interop
+        # type, so only the Mathcad member it pairs with says it is the same member.
+        original = {'assembly': 'automationmgd', 'sha256': 'hash', 'token': 7}
+        removed = dict(method('get_Type', exact=False, original=original), id='P::Quire.IValue::get_Type', type='Quire.IValue')
+        embedded = dict(removed, id='P::Mathcad.IValue::get_Type', type='Mathcad.IValue', declaration_only=True)
+        self.assertTrue(compare(inventory(removed), inventory(embedded))['passed'])
+        self.assertFalse(compare(inventory(removed), inventory())['passed'])
+        self.assertFalse(compare(inventory(removed), inventory(dict(embedded, shape_matches=False)))['passed'])
+        other = dict(embedded, original=dict(original, token=8))
+        self.assertFalse(compare(inventory(removed), inventory(other))['passed'])
+        self.assertFalse(compare(inventory(removed), inventory(dict(embedded, original={'assembly': 'automationmgd'})))['passed'])
+
+    def test_declaration_keeps_its_original_when_its_signature_renames_an_embedded_type(self):
+        original = {'assembly': 'automationmgd', 'sha256': 'hash', 'token': 7}
+        removed = dict(method('SetValue', exact=None, original=original, declaration_only=True), id='P::T::SetValue(Quire.IValue)',
+                       signature='SetValue(Quire.IValue)')
+        renamed = dict(removed, id='P::T::SetValue(Mathcad.IValue)', signature='SetValue(Mathcad.IValue)')
+        self.assertTrue(compare(inventory(removed), inventory(renamed))['passed'])
+        self.assertFalse(compare(inventory(removed), inventory(dict(renamed, shape_matches=False)))['passed'])
+        self.assertFalse(compare(inventory(removed), inventory())['passed'])
+        # A method with a body that gained a same-original sibling in its type still owes its own exact row.
+        body = dict(removed, declaration_only=None, exact_match=True)
+        self.assertFalse(compare(inventory(body), inventory(dict(renamed, declaration_only=None, exact_match=True)))['passed'])
+
     def test_renumbered_generated_members_without_counterpart_may_be_removed(self):
         stale = method('MoveNext', exact=False)
         stale.update(id='P::T+<Get>d__13::MoveNext', type='T+<Get>d__13', original=None)

@@ -115,6 +115,12 @@ public sealed class TypeModel
     public bool IsByRefLike { get; init; }
     public bool IsStatic => Kind == TypeKind.Class && Abstract && Sealed;
 
+    /// <summary>
+    /// A COM interface the compiler embedded from an interop assembly (NoPIA, D22): a compiler-generated copy carrying
+    /// <c>[TypeIdentifier]</c>. Its source is the interop assembly's type of the same name, not a type of its own.
+    /// </summary>
+    public bool IsEmbeddedInterop => DeclaringType == null && CustomAttributes.Contains("System.Runtime.InteropServices.TypeIdentifierAttribute");
+
     // Set on mapped (Quire-side) models only.
     public string? MirrorOf { get; init; }   // "Ptc.Controls.Foo, Ptc.Controls"
     public string? Project { get; init; }

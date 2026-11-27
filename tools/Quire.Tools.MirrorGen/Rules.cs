@@ -39,6 +39,15 @@ public sealed class Rules
 
     public bool TryFind(string asm, string type, out ScopeEntry entry) => Scope.TryGetValue((asm, type), out entry!);
 
+    /// <summary>
+    /// Quire projects whose assembly TlbImp generates (docs/mirror/generated-assemblies.json), by project, with the
+    /// original assembly each stands for. TlbImp keeps the type library's names, so these types are not renamed.
+    /// </summary>
+    public Dictionary<string, string> GeneratedProjects { get; } = new(StringComparer.Ordinal);
+
+    /// <summary>The COM interop assemblies PTC generated from type libraries (D22): interop.mathcad and its siblings.</summary>
+    public static bool IsInteropAssembly(string asm) => asm.StartsWith("interop.", StringComparison.OrdinalIgnoreCase);
+
     /// <summary>Assembly names compare case-insensitively: file names and assembly names differ in case.</summary>
     private sealed class ScopeKeyComparer : IEqualityComparer<(string Asm, string Type)>
     {
@@ -72,6 +81,11 @@ public sealed class Rules
             int? phase = int.TryParse(f[6], out var p) ? p : null;
             rules.Scope[(asm, f[1])] = new ScopeEntry(asm, f[1], f[2], MapTypeName(f[1], asm), disposition, phase);
         }
+        string registry = Path.Combine(repo, "docs", "mirror", "generated-assemblies.json");
+        if (File.Exists(registry))
+            using (var json = System.Text.Json.JsonDocument.Parse(File.ReadAllText(registry)))
+                foreach (var project in json.RootElement.EnumerateObject())
+                    rules.GeneratedProjects[project.Name] = project.Value.GetProperty("assembly").GetString()!;
         return rules;
     }
 

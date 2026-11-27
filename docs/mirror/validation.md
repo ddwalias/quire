@@ -72,7 +72,9 @@ renamed file, so moving a file out of a project affects that project too.
 The check requires changed/new methods and every previously exact method in affected projects
 to match Mathcad. Removed methods fail. Unchanged unfinished methods are reported but do not
 block. Existing methods without a Mathcad counterpart may change or be removed; new ones fail
-([D21](decisions.md)). Use `--type` or exact `--method 'Type::signature'` selections when checking members
+([D21](decisions.md)). A removed row whose Mathcad member (assembly, hash, token) is paired and verified in another
+type, or in the same type as a declaration whose signature only renamed a type, moved with its original: a
+hand-written interop declaration that gave way to the compiler-embedded copy ([D22](decisions.md)). Use `--type` or exact `--method 'Type::signature'` selections when checking members
 whose IL was already unchanged; selections must exist. Selecting a type includes its stubs.
 
 A pass covers what was checked. Every member the run neither verified nor failed is named in the

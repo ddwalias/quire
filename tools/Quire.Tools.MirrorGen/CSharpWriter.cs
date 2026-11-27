@@ -625,7 +625,7 @@ public sealed class CSharpWriter(Mapper mapper, Planner plan)
             case NamedSig n:
             {
                 if (n.Args.Length == 0 && Keywords.TryGetValue(n.Name, out var kw)) return kw;
-                var segments = n.Name.Split('+');
+                var segments = mapper.SourceName(n.Assembly, n.Name).Split('+');
                 var sb = new StringBuilder("global::");
                 int argIndex = 0;
                 for (int i = 0; i < segments.Length; i++)

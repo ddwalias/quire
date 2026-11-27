@@ -27,7 +27,39 @@ public sealed class Mapper
         _boundNames = boundNames ?? new Dictionary<string, string>();
         foreach (var e in rules.Scope.Values)
             if (e.Disposition == Disposition.Mirror) _primary.TryAdd(e.MathcadType, e);
+        // D22: a COM interface the compiler embedded in a Mathcad assembly from an interop assembly is built the same way here
+        // (the project embeds the interop project), so it is no type of its own.
+        var interop = mathcad.Assemblies.Values.Where(a => Rules.IsInteropAssembly(a.Name)).ToList();
+        foreach (var asm in mathcad.Assemblies.Values.Where(a => !Rules.IsInteropAssembly(a.Name)))
+            foreach (var t in asm.Types.Where(t => t.IsEmbeddedInterop))
+                if (interop.FirstOrDefault(i => i.Types.Any(x => x.FullName == t.FullName)) is { } source)
+                    Embedded[(asm.Name, t.FullName)] = source.Name;
     }
+
+    /// <summary>
+    /// NoPIA copies (D22): the Mathcad assembly and type of each embedded interop interface, with the interop assembly
+    /// it comes from. Office and chart type libraries have no interop assembly here and are not listed.
+    /// </summary>
+    public Dictionary<(string Asm, string Type), string> Embedded { get; } = new(new EmbeddedKeyComparer());
+
+    private sealed class EmbeddedKeyComparer : IEqualityComparer<(string Asm, string Type)>
+    {
+        public bool Equals((string Asm, string Type) x, (string Asm, string Type) y) =>
+            string.Equals(x.Asm, y.Asm, StringComparison.OrdinalIgnoreCase) && x.Type == y.Type;
+        public int GetHashCode((string Asm, string Type) k) => HashCode.Combine(StringComparer.OrdinalIgnoreCase.GetHashCode(k.Asm), k.Type);
+    }
+
+    /// <summary>TlbImp builds this project's assembly from the type library (docs/mirror/generated-assemblies.json): it has no source to stub.</summary>
+    public bool IsGeneratedProject(string project) => _rules.GeneratedProjects.ContainsKey(project);
+
+    /// <summary>
+    /// The name C# source gives a Quire type: its Quire name, except in a project TlbImp generates, whose types keep the
+    /// type library's names (`Mathcad.IValue`, not `Quire.IValue`).
+    /// </summary>
+    public string SourceName(string project, string quireName) =>
+        IsGeneratedProject(project) && _byProject.TryGetValue((project, quireName), out var t) && t.MirrorOf is { } of
+            ? of[..of.IndexOf(", ", StringComparison.Ordinal)]
+            : quireName;
 
     public IReadOnlyList<TypeModel> Lookup(string quireName) => _byName.TryGetValue(quireName, out var l) ? l : [];
 
@@ -47,6 +79,7 @@ public sealed class Mapper
             foreach (var t in asm.Types)
             {
                 if (!_rules.TryFind(asm.Name, t.FullName, out var e)) continue;
+                if (Embedded.ContainsKey((asm.Name, t.FullName))) continue;
                 string project = _rules.HostFor(e.Assembly);
                 switch (e.Disposition)
                 {

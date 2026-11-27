@@ -20,6 +20,7 @@ public static class Emit
         int files = 0, skipped = 0;
         foreach (var project in csharp)
         {
+            if (mapper.IsGeneratedProject(project)) continue;
             string dir = Path.Combine(ProjectLayout.ProjectDir(repo, project), GeneratedDir, MirrorDir);
             Directory.CreateDirectory(dir);
             var (texts, skippedHere) = ProjectFiles(g, project);
@@ -81,6 +82,7 @@ public static class Emit
         var texts = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         var written = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         int skipped = 0;
+        if (g.Mapper.IsGeneratedProject(project)) return (texts, skipped);
         foreach (var t in g.Mapper.Types.Where(t => t.Project == project && t.DeclaringType == null).OrderBy(t => t.FullName, StringComparer.Ordinal))
         {
             var text = g.Writer.File(t);
@@ -116,6 +118,8 @@ public static class Emit
         public SortedSet<string> ExternalProjects { get; } = new(StringComparer.Ordinal);
         public SortedDictionary<string, Package> Packages { get; } = new(StringComparer.Ordinal);
         public SortedSet<string> Friends { get; } = new(StringComparer.Ordinal);
+        /// <summary>Interop projects this project embeds (D22): its Mathcad assembly holds NoPIA copies of their types.</summary>
+        public SortedSet<string> Embeds { get; } = new(StringComparer.Ordinal);
         public bool Wpf, WinForms, Unsafe;
         public HashSet<string> NeedsWindowsDesktop { get; } = [];
     }
@@ -153,6 +157,18 @@ public static class Emit
                 if (Externals.WpfAssemblies.Contains(reference)) d.Wpf = true;
                 if (Externals.WinFormsAssemblies.Contains(reference)) d.WinForms = true;
             }
+
+        // D22: a project hosting an assembly with NoPIA copies embeds the interop project the copies come from, as Mathcad's
+        // build did; every other user of those interop types references the project normally.
+        foreach (var ((asm, _), interop) in mapper.Embedded)
+        {
+            string host, source;
+            try { (host, source) = (rules.HostFor(asm), rules.HostFor(interop)); }
+            catch (ArgumentException) { continue; }
+            if (host == source || !deps.TryGetValue(host, out var embedder) || !deps.ContainsKey(source)) continue;
+            embedder.Embeds.Add(source);
+            embedder.Projects.Remove(source);
+        }
 
         // InternalsVisibleTo, as Mathcad declares it, mapped to the host projects.
         foreach (var asm in mathcad.Assemblies.Values)
@@ -357,6 +373,12 @@ public static class Emit
             string reference = Path.GetRelativePath(ProjectLayout.ProjectDir(repo, project), rules.ReferenceFile(p));
             if (!existing.Contains($"\\{p}.csproj\"") && !existing.Contains($"\\{p}.vcxproj\""))
                 sb.AppendLine($@"    <ProjectReference Include=""{reference}"" />");
+        }
+        foreach (var p in d.Embeds)
+        {
+            string reference = Path.GetRelativePath(ProjectLayout.ProjectDir(repo, project), rules.ReferenceFile(p));
+            if (!existing.Contains($"\\{p}.csproj\"") && !existing.Contains($"\\{p}.vcxproj\""))
+                sb.AppendLine($@"    <ProjectReference Include=""{reference}"" EmbedInteropTypes=""true"" />");
         }
         foreach (var assembly in d.ExternalProjects)
         {

@@ -144,6 +144,24 @@ foreach (var artifact in quire.Where(a => generatedBindings.ContainsKey(a.Name)
     foreach (var name in candidateTypes.Intersect(originalTypes))
         typeNames[(artifact.Name, name)] = [name, assembly];
 }
+// A COM interface the compiler embedded from an interop assembly (NoPIA, D22: [TypeIdentifier]) has no source to carry
+// [MirrorOf]. It binds to the original's embedded copy: the type of the same name in a Mathcad assembly the project mirrors,
+// or, for an interop type the Quire project names differently (MathcadAutomationPrivate.* lives in Quire.AutomationPrivate),
+// the type map's binding of that Quire name in such an assembly. Only the project's own assemblies are searched, so its rows
+// do not depend on what else is audited.
+foreach (var artifact in quire)
+{
+    var mirrored = typeNames.Where(t => t.Key.Assembly == artifact.Name).Select(t => t.Value[1])
+        .Distinct(StringComparer.OrdinalIgnoreCase).Where(originals.ContainsKey).ToList();
+    foreach (var type in artifact.Model.Types.Where(t => t.IsEmbeddedInterop && t.MirrorOf == null))
+    {
+        var found = mirrored.SelectMany(assembly => reviewed.GetValueOrDefault(type.FullName, [])
+                .Where(b => string.Equals(b[1], assembly, StringComparison.OrdinalIgnoreCase)).Select(b => b[0])
+                .Append(type.FullName).Distinct().Select(name => (Assembly: originals[assembly], Name: name)))
+            .Where(o => o.Assembly.Model.Types.Any(t => t.FullName == o.Name && t.IsEmbeddedInterop)).ToList();
+        if (found.Count == 1) typeNames[(artifact.Name, type.FullName)] = [found[0].Name, found[0].Assembly.Name];
+    }
+}
 // A C++/CLI build emits the C++ types it uses (Windows SDK records, STL, CRT and template instances) under their C++
 // names, where no [MirrorOf] can be written. In a mixed-mode Quire assembly such a type is the type of the same name, kind
 // and native size in a Mathcad assembly the Quire assembly binds, when the type map lists that original as a C++ artefact
