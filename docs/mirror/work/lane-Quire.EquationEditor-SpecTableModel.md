@@ -13,4 +13,9 @@
 
 - Added `NumberOfDataCells`, `CellCount`, `IsExtraDataCellOrEmptyScale`, `RemoveEmptyColumns`, `IsRowEmpty`, `IsColumnEmpty`, `GetColumn`, `AddColumnAtEnd`, and `AddRowAtEnd`; removed their generated stubs.
 - Release IL report: pending in the lane gate; lint passes.
+
+## Batch 3 — expressions and wrappers
+
+- Added `SExpression`, `CreateMemento`, and `GetColumnWrapper`; removed their generated stubs.
+- Release IL report: pending in the lane gate; lint passes.
 - Remaining: other SpecTableModel members and nested/closure types.

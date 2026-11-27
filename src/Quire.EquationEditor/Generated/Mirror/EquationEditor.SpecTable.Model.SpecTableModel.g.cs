@@ -27,8 +27,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
     [global::Quire.Mirror.MirrorStub]
     private bool o;
     [global::Quire.Mirror.MirrorStub]
-    public string SExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool IsRestrictedReadOnly { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsEmpty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -68,8 +66,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
     public global::Quire.PersistentDataObjects.mathType[] GetColumnsRegionPersistentData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetColumnsRegionPersistentData(global::Quire.PersistentDataObjects.mathType[] columns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.SpecTable.Model.ISpecTableMemento CreateMemento() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RestoreMemento(global::Quire.EquationEditor.SpecTable.Model.SpecTableMemento modelMemento) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -164,8 +160,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
     private void a(int A_0, int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper> GetWrappedColumns() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper GetColumnWrapper(global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn column) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode CreateMatrixFromTableCells(global::Quire.DiscreteRect selected) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

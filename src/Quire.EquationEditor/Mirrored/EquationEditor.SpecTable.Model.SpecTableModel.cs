@@ -1,4 +1,5 @@
 #nullable disable
+using System.Linq;
 using Quire.Mirror;
 
 namespace Quire.EquationEditor.SpecTable.Model;
@@ -12,6 +13,8 @@ public partial class SpecTableModel
     internal int NumberOfDataCells => b__.Count != 0 ? b__[0].DataCellCount : 1;
 
     internal int CellCount => b__[0].CellCount;
+
+    public string SExpression => "(@TABLE " + string.Join(" ", Columns.Select(SpecTableColumn.GetSExpression)) + ")";
 
     public bool IsExtraDataCellOrEmptyScale(IEquationModel cell)
     {
@@ -109,6 +112,14 @@ public partial class SpecTableModel
         {
             a(Direction.Down, CellCount - 1, ColumnCount - 1, 0);
         }
+    }
+
+    public ISpecTableMemento CreateMemento() => new SpecTableMemento(Columns);
+
+    public SpecTableCalculatableWrapper GetColumnWrapper(ISpecTableColumn column)
+    {
+        c__.TryGetValue(column, out SpecTableCalculatableWrapper wrapper);
+        return wrapper;
     }
 
     [MirrorVerified("Release IL")]
