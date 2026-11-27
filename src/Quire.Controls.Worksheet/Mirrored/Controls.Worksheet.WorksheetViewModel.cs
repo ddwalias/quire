@@ -3001,7 +3001,10 @@ private void SetupDefaultPageLayout()
                 ((ICollapsibleAreaControl)area).GridCellSizeChangedAction = () =>
                 {
                     IList<WhiteboardItemSizeChangedEventHandler> sizeChangedHandlers = _itemSizeChangedHandlerMap[area];
-                    _itemSizeChangedHandlerMap[area].Each(new Action<WhiteboardItemSizeChangedEventHandler>(handler => ItemManager.UnhookSizeChanged(area, handler)));
+                    _itemSizeChangedHandlerMap[area].Each(new Action<WhiteboardItemSizeChangedEventHandler>(delegate (WhiteboardItemSizeChangedEventHandler handler)
+                    {
+                        ItemManager.UnhookSizeChanged(area, handler);
+                    }));
                     Size size = ItemManager.GetSize(area);
                     double height = size.Height * newSize.Height / oldSize.Height;
                     ItemManager.SetHeight(area, height);
