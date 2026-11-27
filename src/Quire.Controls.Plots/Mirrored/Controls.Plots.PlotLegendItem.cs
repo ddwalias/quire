@@ -14,6 +14,11 @@ using Quire.PersistentDataObjects;
 using Quire.Serialization;
 using Quire.Wpf;
 using Quire.Xml;
+using System;
+using System.CodeDom.Compiler;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Windows.Markup;
 
 namespace Quire.Controls.Plots;
 
@@ -252,6 +257,38 @@ public partial class PlotLegendItem
     internal ContentPresenter LegendItemLabelPlaceholder;
     private bool _contentLoaded;
 
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [DebuggerNonUserCode]
+    [GeneratedCode("PresentationBuildTasks", "10.0.11.0")]
+    public void InitializeComponent()
+    {
+        if (_contentLoaded)
+        {
+            return;
+        }
+        _contentLoaded = true;
+        Uri resourceLocator = new Uri("/Quire.Controls.Plots;component/plotlegenditem.xaml", UriKind.Relative);
+        Application.LoadComponent(this, resourceLocator);
+    }
+
+    [DebuggerNonUserCode]
+    [GeneratedCode("PresentationBuildTasks", "10.0.11.0")]
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    void IComponentConnector.Connect(int connectionId, object target)
+    {
+        switch (connectionId)
+        {
+            case 1:
+                LegendItemStackPanel = (StackPanel)target;
+                break;
+            case 2:
+                MiniTraceLegend = (ContentControl)target;
+                break;
+            case 3:
+                LegendItemLabelPlaceholder = (ContentPresenter)target;
+                break;
+            default:
+                _contentLoaded = true;
+                break;
+        }
+    }
 }

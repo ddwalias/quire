@@ -1062,11 +1062,26 @@
 - Release IL: PASS — 3109 checked in Plots, 0 failures.
 - Remaining mismatches in this batch: none.
 
+## Batch 126 — ContourPlotControl, PlotLegendItem, AxisLimitEditor, AxisModel remaining members
 
-
-
-
-
-
-
-
+- Owner: agy-contour. Branch: `feature/agy-contour`.
+- Members:
+  - `ContourPlotControl`:
+    - Fields/constants & static `.cctor`: `_typeOfThis`, `LabelFormatterProperty`, `_engineResults`, `_changedEvent`, `TraceLineStyleProperty`, `TraceLineWeightProperty`, `TraceColorProperty`, `ColorSchemeProperty`, `ShowContourValuesProperty`, `ToggleShowContourValuesCommand`, `SetColorSchemeCommand`, `NumberOfPoints_Min`, `NumberOfPoints_Max`, `_content`, `_background`, `plotGrid`, `_contourLines`, `PART_ySplitter`, `PART_xSplitter`, `_yAxis`, `_yEquation`, `_contourPlot`, `plotLegend`, `_xAxis`, `_xEquation`, `_zAxis`, `_zEquation`, `_errorFrame`, `_contentLoaded`.
+    - Constructors & properties: `.ctor` (with `<.ctor>b__13_0`, `<.ctor>b__13_1`), `ViewModel`, `EngineResults`, `LabelFormatter`, `ChangedEvent`, `LastChildItem`, `ColorScheme`, `TraceLineStyle`, `TraceLineWeight`, `TraceColor`, `ShowContourValues`, `StateForXamlSerialization`, `HideFromCalculationContext`, `XAxis`, `YAxis`, `ZAxis`, `SubElementToResizeData`, `PreserveAspectRatio`, `ErrorFrameShouldBeVisible`, `NumberOfPointsMin`, `NumberOfPointsMax`, `CalculatableInfosWithErrors`, and explicit `IPlotControl<XyzEquation>` properties (`Equation`, `Plot`, `ErrorFrame`, `PlotGrid`).
+    - Methods & events: `Dispose`, `CanvasMeasureOverride`, `CanvasArrangeOverride`, `OnGridIsResizingChanged`, `OnPropertyChanged`, `AxisIsKeyboardFocusWithinChanged`, `ZAxisNumberFormatChanged`, `ViewModelPropertyChanged`, `ReadDataOnDeserializationEnd`, `ViewModelModelChanged`, `SetBindingsForVisualProperties`, `EndInit`, `AddEquations`, `GetPlotEquations` (`<GetPlotEquations>d__49`), `DelegateFocus`, `BindCommands`, `OnBackgroundTypeChanged`, `ChangeOriginPositioning`, `ShowContourValuesExecute`, `ZEquation_OnIsKeyboardFocusWithinChanged`, `HandleLostFocus`, `IsActiveRegionChanged`, `BuildEquationList`, `Commit`, `SetRegionPersistentData`, `GetRegionPersistentData`, `ZEquation_ScalingChanged`, `InitializeComponent`, `_CreateDelegate`, `IComponentConnector.Connect`.
+  - `PlotLegendItem`: `InitializeComponent`, `IComponentConnector.Connect`.
+  - `AxisLimitEditor`: `HideFromCalculationContext` (`<>c__DisplayClass79_0`, exact member order in `Mirrored/Controls.Plots.AxisLimitEditor.cs`).
+  - `AxisModel`: `PropertyNames`, fields & events (`LogarithmicStartDefault`, `LogarithmicAxisStep`, `TickMarkNodeName`, `_equations`, `_markers`, `_startExpression`, `_secondTickExpression`, `_endExpression`, `_scaling`, `_start`, `_end`, `_showNumbers`, `ErrorIndicator`, `_showGridLines`, `_gridLineColorHex`, `_displayNumberFormat`, `_isLinearizedRangeAssertEnabled`, `RequestAddEquation`, `Changed`, `RangeChanged`, `ScalingChanged`, `NumberFormatInitialized`, `PropertyChanged`, `TickMarkLabelsUpdated`), `.ctor`, `AxisCalculatables` (`<get_AxisCalculatables>d__41`), `CalculateBetterTickmarks`, `CalculateBetterTickmarksWithZeroInRange`.
+- Hand-written:
+  - `Mirrored/Controls.Plots.Contour.View.ContourPlotControl.cs`
+  - `Mirrored/Controls.Plots.PlotLegendItem.cs`
+  - `Mirrored/Controls.Plots.AxisLimitEditor.cs`
+  - `Mirrored/Controls.Plots.Model.AxisModel.cs`
+- Shapes:
+  - `ContourPlotControl`: placed `Dispose`, `CalculatableInfosWithErrors`, `CanvasMeasureOverride`, `CanvasArrangeOverride`, and explicit `IPlotControl<XyzEquation>` properties before `.ctor` so `.ctor` lambdas take `<.ctor>b__13_*` and `GetPlotEquations` emits `<GetPlotEquations>d__49`; used tuple deconstruction `(zBaselineOffset, zEquationSize) = (...)` in `CanvasMeasureOverride` to match slot order and inline branch structure.
+  - `AxisLimitEditor`: ordered all fields/events/properties/methods in Mathcad order so `HideFromCalculationContext` closure emits `<>c__DisplayClass79_0`.
+  - `AxisModel`: used `(start < 0.0 && end > 0.0) is true` in `CalculateBetterTickmarks` to materialize bool before `brfalse.s` without adding a bool local; kept `SetXmlNode` as an unmarked placeholder stub after `CalculateBetterTickmarksWithZeroInRange` (Roslyn 10 `dup` vs legacy `stloc` on `domainNode`) to preserve `AxisCalculatables` `d__41`, `SetRange` 170, and `GetNumberOfTracesForEquation` 213 ordinals.
+  - `EvaluativeEquationControl`: 5 dependency-property callbacks remain parked in `EvaluativeEquationControl.g.cs` per Batch 122 (Roslyn 10 `dup` vs legacy `stloc`).
+- Release IL: PASS; 4302 checked; 0 failures.
+- Remaining parked stubs in assigned types: `AxisModel.SetXmlNode`, `EvaluativeEquationControl.{IsUserSetValueChanged,RealResultValueChanged,IsActiveChanged,ErrorChanged,FontSizeChanged}`.

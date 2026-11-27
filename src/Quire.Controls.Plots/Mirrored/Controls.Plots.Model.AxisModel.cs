@@ -14,11 +14,81 @@ using Quire.Xml;
 using Quire.Controls.Core;
 using Quire;
 using Quire.Controls.Plots.Presenter;
+using Quire.Serialization;
 
 namespace Quire.Controls.Plots.Model;
 
 internal partial class AxisModel
 {
+    public const double LogarithmicStartDefault = 0.01;
+    private const double LogarithmicAxisStep = 1.0;
+    private const string TickMarkNodeName = "positionticmark";
+    private readonly IList<IEquationItem> _equations = new List<IEquationItem>();
+    private readonly AxisMarkersCollection _markers = new AxisMarkersCollection();
+    private IAxisLimitEditor _startExpression;
+    private IAxisLimitEditor _secondTickExpression;
+    private IAxisLimitEditor _endExpression;
+    private AxisScaling _scaling;
+    private double _start;
+    private double _end;
+    private bool _showNumbers = true;
+    public static readonly string ErrorIndicator = '?'.ToString();
+    private bool _showGridLines;
+    private string _gridLineColorHex = PlotCommonConstants.GridlinesDefaultColorHex;
+    private NumberFormat _displayNumberFormat;
+    private bool? _isLinearizedRangeAssertEnabled;
+
+    public event Func<IAxisModel, XmlNode, IPlotEquation> RequestAddEquation;
+    public event Action Changed;
+    public event Action RangeChanged;
+    public event Action<AxisScaling> ScalingChanged;
+    public event Action NumberFormatInitialized;
+    public event PropertyChangedEventHandler PropertyChanged;
+    public event Action TickMarkLabelsUpdated;
+
+    public AxisModel(AxesType axisType, PlotType plotType, IPlotTitleModel axisTitleModel = null)
+    {
+        Type = axisType;
+        PlotType = plotType;
+        AxisModelDefinitionCollection.AxisModelDefinition axisModelDefinition = AxisModelDefinitionCollection.Instance[axisType, plotType];
+        StartDefault = axisModelDefinition.StartDefault;
+        EndDefault = axisModelDefinition.EndDefault;
+        DefaultTickMarks = axisModelDefinition.TickMarksDefault;
+        MaxTickmarks = axisModelDefinition.MaxTickmarks;
+        Start = StartDefault;
+        End = EndDefault;
+        PositionTickMark = DefaultTickMarks / 2;
+        MajorTickMarks = new TickScale
+        {
+            Show = true,
+            MagnitudeThreashold = axisModelDefinition.DefaultTickMagnitudeThreashold,
+            Count = DefaultTickMarks
+        };
+        MinorTickMarks = new TickScale
+        {
+            Show = false
+        };
+        AxisTitleModel = axisTitleModel;
+        Position = Positions.Origin;
+        ShowNumbers = true;
+        Scaling = AxisScaling.Linear;
+        IsDiscrete = false;
+        UpdateTickMarkValues(true);
+        UseBetterTickMarks = true;
+    }
+
+    public static partial class PropertyNames
+    {
+        public const string Start = "Start";
+        public const string End = "End";
+        public const string StartExpression = "StartExpression";
+        public const string EndExpression = "EndExpression";
+        public const string SecondTickExpression = "SecondTickExpression";
+        public const string DisplayNumberFormat = "DisplayNumberFormat";
+        public const string ShowTicks = "ShowTicks";
+        public const string ShowNumbers = "ShowNumbers";
+    }
+
     public IEnumerable<ICalculatable> AxisCalculatables
     {
         get
@@ -37,8 +107,53 @@ internal partial class AxisModel
             }
         }
     }
-    internal void CalculateBetterTickmarks(ref double start, ref double end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static void CalculateBetterTickmarksWithZeroInRange(ref double start, ref double end, ref int numberOfIntervals) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    internal void CalculateBetterTickmarks(ref double start, ref double end)
+    {
+        int numberOfIntervals = MajorTickMarks.Count - 1;
+        // Pattern check materializes bool before brfalse.s to match Mathcad Release IL.
+        if ((start < 0.0 && end > 0.0) is true)
+        {
+            CalculateBetterTickmarksWithZeroInRange(ref start, ref end, ref numberOfIntervals);
+        }
+        else
+        {
+            CalculateBetterTickmarksWhenZeroIsNotInRange(ref start, ref end, ref numberOfIntervals);
+        }
+        MajorTickMarks.Count = numberOfIntervals + 1;
+    }
+
+    private static void CalculateBetterTickmarksWithZeroInRange(ref double start, ref double end, ref int numberOfIntervals)
+    {
+        if (!(start < 0.0 && end > 0.0))
+        {
+            throw new ArgumentException("Zero is not in range, this function should not have been called.");
+        }
+        double ratio = -start / end;
+        int numNeg = (int)Math.Round((double)numberOfIntervals * ratio / (1.0 + ratio));
+        numNeg = Math.Max(numNeg, 1);
+        numNeg = Math.Min(numNeg, numberOfIntervals - 1);
+        int numPos = numberOfIntervals - numNeg;
+        double negOrder = OrderFunction(-start / (double)numNeg);
+        double posOrder = OrderFunction(end / (double)numPos);
+        double minOrder = Math.Min(negOrder, posOrder);
+        double negStep = RoundWithOrder(-start / (double)numNeg, 0.5 * negOrder);
+        double posStep = RoundWithOrder(end / (double)numPos, 0.5 * posOrder);
+        double step = Math.Max(negStep, posStep);
+        if (step == 0.0)
+        {
+            step = 0.5 * minOrder;
+        }
+        if (SetDoubleValueIfValid(ref start, FloorWithOrder(start, 0.5 * minOrder)) && SetDoubleValueIfValid(ref end, CeilingWithOrder(end, 0.5 * minOrder)))
+        {
+            numNeg = (int)CeilingWithOrder(-start / step, 1.0);
+            numPos = (int)CeilingWithOrder(end / step, 1.0);
+            numberOfIntervals = numNeg + numPos;
+            start = (double)(-numNeg) * step;
+            end = (double)numPos * step;
+        }
+    }
+
     private void SetXmlNode(XmlNode value, XmlNamespaceManager nmspmgr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public IPlotTitleModel AxisTitleModel { get; set; }

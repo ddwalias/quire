@@ -37,7 +37,36 @@ public partial class AxisLimitEditor : IAxisLimitEditor, ICalculatable, ICalcula
 
     private bool _hideFromCalculationContextOverride = true;
 
+    // Member declaration order matches Mathcad IL so HideFromCalculationContext keeps <>c__DisplayClass79_0.
+    public AxisLimitEditor(IEquationControl equationControl, ICurrentNumberFormatProperty currentNumberFormatProperty)
+    {
+        _eq = equationControl;
+        _currentNumberFormatProperty = currentNumberFormatProperty;
+        _eq.RequestEvaluation += EqRequestEvaluation;
+        _eq.AllowExpressionsOnly = true;
+        _eq.ProhibitComboBox = true;
+        PreCalculatedValue = double.NaN;
+        HookupEquationChangedEvents();
+    }
+
+    private void HookupEquationChangedEvents()
+    {
+        _eq.Changed += EquationChanged;
+        _eq.SExpressionChanging += EquationSExpressionChanging;
+    }
+
+    private void UnhookEquationChangedEvents()
+    {
+        _eq.Changed -= EquationChanged;
+        _eq.SExpressionChanging -= EquationSExpressionChanging;
+    }
+
     public bool IsWaitingForEngineResponse { get; private set; }
+
+    private void SetCalculatedValueField(double value)
+    {
+        _calculatedValue = value;
+    }
 
     public double CalculatedValue
     {
@@ -72,6 +101,30 @@ public partial class AxisLimitEditor : IAxisLimitEditor, ICalculatable, ICalcula
         }
     }
 
+    private void SetIsDefaultValueInternal(bool newValue)
+    {
+        if (_isDefaultValue == newValue)
+        {
+            return;
+        }
+        _isDefaultValue = newValue;
+        CreateNewSExpIfIsDefaultValueIsTrue();
+        if (_isDefaultValue)
+        {
+            EngineResult = default(EngineResult);
+            FireValueChanged();
+        }
+        else
+        {
+            ResetCalculatedValue();
+        }
+    }
+
+    private void ResetCalculatedValue()
+    {
+        SetCalculatedValueField(double.NaN);
+    }
+
     public bool IsDefaultValue
     {
         get
@@ -83,6 +136,12 @@ public partial class AxisLimitEditor : IAxisLimitEditor, ICalculatable, ICalcula
             SetIsDefaultValueInternal(value);
             UpdateHideFromCalculationContextToDefaultValue();
         }
+    }
+
+    public void SetPreCalculatedValue(double defaultValue)
+    {
+        PreCalculatedValue = defaultValue;
+        CreateNewSExpIfIsDefaultValueIsTrue();
     }
 
     public bool HasErrors
@@ -122,119 +181,9 @@ public partial class AxisLimitEditor : IAxisLimitEditor, ICalculatable, ICalcula
         }
     }
 
-    public string Rl => string.Format("(eval {0})", _eq.Rl);
-
-    public bool CanHideFromCalculationContext => true;
-
-
-
-    public EngineError CurrentError => Error;
-
-    public EngineResult EngineResult { get; set; }
-
-    public bool InterceptAndUpdateResult => true;
-
-    public bool UseICalculatableToRestoreResult => true;
-
-    public SynchronizationStatus SynchronizationStatus => _eq.SynchronizationStatus;
-
-    public CalculatingStatus CalculatingStatus => _eq.CalculatingStatus;
-
-    public int ErrorCount => _eq.ErrorCount;
-
-    public string ErrorSExpression => _eq.ErrorSExpression;
-
-    public string ErrorCode => _eq.ErrorCode;
-
-    public string ErrorText => _eq.ErrorText;
-
-    public bool IsCommitted
-    {
-        get
-        {
-            if (_eq.IsCommitted)
-            {
-                if (!IsDefaultValue && EngineResult.IsEmpty())
-                {
-                    return SynchronizationStatus == SynchronizationStatus.Pending;
-                }
-                return true;
-            }
-            return false;
-        }
-    }
-
-    public EngineError Error => _eq.Error;
-
     public event Action ValueChanged;
 
     public event Action HasErrorsChanged;
-
-    public event Action<ICalculatable> RequestEvaluation;
-
-    public event Func<ICalculatable, string, IResultNode> GetValueOfIdentifierBefore;
-
-    public event Action<ICalculatable> TreatAsUpToDate;
-
-    public event PropertyChangedEventHandler PropertyChanged;
-
-    public AxisLimitEditor(IEquationControl equationControl, ICurrentNumberFormatProperty currentNumberFormatProperty)
-    {
-        _eq = equationControl;
-        _currentNumberFormatProperty = currentNumberFormatProperty;
-        _eq.RequestEvaluation += EqRequestEvaluation;
-        _eq.AllowExpressionsOnly = true;
-        _eq.ProhibitComboBox = true;
-        PreCalculatedValue = double.NaN;
-        HookupEquationChangedEvents();
-    }
-
-    private void HookupEquationChangedEvents()
-    {
-        _eq.Changed += EquationChanged;
-        _eq.SExpressionChanging += EquationSExpressionChanging;
-    }
-
-    private void UnhookEquationChangedEvents()
-    {
-        _eq.Changed -= EquationChanged;
-        _eq.SExpressionChanging -= EquationSExpressionChanging;
-    }
-
-    private void SetCalculatedValueField(double value)
-    {
-        _calculatedValue = value;
-    }
-
-    private void SetIsDefaultValueInternal(bool newValue)
-    {
-        if (_isDefaultValue == newValue)
-        {
-            return;
-        }
-        _isDefaultValue = newValue;
-        CreateNewSExpIfIsDefaultValueIsTrue();
-        if (_isDefaultValue)
-        {
-            EngineResult = default(EngineResult);
-            FireValueChanged();
-        }
-        else
-        {
-            ResetCalculatedValue();
-        }
-    }
-
-    private void ResetCalculatedValue()
-    {
-        SetCalculatedValueField(double.NaN);
-    }
-
-    public void SetPreCalculatedValue(double defaultValue)
-    {
-        PreCalculatedValue = defaultValue;
-        CreateNewSExpIfIsDefaultValueIsTrue();
-    }
 
     public void SetNonCalculationRelatedCustomError(string message)
     {
@@ -272,6 +221,12 @@ public partial class AxisLimitEditor : IAxisLimitEditor, ICalculatable, ICalcula
         _eq.SetError(null);
         HasErrors = false;
     }
+
+    public event Action<ICalculatable> RequestEvaluation;
+
+    public event Func<ICalculatable, string, IResultNode> GetValueOfIdentifierBefore;
+
+    public event Action<ICalculatable> TreatAsUpToDate;
 
     public void SetResult(IResultNode result)
     {
@@ -339,6 +294,8 @@ public partial class AxisLimitEditor : IAxisLimitEditor, ICalculatable, ICalcula
         }
     }
 
+    public string Rl => string.Format("(eval {0})", _eq.Rl);
+
     private void EqRequestEvaluation(ICalculatable obj)
     {
         Commit();
@@ -379,6 +336,8 @@ public partial class AxisLimitEditor : IAxisLimitEditor, ICalculatable, ICalcula
         _eq.SetCalculatingStatus(computingStatus);
     }
 
+    public event PropertyChangedEventHandler PropertyChanged;
+
     private void SetHideFromCalculationContext(bool value)
     {
         bool hideFromCalculationContext = HideFromCalculationContext;
@@ -401,6 +360,32 @@ public partial class AxisLimitEditor : IAxisLimitEditor, ICalculatable, ICalcula
             if (HideFromCalculationContext != hideFromCalculationContext)
             {
                 FirePropertyChanged(new PropertyChangedEventArgs("HideFromCalculationContext"));
+            }
+        }
+    }
+
+    public bool CanHideFromCalculationContext => true;
+
+    public bool HideFromCalculationContext
+    {
+        get
+        {
+            return _hideFromCalculationContext || _hideFromCalculationContextOverride;
+        }
+        set
+        {
+            if (_hideFromCalculationContext != value)
+            {
+                DelegateFunction0<bool> executeFunction = delegate
+                {
+                    SetHideFromCalculationContext(value);
+                    return true;
+                };
+                Delegate0 undoMethod = delegate
+                {
+                    SetHideFromCalculationContext(!value);
+                };
+                CommandBuffer.Execute(new UndoableCommand("Change HideFromCalculationContext", executeFunction, undoMethod), null);
             }
         }
     }
@@ -494,10 +479,48 @@ public partial class AxisLimitEditor : IAxisLimitEditor, ICalculatable, ICalcula
         }
     }
 
+    public EngineError CurrentError => Error;
+
+    public EngineResult EngineResult { get; set; }
+
+    public bool InterceptAndUpdateResult => true;
+
+    public bool UseICalculatableToRestoreResult => true;
+
     public void RestoreResult()
     {
         throw new NotImplementedException();
     }
+
+    public SynchronizationStatus SynchronizationStatus => _eq.SynchronizationStatus;
+
+    public CalculatingStatus CalculatingStatus => _eq.CalculatingStatus;
+
+    public int ErrorCount => _eq.ErrorCount;
+
+    public string ErrorSExpression => _eq.ErrorSExpression;
+
+    public string ErrorCode => _eq.ErrorCode;
+
+    public string ErrorText => _eq.ErrorText;
+
+    public bool IsCommitted
+    {
+        get
+        {
+            if (_eq.IsCommitted)
+            {
+                if (!IsDefaultValue && EngineResult.IsEmpty())
+                {
+                    return SynchronizationStatus == SynchronizationStatus.Pending;
+                }
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public EngineError Error => _eq.Error;
 
     public valueType GetDataObject(IResultManager resultManager)
     {

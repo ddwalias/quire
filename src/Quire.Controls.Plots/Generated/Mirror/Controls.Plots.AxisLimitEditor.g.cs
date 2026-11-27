@@ -11,6 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.AxisLimitEditor, Ptc.Controls.Plots")]
 public partial class AxisLimitEditor : global::Quire.Controls.Plots.Presenter.IAxisLimitEditor, global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculationHideableChild, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Calculation.Core.ICalculatableResultOwner, global::Quire.Calculation.Core.ICalculatableInfo
 {
-    [global::Quire.Mirror.MirrorStub]
-    public bool HideFromCalculationContext { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
