@@ -12,20 +12,6 @@ namespace Quire;
 public partial class FunctionBrowser : global::System.Windows.Controls.UserControl, global::System.Windows.Markup.IComponentConnector, global::System.Windows.Markup.IStyleConnector
 {
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Type _typeOfthis;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly string FunctionViewByCategory;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly string FunctionViewByName;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly string FunctionLabelName;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly string HeaderName;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Threading.DispatcherTimer _refreshTimer;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty DocumentActiveItemProperty;
-    [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.TextBox matchingTextBox;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.TreeView FunctionsTreeView;
@@ -34,53 +20,13 @@ public partial class FunctionBrowser : global::System.Windows.Controls.UserContr
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IWhiteboardItem DocumentActiveItem { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public FunctionBrowser() { }
-    [global::Quire.Mirror.MirrorStub]
-    private void ItemContainerGeneratorOnStatusChanged(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateSelectedItemsOnCollectionChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Activate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnMouseDown(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnMouseDown(e);
-    [global::Quire.Mirror.MirrorStub]
-    private void CanTabNavigate(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ForwardTabNavigate(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool GetActiveFocusedElement(out global::System.Windows.UIElement activeFocusedElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void matchingTextBox_TextChanged(object sender, global::System.Windows.Controls.TextChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateView(object o, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateView() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void FunctionFilter(object sender, global::System.Windows.Data.FilterEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static bool ContainedInCategories(string match, global::System.Collections.Generic.IEnumerable<string> categories) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SearchCommandExecuted(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void RestoreFocusOnActiveDocument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleItemCommandExecuted(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void MoveFocusToLabel(object sender, global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void DoMoveFocus(global::Quire.FunctionLabel label, global::System.Windows.Controls.Control parentItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.FunctionLabel GetNotFocusedChildLabel(global::System.Windows.Controls.Control item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void TabControl_OnPreviewKeyDown(object sender, global::System.Windows.Input.KeyEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Delegate _CreateDelegate(global::System.Type delegateType, string handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IStyleConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private global::Quire.FunctionLabel GetNotFocusedChildLabel(global::System.Windows.Controls.Control item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    internal void DoMoveFocus(global::Quire.FunctionLabel label, global::System.Windows.Controls.Control parentItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
