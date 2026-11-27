@@ -269,3 +269,8 @@
 - `CanTogglePageLayout` is parked. Its Release IL differs at #2: Quire branches `brfalse.s 6` while Mathcad branches `brfalse.s 8`; Quire has 83 entries versus Mathcad's 85.
 - Release IL gate: PASS, 2,426 checked, 2,426 exact, zero failures; 20 WorksheetViewModel members changed from stubs to exact, with all previously exact members preserved. `HandleProtectedStateChanged` retains one documented goto because Release IL branches collapsed areas to the method's shared exit; lint passes with the required label comment.
 - Remaining WorksheetViewModel members are still stubs or shape-blocked; the two exact diffs above plus `SetupDefaultPageLayout`'s cached delegate mismatch are parked for later batches. The gate also reports 467 generated stubs not implemented, 105 Mathcad members without Quire counterparts, and 7 unchanged members not yet matching.
+
+## Luna WorksheetViewModel remaining members — batch 3
+
+- Implemented 26 WorksheetViewModel accessors and service properties (including `ItemManager`, `ControlCreator`, and `MouseFacadeService`) in the hand-written IL-order partial. Release IL gate: PASS, 2,459 checked, 2,459 exact, zero failures; all previously exact members remained exact. Lint passes.
+- Parked members remain `CreateTextRegionFromEquationControl` and `CanTogglePageLayout` with the Release IL diffs above, plus `SetupDefaultPageLayout`'s nested cached-delegate mismatch recorded in the layout batch. The gate reports 434 generated stubs not implemented, 105 Mathcad members without Quire counterparts, and 7 unchanged members not yet matching.
