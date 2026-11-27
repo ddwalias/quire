@@ -167,6 +167,18 @@ public partial class MathNode
 
     public virtual bool IsScopeRoot => this == ScopeRoot;
 
+    public bool IsValid => b(out _, IndexInParent);
+
+    public string Label
+    {
+        get => c__;
+        set
+        {
+            a(value);
+            c__ = value;
+        }
+    }
+
     public MathNode RootNode
     {
         get
