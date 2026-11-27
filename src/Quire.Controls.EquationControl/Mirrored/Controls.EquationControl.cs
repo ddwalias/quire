@@ -182,7 +182,29 @@ public partial class EquationControl
     }
 
     public bool CanHideFromCalculationContext => true;
-    public bool HideFromCalculationContext { get => CalcIsDisabled; set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public bool HideFromCalculationContext
+    {
+        get => CalcIsDisabled;
+        set
+        {
+            bool isDifferent = CalcIsDisabled != value;
+            if (isDifferent)
+            {
+                global::Quire.DelegateFunction0<bool> doMethod = () =>
+                {
+                    CalcIsDisabled = value;
+                    FirePropertyChanged(new global::System.ComponentModel.PropertyChangedEventArgs("HideFromCalculationContext"));
+                    return true;
+                };
+                global::Quire.Delegate0 undoMethod = () =>
+                {
+                    CalcIsDisabled = !value;
+                    FirePropertyChanged(new global::System.ComponentModel.PropertyChangedEventArgs("HideFromCalculationContext"));
+                };
+                CommandBuffer.Execute(new UndoableCommand("Change HideFromCalculationContext", doMethod, undoMethod));
+            }
+        }
+    }
     private void UpdateSynchronizationStatus()
     {
         SynchronizationStatus synchronizationStatus = SynchronizationStatus.Synchronized;
@@ -2502,7 +2524,53 @@ public partial class EquationControl
         args.CanExecute = CurrentMathFormat.AreAnyPropertiesSet;
         args.Handled = true;
     }
-    private void OnSetNumberFormatField(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnSetNumberFormatField(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args)
+    {
+        if (((global::System.Windows.DependencyObject)this).ReadLocalValue(DisplayNumberFormatProperty).Equals(global::System.Windows.DependencyProperty.UnsetValue))
+        {
+            DisplayNumberFormat = DisplayNumberFormat != null ? DisplayNumberFormat.Clone() : new global::Quire.Controls.Core.NumberFormat();
+        }
+        if (!(args.Parameter is global::Quire.Controls.Core.SetPropertyValueCommandParameter parameter))
+        {
+            return;
+        }
+        if (parameter.DependencyPropVal != null)
+        {
+            DisplayNumberFormat.SetPropertyValueWithCommand(parameter);
+            return;
+        }
+        if (parameter.UserData != null && DisplayNumberFormat.GetValueByName(parameter.PropertyName) is int value)
+        {
+            string propertyName = parameter.PropertyName;
+            bool isDecimalPlaces = propertyName.Equals("DecimalPlaces");
+            bool isThreshold = false;
+            isThreshold = new string[3] { "ComplexThreshold", "ZeroThreshold", "ExponentialThreshold" }.Contains(propertyName);
+            if (isDecimalPlaces | isThreshold)
+            {
+                string userData = parameter.UserData;
+                if (userData == "decrease")
+                {
+                    goto DecreaseNumberFormatValue;
+                }
+                if (!(userData == "increase"))
+                {
+                    goto UnsupportedNumberFormatAdjustment;
+                }
+                goto IncreaseNumberFormatValue;
+
+            DecreaseNumberFormatValue:
+                value = isDecimalPlaces ? global::Quire.Controls.Core.NumberFormat.CoerceDecimalPlaces(value, -1) : value - 1;
+                goto ApplyNumberFormatAdjustment;
+            IncreaseNumberFormatValue:
+                value = isDecimalPlaces ? global::Quire.Controls.Core.NumberFormat.CoerceDecimalPlaces(value, 1) : value + 1;
+                goto ApplyNumberFormatAdjustment;
+            UnsupportedNumberFormatAdjustment:
+                global::Quire.DebugTools.FailAssertion("Unsupported value");
+            ApplyNumberFormatAdjustment:
+                DisplayNumberFormat.SetPropertyValueWithCommand(parameter, value);
+            }
+        }
+    }
     private void OnSetMatrixFormatField(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args)
     {
         if (((global::System.Windows.DependencyObject)this).ReadLocalValue(ResultMatrixFormatProperty).Equals(global::System.Windows.DependencyProperty.UnsetValue))
