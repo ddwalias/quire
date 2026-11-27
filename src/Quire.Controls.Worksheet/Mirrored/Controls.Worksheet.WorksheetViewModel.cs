@@ -2819,4 +2819,28 @@ internal partial class WorksheetViewModel
         return Create3DPlotControl();
     }
 
+
+    public IOleObjectControl CreateOleObjectControl(OleObjectControlCreationMethod creationMethod)
+    {
+        if (creationMethod == null)
+        {
+            creationMethod = new OleObjectControl.CreationMethodWithDialog(Application.Current.MainWindow);
+        }
+
+        try
+        {
+            IOleObjectControl oleObjectControl = ControlCreator.CreateOleObjectControl(new OleObjectControlCreationOptions(creationMethod, OleObjectAutoResize), DisplayFilePath);
+            if (oleObjectControl != null)
+            {
+                AddItemAtInsertionPointAndActivate(oleObjectControl, "Insert Object");
+            }
+
+            return oleObjectControl;
+        }
+        catch (ApplicationException ex)
+        {
+            VisualHelper.DisplayWarningMessage(ex.Message);
+            return null;
+        }
+    }
 }
