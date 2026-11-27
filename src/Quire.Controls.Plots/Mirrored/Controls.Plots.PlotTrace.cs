@@ -1044,7 +1044,14 @@ public partial class PlotTrace
             handler(this);
         }
     }
-    protected override bool ShouldSerializeProperty(global::System.Windows.DependencyProperty dp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected override bool ShouldSerializeProperty(global::System.Windows.DependencyProperty dp) {
+		string name = dp.Name;
+		if (name == "Triggers" || name == "BitmapEffect")
+		{
+			return false;
+		}
+		return base.ShouldSerializeProperty(dp);
+	}
 
     private bool IsInPrinting
     {

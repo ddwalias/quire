@@ -17,11 +17,13 @@ using System.Windows.Markup;
 using Quire.Calculation.Core;
 using Quire.Calculation.Core.Trace2DResults;
 using Quire.Controls.Core;
+using Quire.Controls.Internal;
 using Quire.FunctionalitiesLimitation;
 using Quire.Wpf;
 using Quire.Controls.Plots.Presenter;
 using Quire.Controls.Plots.Model;
 using Quire.Controls.Plots.ViewModel;
+using Quire.Controls.Plots.View;
 using Quire.Controls.Plots.PlotCommands;
 using Quire.Undo;
 
@@ -341,7 +343,25 @@ public partial class PlotControl
 			UpdatePlaceholders();
 		}
 	}
-    protected override void BindCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected override void BindCommands() {
+		CommandBindings.Add(new CommandBinding(PlotControlBase.addRowCommand, AddRowCommandExecute, TraceCommandCanExecute));
+		CommandBindings.Add(new CommandBinding(PlotControlBase.DeleteTraceCommand, DeleteTraceCommandExecute, TraceCommandCanExecute));
+		base.BindCommands();
+		CommandBindings.Add(new CommandBinding(PlotControlBase.ChangeTraceSymbolCommand, ChangeTraceSymbolCommandExecute, TraceSymbolCommandCanExecute));
+		CommandBindings.Add(new CommandBinding(ChangeTraceTypeCommand, ChangeTraceTypeCommandExecute, TraceCommandCanExecuteByType));
+		CommandBindings.Add(new CommandBinding(PlotControlBase.ChangeTraceLineCommand, ChangeTraceLineCommandExecute, TraceLineStyleCommandCanExecute));
+		CommandBindings.Add(new CommandBinding(PlotControlBase.ChangeTraceWeightCommand, ChangeTraceWeightCommandExecute, TraceLineWeightCommandCanExecute));
+		CommandBindings.Add(new CommandBinding(PlotControlBase.ChangeTraceColorCommand, ChangeTraceColorCommandExecute, TraceCommandCanExecute));
+		CommandBindings.Add(new CommandBinding(ToggleAxisScalingCommand, ToggleAxisScalingExecuted, ToggleAxisScalingCanExecute));
+		CommandBindings.Add(new CommandBinding(ToggleAxisTitleVisibilityCommand, ToggleAxisTitleVisibilityExecuted, ToggleAxisTitleVisibilityCanExecute));
+		CommandBindings.Add(new CommandBinding(EquationCommands.NavigateLeft, NavigateToYEquationListEnd, CanNavigateToYEquationList));
+		CommandBindings.Add(new CommandBinding(EquationCommands.NavigateRight, NavigateToXEquationList, CanNavigateToXEquationList));
+		CommandBindings.Add(new CommandBinding(EquationCommands.NavigateUp, NavigateToYEquationListStart, CanNavigateToYEquationList));
+		CommandBindings.Add(new CommandBinding(EquationCommands.NavigateDown, NavigateToXEquationList, CanNavigateToXEquationList));
+		CommandBindings.Add(new CommandBinding(PlotControlBase.ChangeNumOfPointsCommand, ChangeNumOfPointsCommandExecute));
+		CommandBindings.Add(new CommandBinding(TogglePlotTitleVisibilityCommand, TogglePlotTitleCommandExecute, TogglePlotTitleCommandCanExecute));
+		CommandBindings.Add(new CommandBinding(PlotControlBase.TogglePlotLegendVisibilityCommand, TogglePlotLegendVisibilityExecuted, TogglePlotLegendVisibilityCanExecute));
+	}
     protected override global::System.Collections.Generic.List<global::Quire.Controls.EquationControl> BuildEquationList() {
 		List<EquationControl> list = new List<EquationControl>();
 		AddEquationsFromList(_resultEquations, list);
@@ -859,7 +879,10 @@ public partial class PlotControl
 		new ChangPlotLegendPositionCommand(this, moveToIndex).Execute();
 	}
     private void HandleActiveEquationChanged(global::Quire.Controls.Plots.Presenter.IPlotEquation equationControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public override void ChangeOriginPositioning(bool newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public override void ChangeOriginPositioning(bool newValue) {
+		base.ChangeOriginPositioning(newValue);
+		PlotControlBase.UpdateHasOriginPositioningOfAxes(newValue, _rangeAxis, _primaryResultAxis);
+	}
     private static readonly global::System.Windows.RoutedEvent ContentChangedEvent;
     protected global::System.Action _postInitializeResizeEventsCallback;
     private bool _contentLoaded;
@@ -876,7 +899,9 @@ public partial class PlotControl
     private void XMinGapPropertyChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void YMinGapPropertyChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private static void SnapToGridChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public static bool GetShowCallouts(global::System.Windows.UIElement uiElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static bool GetShowCallouts(global::System.Windows.UIElement uiElement) {
+		return (bool)((DependencyObject)uiElement).GetValue(ShowCalloutsProperty);
+	}
     public static void SetShowCallouts(global::System.Windows.UIElement uiElement, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public void SetTraceColor(global::System.Windows.Media.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -1190,7 +1215,10 @@ public partial class PlotControl
     private void SetSelectedTracesLineWeight(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private global::System.Nullable<double> GetSelectedTracesLineWeight() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public void SetTraceType(global::Quire.Calculation.Core.Trace2DResults.TraceType traceType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void TraceErrorChanged(global::Quire.Controls.Plots.Presenter.IPlotTrace trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void TraceErrorChanged(global::Quire.Controls.Plots.Presenter.IPlotTrace trace) {
+		ShowHideErrorFrame();
+		ShowHideErrorMessage();
+	}
 
     public override int NumberOfPointsMin => 100;
 
@@ -1200,7 +1228,13 @@ public partial class PlotControl
     internal global::System.Windows.Visibility RangeEquationsVisibility { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     private void HandleTraceCalculatingStatusChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     internal bool IsExpressionVisibilityChangeInProgress { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    public static global::Quire.Controls.Internal.RubberBandHighlighter CreateErrorFrame(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static global::Quire.Controls.Internal.RubberBandHighlighter CreateErrorFrame(global::System.Windows.UIElement element) {
+		return new RubberBandHighlighter(element, new List<UIElement>())
+		{
+			Color = Colors.Transparent,
+			CornerStyle = HighlightCornerStyle.RoundedWithBorder
+		};
+	}
     public override void DelegateFocus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void RetryDelegateFocusAfterResizeEventsInitialized(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private int IndexByX(global::Quire.Controls.Plots.Presenter.ITraceModel traceModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -1220,7 +1254,9 @@ public partial class PlotControl
     protected override bool ShouldSerializeProperty(global::System.Windows.DependencyProperty dp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public global::Quire.Controls.Plots.Presenter.IPlotTrace AddTrace() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void HasEquationErrorPropertyChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void RemoveTrace(global::Quire.Controls.Plots.Presenter.IPlotTrace trace) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void RemoveTrace(global::Quire.Controls.Plots.Presenter.IPlotTrace trace) {
+		Graph.RemoveTrace(trace);
+	}
     public void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public void FireCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void FireXLegendPositionsIndexChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -1228,9 +1264,37 @@ public partial class PlotControl
     private void FirePlotTitlePositionsIndexChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void FirePlotLegendPositionsIndexChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public void AddEquations(global::Quire.Controls.Plots.XyEquation xyEquation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public int ErrorCount() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public string Error() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    internal string ErrorText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public int ErrorCount() {
+		int errorCount = 0;
+		for (int index = 0; index < Graph.Count; index++)
+		{
+			if (Traces[index].PlotCalculatableError != null)
+			{
+				errorCount++;
+			}
+		}
+		return errorCount;
+	}
+    public string Error() {
+		for (int num = 0; num < Graph.Count; num++)
+		{
+			if (Traces[num].PlotCalculatableError != null)
+			{
+				return Traces[num].PlotCalculatableError.ErrorCode;
+			}
+		}
+		return string.Empty;
+	}
+    internal string ErrorText() {
+		for (int num = 0; num < Graph.Count; num++)
+		{
+			if (Traces[num].PlotCalculatableError != null)
+			{
+				return GetErrorMessage(Traces[num].PlotCalculatableError) ?? string.Empty;
+			}
+		}
+		return string.Empty;
+	}
 
     protected override void IsActiveRegionChanged(bool newValue)
     {
