@@ -937,6 +937,33 @@ public partial class WorksheetControl
         UpdateVisiblePagesControlPaddingTop(paddingTopOffset);
     }
 
+    public void PrePrintUpdateWorksheetLayout(
+        global::Quire.Wpf.Printing.Win32PrintRange printRange,
+        global::Quire.Wpf.Printing.PageIndexRange pageRange)
+    {
+        // Declare the selection list first to preserve Mathcad's local slot order.
+        List<int> pageIndices;
+        switch (printRange)
+        {
+            case global::Quire.Wpf.Printing.Win32PrintRange.CurrentPage:
+                pageRange = new global::Quire.Wpf.Printing.PageIndexRange(CurrentPageNumber - 1);
+                break;
+            case global::Quire.Wpf.Printing.Win32PrintRange.Selection:
+            {
+                pageIndices = SelectedItems.Select(this.GetItemWorksheetPageIndex).ToList();
+                pageRange = new global::Quire.Wpf.Printing.PageIndexRange(pageIndices.Min(), pageIndices.Max());
+                break;
+            }
+            case global::Quire.Wpf.Printing.Win32PrintRange.AllPages:
+                pageRange = new global::Quire.Wpf.Printing.PageIndexRange(0, _viewModel.PageCount - 1);
+                break;
+            case global::Quire.Wpf.Printing.Win32PrintRange.SomePages:
+                break;
+        }
+
+        PrePrintUpdateWorksheetLayout(pageRange);
+    }
+
     public void PostPrintUpdateWorksheetLayout()
     {
         double paddingTopOffset = PageManager.PostPrintUpdateVisiblePages(_viewModel.WorksheetPageLayoutDisplayHeight);
