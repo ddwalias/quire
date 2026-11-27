@@ -32,7 +32,6 @@ public partial class BaseUIFunctionalityAttachedBehavior : global::Microsoft.Xam
     [global::Quire.Mirror.MirrorStub]
     protected override void OnAttached() => base.OnAttached();
     [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorStub]
     protected static global::System.Windows.Controls.Image GetImage(object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     protected virtual void OnLoaded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
