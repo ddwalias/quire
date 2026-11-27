@@ -11,4 +11,5 @@
     <!-- MirrorGen refuses to read any other build as "hand-written". -->
     <AssemblyMetadata Include="Quire.MirrorStubs" Value="false" />
   </ItemGroup>
+  <Import Project="$(MSBuildThisFileDirectory)Directory.Build.pdbpaths.props" Condition="Exists('$(MSBuildThisFileDirectory)Directory.Build.pdbpaths.props')" />
 </Project>
