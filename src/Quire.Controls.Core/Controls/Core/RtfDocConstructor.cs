@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows;
 using Net.Sgoliver.NRtfTree.Core;
+using Net.Sgoliver.NRtfTree.Util;
 using Quire.Mirror;
 using Point = System.Windows.Point;
 using Size = System.Windows.Size;
@@ -129,5 +130,30 @@ public partial class RtfDocConstructor
     }
 
     public void NormalizeHighlightColor(RtfTree tree)
-        => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    {
+        RtfColorTable colorTable = tree.GetColorTable();
+        Dictionary<int, int> colorIndexes = new Dictionary<int, int>();
+        RtfTreeNode node;
+        for (int i = 0; i < colorTable.Count; i++)
+        {
+            int key = colorTable[i].ToArgb();
+            if (ImprovedColorMatchingDictionary.ContainsKey(key))
+            {
+                colorIndexes.Add(i, tree.GetColorID(colorTable, ImprovedColorMatchingDictionary[key]));
+            }
+        }
+
+        if (colorIndexes.Count == 0)
+        {
+            return;
+        }
+
+        for (node = tree.RootNode.FirstChild; node != null; node = node.NextNode)
+        {
+            if (node.NodeType == RtfNodeType.Keyword && node.NodeKey == "highlight" && colorIndexes.ContainsKey(node.Parameter))
+            {
+                node.Parameter = colorIndexes[node.Parameter];
+            }
+        }
+    }
 }

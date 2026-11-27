@@ -11,9 +11,6 @@ namespace Quire.Controls.Core;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.RtfHelper, Ptc.Controls.Core")]
 public static partial class RtfHelper
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Collections.Generic.IEnumerable<global::Net.Sgoliver.NRtfTree.Core.RtfTreeNode> ToEnumerable(this global::Net.Sgoliver.NRtfTree.Core.RtfNodeCollection collection) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Core.RtfHelper+LocationFlags, Ptc.Controls.Core")]
     [global::System.Flags]
     public enum LocationFlags

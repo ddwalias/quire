@@ -1,3 +1,4 @@
+// The Zzz file prefix places these partial members after generated LocationFlags, matching Mathcad closure ordinals.
 #nullable disable
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using Net.Sgoliver.NRtfTree.Util;
 using Color = System.Drawing.Color;
 using Quire.Wpf;
 using Quire.IO;
+using Quire.MindTouch.IO;
 
 namespace Quire.Controls.Core;
 
@@ -54,6 +56,11 @@ public static partial class RtfHelper
         return groupNode;
     }
 
+    private static int ConvertPixelsToTwips(double pixels)
+    {
+        return (int)Math.Round(pixels * 15.0);
+    }
+
     public static void InsertLocation(this RtfTreeNode node, Rect layout, LocationFlags flags, int insertIndex, bool hasBorder = false)
     {
         node.InsertKeywordNode("pard", insertIndex++);
@@ -69,6 +76,11 @@ public static partial class RtfHelper
         {
             node.InsertKeywordNode("absh", -ConvertPixelsToTwips(layout.Height), insertIndex);
         }
+    }
+
+    private static int NormalizeHorizontalPosition(double leftPosition)
+    {
+        return Math.Min(ConvertPixelsToTwips(leftPosition), 27360);
     }
 
     public static void AddImage(this RtfTreeNode node, BitmapSource bitmap)
@@ -168,6 +180,7 @@ public static partial class RtfHelper
         node.AppendTextNode(placeholder);
     }
 
+    [global::Quire.Mirror.MirrorStub]
     private static void ApplyBackgroundColor(this RtfTreeNode node, Brush background, int insertIndex, bool hasBorder, Brush borderColor)
         => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -203,7 +216,30 @@ public static partial class RtfHelper
     }
 
     private static RtfTree TextToRtfTree(Action<Stream> saveRtfAction)
-        => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    {
+        RtfTree rtfTree;
+        try
+        {
+            rtfTree = new RtfTree();
+            using (ChunkedMemoryStream stream = new ChunkedMemoryStream())
+            {
+                saveRtfAction(stream);
+                stream.Seek(0L, SeekOrigin.Begin);
+                StreamReader streamReader = new StreamReader(stream);
+                if (rtfTree.LoadRtfStream(streamReader) != 0)
+                {
+                    rtfTree = null;
+                }
+            }
+        }
+        catch (Exception exception)
+        {
+            rtfTree = null;
+            DebugTools.FailAssertion(exception);
+        }
+
+        return rtfTree;
+    }
 
     private static int ReplaceBaselineTextTagForRtfTag(this RtfTreeNode node)
     {
@@ -296,9 +332,85 @@ public static partial class RtfHelper
     }
 
     private static bool FixHyperlinksRtfSerialization(RtfTree tree, List<Hyperlink> links)
-        => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    {
+        bool result = false;
+        if (DebugTools.DevAssert(links.Count > 0, null).Failed)
+        {
+            return false;
+        }
+
+        IList<RtfTreeNode> nodes = tree.MainGroup.SelectGroups("fldinst", ignoreSpecial: true).ToEnumerable().SelectMany((RtfTreeNode sourceGroup) => from node in sourceGroup.ChildNodes.ToEnumerable()
+            where node.Text.Contains("HYPERLINK")
+            select node).ToList();
+        int count = DebugTools.DevAssert(links.Count == nodes.Count, null).Passed ? nodes.Count : Math.Min(nodes.Count, links.Count);
+        for (int index = 0; index < count; index++)
+        {
+            RtfTreeNode node = nodes[index];
+            Hyperlink hyperlink = links[index];
+            if (UrlUtils.GetStringAddressFromUri(hyperlink.NavigateUri).ContainsUnicodeCharOrSlash())
+            {
+                (string oldAddress, RtfNodeCollection newAddress) = GenerateRtfKeyValueAddressFixPair(hyperlink);
+                if (DebugTools.DevAssert(oldAddress != null && newAddress != null && oldAddress.Equals(node.RawText), null).Passed)
+                {
+                    RtfTreeNode group = new RtfTreeNode(RtfNodeType.Group);
+                    group.AppendTextNode(" HYPERLINK \"");
+                    group.ChildNodes.AddRange(newAddress);
+                    group.AppendTextNode("\" ");
+                    node.ParentNode.ChildNodes[node.Index] = group;
+                    result = true;
+                }
+            }
+        }
+
+        return result;
+    }
 
     private static (string oldAddress, RtfNodeCollection newAddress) GenerateRtfKeyValueAddressFixPair(Hyperlink source)
-        => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    {
+        string oldAddress = null;
+        RtfNodeCollection newAddress = null;
+        if (source == null)
+        {
+            return (oldAddress: null, newAddress: null);
+        }
+
+        FlowDocument doc = new FlowDocument();
+        Paragraph paragraph = new Paragraph();
+        doc.Blocks.Add(paragraph);
+        Hyperlink hyperlink = new Hyperlink(new Run(UrlUtils.GetStringAddressFromUri(source.NavigateUri).Replace("\\", "\\\\")))
+        {
+            NavigateUri = source.NavigateUri
+        };
+        paragraph.Inlines.Add(hyperlink);
+        RtfTree tree = TextToRtfTree(SaveRTfAction);
+        if (DebugTools.AssertNotNull(tree, null).Passed)
+        {
+            try
+            {
+                RtfTreeNode field = tree.MainGroup.SelectSingleGroup("field");
+                oldAddress = field.SelectSingleChildGroup("fldinst", ignoreSpecial: true).RawText;
+                newAddress = field.SelectSingleChildGroup("fldrslt").SelectSingleChildNode(RtfNodeType.Group).ChildNodes;
+            }
+            catch (Exception exception)
+            {
+                DebugTools.FailAssertion(exception.Message);
+            }
+        }
+
+        return (oldAddress: oldAddress, newAddress: newAddress);
+
+        void SaveRTfAction(Stream rtfStream)
+        {
+            new System.Windows.Documents.TextRange(doc.ContentStart, doc.ContentEnd).Save(rtfStream, DataFormats.Rtf);
+        }
+    }
+
+    public static IEnumerable<RtfTreeNode> ToEnumerable(this RtfNodeCollection collection)
+    {
+        foreach (RtfTreeNode item in collection)
+        {
+            yield return item;
+        }
+    }
 
 }

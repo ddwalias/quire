@@ -16,13 +16,4 @@ public static partial class RtfHelper
     private static readonly int TextboxFrameThicknessTwips = ConvertPixelsToTwips(0.5);
     public const string BaselineOffsetTagName = "baselineOffsetTag";
 
-    private static int ConvertPixelsToTwips(double pixels)
-    {
-        return (int)Math.Round(pixels * 15.0);
-    }
-
-    private static int NormalizeHorizontalPosition(double leftPosition)
-    {
-        return Math.Min(ConvertPixelsToTwips(leftPosition), 27360);
-    }
 }
