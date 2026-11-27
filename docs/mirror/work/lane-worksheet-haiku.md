@@ -247,3 +247,12 @@
 - Left as stubs: the constructor, `SelectItems` (lambda), `SelectContiguous`, the `ItemsCollectionChanged` and check handlers, the visual-state and location helpers that have closures, `GetNavigationStartLocation`, `HandleDirectionalMove`, `CalculateItemWorksheetLocation`, `AddItemAtLocation`, `Dispose`, the nested command classes, and the field stubs.
 - Release IL: PASS; 1068 checked; 0 failures.
 - Remaining stubs in `src/Quire.Controls.Worksheet/Generated`: 1657.
+
+## Batch 3 retry: shape variants (no landing from this retry)
+
+- Members retried (7, branch `mirror/worksheet-vm-shape-b4`): `CreateSpecTableControl(TableCoordinate?)`, `DirectionalMoveHandler(Direction)`, `CanTogglePageLayout`, `NavigateOutsideMovingAreaDownIfNeeded`, `MoveByPage`, `SelectItemsInBounds`, `RequestNavigateHandler`.
+- Variant A applied to all seven (hoisted result local, unary minus, pattern variable, `worksheetGrid` used twice, `-num3`, early-return form, no cast on `SetLinkVisited`). Release IL: 2197 checked, none of the seven exact, not landed.
+- Remaining mismatches with variant A: `CreateSpecTableControl` `ldnull` vs `ldstr` at #0 (hoisted local); `DirectionalMoveHandler` `ldarg.0` vs `ldloca.s 0` at #5; `CanTogglePageLayout` `stloc.s 7` vs `5` at #28; `NavigateOutsideMovingAreaDownIfNeeded` `stfld ReferencePoint` at #1; `MoveByPage` 184 vs 185 entries; `SelectItemsInBounds` call order at #3; `RequestNavigateHandler` `bgt.s` vs `ble.s` at #28 (59 vs 58 entries).
+- Parked permanently: `OnPropertyChanged` (Mathcad's base call is `callvirt ViewModelBase::OnPropertyChanged`; Roslyn emits `call` for `base.`). `HandleProtectedStateChanged` (long `brtrue` at #23 vs `brtrue.s`).
+- Closure-bearing WorksheetViewModel members stay with haiku-worksheet's whole-type layout.
+- State: main has the ten members from batch 3 (`c0f1e921d`). The nine above remain stubs on main.
