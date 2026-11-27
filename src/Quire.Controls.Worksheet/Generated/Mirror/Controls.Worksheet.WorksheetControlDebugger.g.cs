@@ -61,8 +61,6 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         private void InitializeDebugWindow() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         private void OnScrollViewerChanged(object sender, global::System.Windows.Controls.ScrollChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void OnPageLayoutPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
         [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlDebugger+WorksheetControlUI+PropertyName, Ptc.Controls.Worksheet")]
         private enum PropertyName

@@ -244,6 +244,31 @@ public partial class WorksheetControlDebugger
             UpdateDebugWindowCellsAll(PropertyName.InsertionPointOnPageNumber, (pageIndex + 1).ToString());
         }
 
+        private void OnPageLayoutPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            UpdateDebugWindowCellPage(PropertyName.DisplayHeight, WorksheetViewModelInst.PageLayout.DisplayHeight.ToString("0.00"));
+            UpdateDebugWindowCellPage(
+                PropertyName.PageWidthHeight,
+                string.Format(
+                    "{0},{1}",
+                    WorksheetViewModelInst.PageLayout.PageWidth,
+                    WorksheetViewModelInst.PageLayout.PageHeight));
+            UpdateDebugWindowCellPage(
+                PropertyName.PageBodyWidthHeight,
+                string.Format(
+                    "{0},{1}",
+                    WorksheetViewModelInst.PageLayout.PageBodyWidth,
+                    WorksheetViewModelInst.PageLayout.PageBodyHeight));
+            UpdateDebugWindowCellPage(PropertyName.PageMargin, WorksheetViewModelInst.PageLayout.PageMargin.ToString());
+            UpdateDebugWindowCellPage(PropertyName.GridCellSize, WorksheetViewModelInst.PageLayout.GridCellSize.ToString());
+            UpdateDebugWindowCellPage(PropertyName.LinesPerPage, WorksheetViewModelInst.PageLayout.LinesPerPage.ToString());
+            UpdateDebugWindowCellPage(
+                PropertyName.PageBodyContentWidth,
+                WorksheetViewModelInst.PageLayout.PageBodyContentWidth.ToString());
+            UpdateDebugWindowCellHeaderFooter(PropertyName.HeaderMargin, WorksheetViewModelInst.PageLayout.HeaderMargin.ToString());
+            UpdateDebugWindowCellHeaderFooter(PropertyName.FooterMargin, WorksheetViewModelInst.PageLayout.FooterMargin.ToString());
+        }
+
         private void OnVisiblePagesCollectionChanged(
             object sender,
             global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
