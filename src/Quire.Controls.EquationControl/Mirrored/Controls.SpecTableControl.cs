@@ -18,145 +18,37 @@ using Quire.Services;
 
 namespace Quire.Controls;
 
-public partial class SpecTableControl
+[global::Quire.Mirror.MirrorOf("Ptc.Controls.SpecTableControl, Ptc.Controls.EquationControl")]
+public partial class SpecTableControl : global::System.Windows.Controls.ContentControl, global::Quire.Controls.ISpecTableControl, global::Quire.Controls.Core.IDitaRegion, global::Quire.Serialization.IPersistentDataProvider, global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculationHideableChild, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Controls.Core.IDelegateFocus, global::Quire.Controls.Core.ISearchableRegion, global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Controls.Core.IHelpContext, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Controls.Core.IORegions.IInputRegion, global::Quire.Controls.Core.IORegions.IIORegion, global::Quire.Controls.Core.IORegions.IIORegionBase, global::Quire.Controls.Core.IORegions.IIOCalculatableContainerRegion, global::Quire.Controls.ICurrentIdLabelProperty, global::Quire.Controls.Core.IMathFormatOwner, global::Quire.Controls.Core.ICurrentMathFormatProperty, global::Quire.Controls.Core.IMathFormatForDeserialization, global::Quire.Controls.Core.ISupportCustomInitialization, global::Quire.Controls.Core.IHasChildArrangeInfoProvider
 {
     private static readonly Type _typeOfThis;
+
     public static readonly DependencyProperty CalcIsDisabledProperty;
+
     public static readonly DependencyProperty SynchronizationStatusProperty;
+
     public static readonly DependencyProperty CalculatingStatusProperty;
+
     public static readonly RoutedEvent ChangedEvent;
 
-    public bool CalcIsDisabled
-    {
-        get => (bool)GetValue(CalcIsDisabledProperty);
-        set => SetValue(CalcIsDisabledProperty, value);
-    }
+    private const string FirstPropertyForXamlSerializationPropertyName = "FirstPropertyForXamlSerialization";
 
-    public bool IsEmpty => false;
+    private readonly global::Quire.Calculation.Core.Support.CalculatableChildHider _childHider;
 
-    public bool IsActive
-    {
-        get;
-        set;
-    }
+    internal readonly global::Quire.Controls.SpecTableView View;
 
-    public SynchronizationStatus SynchronizationStatus
-    {
-        get => (SynchronizationStatus)GetValue(SynchronizationStatusProperty);
-        set => SetValue(SynchronizationStatusProperty, value);
-    }
+    internal readonly global::Quire.EquationEditor.SpecTable.ISpecTableModel Model;
 
-    public CalculatingStatus CalculatingStatus
-    {
-        get => (CalculatingStatus)GetValue(CalculatingStatusProperty);
-        set => SetValue(CalculatingStatusProperty, value);
-    }
+    internal readonly global::Quire.EquationEditor.SpecTable.SpecTableCellMap Map;
 
-    public bool CanHideFromCalculationContext => true;
+    private global::Quire.Controls.EquationControl _currentCell;
 
-    public MathFormat MathFormat
-    {
-        get;
-        set;
-    }
+    private global::Quire.Calculation.Core.EngineResult[] _engineResults;
 
-    public void SimulateMouseClick(System.Windows.Point location, int numberOfClicks)
-    {
-        Activate(true);
-    }
+    private global::System.Nullable<global::Quire.Controls.Core.IdLabels> _currentIdLabel;
 
-    private void CanNavigateDown(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
-    {
-        e.CanExecute = Model.CanNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Down, false);
-    }
+    private global::System.Nullable<global::Quire.Controls.Core.IdLabels> _currentDisplayIdLabel;
 
-    private void CanNavigateUp(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
-    {
-        e.CanExecute = Model.CanNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Up, false);
-    }
-
-    private void CanNavigateRight(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
-    {
-        e.CanExecute = Model.CanNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Right, false);
-    }
-
-    private void CanNavigateLeft(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
-    {
-        e.CanExecute = Model.CanNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Left, false);
-    }
-
-    private void OnNavigateRightByTerm(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
-    {
-        Model.HandleNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Right, true);
-    }
-
-    private void OnNavigateLeftBuyTerm(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
-    {
-        Model.HandleNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Left, true);
-    }
-
-    private void OnNavigateDown(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
-    {
-        Model.HandleNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Down, false);
-    }
-
-    private void OnNavigateUp(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
-    {
-        Model.HandleNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Up, false);
-    }
-
-    private void OnNavigateRight(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
-    {
-        Model.HandleNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Right, false);
-    }
-
-    private void OnNavigateLeft(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
-    {
-        Model.HandleNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Left, false);
-    }
-
-    private void Commit()
-    {
-        Model.Commit();
-    }
-
-    private void HandleRequestEvaluation(Quire.Calculation.Core.ICalculatable calculatable)
-    {
-        Commit();
-    }
-
-    private void FireChangedEvent()
-    {
-        RaiseEvent(new RoutedEventArgs(SpecTableControl.ChangedEvent, this));
-    }
-
-    public Quire.EquationEditor.SpecTable.Model.ISpecTableColumn GetColumnFromIndex(int index)
-    {
-        return Model.GetColumn(index);
-    }
-
-    public void FireContentChangedEvents()
-    {
-        FireContentAndRegionChangedEvents(IORegionChangeType.Content);
-    }
-
-    public bool SubstituteAndCommitInputValue(string sExpr, string valueSExpr, string scalingSExpr)
-    {
-        return Model.SubstituteAndCommitInputValue(sExpr, valueSExpr, scalingSExpr, IsActive);
-    }
-
-    internal Quire.Controls.EquationControl GetCellAt(int row, int column)
-    {
-        return View.GetCellAt(row, column);
-    }
-
-    public double VerticalAlignmentOffset => View.VerticalAlignmentOffset;
-
-    public int NumberOfColumns => Model.ColumnCount;
-
-    public int Columns => Model.ColumnCount;
-
-    public string RegionSExpression => Model.SExpression;
 
     private static void HandleCalcIsDisabledChanged(System.Windows.DependencyObject d, System.Windows.DependencyPropertyChangedEventArgs e)
     {
@@ -167,30 +59,86 @@ public partial class SpecTableControl
         }
     }
 
-    private void ExecuteClearMathFormat(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+
+    public bool CalcIsDisabled
     {
-        MathFormat.ClearFormat();
+        get => (bool)GetValue(CalcIsDisabledProperty);
+        set => SetValue(CalcIsDisabledProperty, value);
     }
 
-    private void ExecuteIncreaseFontSize(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    public event global::System.Action<global::Quire.Calculation.Core.ICalculatableContainer, global::Quire.Calculation.Core.ICalculatable> CalculatableAdded;
+
+    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableRemoved;
+
+    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> CalculatableMoved;
+
+    public event global::System.Action<global::Quire.Controls.Core.IWhiteboardItem> OnGotFocusEvent;
+
+    public event global::System.Action<global::Quire.Controls.Core.IWhiteboardItem, global::Quire.Direction> RequestRemove;
+
+
+    public double VerticalAlignmentOffset => View.VerticalAlignmentOffset;
+
+
+    public bool IsEmpty => false;
+
+
+    public void Activate(bool isActive)
     {
-        MathFormat.IncreaseFontSize();
+        if (isActive)
+        {
+            AppServiceRegistry.GetService<IFrameworkElementFacade>().ExecuteOnLoad(this, DelegateFocus);
+        }
     }
 
-    private void ExecuteDecreaseFontSize(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    private void OnTraversedFocusEvent(object sender, global::Quire.Wpf.CustomRoutedEventArgs<global::System.Windows.Input.FocusNavigationDirection> args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public global::System.Nullable<global::System.Windows.Vector> NavigateIntoItem(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+
+    public void SimulateMouseClick(System.Windows.Point location, int numberOfClicks)
     {
-        MathFormat.DecreaseFontSize();
+        Activate(true);
     }
 
-    private void ExecuteChangeFontColor(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    protected override void OnPreviewGotKeyboardFocus(global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => base.OnPreviewGotKeyboardFocus(e);
+
+    public event global::System.Windows.RoutedEventHandler Changed;
+
+    private static void HandleIOTagPropertyChanged(global::System.Windows.DependencyObject depObj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private static void IsActiveRegionChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+
+    public bool IsActive
     {
-        MathFormat.ChangeFontColor((Color)e.Parameter);
+        get;
+        set;
     }
 
-    private void ExecuteChangeHighlightColor(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+
+    static SpecTableControl()
     {
-        MathFormat.ChangeHighlightColor((Color?)e.Parameter);
+        _typeOfThis = typeof(SpecTableControl);
+        FrameworkElement.DefaultStyleKeyProperty.OverrideMetadata(_typeOfThis, new FrameworkPropertyMetadata(_typeOfThis));
+        WhiteboardDependencyProperties.IsActiveProperty.OverrideMetadata(_typeOfThis, new FrameworkPropertyMetadata(IsActiveRegionChanged));
+        SynchronizationStatusProperty = EquationControl.SynchronizationStatusProperty.AddOwner(_typeOfThis);
+        CalculatingStatusProperty = EquationControl.CalculatingStatusProperty.AddOwner(_typeOfThis);
+        IOTag.IOTagProperty.OverrideMetadata(_typeOfThis, new FrameworkPropertyMetadata(HandleIOTagPropertyChanged));
+        CalcIsDisabledProperty = AttachedProperties.CalcIsDisabledProperty.AddOwner(_typeOfThis, new FrameworkPropertyMetadata(HandleCalcIsDisabledChanged));
+        ChangedEvent = CommonRoutedEvents.ContentChangedEvent.AddOwner(_typeOfThis);
     }
+
+    public SpecTableControl() { }
+
+    public SpecTableControl(int rows, int columns) { }
+
+    public SpecTableControl(string[,] data) { }
+
+    internal SpecTableControl(global::Quire.EquationEditor.SpecTable.ISpecTableModel model) { }
+
+    global::Quire.Controls.Core.IUIElementArrangeInfoProvider global::Quire.Controls.Core.IHasChildArrangeInfoProvider.ChildArrangeInfoProvider { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
 
     public static Quire.Controls.SpecTableControl DefinitionListToSpecTable(System.Collections.Generic.List<Quire.EquationEditor.Tree.MathNode> definionsList)
     {
@@ -203,42 +151,108 @@ public partial class SpecTableControl
         return new SpecTableControl(model);
     }
 
-    public bool HighlightAll(string text, FindOptions options)
+    private void BindCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+
+    private void ExecuteClearMathFormat(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
     {
-        throw new NotImplementedException();
+        MathFormat.ClearFormat();
     }
 
-    public override bool ShouldSerializeContent()
+
+    private void ExecuteIncreaseFontSize(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
     {
-        return false;
+        MathFormat.IncreaseFontSize();
     }
 
-    private void FireCalculatableRemoved(ICalculatable wrapper)
+
+    private void ExecuteDecreaseFontSize(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
     {
-        if (CalculatableRemoved != null)
-        {
-            CalculatableRemoved.Invoke(wrapper);
-        }
+        MathFormat.DecreaseFontSize();
     }
 
-    protected override void OnMouseDown(MouseButtonEventArgs e)
+
+    private void ExecuteChangeFontColor(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
     {
-        DelegateFocus();
+        MathFormat.ChangeFontColor((Color)e.Parameter);
     }
 
-    public bool FirstPropertyForXamlSerialization => true;
 
-    public bool IsCalculating
+    private void ExecuteChangeHighlightColor(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
     {
-        get => throw new NotImplementedException();
-        set => throw new NotImplementedException();
+        MathFormat.ChangeHighlightColor((Color?)e.Parameter);
     }
 
-    public MathFormat CurrentMathFormat
+
+    private void CanNavigateDown(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
     {
-        get => MathFormat;
-        set => throw new NotImplementedException();
+        e.CanExecute = Model.CanNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Down, false);
     }
+
+
+    private void CanNavigateUp(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = Model.CanNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Up, false);
+    }
+
+
+    private void CanNavigateRight(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = Model.CanNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Right, false);
+    }
+
+
+    private void CanNavigateLeft(object sender, System.Windows.Input.CanExecuteRoutedEventArgs e)
+    {
+        e.CanExecute = Model.CanNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Left, false);
+    }
+
+
+    private void OnNavigateRightByTerm(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        Model.HandleNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Right, true);
+    }
+
+
+    private void OnNavigateLeftBuyTerm(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        Model.HandleNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Left, true);
+    }
+
+
+    private void OnNavigateDown(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        Model.HandleNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Down, false);
+    }
+
+
+    private void OnNavigateUp(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        Model.HandleNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Up, false);
+    }
+
+
+    private void OnNavigateRight(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        Model.HandleNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Right, false);
+    }
+
+
+    private void OnNavigateLeft(object sender, System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        Model.HandleNavigationBetweenCells(Map.GetAssociatedModel(ActiveCell), Direction.Left, false);
+    }
+
+    private void HandleOnPreviewCommit(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+
+    private void Commit()
+    {
+        Model.Commit();
+    }
+
+    private void HookUpAllViewEventsToContentChanged(global::Quire.Controls.SpecTableView view) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
 
     private void HandleCellAddedEvent(IEquationControl arg)
     {
@@ -253,6 +267,13 @@ public partial class SpecTableControl
         cell.RequestEvaluation += HandleRequestEvaluation;
     }
 
+
+    private void HandleRequestEvaluation(Quire.Calculation.Core.ICalculatable calculatable)
+    {
+        Commit();
+    }
+
+
     public void HandleCellLostKeyboardFocus(object sender, RoutedEventArgs e)
     {
         ICurrentIdLabelProperty cell = sender as ICurrentIdLabelProperty;
@@ -261,6 +282,7 @@ public partial class SpecTableControl
             cell.PropertyChanged -= CellPropertyChangedHandler;
         }
     }
+
 
     public void HandleCellGotKeyboardFocus(object sender, RoutedEventArgs e)
     {
@@ -274,65 +296,35 @@ public partial class SpecTableControl
         CellPropertyChangedHandler(sender, new PropertyChangedEventArgs(nameof(CurrentDisplayIdLabel)));
     }
 
-    public string GetHelpContext()
+    private void CellPropertyChangedHandler(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+
+    private void FireChangedEvent()
     {
-        if (ActiveCell == null)
-        {
-            return null;
-        }
-        return ActiveCell.GetHelpContext();
+        RaiseEvent(new RoutedEventArgs(SpecTableControl.ChangedEvent, this));
     }
 
-    public int DataRows
-    {
-        get
-        {
-            if (Model.ColumnCount <= 0)
-            {
-                return 0;
-            }
-            return Model.GetColumn(0).DataCellCount;
-        }
-    }
+    private void HandleContentChangeEvent(object arg1, global::Quire.Direction arg2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private void HandleContentChangeEvent(object arg1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
 
     public ISpecTableColumn GetActiveColumn()
     {
         return GetColumnFromIndex(ActiveCellCoordinate.Column);
     }
 
-    private void FirePropertyChanged(string propertyName)
+
+    public Quire.EquationEditor.SpecTable.Model.ISpecTableColumn GetColumnFromIndex(int index)
     {
-        if (PropertyChanged != null)
-        {
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
+        return Model.GetColumn(index);
     }
 
-    public bool ContainsError(EngineError error)
-    {
-        foreach (ICalculatable calculatableChild in CalculatableChildren)
-        {
-            if (calculatableChild is ICalculationErrorOwner calculationErrorOwner && calculationErrorOwner.ContainsError(error))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    static SpecTableControl()
-    {
-        _typeOfThis = typeof(SpecTableControl);
-        FrameworkElement.DefaultStyleKeyProperty.OverrideMetadata(_typeOfThis, new FrameworkPropertyMetadata(_typeOfThis));
-        WhiteboardDependencyProperties.IsActiveProperty.OverrideMetadata(_typeOfThis, new FrameworkPropertyMetadata(IsActiveRegionChanged));
-        SynchronizationStatusProperty = EquationControl.SynchronizationStatusProperty.AddOwner(_typeOfThis);
-        CalculatingStatusProperty = EquationControl.CalculatingStatusProperty.AddOwner(_typeOfThis);
-        IOTag.IOTagProperty.OverrideMetadata(_typeOfThis, new FrameworkPropertyMetadata(HandleIOTagPropertyChanged));
-        CalcIsDisabledProperty = AttachedProperties.CalcIsDisabledProperty.AddOwner(_typeOfThis, new FrameworkPropertyMetadata(HandleCalcIsDisabledChanged));
-        ChangedEvent = CommonRoutedEvents.ContentChangedEvent.AddOwner(_typeOfThis);
-    }
 
     public EquationControl ActiveCell => View.ActiveCell;
+
+    global::Quire.Controls.Core.IEquationControl global::Quire.Controls.ISpecTableControl.ActiveCell { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
 
     public TableCoordinate ActiveCellCoordinate
     {
@@ -347,6 +339,7 @@ public partial class SpecTableControl
         }
     }
 
+
     public string ActiveCellSExpression
     {
         get
@@ -360,35 +353,26 @@ public partial class SpecTableControl
         }
     }
 
-    public EngineError CurrentError
+
+    public int NumberOfColumns => Model.ColumnCount;
+
+
+    public bool FirstPropertyForXamlSerialization => true;
+
+
+    public SynchronizationStatus SynchronizationStatus
     {
-        get
-        {
-            ICalculationErrorOwner calculationErrorOwner = (ICalculationErrorOwner)ActiveCell;
-            if (calculationErrorOwner != null)
-            {
-                return calculationErrorOwner.CurrentError;
-            }
-            return null;
-        }
+        get => (SynchronizationStatus)GetValue(SynchronizationStatusProperty);
+        set => SetValue(SynchronizationStatusProperty, value);
     }
 
-    public bool InCustomInitialization
+
+    public CalculatingStatus CalculatingStatus
     {
-        get
-        {
-            return Model.InCustomInitialization;
-        }
-        set
-        {
-            Model.InCustomInitialization = value;
-            if (!value)
-            {
-                DeserializeLabeledIdFormat = null;
-                DeserializeMathFormat = null;
-            }
-        }
+        get => (CalculatingStatus)GetValue(CalculatingStatusProperty);
+        set => SetValue(CalculatingStatusProperty, value);
     }
+
 
     public int ErrorCount
     {
@@ -406,6 +390,191 @@ public partial class SpecTableControl
             return num;
         }
     }
+
+    public void DelegateFocus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private void HandleNewColumn(global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private void HandleNewColumn(global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn arg, bool addToHider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public void FireContentAndRegionChangedEvents(global::Quire.Controls.Core.IORegions.IORegionChangeType type) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+
+    public void FireContentChangedEvents()
+    {
+        FireContentAndRegionChangedEvents(IORegionChangeType.Content);
+    }
+
+    private void HandleRemovedColumn(global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private void HandleColumnSynchronizationStatusChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private void HandleColumnCalculatingStatusChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable wrapper) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+
+    private void FireCalculatableRemoved(ICalculatable wrapper)
+    {
+        if (CalculatableRemoved != null)
+        {
+            CalculatableRemoved.Invoke(wrapper);
+        }
+    }
+
+
+    public void FireRequestRemove()
+    {
+        try
+        {
+            _currentCell = ActiveCell;
+        }
+        catch
+        {
+        }
+
+        RequestRemove(this, Direction.Left);
+    }
+
+
+    public bool HighlightAll(string text, FindOptions options)
+    {
+        throw new NotImplementedException();
+    }
+
+    private global::System.Collections.Generic.List<global::Quire.Controls.Core.IFindRestrictor> SearchableRegions { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
+    private global::System.Collections.Generic.IEnumerator<global::Quire.Controls.Core.IFindRestrictor> GetISearchableEnumerator(global::Quire.Controls.EquationControl from, global::System.Windows.Documents.LogicalDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public bool FindOncePrivate(string text, bool startFromCaret, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public object PersistentData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
+    public override void EndInit() => base.EndInit();
+
+    public global::Quire.Calculation.Core.EngineResult[] EngineResults { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
+    public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+
+    public bool IsCalculating
+    {
+        get => throw new NotImplementedException();
+        set => throw new NotImplementedException();
+    }
+
+
+    public int DataRows
+    {
+        get
+        {
+            if (Model.ColumnCount <= 0)
+            {
+                return 0;
+            }
+            return Model.GetColumn(0).DataCellCount;
+        }
+    }
+
+
+    public int Columns => Model.ColumnCount;
+
+
+    public string RegionSExpression => Model.SExpression;
+
+    public global::System.Collections.Generic.IEnumerable<global::Quire.Calculation.Core.ICalculatable> CalculatableChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
+
+    public bool ContainsError(EngineError error)
+    {
+        foreach (ICalculatable calculatableChild in CalculatableChildren)
+        {
+            if (calculatableChild is ICalculationErrorOwner calculationErrorOwner && calculationErrorOwner.ContainsError(error))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void ShowError(global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private void ShowError(global::Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper wrapper, global::Quire.Calculation.Core.EngineError error) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+
+    public EngineError CurrentError
+    {
+        get
+        {
+            ICalculationErrorOwner calculationErrorOwner = (ICalculationErrorOwner)ActiveCell;
+            if (calculationErrorOwner != null)
+            {
+                return calculationErrorOwner.CurrentError;
+            }
+            return null;
+        }
+    }
+
+    private void HandleRequestShowError(object sender, global::Quire.Calculation.Core.RequestShowErrorEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+
+    public override bool ShouldSerializeContent()
+    {
+        return false;
+    }
+
+
+    public bool CanHideFromCalculationContext => true;
+
+    public bool HideFromCalculationContext { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
+    private void OnToggleHideFromCalculationContext(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+
+
+    private void FirePropertyChanged(string propertyName)
+    {
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+    }
+
+    protected override void OnLostKeyboardFocus(global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => base.OnLostKeyboardFocus(e);
+
+
+    protected override void OnMouseDown(MouseButtonEventArgs e)
+    {
+        DelegateFocus();
+    }
+
+    public global::System.Collections.Generic.IList<string> GetDefinedIdentifierSExpressions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+
+    public bool SubstituteAndCommitInputValue(string sExpr, string valueSExpr, string scalingSExpr)
+    {
+        return Model.SubstituteAndCommitInputValue(sExpr, valueSExpr, scalingSExpr, IsActive);
+    }
+
+    public bool IsSuitableForInputTaggingPrivate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public void ActivateAndScopeIdentifierPrivate(string idSExpr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn GetLastColumnWithMatchingId(string idSExpr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public string GetDefinitionSExpression(string idSExpr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public global::Quire.Undo.UndoableCommand CreateToggleInputCommand(global::System.Action<global::Quire.Controls.Core.IORegions.IInputRegion, bool> toggleInputTag, bool setTag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private void ToggleInput(bool isSetTag, global::Quire.EquationEditor.SpecTable.Model.ISpecTableMemento memento, global::System.Action<global::Quire.Controls.Core.IORegions.IInputRegion, bool> toggleInputTag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public global::Quire.Calculation.Core.ICalculatable GetCalculatableBySExpression(string sExpr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public event global::System.Action<global::System.Windows.DependencyObject, global::Quire.Controls.Core.IORegions.IORegionChangeType> IORegionChanged;
+
 
     public IdLabels? CurrentIdLabel
     {
@@ -425,6 +594,7 @@ public partial class SpecTableControl
         }
     }
 
+
     public IdLabels? CurrentDisplayIdLabel
     {
         get
@@ -443,24 +613,65 @@ public partial class SpecTableControl
         }
     }
 
-    public void Activate(bool isActive)
+    private void HandleCopySelection(int cellIndexA, int cellIndexB) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private void HandleGotFocus(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    public void HandleMathFormatChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private void HandleOverrideLabelColor(global::System.Windows.DependencyPropertyChangedEventArgs e, global::System.Windows.DependencyObject obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+
+    public MathFormat MathFormat
     {
-        if (isActive)
+        get;
+        set;
+    }
+
+    public global::Quire.Controls.Core.StaticMathFormat MathFormatForSerialize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
+
+    public MathFormat CurrentMathFormat
+    {
+        get => MathFormat;
+        set => throw new NotImplementedException();
+    }
+
+    public global::Quire.Controls.Core.IMathFormat DeserializeMathFormat { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
+    public global::System.Collections.Generic.IDictionary<global::Quire.Controls.Core.IdLabels, global::Quire.Controls.Core.ExtendedFont> DeserializeLabeledIdFormat { set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+
+
+    public bool InCustomInitialization
+    {
+        get
         {
-            AppServiceRegistry.GetService<IFrameworkElementFacade>().ExecuteOnLoad(this, DelegateFocus);
+            return Model.InCustomInitialization;
+        }
+        set
+        {
+            Model.InCustomInitialization = value;
+            if (!value)
+            {
+                DeserializeLabeledIdFormat = null;
+                DeserializeMathFormat = null;
+            }
         }
     }
 
-    public void FireRequestRemove()
-    {
-        try
-        {
-            _currentCell = ActiveCell;
-        }
-        catch
-        {
-        }
 
-        RequestRemove(this, Direction.Left);
+    public string GetHelpContext()
+    {
+        if (ActiveCell == null)
+        {
+            return null;
+        }
+        return ActiveCell.GetHelpContext();
+    }
+
+
+    internal Quire.Controls.EquationControl GetCellAt(int row, int column)
+    {
+        return View.GetCellAt(row, column);
     }
 }
