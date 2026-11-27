@@ -1,1 +1,4 @@
-{}
+{
+  "Quire.DevComponents.WpfDock": "ThirdParty/DevComponents/DotNetBar.4.0.0.1/WpfDock",
+  "Quire.DevComponents.WpfRibbon": "ThirdParty/DevComponents/DotNetBar.4.0.0.1"
+}

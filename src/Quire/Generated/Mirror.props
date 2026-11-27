@@ -19,8 +19,8 @@
     <ProjectReference Include="..\Quire.Controls.Text\Quire.Controls.Text.csproj" />
     <ProjectReference Include="..\Quire.Controls.Worksheet\Quire.Controls.Worksheet.csproj" />
     <ProjectReference Include="..\Quire.Core\Quire.Core.csproj" />
-    <ProjectReference Include="..\Quire.DevComponents.WpfDock\Quire.DevComponents.WpfDock.csproj" />
-    <ProjectReference Include="..\Quire.DevComponents.WpfRibbon\Quire.DevComponents.WpfRibbon.csproj" />
+    <ProjectReference Include="..\ThirdParty\DevComponents\DotNetBar.4.0.0.1\WpfDock\Quire.DevComponents.WpfDock.csproj" />
+    <ProjectReference Include="..\ThirdParty\DevComponents\DotNetBar.4.0.0.1\Quire.DevComponents.WpfRibbon.csproj" />
     <ProjectReference Include="..\Quire.EngNotebook.Automation\Quire.EngNotebook.Automation.csproj" />
     <ProjectReference Include="..\Quire.EngNotebookPlus.Automation\Quire.EngNotebookPlus.Automation.csproj" />
     <ProjectReference Include="..\Quire.EquationEditor\Quire.EquationEditor.csproj" />

@@ -3,7 +3,7 @@
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Quire.DevComponents.WpfRibbon\Quire.DevComponents.WpfRibbon.csproj" />
+    <ProjectReference Include="..\ThirdParty\DevComponents\DotNetBar.4.0.0.1\Quire.DevComponents.WpfRibbon.csproj" />
     <PackageReference Include="Fluent.Ribbon" Version="11.0.2" />
   </ItemGroup>
   <Import Project="Generated\Mirror.props" />

@@ -6,7 +6,10 @@
     <RootNamespace>Quire.DevComponents.WpfRibbon</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Quire.Core\Quire.Core.csproj" />
+    <Compile Remove="WpfDock\**\*.cs" />
+    <None Remove="WpfDock\**\*" />
+    <EmbeddedResource Remove="WpfDock\**\*" />
+    <ProjectReference Include="..\..\..\Quire.Core\Quire.Core.csproj" />
   </ItemGroup>
   <Import Project="Generated\Mirror.props" />
 </Project>

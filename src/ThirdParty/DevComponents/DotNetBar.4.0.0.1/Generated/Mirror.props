@@ -5,7 +5,7 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Quire.Mirror\Quire.Mirror.csproj" />
+    <ProjectReference Include="..\..\..\Quire.Mirror\Quire.Mirror.csproj" />
     <InternalsVisibleTo Include="$(AssemblyName).Tests" />
     <InternalsVisibleTo Include="Quire.Mirror.Tests" />
     <InternalsVisibleTo Include="Quire.Differential.Tests" />
