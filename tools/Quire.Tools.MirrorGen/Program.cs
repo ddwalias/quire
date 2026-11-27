@@ -2,7 +2,7 @@ using Quire.Tools.MirrorGen;
 
 if (args.Length < 1)
 {
-    Console.Error.WriteLine("usage: MirrorGen <emit|names|manifest|native-inventory|scope-diff|assembly-map|shape <dll>>");
+    Console.Error.WriteLine("usage: MirrorGen <emit|names|manifest|native-inventory|scope-diff|assembly-map|shape <dll>|event-fields <dll>>");
     return 2;
 }
 
@@ -10,6 +10,15 @@ if (args.Length < 1)
 if (args is ["shape", var shapeAssembly])
 {
     foreach (var line in Shape.ForAssembly(shapeAssembly)) Console.WriteLine(line);
+    return 0;
+}
+
+// `event-fields ASSEMBLY`: each event whose accessors operate on one backing field (EventBacking), as Type::Event = field.
+if (args is ["event-fields", var eventAssembly])
+{
+    foreach (var type in MetadataLoader.Load(eventAssembly)?.Types ?? [])
+        foreach (var e in type.Events.Where(e => e.BackingField != null))
+            Console.WriteLine($"{type.FullName}::{e.Name} = {e.BackingField}");
     return 0;
 }
 

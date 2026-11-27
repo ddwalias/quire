@@ -313,12 +313,14 @@ public sealed class Mapper
         q.Interfaces = interfaces;
         q.GenericParams = generics;
 
-        // A field-like event's private backing field shares the event's name; the event declaration recreates it.
+        // A field-like event's private backing field shares the event's name, or is the field its accessors operate on
+        // (obfuscated); the event declaration recreates it.
         var eventNames = src.Events.Select(e => e.Name).ToHashSet();
+        var eventFields = src.Events.Select(e => e.BackingField).OfType<string>().ToHashSet();
         foreach (var f in src.Fields)
         {
             if (f.Name.StartsWith('<') || f.Name.StartsWith('$')) continue;
-            if (f.Access == Access.Private && eventNames.Contains(f.Name)) continue;
+            if (f.Access == Access.Private && (eventNames.Contains(f.Name) || eventFields.Contains(f.Name))) continue;
             if (M(f.Type, $"field {f.Name}") is { } ft)
                 q.Fields.Add(f with { Name = Identifier.Encode(f.Name), Type = ft, Value = MapConstant(f.Value) });
         }

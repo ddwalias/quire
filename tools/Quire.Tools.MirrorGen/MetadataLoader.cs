@@ -8,7 +8,7 @@ namespace Quire.Tools.MirrorGen;
 
 /// <summary>
 /// Reads an assembly's metadata tables into <see cref="TypeModel"/>s. The file is parsed as data; nothing is loaded or
-/// executed, and method bodies are never read.
+/// executed, and method bodies are read only for a field-like event's backing field (<see cref="EventBacking"/>).
 /// </summary>
 public sealed class MetadataLoader
 {
@@ -20,7 +20,7 @@ public sealed class MetadataLoader
         var md = pe.GetMetadataReader();
         if (!md.IsAssembly) return null;
         using var pdb = PortablePdb(path);
-        return new MetadataLoader(md, pdb?.GetMetadataReader()).Read(path);
+        return new MetadataLoader(md, pe, pdb?.GetMetadataReader()).Read(path);
     }
 
     /// <summary>The assembly's portable PDB beside it, if it has one (a Windows PDB or none gives null).</summary>
@@ -34,12 +34,14 @@ public sealed class MetadataLoader
 
     private readonly MetadataReader _md;
     private readonly MetadataReader? _pdb;
+    private readonly PEReader _pe;
     private readonly SigProvider _sigs;
     private readonly string _asm;
 
-    private MetadataLoader(MetadataReader md, MetadataReader? pdb)
+    private MetadataLoader(MetadataReader md, PEReader pe, MetadataReader? pdb)
     {
         _md = md;
+        _pe = pe;
         _pdb = pdb;
         _asm = md.GetString(md.GetAssemblyDefinition().Name);
         _sigs = new SigProvider(_asm);
@@ -221,7 +223,8 @@ public sealed class MetadataLoader
             type.Events.Add(new EventModel(_md.GetString(e.Name), DecodeEntity(e.Type)!,
                 a.Adder.IsNil ? null : methods[a.Adder], a.Remover.IsNil ? null : methods[a.Remover])
                 { Status = Bodiless(a.Adder.IsNil ? false : methods[a.Adder].Abstract, OriginStatus(Status(e.GetCustomAttributes(), out var ee), a.Adder, a.Remover)), Evidence = ee,
-                  HandWrittenStub = IsHandWrittenStub(e.GetCustomAttributes()) });
+                  HandWrittenStub = IsHandWrittenStub(e.GetCustomAttributes()),
+                  BackingField = EventBacking.Of(_md, _pe, h, a.Adder, a.Remover) });
         }
         // Obfuscated assemblies can lose property and event rows while keeping their special-name accessors.
         // Rebuild them, so the accessors are declared as the properties and events they were written as.

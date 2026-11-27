@@ -82,6 +82,8 @@ public sealed record PropertyModel(string Name, TypeSig Type, MethodModel? Gette
 
 public sealed record EventModel(string Name, TypeSig Type, MethodModel? Adder, MethodModel? Remover) : IHasStatus
 {
+    /// <summary>The private field a field-like event's accessors operate on (<see cref="EventBacking"/>); null for any other event.</summary>
+    public string? BackingField { get; init; }
     public bool HandWrittenStub { get; init; }
     public MemberStatus Status { get; init; }
     public string? Evidence { get; init; }

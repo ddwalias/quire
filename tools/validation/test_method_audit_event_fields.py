@@ -1,5 +1,5 @@
 """A Quire auto-event's compiler-generated backing field is the Mathcad field its original accessors operate on, with no
-claim written; accessors on different fields, or two events on one field, are errors (built assemblies; no install)."""
+claim written; an event that is not field-like in Mathcad (accessors on different fields, or two events on one field) stays unmapped without an inventory error (built assemblies; no install)."""
 from pathlib import Path
 import tempfile
 import unittest
@@ -59,6 +59,13 @@ def obfuscated(add, remove, extra=''):
     return TEMPLATE.replace('{declare}', declare).replace('{add}', add).replace('{remove}', remove).replace('public int Plain;', 'public int Plain;' + extra)
 
 
+STUB_ATTRIBUTE = '''namespace Quire.Mirror
+{
+    [System.AttributeUsage(System.AttributeTargets.All)]
+    public sealed class MirrorStubAttribute : System.Attribute { }
+}
+'''
+
 # Two Quire events whose originals both operate on field b.
 TWO_ORIGINAL = obfuscated('b', 'b', ' public event System.Action Other { add { b += value; } remove { b -= value; } }')
 TWO_QUIRE = QUIRE.replace('public int Plain;', 'public int Plain; public event System.Action Other;')
@@ -71,9 +78,10 @@ class EventFieldTests(unittest.TestCase):
         cls.addClassCleanup(cls.temp.cleanup)
         cls.tool = build_audit(cls.temp.name)
 
-    def audit(self, name, original, quire):
-        work = Path(self.temp.name) / name
-        work.mkdir()
+    def audit(self, name, original, quire, generated=False):
+        # A stub is generated only when its body is compiled from a file under Generated/ (the loader reads the PDB).
+        work = Path(self.temp.name) / ('Generated' if generated else '') / name
+        work.mkdir(parents=True)
         case = Case(work, self.tool)
         case.original('Orig', original)
         case.quire('Quire.P', quire)
@@ -100,6 +108,18 @@ class EventFieldTests(unittest.TestCase):
     def test_a_field_that_is_not_an_event_backing_field_is_unaffected(self):
         inventory, rows = self.audit('plain', obfuscated('b', 'b'), QUIRE)
         self.assertEqual(inventory['errors'], [])
+
+    def test_a_generated_stub_event_maps_when_mathcads_accessors_are_field_like(self):
+        stub = STUB_ATTRIBUTE + QUIRE.replace('public event System.Action ValueChanged;', '[Quire.Mirror.MirrorStub] public event System.Action ValueChanged;')
+        inventory, rows = self.audit('stub', obfuscated('b', 'b'), stub, generated=True)
+        self.assertEqual(inventory['errors'], [])
+        self.assertTrue(rows['Fire']['exact_match'], rows['Fire'])
+
+    def test_a_generated_stub_event_on_different_fields_is_not_an_error(self):
+        stub = STUB_ATTRIBUTE + QUIRE.replace('public event System.Action ValueChanged;', '[Quire.Mirror.MirrorStub] public event System.Action ValueChanged;')
+        inventory, rows = self.audit('stubsplit', obfuscated('b', 'c'), stub, generated=True)
+        self.assertEqual(inventory['errors'], [])
+        self.assertFalse(rows['Fire']['exact_match'])
 
 
 if __name__ == '__main__':
