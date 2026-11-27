@@ -187,66 +187,66 @@ public partial class ExcelComponentControl
 
     public IList<IRegionPersistentData> SetRegionPersistentData(IDeS11NProvider deS11NProvider, object data)
     {
-        excelComponentType excelComponentType2 = data as excelComponentType;
-        if (excelComponentType2 != null)
+        excelComponentType componentData = data as excelComponentType;
+        if (componentData != null)
         {
             double height = _exViewModel.Grid.GridCellSize.Height;
             double num = height * 3.0;
-            if (excelComponentType2.resultRefSpecified)
+            if (componentData.resultRefSpecified)
             {
-                ResultManager.Instance.SetResultByRefId(excelComponentType2.resultRef, this);
+                ResultManager.Instance.SetResultByRefId(componentData.resultRef, this);
             }
-            IList<IRegionPersistentData> result = DeserializationStrategy.SetRegions(excelComponentType2.regions, deS11NProvider);
+            IList<IRegionPersistentData> result = DeserializationStrategy.SetRegions(componentData.regions, deS11NProvider);
             OleBaseComponentControl.SetItemWidth(ExcelContainer, _exViewModel.ContentWidth);
             OleBaseComponentControl.SetItemHeight(ExcelContainer, Math.Round(OleBaseComponentControl.GetItemHeight(ExcelContainer) / height) * height);
-            if (excelComponentType2.InputSection == null)
+            if (componentData.InputSection == null)
             {
-                excelComponentType2.InputSection = new oleComponentSectionType();
-                excelComponentType2.InputSection.Visibility = OleComponentSectionVisibility.Visible;
+                componentData.InputSection = new oleComponentSectionType();
+                componentData.InputSection.Visibility = OleComponentSectionVisibility.Visible;
             }
-            if (!excelComponentType2.InputSection.HeightSpecified)
+            if (!componentData.InputSection.HeightSpecified)
             {
                 Point itemLocation = GetItemLocation(ExcelContainer);
                 if (itemLocation.Y < num)
                 {
-                    double num2 = num - itemLocation.Y;
+                    double heightDelta = num - itemLocation.Y;
                     itemLocation.Y = num;
-                    _exViewModel.ContentHeight += num2;
+                    _exViewModel.ContentHeight += heightDelta;
                 }
                 _exViewModel.OleContainerItemTop = itemLocation.Y;
-                excelComponentType2.InputSection.Height = _exViewModel.OleContainerItemTop;
+                componentData.InputSection.Height = _exViewModel.OleContainerItemTop;
             }
-            _exViewModel.InputSectionActualHeight = excelComponentType2.InputSection.Height;
-            if (excelComponentType2.InputSection.HeightSpecified && excelComponentType2.InputSection.Visibility != OleComponentSectionVisibility.Visible)
+            _exViewModel.InputSectionActualHeight = componentData.InputSection.Height;
+            if (componentData.InputSection.HeightSpecified && componentData.InputSection.Visibility != OleComponentSectionVisibility.Visible)
             {
                 _exViewModel.ContentHeight += _exViewModel.InputSectionActualHeight;
             }
-            if (excelComponentType2.OutputSection == null)
+            if (componentData.OutputSection == null)
             {
-                excelComponentType2.OutputSection = new oleComponentSectionType();
-                excelComponentType2.OutputSection.Visibility = OleComponentSectionVisibility.Visible;
+                componentData.OutputSection = new oleComponentSectionType();
+                componentData.OutputSection.Visibility = OleComponentSectionVisibility.Visible;
             }
-            if (!excelComponentType2.OutputSection.HeightSpecified)
+            if (!componentData.OutputSection.HeightSpecified)
             {
-                double num3 = _exViewModel.ContentHeight - _exViewModel.InputSectionActualHeight;
-                double num4 = num3 - _exViewModel.OleContainerItemSize.Height;
-                if (num4 < num)
+                double remainingContentHeight = _exViewModel.ContentHeight - _exViewModel.InputSectionActualHeight;
+                double outputSectionHeight = remainingContentHeight - _exViewModel.OleContainerItemSize.Height;
+                if (outputSectionHeight < num)
                 {
-                    double num5 = num - num4;
-                    num4 = num;
-                    _exViewModel.ContentHeight += num5;
+                    double extraHeight = num - outputSectionHeight;
+                    outputSectionHeight = num;
+                    _exViewModel.ContentHeight += extraHeight;
                 }
-                excelComponentType2.OutputSection.Height = num4;
+                componentData.OutputSection.Height = outputSectionHeight;
             }
-            _exViewModel.OutputSectionActualHeight = excelComponentType2.OutputSection.Height;
-            if (excelComponentType2.OutputSection.HeightSpecified && excelComponentType2.OutputSection.Visibility != OleComponentSectionVisibility.Visible)
+            _exViewModel.OutputSectionActualHeight = componentData.OutputSection.Height;
+            if (componentData.OutputSection.HeightSpecified && componentData.OutputSection.Visibility != OleComponentSectionVisibility.Visible)
             {
                 _exViewModel.ContentHeight += _exViewModel.OutputSectionActualHeight;
             }
-            IsInputSectionVisible = excelComponentType2.InputSection.Visibility == OleComponentSectionVisibility.Visible;
-            IsOutputSectionVisible = excelComponentType2.OutputSection.Visibility == OleComponentSectionVisibility.Visible;
+            IsInputSectionVisible = componentData.InputSection.Visibility == OleComponentSectionVisibility.Visible;
+            IsOutputSectionVisible = componentData.OutputSection.Visibility == OleComponentSectionVisibility.Visible;
             _exViewModel.ContentHeight = Math.Round(_exViewModel.ContentHeight / height) * height;
-            DeserializeRegionsEpilog(deS11NProvider, excelComponentType2);
+            DeserializeRegionsEpilog(deS11NProvider, componentData);
             return result;
         }
         throw new ArgumentException("should be of " + typeof(excelComponentType).Name);
@@ -254,7 +254,7 @@ public partial class ExcelComponentControl
 
     public object GetRegionPersistentData(IS11NProvider s11NProvider)
     {
-        excelComponentType excelComponentType2 = new excelComponentType
+        excelComponentType componentData = new excelComponentType
         {
             Regions = SerializationStrategy.GetRegions(s11NProvider),
             InputSection = new oleComponentSectionType
@@ -273,11 +273,11 @@ public partial class ExcelComponentControl
         int num = ResultManager.Instance.CreateResultRefId(this);
         if (IResultManagerHelper.IsResultRefIdSpecified(num))
         {
-            excelComponentType2.resultRefSpecified = true;
-            excelComponentType2.resultRef = num;
+            componentData.resultRefSpecified = true;
+            componentData.resultRef = num;
         }
-        SerializeRegionsEpilog(s11NProvider, excelComponentType2);
-        return excelComponentType2;
+        SerializeRegionsEpilog(s11NProvider, componentData);
+        return componentData;
     }
 
     public IEnumerable<ICalculatableResultOwner> ResultOwners => _exModel.CalculatableWrappers;

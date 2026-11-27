@@ -67,29 +67,29 @@ public partial class ExcelComponentModel
             IExcelComponentCalculatableWrapper excelComponentCalculatableWrapper = _nodeHandleMapper.GetMappedEquation((uint)key.Tag) as IExcelComponentCalculatableWrapper;
             if (DebugTools.AssertNotNull(excelComponentCalculatableWrapper, null).Passed)
             {
-                IDictionary<ResolvedId, string[]> dictionary2;
+                IDictionary<ResolvedId, string[]> identifierLabels;
                 if (dictionary.ContainsKey(excelComponentCalculatableWrapper))
                 {
-                    dictionary2 = dictionary[excelComponentCalculatableWrapper];
+                    identifierLabels = dictionary[excelComponentCalculatableWrapper];
                 }
                 else
                 {
                     // The chained order (indexer target first, then the local) is what the Release IL requires.
-                    dictionary[excelComponentCalculatableWrapper] = dictionary2 = new Dictionary<ResolvedId, string[]>();
+                    dictionary[excelComponentCalculatableWrapper] = identifierLabels = new Dictionary<ResolvedId, string[]>();
                 }
-                ResolvedId key2 = new ResolvedId
+                ResolvedId mappedId = new ResolvedId
                 {
                     Calculatable = excelComponentCalculatableWrapper,
                     Name = key.Name,
                     Tag = (int)_nodeHandleMapper.GetMappedNodeNandle((uint)key.Tag)
                 };
-                if (dictionary2.ContainsKey(key2))
+                if (identifierLabels.ContainsKey(mappedId))
                 {
-                    DebugTools.DevAssert(dictionary2[key2].SequenceEqual(value), null);
+                    DebugTools.DevAssert(identifierLabels[mappedId].SequenceEqual(value), null);
                 }
                 else
                 {
-                    dictionary2.Add(key2, value);
+                    identifierLabels.Add(mappedId, value);
                 }
             }
         }

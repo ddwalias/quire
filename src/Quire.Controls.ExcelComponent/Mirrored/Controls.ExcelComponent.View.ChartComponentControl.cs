@@ -223,12 +223,12 @@ public partial class ChartComponentControl
         }
         IList<IRegionPersistentData> result = DeserializationStrategy.SetRegions(chartComponentType2.regions, d11NProvider);
         OleBaseComponentControl.SetItemWidth(ChartContainer, _chartViewModel.ContentWidth);
-        double num2 = OleBaseComponentControl.GetItemHeight(ChartContainer);
+        double containerHeight = OleBaseComponentControl.GetItemHeight(ChartContainer);
         if (_chartViewModel.ShouldAlignOleContainerItemWithGridLines)
         {
-            num2 = Math.Round(num2 / height) * height;
+            containerHeight = Math.Round(containerHeight / height) * height;
         }
-        OleBaseComponentControl.SetItemHeight(ChartContainer, num2);
+        OleBaseComponentControl.SetItemHeight(ChartContainer, containerHeight);
         if (chartComponentType2.InputSection == null)
         {
             chartComponentType2.InputSection = new oleComponentSectionType();
@@ -239,9 +239,9 @@ public partial class ChartComponentControl
             Point itemLocation = GetItemLocation(ChartContainer);
             if (itemLocation.Y < num)
             {
-                double num3 = num - itemLocation.Y;
+                double heightDelta = num - itemLocation.Y;
                 itemLocation.Y = num;
-                _chartViewModel.ContentHeight += num3;
+                _chartViewModel.ContentHeight += heightDelta;
             }
             _chartViewModel.OleContainerItemTop = itemLocation.Y;
             chartComponentType2.InputSection.Height = _chartViewModel.OleContainerItemTop;

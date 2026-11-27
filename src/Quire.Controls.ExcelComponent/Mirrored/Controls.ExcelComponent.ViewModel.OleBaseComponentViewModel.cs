@@ -163,19 +163,19 @@ public abstract partial class OleBaseComponentViewModel
             double height = _viewModel.Grid.GridCellSize.Height;
             double oleContainerItemTop = _oleBaseComponentViewModel.OleContainerItemTop;
             double sectionsMinimumHeight = _oleBaseComponentViewModel.SectionsMinimumHeight;
-            double val2;
-            double val3;
+            double availableOffset;
+            double caretOffset;
             if (_insertionPoint.Y <= oleContainerItemTop)
             {
-                val2 = oleContainerItemTop - sectionsMinimumHeight;
-                val3 = oleContainerItemTop - _insertionPoint.Y;
+                availableOffset = oleContainerItemTop - sectionsMinimumHeight;
+                caretOffset = oleContainerItemTop - _insertionPoint.Y;
             }
             else
             {
-                val2 = _viewModel.ContentHeight - oleContainerItemTop - _oleBaseComponentViewModel.OleContainerItemSize.Height - sectionsMinimumHeight;
-                val3 = _viewModel.ContentHeight - _insertionPoint.Y;
+                availableOffset = _viewModel.ContentHeight - oleContainerItemTop - _oleBaseComponentViewModel.OleContainerItemSize.Height - sectionsMinimumHeight;
+                caretOffset = _viewModel.ContentHeight - _insertionPoint.Y;
             }
-            return -(Math.Round(Math.Min(val2, val3) / height) * height);
+            return -(Math.Round(Math.Min(availableOffset, caretOffset) / height) * height);
         }
     }
 
@@ -678,9 +678,9 @@ public abstract partial class OleBaseComponentViewModel
             IEnumerable<IWhiteboardItem> enumerable = InputItems.Intersect(SelectedItems);
             IEnumerable<IWhiteboardItem> enumerable2 = OutputItems.Intersect(SelectedItems);
             bool flag = !enumerable.IsNullOrEmpty();
-            bool flag2 = !enumerable2.IsNullOrEmpty();
-            bool flag3 = flag2 & flag;
-            if ((!IsInputSectionVisible & flag3) || (!IsOutputSectionVisible & flag3))
+            bool hasOutputSelection = !enumerable2.IsNullOrEmpty();
+            bool hasSelectionInBothSections = hasOutputSelection & flag;
+            if ((!IsInputSectionVisible & hasSelectionInBothSections) || (!IsOutputSectionVisible & hasSelectionInBothSections))
             {
                 list.AddRange(SelectedItems);
             }
@@ -690,7 +690,7 @@ public abstract partial class OleBaseComponentViewModel
                 {
                     list.AddRange(enumerable);
                 }
-                if (!IsOutputSectionVisible & flag2)
+                if (!IsOutputSectionVisible & hasOutputSelection)
                 {
                     list.AddRange(enumerable2);
                 }
@@ -891,8 +891,8 @@ public abstract partial class OleBaseComponentViewModel
         Size oleContainerItemMinSize = GetOleContainerItemMinSize();
         Size oleContainerItemSize = OleContainerItemSize;
         double num = Math.Max(oleContainerItemMinSize.Width, oleContainerItemSize.Width);
-        double num2 = setExplicitMinHeight ? oleContainerItemMinSize.Height : Math.Max(oleContainerItemMinSize.Height, oleContainerItemSize.Height);
-        Size newSize = new Size(num, num2);
+        double newHeight = setExplicitMinHeight ? oleContainerItemMinSize.Height : Math.Max(oleContainerItemMinSize.Height, oleContainerItemSize.Height);
+        Size newSize = new Size(num, newHeight);
         SetItemSize(OleContainerItem, newSize);
         OnResizeOleContainerItem();
         IsInternalResizing = isInternalResizing;
@@ -939,8 +939,8 @@ public abstract partial class OleBaseComponentViewModel
     private Size AdjustOleContainerItemSize(Size oleContainerItemSize)
     {
         double num = AlignHeightWithGridLines(oleContainerItemSize.Height, isOleContainerItem: true);
-        double num2 = oleContainerItemSize.Height - num;
-        ContentSize = new Size(ContentSize.Width, ContentSize.Height - num2);
+        double heightReduction = oleContainerItemSize.Height - num;
+        ContentSize = new Size(ContentSize.Width, ContentSize.Height - heightReduction);
         oleContainerItemSize.Height = num;
         OleComponentItemMgr.SetSize(OleContainerItem, oleContainerItemSize);
         OnResizeOleContainerItem();
@@ -990,26 +990,26 @@ public abstract partial class OleBaseComponentViewModel
     private Size FindMinimumSize(Size oleContainerItemMinimalSize)
     {
         double num;
-        double num2;
+        double contentHeight;
         if (IsResizing || IsInternalResizing)
         {
             num = Math.Max(oleContainerItemMinimalSize.Width, GetRightMostItemEdge(InputItems.Union(OutputItems)));
-            num2 = AlignHeightWithGridLines(oleContainerItemMinimalSize.Height, isOleContainerItem: true);
+            contentHeight = AlignHeightWithGridLines(oleContainerItemMinimalSize.Height, isOleContainerItem: true);
             if (IsInputSectionVisible)
             {
-                num2 += Math.Max(InputSectionActualHeight, GetLowestItemEdge(InputItems));
+                contentHeight += Math.Max(InputSectionActualHeight, GetLowestItemEdge(InputItems));
             }
             if (IsOutputSectionVisible)
             {
-                num2 += Math.Max(OutputSectionActualHeight, GetLowestItemEdge(OutputItems) - OutputSectionActualTop);
+                contentHeight += Math.Max(OutputSectionActualHeight, GetLowestItemEdge(OutputItems) - OutputSectionActualTop);
             }
         }
         else
         {
             num = oleContainerItemMinimalSize.Width;
-            num2 = GetMinimumContentHeight(AlignHeightWithGridLines(oleContainerItemMinimalSize.Height, isOleContainerItem: true));
+            contentHeight = GetMinimumContentHeight(AlignHeightWithGridLines(oleContainerItemMinimalSize.Height, isOleContainerItem: true));
         }
-        return new Size(num, num2);
+        return new Size(num, contentHeight);
     }
 
     private bool IsPointInDeadArea(Point point, double oleContainerItemTop)
@@ -1132,25 +1132,25 @@ public abstract partial class OleBaseComponentViewModel
 
     internal void OnSizeChanged(object sender, SizeChangedEventArgs eArgs)
     {
-        Size val2;
-        Size val3;
+        Size originalSize;
+        Size adjustedSize;
         if (eArgs.PreviousSize == default(Size))
         {
             return;
         }
-        val2 = new Size
+        originalSize = new Size
         {
             Width = OleContainerItemWidth,
             Height = OleContainerItemHeight
         };
-        val3 = val2;
+        adjustedSize = originalSize;
         if (eArgs.HeightChanged)
         {
-            val3.Height = Math.Max(GetOleContainerItemMinSize(false).Height, eArgs.NewSize.Height - InputSectionActualHeight - OutputSectionActualHeight);
+            adjustedSize.Height = Math.Max(GetOleContainerItemMinSize(false).Height, eArgs.NewSize.Height - InputSectionActualHeight - OutputSectionActualHeight);
         }
         if (eArgs.WidthChanged)
         {
-            val3.Width = eArgs.NewSize.Width;
+            adjustedSize.Width = eArgs.NewSize.Width;
         }
         if (IsResizing || IsInternalResizing)
         {
@@ -1169,11 +1169,11 @@ public abstract partial class OleBaseComponentViewModel
         }
         else
         {
-            val3 = AdjustOleContainerItemSize(val3);
+            adjustedSize = AdjustOleContainerItemSize(adjustedSize);
         }
-        if (val3 != val2)
+        if (adjustedSize != originalSize)
         {
-            SetItemSize(OleContainerItem, val3, DragMode.None);
+            SetItemSize(OleContainerItem, adjustedSize, DragMode.None);
         }
         UpdateSectionHeights();
     }
@@ -1214,9 +1214,9 @@ public abstract partial class OleBaseComponentViewModel
         {
             base.HandleChildSizeChanged(item, oldSize, newSize);
             double contentHeight = ContentHeight;
-            double num2 = (contentHeight / _alignmentGrid.GridCellSize.Height).Ceiling();
-            double contentHeight2 = num2 * _alignmentGrid.GridCellSize.Height;
-            ContentHeight = contentHeight2;
+            double gridRowCount = (contentHeight / _alignmentGrid.GridCellSize.Height).Ceiling();
+            double alignedContentHeight = gridRowCount * _alignmentGrid.GridCellSize.Height;
+            ContentHeight = alignedContentHeight;
             OutputSectionActualHeight = ContentSize.Height - OutputSectionActualTop;
         }
         UpdateSectionHeights();
@@ -1263,40 +1263,40 @@ public abstract partial class OleBaseComponentViewModel
             insertionPoint.Y -= OutputSectionActualTop;
         }
         double num = newSize.Width / oldSize.Width;
-        double num2 = newSize.Height / oldSize.Height;
+        double heightScale = newSize.Height / oldSize.Height;
         Grid.GridCellSize = newSize;
-        MaximumSize = new Size(MaximumSize.Width * num, MaximumSize.Height * num2);
+        MaximumSize = new Size(MaximumSize.Width * num, MaximumSize.Height * heightScale);
         UpdateSizeLimits(MaximumSize);
-        UpdateItemsLocation(isOutput: false, num, num2);
+        UpdateItemsLocation(isOutput: false, num, heightScale);
         InputSectionIndicator.Height = 0.0;
-        OleContainerItemTop = Math.Max(Math.Max(OleContainerItemTop * num2, SectionsMinimumHeight), GetLowestItemEdge(InputItems));
+        OleContainerItemTop = Math.Max(Math.Max(OleContainerItemTop * heightScale, SectionsMinimumHeight), GetLowestItemEdge(InputItems));
         InputSectionIndicator.Height = OleContainerItemTop;
         OleContainerItem.ViewModel.MinSizeChanged -= OleContainerMinSizeChanged;
         OleContainerItem.IsResizing = true;
         Size oleContainerItemMinSize = GetOleContainerItemMinSize(false);
-        OleComponentItemMgr.SetSize(OleContainerItem, new Size(Math.Max(oleContainerItemMinSize.Width, OleContainerItemSize.Width * num), Math.Max(oleContainerItemMinSize.Height, OleContainerItemSize.Height * num2)));
+        OleComponentItemMgr.SetSize(OleContainerItem, new Size(Math.Max(oleContainerItemMinSize.Width, OleContainerItemSize.Width * num), Math.Max(oleContainerItemMinSize.Height, OleContainerItemSize.Height * heightScale)));
         OleContainerItem.IsResizing = false;
         SetRestrictedArea();
         OleContainerItem.ViewModel.MinSizeChanged += OleContainerMinSizeChanged;
-        UpdateItemsLocation(isOutput: true, num, num2);
+        UpdateItemsLocation(isOutput: true, num, heightScale);
         OutputSectionIndicator.Top = OutputSectionActualTop;
-        double val2 = GetLowestItemEdge(OutputItems) - OutputSectionActualTop;
-        OutputSectionIndicator.Height = Math.Max(val2, Math.Max(AlignHeightWithGridLines(OutputSectionIndicator.Height * num2, isOleContainerItem: false), SectionsMinimumHeight));
+        double outputSectionContentHeight = GetLowestItemEdge(OutputItems) - OutputSectionActualTop;
+        OutputSectionIndicator.Height = Math.Max(outputSectionContentHeight, Math.Max(AlignHeightWithGridLines(OutputSectionIndicator.Height * heightScale, isOleContainerItem: false), SectionsMinimumHeight));
         UpdateSizeLimits(MaximumSize);
         ContentSize = new Size(Math.Max(OleContainerItemSize.Width, GetRightMostItemEdge(InputItems.Union(OutputItems))), OutputSectionActualTop + OutputSectionActualHeight);
         if (IsCrosshairVisible)
         {
-            double num5 = insertionPoint.X * num;
-            double num6 = insertionPoint.Y * num2;
-            if (num5 < newSize.Width)
+            double insertionX = insertionPoint.X * num;
+            double insertionY = insertionPoint.Y * heightScale;
+            if (insertionX < newSize.Width)
             {
-                num5 = newSize.Width;
+                insertionX = newSize.Width;
             }
-            if (num6 < newSize.Height)
+            if (insertionY < newSize.Height)
             {
-                num6 = newSize.Height;
+                insertionY = newSize.Height;
             }
-            InsertionPoint = ((!flag) ? new Point(num5, num6) : new Point(num5, OutputSectionActualTop + num6));
+            InsertionPoint = ((!flag) ? new Point(insertionX, insertionY) : new Point(insertionX, OutputSectionActualTop + insertionY));
         }
     }
 

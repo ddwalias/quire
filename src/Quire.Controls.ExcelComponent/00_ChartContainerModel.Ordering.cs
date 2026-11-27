@@ -127,7 +127,7 @@ public partial class ChartContainerModel
         DebugTools.LogData(string.Format("ChartContainerModel.SetMatrix: {0}: Start", place));
         try
         {
-            IMatrixValue value2 = (IMatrixValue)value;
+            IMatrixValue matrixValue = (IMatrixValue)value;
             if (place == "MinMaxPre" || place == "MinMaxPost")
             {
                 IResultNode arg = resultsTransform.Transform((IAutomationValue)value);
@@ -186,7 +186,7 @@ public partial class ChartContainerModel
             }
             if (DebugTools.DevAssert(uint.TryParse(place, out var result), null).Passed)
             {
-                SetTrace(result, value2, resultsTransform);
+                SetTrace(result, matrixValue, resultsTransform);
             }
         }
         finally
@@ -228,9 +228,9 @@ public partial class ChartContainerModel
                 uint[] traceIds = _traceIds;
                 foreach (uint key in traceIds)
                 {
-                    if (_dataLimitsDict.TryGetValue(key, out var value2))
+                    if (_dataLimitsDict.TryGetValue(key, out var dataLimits))
                     {
-                        dictionary.Add(key, value2);
+                        dictionary.Add(key, dataLimits);
                     }
                 }
             }

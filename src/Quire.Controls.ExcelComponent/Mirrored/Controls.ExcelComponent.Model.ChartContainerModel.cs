@@ -46,12 +46,12 @@ public partial class ChartContainerModel
                 return null;
             }
             double[,] array = new double[4, 2];
-            double[,] array2 = _dataLimitsDict.Values.First();
+            double[,] existingLimits = _dataLimitsDict.Values.First();
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 2; j++)
                 {
-                    array[i, j] = array2[i, j];
+                    array[i, j] = existingLimits[i, j];
                 }
             }
             foreach (double[,] item in _dataLimitsDict.Values.Skip(1))
@@ -156,14 +156,14 @@ public partial class ChartContainerModel
         {
             ImageFreezeSources &= ~source;
         }
-        bool isImageFrozen2 = IsImageFrozen;
-        if (isImageFrozen2 == isImageFrozen)
+        bool previousImageFrozenState = IsImageFrozen;
+        if (previousImageFrozenState == isImageFrozen)
         {
-            DebugTools.LogData(string.Format("ChartContainerModel.AddOrRemoveImageFreezeSource: {0}: Skip because no change", isImageFrozen2));
+            DebugTools.LogData(string.Format("ChartContainerModel.AddOrRemoveImageFreezeSource: {0}: Skip because no change", previousImageFrozenState));
         }
         else if (!IsOleSiteManagerRunning)
         {
-            DebugTools.LogData(string.Format("ChartContainerModel.AddOrRemoveImageFreezeSource: {0}: Skip because not running", isImageFrozen2));
+            DebugTools.LogData(string.Format("ChartContainerModel.AddOrRemoveImageFreezeSource: {0}: Skip because not running", previousImageFrozenState));
         }
         else
         {

@@ -204,8 +204,8 @@ public abstract partial class OleBaseComponentModel : AggregateMathboardModel, I
     internal void UpdateCustomErrorBasedOnPlacement(IWhiteboardItem item)
     {
         int num = WhiteboardItems.IndexOf(item);
-        int num2 = WhiteboardItems.IndexOf(OleContainerItem);
-        UpdateCustomErrorBasedOnPlacement(item, num2 != -1 && num > num2);
+        int containerItemIndex = WhiteboardItems.IndexOf(OleContainerItem);
+        UpdateCustomErrorBasedOnPlacement(item, containerItemIndex != -1 && num > containerItemIndex);
     }
 
     internal void UpdateAllErrors()

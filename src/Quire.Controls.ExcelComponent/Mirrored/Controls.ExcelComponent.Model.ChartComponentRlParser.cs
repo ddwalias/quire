@@ -50,8 +50,8 @@ internal partial class ChartComponentRlParser : OleComponentRlParser
             {
                 if (text.IsNotEmpty())
                 {
-                    result = ((uint.TryParse(text, out var result2) && result2 <= 50) ? null : "chart_invalid_index");
-                    index = result2;
+                    result = ((uint.TryParse(text, out var parsedIndex) && parsedIndex <= 50) ? null : "chart_invalid_index");
+                    index = parsedIndex;
                 }
                 else
                 {

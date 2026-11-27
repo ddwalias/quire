@@ -292,24 +292,24 @@ public partial class ChartComponentModel
             if (!DebugTools.AssertNotNull(item.TraceId, null).Failed)
             {
                 uint value = item.TraceId.Value;
-                if (!sortedDictionary.TryGetValue(value, out var value2))
+                if (!sortedDictionary.TryGetValue(value, out var traceCalculatable))
                 {
-                    // Chained so the new trace is stored in value2 before the indexer setter, as Release IL does.
-                    sortedDictionary[value] = value2 = new ChartTraceCalculatable(_chartMinMaxCalc);
+                    // Chained so the new trace is stored in traceCalculatable before the indexer setter, as Release IL does.
+                    sortedDictionary[value] = traceCalculatable = new ChartTraceCalculatable(_chartMinMaxCalc);
                 }
-                action(value2, item);
+                action(traceCalculatable, item);
             }
         }
         IChartComponentCalculatableWrapper arg = source.FirstOrDefault((IChartComponentCalculatableWrapper wrapper) => wrapper.ChartWrapperType == ChartWrapperType.XCommon);
-        IChartComponentCalculatableWrapper arg2 = source.FirstOrDefault((IChartComponentCalculatableWrapper wrapper) => wrapper.ChartWrapperType == ChartWrapperType.YCommon);
+        IChartComponentCalculatableWrapper yCommonWrapper = source.FirstOrDefault((IChartComponentCalculatableWrapper wrapper) => wrapper.ChartWrapperType == ChartWrapperType.YCommon);
         if (!sortedDictionary.ContainsKey(1u))
         {
             sortedDictionary.Add(1u, new ChartTraceCalculatable(_chartMinMaxCalc));
         }
-        foreach (ChartTraceCalculatable value4 in sortedDictionary.Values)
+        foreach (ChartTraceCalculatable traceCalculatable in sortedDictionary.Values)
         {
-            action(value4, arg);
-            action(value4, arg2);
+            action(traceCalculatable, arg);
+            action(traceCalculatable, yCommonWrapper);
         }
         List<uint> list = new List<uint>();
         foreach (KeyValuePair<uint, ChartTraceCalculatable> traceCalculatable in _traceCalculatables)
@@ -320,53 +320,53 @@ public partial class ChartComponentModel
                 list.Add(key);
             }
         }
-        foreach (uint item2 in list)
+        foreach (uint traceId in list)
         {
-            ChartTraceCalculatable chartTraceCalculatable2 = _traceCalculatables[item2];
-            _traceCalculatables.Remove(item2);
+            ChartTraceCalculatable traceToRemove = _traceCalculatables[traceId];
+            _traceCalculatables.Remove(traceId);
             if (DebugTools.AssertNotNull(ChartContainerItem, null).Passed)
             {
-                Exception ex = ChartContainerItem.PublicModel.RemoveTrace(item2);
+                Exception ex = ChartContainerItem.PublicModel.RemoveTrace(traceId);
                 if (ex != null)
                 {
                     DebugTools.FailAssertion(ex);
                 }
             }
-            base.FireCalculatableRemoved(chartTraceCalculatable2);
-            chartTraceCalculatable2.Dispose();
+            base.FireCalculatableRemoved(traceToRemove);
+            traceToRemove.Dispose();
         }
         List<ChartTraceCalculatable> list2 = new List<ChartTraceCalculatable>();
-        foreach (KeyValuePair<uint, ChartTraceCalculatable> item3 in sortedDictionary)
+        foreach (KeyValuePair<uint, ChartTraceCalculatable> tracePair in sortedDictionary)
         {
-            uint key2 = item3.Key;
-            ChartTraceCalculatable value3 = item3.Value;
-            if (value3.XCalculatable != null && value3.YCalculatable != null)
+            uint traceId = tracePair.Key;
+            ChartTraceCalculatable traceCalculatable = tracePair.Value;
+            if (traceCalculatable.XCalculatable != null && traceCalculatable.YCalculatable != null)
             {
-                if (!_traceCalculatables.ContainsKey(key2))
+                if (!_traceCalculatables.ContainsKey(traceId))
                 {
-                    _traceCalculatables.Add(key2, value3);
-                    base.FireCalculatableAdded(value3);
-                    list2.Add(value3);
+                    _traceCalculatables.Add(traceId, traceCalculatable);
+                    base.FireCalculatableAdded(traceCalculatable);
+                    list2.Add(traceCalculatable);
                     continue;
                 }
-                ChartTraceCalculatable chartTraceCalculatable3 = _traceCalculatables[key2];
-                IChartComponentCalculatableWrapper xCalculatable = value3.XCalculatable;
-                IChartComponentCalculatableWrapper yCalculatable = value3.YCalculatable;
-                value3.Dispose();
-                if (chartTraceCalculatable3.XCalculatable != xCalculatable || chartTraceCalculatable3.YCalculatable != yCalculatable)
+                ChartTraceCalculatable existingTrace = _traceCalculatables[traceId];
+                IChartComponentCalculatableWrapper xCalculatable = traceCalculatable.XCalculatable;
+                IChartComponentCalculatableWrapper yCalculatable = traceCalculatable.YCalculatable;
+                traceCalculatable.Dispose();
+                if (existingTrace.XCalculatable != xCalculatable || existingTrace.YCalculatable != yCalculatable)
                 {
-                    chartTraceCalculatable3.XCalculatable = xCalculatable;
-                    chartTraceCalculatable3.YCalculatable = yCalculatable;
-                    list2.Add(chartTraceCalculatable3);
+                    existingTrace.XCalculatable = xCalculatable;
+                    existingTrace.YCalculatable = yCalculatable;
+                    list2.Add(existingTrace);
                 }
-                else if (chartTraceCalculatable3.XCalculatable == wrapperToCommit || chartTraceCalculatable3.YCalculatable == wrapperToCommit)
+                else if (existingTrace.XCalculatable == wrapperToCommit || existingTrace.YCalculatable == wrapperToCommit)
                 {
-                    list2.Add(chartTraceCalculatable3);
+                    list2.Add(existingTrace);
                 }
             }
             else
             {
-                value3.Dispose();
+                traceCalculatable.Dispose();
             }
         }
         sortedDictionary.Clear();
@@ -378,14 +378,14 @@ public partial class ChartComponentModel
         }
         primaryDict.Each((KeyValuePair<IChartComponentCalculatableWrapper, bool> pair) =>
         {
-            IChartComponentCalculatableWrapper key3 = pair.Key;
+            IChartComponentCalculatableWrapper wrapper = pair.Key;
             if (pair.Value)
             {
-                DebugTools.DevAssert(key3.CustomErrorType != OleWrapperCustomErrorType.Placement, null);
+                DebugTools.DevAssert(wrapper.CustomErrorType != OleWrapperCustomErrorType.Placement, null);
             }
             else
             {
-                key3.SetCustomError("chart_duplicate_trace_expression");
+                wrapper.SetCustomError("chart_duplicate_trace_expression");
             }
         });
         if (flag)
@@ -466,9 +466,9 @@ public partial class ChartComponentModel
         }
         foreach (KeyValuePair<ChartWrapperType, SimpleChartCalculatable> defaultLimit in _defaultLimits)
         {
-            ChartWrapperType key2 = defaultLimit.Key;
+            ChartWrapperType wrapperType = defaultLimit.Key;
             SimpleChartCalculatable value = defaultLimit.Value;
-            if (_chartMinMaxCalc.GetLimit(key2) != null)
+            if (_chartMinMaxCalc.GetLimit(wrapperType) != null)
             {
                 if (value.IsConnectedToTheEngine)
                 {

@@ -103,7 +103,7 @@ public abstract partial class OleBaseComponentControl
         {
             ResolvedId key = item.Key;
             string[] value = item.Value;
-            IDictionary<ResolvedId, string[]> dictionary2;
+            IDictionary<ResolvedId, string[]> calculatableIds;
             ICalculatable calculatable;
             if (key.Calculatable == this)
             {
@@ -117,13 +117,13 @@ public abstract partial class OleBaseComponentControl
             calculatable = key.Calculatable;
             if (dictionary.ContainsKey(calculatable))
             {
-                dictionary2 = dictionary[calculatable];
+                calculatableIds = dictionary[calculatable];
             }
             else
             {
-                dictionary[calculatable] = (dictionary2 = new Dictionary<ResolvedId, string[]>());
+                dictionary[calculatable] = (calculatableIds = new Dictionary<ResolvedId, string[]>());
             }
-            dictionary2.Add(key, value);
+            calculatableIds.Add(key, value);
         }
         dictionary.Each((KeyValuePair<ICalculatable, IDictionary<ResolvedId, string[]>> calcToLabelsPair) =>
         {

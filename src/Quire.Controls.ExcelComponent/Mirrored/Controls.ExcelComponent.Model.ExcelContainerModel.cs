@@ -124,10 +124,10 @@ public partial class ExcelContainerModel
                 global::Quire.Automation.MatrixValue matrixValue = new global::Quire.Automation.MatrixValue();
                 object[,] array = (dynamic)range.get_Value(Type.Missing);
                 int count = range.Rows.Count;
-                int count2 = range.Columns.Count;
+                int columnCount = range.Columns.Count;
                 for (int i = 0; i < count; i++)
                 {
-                    for (int j = 0; j < count2; j++)
+                    for (int j = 0; j < columnCount; j++)
                     {
                         int excelRow = i + 1;
                         int excelCol = j + 1;
@@ -183,9 +183,9 @@ public partial class ExcelContainerModel
         {
             throw new Exception(_comExceptionError, innerException);
         }
-        catch (COMException innerException2)
+        catch (COMException comException)
         {
-            throw new Exception(_comExceptionError, innerException2);
+            throw new Exception(_comExceptionError, comException);
         }
     }
 

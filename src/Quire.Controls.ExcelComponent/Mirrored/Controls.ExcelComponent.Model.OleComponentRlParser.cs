@@ -30,25 +30,25 @@ internal partial class OleComponentRlParser
     private static int FindPairCloseBracket(string def)
     {
         int num = 1;
-        int num2 = 1;
+        int delimiterIndex = 1;
         char[] anyOf = new char[2] { '(', ')' };
         while (num != 0)
         {
-            num2 = def.IndexOfAny(anyOf, num2 + 1);
-            if (num2 == -1)
+            delimiterIndex = def.IndexOfAny(anyOf, delimiterIndex + 1);
+            if (delimiterIndex == -1)
             {
                 break;
             }
-            if (def[num2].Equals('('))
+            if (def[delimiterIndex].Equals('('))
             {
                 num++;
             }
-            else if (def[num2].Equals(')'))
+            else if (def[delimiterIndex].Equals(')'))
             {
                 num--;
             }
         }
-        return num2 + 1;
+        return delimiterIndex + 1;
     }
 
     protected static bool ParseOleComponentEquationRl(string rl, Regex leftRegex, Regex rightRegex, out bool isInput, out string lhsExpression, out string rhsExpression)
@@ -61,12 +61,12 @@ internal partial class OleComponentRlParser
         if (match.Success)
         {
             SeparateExpressionBySpaceOrBrackets(match.Result(MatchPattern("def")), out lhsExpression, out rhsExpression);
-            bool flag2 = leftRegex != null && leftRegex.Match(lhsExpression).Success;
-            bool flag3 = rightRegex != null && rightRegex.Match(rhsExpression).Success;
-            flag = flag2 ^ flag3;
+            bool leftMatches = leftRegex != null && leftRegex.Match(lhsExpression).Success;
+            bool rightMatches = rightRegex != null && rightRegex.Match(rhsExpression).Success;
+            flag = leftMatches ^ rightMatches;
             if (flag)
             {
-                isInput = flag2;
+                isInput = leftMatches;
             }
         }
         return flag;
