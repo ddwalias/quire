@@ -844,7 +844,13 @@ public partial class PlotTrace
         }
         return num;
     }
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) {
+		if (double.IsInfinity(constraint.Width) || double.IsInfinity(constraint.Height))
+		{
+			return new Size(10.0, 10.0);
+		}
+		return constraint;
+	}
 
     public bool IsResizing
     {

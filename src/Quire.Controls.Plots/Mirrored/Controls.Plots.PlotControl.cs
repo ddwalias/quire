@@ -14,6 +14,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Markup;
+using Quire.Calculation.Core;
 using Quire.Calculation.Core.Trace2DResults;
 using Quire.Controls.Core;
 using Quire.FunctionalitiesLimitation;
@@ -22,6 +23,7 @@ using Quire.Controls.Plots.Presenter;
 using Quire.Controls.Plots.Model;
 using Quire.Controls.Plots.ViewModel;
 using Quire.Controls.Plots.PlotCommands;
+using Quire.Undo;
 
 namespace Quire.Controls.Plots;
 
@@ -347,8 +349,15 @@ public partial class PlotControl
 		return list;
 	}
     protected override global::System.Collections.Generic.List<global::Quire.Controls.Text.RichTextTitle> BuildLabelsList() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected override global::System.Collections.Generic.List<global::Quire.Controls.EquationControl> CreateTickMarksAndMarkersList() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected override void OnTraversedFocusEvent(object sender, global::Quire.Wpf.CustomRoutedEventArgs<global::System.Windows.Input.FocusNavigationDirection> args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected override global::System.Collections.Generic.List<global::Quire.Controls.EquationControl> CreateTickMarksAndMarkersList() {
+		return _plotStrategy.BuildEditableAxisRelatedElements(this);
+	}
+    protected override void OnTraversedFocusEvent(object sender, global::Quire.Wpf.CustomRoutedEventArgs<global::System.Windows.Input.FocusNavigationDirection> args) {
+		ActivePlotEquation = (((int)args.Parameter == 0) ? _resultEquations[0] : _rangeEquations[_rangeEquations.EquationCount - 1]);
+		ActivePlotEquation.DelegateFocus();
+		CustomRoutedEventArgs<FocusNavigationDirection> e2 = new CustomRoutedEventArgs<FocusNavigationDirection>(args.RoutedEvent, args.Parameter);
+		ActivePlotEquation.RaiseEvent(e2);
+	}
 
     private static void HandleShowAxisExpressionsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
@@ -437,7 +446,20 @@ public partial class PlotControl
     private void MakeSureYEquationsNotOutsidePlot(global::Quire.Controls.Plots.PlotItemPlaceholder equationPlaceholder, global::Quire.Controls.Plots.EquationList equations) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void GraphSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void OnLayoutUpdated(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void CorrectHeightIfXEquationSizeIsChanged(double verticalChange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void CorrectHeightIfXEquationSizeIsChanged(double verticalChange) {
+		if (_xEquationSizeChangingDueToPlotSizeChanged.HasValue)
+		{
+			if (_doubleComparer.Compare(verticalChange, 0.0) < 0 && _xEquationSizeChangingDueToPlotSizeChanged.Value)
+			{
+				Height -= verticalChange;
+			}
+			if (_doubleComparer.Compare(verticalChange, 0.0) > 0 && !_xEquationSizeChangingDueToPlotSizeChanged.Value && DebugTools.DevAssert(Height - verticalChange > 0.0, "Trying to set negative value in Height property.").Passed)
+			{
+				Height -= verticalChange;
+			}
+			_xEquationSizeChangingDueToPlotSizeChanged = null;
+		}
+	}
     private void KeepGraphMinSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private double GetExpressionHorizontalExtent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void PlotControlSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -446,10 +468,84 @@ public partial class PlotControl
     public static readonly global::System.Windows.DependencyProperty IsCalculatingProperty;
     public static readonly global::System.Windows.DependencyPropertyKey PlotXMinGapPropertyKey;
     private void PlaceholderSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void InitializeAxes() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void InitializePlotLegend() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void PlotItemDragEnded(global::Quire.Controls.Plots.PlotItem plotItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void PlotItemDragStarted(global::Quire.Controls.Plots.PlotItem plotItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void InitializeAxes() {
+		_plotStrategy.InitializeAxes(XAxisTitle, YAxisTitle, _plotTitle, _rangeEquations, _resultEquations, out _rangeAxis, out _primaryResultAxis);
+	}
+    private void InitializePlotLegend() {
+		_plotLegend = new PlotLegend(PlotType, new PlotLegendViewModel(_model.PlotLegendModel));
+		_plotLegend.Header = _plotLegend.Resources["PlotLegend.Header"] as string;
+	}
+    private void PlotItemDragEnded(global::Quire.Controls.Plots.PlotItem plotItem) {
+		PlotItemPlaceholder[] array;
+		int num;
+		if (plotItem == _rangeEquations)
+		{
+			array = XLegendsPositions;
+			num = XLegendPositionIndex;
+		}
+		else if (plotItem == _resultEquations)
+		{
+			array = YLegendsPositions;
+			num = YLegendPositionIndex;
+		}
+		else if (plotItem == _plotLegend)
+		{
+			array = PlotLegendPositions;
+			num = PlotLegendPositionIndex;
+		}
+		else
+		{
+			array = PlotTitlePositions;
+			num = PlotTitlePositionIndex;
+		}
+		for (int positionIndex = 0; positionIndex < array.Length; positionIndex++)
+		{
+			if (num != positionIndex)
+			{
+				((DependencyObject)array[positionIndex]).ClearValue(UIElement.VisibilityProperty);
+			}
+		}
+		RemovePlotItemAdorner();
+		UpdateStaticXPlaceholdersVisibility();
+	}
+    private void PlotItemDragStarted(global::Quire.Controls.Plots.PlotItem plotItem) {
+		PlotItemPlaceholder[] array;
+		int num;
+		if (plotItem == _rangeEquations)
+		{
+			array = XLegendsPositions;
+			num = XLegendPositionIndex;
+			CreatePlotItemAdorner(_rangeEquations);
+		}
+		else if (plotItem == _resultEquations)
+		{
+			array = YLegendsPositions;
+			num = YLegendPositionIndex;
+			CreatePlotItemAdorner(_resultEquations);
+		}
+		else if (plotItem == _plotLegend)
+		{
+			array = PlotLegendPositions;
+			num = PlotLegendPositionIndex;
+			CreatePlotItemAdorner(_plotLegend);
+		}
+		else
+		{
+			array = PlotTitlePositions;
+			num = PlotTitlePositionIndex;
+			if (_plotTitle != null)
+			{
+				CreatePlotItemAdorner(_plotTitle);
+			}
+		}
+		for (int positionIndex = 0; positionIndex < array.Length; positionIndex++)
+		{
+			if (num != positionIndex)
+			{
+				array[positionIndex].Visibility = Visibility.Visible;
+			}
+		}
+	}
     private void PlotTitlePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void PlotLegendPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     internal void UpdateStaticXPlaceholdersVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -457,7 +553,13 @@ public partial class PlotControl
     private void UpdatePlotLegendPlaceholderVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     internal void UpdateStaticYPlaceholderVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public void UpdateAxisTitlePlaceholderVisibility(global::Quire.Controls.Plots.ViewModel.PlotTitleViewModel axisTitleViewModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void CreatePlotItemAdorner(global::Quire.Controls.Plots.PlotItem plotItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void CreatePlotItemAdorner(global::Quire.Controls.Plots.PlotItem plotItem) {
+		RemovePlotItemAdorner();
+		AdornerLayer adornerLayer = AdornerLayer.GetAdornerLayer(this);
+		UIElement visualBrushRectangle = plotItem.VisualBrushRectangle;
+		_plotItemAdorner = new PlotItemAdorner(visualBrushRectangle, this);
+		adornerLayer.Add(_plotItemAdorner);
+	}
 
     private void RemovePlotItemAdorner()
     {
@@ -477,8 +579,68 @@ public partial class PlotControl
     {
         return (bool)((DependencyObject)element).GetValue(IsDropTargetProperty);
     }
-    private void PlotControlPreviewDragOver(object sender, global::System.Windows.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private global::System.Windows.Controls.ContentControl GetClosestPlaceholder(global::System.Windows.Point position, global::Quire.Controls.Plots.PlotItem plotItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void PlotControlPreviewDragOver(object sender, global::System.Windows.DragEventArgs e) {
+		if (_plotItemAdorner != null)
+		{
+			Point position = e.GetPosition(this);
+			_plotItemAdorner.Left = position.X;
+			_plotItemAdorner.Top = position.Y;
+			PlotItem plotItem = e.Data.GetData(typeof(PlotItem).Name, autoConvert: true) as PlotItem;
+			DropTarget = GetClosestPlaceholder(position, plotItem);
+			e.Handled = true;
+		}
+	}
+    private global::System.Windows.Controls.ContentControl GetClosestPlaceholder(global::System.Windows.Point position, global::Quire.Controls.Plots.PlotItem plotItem) {
+		bool flag = false;
+		ContentControl[] array;
+		int num;
+		ContentControl[] xLegendsPositions;
+		if (plotItem == _rangeEquations)
+		{
+			xLegendsPositions = XLegendsPositions;
+			array = xLegendsPositions;
+			num = XLegendPositionIndex;
+		}
+		else if (plotItem == _resultEquations)
+		{
+			xLegendsPositions = YLegendsPositions;
+			array = xLegendsPositions;
+			num = YLegendPositionIndex;
+		}
+		else if (plotItem == _plotLegend)
+		{
+			xLegendsPositions = PlotLegendPositions;
+			array = xLegendsPositions;
+			num = PlotLegendPositionIndex;
+		}
+		else
+		{
+			xLegendsPositions = PlotTitlePositions;
+			array = xLegendsPositions;
+			num = PlotTitlePositionIndex;
+		}
+		ContentControl contentControl = null;
+		Vector val = default;
+		xLegendsPositions = array;
+		foreach (ContentControl contentControl2 in xLegendsPositions)
+		{
+			if (!flag || contentControl2 != _sharedResultLegendPosition)
+			{
+				Rect placeholderBounds = contentControl2.TransformToAncestor(this).TransformBounds(new Rect(0.0, 0.0, contentControl2.ActualWidth, contentControl2.ActualHeight));
+				Vector centerOffset = placeholderBounds.TopLeft + (placeholderBounds.BottomRight - placeholderBounds.TopLeft) / 2.0 - position;
+				if (contentControl == null || centerOffset.Length < val.Length)
+				{
+					contentControl = contentControl2;
+					val = centerOffset;
+				}
+			}
+		}
+		if (contentControl == array[num])
+		{
+			return null;
+		}
+		return contentControl;
+	}
     public static readonly global::System.Windows.DependencyPropertyKey PlotYMinGapPropertyKey;
     public static readonly global::System.Windows.DependencyProperty PlotXMinGapProperty;
     protected override void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -602,9 +764,60 @@ public partial class PlotControl
     private static void ToggleAxisTitleVisibilityCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void TogglePlotLegendVisibilityExecuted(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void TogglePlotLegendVisibilityCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected override void OnTemplateChanged(global::System.Windows.Controls.ControlTemplate oldTemplate, global::System.Windows.Controls.ControlTemplate newTemplate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected override void OnTemplateChanged(global::System.Windows.Controls.ControlTemplate oldTemplate, global::System.Windows.Controls.ControlTemplate newTemplate) {
+		base.OnTemplateChanged(oldTemplate, newTemplate);
+		UnRegisterLegendsToEvents(XLegendsPositions);
+		UnRegisterLegendsToEvents(YLegendsPositions);
+		UnRegisterLegendsToEvents(PlotTitlePositions);
+		UnRegisterLegendsToEvents(PlotLegendPositions);
+	}
     protected void UpdatePlaceholders() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public override void OnApplyTemplate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public override void OnApplyTemplate() {
+		base.OnApplyTemplate();
+		using (new CommandScope(new CompoundCommand()))
+		{
+			_plotStrategy.ApplyPlotTemplate(this);
+			_plotStrategy.InitializeLegendPositions(this, out _rangeLegendsPositions, out _resultLegendsPositions, out _plotTitlePositions, out _plotLegendPositions);
+			_sharedResultLegendPosition = _resultLegendsPositions[1];
+			XLegendPositionIndex = _rangeLegendPositionIndex;
+			YLegendPositionIndex = _resultLegendPositionIndex;
+			PlotTitlePositionIndex = _plotTitlePositionIndex;
+			PlotLegendPositionIndex = _plotLegendPositionIndex;
+			DebugTools.DevAssert(_graphPlaceholder == null, null);
+			_graphPlaceholder = Template.FindName("PART_PlotGraph", this) as ContentControl;
+			if (DebugTools.AssertNotNull(_graphPlaceholder, null).Passed)
+			{
+				_graphPlaceholder.Content = Graph;
+				if (_attachGraphSizeChangedOnApplyTemplate != null)
+				{
+					_attachGraphSizeChangedOnApplyTemplate();
+				}
+				_attachGraphSizeChangedOnApplyTemplate = null;
+			}
+			_plotGrid = Template.FindName("plotGrid", this) as Grid;
+			_markersControl = Template.FindName("PART_MarkersControl", this) as ItemsControl;
+			DebugTools.DevAssert(_markersControl == null == (ViewModel.Markers == null), null);
+		}
+		RegisterLegendsToEvents(XLegendsPositions);
+		RegisterLegendsToEvents(YLegendsPositions);
+		RegisterLegendsToEvents(PlotTitlePositions);
+		RegisterLegendsToEvents(PlotLegendPositions);
+		if (XAxisTitlePlaceholder != null && YAxisTitlePlaceholder != null)
+		{
+			RegisterLegendsToEvents(new PlotItemPlaceholder[1] { XAxisTitlePlaceholder });
+			RegisterLegendsToEvents(new PlotItemPlaceholder[1] { YAxisTitlePlaceholder });
+		}
+		if (!ShowAxisExpressions)
+		{
+			SwitchExpressionsVisibility(HiddenExpressionsVisibility);
+		}
+		if (IsLoaded || HasWorksheetProperties)
+		{
+			UpdatePlaceholders();
+			UpdateStaticXPlaceholdersVisibility();
+			UpdateStaticYPlaceholderVisibility();
+		}
+	}
     private global::Quire.Calculation.Core.EngineResult[] _engineResults;
     private static readonly global::System.Windows.RoutedEvent _changedEvent;
     private global::System.Collections.Generic.IEnumerable<global::System.Windows.DependencyObject> GetElementsForAxis(global::Quire.Controls.Plots.Presenter.AxesType axisType, bool useEquations) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -612,8 +825,26 @@ public partial class PlotControl
     protected override void HandleGotFocusOverride(global::System.Windows.DependencyObject newFocused) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     internal global::Quire.Controls.EquationControl GetMarkerEquation(global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel baseMarkerViewModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     internal void HandlePlotGridSplitterMouseDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected virtual void RegisterLegendsToEvents(global::System.Collections.Generic.IEnumerable<global::System.Windows.Controls.ContentControl> legendsPositionsArray) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected void UnRegisterLegendsToEvents(global::System.Collections.Generic.IEnumerable<global::System.Windows.Controls.ContentControl> legendsPositionsArray) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void RegisterLegendsToEvents(global::System.Collections.Generic.IEnumerable<global::System.Windows.Controls.ContentControl> legendsPositionsArray) {
+		if (legendsPositionsArray == null)
+		{
+			return;
+		}
+		foreach (ContentControl item in legendsPositionsArray)
+		{
+			item.SizeChanged += PlaceholderSizeChanged;
+		}
+	}
+    protected void UnRegisterLegendsToEvents(global::System.Collections.Generic.IEnumerable<global::System.Windows.Controls.ContentControl> legendsPositionsArray) {
+		if (legendsPositionsArray == null)
+		{
+			return;
+		}
+		foreach (ContentControl item in legendsPositionsArray)
+		{
+			item.SizeChanged -= PlaceholderSizeChanged;
+		}
+	}
     private void ContentControlDrop(object sender, global::System.Windows.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public void MoveLegendXToIndex(int moveToIndex) {
 		new ChangeXLegendPositionCommand(this, moveToIndex).Execute();
