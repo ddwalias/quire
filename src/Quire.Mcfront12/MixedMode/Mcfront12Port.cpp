@@ -383,9 +383,9 @@ namespace Quire { namespace Engine {
                     do
                     {
                         System::Object^ obj = defined[num];
-                        System::Collections::Generic::List<System::String^>^ defined2 = m_defined;
+                        System::Collections::Generic::List<System::String^>^ definitions = m_defined;
                         System::String^ item = obj->ToString();
-                        defined2->Add(item);
+                        definitions->Add(item);
                         num++;
                     }
                     while (num < defined->Length);
@@ -518,10 +518,10 @@ namespace Quire { namespace Engine {
             Quire::utl_mgd::LabeledDictionary^ labeledDictionary = gcnew Quire::utl_mgd::LabeledDictionary();
             for each (System::Object^ key in dictionary->Keys)
             {
-                System::String^ text2 = dynamic_cast<System::String^>(key);
-                if (text2 && text2->StartsWith("%"))
+                System::String^ dictionaryKey = dynamic_cast<System::String^>(key);
+                if (dictionaryKey && dictionaryKey->StartsWith("%"))
                 {
-                    labeledDictionary[text2] = dictionary[text2];
+                    labeledDictionary[dictionaryKey] = dictionary[dictionaryKey];
                 }
             }
             labeledDictionary["type " + text] = dictionary["type _raw"];
@@ -541,8 +541,8 @@ namespace Quire { namespace Engine {
         virtual System::Object^ Invoke(array<System::Object^>^ args) override
         {
             System::Collections::IDictionary^ dictionary = nullptr;
-            System::Collections::IDictionary^ dictionary2 = dynamic_cast<System::Collections::IDictionary^>(args[1]);
-            if (dictionary2 == nullptr)
+            System::Collections::IDictionary^ rightDictionary = dynamic_cast<System::Collections::IDictionary^>(args[1]);
+            if (rightDictionary == nullptr)
             {
                 return args[0];
             }
@@ -823,7 +823,7 @@ namespace Quire { namespace Engine {
         void ll_move_before(System::Collections::Generic::LinkedListNode<NodeCollection^>^ n1, System::Collections::Generic::LinkedListNode<NodeCollection^>^ n2)
         {
             System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode = (n2->Value->m_child_scope != nullptr) ? n2->Value->m_child_scope->First(true) : n2;
-            System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode2 = n2;
+            System::Collections::Generic::LinkedListNode<NodeCollection^>^ nodeToMove = n2;
             System::Collections::Generic::LinkedListNode<NodeCollection^>^ previous = n2->Previous;
             m_ce_nodes->Remove(n2);
             m_ce_nodes->AddBefore(n1, n2);
@@ -831,13 +831,13 @@ namespace Quire { namespace Engine {
             {
                 do
                 {
-                    System::Collections::Generic::LinkedListNode<NodeCollection^>^ node = linkedListNode2;
-                    linkedListNode2 = previous;
+                    System::Collections::Generic::LinkedListNode<NodeCollection^>^ node = nodeToMove;
+                    nodeToMove = previous;
                     previous = previous->Previous;
-                    m_ce_nodes->Remove(linkedListNode2);
-                    m_ce_nodes->AddBefore(node, linkedListNode2);
+                    m_ce_nodes->Remove(nodeToMove);
+                    m_ce_nodes->AddBefore(node, nodeToMove);
                 }
-                while (linkedListNode2 != linkedListNode);
+                while (nodeToMove != linkedListNode);
             }
             System::GC::KeepAlive(this);
         }
@@ -845,7 +845,7 @@ namespace Quire { namespace Engine {
         void ll_move_after(System::Collections::Generic::LinkedListNode<NodeCollection^>^ n1, System::Collections::Generic::LinkedListNode<NodeCollection^>^ n2)
         {
             System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode = (n2->Value->m_child_scope != nullptr) ? n2->Value->m_child_scope->First(true) : n2;
-            System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode2 = linkedListNode;
+            System::Collections::Generic::LinkedListNode<NodeCollection^>^ nodeToMove = linkedListNode;
             System::Collections::Generic::LinkedListNode<NodeCollection^>^ next = linkedListNode->Next;
             m_ce_nodes->Remove(linkedListNode);
             m_ce_nodes->AddAfter(n1, linkedListNode);
@@ -853,13 +853,13 @@ namespace Quire { namespace Engine {
             {
                 do
                 {
-                    System::Collections::Generic::LinkedListNode<NodeCollection^>^ node = linkedListNode2;
-                    linkedListNode2 = next;
+                    System::Collections::Generic::LinkedListNode<NodeCollection^>^ node = nodeToMove;
+                    nodeToMove = next;
                     next = next->Next;
-                    m_ce_nodes->Remove(linkedListNode2);
-                    m_ce_nodes->AddAfter(node, linkedListNode2);
+                    m_ce_nodes->Remove(nodeToMove);
+                    m_ce_nodes->AddAfter(node, nodeToMove);
                 }
-                while (linkedListNode2 != n2);
+                while (nodeToMove != n2);
             }
             System::GC::KeepAlive(this);
         }
@@ -881,20 +881,20 @@ namespace Quire { namespace Engine {
         void ce_sync(System::Collections::Generic::LinkedListNode<NodeCollection^>^ n)
         {
             System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode = (n->Value->m_child_scope != nullptr) ? n->Value->m_child_scope->First(true) : n;
-            System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode2 = linkedListNode;
+            System::Collections::Generic::LinkedListNode<NodeCollection^>^ currentNode = linkedListNode;
             long h = last_ce_node(linkedListNode->Previous);
             while (true)
             {
-                for each (long current in linkedListNode2->Value->m_ce_nodes)
+                for each (long current in currentNode->Value->m_ce_nodes)
                 {
-                    m_depman->MoveAfter(h, current, reinterpret_cast<::depman::Scope^>(linkedListNode2->Value->m_scope));
+                    m_depman->MoveAfter(h, current, reinterpret_cast<::depman::Scope^>(currentNode->Value->m_scope));
                     h = current;
                 }
-                if (linkedListNode2 == n)
+                if (currentNode == n)
                 {
                     break;
                 }
-                linkedListNode2 = linkedListNode2->Next;
+                currentNode = currentNode->Next;
             }
             System::GC::KeepAlive(this);
         }
@@ -953,29 +953,29 @@ namespace Quire { namespace Engine {
         void RemoveFrontNode(System::Collections::Generic::LinkedListNode<NodeCollection^>^ n, bool bChildrenOnly)
         {
             System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode = (n->Value->m_child_scope != nullptr) ? n->Value->m_child_scope->First(true) : n;
-            System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode2 = linkedListNode;
-            System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode3 = linkedListNode;
+            System::Collections::Generic::LinkedListNode<NodeCollection^>^ nextNode = linkedListNode;
+            System::Collections::Generic::LinkedListNode<NodeCollection^>^ nodeToRemove = linkedListNode;
             while (true)
             {
-                linkedListNode2 = linkedListNode2->Next;
-                if (linkedListNode3 == n)
+                nextNode = nextNode->Next;
+                if (nodeToRemove == n)
                 {
-                    scope_detach(linkedListNode3);
+                    scope_detach(nodeToRemove);
                     if (bChildrenOnly)
                     {
                         break;
                     }
                 }
-                DeleteCENodes(linkedListNode3);
+                DeleteCENodes(nodeToRemove);
                 System::Collections::Generic::Dictionary<long, System::Collections::Generic::LinkedListNode<NodeCollection^>^>^ front_to_nc = m_front_to_nc;
-                int fnode = (int)linkedListNode3->Value->m_fnode;
+                int fnode = (int)nodeToRemove->Value->m_fnode;
                 front_to_nc->Remove(fnode);
-                m_ce_nodes->Remove(linkedListNode3);
-                if (linkedListNode3 == n)
+                m_ce_nodes->Remove(nodeToRemove);
+                if (nodeToRemove == n)
                 {
                     break;
                 }
-                linkedListNode3 = linkedListNode2;
+                nodeToRemove = nextNode;
             }
             System::GC::KeepAlive(this);
         }
@@ -1036,21 +1036,21 @@ namespace Quire { namespace Engine {
         {
             System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode = m_front_to_nc[fnode];
             long h = m_top_ce_node;
-            System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode2 = linkedListNode;
+            System::Collections::Generic::LinkedListNode<NodeCollection^>^ currentNode = linkedListNode;
             if (linkedListNode != nullptr)
             {
                 do
                 {
-                    NodeCollection^ value = linkedListNode2->Value;
+                    NodeCollection^ value = currentNode->Value;
                     if (value->Count <= 0)
                     {
-                        linkedListNode2 = linkedListNode2->Previous;
+                        currentNode = currentNode->Previous;
                         continue;
                     }
                     h = value[value->Count - 1];
                     break;
                 }
-                while (linkedListNode2 != nullptr);
+                while (currentNode != nullptr);
             }
             ::depman::Depman^ depman = m_depman;
             FScope^ scope = linkedListNode->Value->m_scope;
@@ -1147,23 +1147,23 @@ namespace Quire { namespace Engine {
             if (!m_depman->GetAutoCalc())
             {
                 System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode = m_front_to_nc[fnode];
-                System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode2 = linkedListNode->Value->m_scope->Last();
-                System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode3 = linkedListNode->Value->m_scope->First(false);
-                System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode4 = linkedListNode;
+                System::Collections::Generic::LinkedListNode<NodeCollection^>^ lastNode = linkedListNode->Value->m_scope->Last();
+                System::Collections::Generic::LinkedListNode<NodeCollection^>^ firstNode = linkedListNode->Value->m_scope->First(false);
+                System::Collections::Generic::LinkedListNode<NodeCollection^>^ currentNode = linkedListNode;
                 if (linkedListNode != nullptr)
                 {
                     do
                     {
-                        UnLockCENodes(linkedListNode4->Value->m_fnode);
-                        if (linkedListNode4 == linkedListNode3)
+                        UnLockCENodes(currentNode->Value->m_fnode);
+                        if (currentNode == firstNode)
                         {
                             break;
                         }
-                        linkedListNode4 = linkedListNode4->Previous;
+                        currentNode = currentNode->Previous;
                     }
-                    while (linkedListNode4 != nullptr);
+                    while (currentNode != nullptr);
                 }
-                if (linkedListNode == linkedListNode2)
+                if (linkedListNode == lastNode)
                 {
                     System::GC::KeepAlive(this);
                     return;
@@ -1173,12 +1173,12 @@ namespace Quire { namespace Engine {
                 {
                     do
                     {
-                        long fnode2 = next->Value->m_fnode;
-                        if (!globalmap.m_ce_to_front->ContainsValue(fnode2))
+                        long nextFrontNode = next->Value->m_fnode;
+                        if (!globalmap.m_ce_to_front->ContainsValue(nextFrontNode))
                         {
-                            LockCEInvalidNodes(fnode2);
+                            LockCEInvalidNodes(nextFrontNode);
                         }
-                        if (next == linkedListNode2)
+                        if (next == lastNode)
                         {
                             break;
                         }
@@ -1193,8 +1193,8 @@ namespace Quire { namespace Engine {
         void InsertFrontNode(long fnode, long newFnode, IMode mode)
         {
             System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode = nullptr;
-            System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode2 = gcnew System::Collections::Generic::LinkedListNode<NodeCollection^>(gcnew NodeCollection(newFnode));
-            m_front_to_nc[newFnode] = linkedListNode2;
+            System::Collections::Generic::LinkedListNode<NodeCollection^>^ insertedNode = gcnew System::Collections::Generic::LinkedListNode<NodeCollection^>(gcnew NodeCollection(newFnode));
+            m_front_to_nc[newFnode] = insertedNode;
             linkedListNode = nullptr;
             if (m_front_to_nc->TryGetValue(fnode, linkedListNode))
             {
@@ -1204,27 +1204,27 @@ namespace Quire { namespace Engine {
                     {
                         FScope^ child_scope = gcnew FScope(linkedListNode);
                         linkedListNode->Value->m_child_scope = child_scope;
-                        linkedListNode->Value->m_child_scope->OnFirst(linkedListNode2);
+                        linkedListNode->Value->m_child_scope->OnFirst(insertedNode);
                         ce_sync_child(linkedListNode);
                     }
                     else
                     {
-                        linkedListNode->Value->m_child_scope->OnNew(linkedListNode2);
+                        linkedListNode->Value->m_child_scope->OnNew(insertedNode);
                     }
-                    m_ce_nodes->AddBefore(linkedListNode, linkedListNode2);
+                    m_ce_nodes->AddBefore(linkedListNode, insertedNode);
                 }
                 else if (mode == IMode::BEFORE)
                 {
                     System::Collections::Generic::LinkedList<NodeCollection^>^ ce_nodes = m_ce_nodes;
-                    System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode3 = linkedListNode;
-                    System::Collections::Generic::LinkedListNode<NodeCollection^>^ node = (linkedListNode3->Value->m_child_scope != nullptr) ? linkedListNode3->Value->m_child_scope->First(true) : linkedListNode3;
-                    ce_nodes->AddBefore(node, linkedListNode2);
-                    linkedListNode->Value->m_scope->OnBefore(linkedListNode, linkedListNode2);
+                    System::Collections::Generic::LinkedListNode<NodeCollection^>^ beforeNode = linkedListNode;
+                    System::Collections::Generic::LinkedListNode<NodeCollection^>^ node = (beforeNode->Value->m_child_scope != nullptr) ? beforeNode->Value->m_child_scope->First(true) : beforeNode;
+                    ce_nodes->AddBefore(node, insertedNode);
+                    linkedListNode->Value->m_scope->OnBefore(linkedListNode, insertedNode);
                 }
                 else
                 {
-                    m_ce_nodes->AddAfter(linkedListNode, linkedListNode2);
-                    linkedListNode->Value->m_scope->OnAfter(linkedListNode, linkedListNode2);
+                    m_ce_nodes->AddAfter(linkedListNode, insertedNode);
+                    linkedListNode->Value->m_scope->OnAfter(linkedListNode, insertedNode);
                 }
             }
             else
@@ -1234,14 +1234,14 @@ namespace Quire { namespace Engine {
                     throw gcnew System::Exception("illegal child");
                 }
                 FScope^ top_scope = m_top_scope;
-                linkedListNode2->Value->m_scope = top_scope;
+                insertedNode->Value->m_scope = top_scope;
                 if (mode == IMode::AFTER)
                 {
-                    m_ce_nodes->AddLast(linkedListNode2);
+                    m_ce_nodes->AddLast(insertedNode);
                 }
                 else
                 {
-                    m_ce_nodes->AddFirst(linkedListNode2);
+                    m_ce_nodes->AddFirst(insertedNode);
                 }
             }
             System::GC::KeepAlive(this);
@@ -1250,21 +1250,21 @@ namespace Quire { namespace Engine {
         void MoveFrontNode(long fnode1, long fnode2, IMode mode)
         {
             System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode = m_front_to_nc[fnode1];
-            System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode2 = m_front_to_nc[fnode2];
+            System::Collections::Generic::LinkedListNode<NodeCollection^>^ targetNode = m_front_to_nc[fnode2];
             if (mode == IMode::CHILD)
             {
-                if (linkedListNode2->Value->m_scope == linkedListNode->Value->m_child_scope)
+                if (targetNode->Value->m_scope == linkedListNode->Value->m_child_scope)
                 {
                     System::GC::KeepAlive(this);
                     return;
                 }
             }
-            if (linkedListNode->Value->m_scope == linkedListNode2->Value->m_scope)
+            if (linkedListNode->Value->m_scope == targetNode->Value->m_scope)
             {
                 if (mode == IMode::AFTER)
                 {
-                    System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode3 = (linkedListNode2->Value->m_child_scope != nullptr) ? linkedListNode2->Value->m_child_scope->First(true) : linkedListNode2;
-                    if (linkedListNode->Next == linkedListNode3)
+                    System::Collections::Generic::LinkedListNode<NodeCollection^>^ targetScopeFirst = (targetNode->Value->m_child_scope != nullptr) ? targetNode->Value->m_child_scope->First(true) : targetNode;
+                    if (linkedListNode->Next == targetScopeFirst)
                     {
                         System::GC::KeepAlive(this);
                         return;
@@ -1272,7 +1272,7 @@ namespace Quire { namespace Engine {
                 }
                 else if (mode == IMode::BEFORE)
                 {
-                    if (((linkedListNode->Value->m_child_scope != nullptr) ? linkedListNode->Value->m_child_scope->First(true) : linkedListNode)->Previous == linkedListNode2)
+                    if (((linkedListNode->Value->m_child_scope != nullptr) ? linkedListNode->Value->m_child_scope->First(true) : linkedListNode)->Previous == targetNode)
                     {
                         System::GC::KeepAlive(this);
                         return;
@@ -1281,40 +1281,40 @@ namespace Quire { namespace Engine {
             }
             if (mode == IMode::CHILD)
             {
-                scope_detach(linkedListNode2);
+                scope_detach(targetNode);
                 if (linkedListNode->Value->m_child_scope == nullptr)
                 {
-                    FScope^ child_scope2 = gcnew FScope(linkedListNode);
-                    linkedListNode->Value->m_child_scope = child_scope2;
-                    linkedListNode->Value->m_child_scope->OnFirst(linkedListNode2);
+                    FScope^ childScope = gcnew FScope(linkedListNode);
+                    linkedListNode->Value->m_child_scope = childScope;
+                    linkedListNode->Value->m_child_scope->OnFirst(targetNode);
                     ce_sync_child(linkedListNode);
                 }
                 else
                 {
-                    linkedListNode->Value->m_child_scope->OnNew(linkedListNode2);
+                    linkedListNode->Value->m_child_scope->OnNew(targetNode);
                 }
-                ll_move_before(linkedListNode, linkedListNode2);
+                ll_move_before(linkedListNode, targetNode);
             }
             else if (mode == IMode::BEFORE)
             {
-                if (linkedListNode2->Value->m_scope != linkedListNode->Value->m_scope)
+                if (targetNode->Value->m_scope != linkedListNode->Value->m_scope)
                 {
-                    scope_detach(linkedListNode2);
+                    scope_detach(targetNode);
                 }
-                linkedListNode->Value->m_scope->OnBefore(linkedListNode, linkedListNode2);
+                linkedListNode->Value->m_scope->OnBefore(linkedListNode, targetNode);
                 System::Collections::Generic::LinkedListNode<NodeCollection^>^ n = (linkedListNode->Value->m_child_scope != nullptr) ? linkedListNode->Value->m_child_scope->First(true) : linkedListNode;
-                ll_move_before(n, linkedListNode2);
+                ll_move_before(n, targetNode);
             }
             else
             {
-                if (linkedListNode2->Value->m_scope != linkedListNode->Value->m_scope)
+                if (targetNode->Value->m_scope != linkedListNode->Value->m_scope)
                 {
-                    scope_detach(linkedListNode2);
+                    scope_detach(targetNode);
                 }
-                linkedListNode->Value->m_scope->OnAfter(linkedListNode, linkedListNode2);
-                ll_move_after(linkedListNode, linkedListNode2);
+                linkedListNode->Value->m_scope->OnAfter(linkedListNode, targetNode);
+                ll_move_after(linkedListNode, targetNode);
             }
-            ce_sync(linkedListNode2);
+            ce_sync(targetNode);
         }
 
 
@@ -1338,9 +1338,9 @@ namespace Quire { namespace Engine {
             System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode = m_front_to_nc[fnode]->Value->m_scope->Owner();
             if (linkedListNode != nullptr)
             {
-                int fnode2 = (int)linkedListNode->Value->m_fnode;
+                int parentFnode = (int)linkedListNode->Value->m_fnode;
                 System::GC::KeepAlive(this);
-                return fnode2;
+                return parentFnode;
             }
             System::GC::KeepAlive(this);
             return -1;
@@ -1349,8 +1349,8 @@ namespace Quire { namespace Engine {
         int GetPrevious(long fnode)
         {
             System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode = m_front_to_nc[fnode];
-            System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode2 = linkedListNode->Value->m_scope->First(false);
-            if (linkedListNode == linkedListNode2)
+            System::Collections::Generic::LinkedListNode<NodeCollection^>^ firstScopeNode = linkedListNode->Value->m_scope->First(false);
+            if (linkedListNode == firstScopeNode)
             {
                 System::GC::KeepAlive(this);
                 return -1;
@@ -1361,8 +1361,8 @@ namespace Quire { namespace Engine {
                 do
                 {
                     FScope^% scope = previous->Value->m_scope;
-                    FScope^% scope2 = linkedListNode->Value->m_scope;
-                    if (scope != scope2 && previous != linkedListNode2)
+                    FScope^% targetScope = linkedListNode->Value->m_scope;
+                    if (scope != targetScope && previous != firstScopeNode)
                     {
                         previous = previous->Previous;
                         continue;
@@ -1372,9 +1372,9 @@ namespace Quire { namespace Engine {
                 while (previous != nullptr);
                 if (previous != nullptr)
                 {
-                    int fnode2 = (int)previous->Value->m_fnode;
+                    int previousFnode = (int)previous->Value->m_fnode;
                     System::GC::KeepAlive(this);
-                    return fnode2;
+                    return previousFnode;
                 }
             }
             System::GC::KeepAlive(this);
@@ -1384,8 +1384,8 @@ namespace Quire { namespace Engine {
         int GetNext(long fnode)
         {
             System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode = m_front_to_nc[fnode];
-            System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode2 = linkedListNode->Value->m_scope->Last();
-            if (linkedListNode == linkedListNode2)
+            System::Collections::Generic::LinkedListNode<NodeCollection^>^ lastScopeNode = linkedListNode->Value->m_scope->Last();
+            if (linkedListNode == lastScopeNode)
             {
                 System::GC::KeepAlive(this);
                 return -1;
@@ -1396,8 +1396,8 @@ namespace Quire { namespace Engine {
                 do
                 {
                     FScope^% scope = next->Value->m_scope;
-                    FScope^% scope2 = linkedListNode->Value->m_scope;
-                    if (scope != scope2 && next != linkedListNode2)
+                    FScope^% targetScope = linkedListNode->Value->m_scope;
+                    if (scope != targetScope && next != lastScopeNode)
                     {
                         next = next->Next;
                         continue;
@@ -1407,9 +1407,9 @@ namespace Quire { namespace Engine {
                 while (next != nullptr);
                 if (next != nullptr)
                 {
-                    int fnode2 = (int)next->Value->m_fnode;
+                    int nextFnode = (int)next->Value->m_fnode;
                     System::GC::KeepAlive(this);
-                    return fnode2;
+                    return nextFnode;
                 }
             }
             System::GC::KeepAlive(this);
@@ -1458,8 +1458,8 @@ namespace Quire { namespace Engine {
                     do
                     {
                         System::ValueType^ a_ = linkedListNode->Value->m_scope->Id;
-                        System::ValueType^ a_2 = (System::ValueType^)linkedListNode->Value->m_fnode;
-                        A_0->Invoke2(a_2, a_);
+                        System::ValueType^ nodeHandle = (System::ValueType^)linkedListNode->Value->m_fnode;
+                        A_0->Invoke2(nodeHandle, a_);
                         linkedListNode = linkedListNode->Next;
                     }
                     while (linkedListNode != nullptr);
@@ -1491,35 +1491,35 @@ namespace Quire { namespace Engine {
             {
                 PathComponent item;
                 ::depman::Scope^ scope = reinterpret_cast<::depman::Scope^>(linkedListNode->Value->m_scope);
-                System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode2 = linkedListNode->Value->m_scope->First(false);
+                System::Collections::Generic::LinkedListNode<NodeCollection^>^ firstScopeNode = linkedListNode->Value->m_scope->First(false);
                 int num = 0;
-                System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode3 = linkedListNode;
+                System::Collections::Generic::LinkedListNode<NodeCollection^>^ currentNode = linkedListNode;
                 if (linkedListNode != nullptr)
                 {
                     do
                     {
-                        if (reinterpret_cast<::depman::Scope^>(linkedListNode3->Value->m_scope) == scope)
+                        if (reinterpret_cast<::depman::Scope^>(currentNode->Value->m_scope) == scope)
                         {
                             num++;
                         }
-                        if (linkedListNode3 == linkedListNode2)
+                        if (currentNode == firstScopeNode)
                         {
                             break;
                         }
-                        linkedListNode3 = linkedListNode3->Previous;
+                        currentNode = currentNode->Previous;
                     }
-                    while (linkedListNode3 != nullptr);
+                    while (currentNode != nullptr);
                 }
                 item.child_no = num - 1;
-                System::Collections::Generic::LinkedListNode<NodeCollection^>^ linkedListNode4 = linkedListNode->Value->m_scope->Owner();
-                int parent = (!linkedListNode4) ? -1 : linkedListNode4->Value->m_fnode;
+                System::Collections::Generic::LinkedListNode<NodeCollection^>^ scopeOwner = linkedListNode->Value->m_scope->Owner();
+                int parent = (!scopeOwner) ? -1 : scopeOwner->Value->m_fnode;
                 item.parent = parent;
                 list->Add(item);
-                if (linkedListNode4 == nullptr)
+                if (scopeOwner == nullptr)
                 {
                     break;
                 }
-                linkedListNode = linkedListNode4;
+                linkedListNode = scopeOwner;
             }
             list->Reverse();
             System::GC::KeepAlive(this);
@@ -1535,52 +1535,51 @@ namespace Quire { namespace Engine {
         {
             System::Collections::Generic::List<DCount>^ list = gcnew System::Collections::Generic::List<DCount>();
             NodeMap^ nodeMap = dynamic_cast<NodeMap^>(nodes);
-            System::Collections::Generic::List<PathComponent>^ list2 = nodeMap->NodePath(from);
-            System::Collections::Generic::List<PathComponent>^ list3 = nodeMap->NodePath(to);
-            int count = list3->Count;
-            int num = System::Math::Min(list2->Count, count);
-            int num2 = 0;
-            if (0 < num)
+            System::Collections::Generic::List<PathComponent>^ sourcePath = nodeMap->NodePath(from);
+            System::Collections::Generic::List<PathComponent>^ targetPath = nodeMap->NodePath(to);
+            int commonPathLimit = System::Math::Min(sourcePath->Count, targetPath->Count);
+            int commonPathLength = 0;
+            if (0 < commonPathLimit)
             {
                 do
                 {
-                    PathComponent pathComponent = list2[num2];
-                    PathComponent pathComponent2 = list3[num2];
-                    if (pathComponent.parent != pathComponent2.parent)
+                    PathComponent sourceComponent = sourcePath[commonPathLength];
+                    PathComponent targetComponent = targetPath[commonPathLength];
+                    if (sourceComponent.parent != targetComponent.parent)
                     {
                         break;
                     }
-                    num2++;
+                    commonPathLength++;
                 }
-                while (num2 < num);
+                while (commonPathLength < commonPathLimit);
             }
-            DCount item((Direction)0, list2->Count - num2);
-            list->Add(item);
-            int child_no = list2[num2 - 1].child_no;
-            int child_no2 = list3[num2 - 1].child_no;
-            if (child_no2 > child_no)
+            DCount upwardCount((Direction)0, sourcePath->Count - commonPathLength);
+            list->Add(upwardCount);
+            int sourceChildNumber = sourcePath[commonPathLength - 1].child_no;
+            int targetChildNumber = targetPath[commonPathLength - 1].child_no;
+            if (targetChildNumber > sourceChildNumber)
             {
-                DCount item2((Direction)2, child_no2 - child_no);
-                list->Add(item2);
+                DCount rightwardCount((Direction)2, targetChildNumber - sourceChildNumber);
+                list->Add(rightwardCount);
             }
-            else if (child_no2 < child_no)
+            else if (targetChildNumber < sourceChildNumber)
             {
-                DCount item3((Direction)3, child_no - child_no2);
-                list->Add(item3);
+                DCount leftwardCount((Direction)3, sourceChildNumber - targetChildNumber);
+                list->Add(leftwardCount);
             }
-            int num3 = num2;
-            if (num2 < list3->Count)
+            int targetPathIndex = commonPathLength;
+            if (commonPathLength < targetPath->Count)
             {
                 do
                 {
-                    DCount item4((Direction)1, 1);
-                    list->Add(item4);
-                    PathComponent pathComponent3 = list3[num3];
-                    DCount item5((Direction)2, pathComponent3.child_no);
-                    list->Add(item5);
-                    num3++;
+                    DCount downwardCount((Direction)1, 1);
+                    list->Add(downwardCount);
+                    PathComponent targetComponent = targetPath[targetPathIndex];
+                    DCount childCount((Direction)2, targetComponent.child_no);
+                    list->Add(childCount);
+                    targetPathIndex++;
                 }
-                while (num3 < list3->Count);
+                while (targetPathIndex < targetPath->Count);
             }
             return list;
         }
@@ -1740,11 +1739,11 @@ namespace Quire { namespace Engine {
         void CheckGlobals(System::String^ var)
         {
             System::String^ text = nullptr;
-            System::String^ text2 = nullptr;
+            System::String^ multipleGlobalsError = nullptr;
             int count = FilterTopLevel(GetGlobals(var))->Count;
             if (count > 1)
             {
-                text2 = s_too_many_globals;
+                multipleGlobalsError = s_too_many_globals;
             }
             else if (count == 1)
             {
@@ -1756,25 +1755,25 @@ namespace Quire { namespace Engine {
                 do
                 {
                     NodeData^ current = enumerator.Current;
-                    long num = current->Handle();
-                    System::String^ error = (IsTopLevel(num)) ? text2 : s_global_not_top_level;
+                    long handle = current->Handle();
+                    System::String^ error = (IsTopLevel(handle)) ? multipleGlobalsError : s_global_not_top_level;
                     current->SetError(error);
                     m_outofdate_nodes->Add(current);
                 }
                 while (enumerator.MoveNext());
             }
-            System::Collections::Generic::HashSet<NodeData^>::Enumerator enumerator2 = GetNormals(var)->GetEnumerator();
-            if (enumerator2.MoveNext())
+            System::Collections::Generic::HashSet<NodeData^>::Enumerator normalEnumerator = GetNormals(var)->GetEnumerator();
+            if (normalEnumerator.MoveNext())
             {
                 do
                 {
-                    NodeData^ current2 = enumerator2.Current;
-                    long num2 = current2->Handle();
-                    System::String^ error2 = (IsTopLevel(num2)) ? text : nullptr;
-                    current2->SetError(error2);
-                    m_outofdate_nodes->Add(current2);
+                    NodeData^ normalNode = normalEnumerator.Current;
+                    long handle = normalNode->Handle();
+                    System::String^ normalError = (IsTopLevel(handle)) ? text : nullptr;
+                    normalNode->SetError(normalError);
+                    m_outofdate_nodes->Add(normalNode);
                 }
-                while (enumerator2.MoveNext());
+                while (normalEnumerator.MoveNext());
             }
             System::GC::KeepAlive(this);
         }
@@ -1842,15 +1841,15 @@ namespace Quire { namespace Engine {
             long num = parent;
             if (parent != -1)
             {
-                long parent2;
+                long parentHandle;
                 do
                 {
                     h = num;
-                    parent2 = NodeNavigation::GetParent(m_normal_zone, num);
+                    parentHandle = NodeNavigation::GetParent(m_normal_zone, num);
                     System::GC::KeepAlive(this);
-                    num = parent2;
+                    num = parentHandle;
                 }
-                while (parent2 != -1);
+                while (parentHandle != -1);
             }
             return h;
         }
@@ -1884,7 +1883,7 @@ namespace Quire { namespace Engine {
         void OperateRecursively(UnaryNodeDataFunc^ f, long h)
         {
             System::Collections::Generic::Stack<long>^ stack = gcnew System::Collections::Generic::Stack<long>();
-            System::Collections::Generic::Stack<NodeData^>^ stack2 = gcnew System::Collections::Generic::Stack<NodeData^>();
+            System::Collections::Generic::Stack<NodeData^>^ pendingNodes = gcnew System::Collections::Generic::Stack<NodeData^>();
             stack->Push(h);
             if (stack->Count > 0)
             {
@@ -1892,19 +1891,19 @@ namespace Quire { namespace Engine {
                 {
                     long num = stack->Pop();
                     NodeData^ nodeData = nullptr;
-                    NodeData^ nodeData2;
+                    NodeData^ resolvedNode;
                     if (m_handles->TryGetValue(num, nodeData))
                     {
                         System::GC::KeepAlive(this);
-                        nodeData2 = nodeData;
+                        resolvedNode = nodeData;
                     }
                     else
                     {
-                        nodeData2 = nullptr;
+                        resolvedNode = nullptr;
                     }
-                    if (nodeData2 != nullptr)
+                    if (resolvedNode != nullptr)
                     {
-                        stack2->Push(nodeData2);
+                        pendingNodes->Push(resolvedNode);
                     }
                     System::Collections::Generic::List<long>::Enumerator enumerator = NodeNavigation::GetChildren(m_normal_zone, num)->GetEnumerator();
                     if (enumerator.MoveNext())
@@ -1919,14 +1918,14 @@ namespace Quire { namespace Engine {
                 }
                 while (stack->Count > 0);
             }
-            if (stack2->Count > 0)
+            if (pendingNodes->Count > 0)
             {
                 do
                 {
-                    NodeData^ n = stack2->Pop();
+                    NodeData^ n = pendingNodes->Pop();
                     f(n);
                 }
-                while (stack2->Count > 0);
+                while (pendingNodes->Count > 0);
             }
             System::GC::KeepAlive(this);
         }
@@ -1935,17 +1934,17 @@ namespace Quire { namespace Engine {
         {
             long topAncestor = GetTopAncestor(fnode);
             NodeData^ nodeData = nullptr;
-            NodeData^ nodeData2;
+            NodeData^ resolvedNode;
             if (m_handles->TryGetValue(topAncestor, nodeData))
             {
                 System::GC::KeepAlive(this);
-                nodeData2 = nodeData;
+                resolvedNode = nodeData;
             }
             else
             {
-                nodeData2 = nullptr;
+                resolvedNode = nullptr;
             }
-            System::Object^ z = (nodeData2 == nullptr || !nodeData2->IsGlobal()) ? m_normal_zone : m_global_zone;
+            System::Object^ z = (resolvedNode == nullptr || !resolvedNode->IsGlobal()) ? m_normal_zone : m_global_zone;
             SetZone^ a_ = gcnew SetZone(z, this);
             OperateRecursively(gcnew UnaryNodeDataFunc(a_, &SetZone::Operate), fnode);
         }
