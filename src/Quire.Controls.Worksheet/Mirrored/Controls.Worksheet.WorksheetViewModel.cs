@@ -2910,7 +2910,7 @@ private void HandleProtectedStateChanged(IProtectableControl control)
         {
             DebugTools.DevAssert(_itemManager.GetCanActivate(collapsibleAreaControl) || !GetItemRect(collapsibleAreaControl).ContainsAccountingForMeasurementError(InsertionPoint), null);
         }
-    Done:
+    Done: // lint-ok: Release IL requires the collapsed path to branch to the shared exit.
         ;
     }
 
