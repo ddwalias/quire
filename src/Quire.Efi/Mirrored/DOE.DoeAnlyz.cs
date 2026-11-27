@@ -246,18 +246,18 @@ public partial class DoeAnlyz
         }
         MatVal matVal = new MatVal(A.Rows - num + dups.Count, A.Cols);
         matVal.m_dim = A.m_dim;
-        // The Mathcad IL keeps num2 in a nested scope, after the loop slots; a bare block gives the same slot order.
+        // The Mathcad IL keeps keptRows in a nested scope, after the loop slots; a bare block gives the same slot order.
         {
-            int num2 = 0;
+            int keptRows = 0;
             for (int l = 0; l < A.Rows; l++)
             {
                 if (!array[l])
                 {
                     for (int m = 0; m < A.Cols; m++)
                     {
-                        matVal.set_2(num2, m, A.get_2(l, m));
+                        matVal.set_2(keptRows, m, A.get_2(l, m));
                     }
-                    num2++;
+                    keptRows++;
                 }
             }
         }
