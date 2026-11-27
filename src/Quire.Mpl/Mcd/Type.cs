@@ -49,16 +49,16 @@ public abstract partial class Type
     private static Product.Power[] Take(Product.Power[] array, int start, int count)
     {
         if (start == 0 && count == array.Length) return array;
-        Product.Power[] array2 = new Product.Power[count];
+        Product.Power[] powers = new Product.Power[count];
         int num = 0;
-        int num2 = start;
+        int sourceIndex = start;
         while (num < count)
         {
-            array2[num] = array[num2];
+            powers[num] = array[sourceIndex];
             num++;
-            num2++;
+            sourceIndex++;
         }
-        return array2;
+        return powers;
     }
 
     public abstract void Accept(Visitor _);
@@ -499,20 +499,20 @@ public abstract partial class Type
                 }
                 case '{':
                 {
-                    int num2 = 0;
-                    int num3 = 0;
+                    int variablePowerCount = 0;
+                    int constantPowerCount = 0;
                     while (IsNextToken("a"))
                     {
                         m_fac.Push(ParseAtomic(), ParseExponent());
-                        num2++;
+                        variablePowerCount++;
                     }
                     while (IsNextToken("C"))
                     {
                         m_fac.Push(ParseAtomic(), ParseExponent());
-                        num3++;
+                        constantPowerCount++;
                     }
                     SkipToken('}');
-                    return m_fac.NewProduct(num2, num3);
+                    return m_fac.NewProduct(variablePowerCount, constantPowerCount);
                 }
                 case '(':
                 {

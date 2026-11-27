@@ -166,12 +166,12 @@ public partial class DynamicType
     {
         string[] array = Explode(RemovePrefix(tyName, prefix));
         int num = array.Length;
-        Type[] array2 = new Type[num];
+        Type[] types = new Type[num];
         for (int i = 0; i < num; i++)
         {
-            array2[i] = NameToType(array[i]);
+            types[i] = NameToType(array[i]);
         }
-        return array2;
+        return types;
     }
 
     [MirrorVerified("DynamicTypeDifferentialTests")]

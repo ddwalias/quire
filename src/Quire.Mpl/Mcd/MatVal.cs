@@ -115,8 +115,8 @@ public sealed partial class MatVal : DimVal
             int num = 0;
             foreach (DictionaryEntry item in m_parr)
             {
-                int num2 = (int)item.Key;
-                if (IsPtrNan(ref m_rarr[num2]))
+                int sparseIndex = (int)item.Key;
+                if (IsPtrNan(ref m_rarr[sparseIndex]))
                 {
                     if (DimVal.IsDimOf(item.Value, m_dim))
                     {
@@ -241,8 +241,8 @@ public sealed partial class MatVal : DimVal
         Dim dim = null;
         foreach (DictionaryEntry item in m_parr)
         {
-            int num2 = (int)item.Key;
-            if (!IsPtrNan(ref m_rarr[num2]))
+            int sparseIndex = (int)item.Key;
+            if (!IsPtrNan(ref m_rarr[sparseIndex]))
             {
                 continue;
             }
@@ -277,8 +277,8 @@ public sealed partial class MatVal : DimVal
         for (int i = 0; i < cols; i++)
         {
             int num = i * anr + m_offset;
-            int num2 = num + rows;
-            for (int j = num; j < num2; j++)
+            int rowEnd = num + rows;
+            for (int j = num; j < rowEnd; j++)
             {
                 if (!IsPtrNan(ref m_rarr[j]))
                 {
@@ -297,13 +297,13 @@ public sealed partial class MatVal : DimVal
             m_dim = Dim.identity;
         }
         int num = 0;
-        int num2 = 0;
+        int zeroPointerCount = 0;
         Dim dim = (DimActual() ? m_dim : null);
         bool hasOtherPntr = false;
         foreach (DictionaryEntry item in m_parr)
         {
-            int num3 = (int)item.Key;
-            if (!IsPtrNan(ref m_rarr[num3]))
+            int sparseIndex = (int)item.Key;
+            if (!IsPtrNan(ref m_rarr[sparseIndex]))
             {
                 continue;
             }
@@ -321,12 +321,12 @@ public sealed partial class MatVal : DimVal
                     num++;
                     if (dim2 == Dim.mcd_zero)
                     {
-                        num2++;
+                        zeroPointerCount++;
                     }
                 }
                 else if (dim2 == Dim.mcd_zero)
                 {
-                    num2++;
+                    zeroPointerCount++;
                     num++;
                 }
                 else
@@ -335,7 +335,7 @@ public sealed partial class MatVal : DimVal
                 }
             }
         }
-        return TidyPtrs(num, num2, dim, hasOtherPntr);
+        return TidyPtrs(num, zeroPointerCount, dim, hasOtherPntr);
     }
 
     [MirrorAnalyzed("Mcd.MatVal")]
@@ -393,10 +393,10 @@ public sealed partial class MatVal : DimVal
             m_parr = null;
             foreach (DictionaryEntry item2 in parr2)
             {
-                int num2 = (int)item2.Key;
-                if (IsPtrNan(ref m_rarr[num2]))
+                int sparseIndex = (int)item2.Key;
+                if (IsPtrNan(ref m_rarr[sparseIndex]))
                 {
-                    set(num2, item2.Value);
+                    set(sparseIndex, item2.Value);
                 }
             }
         }
@@ -441,17 +441,17 @@ public sealed partial class MatVal : DimVal
             m_parr = null;
             foreach (DictionaryEntry item2 in parr2)
             {
-                int num2 = (int)item2.Key;
-                if (IsPtrNan(ref m_rarr[num2]))
+                int sparseIndex = (int)item2.Key;
+                if (IsPtrNan(ref m_rarr[sparseIndex]))
                 {
                     if (item2.Value is NumVal numVal2 && numVal2.m_dim == Dim.mcd_zero)
                     {
                         numVal2.m_dim = Dim.identity;
-                        set(num2, numVal2);
+                        set(sparseIndex, numVal2);
                     }
                     else
                     {
-                        set(num2, item2.Value);
+                        set(sparseIndex, item2.Value);
                     }
                 }
             }
@@ -509,8 +509,8 @@ public sealed partial class MatVal : DimVal
                     uniformDim = d.dim(k, l);
                     if (uniformDim != Dim.identity)
                     {
-                        int num2 = Index(k, l);
-                        set_ptrs_at(num2, new NumVal(get_real_raw(num2), get_imag_raw(num2), uniformDim));
+                        int matrixIndex = Index(k, l);
+                        set_ptrs_at(matrixIndex, new NumVal(get_real_raw(matrixIndex), get_imag_raw(matrixIndex), uniformDim));
                     }
                 }
             }
@@ -605,8 +605,8 @@ public sealed partial class MatVal : DimVal
         Dim dim = null;
         foreach (DictionaryEntry item in m_parr)
         {
-            int num2 = (int)item.Key;
-            if (!IsPtrNan(ref m_rarr[num2]))
+            int sparseIndex = (int)item.Key;
+            if (!IsPtrNan(ref m_rarr[sparseIndex]))
             {
                 continue;
             }
@@ -2600,7 +2600,7 @@ public sealed partial class MatVal : DimVal
     {
         int num;
         int i;
-        int num2;
+        int currentIndex;
         int j;
         if (incr == 1)
         {
@@ -2611,11 +2611,11 @@ public sealed partial class MatVal : DimVal
             }
             return;
         }
-        num2 = init;
+        currentIndex = init;
         for (j = 0; j < n; j++)
         {
-            arr[num2] = v;
-            num2 += incr;
+            arr[currentIndex] = v;
+            currentIndex += incr;
         }
     }
 

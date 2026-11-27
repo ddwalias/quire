@@ -195,8 +195,8 @@ public partial class UnitSystem : MarshalByRefObject
             int num = 0;
             try
             {
-                Unit[] array2 = value;
-                foreach (Unit unit in array2)
+                Unit[] units = value;
+                foreach (Unit unit in units)
                 {
                     m_unit_syms[unit.Symbol] = true;
                     Type.Product.Power[] constants = unit.Dimensions.Constants;
@@ -359,17 +359,17 @@ public partial class UnitSystem : MarshalByRefObject
     {
         int num = Count(local);
         Units.Power[] array = new Units.Power[num];
-        int num2 = 0;
-        int num3 = 0;
-        while (num3 != num)
+        int basisIndex = 0;
+        int nonzeroExponentIndex = 0;
+        while (nonzeroExponentIndex != num)
         {
-            if (local[num2] != 0.0)
+            if (local[basisIndex] != 0.0)
             {
-                array[num3].Base = m_base[num2];
-                array[num3].Exponent = local[num2];
-                num3++;
+                array[nonzeroExponentIndex].Base = m_base[basisIndex];
+                array[nonzeroExponentIndex].Exponent = local[basisIndex];
+                nonzeroExponentIndex++;
             }
-            num2++;
+            basisIndex++;
         }
         return new Units(array);
     }
@@ -380,17 +380,17 @@ public partial class UnitSystem : MarshalByRefObject
     {
         int num = Count(global);
         Type.Product.Power[] array = new Type.Product.Power[num];
-        int num2 = 0;
-        int num3 = 0;
-        while (num3 != num)
+        int dimensionIndex = 0;
+        int nonzeroDimensionIndex = 0;
+        while (nonzeroDimensionIndex != num)
         {
-            if (global[num2] != 0)
+            if (global[dimensionIndex] != 0)
             {
-                array[num3].Base = m_dims[num2];
-                array[num3].Exponent = global[num2];
-                num3++;
+                array[nonzeroDimensionIndex].Base = m_dims[dimensionIndex];
+                array[nonzeroDimensionIndex].Exponent = global[dimensionIndex];
+                nonzeroDimensionIndex++;
             }
-            num2++;
+            dimensionIndex++;
         }
         return new Type.Product(array, 0);
     }
