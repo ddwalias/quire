@@ -278,7 +278,7 @@ private void Initialize()
         WorksheetContent.NonprintableSpaceWidthIncrease += newWidth =>
         {
             Size gridCellSize = _worksheetGrid.GridCellSize;
-            WidthWithNonprintableSpace = newWidth + 2.0 * gridCellSize.Width;
+            _widthWithNonprintableSpace = newWidth + 2.0 * gridCellSize.Width;
         };
         HookupCollectionChangedHandlers();
         OleObjectAutoResize = true;
@@ -2462,14 +2462,15 @@ private void AddItemAtInsertionPointAndActivate(IWhiteboardItem item, string nam
 private void HandlePageWideSizableDeletion(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items)
     {
         IEnumerable<IWhiteboardItem> sizableItems = items.Where(item => item is IPageWideSizable && !(item is IIncludeWorksheetControl));
-        if (sizableItems.Any())
+        if (!sizableItems.Any())
         {
-            sizableItems.Each(item =>
-            {
-                Point location = GetWorksheetSectionItemLocation(item);
-                UpdateItemPositionsAfterPageWideSizableRemoved(item, location, null);
-            });
+            return;
         }
+        sizableItems.Each(item =>
+        {
+            Point location = GetWorksheetSectionItemLocation(item);
+            UpdateItemPositionsAfterPageWideSizableRemoved(item, location, null);
+        });
     }
 
 private global::Quire.Core.TextFormat _contentTextFormat;
@@ -3019,11 +3020,14 @@ public void OnRequestRestoreInsertionPoint(IWorksheetControl worksheetControl, R
         eventArgs.Handled = true;
     }
 
-public void Activate(global::Quire.Controls.Worksheet.IWorksheetControl worksheetControl)
+    public void Activate(global::Quire.Controls.Worksheet.IWorksheetControl worksheetControl)
     {
         if (ActiveDescendant != null)
         {
-            ItemManager.SuppressBringIntoViewIfNeededAndExecute(ActiveDescendant, () => ActiveDescendant.Activate(isActive: true), suppressBringToView: true);
+            ItemManager.SuppressBringIntoViewIfNeededAndExecute(ActiveDescendant, () =>
+            {
+                ActiveDescendant.Activate(isActive: true);
+            }, suppressBringToView: true);
         }
         else
         {
@@ -3031,30 +3035,31 @@ public void Activate(global::Quire.Controls.Worksheet.IWorksheetControl workshee
             {
                 return;
             }
-            if (PageManager.VisiblePages.Contains(ActivePage))
+            if (!PageManager.VisiblePages.Contains(ActivePage))
             {
-                IWorksheetPageSection section;
-                IWhiteboardControl whiteboard;
-                if (IsHeaderActive)
-                {
-                    section = (IWorksheetPageSection)(whiteboard = ActiveSection == FirstPageHeader ? FirstPageHeader : Header);
-                }
-                else if (IsFooterActive)
-                {
-                    section = (IWorksheetPageSection)(whiteboard = ActiveSection == FirstPageFooter ? FirstPageFooter : Footer);
-                }
-                else
-                {
-                    DebugTools.DevAssert(IsContentActive, null);
-                    section = ActivePage.PageBody;
-                    whiteboard = ActivePage.PageBody;
-                }
-                VisualHelper.SuppressBringIntoViewAndExecute(section, () => whiteboard.ActivateWhiteboard(isActive: true));
+                WorksheetVisiblePages.PassFocusToPagesAncestor(worksheetControl);
+                return;
+            }
+            IWorksheetPageSection pageSection;
+            IWhiteboardControl activePageSectionWhiteboardControl;
+            if (IsHeaderActive)
+            {
+                pageSection = (IWorksheetPageSection)(activePageSectionWhiteboardControl = ((ActiveSection == FirstPageHeader) ? FirstPageHeader : Header));
+            }
+            else if (IsFooterActive)
+            {
+                pageSection = (IWorksheetPageSection)(activePageSectionWhiteboardControl = ((ActiveSection == FirstPageFooter) ? FirstPageFooter : Footer));
             }
             else
             {
-                WorksheetVisiblePages.PassFocusToPagesAncestor(worksheetControl);
+                DebugTools.DevAssert(IsContentActive, null);
+                pageSection = ActivePage.PageBody;
+                activePageSectionWhiteboardControl = ActivePage.PageBody;
             }
+            VisualHelper.SuppressBringIntoViewAndExecute(pageSection, () =>
+            {
+                activePageSectionWhiteboardControl.ActivateWhiteboard(isActive: true);
+            });
         }
     }
 
