@@ -1,6 +1,6 @@
 # WorksheetControl and WorksheetControlDebugger checkpoint
 
-- Owner: current worker; branch `feature/worksheet-control-audit-next-stack`, based on main `4316d4fa8`.
+- Owner: current worker; branch `feature/worksheet-control-audit-next-stack`, based on main `ad827f030`.
 - Claimed: `Quire.Controls.Worksheet.WorksheetControl` and `WorksheetControlDebugger`.
 - Baseline Release IL: PASS, 1455 checked, 0 failures (`.mirror-cache/release-il-c21f14f35d22/release-il.json`).
 - Batch 1 (`WorksheetControl`): exact straightforward accessors and forwarders; 64 method accessors changed from generated stub to exact. Release IL PASS, 1525 checked, 0 failures (`.mirror-cache/release-il-b3e96063c6d5/release-il.json`).
@@ -71,3 +71,4 @@
 - Batch 53 (`WorksheetControlDebugger.WorksheetControlUI`): `OnWorksheetContentInsertionPointSet` now reports worksheet, page-local, and canvas insertion-point coordinates and page number exactly. Release IL PASS, 2020 checked, 0 failures, with 47 exact transitions across this branch (`.mirror-cache/release-il-38de797f2e35/release-il.json`, base `921446e86`); main moved to `d8f6755b9` during validation, so rebase and rerun before landing.
 - Batch 54 (`WorksheetControlDebugger.WorksheetControlUI`): `OnPageLayoutPropertyChanged` now formats page dimensions, margins, grid size, and line counts with the Mathcad call sequence. Release IL PASS, 2021 checked, 0 failures, with 48 exact transitions across this branch (`.mirror-cache/release-il-306b066e047b/release-il.json`, base `d8f6755b9`); main has since advanced to `b61df4896`, so final landing still requires a rebase and gate.
 - Batch 55 (`WorksheetControlDebugger.WorksheetControlUI`): `OnScrollViewerChanged` now matches the null fallback branch order, property update order, and translated offsets. Its latest comparison marks the method exact, but the overall gate has three stale-base `WorksheetViewModel` failures (`InitializeXYZPlotControl`, `HandleBookmarkTag`, `HandleRemoveBookmarkTag`); rebase and rerun before landing (`.mirror-cache/release-il-a330cc220a67/release-il.json`, base `e6c2a41ae`, 2025 checked, 49 exact transitions).
+- Batch 56 (combined WorksheetControl candidate): rebased Release IL PASS, 2025 checked, 0 failures, 49 exact transitions across the branch (`.mirror-cache/release-il-72ef1b4e8a88/release-il.json`, base `ad827f030`). Main moved to `7e7d52f63` after validation, so rebase and rerun before landing.
