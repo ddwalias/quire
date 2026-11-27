@@ -252,23 +252,47 @@ public abstract partial class PlotGraphAxis
 
     protected virtual bool ShouldArrangeConvertedEquationsHorizontally() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private void BindLimitLabelVisibility(global::System.Windows.Controls.Label limitLabel, global::Quire.Controls.EquationControl control) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void BindLimitLabelVisibility(global::System.Windows.Controls.Label limitLabel, global::Quire.Controls.EquationControl control)
+    {
+        limitLabel.SetBinding(global::System.Windows.UIElement.VisibilityProperty, GetVisibilityBinding(control, LimitLabelVisibilityMultiConverter.Instance));
+    }
 
     private global::System.Windows.Data.MultiBinding GetVisibilityBinding(global::Quire.Controls.EquationControl control, global::Quire.Controls.Plots.LimitLabelVisibilityMultiConverter limitLabelVisibilityMultiConverter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     private static void LimitExpressionEqnPreviewGotKeyboardFocus(object sender, global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private void FirstLabelMouseLeftButtonDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void FirstLabelMouseLeftButtonDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e)
+    {
+        ActivateStartLimitEditor(true);
+        e.Handled = true;
+    }
 
-    public void ActivateStartLimitEditor(bool suppressBringIntoView = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void ActivateStartLimitEditor(bool suppressBringIntoView = false)
+    {
+        ActivateAxisExpression(StartExpressionEqn, suppressBringIntoView);
+    }
 
-    private void SecondLabelMouseLeftButtonDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void SecondLabelMouseLeftButtonDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e)
+    {
+        ActivateSecondTickLimitEditor(true);
+        e.Handled = true;
+    }
 
-    public void ActivateSecondTickLimitEditor(bool suppressBringIntoView = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void ActivateSecondTickLimitEditor(bool suppressBringIntoView = false)
+    {
+        ActivateAxisExpression(SecondTickExpressionEqn, suppressBringIntoView);
+    }
 
-    private void LastLabelMouseLeftButtonDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void LastLabelMouseLeftButtonDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e)
+    {
+        ActivateEndLimitEditor(true);
+        e.Handled = true;
+    }
 
-    public void ActivateEndLimitEditor(bool suppressBringIntoView = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void ActivateEndLimitEditor(bool suppressBringIntoView = false)
+    {
+        ActivateAxisExpression(EndExpressionEqn, suppressBringIntoView);
+    }
 
     private void ActivateAxisExpression(global::Quire.Controls.EquationControl eq, bool suppressBringIntoView) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -358,23 +382,79 @@ public abstract partial class PlotGraphAxis
         }
     }
 
-    public void AddTraceToEquation(global::Quire.Controls.Plots.Presenter.IPlotTrace trace, global::Quire.Controls.Plots.Presenter.IPlotEquation equation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void AddTraceToEquation(global::Quire.Controls.Plots.Presenter.IPlotTrace trace, global::Quire.Controls.Plots.Presenter.IPlotEquation equation)
+    {
+        if (!HasEquationList())
+        {
+            return;
+        }
+        EquationList.AddTraceToEquation(trace, equation);
+    }
 
-    public void AddTraceToEquation(global::Quire.Controls.Plots.Presenter.IPlotTrace trace, global::Quire.Controls.Plots.Presenter.IPlotEquation equation, int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void AddTraceToEquation(global::Quire.Controls.Plots.Presenter.IPlotTrace trace, global::Quire.Controls.Plots.Presenter.IPlotEquation equation, int index)
+    {
+        if (!HasEquationList())
+        {
+            return;
+        }
+        EquationList.AddTraceToEquation(trace, equation, index);
+    }
 
-    public void RemoveTraceFromEquation(int traceIndex, global::Quire.Controls.Plots.Presenter.IPlotEquation equation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void RemoveTraceFromEquation(int traceIndex, global::Quire.Controls.Plots.Presenter.IPlotEquation equation)
+    {
+        if (!HasEquationList())
+        {
+            return;
+        }
+        EquationList.RemoveTraceFromEquation(traceIndex, equation);
+    }
 
     public virtual global::System.Collections.Generic.IEnumerable<global::Quire.Controls.EquationControl> CollectElementsForTraversal() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public void AddEquation(string expression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void AddEquation(string expression)
+    {
+        if (!HasEquationList())
+        {
+            return;
+        }
+        EquationList.AddEquation(expression);
+    }
 
-    public global::Quire.Controls.Plots.Presenter.IEquationListItem AddEquation(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::Quire.Controls.Plots.Presenter.IEquationListItem AddEquation(int index)
+    {
+        if (!HasEquationList())
+        {
+            return null;
+        }
+        return EquationList.AddEquation(index);
+    }
 
-    public void AddEquation(int index, global::Quire.Controls.Plots.Presenter.IEquationListItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void AddEquation(int index, global::Quire.Controls.Plots.Presenter.IEquationListItem item)
+    {
+        if (!HasEquationList())
+        {
+            return;
+        }
+        EquationList.AddItemToLegend(index, item, item != null);
+    }
 
-    public global::Quire.Controls.Plots.Presenter.IEquationListItem RemoveEquation(int index, int previousIndex, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::Quire.Controls.Plots.Presenter.IEquationListItem RemoveEquation(int index, int previousIndex, global::Quire.Direction direction)
+    {
+        if (!HasEquationList())
+        {
+            return null;
+        }
+        return EquationList.RemoveItemAt(index, previousIndex, direction);
+    }
 
-    public global::Quire.Controls.Plots.Presenter.IPlotEquation AddEquation(global::System.Xml.XmlNode xmlNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::Quire.Controls.Plots.Presenter.IPlotEquation AddEquation(global::System.Xml.XmlNode xmlNode)
+    {
+        if (!HasEquationList())
+        {
+            return null;
+        }
+        return EquationList.AddEquation(xmlNode);
+    }
 
     public global::Quire.Controls.Plots.Presenter.IPlotEquation this[int index] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 
@@ -626,7 +706,13 @@ public abstract partial class PlotGraphAxis
         }
     }
 
-    public bool IsDisplayNumberFormatLocal { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public bool IsDisplayNumberFormatLocal
+    {
+        get
+        {
+            return global::Quire.Wpf.WpfUtils.HasLocalValue(this, DisplayNumberFormatProperty);
+        }
+    }
 
     private void RegisterHandleTickmarksFormattingChanged(global::Quire.Controls.Core.NumberFormat oldFormat, global::Quire.Controls.Core.NumberFormat newFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
