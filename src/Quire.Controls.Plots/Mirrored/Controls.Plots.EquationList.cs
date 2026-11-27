@@ -152,7 +152,7 @@ public partial class EquationList
     }
 
     public int EquationCount => EquationListGrid.Children.Count;
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotEquation> Equations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotEquation> Equations => from EquationListItem item in EquationListGrid.Children select item.Equation;
 
     internal int Columns
     {
@@ -233,8 +233,57 @@ public partial class EquationList
     internal double MaxListHeight { get; set; }
     public int SelectedItemIndex { get; private set; }
     public EquationListItem SelectedItem => EquationListGrid.Children[SelectedItemIndex] as EquationListItem;
-    internal global::Quire.Controls.Plots.Presenter.IEquationListItem AddItemToLegend(int index, global::Quire.Controls.Plots.Presenter.IEquationListItem equationListItem, bool focus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private global::Quire.Controls.Plots.Presenter.IPlotEquation GetNewEquation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal global::Quire.Controls.Plots.Presenter.IEquationListItem AddItemToLegend(int index, global::Quire.Controls.Plots.Presenter.IEquationListItem equationListItem, bool focus) {
+		if (equationListItem == null)
+		{
+			equationListItem = new EquationListItem
+			{
+				Equation = GetNewEquation()
+			};
+		}
+		if (focus)
+		{
+			((DispatcherObject)this).Dispatcher.BeginInvoke((DispatcherPriority)6, (Delegate)(Action)(() =>
+			{
+				equationListItem.Equation.DelegateFocus();
+			}));
+		}
+		RegisterToEvents(equationListItem);
+		EquationListGrid.Children.Insert(index, (UIElement)equationListItem);
+		SetMinMaxWidth();
+		ChangeSelectedItem((EquationListItem)equationListItem);
+		return equationListItem;
+	}
+    private global::Quire.Controls.Plots.Presenter.IPlotEquation GetNewEquation() {
+		IPlotEquation plotEquation2;
+		if (!EquationItemWOUnit)
+		{
+			IPlotEquation plotEquation = new PlotEquation
+			{
+				ViewModel = new PlotEquationViewModelBase()
+			};
+			plotEquation2 = plotEquation;
+		}
+		else
+		{
+			IPlotEquation plotEquation = new PlotEquationWOUnit();
+			plotEquation2 = plotEquation;
+		}
+		IPlotEquation plotEquation3 = plotEquation2;
+		if (InCustomInitialization)
+		{
+			plotEquation3.InCustomInitialization = InCustomInitialization;
+		}
+		if (DeserializeMathFormat != null)
+		{
+			plotEquation3.DeserializeMathFormat = DeserializeMathFormat;
+		}
+		if (DeserializeLabeledIdFormat != null)
+		{
+			plotEquation3.DeserializeLabeledIdFormat = DeserializeLabeledIdFormat;
+		}
+		return plotEquation3;
+	}
     public bool InCustomInitialization { get; set; }
     public bool EquationItemWOUnit { get; set; }
 
@@ -281,7 +330,19 @@ public partial class EquationList
         eq?.ShowOrHideScaling(IsKeyboardFocusWithin);
     }
 
-    private void OnIsKeyboardFocusWithinChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnIsKeyboardFocusWithinChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) {
+		EquationListItemsEnumerable.Each((EquationListItem item) =>
+		{
+			if (item.Equation is PlotEquation plotEquation)
+			{
+				plotEquation.ShowOrHideScaling(IsKeyboardFocusWithin);
+			}
+		});
+		if (IsKeyboardFocusWithin)
+		{
+			FireActiveEquationChanged(sender as IPlotEquation);
+		}
+	}
 
     private void FireActiveEquationChanged(IPlotEquation equationControl)
     {
@@ -408,8 +469,58 @@ public partial class EquationList
     {
         SetMinMaxWidth(MaxListWidth, 0.0);
     }
-    public void ArrangeEquationsHorizontally() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void SetMinMaxWidth(double previousWidth, double newWidth) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void ArrangeEquationsHorizontally() {
+		if (MaxListWidth == 0.0)
+		{
+			SetMinMaxWidth();
+		}
+		double totalWidth = 0.0;
+		if (Visibility == Visibility.Collapsed)
+		{
+			foreach (EquationListItem item in EquationListGrid.Children.OfType<EquationListItem>())
+			{
+				FrameworkElement frameworkElement = (FrameworkElement)item.Equation;
+				ForceMeasure(frameworkElement);
+				double widthBeforeAdding = totalWidth;
+				Size desiredSize = frameworkElement.DesiredSize;
+				totalWidth = widthBeforeAdding + desiredSize.Width;
+			}
+			totalWidth += (double)(EquationCount * ItemMargin);
+		}
+		else
+		{
+			totalWidth = EquationListGrid.Children.OfType<EquationListItem>().Sum((EquationListItem item) => item.Equation.ActualWidth) + (double)(EquationCount * ItemMargin);
+		}
+		Width = totalWidth;
+	}
+    private void SetMinMaxWidth(double previousWidth, double newWidth) {
+		if (EquationListGrid.Children.OfType<EquationListItem>().IsNullOrEmpty())
+		{
+			return;
+		}
+		if ((previousWidth == MaxListWidth && newWidth < MaxListWidth) || MaxListWidth == 0.0)
+		{
+			MaxListWidth = EquationListGrid.Children.OfType<EquationListItem>().Max((EquationListItem item) => GetEffectiveEquationWidth(item.Equation));
+			MaxWidth = (double)EquationCount * (MaxListWidth + (double)ItemMargin);
+			EquationListGrid.MaxWidth = MaxWidth;
+			if (double.IsNaN(Width))
+			{
+				Width = (double)Columns * (MaxListWidth + (double)ItemMargin);
+			}
+			MinWidth = MaxListWidth + (double)ItemMargin;
+		}
+		if (newWidth > MaxListWidth)
+		{
+			MaxListWidth = newWidth;
+			if (double.IsNaN(Width))
+			{
+				Width = (double)Columns * (MaxListWidth + (double)ItemMargin);
+			}
+			MaxWidth = (double)EquationCount * (MaxListWidth + (double)ItemMargin);
+			EquationListGrid.MaxWidth = MaxWidth;
+			MinWidth = MaxListWidth + (double)ItemMargin;
+		}
+	}
 
     private double GetEffectiveEquationWidth(IPlotEquation equation)
     {
