@@ -321,12 +321,12 @@ public abstract partial class PlotControlBase
                 if (_targetAxes != null)
                 {
                     PlotGraphAxis[] targetAxes = _targetAxes;
-                    foreach (PlotGraphAxis obj2 in targetAxes)
+                    foreach (PlotGraphAxis targetAxis in targetAxes)
                     {
-                        obj2.NumberFormatChanged += PlotGraphAxisNumberFormatChanged;
-                        obj2.ShowTicksChanged += UpdateShowTicks;
-                        obj2.ShowNumbersChanged += UpdateShowNumbers;
-                        obj2.ShowGridLinesChanged += UpdateGridLines;
+                        targetAxis.NumberFormatChanged += PlotGraphAxisNumberFormatChanged;
+                        targetAxis.ShowTicksChanged += UpdateShowTicks;
+                        targetAxis.ShowNumbersChanged += UpdateShowNumbers;
+                        targetAxis.ShowGridLinesChanged += UpdateGridLines;
                     }
                 }
                 UpdateCurrentNumberFormat();
@@ -642,14 +642,14 @@ public abstract partial class PlotControlBase
         using (new CommandScope("Call undoable cmds for updating HasOriginPositioning of x and y axis"))
         {
             int index = rangeAxis.PositionTickMark;
-            int index2 = primaryResultAxis.PositionTickMark;
+            int primaryAxisPosition = primaryResultAxis.PositionTickMark;
             if (newValue)
             {
                 primaryResultAxis.FindClosestTickValueToZero(ref index);
-                rangeAxis.FindClosestTickValueToZero(ref index2);
+                rangeAxis.FindClosestTickValueToZero(ref primaryAxisPosition);
             }
             new AxisSetTickNumberCommand(rangeAxis, index, newValue).Execute();
-            new AxisSetTickNumberCommand(primaryResultAxis, index2, newValue).Execute();
+            new AxisSetTickNumberCommand(primaryResultAxis, primaryAxisPosition, newValue).Execute();
         }
     }
     private void HandleLostFocus(object sender, RoutedEventArgs e)
@@ -946,29 +946,29 @@ public abstract partial class PlotControlBase
             return -1;
         }
         int num = items.IndexOf(active);
-        int num2 = items.Count();
-        int num3 = -1;
-        int num4 = 1;
-        int num5;
+        int itemCount = items.Count();
+        int foundIndex = -1;
+        int attemptCount = 1;
+        int candidateIndex;
         do
         {
-            num5 = num + step * num4;
+            candidateIndex = num + step * attemptCount;
             if (isCyclic)
             {
-                num5 %= num2;
-                if (num5 < 0)
+                candidateIndex %= itemCount;
+                if (candidateIndex < 0)
                 {
-                    num5 += num2;
+                    candidateIndex += itemCount;
                 }
             }
-            if (num5 >= 0 && num5 < num2)
+            if (candidateIndex >= 0 && candidateIndex < itemCount)
             {
-                num3 = num5;
+                foundIndex = candidateIndex;
             }
-            num4++;
+            attemptCount++;
         }
-        while (num4 < num2 && num3 == -1 && num5 >= 0 && num5 < num2);
-        return num3;
+        while (attemptCount < itemCount && foundIndex == -1 && candidateIndex >= 0 && candidateIndex < itemCount);
+        return foundIndex;
     }
     protected virtual void OnTraversedFocusEvent(object sender, CustomRoutedEventArgs<FocusNavigationDirection> args)
     {

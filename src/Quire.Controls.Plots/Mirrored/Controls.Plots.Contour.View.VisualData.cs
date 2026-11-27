@@ -154,18 +154,18 @@ public partial class VisualData : DependencyObject, IOneTimePropertyOwner
             Borders border = borders;
             for (int i = 1; i < PointsData.Length; i++)
             {
-                Borders borders2 = ComputeBorderBelongingStatusForPoint(PointsData[i]);
+                Borders nextPointBorders = ComputeBorderBelongingStatusForPoint(PointsData[i]);
                 LineSegment value = new LineSegment
                 {
                     Point = TransformPoint(PointsData[i]),
-                    IsStroked = !AreOnSameBorder(border, borders2)
+                    IsStroked = !AreOnSameBorder(border, nextPointBorders)
                 };
                 pathSegmentCollection.Add(value);
-                border = borders2;
+                border = nextPointBorders;
             }
-            PathFigure value2 = new PathFigure(TransformPoint(PointsData[0]), pathSegmentCollection, !AreOnSameBorder(border, borders));
+            PathFigure pathFigure = new PathFigure(TransformPoint(PointsData[0]), pathSegmentCollection, !AreOnSameBorder(border, borders));
             PathFigureCollection pathFigureCollection = new PathFigureCollection(1);
-            pathFigureCollection.Add(value2);
+            pathFigureCollection.Add(pathFigure);
             GeometryData.Figures = pathFigureCollection;
         }
     }

@@ -499,33 +499,33 @@ internal partial class AxisModel
 
     public axisBaseType GetDataObject(IResultManager resultManager)
     {
-        xyDomainType xyDomainType2 = CreateXyDomainType(resultManager);
-        axisBaseType axisBaseType2;
+        xyDomainType domainData = CreateXyDomainType(resultManager);
+        axisBaseType axisData;
         switch (Type)
         {
             case AxesType.X:
-                axisBaseType2 = new xAxis
+                axisData = new xAxis
                 {
-                    xyDomain = xyDomainType2
+                    xyDomain = domainData
                 };
                 break;
             case AxesType.Y:
-                axisBaseType2 = new yAxis
+                axisData = new yAxis
                 {
-                    xyDomain = xyDomainType2
+                    xyDomain = domainData
                 };
                 break;
             case AxesType.Z:
-                axisBaseType2 = new zAxis
+                axisData = new zAxis
                 {
-                    zDomain = xyDomainType2
+                    zDomain = domainData
                 };
                 break;
             default:
                 DebugTools.DevAssert(false, null);
                 return new axisBaseType();
         }
-        axisBaseType2.axisGrid = new axisGridType
+        axisData.axisGrid = new axisGridType
         {
             gridFrequency = new axisGridTypeGridFrequency
             {
@@ -541,22 +541,22 @@ internal partial class AxisModel
             },
             gridLines = new axisGridTypeGridLines()
         };
-        axisBaseType2.rank = "1";
-        axisBaseType2.axisLabel = new plotTitleType();
-        axisBaseType2.axisLine = new axisBaseTypeAxisLine
+        axisData.rank = "1";
+        axisData.axisLabel = new plotTitleType();
+        axisData.axisLine = new axisBaseTypeAxisLine
         {
             legendWidthSpecified = false
         };
-        axisBaseType2.start = Start;
-        axisBaseType2.startSpecified = true;
-        axisBaseType2.end = End;
-        axisBaseType2.endSpecified = true;
+        axisData.start = Start;
+        axisData.startSpecified = true;
+        axisData.end = End;
+        axisData.endSpecified = true;
         if (IsDisplayNumberFormatLocal)
         {
             NumberFormatSerializer numberFormatSerializer = new NumberFormatSerializer(DisplayNumberFormat, null);
-            axisBaseType2.numberFormat = numberFormatSerializer.GetDataObject(resultManager);
+            axisData.numberFormat = numberFormatSerializer.GetDataObject(resultManager);
         }
-        return axisBaseType2;
+        return axisData;
     }
 
     private void ReadAxisDomainData(xyDomainType axisDomain, IResultManager resultManager)
@@ -572,9 +572,9 @@ internal partial class AxisModel
         switch (Type)
         {
             case AxesType.X:
-                if (axisData is xAxis xAxis2)
+                if (axisData is xAxis xAxisData)
                 {
-                    axisDomain = xAxis2.xyDomain;
+                    axisDomain = xAxisData.xyDomain;
                 }
                 else
                 {
@@ -582,9 +582,9 @@ internal partial class AxisModel
                 }
                 break;
             case AxesType.Y:
-                if (axisData is yAxis yAxis2)
+                if (axisData is yAxis yAxisData)
                 {
-                    axisDomain = yAxis2.xyDomain;
+                    axisDomain = yAxisData.xyDomain;
                 }
                 else
                 {
@@ -592,9 +592,9 @@ internal partial class AxisModel
                 }
                 break;
             case AxesType.Z:
-                if (axisData is zAxis zAxis2)
+                if (axisData is zAxis zAxisData)
                 {
-                    axisDomain = zAxis2.zDomain;
+                    axisDomain = zAxisData.zDomain;
                 }
                 else
                 {
@@ -654,40 +654,40 @@ internal partial class AxisModel
         XmlDocument xmlDocument = new XmlDocument();
         XmlElement xmlElement = xmlDocument.CreateElement(AxisXmlNodeName, wsNameSpace);
         xmlElement.SetAttribute("rank", "1");
-        XmlElement xmlElement2 = xmlDocument.CreateElement("axisLine", wsNameSpace);
-        xmlElement.AppendChild(xmlElement2);
+        XmlElement axisLineElement = xmlDocument.CreateElement("axisLine", wsNameSpace);
+        xmlElement.AppendChild(axisLineElement);
         if (AxesType.Z != Type)
         {
             xmlElement.SetAttribute("legend-position", ConvertLegendPositionIndexToLegendPositionEnum());
         }
-        xmlElement2.SetAttribute("position", Position.ToString().ToLower());
-        xmlElement2.SetAttribute("positionticmark", PositionTickMark.ToString());
-        xmlElement2.SetAttribute("legendWidth", LegendWidth.ToString(CultureInfo.InvariantCulture));
-        XmlElement xmlElement3 = xmlDocument.CreateElement("axisGrid", wsNameSpace);
-        xmlElement.AppendChild(xmlElement3);
-        XmlElement xmlElement4 = xmlDocument.CreateElement("gridFrequency", wsNameSpace);
-        xmlElement3.AppendChild(xmlElement4);
-        xmlElement4.AppendChild(xmlDocument.CreateTextNode(MajorTickMarks.Count.ToString()));
-        XmlElement xmlElement5 = xmlDocument.CreateElement("gridLabels", wsNameSpace);
-        xmlElement3.AppendChild(xmlElement5);
-        xmlElement5.SetAttribute("display", XmlConvert.ToString(ShowNumbers));
-        XmlElement xmlElement6 = xmlDocument.CreateElement("gridLines", wsNameSpace);
-        xmlElement3.AppendChild(xmlElement6);
-        xmlElement6.SetAttribute("display", XmlConvert.ToString(ShowGridLines));
-        xmlElement6.SetAttribute("color", GridLineColor.ToString());
-        XmlElement xmlElement7 = xmlDocument.CreateElement("tickMarks", wsNameSpace);
-        xmlElement3.AppendChild(xmlElement7);
-        xmlElement7.SetAttribute("display", XmlConvert.ToString(MajorTickMarks.Show));
+        axisLineElement.SetAttribute("position", Position.ToString().ToLower());
+        axisLineElement.SetAttribute("positionticmark", PositionTickMark.ToString());
+        axisLineElement.SetAttribute("legendWidth", LegendWidth.ToString(CultureInfo.InvariantCulture));
+        XmlElement axisGridElement = xmlDocument.CreateElement("axisGrid", wsNameSpace);
+        xmlElement.AppendChild(axisGridElement);
+        XmlElement gridFrequencyElement = xmlDocument.CreateElement("gridFrequency", wsNameSpace);
+        axisGridElement.AppendChild(gridFrequencyElement);
+        gridFrequencyElement.AppendChild(xmlDocument.CreateTextNode(MajorTickMarks.Count.ToString()));
+        XmlElement gridLabelsElement = xmlDocument.CreateElement("gridLabels", wsNameSpace);
+        axisGridElement.AppendChild(gridLabelsElement);
+        gridLabelsElement.SetAttribute("display", XmlConvert.ToString(ShowNumbers));
+        XmlElement gridLinesElement = xmlDocument.CreateElement("gridLines", wsNameSpace);
+        axisGridElement.AppendChild(gridLinesElement);
+        gridLinesElement.SetAttribute("display", XmlConvert.ToString(ShowGridLines));
+        gridLinesElement.SetAttribute("color", GridLineColor.ToString());
+        XmlElement tickMarksElement = xmlDocument.CreateElement("tickMarks", wsNameSpace);
+        axisGridElement.AppendChild(tickMarksElement);
+        tickMarksElement.SetAttribute("display", XmlConvert.ToString(MajorTickMarks.Show));
         if (AxisTitleModel != null)
         {
             XmlNode newChild = xmlDocument.ImportNode(AxisTitleModel.RegionXmlNode, deep: true);
             xmlElement.AppendChild(newChild);
         }
-        XmlElement xmlElement8 = xmlDocument.CreateElement("markers", wsNameSpace);
-        xmlElement.AppendChild(xmlElement8);
+        XmlElement markersElement = xmlDocument.CreateElement("markers", wsNameSpace);
+        xmlElement.AppendChild(markersElement);
         foreach (AxisMarker marker in Markers)
         {
-            using XmlNodeWriter xmlWriter = new XmlNodeWriter(xmlElement8);
+            using XmlNodeWriter xmlWriter = new XmlNodeWriter(markersElement);
             axisBaseTypeMarker.XmlSerializer.Serialize(xmlWriter, marker.GetDataObject(ResultManager.Instance));
         }
         if (IsDisplayNumberFormatLocal)
@@ -697,40 +697,40 @@ internal partial class AxisModel
             resultFormat.RootNodeFormatName = "numberFormat";
             resultFormat.WriteXml(writer);
         }
-        XmlElement xmlElement9 = xmlDocument.CreateElement(DomainXmlNodeName, wsNameSpace);
-        xmlElement.AppendChild(xmlElement9);
-        xmlElement9.SetAttribute("scale-type", Scaling.ToString().ToLower());
-        xmlElement9.SetAttribute("auto-scale", XmlConvert.ToString(value: true));
-        XmlElement xmlElement10 = xmlDocument.CreateElement("startValue", wsNameSpace);
-        xmlElement9.AppendChild(xmlElement10);
+        XmlElement domainElement = xmlDocument.CreateElement(DomainXmlNodeName, wsNameSpace);
+        xmlElement.AppendChild(domainElement);
+        domainElement.SetAttribute("scale-type", Scaling.ToString().ToLower());
+        domainElement.SetAttribute("auto-scale", XmlConvert.ToString(value: true));
+        XmlElement startValueElement = xmlDocument.CreateElement("startValue", wsNameSpace);
+        domainElement.AppendChild(startValueElement);
         if (StartExpression.IsDefaultValue)
         {
-            XmlElement newChild2 = XmlWorksheetData.CreateMLElement(xmlDocument, "placeholder", mathNameSpace);
-            xmlElement10.AppendChild(newChild2);
+            XmlElement startPlaceholder = XmlWorksheetData.CreateMLElement(xmlDocument, "placeholder", mathNameSpace);
+            startValueElement.AppendChild(startPlaceholder);
         }
         else
         {
-            xmlElement10.AppendChild(xmlDocument.ImportNode(StartExpression.RegionXmlNode, deep: true));
-            ResultManager.Instance.CreateResultRef(xmlElement10, StartExpression);
+            startValueElement.AppendChild(xmlDocument.ImportNode(StartExpression.RegionXmlNode, deep: true));
+            ResultManager.Instance.CreateResultRef(startValueElement, StartExpression);
         }
         if (!SecondTickExpression.IsDefaultValue)
         {
-            XmlElement xmlElement11 = xmlDocument.CreateElement("secondTickValue", wsNameSpace);
-            xmlElement9.AppendChild(xmlElement11);
-            xmlElement11.AppendChild(xmlDocument.ImportNode(SecondTickExpression.RegionXmlNode, deep: true));
-            ResultManager.Instance.CreateResultRef(xmlElement11, SecondTickExpression);
+            XmlElement secondTickElement = xmlDocument.CreateElement("secondTickValue", wsNameSpace);
+            domainElement.AppendChild(secondTickElement);
+            secondTickElement.AppendChild(xmlDocument.ImportNode(SecondTickExpression.RegionXmlNode, deep: true));
+            ResultManager.Instance.CreateResultRef(secondTickElement, SecondTickExpression);
         }
-        XmlElement xmlElement12 = xmlDocument.CreateElement("endValue", wsNameSpace);
-        xmlElement9.AppendChild(xmlElement12);
+        XmlElement endValueElement = xmlDocument.CreateElement("endValue", wsNameSpace);
+        domainElement.AppendChild(endValueElement);
         if (EndExpression.IsDefaultValue)
         {
-            XmlElement newChild3 = XmlWorksheetData.CreateMLElement(xmlDocument, "placeholder", mathNameSpace);
-            xmlElement12.AppendChild(newChild3);
+            XmlElement endPlaceholder = XmlWorksheetData.CreateMLElement(xmlDocument, "placeholder", mathNameSpace);
+            endValueElement.AppendChild(endPlaceholder);
         }
         else
         {
-            xmlElement12.AppendChild(xmlDocument.ImportNode(EndExpression.RegionXmlNode, deep: true));
-            ResultManager.Instance.CreateResultRef(xmlElement12, EndExpression);
+            endValueElement.AppendChild(xmlDocument.ImportNode(EndExpression.RegionXmlNode, deep: true));
+            ResultManager.Instance.CreateResultRef(endValueElement, EndExpression);
         }
         xmlElement.SetAttribute("start", Start.ToString(CultureInfo.InvariantCulture));
         xmlElement.SetAttribute("end", End.ToString(CultureInfo.InvariantCulture));
@@ -753,7 +753,7 @@ internal partial class AxisModel
             {
                 TickMarkLabelsUpdated += onLabelsUpdated;
                 double? num = (StartExpression.IsValueValid && !IsStringLabel()) ? new double?(Start) : min;
-                double? num2 = (EndExpression.IsValueValid && !IsStringLabel()) ? new double?(End) : max;
+                double? endValue = (EndExpression.IsValueValid && !IsStringLabel()) ? new double?(End) : max;
                 switch (Type)
                 {
                     case AxesType.Angular:
@@ -765,7 +765,7 @@ internal partial class AxisModel
                     case AxesType.X:
                     case AxesType.Y:
                     case AxesType.Z:
-                        flag = SetRangeToLinearAxis(num.HasValue ? num.Value : StartDefaultByScaling, num2.HasValue ? num2.Value : EndDefault);
+                        flag = SetRangeToLinearAxis(num.HasValue ? num.Value : StartDefaultByScaling, endValue.HasValue ? endValue.Value : EndDefault);
                         break;
                     default:
                         flag = false;
@@ -1231,9 +1231,9 @@ internal partial class AxisModel
             try
             {
                 object defaultGridLine = ColorConverter.ConvertFromString(PlotCommonConstants.GridlinesDefaultColorHex);
-                if (defaultGridLine is Color result2)
+                if (defaultGridLine is Color gridLineColor)
                 {
-                    return result2;
+                    return gridLineColor;
                 }
             }
             catch
@@ -1256,27 +1256,27 @@ internal partial class AxisModel
     {
         string[] labels = MajorTickMarks.Labels;
         int num = labels.Length;
-        bool flag = LimitHasErrors(StartExpression);
-        bool flag2 = LimitHasErrors(SecondTickExpression);
-        bool flag3 = LimitHasErrors(EndExpression);
-        if (flag | flag2 | flag3)
+        bool hasStartLimitError = LimitHasErrors(StartExpression);
+        bool hasSecondTickLimitError = LimitHasErrors(SecondTickExpression);
+        bool hasEndLimitError = LimitHasErrors(EndExpression);
+        if (hasStartLimitError | hasSecondTickLimitError | hasEndLimitError)
         {
             FilteredLabels = new string[num];
-            int num2 = num - 1;
-            FilteredLabels[0] = (flag ? ErrorIndicator : labels[0]);
-            if (num2 > 1)
+            int lastLabelIndex = num - 1;
+            FilteredLabels[0] = (hasStartLimitError ? ErrorIndicator : labels[0]);
+            if (lastLabelIndex > 1)
             {
-                FilteredLabels[1] = (flag2 ? ErrorIndicator : labels[1]);
+                FilteredLabels[1] = (hasSecondTickLimitError ? ErrorIndicator : labels[1]);
             }
             else
             {
-                DebugTools.DevAssert(num2 == 1, null);
+                DebugTools.DevAssert(lastLabelIndex == 1, null);
             }
-            for (int num3 = 2; num3 < num2; num3++)
+            for (int labelIndex = 2; labelIndex < lastLabelIndex; labelIndex++)
             {
-                FilteredLabels[num3] = string.Empty;
+                FilteredLabels[labelIndex] = string.Empty;
             }
-            FilteredLabels[num2] = (flag3 ? ErrorIndicator : labels[num2]);
+            FilteredLabels[lastLabelIndex] = (hasEndLimitError ? ErrorIndicator : labels[lastLabelIndex]);
         }
         else
         {
@@ -1301,9 +1301,9 @@ internal partial class AxisModel
             }
             else
             {
-                double num2 = Math.Max(Math.Abs(min.Value), Math.Abs(max.Value));
+                double maxRadius = Math.Max(Math.Abs(min.Value), Math.Abs(max.Value));
                 effectiveStart = Math.Max(0.0, min.Value);
-                effectiveEnd = EndExpression.IsValueValid ? Math.Max(Math.Abs(min.Value), EndExpression.CalculatedValue) : num2;
+                effectiveEnd = EndExpression.IsValueValid ? Math.Max(Math.Abs(min.Value), EndExpression.CalculatedValue) : maxRadius;
             }
         }
         else
@@ -1375,38 +1375,38 @@ internal partial class AxisModel
         {
             start = Math.Min(end / (double)DefaultTickMarks, 0.01);
         }
-        double num = Math.Floor(Math.Log10(start));
-        double num2 = Math.Ceiling(Math.Log10(end));
-        double num3 = num2 - num;
-        if (num3 < 0.5)
+        double startExponent = Math.Floor(Math.Log10(start));
+        double endExponent = Math.Ceiling(Math.Log10(end));
+        double exponentRange = endExponent - startExponent;
+        if (exponentRange < 0.5)
         {
-            num3 = 1.0;
-            num = num2 - num3;
+            exponentRange = 1.0;
+            startExponent = endExponent - exponentRange;
         }
-        int num4;
+        int tickExponentStep;
         int count;
         try
         {
-            num4 = Convert.ToInt32(Math.Ceiling(num3 / (double)(DefaultTickMarks - 1)));
-            count = Convert.ToInt32(num3 / (double)num4 + 1.0);
+            tickExponentStep = Convert.ToInt32(Math.Ceiling(exponentRange / (double)(DefaultTickMarks - 1)));
+            count = Convert.ToInt32(exponentRange / (double)tickExponentStep + 1.0);
         }
         catch
         {
             return false;
         }
-        Start = Math.Pow(10.0, num);
-        End = Math.Pow(10.0, num2);
+        Start = Math.Pow(10.0, startExponent);
+        End = Math.Pow(10.0, endExponent);
         MajorTickMarks.Count = count;
         MajorTickMarks.Values = new double[MajorTickMarks.Count];
         MinorTickMarks.Count = (MajorTickMarks.Count - 1) * 8;
         MinorTickMarks.Values = new double[MinorTickMarks.Count];
         for (int i = 0; i < MajorTickMarks.Count - 1; i++)
         {
-            double num5 = Math.Pow(10.0, num + (double)(num4 * i));
-            MajorTickMarks.Values[i] = num5;
+            double tickValue = Math.Pow(10.0, startExponent + (double)(tickExponentStep * i));
+            MajorTickMarks.Values[i] = tickValue;
             for (int j = 0; j < 8; j++)
             {
-                MinorTickMarks.Values[i * 8 + j] = num5 * (double)(j + 2);
+                MinorTickMarks.Values[i * 8 + j] = tickValue * (double)(j + 2);
             }
         }
         MajorTickMarks.Values[MajorTickMarks.Count - 1] = End;

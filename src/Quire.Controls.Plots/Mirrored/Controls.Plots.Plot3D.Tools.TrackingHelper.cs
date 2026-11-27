@@ -134,19 +134,19 @@ internal partial class TrackingHelper : ITrackingHelper
     public ITrackingHelper SetTrackingLine2D(Point from, Point to, int colorId)
     {
         Point3D? initialHit = null;
-        Point3D? initialHit2 = null;
+        Point3D? secondaryHit = null;
         PerformHitTest(from, ref initialHit);
-        PerformHitTest(to, ref initialHit2);
-        return (initialHit.HasValue && initialHit2.HasValue) ? SetTrackingLine(initialHit.Value, initialHit2.Value, colorId) : this;
+        PerformHitTest(to, ref secondaryHit);
+        return (initialHit.HasValue && secondaryHit.HasValue) ? SetTrackingLine(initialHit.Value, secondaryHit.Value, colorId) : this;
     }
 
     public ITrackingHelper AddTrackingLine2D(Point from, Point to, int colorId)
     {
         Point3D? initialHit = null;
-        Point3D? initialHit2 = null;
+        Point3D? secondaryHit = null;
         PerformHitTest(from, ref initialHit);
-        PerformHitTest(to, ref initialHit2);
-        return (initialHit.HasValue && initialHit2.HasValue) ? AddTrackingLine(initialHit.Value, initialHit2.Value, colorId) : this;
+        PerformHitTest(to, ref secondaryHit);
+        return (initialHit.HasValue && secondaryHit.HasValue) ? AddTrackingLine(initialHit.Value, secondaryHit.Value, colorId) : this;
     }
 
     public void PerformHitTest(Point position, ref Point3D? initialHit)
@@ -176,13 +176,13 @@ internal partial class TrackingHelper : ITrackingHelper
     private HitTestResultBehavior HitTestResultCallback(HitTestResult result, out Point3D? current)
     {
         current = null;
-        HitTestResultBehavior result2 = HitTestResultBehavior.Continue;
+        HitTestResultBehavior hitTestBehavior = HitTestResultBehavior.Continue;
         if (result is RayHitTestResult rayHitTestResult && rayHitTestResult.VisualHit == _hitTestTarget)
         {
-            result2 = HitTestResultBehavior.Stop;
+            hitTestBehavior = HitTestResultBehavior.Stop;
             current = rayHitTestResult.PointHit;
         }
-        return result2;
+        return hitTestBehavior;
     }
 
     private void UpdateHitTestTarget(object sender, EventArgs e)

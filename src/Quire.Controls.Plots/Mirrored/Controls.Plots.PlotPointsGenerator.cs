@@ -14,13 +14,13 @@ internal partial class PlotPointsGenerator
 
     public PlotPointsGenerator(RealFunction f, double xMin, double xMax, double nPoints)
     {
-        double num = (xMax - xMin) / nPoints;
+        double stepSize = (xMax - xMin) / nPoints;
         points.Clear();
-        for (double num2 = xMin; num2 <= xMax; num2 += num)
+        for (double x = xMin; x <= xMax; x += stepSize)
         {
-            double num3 = f(num2);
-            points.Add(new Point(num2, num3));
-            if (num == 0.0)
+            double y = f(x);
+            points.Add(new Point(x, y));
+            if (stepSize == 0.0)
             {
                 break;
             }

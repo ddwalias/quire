@@ -407,13 +407,13 @@ internal partial class PlotTraceModel3D
     private static Transform3D TransformForVisual(Rect3D bounds)
     {
         TranslateTransform3D value = new TranslateTransform3D(-Tools3D.BoxCenter(bounds));
-        ScaleTransform3D value2 = new ScaleTransform3D(Tools3D.InverseVector((Vector3D)bounds.Size));
+        ScaleTransform3D scaleTransform = new ScaleTransform3D(Tools3D.InverseVector((Vector3D)bounds.Size));
         Transform3DGroup transform3DGroup = new Transform3DGroup
         {
             Children =
             {
                 (Transform3D)value,
-                (Transform3D)value2,
+                (Transform3D)scaleTransform,
                 (Transform3D)PlotCommonConstants.Plot3DLogicalToVisualTransform
             }
         };

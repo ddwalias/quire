@@ -173,7 +173,7 @@ internal static partial class PlotDataObjectCreator
 
     internal static plotType CreatePlotDataObject(PlotControl plotControl, IPlotModel model)
     {
-        plotType plotType2 = new plotType
+        plotType plotData = new plotType
         {
             originpositioning = plotControl.HasOriginPositioning,
             backgroundtype = ConvertBackgroundType(plotControl.PlotBackgroundType),
@@ -182,26 +182,26 @@ internal static partial class PlotDataObjectCreator
         };
         plotBaseType item = ((plotControl.PlotType == PlotType.XY) ? CreateXyPlotType((XYPlotControl)plotControl, model) : CreatePolarPlotType(plotControl, model));
         FillPlotBaseType(item, plotControl);
-        plotType2.Item = item;
-        return plotType2;
+        plotData.Item = item;
+        return plotData;
     }
 
     private static plotBaseType CreatePolarPlotType(IPlotView plotControl, IPlotModel model)
     {
-        polarPlotType polarPlotType2 = new polarPlotType();
-        polarPlotTypeAxes polarPlotTypeAxes2 = new polarPlotTypeAxes();
-        polarPlotTypeAxesAngularAxis polarPlotTypeAxesAngularAxis2 = new polarPlotTypeAxesAngularAxis();
-        FillAxisBaseType(polarPlotTypeAxesAngularAxis2, plotControl.RangeAxis, null, model.rangeAxis);
-        polarPlotTypeAxesAngularAxis2.angularDomain = CreateXyDomainType(plotControl.RangeAxis);
-        polarPlotTypeAxesAngularAxis2.legendposition = GetXLegendPosition(plotControl);
-        polarPlotTypeAxes2.angularAxis = polarPlotTypeAxesAngularAxis2;
-        polarPlotTypeAxesRadialAxis polarPlotTypeAxesRadialAxis2 = new polarPlotTypeAxesRadialAxis();
-        FillAxisBaseType(polarPlotTypeAxesRadialAxis2, plotControl.PrimaryResultAxis, null, model.PrimaryResultAxis);
-        polarPlotTypeAxesRadialAxis2.radialDomain = CreateXyDomainType(plotControl.PrimaryResultAxis);
-        polarPlotTypeAxesRadialAxis2.legendposition = GetYLegendPosition(plotControl);
-        polarPlotTypeAxes2.radialAxis = polarPlotTypeAxesRadialAxis2;
-        polarPlotType2.axes = polarPlotTypeAxes2;
-        return polarPlotType2;
+        polarPlotType polarPlotData = new polarPlotType();
+        polarPlotTypeAxes polarAxesData = new polarPlotTypeAxes();
+        polarPlotTypeAxesAngularAxis angularAxisData = new polarPlotTypeAxesAngularAxis();
+        FillAxisBaseType(angularAxisData, plotControl.RangeAxis, null, model.rangeAxis);
+        angularAxisData.angularDomain = CreateXyDomainType(plotControl.RangeAxis);
+        angularAxisData.legendposition = GetXLegendPosition(plotControl);
+        polarAxesData.angularAxis = angularAxisData;
+        polarPlotTypeAxesRadialAxis radialAxisData = new polarPlotTypeAxesRadialAxis();
+        FillAxisBaseType(radialAxisData, plotControl.PrimaryResultAxis, null, model.PrimaryResultAxis);
+        radialAxisData.radialDomain = CreateXyDomainType(plotControl.PrimaryResultAxis);
+        radialAxisData.legendposition = GetYLegendPosition(plotControl);
+        polarAxesData.radialAxis = radialAxisData;
+        polarPlotData.axes = polarAxesData;
+        return polarPlotData;
     }
 
     private static string GetXLegendPosition(IPlotView plotControl)
@@ -221,13 +221,13 @@ internal static partial class PlotDataObjectCreator
 
     private static plotBaseType CreateXyPlotType(XYPlotControl plotControl, IPlotModel model)
     {
-        xyPlotType xyPlotType2 = new xyPlotType();
-        xyPlotTypeAxes xyPlotTypeAxes2 = new xyPlotTypeAxes();
-        xAxis xAxis2 = new xAxis();
-        FillAxisBaseType(xAxis2, plotControl.RangeAxis, plotControl.VerticalMarkersForSerialization, model.rangeAxis);
-        xAxis2.xyDomain = CreateXyDomainType(plotControl.RangeAxis);
-        xAxis2.legendposition = GetXLegendPosition(plotControl);
-        xyPlotTypeAxes2.xAxis = xAxis2;
+        xyPlotType xyPlotData = new xyPlotType();
+        xyPlotTypeAxes xyAxesData = new xyPlotTypeAxes();
+        xAxis xAxisData = new xAxis();
+        FillAxisBaseType(xAxisData, plotControl.RangeAxis, plotControl.VerticalMarkersForSerialization, model.rangeAxis);
+        xAxisData.xyDomain = CreateXyDomainType(plotControl.RangeAxis);
+        xAxisData.legendposition = GetXLegendPosition(plotControl);
+        xyAxesData.xAxis = xAxisData;
         yAxis[] array = new yAxis[1]
         {
             new yAxis()
@@ -235,65 +235,65 @@ internal static partial class PlotDataObjectCreator
         FillAxisBaseType(array[0], plotControl.PrimaryResultAxis, plotControl.HorizontalMarkersForSerialization, model.PrimaryResultAxis);
         array[0].xyDomain = CreateXyDomainType(plotControl.PrimaryResultAxis);
         array[0].legendposition = GetYLegendPosition(plotControl);
-        xyPlotTypeAxes2.yAxis = array;
-        xyPlotType2.axes = xyPlotTypeAxes2;
-        return xyPlotType2;
+        xyAxesData.yAxis = array;
+        xyPlotData.axes = xyAxesData;
+        return xyPlotData;
     }
 
     private static xyDomainType CreateXyDomainType(IPlotAxisView axis)
     {
-        xyDomainType xyDomainType2 = new xyDomainType();
+        xyDomainType domainData = new xyDomainType();
         if (axis.StartLimitEditor.IsDefaultValue)
         {
-            xyDomainType2.startValue = CreateValueType(XmlWorksheetData.CreateMLElement(new XmlDocument(), "placeholder", "http://schemas.mathsoft.com/math50"));
+            domainData.startValue = CreateValueType(XmlWorksheetData.CreateMLElement(new XmlDocument(), "placeholder", "http://schemas.mathsoft.com/math50"));
         }
         else
         {
-            xyDomainType2.startValue = CreateValueType(axis.StartExpressionEqn.GetRegionXmlNode().FirstChild);
+            domainData.startValue = CreateValueType(axis.StartExpressionEqn.GetRegionXmlNode().FirstChild);
         }
         if (!axis.SecondTickEditor.IsDefaultValue)
         {
-            xyDomainType2.secondTickValue = CreateValueType(axis.SecondTickExpressionEqn.GetRegionXmlNode().FirstChild);
+            domainData.secondTickValue = CreateValueType(axis.SecondTickExpressionEqn.GetRegionXmlNode().FirstChild);
         }
         if (axis.EndLimitEditor.IsDefaultValue)
         {
-            xyDomainType2.endValue = CreateValueType(XmlWorksheetData.CreateMLElement(new XmlDocument(), "placeholder", "http://schemas.mathsoft.com/math50"));
+            domainData.endValue = CreateValueType(XmlWorksheetData.CreateMLElement(new XmlDocument(), "placeholder", "http://schemas.mathsoft.com/math50"));
         }
         else
         {
-            xyDomainType2.endValue = CreateValueType(axis.EndExpressionEqn.GetRegionXmlNode().FirstChild);
+            domainData.endValue = CreateValueType(axis.EndExpressionEqn.GetRegionXmlNode().FirstChild);
         }
-        xyDomainType2.scaletype = ConvertScaling(axis.Scaling);
-        xyDomainType2.autoscale = true;
-        return xyDomainType2;
+        domainData.scaletype = ConvertScaling(axis.Scaling);
+        domainData.autoscale = true;
+        return domainData;
     }
 
     private static valueType CreateValueType(XmlNode regionXmlNode)
     {
         MathTransformer mathTransformer = new MathTransformer(regionXmlNode, XmlWorksheetData.McdxNameSpaceManager, null, null);
-        valueType valueType2 = new valueType();
-        valueType2.InnerXml = new XmlNode[1] { mathTransformer.Math50Xml };
-        valueType2.EquationSExpression = new string[1] { mathTransformer.SExpression };
-        return valueType2;
+        valueType valueData = new valueType();
+        valueData.InnerXml = new XmlNode[1] { mathTransformer.Math50Xml };
+        valueData.EquationSExpression = new string[1] { mathTransformer.SExpression };
+        return valueData;
     }
 
     private static void FillAxisBaseType(axisBaseType axisBaseType, IPlotAxisView axis, IEnumerable<AxisMarker> markers, IAxisModel axisModel)
     {
-        axisGridType axisGridType2 = new axisGridType();
-        axisGridType2.gridFrequency = new axisGridTypeGridFrequency
+        axisGridType axisGridData = new axisGridType();
+        axisGridData.gridFrequency = new axisGridTypeGridFrequency
         {
             Value = axis.TickMarks.ToString(CultureInfo.InvariantCulture)
         };
-        axisGridType2.gridLabels = new axisGridTypeGridLabels
+        axisGridData.gridLabels = new axisGridTypeGridLabels
         {
             display = axis.ShowNumbers
         };
-        axisGridType2.gridLines = new axisGridTypeGridLines();
-        axisGridType2.tickMarks = new axisGridTypeTickMarks
+        axisGridData.gridLines = new axisGridTypeGridLines();
+        axisGridData.tickMarks = new axisGridTypeTickMarks
         {
             display = axis.ShowTicks
         };
-        axisBaseType.axisGrid = axisGridType2;
+        axisBaseType.axisGrid = axisGridData;
         axisBaseType.axisLabel = new plotTitleType();
         axisBaseType.axisLine = new axisBaseTypeAxisLine
         {
@@ -361,15 +361,15 @@ internal static partial class PlotDataObjectCreator
 
     private static trace2DType CreateTrace(IPlotTrace plotTrace)
     {
-        trace2DType trace2DType2 = new trace2DType();
+        trace2DType traceData = new trace2DType();
         if (plotTrace.IsNumOfPointsMutable)
         {
-            trace2DType2.numofpoints = plotTrace.NumberOfPoints.ToString(CultureInfo.InvariantCulture);
+            traceData.numofpoints = plotTrace.NumberOfPoints.ToString(CultureInfo.InvariantCulture);
         }
-        trace2DType2.resultRefSpecified = false;
-        trace2DType2.traceLabel = plotTrace.Label;
-        trace2DType2.traceStyle = CreateTraceStyle(plotTrace);
-        return trace2DType2;
+        traceData.resultRefSpecified = false;
+        traceData.traceLabel = plotTrace.Label;
+        traceData.traceStyle = CreateTraceStyle(plotTrace);
+        return traceData;
     }
 
     private static traceStyleType CreateTraceStyle(IPlotTrace plotTrace)

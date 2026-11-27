@@ -28,8 +28,8 @@ internal partial class LimitLabelVisibilityMultiConverter
     {
         double num = (double)values[0];
         bool flag = (bool)values[1];
-        bool flag2 = (bool)values[2];
-        return (1.0 != num && !flag) & flag2;
+        bool canShowLabel = (bool)values[2];
+        return (1.0 != num && !flag) & canShowLabel;
     }
 
     protected LimitLabelVisibilityMultiConverter()

@@ -78,12 +78,12 @@ public partial class EquationListItem : UserControl, IEquationListItem, ICompone
             Source = trace
         };
         BindingOperations.SetBinding(plotTrace, PlotTrace.RenderColorProperty, binding);
-        Binding binding2 = new Binding
+        Binding symbolBinding = new Binding
         {
             Path = new PropertyPath(PlotTrace.SymbolProperty),
             Source = trace
         };
-        BindingOperations.SetBinding(plotTrace, PlotTrace.SymbolProperty, binding2);
+        BindingOperations.SetBinding(plotTrace, PlotTrace.SymbolProperty, symbolBinding);
         MultiBinding multiBinding = new MultiBinding
         {
             Converter = TraceLineWeightConverter.Instance
@@ -99,36 +99,36 @@ public partial class EquationListItem : UserControl, IEquationListItem, ICompone
             Source = trace
         });
         BindingOperations.SetBinding(plotTrace, PlotTrace.LineWeightProperty, multiBinding);
-        Binding binding3 = new Binding
+        Binding lineStyleBinding = new Binding
         {
             Path = new PropertyPath(PlotTrace.LineStyleProperty),
             Source = trace
         };
-        BindingOperations.SetBinding(plotTrace, PlotTrace.LineStyleProperty, binding3);
-        Binding binding4 = new Binding
+        BindingOperations.SetBinding(plotTrace, PlotTrace.LineStyleProperty, lineStyleBinding);
+        Binding symbolWeightBinding = new Binding
         {
             Path = new PropertyPath(PlotTrace.SymbolWeightProperty),
             Source = trace
         };
-        BindingOperations.SetBinding(plotTrace, PlotTrace.SymbolWeightProperty, binding4);
-        Binding binding5 = new Binding
+        BindingOperations.SetBinding(plotTrace, PlotTrace.SymbolWeightProperty, symbolWeightBinding);
+        Binding symbolFrequencyBinding = new Binding
         {
             Path = new PropertyPath(PlotTrace.SymbolFrequencyProperty),
             Source = trace
         };
-        BindingOperations.SetBinding(plotTrace, PlotTrace.SymbolFrequencyProperty, binding5);
-        Binding binding6 = new Binding
+        BindingOperations.SetBinding(plotTrace, PlotTrace.SymbolFrequencyProperty, symbolFrequencyBinding);
+        Binding selectionBinding = new Binding
         {
             Path = new PropertyPath(PlotTrace.IsSelectedProperty),
             Source = trace
         };
-        BindingOperations.SetBinding(plotTrace, PlotTrace.IsSelectedProperty, binding6);
-        Binding binding7 = new Binding
+        BindingOperations.SetBinding(plotTrace, PlotTrace.IsSelectedProperty, selectionBinding);
+        Binding visibilityBinding = new Binding
         {
             Path = new PropertyPath(UIElement.VisibilityProperty),
             Source = trace
         };
-        BindingOperations.SetBinding(plotTrace, UIElement.VisibilityProperty, binding7);
+        BindingOperations.SetBinding(plotTrace, UIElement.VisibilityProperty, visibilityBinding);
         TraceStackPanel.Children.Insert(index, plotTrace);
     }
 

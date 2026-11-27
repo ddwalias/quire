@@ -46,10 +46,10 @@ internal partial class PolarPlotStrategy
         {
             contentControl.Content = plot.PrimaryResultAxis;
         }
-        ContentControl contentControl2 = plot.Template.FindName("PART_PlotGraphAngularAxis", plot) as ContentControl;
-        if (contentControl2 != null)
+        ContentControl angularAxisControl = plot.Template.FindName("PART_PlotGraphAngularAxis", plot) as ContentControl;
+        if (angularAxisControl != null)
         {
-            contentControl2.Content = plot.RangeAxis;
+            angularAxisControl.Content = plot.RangeAxis;
         }
     }
 
@@ -64,29 +64,29 @@ internal partial class PolarPlotStrategy
     public void SetMinWidthHeight(PlotControl plot)
     {
         double minLegendPlaceholderWidth = plot.XLegendsPositions[0].GetMinLegendPlaceholderWidth();
-        double minLegendPlaceholderWidth2 = plot.XLegendsPositions[1].GetMinLegendPlaceholderWidth();
-        double num = new double[2]
+        double secondXLegendWidth = plot.XLegendsPositions[1].GetMinLegendPlaceholderWidth();
+        double plotTitleWidth = new double[2]
         {
             plot.PlotTitlePositions[0].GetMinLegendPlaceholderWidth(),
             plot.PlotTitlePositions[1].GetMinLegendPlaceholderWidth()
         }.Max();
-        double num2 = 0.0;
+        double legendPlaceholderWidth = 0.0;
         if (plot.PlotLegendPositions != null)
         {
-            num2 = plot.PlotLegendPositions[0].GetMinLegendPlaceholderWidth();
+            legendPlaceholderWidth = plot.PlotLegendPositions[0].GetMinLegendPlaceholderWidth();
         }
-        double value = new double[5] { minLegendPlaceholderWidth, minLegendPlaceholderWidth2, plot.GraphMinWidth, num, num2 }.Max();
-        double minLegendPlaceholderWidth3 = plot.YLegendsPositions[0].GetMinLegendPlaceholderWidth();
-        double minLegendPlaceholderWidth4 = plot.YLegendsPositions[1].GetMinLegendPlaceholderWidth();
-        plot.MinWidth = Safe(minLegendPlaceholderWidth3) + Safe(value) + Safe(minLegendPlaceholderWidth4);
-        double value2 = plot.PlotTitlePositions[0].GetMinLegendPlaceholderHeight() + plot.PlotTitlePositions[1].GetMinLegendPlaceholderHeight();
+        double value = new double[5] { minLegendPlaceholderWidth, secondXLegendWidth, plot.GraphMinWidth, plotTitleWidth, legendPlaceholderWidth }.Max();
+        double firstYLegendWidth = plot.YLegendsPositions[0].GetMinLegendPlaceholderWidth();
+        double secondYLegendWidth = plot.YLegendsPositions[1].GetMinLegendPlaceholderWidth();
+        plot.MinWidth = Safe(firstYLegendWidth) + Safe(value) + Safe(secondYLegendWidth);
+        double titlePlaceholderHeight = plot.PlotTitlePositions[0].GetMinLegendPlaceholderHeight() + plot.PlotTitlePositions[1].GetMinLegendPlaceholderHeight();
         double minLegendPlaceholderHeight = plot.YLegendsPositions[0].GetMinLegendPlaceholderHeight();
-        double minLegendPlaceholderHeight2 = plot.YLegendsPositions[1].GetMinLegendPlaceholderHeight();
-        double value3 = new double[3] { minLegendPlaceholderHeight, minLegendPlaceholderHeight2, plot.GraphMinHeight }.Max();
-        double minLegendPlaceholderHeight3 = plot.XLegendsPositions[0].GetMinLegendPlaceholderHeight();
-        double minLegendPlaceholderHeight4 = plot.XLegendsPositions[1].GetMinLegendPlaceholderHeight();
-        double value4 = ((plot.PlotLegendPositions != null) ? plot.PlotLegendPositions[0].GetMinLegendPlaceholderHeight() : 0.0);
-        plot.MinHeight = Safe(minLegendPlaceholderHeight3) + Safe(value3) + Safe(minLegendPlaceholderHeight4) + Safe(value2) + Safe(value4);
+        double xLegendHeight = plot.YLegendsPositions[1].GetMinLegendPlaceholderHeight();
+        double plotBodyHeight = new double[3] { minLegendPlaceholderHeight, xLegendHeight, plot.GraphMinHeight }.Max();
+        double firstYLegendHeight = plot.XLegendsPositions[0].GetMinLegendPlaceholderHeight();
+        double secondYLegendHeight = plot.XLegendsPositions[1].GetMinLegendPlaceholderHeight();
+        double legendPlaceholderHeight = ((plot.PlotLegendPositions != null) ? plot.PlotLegendPositions[0].GetMinLegendPlaceholderHeight() : 0.0);
+        plot.MinHeight = Safe(firstYLegendHeight) + Safe(plotBodyHeight) + Safe(secondYLegendHeight) + Safe(titlePlaceholderHeight) + Safe(legendPlaceholderHeight);
         static double Safe(double value)
         {
             if (!double.IsNaN(value))

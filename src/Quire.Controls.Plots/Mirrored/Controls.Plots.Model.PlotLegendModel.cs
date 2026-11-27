@@ -113,11 +113,11 @@ internal partial class PlotLegendModel
         {
             return null;
         }
-        plotBaseTypeLegend plotBaseTypeLegend2 = (plotBaseTypeLegend)data;
-        ShowPlotLegend = plotBaseTypeLegend2.display;
-        ShowBorder = plotBaseTypeLegend2.showborder;
-        Position = (Enum.TryParse<LegendPositions.PlotLegendPosition>(plotBaseTypeLegend2.position.ToString(), ignoreCase: true, out var result) ? result : LegendPositions.PlotLegendPosition.Below);
-        LegendWidth = plotBaseTypeLegend2.legendWidth;
+        plotBaseTypeLegend legendData = (plotBaseTypeLegend)data;
+        ShowPlotLegend = legendData.display;
+        ShowBorder = legendData.showborder;
+        Position = (Enum.TryParse<LegendPositions.PlotLegendPosition>(legendData.position.ToString(), ignoreCase: true, out var result) ? result : LegendPositions.PlotLegendPosition.Below);
+        LegendWidth = legendData.legendWidth;
         return null;
     }
 
@@ -208,20 +208,20 @@ internal partial class PlotLegendModel
             {
                 ShowPlotLegend = result;
             }
-            XmlAttribute xmlAttribute2 = value.Attributes?["show-border"];
-            if (xmlAttribute2 != null && bool.TryParse(xmlAttribute2.Value, out var result2))
+            XmlAttribute showBorderAttribute = value.Attributes?["show-border"];
+            if (showBorderAttribute != null && bool.TryParse(showBorderAttribute.Value, out var showBorder))
             {
-                ShowBorder = result2;
+                ShowBorder = showBorder;
             }
-            XmlAttribute xmlAttribute3 = value.Attributes?["position"];
-            if (xmlAttribute3 != null && TryConvertToPlotLegendPosition(xmlAttribute3.Value, out var position))
+            XmlAttribute positionAttribute = value.Attributes?["position"];
+            if (positionAttribute != null && TryConvertToPlotLegendPosition(positionAttribute.Value, out var position))
             {
                 Position = position;
             }
-            XmlAttribute xmlAttribute4 = value.Attributes?["legendWidth"];
-            if (xmlAttribute4 != null && double.TryParse(xmlAttribute4.Value, NumberStyles.Float, CultureInfo.InvariantCulture, out var result3))
+            XmlAttribute legendWidthAttribute = value.Attributes?["legendWidth"];
+            if (legendWidthAttribute != null && double.TryParse(legendWidthAttribute.Value, NumberStyles.Float, CultureInfo.InvariantCulture, out var legendWidth))
             {
-                LegendWidth = result3;
+                LegendWidth = legendWidth;
             }
         }
     }

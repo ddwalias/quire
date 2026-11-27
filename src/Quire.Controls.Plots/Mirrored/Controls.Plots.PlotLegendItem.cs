@@ -204,22 +204,22 @@ public partial class PlotLegendItem
             s11NProvider.Helper.AssignNextRegionId(LegendLabel);
             regionType.regionid = s11NProvider.Helper.GetRegionId(LegendLabel).ToString();
         }
-        if (LegendLabel.GetRegionPersistentData(s11NProvider) is textType textType2)
+        if (LegendLabel.GetRegionPersistentData(s11NProvider) is textType labelData)
         {
-            if (textType2.Any != null)
+            if (labelData.Any != null)
             {
-                XmlNode newChild = xmlDocument.ImportNode(textType2.Any, deep: true);
+                XmlNode newChild = xmlDocument.ImportNode(labelData.Any, deep: true);
                 xmlElement.AppendChild(newChild);
             }
-            if (textType2.istextblock)
+            if (labelData.istextblock)
             {
-                xmlElement.SetAttribute("is-text-block", XmlConvert.ToString(textType2.istextblock));
+                xmlElement.SetAttribute("is-text-block", XmlConvert.ToString(labelData.istextblock));
             }
-            if (!string.IsNullOrEmpty(textType2.itemidref))
+            if (!string.IsNullOrEmpty(labelData.itemidref))
             {
-                xmlElement.SetAttribute("item-idref", textType2.itemidref);
+                xmlElement.SetAttribute("item-idref", labelData.itemidref);
             }
-            textType2.PreSerialize();
+            labelData.PreSerialize();
         }
         return xmlElement;
     }
@@ -230,24 +230,24 @@ public partial class PlotLegendItem
         {
             return;
         }
-        textType textType2 = new textType();
+        textType labelData = new textType();
         if (legendLabelItemNode.FirstChild is XmlElement any)
         {
-            textType2.Any = any;
+            labelData.Any = any;
         }
         XmlAttribute xmlAttribute = legendLabelItemNode.Attributes?["is-text-block"];
         if (xmlAttribute != null)
         {
-            textType2.istextblock = XmlConvert.ToBoolean(xmlAttribute.Value);
+            labelData.istextblock = XmlConvert.ToBoolean(xmlAttribute.Value);
         }
-        XmlAttribute xmlAttribute2 = legendLabelItemNode.Attributes?["item-idref"];
-        if (xmlAttribute2 != null)
+        XmlAttribute itemIdAttribute = legendLabelItemNode.Attributes?["item-idref"];
+        if (itemIdAttribute != null)
         {
-            textType2.itemidref = xmlAttribute2.Value;
+            labelData.itemidref = itemIdAttribute.Value;
         }
-        if (textType2.Any != null)
+        if (labelData.Any != null)
         {
-            LegendLabel.SetRegionPersistentData(d11NProvider, textType2);
+            LegendLabel.SetRegionPersistentData(d11NProvider, labelData);
         }
     }
 

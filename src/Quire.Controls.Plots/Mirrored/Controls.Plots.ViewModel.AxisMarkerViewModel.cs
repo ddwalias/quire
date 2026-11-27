@@ -115,8 +115,8 @@ internal partial class AxisMarkerViewModel
         {
             if (IsUserSetValue != value)
             {
-                double value2 = Value;
-                ExecuteChangeValueAndIsUserSetFlagCommand("Set Is-User-Set-Value", value2, value);
+                double previousValue = Value;
+                ExecuteChangeValueAndIsUserSetFlagCommand("Set Is-User-Set-Value", previousValue, value);
             }
         }
     }

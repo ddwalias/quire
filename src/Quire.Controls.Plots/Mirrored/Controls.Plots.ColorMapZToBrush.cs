@@ -23,14 +23,14 @@ internal partial class ColorMapZToBrush
             double num = (double)values[2];
             if (interval.Contains(num))
             {
-                double num2 = (double)values[3];
-                if (2.0 == num2)
+                double intervalOffset = (double)values[3];
+                if (2.0 == intervalOffset)
                 {
                     result = null;
                 }
                 else
                 {
-                    result = colorMap.GetBrush(interval.Normalize(num) + num2 * double.Epsilon);
+                    result = colorMap.GetBrush(interval.Normalize(num) + intervalOffset * double.Epsilon);
                 }
             }
             else

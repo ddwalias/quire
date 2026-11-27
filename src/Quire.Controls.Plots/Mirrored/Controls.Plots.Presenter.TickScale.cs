@@ -47,8 +47,8 @@ public partial class TickScale
         if (Pattern != null)
         {
             int num = Pattern.Length;
-            int num2 = tickmark / num;
-            return StartGap + Pattern.Sum() * (double)num2 + Pattern.Take(tickmark % num).Sum();
+            int completePatternCount = tickmark / num;
+            return StartGap + Pattern.Sum() * (double)completePatternCount + Pattern.Take(tickmark % num).Sum();
         }
         return tickmark;
     }
@@ -75,21 +75,21 @@ public partial class TickScale
         {
             array[i] = GetValueMagnitude(Values[i]);
         }
-        double[] array2 = new double[Values.Length];
+        double[] correctedValues = new double[Values.Length];
         for (int j = 0; j < Values.Length; j++)
         {
             // The right-grouped && chains match the short-circuit layout of Mathcad's Release IL.
             bool flag = j != 0 && (Values[j - 1] < 0.0 && (double)(array[j - 1] - array[j]) > MagnitudeThreashold);
             if ((j != Values.Length - 1 && (Values[j + 1] > 0.0 && (double)(array[j + 1] - array[j]) > MagnitudeThreashold)) | flag)
             {
-                array2[j] = 0.0;
+                correctedValues[j] = 0.0;
             }
             else
             {
-                array2[j] = Values[j];
+                correctedValues[j] = Values[j];
             }
         }
-        return array2;
+        return correctedValues;
     }
 
     private static int GetValueMagnitude(double value)

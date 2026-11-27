@@ -42,16 +42,16 @@ public partial class PlotItemPlaceholder
         {
             uIElement.InvalidateMeasure();
         }
-        Size constraint2 = new Size(double.PositiveInfinity, double.PositiveInfinity);
-        Size expectedRenderSize = base.MeasureOverride(constraint2);
+        Size unboundedConstraint = new Size(double.PositiveInfinity, double.PositiveInfinity);
+        Size expectedRenderSize = base.MeasureOverride(unboundedConstraint);
         Thickness padding = Padding;
         AdjustPadding(expectedRenderSize);
-        double num = Padding.Left + Padding.Right - (padding.Left + padding.Right);
-        double num2 = Padding.Top + Padding.Bottom - (padding.Top + padding.Bottom);
-        _expectedRenderSize = new Size(expectedRenderSize.Width + num, expectedRenderSize.Height + num2);
-        if (num != 0.0 || num2 != 0.0)
+        double horizontalPaddingChange = Padding.Left + Padding.Right - (padding.Left + padding.Right);
+        double verticalPaddingChange = Padding.Top + Padding.Bottom - (padding.Top + padding.Bottom);
+        _expectedRenderSize = new Size(expectedRenderSize.Width + horizontalPaddingChange, expectedRenderSize.Height + verticalPaddingChange);
+        if (horizontalPaddingChange != 0.0 || verticalPaddingChange != 0.0)
         {
-            expectedRenderSize = base.MeasureOverride(constraint2);
+            expectedRenderSize = base.MeasureOverride(unboundedConstraint);
             DebugTools.DevAssert(_doubleComparer.Compare(expectedRenderSize.Width, _expectedRenderSize.Width) == 0 && _doubleComparer.Compare(expectedRenderSize.Height, _expectedRenderSize.Height) == 0, null);
         }
         return _expectedRenderSize;
@@ -80,35 +80,35 @@ public partial class PlotItemPlaceholder
         DebugTools.DevAssert(Visibility != Visibility.Collapsed, null);
         if (SnapToGrid)
         {
-            double num;
-            double num2;
+            double contentWidth;
+            double contentHeight;
             FrameworkElement frameworkElement = Content as FrameworkElement;
             if (HasContent && DebugTools.AssertNotNull(frameworkElement, null).Passed)
             {
                 bool flag = IsPlotTitleOrientationSwapped(frameworkElement);
-                num = (flag ? frameworkElement.DesiredSize.Height : frameworkElement.DesiredSize.Width);
-                num2 = (flag ? frameworkElement.DesiredSize.Width : frameworkElement.DesiredSize.Height);
+                contentWidth = (flag ? frameworkElement.DesiredSize.Height : frameworkElement.DesiredSize.Width);
+                contentHeight = (flag ? frameworkElement.DesiredSize.Width : frameworkElement.DesiredSize.Height);
                 if (frameworkElement.IsArrangeValid && frameworkElement.IsMeasureValid)
                 {
-                    double x = (flag ? (num - (frameworkElement.Margin.Top + frameworkElement.Margin.Bottom)) : (num - (frameworkElement.Margin.Left + frameworkElement.Margin.Right)));
-                    double x2 = (flag ? (num2 - (frameworkElement.Margin.Left + frameworkElement.Margin.Right)) : (num2 - (frameworkElement.Margin.Top + frameworkElement.Margin.Bottom)));
+                    double x = (flag ? (contentWidth - (frameworkElement.Margin.Top + frameworkElement.Margin.Bottom)) : (contentWidth - (frameworkElement.Margin.Left + frameworkElement.Margin.Right)));
+                    double adjustedLength = (flag ? (contentHeight - (frameworkElement.Margin.Left + frameworkElement.Margin.Right)) : (contentHeight - (frameworkElement.Margin.Top + frameworkElement.Margin.Bottom)));
                     DebugTools.DevAssert(_doubleComparer.Compare(x, frameworkElement.ActualWidth) == 0, null);
-                    DebugTools.DevAssert(_doubleComparer.Compare(x2, frameworkElement.ActualHeight) == 0, null);
+                    DebugTools.DevAssert(_doubleComparer.Compare(adjustedLength, frameworkElement.ActualHeight) == 0, null);
                 }
             }
             else
             {
-                num = expectedRenderSize.Width - (Padding.Left + Padding.Right);
-                num2 = expectedRenderSize.Height - (Padding.Top + Padding.Bottom);
+                contentWidth = expectedRenderSize.Width - (Padding.Left + Padding.Right);
+                contentHeight = expectedRenderSize.Height - (Padding.Top + Padding.Bottom);
             }
-            double contentDimension = num + Margin.Left + Margin.Right;
+            double contentDimension = contentWidth + Margin.Left + Margin.Right;
             double halfPaddingValue = GetHalfPaddingValue(contentDimension, GridCellSize.Width);
-            double contentDimension2 = num2 + Margin.Top + Margin.Bottom;
-            double halfPaddingValue2 = GetHalfPaddingValue(contentDimension2, GridCellSize.Height);
+            double contentHeightWithMargin = contentHeight + Margin.Top + Margin.Bottom;
+            double verticalHalfPadding = GetHalfPaddingValue(contentHeightWithMargin, GridCellSize.Height);
             Thickness padding = Padding;
-            if (_doubleComparer.Compare(padding.Left, halfPaddingValue) != 0 || _doubleComparer.Compare(padding.Top, halfPaddingValue2) != 0 || _doubleComparer.Compare(padding.Right, halfPaddingValue) != 0 || _doubleComparer.Compare(padding.Bottom, halfPaddingValue2) != 0)
+            if (_doubleComparer.Compare(padding.Left, halfPaddingValue) != 0 || _doubleComparer.Compare(padding.Top, verticalHalfPadding) != 0 || _doubleComparer.Compare(padding.Right, halfPaddingValue) != 0 || _doubleComparer.Compare(padding.Bottom, verticalHalfPadding) != 0)
             {
-                Padding = new Thickness(halfPaddingValue, halfPaddingValue2, halfPaddingValue, halfPaddingValue2);
+                Padding = new Thickness(halfPaddingValue, verticalHalfPadding, halfPaddingValue, verticalHalfPadding);
             }
         }
         else
@@ -159,22 +159,22 @@ public partial class PlotItemPlaceholder
         {
             return 0.0;
         }
-        double num2;
+        double minimumWidth;
         FrameworkElement frameworkElement = Content as FrameworkElement;
         if (HasContent && DebugTools.AssertNotNull(frameworkElement, null).Passed)
         {
             double num = (IsPlotTitleOrientationSwapped(frameworkElement) ? (frameworkElement.MinHeight + frameworkElement.Margin.Top + frameworkElement.Margin.Bottom) : (frameworkElement.MinWidth + frameworkElement.Margin.Left + frameworkElement.Margin.Right));
-            num2 = num + 2.0 * GetHalfPaddingValue(num, GridCellSize.Width);
+            minimumWidth = num + 2.0 * GetHalfPaddingValue(num, GridCellSize.Width);
         }
         else
         {
-            num2 = _expectedRenderSize.Width;
+            minimumWidth = _expectedRenderSize.Width;
             if (IsArrangeValid)
             {
-                DebugTools.DevAssert(_doubleComparer.Compare(num2, ActualWidth) == 0, null);
+                DebugTools.DevAssert(_doubleComparer.Compare(minimumWidth, ActualWidth) == 0, null);
             }
         }
-        return num2 + Margin.Left + Margin.Right;
+        return minimumWidth + Margin.Left + Margin.Right;
     }
 
     public double GetMinLegendPlaceholderHeight()
@@ -188,16 +188,16 @@ public partial class PlotItemPlaceholder
         bool flag = HasContent && DebugTools.AssertNotNull(frameworkElement, null).Passed;
         if (flag)
         {
-            bool flag2;
+            bool isPlotTitleOrLegend;
             if (frameworkElement is PlotTitle || frameworkElement is PlotLegend)
             {
-                flag2 = true;
+                isPlotTitleOrLegend = true;
             }
             else
             {
-                flag2 = false;
+                isPlotTitleOrLegend = false;
             }
-            flag = flag2;
+            flag = isPlotTitleOrLegend;
         }
         if (flag)
         {

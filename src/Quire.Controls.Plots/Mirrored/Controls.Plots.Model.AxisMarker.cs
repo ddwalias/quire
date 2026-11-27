@@ -110,7 +110,7 @@ public partial class AxisMarker : BaseMarker, IAxisMarker, IBaseMarker, INotifyP
     public axisBaseTypeMarker GetDataObject(IResultManager resultManager)
     {
         int num = ((IsUserSetValue && resultManager != null) ? resultManager.CreateResultRefId(RealNumberCalculatable) : (-1));
-        axisBaseTypeMarker axisBaseTypeMarker2 = new axisBaseTypeMarker
+        axisBaseTypeMarker markerData = new axisBaseTypeMarker
         {
             linestyle = PlotDataObjectCreator.ConvertLineStyle(LineStyle),
             lineweight = LineWeight,
@@ -123,15 +123,15 @@ public partial class AxisMarker : BaseMarker, IAxisMarker, IBaseMarker, INotifyP
         };
         if (IsUserSetValue)
         {
-            axisBaseTypeMarker2.InnerXml = new XmlNode[1] { ExpressionXml };
-            axisBaseTypeMarker2.EquationSExpression = new string[1] { EquationSExpression };
+            markerData.InnerXml = new XmlNode[1] { ExpressionXml };
+            markerData.EquationSExpression = new string[1] { EquationSExpression };
         }
         else
         {
-            axisBaseTypeMarker2.InnerXml = null;
-            axisBaseTypeMarker2.EquationSExpression = null;
+            markerData.InnerXml = null;
+            markerData.EquationSExpression = null;
         }
-        return axisBaseTypeMarker2;
+        return markerData;
     }
 
     private void CalculatablePropertyChanged(object sender, PropertyChangedEventArgs e)

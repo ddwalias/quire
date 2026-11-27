@@ -138,9 +138,9 @@ public partial class ContourLogicalDataCollection
         result = contourLogicalData;
         if (Contours.Length != 0)
         {
-            ContourLogicalData contourLogicalData2 = Contours[0];
-            result.ZLevel = contourLogicalData2.ZLevel;
-            result.GradientSign = -contourLogicalData2.GradientSign;
+            ContourLogicalData firstContour = Contours[0];
+            result.ZLevel = firstContour.ZLevel;
+            result.GradientSign = -firstContour.GradientSign;
         }
         return result;
     }

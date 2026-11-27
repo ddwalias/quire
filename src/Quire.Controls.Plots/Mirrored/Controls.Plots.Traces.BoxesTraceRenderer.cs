@@ -53,20 +53,20 @@ internal partial class BoxesTraceRenderer : ClustersTraceRenderer
             DashStyle = LinePen.DashStyle,
             DashCap = PenLineCap.Round
         };
-        Pen pen2 = new Pen(Brushes.Black, _ownerTrace.LineWeight * 0.75);
+        Pen whiskerPen = new Pen(Brushes.Black, _ownerTrace.LineWeight * 0.75);
         double num = pointCollection[3].Y;
-        double num2 = pointCollection[0].Y;
-        if (num > num2)
+        double minimumY = pointCollection[0].Y;
+        if (num > minimumY)
         {
-            drawingContext.DrawLine(pen, new Point(xMid, num), new Point(xMid, num2));
-            drawingContext.DrawLine(pen2, new Point(xMid - width * 0.75 / 2.0, num), new Point(xMid + width * 0.75 / 2.0, num));
+            drawingContext.DrawLine(pen, new Point(xMid, num), new Point(xMid, minimumY));
+            drawingContext.DrawLine(whiskerPen, new Point(xMid - width * 0.75 / 2.0, num), new Point(xMid + width * 0.75 / 2.0, num));
         }
-        double num3 = pointCollection[4].Y;
-        double num4 = pointCollection[2].Y;
-        if (num3 < num4)
+        double maximumY = pointCollection[4].Y;
+        double medianY = pointCollection[2].Y;
+        if (maximumY < medianY)
         {
-            drawingContext.DrawLine(pen, new Point(xMid, num4), new Point(xMid, num3));
-            drawingContext.DrawLine(pen2, new Point(xMid - width * 0.75 / 2.0, num3), new Point(xMid + width * 0.75 / 2.0, num3));
+            drawingContext.DrawLine(pen, new Point(xMid, medianY), new Point(xMid, maximumY));
+            drawingContext.DrawLine(whiskerPen, new Point(xMid - width * 0.75 / 2.0, maximumY), new Point(xMid + width * 0.75 / 2.0, maximumY));
         }
     }
 
@@ -90,8 +90,8 @@ internal partial class BoxesTraceRenderer : ClustersTraceRenderer
         {
             for (int j = 0; j < item.Value; j++)
             {
-                double num3 = xStart + width / (double)(item.Value + 1) * (double)(j + 1);
-                drawingContext.DrawGeometry(null, SymbolPen, symbol.Create(new Point(num3, item.Key), _ownerTrace));
+                double outlierX = xStart + width / (double)(item.Value + 1) * (double)(j + 1);
+                drawingContext.DrawGeometry(null, SymbolPen, symbol.Create(new Point(outlierX, item.Key), _ownerTrace));
             }
         }
     }

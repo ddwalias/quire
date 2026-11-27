@@ -259,15 +259,15 @@ public sealed partial class ContourPlotModel
     private void YAxisModelRangeChanged()
     {
         double limitValueOrDefault = GetLimitValueOrDefault(YAxisModel.StartExpression, double.NaN);
-        double limitValueOrDefault2 = GetLimitValueOrDefault(YAxisModel.EndExpression, double.NaN);
-        _contourCalculatable.SetVerticalRange(limitValueOrDefault, limitValueOrDefault2);
+        double endLimit = GetLimitValueOrDefault(YAxisModel.EndExpression, double.NaN);
+        _contourCalculatable.SetVerticalRange(limitValueOrDefault, endLimit);
     }
 
     private void XAxisModelRangeChanged()
     {
         double limitValueOrDefault = GetLimitValueOrDefault(XAxisModel.StartExpression, double.NaN);
-        double limitValueOrDefault2 = GetLimitValueOrDefault(XAxisModel.EndExpression, double.NaN);
-        _contourCalculatable.SetHorizontalRange(limitValueOrDefault, limitValueOrDefault2);
+        double endLimit = GetLimitValueOrDefault(XAxisModel.EndExpression, double.NaN);
+        _contourCalculatable.SetHorizontalRange(limitValueOrDefault, endLimit);
     }
 
     private static double GetLimitValueOrDefault(IAxisLimitEditor limitExpression, double defaultValue)

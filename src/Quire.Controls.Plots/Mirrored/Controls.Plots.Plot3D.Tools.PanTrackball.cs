@@ -13,12 +13,12 @@ public partial class PanTrackball : BasePanZoomTrackball
     protected override bool Track(Point current)
     {
         Point captureStartPosition = CurrentTrackingInfo.CaptureStartPosition;
-        Point3D? point1 = PerformHitTest(captureStartPosition);
-        Point3D? point2 = PerformHitTest(current);
-        bool flag = DebugTools.AssertNotNull(point1, null).Passed && DebugTools.AssertNotNull(point2, null).Passed;
+        Point3D? captureStartHit = PerformHitTest(captureStartPosition);
+        Point3D? currentHit = PerformHitTest(current);
+        bool flag = DebugTools.AssertNotNull(captureStartHit, null).Passed && DebugTools.AssertNotNull(currentHit, null).Passed;
         if (flag)
         {
-            ScaleAndAddTranslation(point2.Value - point1.Value);
+            ScaleAndAddTranslation(currentHit.Value - captureStartHit.Value);
             TrackingHelper.SetTrackingPoint2D(captureStartPosition).SetTrackingPoint2D(current, 1).SetTrackingLine2D(captureStartPosition, current);
         }
         return flag;

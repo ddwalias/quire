@@ -159,9 +159,9 @@ public partial class MarkersPanel
         {
             valueToScreen.ValueToScreenChanged -= markersPanel.HandleValueToScreenChanged;
         }
-        if (e.NewValue is IValueToScreen valueToScreen2)
+        if (e.NewValue is IValueToScreen newValueToScreen)
         {
-            valueToScreen2.ValueToScreenChanged += markersPanel.HandleValueToScreenChanged;
+            newValueToScreen.ValueToScreenChanged += markersPanel.HandleValueToScreenChanged;
         }
     }
 
@@ -236,19 +236,19 @@ public partial class MarkersPanel
             double horizontalValue = GetHorizontalValue(child);
             double verticalValue = GetVerticalValue(child);
             bool flag = !double.IsNaN(horizontalValue);
-            bool flag2 = !double.IsNaN(verticalValue);
-            DebugTools.DevAssert(flag | flag2);
+            bool hasVerticalValue = !double.IsNaN(verticalValue);
+            DebugTools.DevAssert(flag | hasVerticalValue);
             double num = GetActualX(horizontalValue, flag, child.HorizontalAlignment, child.DesiredSize);
-            double num2 = GetActualY(verticalValue, flag2, child.VerticalAlignment, child.DesiredSize);
+            double verticalPosition = GetActualY(verticalValue, hasVerticalValue, child.VerticalAlignment, child.DesiredSize);
             Size val = child.DesiredSize;
-            bool valid = num.IsValid() && num2.IsValid() && child.DesiredSize.Height.IsValid() && child.DesiredSize.Width.IsValid();
+            bool valid = num.IsValid() && verticalPosition.IsValid() && child.DesiredSize.Height.IsValid() && child.DesiredSize.Width.IsValid();
             if (DebugTools.DevAssert(valid).Failed)
             {
                 num = 0.0;
-                num2 = 0.0;
+                verticalPosition = 0.0;
                 val = finalSize;
             }
-            child.Arrange(new Rect(new Point(num, num2), val));
+            child.Arrange(new Rect(new Point(num, verticalPosition), val));
         }
         return base.ArrangeOverride(finalSize);
     }

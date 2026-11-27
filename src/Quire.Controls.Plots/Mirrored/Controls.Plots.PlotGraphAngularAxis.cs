@@ -75,9 +75,9 @@ internal sealed partial class PlotGraphAngularAxis
     protected override Size ArrangeOverride(Size finalSize)
     {
         Point tickMarkElementPosition = GetTickMarkElementPosition(1, _secondLabel);
-        Point tickMarkElementPosition2 = GetTickMarkElementPosition(1, SecondTickExpressionEqn);
+        Point secondTickPosition = GetTickMarkElementPosition(1, SecondTickExpressionEqn);
         DebugTools.DevAssert(Scaling != AxisScaling.Logarithmic, null);
-        ArrangeSecondTickExpressionEqn(tickMarkElementPosition2);
+        ArrangeSecondTickExpressionEqn(secondTickPosition);
         if (DebugTools.DevAssert(TickMarks > 1, null).Passed)
         {
             _secondLabel.Arrange(SecondLabelRectangle(tickMarkElementPosition));

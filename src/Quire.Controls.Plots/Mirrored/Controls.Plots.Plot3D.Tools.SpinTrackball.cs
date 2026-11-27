@@ -45,9 +45,9 @@ public partial class SpinTrackball : BaseTrackball
         axisOfRotation.Normalize();
         double num = Vector3D.AngleBetween(_lastCapturedPoint3D, result);
         Quaternion quaternion = new Quaternion(axisOfRotation, -num);
-        Quaternion quaternion2 = _rotationAtCaptureStart * quaternion;
-        CameraRotation.Axis = quaternion2.Axis;
-        CameraRotation.Angle = quaternion2.Angle;
+        Quaternion combinedRotation = _rotationAtCaptureStart * quaternion;
+        CameraRotation.Axis = combinedRotation.Axis;
+        CameraRotation.Angle = combinedRotation.Angle;
         return true;
     }
 
@@ -59,11 +59,11 @@ public partial class SpinTrackball : BaseTrackball
     private bool ViewportToTrackball(Point point, out Vector3D result)
     {
         double num = point.X / (Viewport.ActualWidth / 2.0) - 1.0;
-        double num2 = 1.0 - point.Y / (Viewport.ActualHeight / 2.0);
-        double num3 = 2.0 - num * num - num2 * num2;
-        bool flag = num3 >= 0.0;
-        result = new Vector3D(num, num2, flag ? Math.Sqrt(num3) : 0.0);
-        return flag;
+        double y = 1.0 - point.Y / (Viewport.ActualHeight / 2.0);
+        double zSquared = 2.0 - num * num - y * y;
+        bool isOnTrackball = zSquared >= 0.0;
+        result = new Vector3D(num, y, isOnTrackball ? Math.Sqrt(zSquared) : 0.0);
+        return isOnTrackball;
     }
 
     public SpinTrackball()

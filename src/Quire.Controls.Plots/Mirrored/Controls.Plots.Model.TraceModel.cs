@@ -490,10 +490,10 @@ internal partial class TraceModel
             {
                 return;
             }
-            bool isUsingDensityVisualization = IsUsingDensityVisualization;
+            bool wasUsingDensityVisualization = IsUsingDensityVisualization;
             _lineStyle = value;
-            bool isUsingDensityVisualization2 = IsUsingDensityVisualization;
-            if (isUsingDensityVisualization != isUsingDensityVisualization2)
+            bool isUsingDensityVisualization = IsUsingDensityVisualization;
+            if (wasUsingDensityVisualization != isUsingDensityVisualization)
             {
                 UpdateImageRendererModel();
             }
@@ -775,9 +775,9 @@ internal partial class TraceModel
     private bool CreateAllPointsByTraceType(IVectorListResultNode xResult, IVectorListResultNode yResult)
     {
         IList<IList<double>> list = TraceResultAnalyzer.ToDoubleDataList(xResult);
-        IList<IList<double>> list2 = TraceResultAnalyzer.ToDoubleDataList(yResult);
+        IList<IList<double>> yData = TraceResultAnalyzer.ToDoubleDataList(yResult);
         IList<Point> pointsCollection = _analyzedData.PointsCollection;
-        if (list.IsNullOrEmpty() || list2.IsNullOrEmpty())
+        if (list.IsNullOrEmpty() || yData.IsNullOrEmpty())
         {
             return false;
         }
@@ -788,19 +788,19 @@ internal partial class TraceModel
             case TraceType.Columns:
             case TraceType.Bars:
             case TraceType.Stems:
-                result = TraceResultAnalyzer.AddOneDataSegment(pointsCollection, list.First(), list2.First(), ensureTrailingNaN: false);
+                result = TraceResultAnalyzer.AddOneDataSegment(pointsCollection, list.First(), yData.First(), ensureTrailingNaN: false);
                 break;
             case TraceType.Waterfall:
-                result = TraceResultAnalyzer.BuildPointsForWaterfall(pointsCollection, list, list2);
+                result = TraceResultAnalyzer.BuildPointsForWaterfall(pointsCollection, list, yData);
                 break;
             case TraceType.Boxes:
-                result = TraceResultAnalyzer.BuildPointsForBoxes(pointsCollection, list.First(), list2);
+                result = TraceResultAnalyzer.BuildPointsForBoxes(pointsCollection, list.First(), yData);
                 break;
             case TraceType.Errors:
-                result = TraceResultAnalyzer.BuildTuplesOfPoints(pointsCollection, list.First(), list2.Take(2).ToArray());
+                result = TraceResultAnalyzer.BuildTuplesOfPoints(pointsCollection, list.First(), yData.Take(2).ToArray());
                 break;
             case TraceType.Effects:
-                result = TraceResultAnalyzer.BuildTuplesOfPoints(pointsCollection, list.First(), list2.Take(2).ToArray(), new double[2] { -0.25, 0.25 });
+                result = TraceResultAnalyzer.BuildTuplesOfPoints(pointsCollection, list.First(), yData.Take(2).ToArray(), new double[2] { -0.25, 0.25 });
                 break;
         }
         return result;
@@ -870,10 +870,10 @@ internal partial class TraceModel
             }
             AnalyzeAxisAndTypeData(plotResult);
         }
-        catch (Exception ex2)
+        catch (Exception resultException)
         {
-            DebugTools.FailAssertion(ex2.Message);
-            ex = new PlotInvalidResultException("PlotControl.Error.ResultIsNotAMatrix", ex2);
+            DebugTools.FailAssertion(resultException.Message);
+            ex = new PlotInvalidResultException("PlotControl.Error.ResultIsNotAMatrix", resultException);
         }
         if (ex == null)
         {

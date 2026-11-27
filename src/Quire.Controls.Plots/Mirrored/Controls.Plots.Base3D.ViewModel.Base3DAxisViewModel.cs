@@ -57,21 +57,21 @@ public abstract partial class Base3DAxisViewModel
             else
             {
                 Interval tickInterval = GetTickInterval(0);
-                Interval tickInterval2 = GetTickInterval(_plotAxisView.TickMarks);
+                Interval upperTickInterval = GetTickInterval(_plotAxisView.TickMarks);
                 // Match Mathcad IL: preserve float64 temporary local store/load before branch.
-                if (tickInterval.Center < (tickInterval2.Center switch { var center2 => center2 }))
+                if (tickInterval.Center < (upperTickInterval.Center switch { var centerValue => centerValue }))
                 {
                     result = new Interval
                     {
                         Lower = tickInterval.GetValueByNormalizedPosition(1.0),
-                        Upper = tickInterval2.GetValueByNormalizedPosition(0.0)
+                        Upper = upperTickInterval.GetValueByNormalizedPosition(0.0)
                     };
                 }
                 else
                 {
                     result = new Interval
                     {
-                        Lower = tickInterval2.GetValueByNormalizedPosition(0.0),
+                        Lower = upperTickInterval.GetValueByNormalizedPosition(0.0),
                         Upper = tickInterval.GetValueByNormalizedPosition(1.0)
                     };
                 }

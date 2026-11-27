@@ -27,8 +27,8 @@ public partial class OpacityConverter
         }
         SynchronizationStatus synchronizationStatus = (SynchronizationStatus)values[0];
         bool flag = (bool)values[1];
-        bool flag2 = (bool)values[2];
-        return (flag || (flag2 && synchronizationStatus == SynchronizationStatus.Pending)) ? 0.5 : 1.0;
+        bool isPendingVisible = (bool)values[2];
+        return (flag || (isPendingVisible && synchronizationStatus == SynchronizationStatus.Pending)) ? 0.5 : 1.0;
     }
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

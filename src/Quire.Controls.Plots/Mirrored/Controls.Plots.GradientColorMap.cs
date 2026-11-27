@@ -44,12 +44,12 @@ public partial class GradientColorMap
     {
         IEnumerator<GradientStop> enumerator = GradientStops.GetEnumerator();
         GradientStop gradientStop = null;
-        GradientStop gradientStop2 = null;
+        GradientStop nextGradientStop = null;
         while (enumerator.MoveNext())
         {
-            gradientStop = gradientStop2;
-            gradientStop2 = enumerator.Current;
-            if (gradientStop2.Offset >= value)
+            gradientStop = nextGradientStop;
+            nextGradientStop = enumerator.Current;
+            if (nextGradientStop.Offset >= value)
             {
                 break;
             }
@@ -57,9 +57,9 @@ public partial class GradientColorMap
         Color color;
         if (gradientStop == null)
         {
-            if (gradientStop2 != null && gradientStop2.Offset >= value)
+            if (nextGradientStop != null && nextGradientStop.Offset >= value)
             {
-                color = gradientStop2.Color;
+                color = nextGradientStop.Color;
             }
             else
             {
@@ -71,7 +71,7 @@ public partial class GradientColorMap
             Interval interval = new Interval
             {
                 Lower = gradientStop.Offset,
-                Upper = gradientStop2.Offset,
+                Upper = nextGradientStop.Offset,
             };
             if (interval.Norm < double.Epsilon)
             {
@@ -80,8 +80,8 @@ public partial class GradientColorMap
             else if (interval.Contains(value))
             {
                 double num = interval.Normalize(value);
-                double num2 = 1.0 - num;
-                color = gradientStop.Color * (float)num2 + gradientStop2.Color * (float)num;
+                double inverseRatio = 1.0 - num;
+                color = gradientStop.Color * (float)inverseRatio + nextGradientStop.Color * (float)num;
             }
             else
             {

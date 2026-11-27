@@ -349,16 +349,16 @@ public partial class PlotModel3D
     protected Rect3D CalculateInitialCommonRange(Rect3D commonTraceBounds)
     {
         Interval commonInterval = GetCommonInterval(_xAxis, commonTraceBounds.X, commonTraceBounds.X + commonTraceBounds.SizeX);
-        Interval commonInterval2 = GetCommonInterval(_yAxis, commonTraceBounds.Y, commonTraceBounds.Y + commonTraceBounds.SizeY);
-        Interval commonInterval3 = GetCommonInterval(_zAxis, commonTraceBounds.Z, commonTraceBounds.Z + commonTraceBounds.SizeZ);
+        Interval yInterval = GetCommonInterval(_yAxis, commonTraceBounds.Y, commonTraceBounds.Y + commonTraceBounds.SizeY);
+        Interval zInterval = GetCommonInterval(_zAxis, commonTraceBounds.Z, commonTraceBounds.Z + commonTraceBounds.SizeZ);
         return new Rect3D
         {
             X = commonInterval.Lower,
             SizeX = commonInterval.Width,
-            Y = commonInterval2.Lower,
-            SizeY = commonInterval2.Width,
-            Z = commonInterval3.Lower,
-            SizeZ = commonInterval3.Width
+            Y = yInterval.Lower,
+            SizeY = yInterval.Width,
+            Z = zInterval.Lower,
+            SizeZ = zInterval.Width
         };
     }
 

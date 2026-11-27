@@ -83,15 +83,15 @@ public partial class ZoomTrackball : BasePanZoomTrackball
         }
         Point captureStartPosition = CurrentTrackingInfo.CaptureStartPosition;
         double num = Math.Min(current.X, captureStartPosition.X);
-        double num2 = Math.Max(current.X, captureStartPosition.X);
-        double num3 = Math.Min(current.Y, captureStartPosition.Y);
-        double num4 = Math.Max(current.Y, captureStartPosition.Y);
-        Point screenAreaCenter = new Point((num + num2) / 2.0, (num3 + num4) / 2.0);
+        double rightEdge = Math.Max(current.X, captureStartPosition.X);
+        double topEdge = Math.Min(current.Y, captureStartPosition.Y);
+        double bottomEdge = Math.Max(current.Y, captureStartPosition.Y);
+        Point screenAreaCenter = new Point((num + rightEdge) / 2.0, (topEdge + bottomEdge) / 2.0);
         DoubleComparer defaultDoubleComparer = DoubleComparer.DefaultDoubleComparer;
         Vector val = current - captureStartPosition;
-        double val2 = ((defaultDoubleComparer.Compare(val.X, 0.0) == 0) ? 1.0 : Math.Abs(Viewport.ActualWidth / val.X));
-        double val3 = ((defaultDoubleComparer.Compare(val.Y, 0.0) == 0) ? 1.0 : Math.Abs(Viewport.ActualHeight / val.Y));
-        double requestedScale = Math.Min(val2, val3);
+        double horizontalScale = ((defaultDoubleComparer.Compare(val.X, 0.0) == 0) ? 1.0 : Math.Abs(Viewport.ActualWidth / val.X));
+        double verticalScale = ((defaultDoubleComparer.Compare(val.Y, 0.0) == 0) ? 1.0 : Math.Abs(Viewport.ActualHeight / val.Y));
+        double requestedScale = Math.Min(horizontalScale, verticalScale);
         TrackingHelper.SetTrackingPoint2D(captureStartPosition).SetTrackingPoint2D(current, 1).SetTrackingLine2D(captureStartPosition, current);
         ApplyScaleWithCenter(requestedScale, screenAreaCenter);
         return true;

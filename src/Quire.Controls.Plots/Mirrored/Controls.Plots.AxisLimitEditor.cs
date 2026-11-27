@@ -525,10 +525,10 @@ public partial class AxisLimitEditor : IAxisLimitEditor, ICalculatable, ICalcula
     public valueType GetDataObject(IResultManager resultManager)
     {
         bool flag = !IsDefaultValue;
-        bool flag2 = flag && resultManager != null;
+        bool hasResultManager = flag && resultManager != null;
         valueType valueType = new valueType();
-        valueType.resultRefSpecified = flag2;
-        valueType.resultRef = (flag2 ? resultManager.CreateResultRefId(this) : (-1));
+        valueType.resultRefSpecified = hasResultManager;
+        valueType.resultRef = (hasResultManager ? resultManager.CreateResultRefId(this) : (-1));
         valueType.InnerXml = ((resultManager == null) ? null : (flag ? new XmlNode[1] { _eq.GetRegionXmlNode().FirstChild } : null));
         valueType.EquationSExpression = ((resultManager != null) ? null : (flag ? new string[1] { _eq.EquationSExpression } : null));
         return valueType;

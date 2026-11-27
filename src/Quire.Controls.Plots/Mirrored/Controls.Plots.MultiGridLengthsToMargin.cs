@@ -25,9 +25,9 @@ public partial class MultiGridLengthsToMargin
             {
                 num += gridLength.Value;
             }
-            else if (obj is double num2)
+            else if (obj is double marginAmount)
             {
-                num += num2;
+                num += marginAmount;
             }
         }
         // Mathcad returns from each case directly, so the IL has no shared result local.

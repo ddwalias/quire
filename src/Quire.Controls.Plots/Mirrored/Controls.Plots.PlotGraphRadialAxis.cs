@@ -145,17 +145,17 @@ internal sealed partial class PlotGraphRadialAxis
     protected override Size ArrangeOverride(Size finalSize)
     {
         Point tickMarkElementPosition = GetTickMarkElementPosition(0, _firstLabel);
-        Point tickMarkElementPosition2 = GetTickMarkElementPosition(TickMarks - 1, _lastLabel);
-        Point tickMarkElementPosition3 = GetTickMarkElementPosition(1, _secondLabel);
-        Point tickMarkElementPosition4 = GetTickMarkElementPosition(0, StartExpressionEqn);
-        Point tickMarkElementPosition5 = GetTickMarkElementPosition(TickMarks - 1, EndExpressionEqn);
-        Point tickMarkElementPosition6 = GetTickMarkElementPosition(1, SecondTickExpressionEqn);
-        StartExpressionEqn.Arrange(StartEquationRectangle(tickMarkElementPosition4));
-        EndExpressionEqn.Arrange(EndEquationRectangle(tickMarkElementPosition5));
-        ArrangeSecondTickExpressionEqn(tickMarkElementPosition6);
+        Point endTickPosition = GetTickMarkElementPosition(TickMarks - 1, _lastLabel);
+        Point secondTickPosition = GetTickMarkElementPosition(1, _secondLabel);
+        Point startTickPosition = GetTickMarkElementPosition(0, StartExpressionEqn);
+        Point lastTickPosition = GetTickMarkElementPosition(TickMarks - 1, EndExpressionEqn);
+        Point nextSecondTickPosition = GetTickMarkElementPosition(1, SecondTickExpressionEqn);
+        StartExpressionEqn.Arrange(StartEquationRectangle(startTickPosition));
+        EndExpressionEqn.Arrange(EndEquationRectangle(lastTickPosition));
+        ArrangeSecondTickExpressionEqn(nextSecondTickPosition);
         _firstLabel.Arrange(FirstLabelRectangle(tickMarkElementPosition));
-        _lastLabel.Arrange(LastLabelRectangle(tickMarkElementPosition2));
-        _secondLabel.Arrange(SecondLabelRectangle(tickMarkElementPosition3));
+        _lastLabel.Arrange(LastLabelRectangle(endTickPosition));
+        _secondLabel.Arrange(SecondLabelRectangle(secondTickPosition));
         Size result = base.ArrangeOverride(finalSize);
         DebugTools.DevAssert(IsMeasureValid, null);
         return result;

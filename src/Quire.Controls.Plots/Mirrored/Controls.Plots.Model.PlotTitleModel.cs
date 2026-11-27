@@ -108,24 +108,24 @@ internal partial class PlotTitleModel
             S11NProvider.Helper.AssignNextRegionId(Title);
             regionType.regionid = S11NProvider.Helper.GetRegionId(Title).ToString();
         }
-        if (Title.GetRegionPersistentData(S11NProvider) is textType textType2)
+        if (Title.GetRegionPersistentData(S11NProvider) is textType titleData)
         {
-            XmlElement xmlElement2 = xmlDocument.CreateElement("title", wsNameSpace);
-            if (textType2.Any != null)
+            XmlElement titleElement = xmlDocument.CreateElement("title", wsNameSpace);
+            if (titleData.Any != null)
             {
-                XmlNode newChild = xmlDocument.ImportNode(textType2.Any, deep: true);
-                xmlElement2.AppendChild(newChild);
+                XmlNode newChild = xmlDocument.ImportNode(titleData.Any, deep: true);
+                titleElement.AppendChild(newChild);
             }
-            if (textType2.istextblock)
+            if (titleData.istextblock)
             {
-                xmlElement2.SetAttribute("is-text-block", XmlConvert.ToString(textType2.istextblock));
+                titleElement.SetAttribute("is-text-block", XmlConvert.ToString(titleData.istextblock));
             }
-            if (!string.IsNullOrEmpty(textType2.itemidref))
+            if (!string.IsNullOrEmpty(titleData.itemidref))
             {
-                xmlElement2.SetAttribute("item-idref", textType2.itemidref);
+                titleElement.SetAttribute("item-idref", titleData.itemidref);
             }
-            xmlElement.AppendChild(xmlElement2);
-            textType2.PreSerialize();
+            xmlElement.AppendChild(titleElement);
+            titleData.PreSerialize();
         }
         return xmlElement;
     }
@@ -137,18 +137,18 @@ internal partial class PlotTitleModel
         {
             Position = (LegendPositions.PlotTitlePosition)Enum.Parse(typeof(LegendPositions.PlotTitlePosition), xmlAttribute.Value);
         }
-        XmlAttribute xmlAttribute2 = value.Attributes?["display"];
-        if (xmlAttribute2 != null)
+        XmlAttribute displayAttribute = value.Attributes?["display"];
+        if (displayAttribute != null)
         {
-            ShowTitle = XmlConvert.ToBoolean(xmlAttribute2.Value);
+            ShowTitle = XmlConvert.ToBoolean(displayAttribute.Value);
         }
-        XmlAttribute xmlAttribute3 = value.Attributes?["show-border"];
-        if (xmlAttribute3 != null)
+        XmlAttribute showBorderAttribute = value.Attributes?["show-border"];
+        if (showBorderAttribute != null)
         {
-            ShowBorder = XmlConvert.ToBoolean(xmlAttribute3.Value);
+            ShowBorder = XmlConvert.ToBoolean(showBorderAttribute.Value);
         }
-        XmlAttribute xmlAttribute4 = value.Attributes?["is-vertical"];
-        IsVertical = ((xmlAttribute4 != null) ? XmlConvert.ToBoolean(xmlAttribute4.Value) : (TitleType == PlotTitleType.YAxis));
+        XmlAttribute verticalAttribute = value.Attributes?["is-vertical"];
+        IsVertical = ((verticalAttribute != null) ? XmlConvert.ToBoolean(verticalAttribute.Value) : (TitleType == PlotTitleType.YAxis));
         if (Title != null)
         {
             XmlNamespaceManager mcdxNameSpaceManager = XmlWorksheetData.McdxNameSpaceManager;
@@ -157,22 +157,22 @@ internal partial class PlotTitleModel
             {
                 return;
             }
-            textType textType2 = new textType();
+            textType titleData = new textType();
             if (xmlNode.FirstChild != null)
             {
-                textType2.Any = xmlNode.FirstChild as XmlElement;
+                titleData.Any = xmlNode.FirstChild as XmlElement;
             }
-            XmlAttribute xmlAttribute5 = xmlNode.Attributes?["is-text-block"];
-            if (xmlAttribute5 != null)
+            XmlAttribute textBlockAttribute = xmlNode.Attributes?["is-text-block"];
+            if (textBlockAttribute != null)
             {
-                textType2.istextblock = XmlConvert.ToBoolean(xmlAttribute5.Value);
+                titleData.istextblock = XmlConvert.ToBoolean(textBlockAttribute.Value);
             }
-            XmlAttribute xmlAttribute6 = xmlNode.Attributes?["item-idref"];
-            if (xmlAttribute6 != null)
+            XmlAttribute itemIdAttribute = xmlNode.Attributes?["item-idref"];
+            if (itemIdAttribute != null)
             {
-                textType2.itemidref = xmlAttribute6.Value;
+                titleData.itemidref = itemIdAttribute.Value;
             }
-            Title.SetRegionPersistentData(DeS11NProvider, textType2);
+            Title.SetRegionPersistentData(DeS11NProvider, titleData);
         }
     }
 
@@ -193,24 +193,24 @@ internal partial class PlotTitleModel
         {
             return null;
         }
-        plotTitleType plotTitleType2 = (plotTitleType)data;
-        ShowTitle = plotTitleType2.display;
-        ShowBorder = plotTitleType2.showborder;
-        if (!string.IsNullOrEmpty(plotTitleType2.titleposition) && Enum.TryParse<LegendPositions.PlotTitlePosition>(plotTitleType2.titleposition, out var result))
+        plotTitleType titleData = (plotTitleType)data;
+        ShowTitle = titleData.display;
+        ShowBorder = titleData.showborder;
+        if (!string.IsNullOrEmpty(titleData.titleposition) && Enum.TryParse<LegendPositions.PlotTitlePosition>(titleData.titleposition, out var result))
         {
             Position = result;
         }
-        IsVertical = plotTitleType2.isvertical;
-        if (Title != null && plotTitleType2.title != null)
+        IsVertical = titleData.isvertical;
+        if (Title != null && titleData.title != null)
         {
-            Title.SetRegionPersistentData(d11NProvider, plotTitleType2.title);
+            Title.SetRegionPersistentData(d11NProvider, titleData.title);
         }
         return null;
     }
 
     public object GetRegionPersistentData(IS11NProvider s11NProvider)
     {
-        plotTitleType plotTitleType2 = new plotTitleType
+        plotTitleType titleData = new plotTitleType
         {
             display = ShowTitle,
             showborder = ShowBorder,
@@ -220,9 +220,9 @@ internal partial class PlotTitleModel
         if (Title != null)
         {
             textType title = Title.GetRegionPersistentData(s11NProvider) as textType;
-            plotTitleType2.title = title;
+            titleData.title = title;
         }
-        return plotTitleType2;
+        return titleData;
     }
 
     public PlotTitleModel()

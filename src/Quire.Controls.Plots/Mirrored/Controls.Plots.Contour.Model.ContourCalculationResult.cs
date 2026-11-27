@@ -97,8 +97,8 @@ internal partial class ContourCalculationResult
                 for (int j = 0; j < rows; j++)
                 {
                     IResultNode node = contour[j, 0];
-                    IResultNode node2 = contour[j, 1];
-                    contourLogicalData.Points[j] = new Point(ResultNodeToDouble(node), ResultNodeToDouble(node2));
+                    IResultNode yNode = contour[j, 1];
+                    contourLogicalData.Points[j] = new Point(ResultNodeToDouble(node), ResultNodeToDouble(yNode));
                 }
                 contourLogicalData.ZLevel = ResultNodeToDouble(zNode[i, 0]);
                 contourLogicalData.GradientSign = ResultNodeToDouble(gradientSigns[i, 0]);
@@ -106,13 +106,13 @@ internal partial class ContourCalculationResult
             }
             Rect boundingRectangleXy = default;
             double num = ResultNodeToDouble(bounds[0, 0]);
-            double num2 = ResultNodeToDouble(bounds[1, 0]);
-            boundingRectangleXy.X = Math.Min(num, num2);
-            boundingRectangleXy.Width = Math.Abs(num2 - num);
-            double num3 = ResultNodeToDouble(bounds[2, 0]);
-            double num4 = ResultNodeToDouble(bounds[3, 0]);
-            boundingRectangleXy.Y = Math.Min(num3, num4);
-            boundingRectangleXy.Height = Math.Abs(num4 - num3);
+            double rightX = ResultNodeToDouble(bounds[1, 0]);
+            boundingRectangleXy.X = Math.Min(num, rightX);
+            boundingRectangleXy.Width = Math.Abs(rightX - num);
+            double topY = ResultNodeToDouble(bounds[2, 0]);
+            double bottomY = ResultNodeToDouble(bounds[3, 0]);
+            boundingRectangleXy.Y = Math.Min(topY, bottomY);
+            boundingRectangleXy.Height = Math.Abs(bottomY - topY);
             contourLogicalDataCollection.BoundingRectangleXy = boundingRectangleXy;
         }
         return contourLogicalDataCollection;

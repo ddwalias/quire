@@ -346,9 +346,9 @@ public partial class PlotEquation : PlotEquationBase, IPlotEquationScaled, IPlot
             if (match.Success)
             {
                 string equationSExpression = match.Result("${Exp}");
-                string equationSExpression2 = match.Result("${Scaling}");
+                string scalingExpression = match.Result("${Scaling}");
                 _exp.EquationSExpression = equationSExpression;
-                _scaling.EquationSExpression = equationSExpression2;
+                _scaling.EquationSExpression = scalingExpression;
                 return;
             }
             throw new FormatException("The SExp is not in a correct format. the format should be:(@TRACE_EXPR @PLACEHOLDER (@TRACE_UNIT @PLACEHOLDER))");
@@ -771,7 +771,7 @@ public partial class PlotEquation : PlotEquationBase, IPlotEquationScaled, IPlot
         string text = isInPrinting ? Expression.EquationSExpressionWithResolvedLabels : Expression.EquationSExpression;
         IEquationControl userScalingExpression = GetUserScalingExpression();
         XmlNode regionXmlNode = userScalingExpression.GetRegionXmlNode();
-        string text2 = isInPrinting ? userScalingExpression.EquationSExpressionWithResolvedLabels : userScalingExpression.EquationSExpression;
+        string scalingExpression = isInPrinting ? userScalingExpression.EquationSExpressionWithResolvedLabels : userScalingExpression.EquationSExpression;
         if (regionXmlNode == null || regionXmlNode.FirstChild == null || expXml == null || expXml.FirstChild == null)
         {
             DebugTools.DevAssert(false, null);
@@ -787,7 +787,7 @@ public partial class PlotEquation : PlotEquationBase, IPlotEquationScaled, IPlot
             new mathType
             {
                 InnerXml = new XmlNode[1] { regionXmlNode.FirstChild },
-                EquationSExpression = new string[1] { text2 }
+                EquationSExpression = new string[1] { scalingExpression }
             }
         };
         return new plotEquation

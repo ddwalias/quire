@@ -16,12 +16,12 @@ public partial class VisualTrackballAdorner
         Pen pen = new Pen(new SolidColorBrush(Colors.Orange), 1.0);
         Size renderSize = AdornedElement.RenderSize;
         Point point = new Point(renderSize.Width * 0.5, renderSize.Height * 0.5);
-        double num = SpinTrackball.Radius * renderSize.Width * 0.5;
-        double num2 = SpinTrackball.Radius * renderSize.Height * 0.5;
-        drawingContext.DrawEllipse(Brushes.Transparent, pen, point, num, num2);
-        Vector vector = new Vector(num, 0.0);
-        Vector vector2 = new Vector(0.0, num2);
+        double widthRadius = SpinTrackball.Radius * renderSize.Width * 0.5;
+        double heightRadius = SpinTrackball.Radius * renderSize.Height * 0.5;
+        drawingContext.DrawEllipse(Brushes.Transparent, pen, point, widthRadius, heightRadius);
+        Vector vector = new Vector(widthRadius, 0.0);
+        Vector verticalRadiusVector = new Vector(0.0, heightRadius);
         drawingContext.DrawLine(pen, point - vector, point + vector);
-        drawingContext.DrawLine(pen, point - vector2, point + vector2);
+        drawingContext.DrawLine(pen, point - verticalRadiusVector, point + verticalRadiusVector);
     }
 }

@@ -82,8 +82,8 @@ public sealed partial class ContourPlotViewModel : PlotViewModelBase<ContourPlot
         if (!_contourVisualDataCollection.IsResizing)
         {
             Interval clippingInterval = XAxisViewModel.ClippingInterval;
-            Interval clippingInterval2 = YAxisViewModel.ClippingInterval;
-            ContoursClippingRect = new Rect(clippingInterval.Lower, clippingInterval2.Lower, clippingInterval.Width, clippingInterval2.Width);
+            Interval yClippingInterval = YAxisViewModel.ClippingInterval;
+            ContoursClippingRect = new Rect(clippingInterval.Lower, yClippingInterval.Lower, clippingInterval.Width, yClippingInterval.Width);
         }
     }
 

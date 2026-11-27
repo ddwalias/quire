@@ -835,10 +835,10 @@ public partial class PlotTrace
         double num = double.PositiveInfinity;
         for (int i = 1; i < values.Count; i++)
         {
-            double num2 = values[i] - values[i - 1];
-            if (num2 > 0.0)
+            double adjacentGap = values[i] - values[i - 1];
+            if (adjacentGap > 0.0)
             {
-                num = Math.Min(num, num2);
+                num = Math.Min(num, adjacentGap);
             }
         }
         return num;

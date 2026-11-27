@@ -17,11 +17,11 @@ public abstract partial class BasePanZoomTrackball : BaseTrackball
             return;
         }
         Vector3D vector3D = new Vector3D(TranslateTransformAtTrackStart.OffsetX, TranslateTransformAtTrackStart.OffsetY, TranslateTransformAtTrackStart.OffsetZ);
-        Vector3D vector3D2 = translation * CurrentScale;
-        Vector3D vector3D3 = vector3D - vector3D2;
-        TranslateTransform.OffsetX = vector3D3.X;
-        TranslateTransform.OffsetY = vector3D3.Y;
-        TranslateTransform.OffsetZ = vector3D3.Z;
+        Vector3D scaledTranslation = translation * CurrentScale;
+        Vector3D adjustedTranslation = vector3D - scaledTranslation;
+        TranslateTransform.OffsetX = adjustedTranslation.X;
+        TranslateTransform.OffsetY = adjustedTranslation.Y;
+        TranslateTransform.OffsetZ = adjustedTranslation.Z;
     }
 
     protected override Transform3D InitializeTransform()
@@ -65,13 +65,13 @@ public abstract partial class BasePanZoomTrackball : BaseTrackball
         double currentScale = CurrentScale;
         Point3D? point3D = PerformHitTest(screenAreaCenter);
         AddScale(requestedScale);
-        Point3D? point3D2 = PerformHitTest(new Point(Viewport.ActualWidth / 2.0, Viewport.ActualHeight / 2.0));
-        if (DebugTools.AssertNotNull(point3D2, null).Passed && DebugTools.AssertNotNull(point3D, null).Passed)
+        Point3D? viewportCenterPoint = PerformHitTest(new Point(Viewport.ActualWidth / 2.0, Viewport.ActualHeight / 2.0));
+        if (DebugTools.AssertNotNull(viewportCenterPoint, null).Passed && DebugTools.AssertNotNull(point3D, null).Passed)
         {
-            Point3D value = point3D.Value;
-            Point3D value2 = point3D2.Value;
-            TrackingHelper.AddTrackingPoint(value).AddTrackingPoint(value2, 1).AddTrackingLine(value, value2);
-            ScaleAndAddTranslation(value2 - value);
+            Point3D hitPoint = point3D.Value;
+            Point3D viewportCenterHit = viewportCenterPoint.Value;
+            TrackingHelper.AddTrackingPoint(hitPoint).AddTrackingPoint(viewportCenterHit, 1).AddTrackingLine(hitPoint, viewportCenterHit);
+            ScaleAndAddTranslation(viewportCenterHit - hitPoint);
         }
         else
         {

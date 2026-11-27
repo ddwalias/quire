@@ -134,8 +134,8 @@ public abstract partial class PlotGraphLinearAxisBase
         }
         else
         {
-            double num2 = scale.TickMarkPosition(tickNumber) - majorTickmaks.TickMarkPosition(0);
-            offset = 1.0 / 12.0 + num2 / num * (5.0 / 6.0);
+            double tickPositionOffset = scale.TickMarkPosition(tickNumber) - majorTickmaks.TickMarkPosition(0);
+            offset = 1.0 / 12.0 + tickPositionOffset / num * (5.0 / 6.0);
         }
         return GetRealRelaviveOffset(offset);
     }

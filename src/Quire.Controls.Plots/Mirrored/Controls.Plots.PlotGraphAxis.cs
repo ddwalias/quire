@@ -1524,22 +1524,22 @@ public abstract partial class PlotGraphAxis
             ((global::Quire.Controls.Plots.Presenter.IValueToScreen)this).ValueToScreen(Start),
             ((global::Quire.Controls.Plots.Presenter.IValueToScreen)this).ValueToScreen(End)
         };
-        double num = source.Min();
-        double num2 = source.Max();
-        double result = num;
-        double result2 = num2;
+        double minimumScreenValue = source.Min();
+        double maximumScreenValue = source.Max();
+        double edgeMinimum = minimumScreenValue;
+        double edgeMaximum = maximumScreenValue;
         if (toEdges)
         {
-            result = 0.0;
-            result2 = Length;
+            edgeMinimum = 0.0;
+            edgeMaximum = Length;
         }
-        if (screenValue < num)
+        if (screenValue < minimumScreenValue)
         {
-            return result;
+            return edgeMinimum;
         }
-        if (screenValue > num2)
+        if (screenValue > maximumScreenValue)
         {
-            return result2;
+            return edgeMaximum;
         }
         return screenValue;
     }

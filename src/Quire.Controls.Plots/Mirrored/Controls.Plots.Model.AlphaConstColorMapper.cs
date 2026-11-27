@@ -56,14 +56,14 @@ public partial class AlphaConstColorMapper : IMapper
     public uint[] MapDensityToRGBA(double[] density, double maxDensityValue)
     {
         uint num = (UseTraceInvalidStyle ? _invalidTraceColor : WpfUtils.WpfColorToRgb(Color));
-        int num2 = density.Length;
-        uint[] array = new uint[num2];
-        for (int i = 0; i < num2; i++)
+        int densityLength = density.Length;
+        uint[] array = new uint[densityLength];
+        for (int i = 0; i < densityLength; i++)
         {
             if (density[i] > 0.0)
             {
-                uint num3 = (uint)(Math.Pow(density[i] / maxDensityValue, 0.45) * (double)(255 - Alpha) + (double)Alpha);
-                array[i] = num | (num3 << 24);
+                uint alpha = (uint)(Math.Pow(density[i] / maxDensityValue, 0.45) * (double)(255 - Alpha) + (double)Alpha);
+                array[i] = num | (alpha << 24);
             }
         }
         return array;

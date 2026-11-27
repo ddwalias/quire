@@ -91,8 +91,8 @@ internal partial class StarPoints
         {
             throw new ArgumentException("points declare parallel lines");
         }
-        Vector val2 = new Vector(val.Value.X, val.Value.Y);
-        return val2.Length;
+        Vector intersectionVector = new Vector(val.Value.X, val.Value.Y);
+        return intersectionVector.Length;
     }
 
     private static void findLineCoefficients(out double ac, out double b, Point point1, Point point2)
@@ -108,8 +108,8 @@ internal partial class StarPoints
             return null;
         }
         double num = -(b1 - b2) / (a1 - a2);
-        double num2 = a1 * num + b1;
-        return new Point(num, num2);
+        double y = a1 * num + b1;
+        return new Point(num, y);
     }
 
     private Point[] BuildPrimaryPoints()

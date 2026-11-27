@@ -41,7 +41,7 @@ public partial class VisualDataCollection
                     SetLineWeight((double)param);
                 }
             };
-            Action<object> execute2 = (object param) =>
+            Action<object> setContoursLineColorAction = (object param) =>
             {
                 Color? color = null;
                 if (param is SolidColorBrush)
@@ -61,14 +61,14 @@ public partial class VisualDataCollection
                     DebugTools.DevAssert(false, null);
                 }
             };
-            Action<object> execute3 = (object param) =>
+            Action<object> setColorSchemeAction = (object param) =>
             {
                 EnumHelper.TryCallAction<ColorScheme>(param, SetColorScheme);
             };
-            _viewModelHelper.HelperCreateCommandBinding(SetColorSchemeCommand, execute3);
+            _viewModelHelper.HelperCreateCommandBinding(SetColorSchemeCommand, setColorSchemeAction);
         _viewModelHelper.HelperCreateCommandBinding(global::Quire.Controls.Plots.View.PlotControlBase.ChangeTraceLineCommand, SetContoursLineStyle);
         _viewModelHelper.HelperCreateCommandBinding(global::Quire.Controls.Plots.View.PlotControlBase.ChangeTraceWeightCommand, execute);
-        _viewModelHelper.HelperCreateCommandBinding(global::Quire.Controls.Plots.View.PlotControlBase.ChangeTraceColorCommand, execute2);
+        _viewModelHelper.HelperCreateCommandBinding(global::Quire.Controls.Plots.View.PlotControlBase.ChangeTraceColorCommand, setContoursLineColorAction);
             _model.PropertyChanged += (object? sender, PropertyChangedEventArgs eArgs) =>
             {
                 ModelPropertyChanged(eArgs.PropertyName);
@@ -417,9 +417,9 @@ public partial class VisualDataCollection
         else
         {
             VisualData[] visualData = _visualData;
-            for (int num2 = 0; num2 < visualData.Length; num2++)
+            for (int visualDataIndex = 0; visualDataIndex < visualData.Length; visualDataIndex++)
             {
-                visualData[num2].Fill = null;
+                visualData[visualDataIndex].Fill = null;
             }
         }
     }

@@ -74,22 +74,22 @@ internal abstract partial class PlotCalculatable : IPlotCalculatable, ICalculata
                     Name = item.Key.Name,
                     Tag = (int)mappedNodeNandle
                 };
-                IDictionary<ResolvedId, string[]> dictionary2;
+                IDictionary<ResolvedId, string[]> identifierLabels;
                 if (dictionary.ContainsKey(calculatable))
                 {
-                    dictionary2 = dictionary[calculatable];
+                    identifierLabels = dictionary[calculatable];
                 }
                 else
                 {
-                    dictionary2 = new Dictionary<ResolvedId, string[]>();
-                    dictionary.Add(calculatable, dictionary2);
+                    identifierLabels = new Dictionary<ResolvedId, string[]>();
+                    dictionary.Add(calculatable, identifierLabels);
                 }
-                dictionary2.Add(key, item.Value);
+                identifierLabels.Add(key, item.Value);
             }
         }
-        foreach (KeyValuePair<ICalculatable, IDictionary<ResolvedId, string[]>> item2 in dictionary)
+        foreach (KeyValuePair<ICalculatable, IDictionary<ResolvedId, string[]>> calculatableLabels in dictionary)
         {
-            item2.Key.SetIdentifierLabels(item2.Value);
+            calculatableLabels.Key.SetIdentifierLabels(calculatableLabels.Value);
         }
     }
 

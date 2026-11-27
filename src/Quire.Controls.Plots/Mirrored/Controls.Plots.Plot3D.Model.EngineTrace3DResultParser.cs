@@ -58,28 +58,28 @@ internal abstract partial class EngineTrace3DResultParser : IEngineTrace3DResult
             int columns = xCoordinates.Columns;
             int verticesCount = rows * columns;
             SurfaceVisualData3D surfaceVisualData3D = new SurfaceVisualData3D(transformForVisual, verticesCount);
-            for (int num = 0; num < rows; num++)
+            for (int rowIndex = 0; rowIndex < rows; rowIndex++)
             {
-                int num2 = num * columns;
-                for (int num3 = 0; num3 < columns; num3++)
+                int firstVertexIndex = rowIndex * columns;
+                for (int columnIndex = 0; columnIndex < columns; columnIndex++)
                 {
-                    Point3D value = GetValue(xCoordinates, yCoordinates, zCoordinates, num, num3);
+                    Point3D value = GetValue(xCoordinates, yCoordinates, zCoordinates, rowIndex, columnIndex);
                     if (IsValidAndInRange(value.X, value.Y, value.Z))
                     {
-                        surfaceVisualData3D.FilteredVerticesMap[num2 + num3] = true;
+                        surfaceVisualData3D.FilteredVerticesMap[firstVertexIndex + columnIndex] = true;
                     }
                     surfaceVisualData3D.AddVertex(value);
                 }
             }
             int[] array = new int[4];
-            for (int num4 = 0; num4 < rows - 1; num4++)
+            for (int rowIndex = 0; rowIndex < rows - 1; rowIndex++)
             {
-                for (int num5 = 0; num5 < columns - 1; num5++)
+                for (int columnIndex = 0; columnIndex < columns - 1; columnIndex++)
                 {
-                    array[0] = num4 * columns + num5;
-                    array[1] = num4 * columns + (num5 + 1);
-                    array[2] = (num4 + 1) * columns + (num5 + 1);
-                    array[3] = (num4 + 1) * columns + num5;
+                    array[0] = rowIndex * columns + columnIndex;
+                    array[1] = rowIndex * columns + (columnIndex + 1);
+                    array[2] = (rowIndex + 1) * columns + (columnIndex + 1);
+                    array[3] = (rowIndex + 1) * columns + columnIndex;
                     if (array.Any(surfaceVisualData3D.FilteredVerticesMap.Get))
                     {
                         array.Each(surfaceVisualData3D.Indices.Add);
@@ -113,13 +113,13 @@ internal abstract partial class EngineTrace3DResultParser : IEngineTrace3DResult
                 double z = value.Z;
                 if (IsValid(x, y, z))
                 {
-                    bool flag2 = Contains(x, y, z);
-                    if (point3D.HasValue && (flag | flag2))
+                    bool isPointInside = Contains(x, y, z);
+                    if (point3D.HasValue && (flag | isPointInside))
                     {
                         curveVisualData3D.AddVertex(point3D.Value);
                         curveVisualData3D.AddVertex(value);
                     }
-                    flag = flag2;
+                    flag = isPointInside;
                     point3D = value;
                 }
                 else
@@ -188,23 +188,23 @@ internal abstract partial class EngineTrace3DResultParser : IEngineTrace3DResult
         if (matrixResultNode != null && matrixResultNode.Rows == 4)
         {
             realResultNode = StripUnits(matrixResultNode[0, 0]) as IRealResultNode;
-            IMatrixResultNode matrixResultNode2 = matrixResultNode[1, 0] as IMatrixResultNode;
-            if (matrixResultNode2 != null)
+            IMatrixResultNode surfaceMatrixNode = matrixResultNode[1, 0] as IMatrixResultNode;
+            if (surfaceMatrixNode != null)
             {
-                if (!ValidateResult(matrixResultNode2, out var error))
+                if (!ValidateResult(surfaceMatrixNode, out var error))
                 {
                     return CreateErrorParser(error);
                 }
-                eagerMatrixResultNode = EagerMatrixSimpleResultNode.ConvertToEagerMatrix(matrixResultNode2);
+                eagerMatrixResultNode = EagerMatrixSimpleResultNode.ConvertToEagerMatrix(surfaceMatrixNode);
                 unitedValueResultNode = eagerMatrixResultNode[2, 0] as IUnitedValueResultNode;
             }
-            IMatrixResultNode matrixResultNode3 = matrixResultNode[2, 0] as IMatrixResultNode;
-            if (matrixResultNode3 != null && matrixResultNode3.Rows == 6)
+            IMatrixResultNode boundsMatrixNode = matrixResultNode[2, 0] as IMatrixResultNode;
+            if (boundsMatrixNode != null && boundsMatrixNode.Rows == 6)
             {
                 try
                 {
-                    empty.Union(new Point3D(((IRealResultNode)matrixResultNode3[0, 0]).Value, ((IRealResultNode)matrixResultNode3[2, 0]).Value, ((IRealResultNode)StripUnits(matrixResultNode3[4, 0])).Value));
-                    empty.Union(new Point3D(((IRealResultNode)matrixResultNode3[1, 0]).Value, ((IRealResultNode)matrixResultNode3[3, 0]).Value, ((IRealResultNode)StripUnits(matrixResultNode3[5, 0])).Value));
+                    empty.Union(new Point3D(((IRealResultNode)boundsMatrixNode[0, 0]).Value, ((IRealResultNode)boundsMatrixNode[2, 0]).Value, ((IRealResultNode)StripUnits(boundsMatrixNode[4, 0])).Value));
+                    empty.Union(new Point3D(((IRealResultNode)boundsMatrixNode[1, 0]).Value, ((IRealResultNode)boundsMatrixNode[3, 0]).Value, ((IRealResultNode)StripUnits(boundsMatrixNode[5, 0])).Value));
                 }
                 catch (Exception ex)
                 {
@@ -212,10 +212,10 @@ internal abstract partial class EngineTrace3DResultParser : IEngineTrace3DResult
                     DebugTools.DevAssert(false, ex.Message);
                 }
             }
-            IRealResultNode realResultNode2 = matrixResultNode[3, 0] as IRealResultNode;
-            if (realResultNode2 != null)
+            IRealResultNode scaleResultNode = matrixResultNode[3, 0] as IRealResultNode;
+            if (scaleResultNode != null)
             {
-                isInputRangeFullyConstrained = (realResultNode2.Value == 1.0);
+                isInputRangeFullyConstrained = (scaleResultNode.Value == 1.0);
             }
         }
         if (realResultNode != null && EnumHelper.TryParse<EngineTraceType3D>(realResultNode.Value, out enumValue, assert: false))

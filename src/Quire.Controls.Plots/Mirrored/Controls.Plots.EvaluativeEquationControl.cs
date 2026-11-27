@@ -273,12 +273,12 @@ public partial class EvaluativeEquationControl : UserControl, IEquationProxy, IE
         {
             numberFormat.FormatChanged -= evaluativeEquationControl.DisplayNumberFormatChanged;
         }
-        NumberFormat numberFormat2 = e.NewValue as NumberFormat;
-        if (null != numberFormat2)
+        NumberFormat newNumberFormat = e.NewValue as NumberFormat;
+        if (null != newNumberFormat)
         {
-            numberFormat2.FormatChanged += evaluativeEquationControl.DisplayNumberFormatChanged;
+            newNumberFormat.FormatChanged += evaluativeEquationControl.DisplayNumberFormatChanged;
         }
-        evaluativeEquationControl.CreateFormatter(numberFormat2);
+        evaluativeEquationControl.CreateFormatter(newNumberFormat);
         evaluativeEquationControl.DisplayNumberFormatChanged(string.Empty, null);
     }
 

@@ -129,36 +129,36 @@ internal partial class ImageCreator : IStyleOwner
             _hitsArray = null;
             return false;
         }
-        int num = imageBounds.Width * imageBounds.Height;
-        _hitsArray = new double[num];
+        int pixelCount = imageBounds.Width * imageBounds.Height;
+        _hitsArray = new double[pixelCount];
         int width = imageBounds.Width;
-        int num2 = imageBounds.Width - 1;
-        int num3 = imageBounds.Height - 1;
-        double num4 = (double)num2 / axesBounds.Width;
-        double num5 = (double)num3 / axesBounds.Height;
-        double num6 = 0.0;
+        int lastX = imageBounds.Width - 1;
+        int lastY = imageBounds.Height - 1;
+        double xScale = (double)lastX / axesBounds.Width;
+        double yScale = (double)lastY / axesBounds.Height;
+        double maxPixelCount = 0.0;
         foreach (Point point in points)
         {
             if (!axesBounds.Contains(point))
             {
                 continue;
             }
-            int x = (int)Math.Round((point.X - axesBounds.Left) * num4);
-            int num7 = (int)Math.Round((point.Y - axesBounds.Top) * num5);
-            num7 = num3 - num7;
-            x = SqueezeToBounds(0, num2, x);
-            num7 = SqueezeToBounds(0, num3, num7);
-            int num8 = num7 * width + x;
-            if (0 <= num8 && num8 < _hitsArray.Length)
+            int x = (int)Math.Round((point.X - axesBounds.Left) * xScale);
+            int y = (int)Math.Round((point.Y - axesBounds.Top) * yScale);
+            y = lastY - y;
+            x = SqueezeToBounds(0, lastX, x);
+            y = SqueezeToBounds(0, lastY, y);
+            int pixelIndex = y * width + x;
+            if (0 <= pixelIndex && pixelIndex < _hitsArray.Length)
             {
-                _hitsArray[num8]++;
-                if (_hitsArray[num8] > num6)
+                _hitsArray[pixelIndex]++;
+                if (_hitsArray[pixelIndex] > maxPixelCount)
                 {
-                    num6 = _hitsArray[num8];
+                    maxPixelCount = _hitsArray[pixelIndex];
                 }
             }
         }
-        _maxPixelCount = num6;
+        _maxPixelCount = maxPixelCount;
         return true;
     }
 
