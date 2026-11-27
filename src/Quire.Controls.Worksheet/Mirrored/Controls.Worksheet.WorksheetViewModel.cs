@@ -10,6 +10,11 @@ using System.Windows.Input;
 using System.Windows.Markup;
 using Quire.Calculation.Core;
 using Quire.Controls.Core;
+using Quire.Controls.Whiteboard;
+using Quire.Services;
+using System.Windows.Controls.Primitives;
+using System.Windows.Controls;
+using Quire.Controls.Core.Protection;
 using Quire.Controls.Core.IORegions;
 using Quire.Controls.ExcelComponent;
 using Quire.Controls.ExcelComponent.View;
@@ -2843,4 +2848,172 @@ internal partial class WorksheetViewModel
             return null;
         }
     }
+
+    public void TraverseWhiteboardItems(Func<IWhiteboardItem, bool, bool> function)
+    {
+        TraverseWhiteboardItems(_model.WhiteboardItems, function, isWorksheetContentItems: true);
+        TraverseWhiteboardItems(Footer.WhiteboardItems, function, isWorksheetContentItems: false);
+        TraverseWhiteboardItems(Header.WhiteboardItems, function, isWorksheetContentItems: false);
+        TraverseWhiteboardItems(FirstPageFooter.WhiteboardItems, function, isWorksheetContentItems: false);
+        TraverseWhiteboardItems(FirstPageHeader.WhiteboardItems, function, isWorksheetContentItems: false);
+    }
+
+    public void TraverseWhiteboardItems(IEnumerable<IWhiteboardItem> wbiCollection, Func<IWhiteboardItem, bool, bool> function, bool isWorksheetContentItems)
+    {
+        foreach (IWhiteboardItem item in wbiCollection)
+        {
+            if (function(item, isWorksheetContentItems) && item is IWhiteboardItemContainer)
+            {
+                IWhiteboardItemContainer whiteboardItemContainer = (IWhiteboardItemContainer)item;
+                TraverseWhiteboardItems(whiteboardItemContainer.WhiteboardItems, function, isWorksheetContentItems);
+            }
+        }
+    }
+
+    public ISpecTableControl CreateSpecTableControl(object dimensions)
+    {
+        return CreateSpecTableControl((dimensions as TableCoordinate?) ?? (TypeDescriptor.GetConverter(typeof(TableCoordinate)).ConvertFrom(dimensions) as TableCoordinate?));
+    }
+
+    public ISpecTableControl CreateSpecTableControl()
+    {
+        return CreateSpecTableControl(null);
+    }
+
+    public bool HandleTextInput(string text)
+    {
+        if (WpfUtils.ShouldSuspendInputMethod())
+        {
+            _textCache += text;
+            ItemManager.BlockUntilInput();
+            if (string.IsNullOrEmpty(_textCache))
+            {
+                return true;
+            }
+            text = _textCache;
+            _textCache = string.Empty;
+        }
+        if (string.IsNullOrEmpty(text))
+        {
+            return false;
+        }
+        if (!CanCreateControlOfType<IEquationControl>())
+        {
+            return false;
+        }
+        IEquationControl equationControl;
+        using (new CommandScope("Create Equation Control Via Keypress"))
+        {
+            equationControl = ControlCreator.CreateEquationControlWithTextInput(text);
+            if (equationControl != null)
+            {
+                equationControl = CreateNewEquation(null);
+                ItemManager.BlockUntilLoaded();
+                equationControl.Keypress(text[0].ToString());
+            }
+        }
+        if (equationControl != null && text.Length > 1)
+        {
+            equationControl.Keypress(text.Substring(1));
+        }
+        return equationControl != null;
+    }
+
+    public bool HandleKeyDown(System.Windows.Input.KeyEventArgs args)
+    {
+        if (!CanCreateControlOfType<IEquationControl>())
+        {
+            return false;
+        }
+        if (ActiveDescendant is IRichTextWithEmbeddedItem)
+        {
+            return false;
+        }
+        IEquationControl equationControl = null;
+        SymbolDescriptor symbolDescriptor = SearchSymbolDescriptorsForKeygesture(args, VisualOperatorDescriptorTable.Default.Values.OfType<SymbolDescriptor>()) ?? SearchSymbolDescriptorsForKeygesture(args, VisualConstantDescriptorTable.Default.Values.OfType<SymbolDescriptor>());
+        if (symbolDescriptor != null && FunctionalityServiceWrapper.Instance.IsFunctionalityEnabled(symbolDescriptor.FunctionalityKey))
+        {
+            if (symbolDescriptor is VisualOperatorDescriptor visualOperatorDescriptor && !CanInsertOperator(visualOperatorDescriptor.CanonicalName))
+            {
+                return false;
+            }
+            equationControl = CreateNewEquation(symbolDescriptor.Command, symbolDescriptor.CommandParameter);
+        }
+        return equationControl != null;
+    }
+
+    private IWhiteboardItemContainer GetAddableContainerControl(bool isExcludeWorksheetControlContent = false)
+    {
+        if (ActiveItem == null && SelectedItems.Count() == 0)
+        {
+            if (IsContentActive && OverlapsVerticallyWithRegionOfType<IParagraphControl>(InsertionPoint))
+            {
+                return null;
+            }
+            if (isExcludeWorksheetControlContent && ActiveSection is WorksheetControlContent)
+            {
+                return null;
+            }
+            return ActiveSection;
+        }
+        if (!(ActiveDescendant is IWhiteboardItemContainer { CanAddItems: not false } whiteboardItemContainer))
+        {
+            return null;
+        }
+        if (isExcludeWorksheetControlContent && whiteboardItemContainer is CollapsibleAreaControl)
+        {
+            return null;
+        }
+        return whiteboardItemContainer;
+    }
+
+    private void ShowZombiesOnPage(IWorksheetPage page, bool createIfNeeded = true)
+    {
+        if (createIfNeeded && (page.HeaderZombie == null || page.FooterZombie == null))
+        {
+            DebugTools.DevAssert(page.HeaderZombie == page.FooterZombie, null);
+            page.HeaderZombie = ControlCreator.CreateHeaderFooterZombieControl(Header);
+            page.FooterZombie = ControlCreator.CreateHeaderFooterZombieControl(Footer);
+            page.HeaderZombie?.SubscribeToZombieIsInitialized(OnZombieInitializationComplete);
+            page.FooterZombie?.SubscribeToZombieIsInitialized(OnZombieInitializationComplete);
+            bool isPageVisible = VisiblePages.Contains(page);
+            ItemManager.SetElementIsOnVisiblePage(page.HeaderZombie, isPageVisible);
+            ItemManager.SetElementIsOnVisiblePage(page.FooterZombie, isPageVisible);
+        }
+        if (createIfNeeded && page.PageNumber == 1 && (page.FirstPageHeaderZombie == null || page.FirstPageFooterZombie == null))
+        {
+            page.FirstPageHeaderZombie = ControlCreator.CreateHeaderFooterZombieControl(FirstPageHeader);
+            page.FirstPageFooterZombie = ControlCreator.CreateHeaderFooterZombieControl(FirstPageFooter);
+            bool isPageVisible2 = VisiblePages.Contains(page);
+            ItemManager.SetElementIsOnVisiblePage(page.FirstPageHeaderZombie, isPageVisible2);
+            ItemManager.SetElementIsOnVisiblePage(page.FirstPageFooterZombie, isPageVisible2);
+        }
+        if (page.PageNumber == 1 && IsFirstPageHeaderFooterDifferent)
+        {
+            page.Header = page.FirstPageHeaderZombie;
+            page.Footer = page.FirstPageFooterZombie;
+        }
+        else
+        {
+            page.Header = page.HeaderZombie;
+            page.Footer = page.FooterZombie;
+        }
+    }
+
+    public void InsertSpace(int? numberOfLines)
+    {
+        int numberOfLines2 = numberOfLines ?? 1;
+        // Release IL calls Execute through a local (callvirt); a new(...).Execute() call compiles to call.
+        InsertSpaceCommand command = new InsertSpaceCommand(this, numberOfLines2, pushInsertionPoint: false);
+        command.Execute();
+    }
+
+    public void RemoveSpace(int? numberOfLines, Direction direction)
+    {
+        int numberOfLines2 = numberOfLines ?? WhiteboardControl.DeleteEmptySpaceDefaultLinesCount;
+        // Release IL calls Execute through a local (callvirt); a new(...).Execute() call compiles to call.
+        RemoveSpaceCommand command = new RemoveSpaceCommand(this, numberOfLines2, direction);
+        command.Execute();
+    }
+
 }
