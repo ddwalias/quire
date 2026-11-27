@@ -25,5 +25,7 @@
 - Batch 10 Release IL: PASS, 2,060 checked, 0 failures; report `.mirror-cache/release-il-ce5d48a7b6be/release-il.json`. Cumulative exact implementation count: 148 across batches 1–10.
 - Batch 11: implemented `SaveDocumentWithFilenameAndExtension`, `SaveDocument`, and `AskForSaveDefaultFileName`.
 - Batch 11 Release IL: `python tools/validation/release_il.py --base main --project Quire` — PASS, 2,063 checked, 0 failures; report `.mirror-cache/release-il-6ec5564449fd/release-il.json`. Cumulative exact implementation count: 151 across batches 1–11.
+- Batch 12: implemented `LaunchOpenFileDialogAndGetFileNameForTemplates`, `CloneWorksheetAndOpenInDocument`, and `HandleSaveFileFailure`.
+- Batch 12 Release IL: `python tools/validation/release_il.py --base main --project Quire` — PASS, 2,066 checked, 0 failures; report `.mirror-cache/release-il-3e046847eafc/release-il.json`. Cumulative exact implementation count: 154 across batches 1–12.
 - Batch 10: added five exact members for save-extension handling, static save/open filters, opening files, and file-open failure handling. `OnCWDChanged` remains a generated stub because Roslyn emits `callvirt` with a local where Mathcad emits `call` with `dup`.
 - Batch 10 Release IL: `python tools/validation/release_il.py --base main --project Quire` — PASS, 2,060 checked, 0 failures; report `.mirror-cache/release-il-ce5d48a7b6be/release-il.json`. Cumulative exact implementation count: 148 across batches 1–10.

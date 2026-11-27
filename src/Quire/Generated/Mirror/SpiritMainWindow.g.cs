@@ -104,13 +104,7 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
     [global::Quire.Mirror.MirrorStub]
     private bool HandleClonningAndOpenningWorksheetInNewDocument(string fileName, global::Quire.Controls.Core.DocumentReadonlyOptions readonlyOptions, out global::Quire.Controls.Core.IEngineeringDocument doc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public string LaunchOpenFileDialogAndGetFileNameForTemplates(string templatesFolderLocation, bool overrideDialogTitle, string title = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void HandleOpenTemplateDocument(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Exception CloneWorksheetAndOpenInDocument(global::Quire.Controls.Core.IEngineeringDocument doc, string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleSaveFileFailure(global::Quire.Controls.Core.IEngineeringDocument doc, string fileName, global::System.Exception result, global::Quire.Controls.Core.IDocumentSaveOptions options) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Exception OpenFileInDocument(global::Quire.Controls.Core.IEngineeringDocument doc, string fileName, string tag) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
