@@ -402,4 +402,31 @@ public partial class AddonsCollection
 
         return false;
     }
+
+    public void CallAddonsWhenDocumentOpened(global::Quire.Controls.Core.IEngineeringDocument doc, string documentPath)
+    {
+        if (IsAddonsCollectionNotEmpty() && !string.IsNullOrEmpty(documentPath) && _documentsOpenedInSession.ContainsKey(documentPath))
+        {
+            _documentsOpenedInSession.TryGetValue(documentPath, out bool isFromPtcPlaces);
+            doc.IsDocumentFromPTCPlaces = isFromPtcPlaces;
+        }
+
+        foreach (Addon addon in _addonsCollection)
+        {
+            addon.CallAddonWhenDocumentOpened(documentPath);
+        }
+    }
+
+    public void CallAddonsWhenDocumentClosing(string documentPath)
+    {
+        if (!string.IsNullOrEmpty(documentPath))
+        {
+            foreach (Addon addon in _addonsCollection)
+            {
+                addon.CallAddonWhenDocumentClosing(documentPath);
+            }
+
+            _documentsOpenedInSession.Remove(documentPath);
+        }
+    }
 }

@@ -25,8 +25,4 @@ public partial class AddonsCollection
     private static bool _isPtcPlacesForced;
     [global::Quire.Mirror.MirrorStub]
     public string GetDisplayTitle(string filePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CallAddonsWhenDocumentOpened(global::Quire.Controls.Core.IEngineeringDocument doc, string documentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CallAddonsWhenDocumentClosing(string documentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
