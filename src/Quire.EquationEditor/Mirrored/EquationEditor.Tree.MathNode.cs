@@ -251,6 +251,18 @@ public partial class MathNode
 
     public bool HasCaretPositions => d__.HasCaretPositions;
 
+    public int ChildCount
+    {
+        get
+        {
+            if (IsNary || IsPairNary)
+            {
+                return Children.Count;
+            }
+            return d__.ChildCount;
+        }
+    }
+
     public int[] ChildrenToRemoveOnDelete => d__.ChildrenToRemoveOnDelete;
 
     public bool AllChildSlotsAreContainerSlots => d__.AllChildSlotsAreContainerSlots;
@@ -353,6 +365,18 @@ public partial class MathNode
     public bool PostFenceNavigatable => d__.PostFenceNavigatable;
 
     public bool HasContainerSlot => ContainerSlots.Length > 0;
+
+    public bool IsFullContainer
+    {
+        get
+        {
+            if (AllChildSlotsAreContainerSlots)
+            {
+                return true;
+            }
+            return d__.IsFullContainer;
+        }
+    }
 
     public bool HasLastElement
     {
