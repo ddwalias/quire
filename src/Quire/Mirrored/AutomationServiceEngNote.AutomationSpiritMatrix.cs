@@ -69,4 +69,39 @@ public partial class AutomationSpiritMatrix
             columns = 0;
         }
     }
+
+    public int SetMatrixElement(int rowIndexArg, int columnIndexArg, double valueArg)
+    {
+        try
+        {
+            if (rowIndexArg >= 0 && rowIndexArg < _matrix.Length && columnIndexArg >= 0 && columnIndexArg < _matrix[rowIndexArg].Length)
+            {
+                _matrix[rowIndexArg][columnIndexArg] = valueArg;
+                return 0;
+            }
+        }
+        catch
+        {
+        }
+
+        return -1;
+    }
+
+    public int GetMatrixElement(int rowIndexArg, int columnIndexArg, out double valueArg)
+    {
+        try
+        {
+            if (rowIndexArg >= 0 && rowIndexArg < _matrix.Length && columnIndexArg >= 0 && columnIndexArg < _matrix[rowIndexArg].Length)
+            {
+                valueArg = _matrix[rowIndexArg][columnIndexArg];
+                return 0;
+            }
+        }
+        catch
+        {
+        }
+
+        valueArg = double.NaN;
+        return -1;
+    }
 }

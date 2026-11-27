@@ -52,4 +52,17 @@ public partial class AutomationSpiritValuesSetter
         {
         }
     }
+
+    private global::Quire.Controls.Core.IORegions.ISetValueResults DoSetValues(int seconds)
+    {
+        try
+        {
+            return _collection.SetValues(seconds);
+        }
+        catch
+        {
+        }
+
+        return null;
+    }
 }

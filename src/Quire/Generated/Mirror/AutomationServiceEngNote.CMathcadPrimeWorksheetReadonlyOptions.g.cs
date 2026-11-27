@@ -12,7 +12,5 @@ namespace Quire.AutomationServiceEngNote;
 internal partial class CMathcadPrimeWorksheetReadonlyOptions : global::Quire.EngNotebook.Automation.IMathcadPrimeWorksheetReadonlyOptions, global::Quire.AutomationServiceEngNote.IConvertableToDocumentReadonlyOptions
 {
     [global::Quire.Mirror.MirrorStub]
-    public int SetOptionValue(global::Quire.EngNotebook.Automation.WorksheetReadonlyOptionNames optionNameArg, object optionValueArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public CMathcadPrimeWorksheetReadonlyOptions() { }
 }
