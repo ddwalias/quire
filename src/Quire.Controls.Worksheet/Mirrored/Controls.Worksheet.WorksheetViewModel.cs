@@ -2536,4 +2536,27 @@ internal partial class WorksheetViewModel
             ViewModel._model.RemoveItem(_item);
         }
     }
+    private void HandleItemGotFocus(IWhiteboardItem item)
+    {
+        WorksheetContent.HandleItemGotFocus(item);
+        ChangePageLayoutAndGridAreaIfNeeded(item);
+        IWhiteboardItem activeDescendant = WorksheetContent.ActiveDescendant;
+        if (ItemManager.SmartDescendantsSatisfyingCondition(item, ItemManager.IsSuppressBringIntoView).IsNullOrEmpty())
+        {
+            // Release IL tests activeDescendant != item first, so the BringIntoView(item) case is the else branch.
+            if (activeDescendant != item)
+            {
+                if (ItemManager.IsItemLoaded(activeDescendant))
+                {
+                    VisualHelper.BringIntoView(item, ItemManager.TransformBoundsToAncestor(activeDescendant, item, new Rect(ItemManager.GetRenderSize(activeDescendant))));
+                }
+            }
+            else
+            {
+                VisualHelper.BringIntoView(item);
+            }
+        }
+
+        SetActivePage(item);
+    }
 }
