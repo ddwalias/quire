@@ -44,6 +44,4 @@ public partial class StringToComboBoxMathTransformer : global::Quire.EquationEdi
     internal virtual bool bn(string A_0, out global::System.ValueTuple<bool, string, bool, string> A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode TransformStringToNumericMathTree(string value, bool parseNaNs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.EquationEditor.Tree.MathNode TransformStringMathNode(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

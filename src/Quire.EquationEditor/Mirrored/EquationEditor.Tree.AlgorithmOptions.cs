@@ -1,4 +1,8 @@
 using System;
+
+using System.Collections.Generic;
+using Quire.Mirror;
+using System;
 using System.Collections.Generic;
 
 namespace Quire.EquationEditor.Tree;
@@ -73,4 +77,10 @@ public partial class AlgorithmOptions
         }
         return "-" + string.Join(OptionSeparator.ToString(), options);
     }
+
+    [MirrorVerified("Release IL")]
+    private bool a;
+
+    [MirrorVerified("Release IL")]
+    public bool IsMultiStart { get => a; set => a = value; }
 }

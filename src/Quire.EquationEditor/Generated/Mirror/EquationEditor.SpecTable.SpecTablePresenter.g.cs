@@ -61,8 +61,6 @@ public partial class SpecTablePresenter
     [global::Quire.Mirror.MirrorStub]
     private void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void a(int A_0, int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void a(object A_0, global::Quire.EquationEditor.SpecTable.ShouldHideCellEventArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void a(global::Quire.EquationEditor.IEquationModel A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

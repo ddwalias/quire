@@ -14,10 +14,4 @@ internal partial class q : global::System.Exception
     [global::Quire.Mirror.MirrorStub]
     [global::Quire.Mirror.MirrorName("a")]
     private readonly global::Quire.Native.PtcEquationEditor.p a_;
-    [global::Quire.Mirror.MirrorStub]
-    public q(global::Quire.Native.PtcEquationEditor.p A_0) { }
-    [global::Quire.Mirror.MirrorStub]
-    public q(global::Quire.Native.PtcEquationEditor.p A_0, string A_1) { }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Native.PtcEquationEditor.p a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

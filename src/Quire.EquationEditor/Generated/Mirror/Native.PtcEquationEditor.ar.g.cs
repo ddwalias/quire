@@ -26,10 +26,6 @@ internal partial class ar
     [global::Quire.Mirror.MirrorStub]
     public ar(global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_0) : this() { }
     [global::Quire.Mirror.MirrorStub]
-    public ar(global::Quire.EquationEditor.Tree.Scoping.TypeoverState A_0) : this() { }
-    [global::Quire.Mirror.MirrorStub]
-    public ar(global::Quire.Native.PtcEquationEditor.al A_0) : this() { }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState e() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool d() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

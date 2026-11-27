@@ -15,8 +15,6 @@ internal partial class an
     [global::Quire.Mirror.MirrorName("a")]
     private readonly global::Quire.Native.PtcEquationEditor.aw a_;
     [global::Quire.Mirror.MirrorStub]
-    public an(global::Quire.Native.PtcEquationEditor.aw A_0) { }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode> c(global::Quire.Native.PtcEquationEditor.al A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DirectionalPair<global::Quire.EquationEditor.Tree.MathNode, global::Quire.EquationEditor.Tree.MathNode> b(global::Quire.Native.PtcEquationEditor.al A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

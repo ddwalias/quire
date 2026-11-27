@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 
+using System.Collections.Generic;
+
+using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire.EquationEditor.Tree.Scoping;
@@ -70,5 +73,11 @@ public partial class ScopedNodes
     {
         [MirrorVerified("Release IL")]
         public b_() { }
+    }
+
+    partial class b_
+    {
+        [MirrorVerified("Release IL")]
+        internal bool a(IList<MathNode> iList) => Enumerable.Any<MathNode>(iList, a_);
     }
 }

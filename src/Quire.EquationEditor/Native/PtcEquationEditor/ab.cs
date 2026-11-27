@@ -1,7 +1,11 @@
 #nullable disable
 using Quire.Calculation.Core;
+using Quire.Calculation.Core;
 using Quire.EquationEditor.Tree;
 using Quire.EquationEditor.Tree.Transform;
+using Quire.EquationEditor.Tree;
+using Quire.EquationEditor.Tree.Transform;
+using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire.Native.PtcEquationEditor;
@@ -31,4 +35,7 @@ internal partial class ab
 
     [MirrorVerified("Release IL")]
     public override void Accept(IResultNodeVisitor visitor) => visitor.Visit(this);
+
+    [MirrorVerified("Release IL")]
+    private void b(int valueValue) => b_ = valueValue;
 }

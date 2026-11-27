@@ -15,8 +15,6 @@ public partial class NavigatorSegment
     [global::Quire.Mirror.MirrorName("a")]
     private global::Quire.EquationEditor.Tree.Navigation.NavigatorState a_;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState LeftNavigatorState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool Linearizable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode LeftNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

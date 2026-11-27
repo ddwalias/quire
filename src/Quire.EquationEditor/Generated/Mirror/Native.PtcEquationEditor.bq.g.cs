@@ -26,8 +26,6 @@ internal partial class bq
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Native.PtcEquationEditor.bq d(global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState f() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode e() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Direction d() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

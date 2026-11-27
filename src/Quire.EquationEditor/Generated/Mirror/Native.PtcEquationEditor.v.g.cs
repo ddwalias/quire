@@ -19,10 +19,6 @@ internal partial class v : global::Quire.Native.PtcEquationEditor.t, global::Qui
     [global::Quire.Mirror.MirrorStub]
     public v() { }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Native.PtcEquationEditor.t a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void a(global::Quire.Native.PtcEquationEditor.t A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void AddUnit(string canonicalName, int powerNumerator, int powerDenominator) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Native.PtcEquationEditor.t bp() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

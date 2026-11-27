@@ -104,10 +104,6 @@ internal partial class a2
         [global::Quire.Mirror.MirrorStub]
         public b_(global::Quire.Native.PtcEquationEditor.a5 A_0, global::Quire.EquationEditor.Tree.MathNode A_1, global::System.Nullable<global::Quire.EquationEditor.Tree.Navigation.NavigatorState> A_2, global::Quire.EquationEditor.Tree.MathNode A_3, global::Quire.Native.PtcEquationEditor.a1 A_4) { }
         [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Native.PtcEquationEditor.aw d() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.Native.PtcEquationEditor.r c() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         public bool b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public bool a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

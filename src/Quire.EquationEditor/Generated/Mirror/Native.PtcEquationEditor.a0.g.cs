@@ -23,20 +23,6 @@ internal partial class a0
     [global::Quire.Mirror.MirrorStub]
     public a0(global::Quire.Native.PtcEquationEditor.a5 A_0) { }
     [global::Quire.Mirror.MirrorStub]
-    protected void a(global::Quire.Native.PtcEquationEditor.ar A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Native.PtcEquationEditor.aw h() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Native.PtcEquationEditor.r g() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Native.PtcEquationEditor.at f() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Native.PtcEquationEditor.a4 e() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Native.PtcEquationEditor.a6 d() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Native.PtcEquationEditor.a3 c() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Native.PtcEquationEditor.ar b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Native.PtcEquationEditor.ar a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

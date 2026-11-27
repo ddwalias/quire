@@ -34,10 +34,6 @@ internal partial class ad : global::Quire.Native.PtcEquationEditor.t, global::Qu
     [global::Quire.Mirror.MirrorStub]
     public ad(global::Quire.Calculation.Core.IMatrixValueProxyWrapper A_0, global::System.Func<global::Quire.Calculation.Core.IValueProxyWrapper, global::Quire.Calculation.Core.IResultNode> A_1) { }
     [global::Quire.Mirror.MirrorStub]
-    private void b(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void a(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Native.PtcEquationEditor.t bp() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Calculation.Core.IResultNode global::Quire.Calculation.Core.IMatrixResultNode.this[int r, int c] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -1,5 +1,9 @@
 using System.Runtime.CompilerServices;
+
+using System.Runtime.CompilerServices;
 using Quire.EquationEditor.Tree.Navigation;
+using Quire.EquationEditor.Tree.Navigation;
+using Quire.Mirror;
 
 namespace Quire.EquationEditor.Tree.Scoping;
 
@@ -36,4 +40,7 @@ public partial class NavigatorSegment
             return LeftNode == RightNode;
         }
     }
+
+    [MirrorVerified("Release IL")]
+    public NavigatorState LeftNavigatorState { get => a_; set => a_ = value; }
 }

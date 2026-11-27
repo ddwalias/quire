@@ -20,8 +20,6 @@ internal partial class af
     [global::Quire.Mirror.MirrorStub]
     private const string c = "cols";
     [global::Quire.Mirror.MirrorStub]
-    public af(global::System.Xml.XmlElement A_0) { }
-    [global::Quire.Mirror.MirrorStub]
     private int a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void a(string A_0, int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

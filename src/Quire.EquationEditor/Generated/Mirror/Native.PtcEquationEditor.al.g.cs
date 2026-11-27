@@ -23,10 +23,6 @@ internal partial class al : global::Quire.EquationEditor.Tree.Scoping.LinearSegm
     [global::Quire.Mirror.MirrorStub]
     public override int GetHashCode() => base.GetHashCode();
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Direction d() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Direction c() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void a(global::Quire.Direction A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

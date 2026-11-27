@@ -34,8 +34,6 @@ internal partial class ab : global::Quire.Native.PtcEquationEditor.t, global::Qu
     [global::Quire.Mirror.MirrorStub]
     public ab(int A_0, int A_1, global::Quire.TableCoordinate A_2, global::Quire.TableSize A_3) { }
     [global::Quire.Mirror.MirrorStub]
-    private void b(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override global::Quire.Native.PtcEquationEditor.t bp() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     global::Quire.Calculation.Core.IResultNode global::Quire.Calculation.Core.IMatrixResultNode.this[int r, int c] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

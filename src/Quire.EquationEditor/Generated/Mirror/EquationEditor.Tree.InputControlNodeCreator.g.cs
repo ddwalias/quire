@@ -12,7 +12,5 @@ namespace Quire.EquationEditor.Tree;
 public static partial class InputControlNodeCreator
 {
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.EquationEditor.Tree.MathNode Create(global::Quire.Controls.Core.InputControlTypes inputControlType, global::Quire.EquationEditor.Tree.IInputControlData data, global::Quire.EquationEditor.Tree.MathNode[] childrenNodes = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.EquationEditor.Tree.MathNode CreateInputField(global::Quire.EquationEditor.Tree.IInputControlData data, global::Quire.EquationEditor.Tree.MathNode[] childrenNodes = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

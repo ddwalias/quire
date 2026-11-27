@@ -19,19 +19,9 @@ internal partial class ay
     [global::Quire.Mirror.MirrorStub]
     public ay() { }
     [global::Quire.Mirror.MirrorStub]
-    public int d() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public bool c() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void a(global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void a(global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.Navigation.NavigatorState> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void a(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void a(int A_0, global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

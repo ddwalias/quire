@@ -1,6 +1,9 @@
 #nullable disable
 using Quire.EquationEditor.Tree;
 using Quire.EquationEditor.Tree.Navigation;
+using Quire.EquationEditor.Tree;
+using Quire.EquationEditor.Tree.Navigation;
+using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire.Native.PtcEquationEditor;
@@ -31,4 +34,7 @@ internal partial class bq
 
     [MirrorVerified("Release IL")]
     public static bool b(NavigatorState navigatorState) => a(Direction.Left, navigatorState);
+
+    [MirrorVerified("Release IL")]
+    public NavigatorState f() => b_;
 }

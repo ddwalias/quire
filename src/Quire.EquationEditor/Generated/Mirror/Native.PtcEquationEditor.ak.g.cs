@@ -62,8 +62,6 @@ internal partial class ak
     [global::Quire.Mirror.MirrorStub]
     public bool r() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Navigation.NavigatorState q() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode> p() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool o() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

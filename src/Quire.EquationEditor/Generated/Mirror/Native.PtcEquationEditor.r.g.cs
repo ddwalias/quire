@@ -26,8 +26,6 @@ internal partial class r
     [global::Quire.Mirror.MirrorStub]
     public r(global::Quire.EquationEditor.Tree.MathNodeDescriptorTable A_0, string A_1, string A_2) { }
     [global::Quire.Mirror.MirrorStub]
-    public string d() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNodeDescriptor c(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string a(string A_0, int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

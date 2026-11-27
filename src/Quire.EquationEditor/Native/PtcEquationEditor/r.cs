@@ -1,6 +1,9 @@
 #nullable disable
 using Quire.Controls.Core;
+using Quire.Controls.Core;
 using Quire.EquationEditor.Tree;
+using Quire.EquationEditor.Tree;
+using Quire.Mirror;
 using Quire.Mirror;
 
 namespace Quire.Native.PtcEquationEditor;
@@ -21,4 +24,7 @@ internal partial class r
 
     [MirrorVerified("Release IL")]
     public MathNode a(string text, InputControlTypes inputControlTypes) => a(text, inputControlTypes, null, null);
+
+    [MirrorVerified("Release IL")]
+    public string d() => c_;
 }

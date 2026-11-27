@@ -37,10 +37,6 @@ public partial class SExpressionParser
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Transform.ParsedSExpression Parsed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool IsValid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string ReasonInvalid { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public static string UnParse(global::Quire.EquationEditor.Tree.Transform.ParsedSExpression parsed) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void e() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
