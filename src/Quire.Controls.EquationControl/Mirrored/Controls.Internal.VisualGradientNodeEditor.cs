@@ -123,8 +123,7 @@ internal partial class VisualGradientNodeEditor : VisualMathNodeEditor<VisualGra
                 VisualMathNode[] array = (AdornedElement as VisualGradientOperatorNode)?.NodeChildren;
                 if (array != null)
                 {
-                    VisualMathNode[] array2 = array;
-                    foreach (VisualMathNode visualMathNode in array2)
+                    foreach (VisualMathNode visualMathNode in array)
                     {
                         _operandHighlighters.Add(CreateNodeHighlighter(visualMathNode, HighlightCornerStyle.Rounded, visualMathNode));
                     }

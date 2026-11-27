@@ -57,8 +57,8 @@ public partial class RootMathNode
             do
             {
                 action2 = action;
-                Action value2 = (Action)Delegate.Combine(action2, value);
-                action = Interlocked.CompareExchange(ref l, value2, action2);
+                Action updatedHandlers = (Action)Delegate.Combine(action2, value);
+                action = Interlocked.CompareExchange(ref l, updatedHandlers, action2);
             }
             while ((object)action != action2);
         }
@@ -69,8 +69,8 @@ public partial class RootMathNode
             do
             {
                 action2 = action;
-                Action value2 = (Action)Delegate.Remove(action2, value);
-                action = Interlocked.CompareExchange(ref l, value2, action2);
+                Action updatedHandlers = (Action)Delegate.Remove(action2, value);
+                action = Interlocked.CompareExchange(ref l, updatedHandlers, action2);
             }
             while ((object)action != action2);
         }
@@ -85,8 +85,8 @@ public partial class RootMathNode
             do
             {
                 eventHandler2 = eventHandler;
-                EventHandler<RequestRestoreInsertionPointEventArgs> value2 = (EventHandler<RequestRestoreInsertionPointEventArgs>)Delegate.Combine(eventHandler2, value);
-                eventHandler = Interlocked.CompareExchange(ref m, value2, eventHandler2);
+                EventHandler<RequestRestoreInsertionPointEventArgs> updatedHandlers = (EventHandler<RequestRestoreInsertionPointEventArgs>)Delegate.Combine(eventHandler2, value);
+                eventHandler = Interlocked.CompareExchange(ref m, updatedHandlers, eventHandler2);
             }
             while ((object)eventHandler != eventHandler2);
         }
@@ -97,8 +97,8 @@ public partial class RootMathNode
             do
             {
                 eventHandler2 = eventHandler;
-                EventHandler<RequestRestoreInsertionPointEventArgs> value2 = (EventHandler<RequestRestoreInsertionPointEventArgs>)Delegate.Remove(eventHandler2, value);
-                eventHandler = Interlocked.CompareExchange(ref m, value2, eventHandler2);
+                EventHandler<RequestRestoreInsertionPointEventArgs> updatedHandlers = (EventHandler<RequestRestoreInsertionPointEventArgs>)Delegate.Remove(eventHandler2, value);
+                eventHandler = Interlocked.CompareExchange(ref m, updatedHandlers, eventHandler2);
             }
             while ((object)eventHandler != eventHandler2);
         }
@@ -113,8 +113,8 @@ public partial class RootMathNode
             do
             {
                 action2 = action;
-                Action<DelegateFunction0<bool>, string, MathNode> value2 = (Action<DelegateFunction0<bool>, string, MathNode>)Delegate.Combine(action2, value);
-                action = Interlocked.CompareExchange(ref n, value2, action2);
+                Action<DelegateFunction0<bool>, string, MathNode> updatedHandlers = (Action<DelegateFunction0<bool>, string, MathNode>)Delegate.Combine(action2, value);
+                action = Interlocked.CompareExchange(ref n, updatedHandlers, action2);
             }
             while ((object)action != action2);
         }
@@ -125,8 +125,8 @@ public partial class RootMathNode
             do
             {
                 action2 = action;
-                Action<DelegateFunction0<bool>, string, MathNode> value2 = (Action<DelegateFunction0<bool>, string, MathNode>)Delegate.Remove(action2, value);
-                action = Interlocked.CompareExchange(ref n, value2, action2);
+                Action<DelegateFunction0<bool>, string, MathNode> updatedHandlers = (Action<DelegateFunction0<bool>, string, MathNode>)Delegate.Remove(action2, value);
+                action = Interlocked.CompareExchange(ref n, updatedHandlers, action2);
             }
             while ((object)action != action2);
         }
@@ -141,8 +141,8 @@ public partial class RootMathNode
             do
             {
                 action2 = action;
-                Action<MathNode> value2 = (Action<MathNode>)Delegate.Combine(action2, value);
-                action = Interlocked.CompareExchange(ref o, value2, action2);
+                Action<MathNode> updatedHandlers = (Action<MathNode>)Delegate.Combine(action2, value);
+                action = Interlocked.CompareExchange(ref o, updatedHandlers, action2);
             }
             while ((object)action != action2);
         }
@@ -153,8 +153,8 @@ public partial class RootMathNode
             do
             {
                 action2 = action;
-                Action<MathNode> value2 = (Action<MathNode>)Delegate.Remove(action2, value);
-                action = Interlocked.CompareExchange(ref o, value2, action2);
+                Action<MathNode> updatedHandlers = (Action<MathNode>)Delegate.Remove(action2, value);
+                action = Interlocked.CompareExchange(ref o, updatedHandlers, action2);
             }
             while ((object)action != action2);
         }

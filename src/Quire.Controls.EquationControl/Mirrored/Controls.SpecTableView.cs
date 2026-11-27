@@ -252,9 +252,9 @@ internal partial class SpecTableView
 
     public void FillActiveCells()
     {
-        foreach (int item2 in MatrixHelper.SubMatrixIndices(SelectedCells.Value.First, SelectedCells.Value.Second, Columns))
+        foreach (int cellIndex in MatrixHelper.SubMatrixIndices(SelectedCells.Value.First, SelectedCells.Value.Second, Columns))
         {
-            if (Children[ViewIndexFromModelIndex(item2)] is EquationControl item)
+            if (Children[ViewIndexFromModelIndex(cellIndex)] is EquationControl item)
             {
                 _activeCells.Add(item);
             }
@@ -321,8 +321,8 @@ internal partial class SpecTableView
     {
         RowColumnHelper rowColumnHelper = new RowColumnHelper(Columns);
         int num = rowColumnHelper.ColIndexFromCellIndex(modelIndex);
-        int num2 = rowColumnHelper.RowIndexFromCellIndex(modelIndex);
-        return num * Rows + num2;
+        int rowIndex = rowColumnHelper.RowIndexFromCellIndex(modelIndex);
+        return num * Rows + rowIndex;
     }
 
     private void HandleNavigateToEquationStart(object sender, ExecutedRoutedEventArgs e)

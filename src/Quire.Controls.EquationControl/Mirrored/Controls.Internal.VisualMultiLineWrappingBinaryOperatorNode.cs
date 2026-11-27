@@ -27,7 +27,7 @@ internal partial class VisualMultiLineWrappingBinaryOperatorNode
     private Rect ComputeOperatorRectangle()
     {
         Point val = new Point(_operatorTopLeft.X, _firstNodeArrangeVoffset + FirstMathNode.DesiredSize.Height);
-        Point val2 = new Point(_operatorTopLeft.X + _operator.DesiredSize.Width, _secondOperandTopLeft.Y + SecondVariantLineNode.TopLineHeight);
-        return new Rect(val, val2);
+        Point bottomRight = new Point(_operatorTopLeft.X + _operator.DesiredSize.Width, _secondOperandTopLeft.Y + SecondVariantLineNode.TopLineHeight);
+        return new Rect(val, bottomRight);
     }
 }

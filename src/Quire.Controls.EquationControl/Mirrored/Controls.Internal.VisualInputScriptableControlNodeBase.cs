@@ -336,7 +336,7 @@ internal partial class VisualInputScriptableControlNodeBase
             equationControl.MinWidth = _inputControl.MinWidth + num + 10.0;
             equationControl.MinHeight = Math.Max(_inputControl.MinHeight, val);
             equationControl.IsResizableInputControl = true;
-            for (int num2 = 0; num2 < 5; num2++)
+            for (int retry = 0; retry < 5; retry++)
             {
                 if (DocumentAttachedProperties.GetIsInPasting(equationControl) || DocumentAttachedProperties.GetIsInPrinting(equationControl))
                 {
@@ -519,7 +519,7 @@ internal partial class VisualInputScriptableControlNodeBase
         }
 
         int num = MatrixHelper.RowOf(indexOfNode, ColumnCount);
-        int num2 = MatrixHelper.ColumnOf(indexOfNode, ColumnCount);
+        int columnIndex = MatrixHelper.ColumnOf(indexOfNode, ColumnCount);
         if (num == 0 && _matrixInfo.RowsBeforeViewport > 0)
         {
             rowShift = -1;
@@ -529,11 +529,11 @@ internal partial class VisualInputScriptableControlNodeBase
             rowShift = 1;
         }
 
-        if (num2 == 0 && _matrixInfo.ColsBeforeViewport > 0)
+        if (columnIndex == 0 && _matrixInfo.ColsBeforeViewport > 0)
         {
             columnShift = -1;
         }
-        else if (num2 == ColumnCount - 1 && _matrixInfo.ColsAfterViewport > 0)
+        else if (columnIndex == ColumnCount - 1 && _matrixInfo.ColsAfterViewport > 0)
         {
             columnShift = 1;
         }
@@ -566,18 +566,18 @@ internal partial class VisualInputScriptableControlNodeBase
             return new VisualMathNodeHitTestResult(this, Direction.Left, Direction.Indeterminate, hitPoint);
         }
 
-        Point val2 = TransformToDescendant(_matrixGrid).Transform(hitPoint);
-        if (val2.X < 0.0)
+        Point matrixPoint = TransformToDescendant(_matrixGrid).Transform(hitPoint);
+        if (matrixPoint.X < 0.0)
         {
             return new VisualMathNodeHitTestResult(this, Direction.Left, Direction.Left, hitPoint);
         }
 
-        if (val2.X > _matrixGrid.ActualWidth)
+        if (matrixPoint.X > _matrixGrid.ActualWidth)
         {
-            val2.X = _matrixGrid.ActualWidth;
+            matrixPoint.X = _matrixGrid.ActualWidth;
         }
 
-        VisualMathNode visualMathNode = _matrixGrid.CellFromPoint(val2);
+        VisualMathNode visualMathNode = _matrixGrid.CellFromPoint(matrixPoint);
         GeneralTransform generalTransform = TransformToDescendant(visualMathNode);
         return visualMathNode.GetNodeAtPoint(generalTransform.Transform(hitPoint));
     }
@@ -799,11 +799,11 @@ internal partial class VisualInputScriptableControlNodeBase
         }
         else
         {
-            int num2 = heading.Name == "RowHeading" ? _matrixInfo.ViewportSize.Rows : _matrixInfo.ViewportSize.Columns;
+            int headingCount = heading.Name == "RowHeading" ? _matrixInfo.ViewportSize.Rows : _matrixInfo.ViewportSize.Columns;
             int origin = _matrixInfo.Origin;
-            for (int num3 = 0; num3 < num2; num3++)
+            for (int headingIndex = 0; headingIndex < headingCount; headingIndex++)
             {
-                arrayList.Add((num3 + origin).ToString());
+                arrayList.Add((headingIndex + origin).ToString());
             }
         }
 
@@ -869,19 +869,19 @@ internal partial class VisualInputScriptableControlNodeBase
             ColumnHeading.Children.Add(element);
         }
 
-        for (int num2 = 0; num2 < _matrixInfo.ViewportSize.Columns; num2++)
+        for (int columnIndex = 0; columnIndex < _matrixInfo.ViewportSize.Columns; columnIndex++)
         {
             element = new Label
             {
-                Content = (_matrixInfo.Origin + _matrixInfo.ViewportOffset.Column + num2).ToString()
+                Content = (_matrixInfo.Origin + _matrixInfo.ViewportOffset.Column + columnIndex).ToString()
             };
             ColumnHeading.Children.Add(element);
         }
 
         if (_matrixInfo.Remainder.Columns > 0)
         {
-            int num3 = _matrixInfo.ViewportSize.Columns - 1 + _matrixInfo.Remainder.Columns + _matrixInfo.ViewportOffset.Column + _matrixInfo.Origin;
-            string content4 = " ⋮\n" + num3;
+            int finalColumnIndex = _matrixInfo.ViewportSize.Columns - 1 + _matrixInfo.Remainder.Columns + _matrixInfo.ViewportOffset.Column + _matrixInfo.Origin;
+            string content4 = " ⋮\n" + finalColumnIndex;
             element = new Label
             {
                 Content = content4

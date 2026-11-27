@@ -399,13 +399,13 @@ public partial class EditableComboBoxViewModel
         DiscreteRect tableRect = GetTableRect(cellIndexA, cellIndexB);
         bool flag = tableRect.Top <= 1 && tableRect.Bottom == Rows - 1;
         bool num = tableRect.Top == 0 && tableRect.Bottom == Rows - 1;
-        bool flag2 = tableRect.Left == 0 && tableRect.Right == Columns - 1;
-        onlyClearSelectionContent |= flag2 & flag;
+        bool selectsAllColumns = tableRect.Left == 0 && tableRect.Right == Columns - 1;
+        onlyClearSelectionContent |= selectsAllColumns & flag;
         if (num && !onlyClearSelectionContent)
         {
             DeleteColumns(tableRect.Left, tableRect.Right, assertIfCannotDelete: false, isFinishedEditingMode: false);
         }
-        else if (flag2 && !onlyClearSelectionContent)
+        else if (selectsAllColumns && !onlyClearSelectionContent)
         {
             DeleteRows(tableRect.Top, tableRect.Bottom, assertIfCannotDelete: false, isFinishedEditingMode: false);
         }
@@ -460,25 +460,25 @@ public partial class EditableComboBoxViewModel
             fromIndex = toIndex;
             toIndex = num;
         }
-        int? num2 = null;
-        for (int num3 = toIndex; num3 >= fromIndex; num3--)
+        int? intervalEnd = null;
+        for (int index = toIndex; index >= fromIndex; index--)
         {
-            if (condition(num3))
+            if (condition(index))
             {
-                if (!num2.HasValue)
+                if (!intervalEnd.HasValue)
                 {
-                    num2 = num3;
+                    intervalEnd = index;
                 }
             }
-            else if (num2.HasValue)
+            else if (intervalEnd.HasValue)
             {
-                notify(num3 + 1, num2.Value);
-                num2 = null;
+                notify(index + 1, intervalEnd.Value);
+                intervalEnd = null;
             }
         }
-        if (num2.HasValue)
+        if (intervalEnd.HasValue)
         {
-            notify(fromIndex, num2.Value);
+            notify(fromIndex, intervalEnd.Value);
         }
     }
 

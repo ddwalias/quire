@@ -59,9 +59,9 @@ public abstract partial class InputControlClearScriptEngine
             {
                 num = 2;
             }
-            string[] array2 = array[num].Split(':');
-            array2[0] = Math.Max(int.Parse(array2[0]) - _linesCountErrorCurrection / 2 + 1, 1).ToString();
-            return array[0] + array[1] + array2[0] + ":" + array2[1];
+            string[] errorLocation = array[num].Split(':');
+            errorLocation[0] = Math.Max(int.Parse(errorLocation[0]) - _linesCountErrorCurrection / 2 + 1, 1).ToString();
+            return array[0] + array[1] + errorLocation[0] + ":" + errorLocation[1];
         }
         return ex.ErrorDetails;
     }

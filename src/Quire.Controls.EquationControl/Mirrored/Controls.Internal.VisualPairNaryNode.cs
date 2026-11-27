@@ -99,43 +99,43 @@ internal partial class VisualPairNaryNode
     protected override Size MeasureOverride(Size availableSize)
     {
         int num = _nodeChildren.Length;
-        int num2 = _operatorParts.Length;
+        int operatorCount = _operatorParts.Length;
         Size contentSize;
-        double val2;
+        double leftContentWidth;
         double height;
-        double val3;
+        double rightContentWidth;
         double height2;
         Size result;
-        double num4;
-        double num5;
-        double num6;
+        double x;
+        double childX;
+        double y;
         for (int i = 0; i < num; i++)
         {
             _nodeChildren[i].Measure(WpfUtils.SizeInfinity);
         }
-        for (int j = 0; j < num2; j++)
+        for (int j = 0; j < operatorCount; j++)
         {
             _operatorParts[j].Measure(WpfUtils.SizeInfinity);
         }
         contentSize = new Size(0.0, 0.0);
-        for (int k = 0; k < num2; k++)
+        for (int k = 0; k < operatorCount; k++)
         {
-            if (k == num2 - 1 && _hasLastSymbol)
+            if (k == operatorCount - 1 && _hasLastSymbol)
             {
-                val2 = _operatorParts[k].DesiredSize.Width;
+                leftContentWidth = _operatorParts[k].DesiredSize.Width;
                 height = _operatorParts[k].DesiredSize.Height;
-                val3 = 8.0 + _nodeChildren[k * 2].DesiredSize.Width;
+                rightContentWidth = 8.0 + _nodeChildren[k * 2].DesiredSize.Width;
                 height2 = _nodeChildren[k * 2].DesiredSize.Height;
             }
             else
             {
-                val2 = _operatorParts[k].DesiredSize.Width + 4.0 + _nodeChildren[k * 2].DesiredSize.Width;
+                leftContentWidth = _operatorParts[k].DesiredSize.Width + 4.0 + _nodeChildren[k * 2].DesiredSize.Width;
                 height = _nodeChildren[k * 2].DesiredSize.Height;
-                val3 = 8.0 + _nodeChildren[k * 2 + 1].DesiredSize.Width;
+                rightContentWidth = 8.0 + _nodeChildren[k * 2 + 1].DesiredSize.Width;
                 height2 = _nodeChildren[k * 2 + 1].DesiredSize.Height;
             }
             contentSize.Height += height + height2;
-            contentSize.Width = Math.Max(contentSize.Width, Math.Max(val2, val3));
+            contentSize.Width = Math.Max(contentSize.Width, Math.Max(leftContentWidth, rightContentWidth));
         }
         _operatorRightMinorPart.ContentSize = contentSize;
         _operatorRightMinorPart.Measure(WpfUtils.SizeInfinity);
@@ -143,25 +143,25 @@ internal partial class VisualPairNaryNode
         result.Width = contentSize.Width + _operatorRightMinorPart.DesiredSize.Width;
         result.Height = _operatorRightMinorPart.DesiredSize.Height;
         _verticalOffset = (result.Height - contentSize.Height) / 2.0;
-        num4 = 0.0;
-        num5 = num4 + 8.0;
-        num6 = _verticalOffset;
-        for (int l = 0; l < num2; l++)
+        x = 0.0;
+        childX = x + 8.0;
+        y = _verticalOffset;
+        for (int l = 0; l < operatorCount; l++)
         {
-            if (l == num2 - 1 && _hasLastSymbol)
+            if (l == operatorCount - 1 && _hasLastSymbol)
             {
-                _operatorPartsTopLeft[l] = new Point(num4, num6);
-                num6 += _operatorParts[l].DesiredSize.Height;
-                _operandsTopLeft[l * 2] = new Point(num5, num6);
-                num6 += _nodeChildren[l * 2].DesiredSize.Height;
+                _operatorPartsTopLeft[l] = new Point(x, y);
+                y += _operatorParts[l].DesiredSize.Height;
+                _operandsTopLeft[l * 2] = new Point(childX, y);
+                y += _nodeChildren[l * 2].DesiredSize.Height;
             }
             else
             {
-                _operatorPartsTopLeft[l] = new Point(num4, num6 + _nodeChildren[l * 2].TextBaselineY - _operatorParts[l].TextBaselineY);
-                _operandsTopLeft[l * 2] = new Point(num4 + _operatorParts[l].DesiredSize.Width + 4.0, num6);
-                num6 += _nodeChildren[l * 2].DesiredSize.Height;
-                _operandsTopLeft[l * 2 + 1] = new Point(num5, num6);
-                num6 += _nodeChildren[l * 2 + 1].DesiredSize.Height;
+                _operatorPartsTopLeft[l] = new Point(x, y + _nodeChildren[l * 2].TextBaselineY - _operatorParts[l].TextBaselineY);
+                _operandsTopLeft[l * 2] = new Point(x + _operatorParts[l].DesiredSize.Width + 4.0, y);
+                y += _nodeChildren[l * 2].DesiredSize.Height;
+                _operandsTopLeft[l * 2 + 1] = new Point(childX, y);
+                y += _nodeChildren[l * 2 + 1].DesiredSize.Height;
             }
         }
         _operatorRightMinorPartTopLeft = new Point(_operatorRightMinorPart.ContentSize.Width, 0.0);
@@ -172,8 +172,8 @@ internal partial class VisualPairNaryNode
     protected override Size ArrangeOverride(Size finalSize)
     {
         int num = _nodeChildren.Length;
-        int num2 = _operatorParts.Length;
-        for (int i = 0; i < num2; i++)
+        int operatorCount = _operatorParts.Length;
+        for (int i = 0; i < operatorCount; i++)
         {
             _operatorParts[i].Arrange(new Rect(_operatorPartsTopLeft[i], _operatorParts[i].DesiredSize));
         }
@@ -192,66 +192,66 @@ internal partial class VisualPairNaryNode
         {
             return new VisualMathNodeHitTestResult(this, Direction.Right, null, hitPoint);
         }
-        Point val2 = TransformToDescendant(_operatorParts[0]).Transform(hitPoint);
-        if (val2.X <= 0.0)
+        Point firstOperatorPoint = TransformToDescendant(_operatorParts[0]).Transform(hitPoint);
+        if (firstOperatorPoint.X <= 0.0)
         {
             return new VisualMathNodeHitTestResult(this, Direction.Left, null, hitPoint);
         }
         int num = 0;
-        int num2 = _operatorParts.Length;
-        int num5;
+        int operatorCount = _operatorParts.Length;
+        int childIndex;
         Point hitPoint2;
-        for (int i = 0; i < num2; i++)
+        for (int i = 0; i < operatorCount; i++)
         {
-            double num3;
+            double upperBoundary;
             if (i == 0)
             {
-                num3 = double.NegativeInfinity;
+                upperBoundary = double.NegativeInfinity;
             }
-            else if (i == num2 - 1 && _hasLastSymbol)
+            else if (i == operatorCount - 1 && _hasLastSymbol)
             {
-                num3 = _operatorPartsTopLeft[i].Y;
+                upperBoundary = _operatorPartsTopLeft[i].Y;
             }
             else
             {
-                num3 = _operandsTopLeft[i * 2].Y;
+                upperBoundary = _operandsTopLeft[i * 2].Y;
             }
-            double num4;
-            if (i == num2 - 1)
+            double lowerBoundary;
+            if (i == operatorCount - 1)
             {
-                num4 = double.PositiveInfinity;
+                lowerBoundary = double.PositiveInfinity;
             }
-            else if (i == num2 - 2 && _hasLastSymbol)
+            else if (i == operatorCount - 2 && _hasLastSymbol)
             {
-                num4 = _operatorPartsTopLeft[i + 1].Y;
+                lowerBoundary = _operatorPartsTopLeft[i + 1].Y;
             }
             else
             {
-                num4 = _operandsTopLeft[(i + 1) * 2].Y;
+                lowerBoundary = _operandsTopLeft[(i + 1) * 2].Y;
             }
-            if (hitPoint.Y >= num3 && hitPoint.Y <= num4)
+            if (hitPoint.Y >= upperBoundary && hitPoint.Y <= lowerBoundary)
             {
                 num = i;
                 break;
             }
         }
-        num5 = num * 2 + 1;
-        if (num == num2 - 1 && _hasLastSymbol)
+        childIndex = num * 2 + 1;
+        if (num == operatorCount - 1 && _hasLastSymbol)
         {
-            num5 = num * 2;
+            childIndex = num * 2;
         }
-        hitPoint2 = TransformToDescendant(_nodeChildren[num5]).Transform(hitPoint);
+        hitPoint2 = TransformToDescendant(_nodeChildren[childIndex]).Transform(hitPoint);
         if (hitPoint2.Y >= 0.0)
         {
-            return _nodeChildren[num5].GetNodeAtPoint(hitPoint2);
+            return _nodeChildren[childIndex].GetNodeAtPoint(hitPoint2);
         }
-        if (num != num2 - 1 || !_hasLastSymbol)
+        if (num != operatorCount - 1 || !_hasLastSymbol)
         {
-            int num6 = num * 2;
-            Point hitPoint3 = TransformToDescendant(_nodeChildren[num6]).Transform(hitPoint);
+            int firstChildIndex = num * 2;
+            Point hitPoint3 = TransformToDescendant(_nodeChildren[firstChildIndex]).Transform(hitPoint);
             if (hitPoint3.X >= 0.0)
             {
-                return _nodeChildren[num6].GetNodeAtPoint(hitPoint3);
+                return _nodeChildren[firstChildIndex].GetNodeAtPoint(hitPoint3);
             }
         }
         return new VisualMathNodeHitTestResult(this, Direction.Indeterminate, num, hitPoint);

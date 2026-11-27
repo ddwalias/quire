@@ -102,21 +102,21 @@ public partial class ListBoxModel
                 IsSort = result;
                 _isSortChanged = false;
             }
-            if (hashtable.ContainsKey("rightAlignedText") && bool.TryParse(hashtable["rightAlignedText"].ToString(), out var result2))
+            if (hashtable.ContainsKey("rightAlignedText") && bool.TryParse(hashtable["rightAlignedText"].ToString(), out var isRightAligned))
             {
-                FlowDirection = (result2 ? FlowDirection.RightToLeft : FlowDirection.LeftToRight);
+                FlowDirection = (isRightAligned ? FlowDirection.RightToLeft : FlowDirection.LeftToRight);
             }
-            if (hashtable.ContainsKey("CurSel") && double.TryParse(hashtable["CurSel"].ToString(), out var result3))
+            if (hashtable.ContainsKey("CurSel") && double.TryParse(hashtable["CurSel"].ToString(), out var selectedValueIndex))
             {
-                if (Data.SelectedValueIndex != result3 || IsSort)
+                if (Data.SelectedValueIndex != selectedValueIndex || IsSort)
                 {
-                    Data.SelectedValueIndex = result3;
-                    valueIndex = result3;
+                    Data.SelectedValueIndex = selectedValueIndex;
+                    valueIndex = selectedValueIndex;
                     OnPropertyChanged("SelectedIndex");
                 }
-                else if (((double)valueIndex != result3) | flag)
+                else if (((double)valueIndex != selectedValueIndex) | flag)
                 {
-                    valueIndex = result3;
+                    valueIndex = selectedValueIndex;
                     OnPropertyChanged("SelectedIndex");
                 }
             }

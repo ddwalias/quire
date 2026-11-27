@@ -115,13 +115,13 @@ public abstract partial class InputControlModel
     protected Size GetFieldSizeFormSExpression(string sexpression, string sexpressionTag)
     {
         int num = 0;
-        int num2 = 0;
+        int width = 0;
         if (sexpression != null && !(sexpression == "PLACEHOLDER") && !sexpression.Contains("1 1 @PLACEHOLDER") && sexpression.IndexOf(sexpressionTag) == 0)
         {
             num = int.Parse(sexpression.Substring(sexpressionTag.Length, 2));
-            num2 = int.Parse(sexpression.Substring(sexpressionTag.Length + 2, 2));
+            width = int.Parse(sexpression.Substring(sexpressionTag.Length + 2, 2));
         }
 
-        return new Size(num2, num);
+        return new Size(width, num);
     }
 }

@@ -154,10 +154,10 @@ internal partial class SliderModel
             Data.SelectedValueIndex = value;
             Data.IsNeedsCalculate = false;
             string exception = null;
-            object value2 = Data.SelectedValueIndex;
+            object selectedValue = Data.SelectedValueIndex;
             _data.SelectedCalculatedValue = scriptableEngine.GetCalculatedValue(
                 Script,
-                ref value2,
+                ref selectedValue,
                 out object scriptControlObject,
                 out exception,
                 Data.InputsResultValue,
@@ -165,7 +165,7 @@ internal partial class SliderModel
                 {
                     IsInteractChanged = true
                 });
-            HandlePostInputFieldResultChanged(ref value2, scriptControlObject, exception);
+            HandlePostInputFieldResultChanged(ref selectedValue, scriptControlObject, exception);
             if (exception != null)
             {
                 EngineError = exception;

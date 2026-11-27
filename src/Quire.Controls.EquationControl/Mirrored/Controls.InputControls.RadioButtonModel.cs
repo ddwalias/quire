@@ -49,18 +49,18 @@ internal partial class RadioButtonModel
             {
                 FlowDirection = (result ? FlowDirection.RightToLeft : FlowDirection.LeftToRight);
             }
-            if (hashtable.ContainsKey("orientation") && double.TryParse(hashtable["orientation"].ToString(), out var result2))
+            if (hashtable.ContainsKey("orientation") && double.TryParse(hashtable["orientation"].ToString(), out var orientationValue))
             {
-                Orientation = (result2 == 0.0 ? Orientation.Horizontal : Orientation.Vertical);
+                Orientation = (orientationValue == 0.0 ? Orientation.Horizontal : Orientation.Vertical);
             }
             if (hashtable.ContainsKey("CurSel"))
             {
-                if (double.TryParse(hashtable["CurSel"].ToString(), out var result3))
+                if (double.TryParse(hashtable["CurSel"].ToString(), out var selectedValueIndex))
                 {
-                    if (Data.SelectedValueIndex != result3)
+                    if (Data.SelectedValueIndex != selectedValueIndex)
                     {
-                        Data.SelectedValueIndex = result3;
-                        valueIndex = result3;
+                        Data.SelectedValueIndex = selectedValueIndex;
+                        valueIndex = selectedValueIndex;
                         IsDirty = !isRecalculate;
                         OnPropertyChanged("SelectedIndex");
                     }
@@ -80,14 +80,14 @@ internal partial class RadioButtonModel
         {
             Data.SelectedValueIndex = (int)value;
             string exception = null;
-            object value2 = value;
+            object calculatedValue = value;
             if (value >= 0.0)
             {
-                _data.SelectedCalculatedValue = scriptableEngine.GetCalculatedValue(Script, ref value2, out object scriptControlObject, out exception, Data.InputsResultValue, new ScriptEngineParams(Data)
+                _data.SelectedCalculatedValue = scriptableEngine.GetCalculatedValue(Script, ref calculatedValue, out object scriptControlObject, out exception, Data.InputsResultValue, new ScriptEngineParams(Data)
                 {
                     IsInteractChanged = true
                 });
-                HandlePostInputFieldResultChanged(ref value2, scriptControlObject, exception);
+                HandlePostInputFieldResultChanged(ref calculatedValue, scriptControlObject, exception);
             }
             if (exception != null)
             {

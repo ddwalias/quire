@@ -50,14 +50,14 @@ internal partial class VisualDerivativeSymbolNode : VisualMathNode, IGeometryPro
             Geometry geometry4 = _orderSymbol.Geometry;
             Point val = _fractionBar.TransformToAncestor(this).Transform(new Point(VisualOffset.X, VisualOffset.Y));
             geometry.Transform = new TranslateTransform(val.X, val.Y);
-            Point val2 = _upperDerivativeSymbol.TransformToAncestor(this).Transform(new Point(VisualOffset.X, VisualOffset.Y));
-            geometry2.Transform = new TranslateTransform(val2.X, val2.Y);
-            Point val3 = _lowerDerivativeSymbol.TransformToAncestor(this).Transform(new Point(VisualOffset.X, VisualOffset.Y));
-            geometry3.Transform = new TranslateTransform(val3.X, val3.Y);
+            Point upperSymbolOffset = _upperDerivativeSymbol.TransformToAncestor(this).Transform(new Point(VisualOffset.X, VisualOffset.Y));
+            geometry2.Transform = new TranslateTransform(upperSymbolOffset.X, upperSymbolOffset.Y);
+            Point lowerSymbolOffset = _lowerDerivativeSymbol.TransformToAncestor(this).Transform(new Point(VisualOffset.X, VisualOffset.Y));
+            geometry3.Transform = new TranslateTransform(lowerSymbolOffset.X, lowerSymbolOffset.Y);
             if (!geometry4.IsEmpty())
             {
-                Point val4 = _orderSymbol.TransformToAncestor(this).Transform(new Point(VisualOffset.X, VisualOffset.Y));
-                geometry4.Transform = new TranslateTransform(val4.X, val4.Y);
+                Point orderSymbolOffset = _orderSymbol.TransformToAncestor(this).Transform(new Point(VisualOffset.X, VisualOffset.Y));
+                geometry4.Transform = new TranslateTransform(orderSymbolOffset.X, orderSymbolOffset.Y);
             }
             return new GeometryGroup
             {

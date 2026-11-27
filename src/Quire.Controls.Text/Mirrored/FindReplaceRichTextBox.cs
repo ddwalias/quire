@@ -218,10 +218,10 @@ public partial class FindReplaceRichTextBox
         foreach (Hyperlink item in range.EnumerateHyperlinksInRange().ToList())
         {
             System.Windows.Documents.Paragraph paragraph = item.Parent as System.Windows.Documents.Paragraph;
-            foreach (Inline item2 in item.Inlines.ToList())
+            foreach (Inline inline in item.Inlines.ToList())
             {
-                item.Inlines.Remove(item2);
-                paragraph?.Inlines.InsertBefore(item, item2);
+                item.Inlines.Remove(inline);
+                paragraph?.Inlines.InsertBefore(item, inline);
             }
             paragraph?.Inlines.Remove(item);
         }

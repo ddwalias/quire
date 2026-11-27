@@ -106,19 +106,19 @@ internal partial class d : b
     private static int a(IList<double> A_0, double A_1)
     {
         double num = 0.0;
-        int num2;
-        for (num2 = 0; num2 < A_0.Count; num2++)
+        int characterIndex;
+        for (characterIndex = 0; characterIndex < A_0.Count; characterIndex++)
         {
-            double num3 = A_0[num2];
-            if (A_1 < num + num3 / 2.0)
+            double characterWidth = A_0[characterIndex];
+            if (A_1 < num + characterWidth / 2.0)
             {
                 break;
             }
 
-            num += num3;
+            num += characterWidth;
         }
 
-        return num2;
+        return characterIndex;
     }
 
     public d()

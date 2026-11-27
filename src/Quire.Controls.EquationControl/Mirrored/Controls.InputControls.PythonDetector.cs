@@ -67,8 +67,7 @@ public static partial class PythonDetector
         };
         Version version = null;
         string result = null;
-        string[] array2 = array;
-        foreach (string path in array2)
+        foreach (string path in array)
         {
             if (!Directory.Exists(path))
             {

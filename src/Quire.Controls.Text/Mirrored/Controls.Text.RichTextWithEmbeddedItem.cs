@@ -1176,31 +1176,31 @@ private static void RequestNavigateHandler(object sender, System.Windows.Navigat
         {
             return null;
         }
-        int num = itemXamls.Sum((string itemXaml) => itemXaml.Length);
-        if (num == 0)
+        int totalEmbeddedMarkupLength = itemXamls.Sum((string itemXaml) => itemXaml.Length);
+        if (totalEmbeddedMarkupLength == 0)
         {
             return null;
         }
-        System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder(xaml.Length + num);
-        int num2 = 0;
+        System.Text.StringBuilder stringBuilder = new System.Text.StringBuilder(xaml.Length + totalEmbeddedMarkupLength);
+        int xamlOffset = 0;
         foreach (string itemXaml in itemXamls)
         {
             bool flag = itemXaml.StartsWith("<BlockUIContainer");
             string text = (flag ? "> </Paragraph>" : "> </Run>");
             string value = (flag ? "<Paragraph" : "<Run");
-            int num3 = xaml.IndexOf(text, num2);
+            int closingTagIndex = xaml.IndexOf(text, xamlOffset);
             if (string.IsNullOrEmpty(itemXaml))
             {
-                stringBuilder.Append(xaml, num2, num3 + text.Length - num2);
+                stringBuilder.Append(xaml, xamlOffset, closingTagIndex + text.Length - xamlOffset);
             }
             else
             {
-                int num4 = xaml.LastIndexOf(value, num3);
-                stringBuilder.Append(xaml, num2, num4 - num2).Append(itemXaml);
+                int openingTagIndex = xaml.LastIndexOf(value, closingTagIndex);
+                stringBuilder.Append(xaml, xamlOffset, openingTagIndex - xamlOffset).Append(itemXaml);
             }
-            num2 = num3 + text.Length;
+            xamlOffset = closingTagIndex + text.Length;
         }
-        stringBuilder.Append(xaml, num2, xaml.Length - num2);
+        stringBuilder.Append(xaml, xamlOffset, xaml.Length - xamlOffset);
         return stringBuilder.ToString();
     }
 
@@ -2218,9 +2218,9 @@ private static void RequestNavigateHandler(object sender, System.Windows.Navigat
         using (new CommandScope(new CompoundCommand()))
         {
             CloneContent(original);
-            foreach (IWhiteboardItem item2 in original.WhiteboardItems.Reverse())
+            foreach (IWhiteboardItem whiteboardItem in original.WhiteboardItems.Reverse())
             {
-                IWhiteboardItemInText whiteboardItemInText = item2 as IWhiteboardItemInText;
+                IWhiteboardItemInText whiteboardItemInText = whiteboardItem as IWhiteboardItemInText;
                 if (DebugTools.AssertNotNull(whiteboardItemInText, null).Failed)
                 {
                     return;
@@ -2448,26 +2448,26 @@ private static void RequestNavigateHandler(object sender, System.Windows.Navigat
         }
         if (direction == LogicalDirection.Forward)
         {
-            foreach (IWhiteboardItemInText item2 in WhiteboardItems.Cast<IWhiteboardItemInText>())
+            foreach (IWhiteboardItemInText embeddedItem in WhiteboardItems.Cast<IWhiteboardItemInText>())
             {
-                InlineUIContainer container2 = GetContainer(item2);
-                if (container2 == null)
+                InlineUIContainer embeddedItemContainer = GetContainer(embeddedItem);
+                if (embeddedItemContainer == null)
                 {
                     continue;
                 }
-                TextPointer insertionPosition = container2.ElementStart.GetInsertionPosition(LogicalDirection.Backward);
+                TextPointer insertionPosition = embeddedItemContainer.ElementStart.GetInsertionPosition(LogicalDirection.Backward);
                 if (insertionPosition.CompareTo(textPointer) >= 0)
                 {
                     if (findInText && FindInRange(textPointer, insertionPosition, text, direction, options, subscriptPositions))
                     {
                         return true;
                     }
-                    if (FindInEmbeddedItem(item2, text, startFromCaret: false, direction, options, subscriptPositions))
+                    if (FindInEmbeddedItem(embeddedItem, text, startFromCaret: false, direction, options, subscriptPositions))
                     {
-                        ActiveItem = item2;
+                        ActiveItem = embeddedItem;
                         return true;
                     }
-                    textPointer = container2.ElementEnd.GetInsertionPosition(LogicalDirection.Forward);
+                    textPointer = embeddedItemContainer.ElementEnd.GetInsertionPosition(LogicalDirection.Forward);
                 }
             }
             if (findInText)
@@ -2476,26 +2476,26 @@ private static void RequestNavigateHandler(object sender, System.Windows.Navigat
             }
             return false;
         }
-        foreach (IWhiteboardItemInText item3 in WhiteboardItems.Reverse().Cast<IWhiteboardItemInText>())
+        foreach (IWhiteboardItemInText embeddedItem in WhiteboardItems.Reverse().Cast<IWhiteboardItemInText>())
         {
-            InlineUIContainer container3 = GetContainer(item3);
-            if (container3 == null)
+            InlineUIContainer embeddedItemContainer = GetContainer(embeddedItem);
+            if (embeddedItemContainer == null)
             {
                 continue;
             }
-            TextPointer insertionPosition2 = container3.ElementEnd.GetInsertionPosition(LogicalDirection.Forward);
+            TextPointer insertionPosition2 = embeddedItemContainer.ElementEnd.GetInsertionPosition(LogicalDirection.Forward);
             if (insertionPosition2.CompareTo(textPointer) <= 0)
             {
                 if (findInText && FindInRange(insertionPosition2, textPointer, text, direction, options, subscriptPositions))
                 {
                     return true;
                 }
-                if (FindInEmbeddedItem(item3, text, startFromCaret: false, direction, options, subscriptPositions))
+                if (FindInEmbeddedItem(embeddedItem, text, startFromCaret: false, direction, options, subscriptPositions))
                 {
-                    ActiveItem = item3;
+                    ActiveItem = embeddedItem;
                     return true;
                 }
-                textPointer = container3.ElementStart.GetInsertionPosition(LogicalDirection.Backward);
+                textPointer = embeddedItemContainer.ElementStart.GetInsertionPosition(LogicalDirection.Backward);
             }
         }
         if (findInText)

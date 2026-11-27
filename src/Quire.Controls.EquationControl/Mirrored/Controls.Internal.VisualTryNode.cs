@@ -91,18 +91,18 @@ internal partial class VisualTryNode : VisualMathNode
         _verticalOffset = (result.Height - contentSize.Height) / 2.0;
 
         double num = 0.0;
-        double num2 = num + 8.0;
-        double num3 = TextBaselineY - _tryOperator.TextBaselineY;
-        _tryOperatorTopLeft = new Point(num, num3);
-        num3 += _tryOperator.DesiredSize.Height;
-        _firstChildTopLeft = new Point(num2, num3);
-        num3 += _nodeChildren[0].DesiredSize.Height;
-        _onErrorOperatorTopLeft = new Point(num, num3);
-        num3 += _onErrorOperator.DesiredSize.Height;
-        _secondChildTopLeft = new Point(num2, num3);
+        double childX = num + 8.0;
+        double y = TextBaselineY - _tryOperator.TextBaselineY;
+        _tryOperatorTopLeft = new Point(num, y);
+        y += _tryOperator.DesiredSize.Height;
+        _firstChildTopLeft = new Point(childX, y);
+        y += _nodeChildren[0].DesiredSize.Height;
+        _onErrorOperatorTopLeft = new Point(num, y);
+        y += _onErrorOperator.DesiredSize.Height;
+        _secondChildTopLeft = new Point(childX, y);
         double width = _operatorRightMinorPart.ContentSize.Width;
-        num3 = 0.0;
-        _operatorRightMinorPartTopLeft = new Point(width, num3);
+        y = 0.0;
+        _operatorRightMinorPartTopLeft = new Point(width, y);
         FireMeasureOverideCompleted();
         return result;
     }
@@ -124,8 +124,8 @@ internal partial class VisualTryNode : VisualMathNode
         {
             return new VisualMathNodeHitTestResult(this, Direction.Right, Direction.Indeterminate, hitPoint);
         }
-        Point val2 = TransformToDescendant(_tryOperator).Transform(hitPoint);
-        if (val2.X <= 0.0)
+        Point tryOperatorPoint = TransformToDescendant(_tryOperator).Transform(hitPoint);
+        if (tryOperatorPoint.X <= 0.0)
         {
             return new VisualMathNodeHitTestResult(this, Direction.Left, Direction.Indeterminate, hitPoint);
         }
@@ -134,8 +134,8 @@ internal partial class VisualTryNode : VisualMathNode
         {
             return _nodeChildren[1].GetNodeAtPoint(hitPoint2);
         }
-        Point val3 = TransformToDescendant(_onErrorOperator).Transform(hitPoint);
-        if (val3.Y >= 0.0)
+        Point onErrorOperatorPoint = TransformToDescendant(_onErrorOperator).Transform(hitPoint);
+        if (onErrorOperatorPoint.Y >= 0.0)
         {
             return new VisualMathNodeHitTestResult(this, Direction.Indeterminate, Direction.Right, hitPoint);
         }

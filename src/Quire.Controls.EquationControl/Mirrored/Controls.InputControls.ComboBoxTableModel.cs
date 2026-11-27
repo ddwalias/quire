@@ -120,14 +120,14 @@ public partial class ComboBoxTableModel
         }
 
         IList<(string rowName, IList<string> rowValues)> dataRowsList = data.GroupByRows;
-        int num = dataRowsList.Count + 1;
-        int num2 = data.Units.Count + 1;
-        if (DebugTools.DevAssert(num >= 2 && num2 >= 2, null).Failed)
+        int rowCount = dataRowsList.Count + 1;
+        int columnCount = data.Units.Count + 1;
+        if (DebugTools.DevAssert(rowCount >= 2 && columnCount >= 2, null).Failed)
         {
             return;
         }
 
-        UpdateTableSize(num, num2);
+        UpdateTableSize(rowCount, columnCount);
         TableTitle = data.TableTitle;
         _topRow.UnitCells.EachWithIndex((int idx, ICellData cell) =>
         {
@@ -180,29 +180,29 @@ public partial class ComboBoxTableModel
         }
         else if (num < 0)
         {
-            for (int num2 = Rows; num2 < rows; num2++)
+            for (int rowIndex = Rows; rowIndex < rows; rowIndex++)
             {
-                _nameValuesRows.Add(new NameValuesRow(num2, Columns));
+                _nameValuesRows.Add(new NameValuesRow(rowIndex, Columns));
             }
         }
-        int num3 = Columns - columns;
-        if (num3 > 0)
+        int columnDifference = Columns - columns;
+        if (columnDifference > 0)
         {
             foreach (ComboBoxRow allRow in AllRows)
             {
-                num3.Times(allRow.RemoveLastCell);
+                columnDifference.Times(allRow.RemoveLastCell);
             }
         }
-        else if (num3 < 0)
+        else if (columnDifference < 0)
         {
-            int num4 = 0;
+            int rowIndex = 0;
             foreach (ComboBoxRow allRow2 in AllRows)
             {
-                for (int num5 = Columns; num5 < columns; num5++)
+                for (int columnIndex = Columns; columnIndex < columns; columnIndex++)
                 {
-                    allRow2.AddCell(new CellData(string.Empty, num4, num5));
+                    allRow2.AddCell(new CellData(string.Empty, rowIndex, columnIndex));
                 }
-                num4++;
+                rowIndex++;
             }
         }
         Columns = columns;
@@ -281,17 +281,17 @@ public partial class ComboBoxTableModel
         DebugTools.DevAssert(direction == Direction.Right || direction == Direction.Left, null);
         int num = columnIndex + ((direction == Direction.Right) ? 1 : 0);
         List<ICellData> list = new List<ICellData>(Rows);
-        int num2 = 0;
+        int rowIndex = 0;
         foreach (ComboBoxRow allRow in AllRows)
         {
-            CellData cellData = new CellData(string.Empty, num2, num);
+            CellData cellData = new CellData(string.Empty, rowIndex, num);
             list.Add(cellData);
             allRow.InsertCell(num, cellData);
             UpdateShiftedCellsColumnPosition(allRow.AllCells, num + 1, (ICellData cell) =>
             {
                 cell.Column += 1;
             });
-            num2++;
+            rowIndex++;
         }
 
         Columns++;

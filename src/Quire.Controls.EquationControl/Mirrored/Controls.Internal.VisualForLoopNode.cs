@@ -89,24 +89,24 @@ internal partial class VisualForLoopNode
         result.Width = contentSize.Width + _operatorRightMinorPart.DesiredSize.Width;
         result.Height = _operatorRightMinorPart.DesiredSize.Height;
         _verticalOffset = (result.Height - contentSize.Height) / 2.0;
-        double num4 = 0.0;
-        double num5 = TextBaselineY - _forOperator.TextBaselineY;
-        _forOperatorTopLeft = new Point(num4, num5);
-        num4 += 4.0 + _forOperator.DesiredSize.Width;
-        num5 = TextBaselineY - _nodeChildren[0].TextBaselineY;
-        _firstChildTopLeft = new Point(num4, num5);
-        num4 += 4.0 + _nodeChildren[0].DesiredSize.Width;
-        num5 = TextBaselineY - _inOperator.TextBaselineY;
-        _inOperatorTopLeft = new Point(num4, num5);
-        num4 += 4.0 + _inOperator.DesiredSize.Width;
-        num5 = _verticalOffset;
-        _secondChildTopLeft = new Point(num4, num5);
-        num4 = 8.0;
-        num5 += _nodeChildren[1].DesiredSize.Height;
-        _thirdChildTopLeft = new Point(num4, num5);
-        num4 = _operatorRightMinorPart.ContentSize.Width;
-        num5 = 0.0;
-        _operatorRightMinorPartTopLeft = new Point(num4, num5);
+        double x = 0.0;
+        double y = TextBaselineY - _forOperator.TextBaselineY;
+        _forOperatorTopLeft = new Point(x, y);
+        x += 4.0 + _forOperator.DesiredSize.Width;
+        y = TextBaselineY - _nodeChildren[0].TextBaselineY;
+        _firstChildTopLeft = new Point(x, y);
+        x += 4.0 + _nodeChildren[0].DesiredSize.Width;
+        y = TextBaselineY - _inOperator.TextBaselineY;
+        _inOperatorTopLeft = new Point(x, y);
+        x += 4.0 + _inOperator.DesiredSize.Width;
+        y = _verticalOffset;
+        _secondChildTopLeft = new Point(x, y);
+        x = 8.0;
+        y += _nodeChildren[1].DesiredSize.Height;
+        _thirdChildTopLeft = new Point(x, y);
+        x = _operatorRightMinorPart.ContentSize.Width;
+        y = 0.0;
+        _operatorRightMinorPartTopLeft = new Point(x, y);
         FireMeasureOverideCompleted();
         return result;
     }
@@ -129,8 +129,8 @@ internal partial class VisualForLoopNode
         {
             return new VisualMathNodeHitTestResult(this, Direction.Right, Direction.Indeterminate, hitPoint);
         }
-        Point val2 = TransformToDescendant(_forOperator).Transform(hitPoint);
-        if (val2.X <= 0.0)
+        Point forOperatorPoint = TransformToDescendant(_forOperator).Transform(hitPoint);
+        if (forOperatorPoint.X <= 0.0)
         {
             return new VisualMathNodeHitTestResult(this, Direction.Left, Direction.Indeterminate, hitPoint);
         }
@@ -144,8 +144,8 @@ internal partial class VisualForLoopNode
         {
             return _nodeChildren[1].GetNodeAtPoint(hitPoint3);
         }
-        Point val3 = TransformToDescendant(_inOperator).Transform(hitPoint);
-        if (val3.X >= 0.0)
+        Point inOperatorPoint = TransformToDescendant(_inOperator).Transform(hitPoint);
+        if (inOperatorPoint.X >= 0.0)
         {
             return new VisualMathNodeHitTestResult(this, Direction.Indeterminate, Direction.Right, hitPoint);
         }

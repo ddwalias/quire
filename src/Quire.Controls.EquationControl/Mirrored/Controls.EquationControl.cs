@@ -1341,11 +1341,11 @@ public partial class EquationControl
         if (!AllowExpressionsOnly)
         {
             bool flag = global::Quire.Wpf.WpfUtils.HasLocalValue(this, DisplayNumberFormatProperty);
-            bool flag2 = global::Quire.Wpf.WpfUtils.HasLocalValue(this, ResultMatrixFormatProperty);
-            if (flag | flag2)
+            bool hasLocalResultMatrixFormat = global::Quire.Wpf.WpfUtils.HasLocalValue(this, ResultMatrixFormatProperty);
+            if (flag | hasLocalResultMatrixFormat)
             {
                 using global::Quire.Xml.XmlNodeWriter writer = new global::Quire.Xml.XmlNodeWriter(xmlElement);
-                new global::Quire.Controls.Core.ResultFormat(flag ? DisplayNumberFormat : null, flag2 ? ResultMatrixFormat : null, xmlElement.NamespaceURI).WriteXml(writer);
+                new global::Quire.Controls.Core.ResultFormat(flag ? DisplayNumberFormat : null, hasLocalResultMatrixFormat ? ResultMatrixFormat : null, xmlElement.NamespaceURI).WriteXml(writer);
             }
         }
         if (IsMathFormatHandledLocally && MathFormat.AreAnyPropertiesSet)
@@ -1404,9 +1404,9 @@ public partial class EquationControl
         int num = global::Quire.Calculation.Core.ResultManager.Instance.CreateResultRefId(this);
         global::System.Xml.XmlNodeList childNodes = GetRegionXmlNode().ChildNodes;
         global::System.Xml.XmlNode[] array = new global::System.Xml.XmlNode[childNodes.Count];
-        for (int num2 = 0; num2 < childNodes.Count; num2++)
+        for (int childIndex = 0; childIndex < childNodes.Count; childIndex++)
         {
-            array[num2] = childNodes[num2];
+            array[childIndex] = childNodes[childIndex];
         }
         global::Quire.PersistentDataObjects.mathType mathType2 = new global::Quire.PersistentDataObjects.mathType
         {
@@ -2017,21 +2017,21 @@ public partial class EquationControl
             global::System.Action action = () =>
             {
                 double num = leftMostVisualResult.TranslatePoint(new global::System.Windows.Point(0.0, 0.0), _view).X;
-                double val2 = num + RecommendedSymbolicResultsWidth;
+                double minimumWidth = num + RecommendedSymbolicResultsWidth;
                 MinWidth = num + ResizeIndicatorWidth;
                 MaxWidth = ViewFullWidth + ResizeIndicatorWidth;
                 if (widthNotSet)
                 {
-                    double val3 = 0.0;
+                    double navigatorWidth = 0.0;
                     if (_model.Mode == global::Quire.EquationEditor.EquationEditModeEnum.Normal)
                     {
-                        val3 = XFromNavigatorState(_model.NavigatorState);
+                        navigatorWidth = XFromNavigatorState(_model.NavigatorState);
                     }
                     else if (_model.Mode == global::Quire.EquationEditor.EquationEditModeEnum.Scope)
                     {
-                        val3 = XFromNavigatorState(_model.GetNavigatorStateFromScoperCaretSide());
+                        navigatorWidth = XFromNavigatorState(_model.GetNavigatorStateFromScoperCaretSide());
                     }
-                    Width = Math.Max(val3, val2) + ResizeIndicatorWidth;
+                    Width = Math.Max(navigatorWidth, minimumWidth) + ResizeIndicatorWidth;
                 }
                 else if (ViewClippedWidth + ResizeIndicatorWidth < Width)
                 {
@@ -2592,10 +2592,9 @@ public partial class EquationControl
         {
             return;
         }
-        string text2 = text;
-        foreach (char c2 in text2)
+        foreach (char character in text)
         {
-            _view.FireKeypress(c2);
+            _view.FireKeypress(character);
         }
     }
     private void OnInsertId(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
@@ -3013,9 +3012,9 @@ public partial class EquationControl
         string text = "EquationControl.";
         if (_model.CurrentModeNavigatorState.Current.IsIdentifier || _model.CurrentModeNavigatorState.Current.IsLiteral)
         {
-            string text2 = _model.CurrentModeNavigatorState.Current.DescriptorName[0].ToString().ToUpper();
-            text2 += _model.CurrentModeNavigatorState.Current.DescriptorName.Substring(1).ToLower();
-            text = text + text2 + "." + _model.CurrentModeNavigatorState.Current.NodeInfoValueAsString;
+            string descriptorName = _model.CurrentModeNavigatorState.Current.DescriptorName[0].ToString().ToUpper();
+            descriptorName += _model.CurrentModeNavigatorState.Current.DescriptorName.Substring(1).ToLower();
+            text = text + descriptorName + "." + _model.CurrentModeNavigatorState.Current.NodeInfoValueAsString;
         }
         else
         {
@@ -3881,10 +3880,10 @@ public partial class EquationControl
         global::Quire.Controls.Core.IORegions.IOTagType iOTagType = (global::Quire.Controls.Core.IORegions.IOTagType)args.OldValue;
         global::Quire.Controls.Core.IORegions.IOTagType iOTagType2 = (global::Quire.Controls.Core.IORegions.IOTagType)args.NewValue;
         bool flag = iOTagType.HasFlag(global::Quire.Controls.Core.IORegions.IOTagType.Input);
-        bool flag2 = iOTagType2.HasFlag(global::Quire.Controls.Core.IORegions.IOTagType.Input);
-        if (flag != flag2)
+        bool hasInputTag = iOTagType2.HasFlag(global::Quire.Controls.Core.IORegions.IOTagType.Input);
+        if (flag != hasInputTag)
         {
-            ((EquationControl)(object)depObj)._view.FireInputTagChanged(flag2);
+            ((EquationControl)(object)depObj)._view.FireInputTagChanged(hasInputTag);
         }
     }
     private static void HandleCurrentNestedResultMatrixPositionChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e)

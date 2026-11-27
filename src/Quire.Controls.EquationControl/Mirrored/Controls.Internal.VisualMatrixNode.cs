@@ -248,11 +248,11 @@ internal partial class VisualMatrixNode
         }
         else
         {
-            int num2 = ((heading.Name == "RowHeading") ? _matrixInfo.ViewportSize.Rows : _matrixInfo.ViewportSize.Columns);
+            int headingCount = ((heading.Name == "RowHeading") ? _matrixInfo.ViewportSize.Rows : _matrixInfo.ViewportSize.Columns);
             int origin = _matrixInfo.Origin;
-            for (int num3 = 0; num3 < num2; num3++)
+            for (int headingIndex = 0; headingIndex < headingCount; headingIndex++)
             {
-                arrayList.Add((num3 + origin).ToString());
+                arrayList.Add((headingIndex + origin).ToString());
             }
         }
         return (string[])arrayList.ToArray(typeof(string));
@@ -324,8 +324,8 @@ internal partial class VisualMatrixNode
         Point val = TransformToDescendant(_matrixGrid).Transform(hitPoint);
         if (val.X < 0.0)
         {
-            Point val2 = TransformToDescendant((Visual)LeftFence).Transform(hitPoint);
-            if (val2.X < 0.0)
+            Point leftFencePoint = TransformToDescendant((Visual)LeftFence).Transform(hitPoint);
+            if (leftFencePoint.X < 0.0)
             {
                 return new VisualMathNodeHitTestResult(this, Direction.Left, Direction.Indeterminate, hitPoint);
             }
@@ -333,8 +333,8 @@ internal partial class VisualMatrixNode
         }
         if (val.X > _matrixGrid.ActualWidth)
         {
-            Point val3 = TransformToDescendant((Visual)RightFence).Transform(hitPoint);
-            if (val3.X > ((FrameworkElement)RightFence).ActualWidth)
+            Point rightFencePoint = TransformToDescendant((Visual)RightFence).Transform(hitPoint);
+            if (rightFencePoint.X > ((FrameworkElement)RightFence).ActualWidth)
             {
                 return new VisualMathNodeHitTestResult(this, Direction.Right, Direction.Indeterminate, hitPoint);
             }

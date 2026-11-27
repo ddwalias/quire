@@ -28,11 +28,11 @@ internal partial class VisualStepRangeOperatorNode
         _effectiveBaseline = 0.0;
         _effectiveScriptBaseline = 0.0;
         double num = 0.0;
-        double num2 = 0.0;
+        double contentWidth = 0.0;
         foreach (VisualMathNode child in Children)
         {
             child.MeasureMathNode(WpfUtils.SizeInfinity);
-            num2 += child.DesiredSize.Width;
+            contentWidth += child.DesiredSize.Width;
             if (!(child is VisualSymbolNode))
             {
                 _baseline = Math.Max(_baseline, child.TextBaselineY);
@@ -42,8 +42,8 @@ internal partial class VisualStepRangeOperatorNode
             }
         }
 
-        double num3 = _baseline + num;
-        return new Size(num2, num3);
+        double contentHeight = _baseline + num;
+        return new Size(contentWidth, contentHeight);
     }
 
     protected override Size ArrangeStaticLayout(Size finalSize)
@@ -54,9 +54,9 @@ internal partial class VisualStepRangeOperatorNode
         num += ArrangeChild(Operands[1], num);
         num += ArrangeChild(OperatorSymbols[1], num);
         num += ArrangeChild(Operands[2], num);
-        double num2 = num;
+        double contentWidth = num;
         Size desiredSize = DesiredSize;
-        return new Size(num2, desiredSize.Height);
+        return new Size(contentWidth, desiredSize.Height);
     }
 
     internal override HitTestResult GetNodeAtPoint(Point hitPoint)

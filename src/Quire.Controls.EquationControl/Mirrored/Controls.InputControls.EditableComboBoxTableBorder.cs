@@ -56,15 +56,15 @@ public partial class EditableComboBoxTableBorder : Border, IComponentConnector
         double num = ECB_ScrollViewer.ViewportWidth + e.HorizontalChange;
         if (num.IsGreaterThan(MinimumVisibleEditableTableSize.Width, 1E-05))
         {
-            double num2 = ECB_ScrollViewer.ExtentWidth + SystemParameters.VerticalScrollBarWidth;
-            ECB_ScrollViewer.MaxWidth = (num.IsLessThan(num2, 1E-05) ? num : num2);
+            double maximumWidth = ECB_ScrollViewer.ExtentWidth + SystemParameters.VerticalScrollBarWidth;
+            ECB_ScrollViewer.MaxWidth = (num.IsLessThan(maximumWidth, 1E-05) ? num : maximumWidth);
         }
 
-        double num3 = ECB_ScrollViewer.ViewportHeight + e.VerticalChange;
-        if (num3.IsGreaterThan(MinimumVisibleEditableTableSize.Height, 1E-05))
+        double requestedHeight = ECB_ScrollViewer.ViewportHeight + e.VerticalChange;
+        if (requestedHeight.IsGreaterThan(MinimumVisibleEditableTableSize.Height, 1E-05))
         {
-            double num4 = ECB_ScrollViewer.ExtentHeight + SystemParameters.HorizontalScrollBarHeight;
-            ECB_ScrollViewer.MaxHeight = (num3.IsLessThan(num4, 1E-05) ? num3 : num4);
+            double maximumHeight = ECB_ScrollViewer.ExtentHeight + SystemParameters.HorizontalScrollBarHeight;
+            ECB_ScrollViewer.MaxHeight = (requestedHeight.IsLessThan(maximumHeight, 1E-05) ? requestedHeight : maximumHeight);
         }
     }
 

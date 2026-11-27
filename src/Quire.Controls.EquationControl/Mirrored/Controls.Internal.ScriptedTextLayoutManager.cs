@@ -76,8 +76,8 @@ public partial class ScriptedTextLayoutManager
     private void SetBaselines()
     {
         double num = -1.0;
-        double num2 = -1.0;
-        double num3 = -1.0;
+        double baselineOffset = -1.0;
+        double capsHeight = -1.0;
         TextLayoutItem[] childItems = ChildItems;
         foreach (TextLayoutItem textLayoutItem in childItems)
         {
@@ -90,33 +90,33 @@ public partial class ScriptedTextLayoutManager
                     }
                     break;
                 case TextLayoutItem.ItemTypes.Subscript:
-                    if (textLayoutItem.TextBaselineOffset > num2)
+                    if (textLayoutItem.TextBaselineOffset > baselineOffset)
                     {
-                        num2 = textLayoutItem.TextBaselineOffset;
+                        baselineOffset = textLayoutItem.TextBaselineOffset;
                     }
-                    if (textLayoutItem.CapsHeight > num3)
+                    if (textLayoutItem.CapsHeight > capsHeight)
                     {
-                        num3 = textLayoutItem.CapsHeight;
+                        capsHeight = textLayoutItem.CapsHeight;
                     }
                     break;
             }
         }
 
-        if (num2 == -1.0)
+        if (baselineOffset == -1.0)
         {
-            num2 = _defaultSubscriptItem.TextBaselineOffset;
-            num3 = _defaultSubscriptItem.CapsHeight;
+            baselineOffset = _defaultSubscriptItem.TextBaselineOffset;
+            capsHeight = _defaultSubscriptItem.CapsHeight;
         }
 
         if (num == -1.0)
         {
-            TextBaselineOffset = num2 - num3 / 2.0;
+            TextBaselineOffset = baselineOffset - capsHeight / 2.0;
         }
         else
         {
             TextBaselineOffset = num;
         }
 
-        SubscriptBaseline = TextBaselineOffset + num3 / 2.0;
+        SubscriptBaseline = TextBaselineOffset + capsHeight / 2.0;
     }
 }
