@@ -324,20 +324,20 @@ public partial class EngineeringDocument
         if (scrollViewer != null)
         {
             double num = scrollViewer.ViewportWidth / 2.0;
-            double num2 = scrollViewer.ViewportHeight / 2.0;
-            double num3 = scrollViewer.HorizontalOffset + num;
-            double num4 = scrollViewer.VerticalOffset + num2;
-            double num5 = zoomNewValue / zoomOldValue;
-            double value = scrollViewer.ExtentWidth * num5;
+            double halfViewportHeight = scrollViewer.ViewportHeight / 2.0;
+            double horizontalOffset = scrollViewer.HorizontalOffset + num;
+            double verticalOffset = scrollViewer.VerticalOffset + halfViewportHeight;
+            double zoomScale = zoomNewValue / zoomOldValue;
+            double scaledExtentWidth = scrollViewer.ExtentWidth * zoomScale;
             if (scrollViewer.ExtentWidth.IsLessThan(scrollViewer.ViewportWidth) && value.IsGreaterThan(scrollViewer.ViewportWidth))
             {
                 Point val = TranslatePoint(default, scrollViewer);
-                num3 -= val.X;
+                horizontalOffset -= val.X;
             }
-            double num6 = num3 * num5;
-            double num7 = num4 * num5;
-            double offset = num6 - num;
-            double offset2 = num7 - num2;
+            double scaledHorizontalOffset = horizontalOffset * zoomScale;
+            double scaledVerticalOffset = verticalOffset * zoomScale;
+            double offset = scaledHorizontalOffset - num;
+            double offset2 = scaledVerticalOffset - halfViewportHeight;
             scrollViewer.ScrollToHorizontalOffset(offset);
             scrollViewer.ScrollToVerticalOffset(offset2);
         }
@@ -348,12 +348,12 @@ public partial class EngineeringDocument
         if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
         {
             int num = Math.Abs(e.Delta) < WpfUtils.MouseWheelScrollDelta ? WpfUtils.MouseScrollDeltaForTouchPad : WpfUtils.MouseWheelScrollDelta;
-            int num2 = e.Delta / num;
-            if (num2 == 0)
+            int wheelSteps = e.Delta / num;
+            if (wheelSteps == 0)
             {
                 return;
             }
-            HandleCtrlMouseWheel(num2);
+            HandleCtrlMouseWheel(wheelSteps);
             e.Handled = true;
         }
         base.OnMouseWheel(e);
@@ -1952,13 +1952,13 @@ public partial class EngineeringDocument
         string text = printQueue?.FullName;
         if (text != null)
         {
-            string text2 = null;
+            string temporaryXpsPath = null;
             try
             {
                 try
                 {
-                    text2 = Path.GetTempFileName();
-                    SaveXpsDocument(text2);
+                    temporaryXpsPath = Path.GetTempFileName();
+                    SaveXpsDocument(temporaryXpsPath);
                 }
                 catch (IOException innerException2)
                 {
@@ -1966,7 +1966,7 @@ public partial class EngineeringDocument
                 }
                 if (ex == null)
                 {
-                    XpsPrintInterop.XpsFileToPrinterFile(text, text2, filePath, out jobId);
+                    XpsPrintInterop.XpsFileToPrinterFile(text, temporaryXpsPath, filePath, out jobId);
                     PrintSystemJobInfo printSystemJobInfo = printQueue.GetPrintJobInfoCollection().FirstOrDefault((PrintSystemJobInfo jobItem) => jobItem.JobIdentifier == jobId);
                     if (printSystemJobInfo != null && printSystemJobInfo.IsInError)
                     {
@@ -1982,9 +1982,9 @@ public partial class EngineeringDocument
             {
                 try
                 {
-                    if (text2 != null)
+                    if (temporaryXpsPath != null)
                     {
-                        File.Delete(text2);
+                        File.Delete(temporaryXpsPath);
                     }
                 }
                 catch (Exception ex2)

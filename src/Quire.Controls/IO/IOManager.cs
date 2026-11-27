@@ -334,37 +334,37 @@ public partial class IOManager
 
         protected IOManagerErrorCode GetComputedScalar(IScaledEvaluation shadowEval, out double value, out string units)
         {
-            string units2 = null;
-            double value2 = double.NaN;
+            string computedUnits = null;
+            double computedValue = double.NaN;
             IOManagerErrorCode iOManagerErrorCode = EvaluationHelper.AnalyzeEvaluationError(shadowEval);
             if (iOManagerErrorCode == IOManagerErrorCode.NoError)
             {
-                iOManagerErrorCode = ScaledEvaluationResultToIOManagerErrorCode(shadowEval.GetComputedValue(out value2, out units2));
+                iOManagerErrorCode = ScaledEvaluationResultToIOManagerErrorCode(shadowEval.GetComputedValue(out computedValue, out computedUnits));
             }
-            if (iOManagerErrorCode == IOManagerErrorCode.NoError && !AreUnitsCompatible(units2))
+            if (iOManagerErrorCode == IOManagerErrorCode.NoError && !AreUnitsCompatible(computedUnits))
             {
                 iOManagerErrorCode = IOManagerErrorCode.UnitsIncompatible;
             }
-            value = ((iOManagerErrorCode == IOManagerErrorCode.NoError) ? value2 : double.NaN);
-            units = ((iOManagerErrorCode == IOManagerErrorCode.NoError) ? units2 : null);
+            value = ((iOManagerErrorCode == IOManagerErrorCode.NoError) ? computedValue : double.NaN);
+            units = ((iOManagerErrorCode == IOManagerErrorCode.NoError) ? computedUnits : null);
             return iOManagerErrorCode;
         }
 
         protected IOManagerErrorCode GetComputedMatrix(IScaledEvaluation shadowEval, out double[][] value, out string units)
         {
-            string units2 = null;
-            double[][] value2 = null;
+            string computedUnits = null;
+            double[][] computedMatrix = null;
             IOManagerErrorCode iOManagerErrorCode = EvaluationHelper.AnalyzeEvaluationError(shadowEval);
             if (iOManagerErrorCode == IOManagerErrorCode.NoError)
             {
-                iOManagerErrorCode = ScaledEvaluationResultToIOManagerErrorCode(shadowEval.GetComputedValue(out value2, out units2));
+                iOManagerErrorCode = ScaledEvaluationResultToIOManagerErrorCode(shadowEval.GetComputedValue(out computedMatrix, out computedUnits));
             }
-            if (iOManagerErrorCode == IOManagerErrorCode.NoError && !AreUnitsCompatible(units2))
+            if (iOManagerErrorCode == IOManagerErrorCode.NoError && !AreUnitsCompatible(computedUnits))
             {
                 iOManagerErrorCode = IOManagerErrorCode.UnitsIncompatible;
             }
-            value = ((iOManagerErrorCode == IOManagerErrorCode.NoError) ? value2 : null);
-            units = ((iOManagerErrorCode == IOManagerErrorCode.NoError) ? units2 : null);
+            value = ((iOManagerErrorCode == IOManagerErrorCode.NoError) ? computedMatrix : null);
+            units = ((iOManagerErrorCode == IOManagerErrorCode.NoError) ? computedUnits : null);
             return iOManagerErrorCode;
         }
 
@@ -815,18 +815,18 @@ public partial class IOManager
             }
             if (iOManagerErrorCode == IOManagerErrorCode.ResultTypeIncompatible)
             {
-                iOManagerErrorCode = GetComputedMatrix(shadowEval, out var value2, out var units2);
+                iOManagerErrorCode = GetComputedMatrix(shadowEval, out var matrixValue, out var matrixUnits);
                 if (iOManagerErrorCode == IOManagerErrorCode.NoError)
                 {
-                    ErrorState = new UnitedMatrixState(value2, units2, iOManagerErrorCode);
+                    ErrorState = new UnitedMatrixState(matrixValue, matrixUnits, iOManagerErrorCode);
                 }
             }
             if (iOManagerErrorCode == IOManagerErrorCode.ResultTypeIncompatible)
             {
-                iOManagerErrorCode = GetComputedString(shadowEval, out var value3);
+                iOManagerErrorCode = GetComputedString(shadowEval, out var stringValue);
                 if (iOManagerErrorCode == IOManagerErrorCode.NoError)
                 {
-                    ErrorState = new StringState(value3, iOManagerErrorCode);
+                    ErrorState = new StringState(stringValue, iOManagerErrorCode);
                 }
             }
             if (iOManagerErrorCode != IOManagerErrorCode.NoError)
@@ -1162,20 +1162,20 @@ public partial class IOManager
                 return;
             }
             int length = value.GetLength(0);
-            int length2 = value[0].GetLength(0);
+            int columnCount = value[0].GetLength(0);
             for (int num = 1; num < length; num++)
             {
-                if (value[num].GetLength(0) != length2)
+                if (value[num].GetLength(0) != columnCount)
                 {
                     return;
                 }
             }
-            _value = new double[length, length2];
-            for (int num2 = 0; num2 < length; num2++)
+            _value = new double[length, columnCount];
+            for (int row = 0; row < length; row++)
             {
-                for (int num3 = 0; num3 < length2; num3++)
+                for (int column = 0; column < columnCount; column++)
                 {
-                    _value[num2, num3] = value[num2][num3];
+                    _value[row, column] = value[row][column];
                 }
             }
         }
@@ -1196,12 +1196,12 @@ public partial class IOManager
                 return false;
             }
             int length = _value.GetLength(0);
-            int length2 = _value.GetLength(1);
+            int columnCount = _value.GetLength(1);
             for (int num = 0; num < length; num++)
             {
-                for (int num2 = 0; num2 < length2; num2++)
+                for (int column = 0; column < columnCount; column++)
                 {
-                    if (!_value[num, num2].IsValid())
+                    if (!_value[num, column].IsValid())
                     {
                         return false;
                     }
@@ -1269,7 +1269,7 @@ public partial class IOManager
         }
         if (IOTag.HasOutputTag(val))
         {
-            if (val is IOutputRegion region2 && region2.IsSuitableForOutputTagging())
+            if (val is IOutputRegion outputRegion && outputRegion.IsSuitableForOutputTagging())
             {
                 _outputs.HandleTaggedRegionAdded(val);
             }
@@ -1303,16 +1303,16 @@ public partial class IOManager
         if (IOTag.IsIOTagged(region as DependencyObject) && IORegionsSelected != null)
         {
             List<string> list = new List<string>();
-            List<string> list2 = new List<string>();
+            List<string> outputAliases = new List<string>();
             if (IOTag.HasInputTag(region as DependencyObject))
             {
                 list.AddRange(IOItemsAliasManager.GetAliases(region as DependencyObject, true));
             }
             if (IOTag.HasOutputTag(region as DependencyObject))
             {
-                list2.AddRange(IOItemsAliasManager.GetAliases(region as DependencyObject, false));
+                outputAliases.AddRange(IOItemsAliasManager.GetAliases(region as DependencyObject, false));
             }
-            IORegionsSelected(_document, list, list2);
+            IORegionsSelected(_document, list, outputAliases);
         }
     }
 
@@ -1638,8 +1638,8 @@ public partial class IOManager
     public IInputOutputItemsStates CollectScalarInputsOutputsStates(GetInputValueTypes inputTypes, GetOutputValueTypes outputTypes, Func<INotifyProgress, bool> waitForCalculationStopped)
     {
         List<IScalarItemWithOriginalState> list = new List<IScalarItemWithOriginalState>(Inputs.Count);
-        List<IScalarItem> list2 = new List<IScalarItem>(Outputs.Count);
-        Dictionary<IIOItem, IUnitedValueGetter> dictionary = new Dictionary<IIOItem, IUnitedValueGetter>(list.Count + list2.Count);
+        List<IScalarItem> scalarOutputs = new List<IScalarItem>(Outputs.Count);
+        Dictionary<IIOItem, IUnitedValueGetter> dictionary = new Dictionary<IIOItem, IUnitedValueGetter>(list.Count + scalarOutputs.Count);
         if (inputTypes != GetInputValueTypes.None)
         {
             foreach (IIOItem input in Inputs)
@@ -1654,7 +1654,7 @@ public partial class IOManager
             foreach (IIOItem output in Outputs)
             {
                 ScalarOutputGetter scalarOutputGetter = new ScalarOutputGetter(output.Alias, outputTypes);
-                list2.Add(scalarOutputGetter);
+                scalarOutputs.Add(scalarOutputGetter);
                 dictionary.Add(output, scalarOutputGetter);
             }
         }
@@ -1681,14 +1681,14 @@ public partial class IOManager
             else
             {
                 list = null;
-                list2 = null;
+                scalarOutputs = null;
             }
             inputOutputStateGetterNotifier.Dispose();
             RemoveShadowEvals(dictionary);
         }
-        if (list != null || list2 != null)
+        if (list != null || scalarOutputs != null)
         {
-            return new InputOutputItemsStates(list, list2);
+            return new InputOutputItemsStates(list, scalarOutputs);
         }
         return null;
     }
@@ -1713,30 +1713,30 @@ public partial class IOManager
 
     private static bool CanToggleRegionAsInput(IIORegion region)
     {
-        if (region is IInputRegion region2)
+        if (region is IInputRegion inputRegion)
         {
-            return region2.IsSuitableForInputTagging();
+            return inputRegion.IsSuitableForInputTagging();
         }
         return false;
     }
 
     private static bool CanToggleRegionAsOutput(IIORegion region)
     {
-        if (region is IOutputRegion region2)
+        if (region is IOutputRegion outputRegion)
         {
-            return region2.IsSuitableForOutputTagging();
+            return outputRegion.IsSuitableForOutputTagging();
         }
         return false;
     }
 
     private void InputRemoveAllCalculationOverrides(DependencyObject region)
     {
-        foreach (ICalculatable item2 in CalculationOverridesHandler.RemoveCalculatableOverrides(region, CalculationOverridesTypes.InputOverriddenValueSetter))
+        foreach (ICalculatable calculatable in CalculationOverridesHandler.RemoveCalculatableOverrides(region, CalculationOverridesTypes.InputOverriddenValueSetter))
         {
             Pair<IIORegion, ICalculatable> item = new Pair<IIORegion, ICalculatable>
             {
                 First = region as IIORegion,
-                Second = item2
+                Second = calculatable
             };
             _shadowCalculatableNotifier.Remove(item);
         }
@@ -1746,10 +1746,10 @@ public partial class IOManager
     private void InputRemoveCalculationOverridesOnRemoveIOItems(IEnumerable<IIOItem> ioItem)
     {
         List<DependencyObject> list = new List<DependencyObject>();
-        foreach (IOItem item2 in ioItem)
+        foreach (IOItem inputItem in ioItem)
         {
-            DependencyObject region = item2.Region;
-            string idSexp = item2.IdSexp;
+            DependencyObject region = inputItem.Region;
+            string idSexp = inputItem.IdSexp;
             ICalculatable calculatable = CalculationOverridesHandler.RemoveCalculationOverrideForSExpr(region, idSexp, CalculationOverridesTypes.InputOverriddenValueSetter);
             if (calculatable != null)
             {
@@ -1765,11 +1765,11 @@ public partial class IOManager
                 list.Add(region);
             }
         }
-        foreach (DependencyObject item3 in list)
+        foreach (DependencyObject inputRegion in list)
         {
-            if (_inputs.GetRegionIOItems(item3).IsNullOrEmpty())
+            if (_inputs.GetRegionIOItems(inputRegion).IsNullOrEmpty())
             {
-                DebugTools.DevAssert(CalculationOverridesHandler.GetInputCalculationOverrides(item3).IsNullOrEmpty(), null);
+                DebugTools.DevAssert(CalculationOverridesHandler.GetInputCalculationOverrides(inputRegion).IsNullOrEmpty(), null);
             }
         }
     }
@@ -1785,11 +1785,11 @@ public partial class IOManager
                 list.Add(region);
             }
         }
-        foreach (DependencyObject item2 in list)
+        foreach (DependencyObject outputRegion in list)
         {
-            if (DebugTools.DevAssert(_outputs.GetRegionIOItems(item2).IsNullOrEmpty(), null).Passed)
+            if (DebugTools.DevAssert(_outputs.GetRegionIOItems(outputRegion).IsNullOrEmpty(), null).Passed)
             {
-                OutputAssertNoCalculationOverrides(item2);
+                OutputAssertNoCalculationOverrides(outputRegion);
             }
         }
     }
@@ -1849,12 +1849,12 @@ public partial class IOManager
             };
             _shadowCalculatableNotifier.Remove(item);
         }
-        Pair<IIORegion, ICalculatable> item2 = new Pair<IIORegion, ICalculatable>
+        Pair<IIORegion, ICalculatable> shadowCalculatable = new Pair<IIORegion, ICalculatable>
         {
             First = region as IIORegion,
             Second = shadowIdDefinition
         };
-        _shadowCalculatableNotifier.Add(item2);
+        _shadowCalculatableNotifier.Add(shadowCalculatable);
         shadowIdDefinition.Commit();
         return IOManagerErrorCode.NoError;
     }
@@ -1894,15 +1894,15 @@ public partial class IOManager
         try
         {
             FireWaitForCalculation(iIOItem.Region, seconds);
-            foreach (ISingleValueSetter scaledValueSetter2 in scaledValueSetters)
+            foreach (ISingleValueSetter valueSetter in scaledValueSetters)
             {
-                if (scaledValueSetter2.OperationResult == IOManagerErrorCode.NoError)
+                if (valueSetter.OperationResult == IOManagerErrorCode.NoError)
                 {
-                    IIOItem item2 = Inputs.GetItem(scaledValueSetter2.Alias, GetAndSetOperationsCompareAliasesCaseInsensitively);
-                    ISimpleCalculatable calculationOverrideForSExpr = CalculationOverridesHandler.GetCalculationOverrideForSExpr(item2.Region, item2.IdSexp, CalculationOverridesTypes.InputOverriddenValueSetter);
+                    IIOItem inputItem = Inputs.GetItem(valueSetter.Alias, GetAndSetOperationsCompareAliasesCaseInsensitively);
+                    ISimpleCalculatable calculationOverrideForSExpr = CalculationOverridesHandler.GetCalculationOverrideForSExpr(inputItem.Region, inputItem.IdSexp, CalculationOverridesTypes.InputOverriddenValueSetter);
                     if (calculationOverrideForSExpr != null)
                     {
-                        scaledValueSetter2.OperationResult = EvaluationHelper.AnalyzeEvaluationError(calculationOverrideForSExpr);
+                        valueSetter.OperationResult = EvaluationHelper.AnalyzeEvaluationError(calculationOverrideForSExpr);
                     }
                 }
             }

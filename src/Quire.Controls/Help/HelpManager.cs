@@ -198,12 +198,12 @@ public partial class HelpManager
             }
             break;
         }
-        string text2 = absoluteUri.AbsoluteUri;
-        if (!text2.EndsWith("/"))
+        string absoluteUrl = absoluteUri.AbsoluteUri;
+        if (!absoluteUrl.EndsWith("/"))
         {
-            text2 += "/";
+            absoluteUrl += "/";
         }
-        return text2;
+        return absoluteUrl;
     }
 
     private void OnHelpSettingsPropertyChanged(object sender, PropertyChangedEventArgs args)

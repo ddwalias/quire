@@ -26,18 +26,18 @@ internal partial class DimensionSelectorController
     private void HandleMouseOverCell(int numberOfColumns, int childIndex)
     {
         int num = childIndex / numberOfColumns + 1;
-        int num2 = childIndex % numberOfColumns + 1;
-        _view.CommandParameter = new Size((double)num2, (double)num);
-        List<int> list = new List<int>(num * num2);
-        for (int num3 = 0; num3 < num; num3++)
+        int columnCount = childIndex % numberOfColumns + 1;
+        _view.CommandParameter = new Size((double)columnCount, (double)num);
+        List<int> list = new List<int>(num * columnCount);
+        for (int rowIndex = 0; rowIndex < num; rowIndex++)
         {
-            for (int num4 = 0; num4 < num2; num4++)
+            for (int columnIndex = 0; columnIndex < columnCount; columnIndex++)
             {
-                list.Add(MatrixHelper.IndexOf(num3, num4, numberOfColumns));
+                list.Add(MatrixHelper.IndexOf(rowIndex, columnIndex, numberOfColumns));
             }
         }
         _view.SetSelection(list.ToArray());
         _view.RowDisplayText = num.ToString();
-        _view.ColumnDisplayText = num2.ToString();
+        _view.ColumnDisplayText = columnCount.ToString();
     }
 }

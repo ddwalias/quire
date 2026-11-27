@@ -31,19 +31,19 @@ internal partial class UnitMonomialBuilder
                 string symbol = _descriptors[unit.CanonicalName].Symbol;
                 if (DebugTools.DevAssert(unit.PowerDenominator != 0, null).Passed)
                 {
-                    string text2 = string.Empty;
+                    string powerText = string.Empty;
                     int powerDenominator = unit.PowerDenominator;
                     int powerNumerator = unit.PowerNumerator;
                     if (powerDenominator != 1)
                     {
-                        text2 = string.Format(CultureInfo.InvariantCulture, "{0}/{1}", powerNumerator, powerDenominator);
+                        powerText = string.Format(CultureInfo.InvariantCulture, "{0}/{1}", powerNumerator, powerDenominator);
                     }
                     else if (powerNumerator != 1)
                     {
-                        text2 = string.Format(CultureInfo.InvariantCulture, "{0}", powerNumerator);
+                        powerText = string.Format(CultureInfo.InvariantCulture, "{0}", powerNumerator);
                     }
-                    string text3 = string.IsNullOrEmpty(text2) ? symbol : string.Format("{0}^({1})", symbol, text2);
-                    text = string.IsNullOrEmpty(text) ? text3 : string.Format("{0}*{1}", text, text3);
+                    string poweredSymbol = string.IsNullOrEmpty(powerText) ? symbol : string.Format("{0}^({1})", symbol, powerText);
+                    text = string.IsNullOrEmpty(text) ? poweredSymbol : string.Format("{0}*{1}", text, poweredSymbol);
                 }
             }
         }

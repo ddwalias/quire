@@ -45,10 +45,10 @@ internal partial class MatrixDefinition
         }
         StringBuilder stringBuilder = new StringBuilder();
         int length = Value.GetLength(0);
-        int length2 = Value.GetLength(1);
+        int columnCount = Value.GetLength(1);
         for (int i = 0; i < length; i++)
         {
-            for (int j = 0; j < length2; j++)
+            for (int j = 0; j < columnCount; j++)
             {
                 string arg = IdDefinition.ConstructValueSExpression(Value[i, j]);
                 stringBuilder.AppendFormat(CultureInfo.InvariantCulture, " {0}", arg);
@@ -65,8 +65,8 @@ internal partial class MatrixDefinition
         {
             string arg = BuildListOfValues();
             ValueSExpression = string.Format(CultureInfo.InvariantCulture, "(@MATRIX {0} {1} {2})", Value.GetLength(0), Value.GetLength(1), arg);
-            string arg2 = (string.IsNullOrEmpty(ScalingSExpression) ? ValueSExpression : string.Format(CultureInfo.InvariantCulture, MathNodeToSExpressionTransform.ScaleSexpFormat, ValueSExpression, ScalingSExpression));
-            string sExpr = string.Format(CultureInfo.InvariantCulture, "(:= {0} {1})", IdSExpression, arg2);
+            string scaledValueSExpression = (string.IsNullOrEmpty(ScalingSExpression) ? ValueSExpression : string.Format(CultureInfo.InvariantCulture, MathNodeToSExpressionTransform.ScaleSexpFormat, ValueSExpression, ScalingSExpression));
+            string sExpr = string.Format(CultureInfo.InvariantCulture, "(:= {0} {1})", IdSExpression, scaledValueSExpression);
             try
             {
                 text = ShadowCalculatable.ConvertSExpressionToRl(sExpr);
@@ -101,14 +101,14 @@ internal partial class MatrixDefinition
     private static bool IsMatrixEqual(double[,] first, double[,] second)
     {
         int length = first.GetLength(0);
-        int length2 = first.GetLength(1);
-        int length3 = second.GetLength(0);
-        int length4 = second.GetLength(1);
-        if (length == length3 && length2 == length4)
+        int firstColumnCount = first.GetLength(1);
+        int secondRowCount = second.GetLength(0);
+        int secondColumnCount = second.GetLength(1);
+        if (length == secondRowCount && firstColumnCount == secondColumnCount)
         {
             for (int i = 0; i < length; i++)
             {
-                for (int j = 0; j < length2; j++)
+                for (int j = 0; j < firstColumnCount; j++)
                 {
                     if (first[i, j] != second[i, j])
                     {
