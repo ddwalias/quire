@@ -27,7 +27,7 @@ public partial class CollapsibleAreaHeightConverter
         double height = worksheetPageLayout.GridCellSize.Height;
         double controlHeight = collapsibleAreaControl.Height;
         double remainder = controlHeight % height;
-        if (num.IsEqualTo(0.0) || num.IsEqualTo(height))
+        if (remainder.IsEqualTo(0.0) || remainder.IsEqualTo(height))
         {
             return controlHeight;
         }
