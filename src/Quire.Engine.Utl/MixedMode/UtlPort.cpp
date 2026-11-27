@@ -710,9 +710,9 @@ namespace Quire { namespace utl_mgd {
         {
             Int32 count = m_strings->Count;
             GC::KeepAlive(this);
-            Int32 count2 = other->m_strings->Count;
+            Int32 otherCount = other->m_strings->Count;
             GC::KeepAlive(other);
-            if (count != count2)
+            if (count != otherCount)
             {
                 GC::KeepAlive(this);
                 return false;
@@ -927,14 +927,14 @@ namespace Quire { namespace utl_mgd {
 
             if (other->m_wild)
             {
-                Boolean result2 = other->m_labels->IsSubsetOf(m_labels);
+                Boolean isSubset = other->m_labels->IsSubsetOf(m_labels);
                 GC::KeepAlive(this);
-                return result2;
+                return isSubset;
             }
 
-            Boolean result3 = m_labels->SetEquals(other->m_labels);
+            Boolean labelsMatch = m_labels->SetEquals(other->m_labels);
             GC::KeepAlive(this);
-            return result3;
+            return labelsMatch;
         }
 
         static Boolean _unifies(LabelSet^ a, LabelSet^ b)
@@ -1092,24 +1092,24 @@ namespace Quire { namespace utl_mgd {
             s = s->Substring(num + 1);
             s = s->Trim(s_braces);
             array<String^>^ labels = s->Split(s_comma);
-            Int32 num2 = labels->Length;
-            Int32 num3 = 0;
-            if (0 < num2)
+            Int32 labelCount = labels->Length;
+            Int32 labelIndex = 0;
+            if (0 < labelCount)
             {
                 do
                 {
-                    String^ text = labels[num3]->Trim();
-                    labels[num3] = text;
-                    if (labels[num3]->Length != 0)
+                    String^ label = labels[labelIndex]->Trim();
+                    labels[labelIndex] = label;
+                    if (labels[labelIndex]->Length != 0)
                     {
-                        if (labels[num3]->Equals("*"))
+                        if (labels[labelIndex]->Equals("*"))
                             wild = true;
                         else
-                            sortedStringSet->Add(labels[num3]);
+                            sortedStringSet->Add(labels[labelIndex]);
                     }
-                    num3++;
+                    labelIndex++;
                 }
-                while (num3 < num2);
+                while (labelIndex < labelCount);
             }
 
             return Find(sortedStringSet, wild);
@@ -1217,9 +1217,9 @@ namespace Quire { namespace utl_mgd {
         {
             Int32 num = c->IndexOf('{');
             String^ obj = ((num == -1) ? c : c->Substring(0, num));
-            Int32 num2 = c_non_wild->IndexOf('{');
-            String^ value = ((num2 == -1) ? c_non_wild : c_non_wild->Substring(0, num2));
-            if (!obj->Equals(value))
+            Int32 nonWildNameEnd = c_non_wild->IndexOf('{');
+            String^ nonWildName = ((nonWildNameEnd == -1) ? c_non_wild : c_non_wild->Substring(0, nonWildNameEnd));
+            if (!obj->Equals(nonWildName))
                 return false;
 
             LabelSet^ labelSet = LabelTrie::InternLabels(c);
@@ -1294,9 +1294,9 @@ namespace Quire { namespace utl_mgd {
                     GC::KeepAlive(this);
                     return result;
                 }
-                Object^ result2 = LabelUtils::LookupPossiblyWild(text, m_table);
+                Object^ matchingValue = LabelUtils::LookupPossiblyWild(text, m_table);
                 GC::KeepAlive(this);
-                return result2;
+                return matchingValue;
             }
             void set(Object^ key, Object^ value)
             {
@@ -1349,9 +1349,9 @@ namespace Quire { namespace utl_mgd {
                 GC::KeepAlive(this);
                 return result;
             }
-            Boolean result2 = LabelUtils::LookupPossiblyWild(text, m_table) != nullptr;
+            Boolean containsMatchingKey = LabelUtils::LookupPossiblyWild(text, m_table) != nullptr;
             GC::KeepAlive(this);
-            return result2;
+            return containsMatchingKey;
         }
 
         Int32 Contains1(String^ text) { return Contains(text) ? 1 : 0; }
@@ -1595,14 +1595,14 @@ namespace Quire { namespace utl_mgd {
                     }
 
                     StringBuilder^ stringBuilder = gcnew StringBuilder(length);
-                    Int32 num2 = 0;
+                    Int32 index = 0;
                     do
                     {
-                        if (!p(s[num2]))
-                            stringBuilder->Append(s[num2]);
-                        num2++;
+                        if (!p(s[index]))
+                            stringBuilder->Append(s[index]);
+                        index++;
                     }
-                    while (num2 < length);
+                    while (index < length);
 
                     return stringBuilder->ToString();
                 }
@@ -1653,20 +1653,20 @@ namespace Quire { namespace utl_mgd {
             {
                 do
                 {
-                    Byte b2 = static_cast<Byte>(b[num] >> 4);
-                    Int32 num2;
-                    if (static_cast<UInt32>(b2) < 10u)
-                        num2 = b2 + 48;
+                    Byte highNibble = static_cast<Byte>(b[num] >> 4);
+                    Int32 highDigit;
+                    if (static_cast<UInt32>(highNibble) < 10u)
+                        highDigit = highNibble + 48;
                     else
-                        num2 = b2 + 55;
-                    stringBuilder->Append(static_cast<Char>(num2));
-                    Byte b3 = static_cast<Byte>(b[num] % 16);
-                    Int32 num3;
-                    if (static_cast<UInt32>(b3) < 10u)
-                        num3 = b3 + 48;
+                        highDigit = highNibble + 55;
+                    stringBuilder->Append(static_cast<Char>(highDigit));
+                    Byte lowNibble = static_cast<Byte>(b[num] % 16);
+                    Int32 lowDigit;
+                    if (static_cast<UInt32>(lowNibble) < 10u)
+                        lowDigit = lowNibble + 48;
                     else
-                        num3 = b3 + 55;
-                    stringBuilder->Append(static_cast<Char>(num3));
+                        lowDigit = lowNibble + 55;
+                    stringBuilder->Append(static_cast<Char>(lowDigit));
                     num++;
                 }
                 while (num < b->Length);
