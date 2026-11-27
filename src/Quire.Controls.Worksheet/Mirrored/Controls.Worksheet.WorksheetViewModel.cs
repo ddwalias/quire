@@ -3016,4 +3016,44 @@ internal partial class WorksheetViewModel
         command.Execute();
     }
 
+
+    public void ActivateHeader(Point pt)
+    {
+        IHeaderFooterControl headerControl = IsFirstPageHeaderFooterDifferent && ActivePage?.PageNumber == 1 ? FirstPageHeader : Header;
+        ActivateSection(headerControl, ActivePage, pt);
+        headerControl.RestoreVisualState();
+    }
+
+    public void ActivateFooter(Point pt)
+    {
+        IHeaderFooterControl footerControl = IsFirstPageHeaderFooterDifferent && ActivePage?.PageNumber == 1 ? FirstPageFooter : Footer;
+        ActivateSection(footerControl, ActivePage, pt);
+        footerControl.RestoreVisualState();
+    }
+
+    public void ScrollToActiveArea()
+    {
+        if (ActiveSection.IsCrosshairVisible)
+        {
+            IWorksheetPageSection pageSection;
+            IWhiteboardControl section;
+            if (ActiveSection is IWorksheetPageSection)
+            {
+                pageSection = ActiveSection as IWorksheetPageSection;
+                section = ActiveSection;
+            }
+            else
+            {
+                DebugTools.DevAssert(IsContentActive);
+                pageSection = ActivePage.PageBody;
+                section = ActivePage.PageBody;
+            }
+
+            VisualHelper.BringIntoView(pageSection, section.GetInsertionPointRect());
+        }
+        else
+        {
+            VisualHelper.BringIntoView(ActiveOrSelectedItems.First());
+        }
+    }
 }
