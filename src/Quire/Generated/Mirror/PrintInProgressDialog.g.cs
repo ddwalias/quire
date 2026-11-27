@@ -23,16 +23,4 @@ public partial class PrintInProgressDialog : global::System.Windows.Window, glob
     internal global::System.Windows.Controls.Button CancelButton;
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public bool DontBotherMeAgain { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public PrintInProgressDialog() { }
-    [global::Quire.Mirror.MirrorStub]
-    private void Ok_Click(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void Cancel_Click(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

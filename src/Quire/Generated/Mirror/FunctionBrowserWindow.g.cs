@@ -16,13 +16,9 @@ public partial class FunctionBrowserWindow : global::AvalonDock.Layout.LayoutAnc
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
     [global::Quire.Mirror.MirrorStub]
-    public FunctionBrowserWindow() { }
-    [global::Quire.Mirror.MirrorStub]
     public void OpenAndActivate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void OnKeyDown(global::System.Windows.Input.KeyEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public FunctionBrowserWindow() { }
 }

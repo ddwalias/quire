@@ -23,12 +23,4 @@ public partial class MessageDialogWithOptions : global::Quire.Controls.Core.Dial
     private global::System.Windows.Controls.ItemsControl _buttons;
     [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    private MessageDialogWithOptions(global::System.Windows.Window ownerWindow, string caption, global::System.Collections.Generic.IEnumerable<global::Quire.Wpf.CheckBoxData> checkBoxesData) : base(default(global::System.Windows.Window), default(string)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IStyleConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
