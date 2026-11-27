@@ -49,9 +49,44 @@ internal abstract partial class DataExchangeHandler
 
     protected abstract IValue GetValueDispatch(string id, bool isCalculate, bool isAutoCalc);
 
-    public void SetValue(string id, IValue value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SetValue(string id, IValue value)
+    {
+        _isDirty = true;
+        DateTime? refTime = DebugTools.LogData(string.Format("ComponentController.SetValue: {0}: Start", id));
+        try
+        {
+            ExecuteWithDispatcher(() =>
+            {
+                SetValueDispatch(id, value, (bool)_engineOptions.Statuses[CalculationController.EngineStatuses.IsAutoCalc]);
+            });
+        }
+        finally
+        {
+            DebugTools.LogData(string.Format("ComponentController.SetValue: {0}: End", id), ref refTime);
+        }
+    }
 
-    public IValue GetValue(string id) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public IValue GetValue(string id)
+    {
+        IValue value = ConvertToIValue(null);
+        DateTime? refTime = DebugTools.LogData(string.Format("ComponentController.GetValue: {0}: Start", id));
+        try
+        {
+            CommitIfNeeded();
+            ExecuteWithDispatcher(() =>
+            {
+                value = GetValueDispatch(id,
+                    (bool)_engineOptions.Statuses[CalculationController.EngineStatuses.IsRunScriptingOnRecalculate]
+                        && (bool)_engineOptions.Statuses[CalculationController.EngineStatuses.IsCalculateAll],
+                    (bool)_engineOptions.Statuses[CalculationController.EngineStatuses.IsAutoCalc]);
+            });
+        }
+        finally
+        {
+            DebugTools.LogData(string.Format("ComponentController.GetValue: {0}: End", id), ref refTime);
+        }
+        return value;
+    }
 
     public bool ShouldSkipUnchangedValue(string id)
     {
@@ -126,12 +161,12 @@ internal abstract partial class DataExchangeHandler
 
     protected static object ConvertFromIValue(IValue value)
     {
+        // The case sections declare their locals in the switch block (no braces): the IL numbers them before the switch temp.
         switch (value.Type)
         {
             case "String":
                 return ((StringValue)value).Value;
             case "Numeric":
-            {
                 double real = ((NumericValue)value).Real;
                 _ = ((NumericValue)value).Imag;
                 if (double.IsNaN(real))
@@ -139,9 +174,7 @@ internal abstract partial class DataExchangeHandler
                     return null;
                 }
                 return real;
-            }
             case "Matrix":
-            {
                 MatrixValue matrixValue = (MatrixValue)value;
                 object[,] array = new object[matrixValue.Rows, matrixValue.Cols];
                 for (int i = 0; i < matrixValue.Rows; i++)
@@ -152,7 +185,6 @@ internal abstract partial class DataExchangeHandler
                     }
                 }
                 return array;
-            }
             default:
                 return value.AsString;
         }

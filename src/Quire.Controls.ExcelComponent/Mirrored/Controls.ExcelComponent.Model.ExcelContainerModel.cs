@@ -273,36 +273,56 @@ public partial class ExcelContainerModel
         return false;
     }
 
-    private static global::Mathcad.IValue ConvertToIValue(object value, global::System.Func<string> getDefaultText) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static IValue ConvertToIValue(object value, Func<string> getDefaultText)
+    {
+        if (value == null)
+        {
+            return new global::Quire.Automation.NumericValue { Real = 0.0 };
+        }
+        if (IsExcelErrorValue(value))
+        {
+            return new global::Quire.Automation.NumericValue { Real = double.NaN };
+        }
+        if (value is double)
+        {
+            return new global::Quire.Automation.NumericValue { Real = (double)value };
+        }
+        if (value is int)
+        {
+            return new global::Quire.Automation.NumericValue { Integer = (int)value };
+        }
+        if (value is string)
+        {
+            return new global::Quire.Automation.StringValue { Value = (string)value };
+        }
+        return new global::Quire.Automation.StringValue { Value = getDefaultText() };
+    }
 
     private static object ConvertFromIValue(IValue value)
     {
+        // The case sections declare their locals in the switch block (no braces): the IL numbers them before the switch temp.
         switch (value.Type)
         {
             case "String":
                 return ((Quire.Automation.StringValue)value).Value;
             case "Numeric":
+                double real = ((Quire.Automation.NumericValue)value).Real;
+                if (double.IsNaN(real))
                 {
-                    double real = ((Quire.Automation.NumericValue)value).Real;
-                    if (double.IsNaN(real))
-                    {
-                        return null;
-                    }
-                    return real;
+                    return null;
                 }
+                return real;
             case "Matrix":
+                Quire.Automation.MatrixValue matrixValue = (Quire.Automation.MatrixValue)value;
+                object[,] array = new object[matrixValue.Rows, matrixValue.Cols];
+                for (int i = 0; i < matrixValue.Rows; i++)
                 {
-                    Quire.Automation.MatrixValue matrixValue = (Quire.Automation.MatrixValue)value;
-                    object[,] array = new object[matrixValue.Rows, matrixValue.Cols];
-                    for (int i = 0; i < matrixValue.Rows; i++)
+                    for (int j = 0; j < matrixValue.Cols; j++)
                     {
-                        for (int j = 0; j < matrixValue.Cols; j++)
-                        {
-                            array[i, j] = ConvertFromIValue(matrixValue.GetElement(i, j) as IValue);
-                        }
+                        array[i, j] = ConvertFromIValue(matrixValue.GetElement(i, j) as IValue);
                     }
-                    return array;
                 }
+                return array;
             default:
                 throw new Exception(string.Format(_excelNotSupportedValueTypeFormat, value.Type));
         }

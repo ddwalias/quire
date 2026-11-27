@@ -11,7 +11,6 @@ using Quire.OLE;
 using Quire.PersistentData;
 using Quire.Serialization;
 using Quire.Automation;
-using IMatrixValue = Mathcad.IMatrixValue;
 using IValue = Mathcad.IValue;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -83,18 +82,16 @@ public partial class ChartContainerModel
     public override void SetValue(string place, IValue value, IValueToIResultNodeTransform resultsTransform)
     {
         CheckInstalledAndAvailable(forceRun: true);
-        string type = value.Type;
-        if (!(type == "String"))
+        switch (value.Type)
         {
-            if (!(type == "Matrix"))
-            {
-                throw new Exception($"Unsupported type {value.Type}");
-            }
-            SetMatrix(place, value, resultsTransform);
-        }
-        else
-        {
-            SetString(place, value);
+            case "String":
+                SetString(place, value);
+                break;
+            case "Matrix":
+                SetMatrix(place, value, resultsTransform);
+                break;
+            default:
+                throw new Exception(string.Format("Unsupported type {0}", value.Type));
         }
     }
     public override IValue GetValue(string place)
@@ -124,77 +121,8 @@ public partial class ChartContainerModel
     {
         throw new AddressErrorException(place);
     }
-    private void SetMatrix(string place, IValue value, IValueToIResultNodeTransform resultsTransform)
-    {
-        DebugTools.LogData(string.Format("ChartContainerModel.SetMatrix: {0}: Start", place));
-        try
-        {
-            IMatrixValue matrixValue = (IMatrixValue)value;
-            if (place == "MinMaxPre" || place == "MinMaxPost")
-            {
-                IResultNode arg = resultsTransform.Transform((IAutomationValue)value);
-                if (DebugTools.AssertNotNull(OnProcessMinMax, null).Failed)
-                {
-                    return;
-                }
-                StringBuilder stringBuilder = new StringBuilder();
-                double[,] array = OnProcessMinMax(arg, (place == "MinMaxPost") ? DataLimits : null, stringBuilder);
-                if (array == null)
-                {
-                    throw new Exception(stringBuilder.ToString());
-                }
-                if (!(place == "MinMaxPost"))
-                {
-                    return;
-                }
-                AddImageFreezeSource(ImageFreezeSources.AsynchronousCalculation);
-                try
-                {
-                    ChartMinMax chartMinMax = CreateEmptyChartMinMax();
-                    chartMinMax.m_X = new MinMax
-                    {
-                        m_Min = array[0, 0],
-                        m_Max = array[0, 1]
-                    };
-                    chartMinMax.m_Y = new MinMax
-                    {
-                        m_Min = array[1, 0],
-                        m_Max = array[1, 1]
-                    };
-                    chartMinMax.m_Y2 = new MinMax
-                    {
-                        m_Min = array[2, 0],
-                        m_Max = array[2, 1]
-                    };
-                    chartMinMax.m_Z = new MinMax
-                    {
-                        m_Min = array[3, 0],
-                        m_Max = array[3, 1]
-                    };
-                    ChartAppOLE chartObject = ChartObject;
-                    ChartMinMax data = chartMinMax;
-                    chartObject.setChartMinMax(ref data);
-                    return;
-                }
-                catch (Exception ex)
-                {
-                    RemoveImageFreezeSource(ImageFreezeSources.AsynchronousCalculation);
-                    if (ex is COMException)
-                    {
-                        throw new Exception(ComExceptionEngineErrorCode, ex);
-                    }
-                    throw;
-                }
-            }
-            if (DebugTools.DevAssert(uint.TryParse(place, out var result), null).Passed)
-            {
-                SetTrace(result, matrixValue, resultsTransform);
-            }
-        }
-        finally
-        {
-        }
-    }
+    [global::Quire.Mirror.MirrorStub, global::Quire.Mirror.MirrorBlocked("IChartAppOLE.setChartMinMax(ref) needs COM ref omission: ChartAppLib must be an embedded COM interface")]
+    private void SetMatrix(string place, IValue value, IValueToIResultNodeTransform resultsTransform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public event Func<IResultNode, double[,], StringBuilder, double[,]> OnProcessMinMax;
     public IEnumerable<uint> CurrentTraceIds
     {

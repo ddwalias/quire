@@ -77,7 +77,7 @@ public partial class McxComponent
         return false;
     }
 
-    [global::Quire.Mirror.MirrorStub, global::Quire.Mirror.MirrorBlocked("Cross-assembly Mathcad.IMatrixValue mapping (interop.mathcad vs automationmgd) is maintained outside Componentsmgd.")]
+    [global::Quire.Mirror.MirrorStub]
     private bool FixInputs(ref object[] inputs, ref uint nInputs, ref uint nOutputs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     private void CreateInputQueue(uint nInputs, ref McxInput[] minputs, object[] inputs, UnitAction action)

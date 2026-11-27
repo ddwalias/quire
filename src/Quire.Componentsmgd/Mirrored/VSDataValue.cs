@@ -12,28 +12,34 @@ public partial class VSDataValue : MatrixValue, IVSDataType, IVSUnitData, IPersi
     private GCHandle handleR;
     private GCHandle handleI;
 
-    [global::Quire.Mirror.MirrorStub, global::Quire.Mirror.MirrorBlocked("Cross-assembly IMatrixValue mapping is maintained outside Componentsmgd.")]
-    public IVSDataType GetElement(uint row, uint col) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public IVSDataType GetElement(uint row, uint col)
+    {
+        object element = ((global::Mathcad.IMatrixValue)this).GetElement((int)row, (int)col);
+        return VSValueFactory.Instance.AutomationToVSData(element) as IVSDataType;
+    }
 
-    [global::Quire.Mirror.MirrorStub, global::Quire.Mirror.MirrorBlocked("Cross-assembly IMatrixValue mapping is maintained outside Componentsmgd.")]
-    public void SetElement(uint row, uint col, IVSDataType elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SetElement(uint row, uint col, IVSDataType elem)
+    {
+        object element = VSValueFactory.Instance.VSDataToAutomation(elem);
+        ((global::Mathcad.IMatrixValue)this).SetElement((int)row, (int)col, element);
+    }
 
-    [global::Quire.Mirror.MirrorStub, global::Quire.Mirror.MirrorBlocked("Cross-assembly IMatrixValue mapping is maintained outside Componentsmgd.")]
+    [global::Quire.Mirror.MirrorStub]
     public IVSDataType GetSubmatrix(uint srow, uint scol, VSDATABOUNDS bounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    [global::Quire.Mirror.MirrorStub, global::Quire.Mirror.MirrorBlocked("Cross-assembly IMatrixValue mapping is maintained outside Componentsmgd.")]
+    [global::Quire.Mirror.MirrorStub]
     public void SetSubmatrix(uint drow, uint dcol, IVSDataType mat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    [global::Quire.Mirror.MirrorStub, global::Quire.Mirror.MirrorBlocked("Cross-assembly IMatrixValue mapping is maintained outside Componentsmgd.")]
+    [global::Quire.Mirror.MirrorStub]
     public void Load(global::System.Runtime.InteropServices.ComTypes.IStream pStm) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    [global::Quire.Mirror.MirrorStub, global::Quire.Mirror.MirrorBlocked("Cross-assembly IMatrixValue mapping is maintained outside Componentsmgd.")]
+    [global::Quire.Mirror.MirrorStub]
     public void Load(global::System.Runtime.InteropServices.ComTypes.IStream pStm, bool old) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    [global::Quire.Mirror.MirrorStub, global::Quire.Mirror.MirrorBlocked("Cross-assembly IMatrixValue mapping is maintained outside Componentsmgd.")]
+    [global::Quire.Mirror.MirrorStub]
     public void Save(global::System.Runtime.InteropServices.ComTypes.IStream pStm, bool fClearDirty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    [global::Quire.Mirror.MirrorStub, global::Quire.Mirror.MirrorBlocked("Cross-assembly IMatrixValue mapping is maintained outside Componentsmgd.")]
+    [global::Quire.Mirror.MirrorStub]
     public void Save(global::System.Runtime.InteropServices.ComTypes.IStream pStm, bool fClearDirty, bool old) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public bool IsScalar
