@@ -94,31 +94,11 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
     [global::Quire.Mirror.MirrorStub]
     private void HandleSaveDocumentWithExtension(string extension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HandleSaveDocumentAs(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal bool SaveDocumentWithFilename(global::Quire.Controls.Core.IEngineeringDocument doc, string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal bool SaveDocumentAsNonPrimeFormat_ForApiOnly(global::Quire.Controls.Core.IEngineeringDocument doc, string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleSaveDocumentCopy(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private int ShouldPromptForFileNameOnSave(global::Quire.Controls.Core.IEngineeringDocument doc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool SaveDocumentAsPdf_ForApiOnly(global::Quire.Controls.Core.IEngineeringDocument doc, string pdfFileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal bool SaveAndPushEngNote(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool SaveDocument(global::Quire.Controls.Core.IEngineeringDocument doc, global::Quire.Controls.RegularSaveOptions options) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HandleSaveDocumentWithInputsOutputsStates(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleSaveDocumentWithoutInputsOutputsStates(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal bool SaveDocumentWithoutInputsOutputsStates(global::Quire.Controls.Core.IEngineeringDocument doc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private string AskForSaveDefaultFileName(global::Quire.Controls.Core.IEngineeringDocument doc, string defaultFileExtensionForDialog) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Collections.Generic.IList<global::Quire.Controls.Core.FileDialogFilterPair> GetFileSaveOpenFilters(string extension, bool save) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static global::System.Collections.Generic.IList<global::Quire.Controls.Core.FileDialogFilterPair> GetFileSaveOpenFilters(string extension, global::System.Func<object, object> tryFindResource, global::Quire.Services.IFunctionalityService functionalityService, bool docOptionsEnabled, bool save) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
