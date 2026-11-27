@@ -319,6 +319,57 @@ TypeSig Corlib(TypeSig sig) => sig switch
     PointerSig p => p with { Element = Corlib(p.Element) },
     _ => sig
 };
+// Renamed fields: the MirrorName provenance MirrorGen emitted on each Quire field (FieldProvenance). Each claim is checked
+// against the owner (bound as the type map or the declaring assembly's [MirrorOf] says), the Mathcad field (static-ness,
+// access and type), and the shape of a rename (the Quire name is the Mathcad name plus underscores). A Mathcad field two
+// Quire fields claim fails both claims. Claims of assemblies outside the audited closure are not read.
+var fieldRenames = new Dictionary<(string Assembly, string Type, string Field), string>();
+var closure = new Dictionary<string, Artifact>(StringComparer.OrdinalIgnoreCase);
+foreach (var a in quire) closure[a.Name] = a;
+foreach (var name in quire.SelectMany(a => a.Metadata.AssemblyReferences.Select(h => a.Metadata.GetString(a.Metadata.GetAssemblyReference(h).Name))).ToList())
+{
+    if (closure.ContainsKey(name) || !File.Exists(Path.Combine(assemblies, name + ".dll"))) continue;
+    try { closure[name] = new Artifact(Path.Combine(assemblies, name + ".dll")); }
+    catch (Exception e) { errors.Add($"{name}: referenced assembly cannot be read for its rename provenance: {e.Message}"); }
+}
+var resolved = new List<(string Assembly, string Type, string Field, string MathcadField, string[] Binding, Artifact Owner, TypeModel Declaring, FieldModel Declared)>();
+foreach (var artifact in closure.Values)
+    foreach (var (type, field, mathcadField) in FieldProvenance.Read(artifact.Metadata))
+    {
+        var audited = quire.Contains(artifact);
+        var declaring = artifact.Model.Types.SingleOrDefault(t => t.FullName == type);
+        var quireField = declaring?.Fields.SingleOrDefault(f => f.Name == field);
+        if (declaring is null || quireField is null) { errors.Add($"{artifact.Name}: MirrorName on no field {type}::{field}"); continue; }
+        string[]? bound = audited
+            ? (typeNames.TryGetValue((artifact.Name, type), out var known) ? known : null)
+            : declaring.MirrorOf?.Split(',').Select(s => s.Trim()).ToArray();
+        if (bound is null || bound.Length < 2 || !Reviewed(type, bound))
+        { errors.Add($"{artifact.Name}: {type} is not a reviewed binding for {field}'s rename to {mathcadField}"); continue; }
+        resolved.Add((artifact.Name, type, field, mathcadField, bound, artifact, declaring, quireField));
+    }
+var targets = resolved.GroupBy(r => (Assembly: r.Binding[1].ToLowerInvariant(), Type: r.Binding[0], Field: r.MathcadField))
+    .Where(g => g.Count() > 1).Select(g => g.Key).ToHashSet();
+foreach (var r in resolved)
+{
+    string claim = $"{r.Assembly}|{r.Type}|{r.Field} -> {r.Binding[0]}::{r.MathcadField}";
+    if (targets.Contains((r.Binding[1].ToLowerInvariant(), r.Binding[0], r.MathcadField)))
+    { errors.Add($"field provenance: {r.Binding[0]}::{r.MathcadField} is claimed twice: {claim}"); continue; }
+    if (!(r.Field.Length > r.MathcadField.Length && r.Field.StartsWith(r.MathcadField, StringComparison.Ordinal)
+        && r.Field[r.MathcadField.Length..].All(c => c == '_')))
+    { errors.Add($"field provenance: {r.Field} is not {r.MathcadField} plus underscores: {claim}"); continue; }
+    if (!originals.TryGetValue(r.Binding[1], out var mathcadAssembly))
+    {
+        try { originals[r.Binding[1]] = mathcadAssembly = new Artifact(InstallFile(r.Binding[1])); }
+        catch (Exception e) { errors.Add($"field provenance: {r.Binding[1]} unavailable for {claim}: {e.Message}"); continue; }
+    }
+    var original = mathcadAssembly.Model.Types.SingleOrDefault(t => t.FullName == r.Binding[0]);
+    var target = original?.Fields.SingleOrDefault(f => f.Name == r.MathcadField);
+    if (original is null || target is null) { errors.Add($"field provenance: no field {r.Binding[0]}::{r.MathcadField}: {claim}"); continue; }
+    if (target.Static != r.Declared.Static || target.Access != r.Declared.Access
+        || Canonical.Write(Corlib(Map(r.Declared.Type))) != Canonical.Write(Corlib(target.Type)))
+    { errors.Add($"field provenance: {r.Type}::{r.Field} differs from {r.Binding[0]}::{r.MathcadField} in static, access or type: {claim}"); continue; }
+    fieldRenames[(r.Assembly, r.Type, r.Field)] = r.MathcadField;
+}
 var originalKeys = new Dictionary<(Artifact Artifact, int Token), string>();
 string OriginalKey(Artifact artifact, RawMethod raw)
 {
@@ -499,7 +550,8 @@ StructureReader Reader(Artifact a, bool isQuire) => structures.TryGetValue(a, ou
     : structures[a] = new StructureReader(a.Metadata, a.Pe, new StrictSigProvider(a.Name),
         isQuire ? token => originalNames.GetValueOrDefault((a.Name, token)) : _ => null,
         bind: isQuire ? Binding : (_, _) => null,
-        products: products);
+        products: products,
+        fieldNames: isQuire ? (assembly, type, field) => fieldRenames.GetValueOrDefault((assembly, type, field)) : null);
 // Stable body hashes identify changed Release methods independently of metadata token numbering.
 var bodies = quire.ToDictionary(a => a, a => new StructureReader(a.Metadata, a.Pe, new SigProvider(a.Name), _ => null, root: repo));
 // D19: an unpaired mixed-mode member whose bound Mathcad assembly has a member of the same owner, name and arity is a

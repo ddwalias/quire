@@ -11,6 +11,10 @@ namespace Quire.Tools.MirrorGen;
 /// </summary>
 public static class Shape
 {
+    /// <summary>A directory of built DLLs (`names --assemblies`) to read in place of each project's Release build; null reads
+    /// the Release builds under src/&lt;project&gt;/bin.</summary>
+    public static string? BuildOutputs { get; set; }
+
     public static IEnumerable<string> Lines(TypeModel t) => Entries(t).Select(e => e.Line);
 
     /// <summary>
@@ -156,6 +160,12 @@ public static class Shape
     /// </summary>
     public static string? BuiltAssembly(string repo, string project)
     {
+        if (BuildOutputs is { } outputs)
+        {
+            // A build directory given by the caller (names --assemblies): the project's DLL there, if it is C# IL.
+            string built = Path.Combine(outputs, project + ".dll");
+            return File.Exists(built) && IsILOnly(built) ? built : null;
+        }
         var dll = ReleaseOutput(repo, project);
         if (dll == null || IsILOnly(dll)) return dll;
         string standIn = Path.Combine(ProjectLayout.ProjectDir(repo, project), "obj", "Release", Path.GetFileName(Path.GetDirectoryName(dll))!, project + ".dll");

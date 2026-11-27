@@ -17,10 +17,14 @@ public sealed class Mapper
 
     public List<TypeModel> Types { get; } = [];
 
-    public Mapper(Universe mathcad, Rules rules)
+    private readonly IReadOnlyDictionary<string, string> _boundNames;
+
+    /// <param name="boundNames">Quire names of hand-written types, by their MirrorOf argument (HandWritten.BoundNames).</param>
+    public Mapper(Universe mathcad, Rules rules, IReadOnlyDictionary<string, string>? boundNames = null)
     {
         _mathcad = mathcad;
         _rules = rules;
+        _boundNames = boundNames ?? new Dictionary<string, string>();
         foreach (var e in rules.Scope.Values)
             if (e.Disposition == Disposition.Mirror) _primary.TryAdd(e.MathcadType, e);
     }
@@ -133,6 +137,8 @@ public sealed class Mapper
     public string QuireName(string fullName, string asm)
     {
         if (_mathcad.Assemblies.TryGetValue(asm, out var model)) asm = Path.GetFileNameWithoutExtension(model.Path); // file stem
+        // A type hand-written code binds to keeps that code's name (the hand-written declaration is the mirror).
+        if (_boundNames.TryGetValue($"{fullName}, {asm}", out var boundName)) return boundName;
 
         var segments = fullName.Split('+');
         string outer = segments[0];

@@ -43,6 +43,11 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
     /// <summary>Mathcad methods hand-written code declares (a subset of <see cref="Skip"/>).</summary>
     public HashSet<MethodModel> HandWrittenMembers { get; } = new(ReferenceEqualityComparer.Instance);
 
+    /// <summary>Names hand-written code declares per type (methods, and fields, properties and events). A generated field
+    /// with one of these names is renamed (FieldClaims), not left out: hand-written code keeps its member, and the field
+    /// takes its Mathcad name plus underscores.</summary>
+    public Dictionary<TypeModel, HashSet<string>> HandMethodNames { get; } = [];
+
     public void Run()
     {
         foreach (var t in mapper.Types) MergeHandWritten(t);
@@ -399,6 +404,8 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
         }
         void Conflict(string what) => t.Notes.Add($"hand-written code uses the name of {what} for a different kind of member; not generated");
         var optional = handWritten.OptionalOverloads(t);
+        // Explicit implementations match by interface identity: their qualified names are spelled differently.
+        var handExplicit = handWritten.ExplicitImpls(t);
         foreach (var m in t.Methods)
         {
             // Hand-written code spells a member as the writer does: encoded ("!T" -> "_bangT"), without a C++/CLI arity
@@ -409,6 +416,12 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
                 HandWrittenMembers.Add(m);
             }
             else if (nonMethods.Contains(m.Name)) { Skip.Add(m); Conflict($"method {m.Name}"); }
+            // Mathcad may obfuscate an explicit implementation's name (ICloneable.Clone is `a`); the interface member decides.
+            else if (m.Access == Access.Private && !m.Implements.IsEmpty && m.Implements.All(i => handExplicit.Contains($"{i.Interface}::{i.Method}")))
+            {
+                Skip.Add(m);
+                HandWrittenMembers.Add(m);
+            }
             else if (optional.Contains(HandWritten.MethodKey(m)))
             {
                 // A hand-written overload with optional parameters already accepts these arguments; a generated
@@ -417,8 +430,6 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
                 t.Notes.Add($"{(m.IsConstructor ? "constructor" : "method " + m.Name)}({string.Join(", ", m.Params.Select(p => p.Type))}) not generated: a hand-written overload with optional parameters covers it");
             }
         }
-        // Explicit implementations match by interface identity: their qualified names are spelled differently.
-        var handExplicit = handWritten.ExplicitImpls(t);
         bool ExplicitByHand(params MethodModel?[] accessors) =>
             accessors.OfType<MethodModel>().ToList() is { Count: > 0 } acc
             && acc.All(a => IsExplicitImpl(a) && a.Implements.All(i => handExplicit.Contains($"{i.Interface}::{i.Method}")));
@@ -436,10 +447,12 @@ public sealed class Planner(Mapper mapper, Externals externals, HandWritten hand
             if (nonMethods.Contains(e.Name) || ExplicitByHand(e.Adder, e.Remover) || AccessorsByHand(e.Adder, e.Remover)) Skip.Add(e);
             else if (methodNames.Contains(e.Name)) { Skip.Add(e); Conflict($"event {e.Name}"); }
         }
+        // Every name hand-written code declares is taken: a renamed field must not collide with a hand-written field, property
+        // or event (InlineToSExpressionTransform declares const a_ by hand) any more than with a method.
+        if (methodNames.Count > 0 || nonMethods.Count > 0) HandMethodNames[t] = [.. methodNames, .. nonMethods];
         foreach (var f in t.Fields)
         {
             if (nonMethods.Contains(f.Name)) Skip.Add(f);
-            else if (methodNames.Contains(f.Name)) { Skip.Add(f); Conflict($"field {f.Name}"); }
         }
     }
 }
@@ -481,6 +494,42 @@ public sealed class HandWritten
                 && !file.Contains($"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}")
                 && !file.Contains($"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}")
                 && !nested.Any(directory => Path.GetFullPath(file).StartsWith(directory, StringComparison.OrdinalIgnoreCase)));
+    }
+
+    /// <summary>The Quire names of types that hand-written source binds with [MirrorOf]. The binding is the hand-written
+    /// declaration's own Mathcad name, so the mapping takes the compiled type's name, wherever the hand-written code
+    /// declares it (Quire.ComponentModel.PropertyBag binds Flobbster.Windows.Forms.PropertyBag). Keys are the MirrorOf
+    /// arguments ("Type, Assembly"). Reads the Release builds, as emit does.</summary>
+    public static Dictionary<string, string> BoundNames(string repo)
+    {
+        var names = new Dictionary<string, string>(StringComparer.Ordinal);
+        string src = Path.Combine(repo, "src");
+        if (!Directory.Exists(src)) return names;
+        foreach (var dir in Directory.GetDirectories(src).OrderBy(d => d, StringComparer.Ordinal))
+        {
+            string project = Path.GetFileName(dir);
+            if (Shape.BuiltAssembly(repo, project) is not { } dll || MetadataLoader.Load(dll) is not { } model) continue;
+            var bound = SourceBindings(dir);
+            foreach (var t in model.Types)
+                if (t.MirrorOf is { } binding && bound.Contains(binding)) names.TryAdd(binding, t.FullName);
+        }
+        return names;
+    }
+
+    /// <summary>The [MirrorOf] arguments of a project's hand-written sources (outside Generated/, bin and obj).</summary>
+    public static HashSet<string> SourceBindings(string projectDir)
+    {
+        var bindings = new HashSet<string>(StringComparer.Ordinal);
+        foreach (var file in Sources(projectDir))
+        {
+            // Code only the stub-free build compiles (-p:MirrorStubs=false) is not part of the normal build read here.
+            string text = System.Text.RegularExpressions.Regex.Replace(File.ReadAllText(file),
+                @"#if\s+QUIRE_MIRROR_STUB_FREE\b.*?#endif", "", System.Text.RegularExpressions.RegexOptions.Singleline);
+            foreach (System.Text.RegularExpressions.Match m in System.Text.RegularExpressions.Regex.Matches(
+                text, @"\bMirrorOf\(\s*""([^""]+)""\s*\)"))
+                bindings.Add(m.Groups[1].Value);
+        }
+        return bindings;
     }
 
     /// <summary>[MirrorOf] arguments written in hand-written sources (outside Generated/), which metadata can't tell

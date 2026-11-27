@@ -94,7 +94,8 @@ sealed record Structure(string[] Calls, string[] Fields, string[] Types, string[
 /// <see cref="SigProvider"/> erases.</summary>
 sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecutable.PEReader pe, ISignatureTypeProvider<TypeSig, object?> decoder,
     Func<int, string?> methodName, string? root = null,
-    Func<string, string, string[]?>? bind = null, IReadOnlySet<string>? products = null)
+    Func<string, string, string[]?>? bind = null, IReadOnlySet<string>? products = null,
+    Func<string, string, string, string?>? fieldNames = null)
 {
     private readonly bool strict = decoder is StrictSigProvider;
     private readonly string? root = root is null ? null : Path.GetFullPath(root);
@@ -405,6 +406,32 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
         }
     }
 
+    /// <summary>The metadata full name of a type of this module as its own assembly spells it (nested types with '+').</summary>
+    private string RawFullName(TypeDefinitionHandle handle)
+    {
+        var t = md.GetTypeDefinition(handle);
+        string name = md.GetString(t.Name);
+        if (!t.GetDeclaringType().IsNil) return RawFullName(t.GetDeclaringType()) + "+" + name;
+        string ns = md.GetString(t.Namespace);
+        return ns.Length == 0 ? name : ns + "." + name;
+    }
+
+    /// <summary>The assembly and metadata full name a TypeRef names (nested types with '+').</summary>
+    private (string Assembly, string Type) RawReferenceName(TypeReferenceHandle handle)
+    {
+        var t = md.GetTypeReference(handle);
+        string name = md.GetString(t.Name);
+        if (t.ResolutionScope.Kind == HandleKind.TypeReference)
+        {
+            var outer = RawReferenceName((TypeReferenceHandle)t.ResolutionScope);
+            return (outer.Assembly, outer.Type + "+" + name);
+        }
+        string scope = t.ResolutionScope.Kind == HandleKind.AssemblyReference
+            ? md.GetString(md.GetAssemblyReference((AssemblyReferenceHandle)t.ResolutionScope).Name) : "";
+        string ns = md.GetString(t.Namespace);
+        return (scope, ns.Length == 0 ? name : ns + "." + name);
+    }
+
     private string Field(EntityHandle handle, MethodDefinitionHandle context = default)
     {
         if (handle.Kind == HandleKind.FieldDefinition)
@@ -445,10 +472,19 @@ sealed class StructureReader(MetadataReader md, System.Reflection.PortableExecut
                     if (unique) name = normalized;
                 }
             }
+            // A reviewed rename (MirrorGen's name clash with a method): the Quire field is the Mathcad field under its Mathcad name.
+            if (self is not null && fieldNames?.Invoke(self, RawFullName(field.GetDeclaringType()), name) is { } mathcadName) name = mathcadName;
             return $"{Type(field.GetDeclaringType())}::{name}";
         }
         var reference = md.GetMemberReference((MemberReferenceHandle)handle);
-        return $"{Owner(reference.Parent)}::{md.GetString(reference.Name)}";
+        string member = md.GetString(reference.Name);
+        // A field of another module of this build, named through a TypeRef: the rename is the declaring module's.
+        if (fieldNames is not null && reference.Parent.Kind == HandleKind.TypeReference)
+        {
+            var (assembly, type) = RawReferenceName((TypeReferenceHandle)reference.Parent);
+            if (fieldNames(assembly, type, member) is { } mathcadName) member = mathcadName;
+        }
+        return $"{Owner(reference.Parent)}::{member}";
     }
 
     /// <summary>Remove the source-path hash only from a plainly named anonymous-namespace module field.</summary>

@@ -10,9 +10,40 @@ public static class Emit
     public const string GeneratedDir = "Generated";
     public const string MirrorDir = "Mirror";
 
+    /// <summary>What emit writes, computed without writing: the mapped types, the projects and the planned members.</summary>
+    public sealed record Generation(Mapper Mapper, List<string> Projects, List<string> Csharp, Planner Plan, CSharpWriter Writer);
+
     public static void Run(string repo, Universe mathcad, Rules rules)
     {
-        var mapper = new Mapper(mathcad, rules);
+        var g = Generate(repo, mathcad, rules);
+        var mapper = g.Mapper; var projects = g.Projects; var csharp = g.Csharp; var plan = g.Plan; var writer = g.Writer;
+        int files = 0, skipped = 0;
+        foreach (var project in csharp)
+        {
+            string dir = Path.Combine(ProjectLayout.ProjectDir(repo, project), GeneratedDir, MirrorDir);
+            Directory.CreateDirectory(dir);
+            var (texts, skippedHere) = ProjectFiles(g, project);
+            skipped += skippedHere;
+            foreach (var (file, text) in texts)
+            {
+                WriteIfChanged(Path.Combine(dir, file), text);
+                files++;
+            }
+            foreach (var stale in Directory.GetFiles(dir, "*.g.cs"))
+                if (!texts.ContainsKey(Path.GetFileName(stale))) File.Delete(stale);
+        }
+
+        var deps = Dependencies(repo, mapper, plan, mathcad, rules);
+        foreach (var project in csharp) WriteProject(repo, project, deps[project], rules);
+        AddToSolution(repo, csharp.Append("Quire.Mirror"), ["tools/Quire.Tools.MirrorGen/Quire.Tools.MirrorGen.csproj"]);
+        WriteNotes(repo, mapper, plan);
+        UpdateTypeMap(repo, mapper, rules);
+        Console.WriteLine($"{mapper.Types.Count} types in {projects.Count} projects; {files} files written, {skipped} types left to hand-written code");
+    }
+
+    public static Generation Generate(string repo, Universe mathcad, Rules rules)
+    {
+        var mapper = new Mapper(mathcad, rules, HandWritten.BoundNames(repo));
         mapper.Build();
         var externals = Externals.Load(repo);
         var projects = mapper.Types.Select(t => t.Project!).Distinct().OrderBy(p => p, StringComparer.Ordinal).ToList();
@@ -20,7 +51,8 @@ public static class Emit
         // regenerated as stubs.
         var unbuilt = projects.Where(p => !rules.IsCppProject(p) && Shape.BuiltAssembly(repo, p) == null
             && HandWritten.Sources(ProjectLayout.ProjectDir(repo, p), ProjectLayout.NestedProjectDirs(repo, p)).Any()).ToList();
-        if (unbuilt.Count > 0)
+        // With a build directory, a project it lacks is left unchecked (NameCheck skips it) rather than failing the run.
+        if (unbuilt.Count > 0 && Shape.BuildOutputs == null)
             throw new InvalidOperationException("no Release build of " + string.Join(", ", unbuilt) + ", which have hand-written C# "
                 + "(the resolved project directory's bin/Release; for a mixed-mode project, its C# stand-in in obj/Release): "
                 + "run `dotnet build Quire.slnx -c Release` before emit");
@@ -39,30 +71,24 @@ public static class Emit
             throw new InvalidOperationException("split these before their C++/CLI host: " +
                 string.Join(", ", stranded.Select(a => $"{a} (in {rules.HostFor(a)})")));
 
-        int files = 0, skipped = 0;
-        foreach (var project in csharp)
-        {
-            string dir = Path.Combine(ProjectLayout.ProjectDir(repo, project), GeneratedDir, MirrorDir);
-            Directory.CreateDirectory(dir);
-            var written = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-            foreach (var t in mapper.Types.Where(t => t.Project == project && t.DeclaringType == null).OrderBy(t => t.FullName, StringComparer.Ordinal))
-            {
-                var text = writer.File(t);
-                if (text == null) { skipped++; continue; }
-                string file = FileName(t.FullName, written);
-                WriteIfChanged(Path.Combine(dir, file), text);
-                files++;
-            }
-            foreach (var stale in Directory.GetFiles(dir, "*.g.cs"))
-                if (!written.Contains(Path.GetFileName(stale))) File.Delete(stale);
-        }
+        return new Generation(mapper, projects, csharp, plan, writer);
+    }
 
-        var deps = Dependencies(repo, mapper, plan, mathcad, rules);
-        foreach (var project in csharp) WriteProject(repo, project, deps[project], rules);
-        AddToSolution(repo, csharp.Append("Quire.Mirror"), ["tools/Quire.Tools.MirrorGen/Quire.Tools.MirrorGen.csproj"]);
-        WriteNotes(repo, mapper, plan);
-        UpdateTypeMap(repo, mapper, rules);
-        Console.WriteLine($"{mapper.Types.Count} types in {projects.Count} projects; {files} files written, {skipped} types left to hand-written code");
+    /// <summary>The generated file text of each type a project emits, by file name, and how many types were left to
+    /// hand-written code. Nothing is written.</summary>
+    public static (Dictionary<string, string> Texts, int Skipped) ProjectFiles(Generation g, string project)
+    {
+        var texts = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        var written = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        int skipped = 0;
+        foreach (var t in g.Mapper.Types.Where(t => t.Project == project && t.DeclaringType == null).OrderBy(t => t.FullName, StringComparer.Ordinal))
+        {
+            var text = g.Writer.File(t);
+            if (text == null) { skipped++; continue; }
+            string file = FileName(t.FullName, written);
+            texts[file] = text;
+        }
+        return (texts, skipped);
     }
 
     private static string FileName(string fullName, HashSet<string> taken)

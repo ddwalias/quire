@@ -19,18 +19,59 @@ public sealed class MetadataLoader
         if (!pe.HasMetadata) return null;
         var md = pe.GetMetadataReader();
         if (!md.IsAssembly) return null;
-        return new MetadataLoader(md).Read(path);
+        using var pdb = PortablePdb(path);
+        return new MetadataLoader(md, pdb?.GetMetadataReader()).Read(path);
+    }
+
+    /// <summary>The assembly's portable PDB beside it, if it has one (a Windows PDB or none gives null).</summary>
+    private static MetadataReaderProvider? PortablePdb(string path)
+    {
+        string pdb = Path.ChangeExtension(path, ".pdb");
+        if (!File.Exists(pdb)) return null;
+        try { return MetadataReaderProvider.FromPortablePdbImage(ImmutableArray.Create(File.ReadAllBytes(pdb))); }
+        catch (BadImageFormatException) { return null; }
     }
 
     private readonly MetadataReader _md;
+    private readonly MetadataReader? _pdb;
     private readonly SigProvider _sigs;
     private readonly string _asm;
 
-    private MetadataLoader(MetadataReader md)
+    private MetadataLoader(MetadataReader md, MetadataReader? pdb)
     {
         _md = md;
+        _pdb = pdb;
         _asm = md.GetString(md.GetAssemblyDefinition().Name);
         _sigs = new SigProvider(_asm);
+    }
+
+    /// <summary>
+    /// A [MirrorStub] member is generated only when its body was compiled from a file under Generated/. Hand-written code
+    /// may carry the marker too, to park a member it declares itself (AttachedProperties.SetIsBringToView); such a member
+    /// is hand-written, so the generator does not write a second declaration of it. Without a portable PDB, or for a member
+    /// with no body, the marker alone decides.
+    /// </summary>
+    private MemberStatus OriginStatus(MemberStatus status, params MethodDefinitionHandle[] bodies) =>
+        status == MemberStatus.Stub && bodies.Any(HandWrittenBody) ? MemberStatus.Unclassified : status;
+
+    private bool HandWrittenBody(MethodDefinitionHandle body)
+    {
+        if (_pdb == null || body.IsNil) return false;
+        var info = _pdb.GetMethodDebugInformation(MetadataTokens.MethodDebugInformationHandle(MetadataTokens.GetRowNumber(body)));
+        if (info.Document.IsNil) return false;
+        string file = DocumentName(_pdb.GetDocument(info.Document).Name).Replace('\\', '/');
+        return !file.Contains("/Generated/", StringComparison.OrdinalIgnoreCase);
+    }
+
+    /// <summary>A PDB document name: a separator byte, then the path parts, each a blob index as a compressed integer.</summary>
+    private string DocumentName(BlobHandle name)
+    {
+        var reader = _pdb!.GetBlobReader(name);
+        char separator = reader.ReadByte() is var b && b != 0 ? (char)b : '\0';
+        var parts = new List<string>();
+        while (reader.RemainingBytes > 0)
+            parts.Add(System.Text.Encoding.UTF8.GetString(_pdb.GetBlobBytes(MetadataTokens.BlobHandle(reader.ReadCompressedInteger()))));
+        return string.Join(separator == '\0' ? "" : separator.ToString(), parts);
     }
 
     private AssemblyModel Read(string path)
@@ -169,7 +210,7 @@ public sealed class MetadataLoader
             var setter = a.Setter.IsNil ? null : methods[a.Setter];
             var index = (getter?.Params ?? setter?.Params.RemoveAt(setter.Params.Length - 1) ?? []);
             type.Properties.Add(new PropertyModel(_md.GetString(p.Name), sig.ReturnType, getter, setter, index)
-                { Status = Bodiless((getter ?? setter)?.Abstract == true, Status(p.GetCustomAttributes(), out var pe)), Evidence = pe,
+                { Status = Bodiless((getter ?? setter)?.Abstract == true, OriginStatus(Status(p.GetCustomAttributes(), out var pe), a.Getter, a.Setter)), Evidence = pe,
                   HandWrittenStub = IsHandWrittenStub(p.GetCustomAttributes()) });
         }
         foreach (var eh in td.GetEvents())
@@ -179,7 +220,7 @@ public sealed class MetadataLoader
             accessors.Add(a.Adder); accessors.Add(a.Remover);
             type.Events.Add(new EventModel(_md.GetString(e.Name), DecodeEntity(e.Type)!,
                 a.Adder.IsNil ? null : methods[a.Adder], a.Remover.IsNil ? null : methods[a.Remover])
-                { Status = Bodiless(a.Adder.IsNil ? false : methods[a.Adder].Abstract, Status(e.GetCustomAttributes(), out var ee)), Evidence = ee,
+                { Status = Bodiless(a.Adder.IsNil ? false : methods[a.Adder].Abstract, OriginStatus(Status(e.GetCustomAttributes(), out var ee), a.Adder, a.Remover)), Evidence = ee,
                   HandWrittenStub = IsHandWrittenStub(e.GetCustomAttributes()) });
         }
         // Obfuscated assemblies can lose property and event rows while keeping their special-name accessors.
@@ -313,7 +354,7 @@ public sealed class MetadataLoader
             impls.TryGetValue(mh, out var list) ? [.. list] : [],
             (a & MethodAttributes.PinvokeImpl) != 0 || (m.ImplAttributes & MethodImplAttributes.InternalCall) != 0,
             methodAttrs.Contains("System.Runtime.CompilerServices.ExtensionAttribute"),
-            initOnly) { ReturnMarshalU1 = returnMarshalU1, Status = Bodiless((a & MethodAttributes.Abstract) != 0, Status(m.GetCustomAttributes(), out var me)), Evidence = me,
+            initOnly) { ReturnMarshalU1 = returnMarshalU1, Status = Bodiless((a & MethodAttributes.Abstract) != 0, OriginStatus(Status(m.GetCustomAttributes(), out var me), mh)), Evidence = me,
                 HandWrittenStub = IsHandWrittenStub(m.GetCustomAttributes()) };
     }
 

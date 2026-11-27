@@ -179,8 +179,24 @@ public sealed class CSharpWriter(Mapper mapper, Planner plan)
             return renamed;
         }
 
+        // Field names come from FieldClaims, the rule MethodAudit's field-rename registry is checked against.
+        var fieldMethodNames = plan.HandMethodNames.TryGetValue(t, out var handNames) ? methodNames.Union(handNames) : methodNames;
+        var fieldRenames = FieldClaims.Renames(t.Name, t.Fields.Where(f => !plan.Skip.Contains(f)).Select(f => f.Name), fieldMethodNames,
+            _nested.TryGetValue((t.Project!, t.FullName), out var nestedOf) ? nestedOf.Select(n => n.Name) : []);
         foreach (var f in t.Fields.Where(f => !plan.Skip.Contains(f)))
-            if (Claim(f.Name, true, "field") is { } name) WriteField(sb, t, f, ctx, pad, name);
+        {
+            if (fieldRenames.TryGetValue(f.Name, out var renamed))
+            {
+                t.Notes.Add($"renamed field {f.Name} to {renamed}: name clash");
+                taken.Add(renamed);
+                WriteField(sb, t, f, ctx, pad, renamed);
+            }
+            else
+            {
+                taken.Add(Plain(f.Name));
+                WriteField(sb, t, f, ctx, pad, f.Name);
+            }
+        }
 
         string? indexerName = null;
         foreach (var p in t.Properties.Where(p => !plan.Skip.Contains(p)))
@@ -221,6 +237,8 @@ public sealed class CSharpWriter(Mapper mapper, Planner plan)
         string unsafeMod = HasPointer(f.Type) ? "unsafe " : "";
         string name = Identifier.Source(memberName);
         sb.AppendLine($"{pad}{StubAttr}");
+        // The provenance of a renamed field: the Mathcad name it mirrors, in the assembly MethodAudit reads.
+        if (memberName != f.Name) sb.AppendLine($"{pad}[global::Quire.Mirror.MirrorName(\"{f.Name}\")]");
         if (f.Const)
             sb.AppendLine($"{pad}{access} const {type} {name} = {Literal(f.Value, f.Type, ctx)};");
         else

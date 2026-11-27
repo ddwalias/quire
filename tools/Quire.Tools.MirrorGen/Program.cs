@@ -2,7 +2,7 @@ using Quire.Tools.MirrorGen;
 
 if (args.Length < 1)
 {
-    Console.Error.WriteLine("usage: MirrorGen <emit|manifest|native-inventory|scope-diff|assembly-map|shape <dll>>");
+    Console.Error.WriteLine("usage: MirrorGen <emit|names|manifest|native-inventory|scope-diff|assembly-map|shape <dll>>");
     return 2;
 }
 
@@ -28,6 +28,14 @@ switch (args[0])
     case "emit":
         Emit.Run(repo, Universe.LoadMathcad(install, rules), rules);
         return 0;
+    // `names [--assemblies DIR]`: the MirrorName origin check (NameCheck). Reads the Release builds emit reads, or the DLLs
+    // in DIR (a gate's build output); writes nothing.
+    case "names":
+    {
+        int at = Array.IndexOf(args, "--assemblies");
+        if (at >= 0 && at + 1 < args.Length) Shape.BuildOutputs = Path.GetFullPath(args[at + 1]);
+        return NameCheck.Run(repo, Emit.Generate(repo, Universe.LoadMathcad(install, rules), rules)) ? 0 : 1;
+    }
     case "native-inventory":
         NativeInventory.Run(install, Path.Combine(repo, "docs", "mirror", "native"));
         return 0;

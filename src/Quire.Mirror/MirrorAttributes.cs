@@ -10,6 +10,16 @@ public sealed class MirrorOfAttribute(string mathcadType) : Attribute
     public string MathcadType { get; } = mathcadType;
 }
 
+/// <summary>
+/// The Mathcad field a Quire field mirrors, written by MirrorGen on a field it renames for a name clash (the field keeps
+/// its Mathcad name when the name is free). MethodAudit maps the field to that Mathcad field by this attribute.
+/// </summary>
+[AttributeUsage(AttributeTargets.Field, Inherited = false)]
+public sealed class MirrorNameAttribute(string mathcadField) : Attribute
+{
+    public string MathcadField { get; } = mathcadField;
+}
+
 /// <summary>Marks a generated member that has no implementation yet. The coverage report counts these.</summary>
 [AttributeUsage(AttributeTargets.Constructor | AttributeTargets.Method | AttributeTargets.Property | AttributeTargets.Event | AttributeTargets.Field,
     Inherited = false)]

@@ -294,6 +294,15 @@ longer lands unchecked.
 Pass the same `--project`, `--type` or `--method` selectors to `lane_merge.py` when needed.
 Keep the candidate fixed during validation. Never force-push `main`.
 
+## Regenerate the Mirror trees
+
+`python tools/validation/mirror_regenerate.py` brings the generated trees to the current writer's output: it stamps
+the `[MirrorStub]` marker on committed Generated fields that lack it (once, for trees written before the writer marked
+fields), builds the production projects in Release, runs `MirrorGen emit`, and repeats build and emit until an emit
+writes nothing new. The product `src/*/Generated/` trees change only through this script, run by the maintainer.
+Build `tools/Quire.Tools.MirrorGen` in Release first. `MirrorGen names` checks that each `[MirrorName]` in hand-written
+code and in Generated code is the claim emit makes; it reads the same Release builds, so run it after a build.
+
 ## Entry points
 
 `release_il.py` checks the batch, `il_diff.py` inspects a mismatch, and `lane_merge.py` lands
