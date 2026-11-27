@@ -2961,9 +2961,452 @@ private void ChangePageLayoutAndGridAreaIfNeeded(global::Quire.Controls.Core.IWh
 
 private void RemoveActiveSectionItemAndRestoreInsertionPoint(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point insertionPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-private void SetupDefaultPageLayout() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private void SetupDefaultPageLayout()
+    {
+        DisplayGrid = true;
+        DisplayFrame = false;
+        DisplayHeaderFrame = false;
+        DisplayFooterFrame = false;
+        IsSolveBlockLabelVisible = true;
+        WidthWithNonprintableSpace = PageLayout.PageBodyWidth;
+        WorksheetContent.ContentAreaWidth = PageLayout.PageBodyWidth;
+        WorksheetContent.BoundDirectionalMoveByContentWidth = true;
+        Header.IsCrosshairVisible = false;
+        Footer.IsCrosshairVisible = false;
+        WorksheetPageLayoutMode = PageLayoutMode.PageMode;
+        PageLayout.GridCellSizeChanged += (Size oldSize, Size newSize) =>
+        {
+            _worksheetGrid.GridCellSize = newSize;
+            using (new CommandScope(new CompoundCommand()))
+            {
+                foreach (IWhiteboardItem item in WorksheetItems.ToList())
+                {
+                    Point itemLocation = WorksheetContent.GetItemLocation(item);
+                    Point gridCoordinates = new Point(itemLocation.X / oldSize.Width, itemLocation.Y / oldSize.Height);
+                    ItemManager.SetItemWorksheetLocation(item, _worksheetGrid.ConvertGridCoordinatesToDips(gridCoordinates));
+                }
+            }
+            if (ActiveSection.IsCrosshairVisible)
+            {
+                IRestrictedAreaAlignmentGrid worksheetGrid = _worksheetGrid;
+                Point insertionPoint = InsertionPoint;
+                double gridX = insertionPoint.X / oldSize.Width;
+                insertionPoint = InsertionPoint;
+                InsertionPoint = worksheetGrid.ConvertGridCoordinatesToDips(new Point(gridX, insertionPoint.Y / oldSize.Height));
+            }
+            foreach (IWorksheetPageBreak pageBreak in PageBreaks.ToList())
+            {
+                Point itemLocation = WorksheetContent.GetItemLocation(pageBreak);
+                Point gridCoordinates = new Point(itemLocation.X / oldSize.Width, itemLocation.Y / oldSize.Height);
+                WorksheetContent.SetItemLocation(pageBreak, _worksheetGrid.ConvertGridCoordinatesToDips(gridCoordinates));
+            }
+            WorksheetItems.Where(item => item is ICollapsibleAreaControl).Each(area =>
+            {
+                ((ICollapsibleAreaControl)area).GridCellSizeChangedAction = () =>
+                {
+                    IList<WhiteboardItemSizeChangedEventHandler> sizeChangedHandlers = _itemSizeChangedHandlerMap[area];
+                    _itemSizeChangedHandlerMap[area].Each(handler => ItemManager.UnhookSizeChanged(area, handler));
+                    Size size = ItemManager.GetSize(area);
+                    double height = size.Height * newSize.Height / oldSize.Height;
+                    ItemManager.SetHeight(area, height);
+                    ItemManager.ExecuteInBackground(() =>
+                    {
+                        sizeChangedHandlers.Each(handler => ItemManager.HookupSizeChanged(area, handler));
+                        UpdateGridRestrictedAreaForItem(area);
+                    }, asynch: true);
+                };
+            });
+        };
+        PageLayout.HeaderFooterGridCellSizeChanged += (Size oldSize, Size newSize) =>
+        {
+            Header.GridCellSize = newSize;
+            Footer.GridCellSize = newSize;
+            Header.UpdateItemLocationsAfterGridSizeChanged(oldSize);
+            Footer.UpdateItemLocationsAfterGridSizeChanged(oldSize);
+            if (Header.IsCrosshairVisible || Footer.IsCrosshairVisible)
+            {
+                Point insertionPoint = InsertionPoint;
+                double gridX = insertionPoint.X / oldSize.Width * newSize.Width;
+                insertionPoint = InsertionPoint;
+                InsertionPoint = new Point(gridX, insertionPoint.Y / oldSize.Height * newSize.Height);
+            }
+        };
+        PageLayout.WorksheetRecreateSuggested += RecreateDocumentAfterPageSizeChange;
+        PageLayout.PropertyChanged += (object? sender, PropertyChangedEventArgs args) =>
+        {
+            switch (args.PropertyName)
+            {
+                case "PageBodyHeight":
+                    UpdateWorksheetGridSize();
+                    break;
+                case "PageBodyWidth":
+                    WidthWithNonprintableSpace = PageLayout.PageBodyWidth;
+                    WorksheetContent.ContentAreaWidth = PageLayout.PageBodyWidth;
+                    break;
+                case "PageOrientation":
+                case "GridSize":
+                case "PageSize":
+                case "PageMargin":
+                    UpdateWorksheetHeight();
+                    UpdateHeaderFooterTops();
+                    break;
+            }
+        };
+        ActiveSection = WorksheetContent;
+        WorksheetContent.InsertionPoint = PageLayout.InitialInsertionPoint;
+    }
 
-private void SetupCommandBindings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private void SetupCommandBindings()
+    {
+        CreateCommandBinding(EditingCommands.MoveDownByLine, (object param) =>
+        {
+            DirectionalMoveHandler(Direction.Down);
+        }, (object param) => CanMoveInDirection(Direction.Down));
+        CreateCommandBinding(EditingCommands.MoveUpByLine, (object param) =>
+        {
+            DirectionalMoveHandler(Direction.Up);
+        }, (object param) => CanMoveInDirection(Direction.Up));
+        CreateCommandBinding(EditingCommands.MoveRightByCharacter, (object param) =>
+        {
+            DirectionalMoveHandler(Direction.Right);
+        });
+        CreateCommandBinding(EditingCommands.MoveLeftByCharacter, (object param) =>
+        {
+            DirectionalMoveHandler(Direction.Left);
+        });
+        CreateCommandBinding(EditingCommands.Delete, (object param) =>
+        {
+            HandleDelete();
+        });
+        CreateCommandBinding(EditingCommands.Backspace, (object param) =>
+        {
+            HandleBackspace();
+        });
+        CreateCommandBinding(EditingCommands.EnterParagraphBreak, (object param) =>
+        {
+            HandleEnter();
+        });
+        CreateCommandBinding(EditingCommands.TabForward, (object param) =>
+        {
+            HandleTab((FocusNavigationDirection)0);
+        });
+        CreateCommandBinding(EditingCommands.TabBackward, (object param) =>
+        {
+            HandleTab((FocusNavigationDirection)1);
+        });
+        CreateCommandBinding(EquationCommands.InsertOperator, (RoutedCommand cmd, object param) =>
+        {
+            CreateNewEquation(cmd, param);
+        }, CanInsertOperator);
+        CreateCommandBinding(EquationCommands.InsertEvaluation, (RoutedCommand cmd, object param) =>
+        {
+            CreateNewEquation(cmd, param);
+        }, (object param) => CanCreateControlOfType<IEquationControl>());
+        CreateCommandBinding(EquationCommands.InsertSymbolicEvaluation, (RoutedCommand cmd, object param) =>
+        {
+            CreateNewEquation(cmd, param);
+        }, (object param) => CanCreateControlOfType<IEquationControl>());
+        CreateCommandBinding(EquationCommands.InsertValue, (RoutedCommand cmd, object param) =>
+        {
+            CreateNewEquation(cmd, param);
+        }, (object param) => CanCreateControlOfType<IEquationControl>());
+        CreateCommandBinding(EquationCommands.InsertId, (RoutedCommand cmd, object param) =>
+        {
+            CreateNewEquation(cmd, param);
+        }, (object param) => CanCreateControlOfType<IEquationControl>());
+        CreateCommandBinding(EquationCommands.InsertMatrix, (RoutedCommand cmd, object param) =>
+        {
+            CreateNewEquation(cmd, param);
+        }, (object param) => CanCreateControlOfType<IEquationControl>());
+        CreateCommandBinding(EquationCommands.InsertInputControl, (RoutedCommand cmd, object param) =>
+        {
+            CreateNewEquationWithInputControl(cmd, param as InputControlTypes?);
+        }, (object param) => CanCreateInputControlOfType<IEquationControl>(param as InputControlTypes?));
+        CreateCommandBinding(EquationCommands.InsertFunction, (RoutedCommand cmd, object param) =>
+        {
+            CreateNewEquation(cmd, param);
+        }, (object param) => CanCreateControlOfType<IEquationControl>());
+        CreateCommandBinding(EquationCommands.InsertString, (RoutedCommand cmd, object param) =>
+        {
+            CreateNewEquation(cmd, param);
+        }, (object param) => CanCreateControlOfType<IEquationControl>());
+        CreateCommandBinding(EquationCommands.InsertKeyword, (RoutedCommand cmd, object param) =>
+        {
+            CreateNewEquation(cmd, param);
+        }, (object param) => CanCreateControlOfType<IEquationControl>());
+        CreateCommandBinding(EquationCommands.InsertModifier, (RoutedCommand cmd, object param) =>
+        {
+            CreateNewEquation(cmd, param);
+        }, (object param) => CanCreateControlOfType<IEquationControl>());
+        CreateCommandBinding(OleBaseComponentCommands.NewOleComponentExpression, (object param) =>
+        {
+            CreateNewEquation(param as string);
+        });
+        CreateCommandBinding(WorksheetCommands.NewMathRegion, (object param) =>
+        {
+            CreateNewEquation(param as string);
+        }, (object param) => CanCreateControlOfType<IEquationControl>());
+        CreateCommandBinding(WorksheetCommands.NewImageRegion, (object param) =>
+        {
+            CreateImageControl();
+        }, (object param) => CanCreateControlOfType<IImageControl>());
+        CreateCommandBinding(WorksheetCommands.NewImageRegionFromPath, (object param) =>
+        {
+            CreateImageControl(param as string);
+        }, (object param) => CanCreateControlOfType<IImageControl>());
+        CreateCommandBinding(WorksheetCommands.NewTextRegion, (object param) =>
+        {
+            CreateTextboxControl(param as string);
+        }, (object param) => CanCreateControlOfType<IRichTextBase>());
+        CreateCommandBinding(WorksheetCommands.NewPlot, (object param) =>
+        {
+            CreateXYPlotControl(param as XyEquation);
+        }, (object param) => CanCreateControlOfType<IPlotControl>());
+        CreateCommandBinding(WorksheetCommands.NewPolarPlot, (object param) =>
+        {
+            CreatePolarPlotControl(param as XyEquation);
+        }, (object param) => CanCreateControlOfType<IPlotControl>());
+        CreateCommandBinding(WorksheetCommands.NewContourPlot, (object param) =>
+        {
+            CreateContourPlotControl(param as XyzEquation);
+        }, (object param) => CanCreateControlOfType<IPlotControl>());
+        CreateCommandBinding(WorksheetCommands.New3DPlot, (object param) =>
+        {
+            Create3DPlotControl(param as XyzEquation);
+        }, (object param) => CanCreateControlOfType<IPlotControl>());
+        CreateCommandBinding(WorksheetCommands.NewSpecTable, (object param) =>
+        {
+            CreateSpecTableControl(param);
+        }, (object param) => CanCreateControlOfType<ISpecTableControl>());
+        CreateCommandBinding(WorksheetCommands.NewSolveBlock, (object param) =>
+        {
+            CreateSolveBlockControl();
+        }, (object param) => CanCreateControlOfType<ISolveBlockControl>());
+        CreateCommandBinding(WorksheetCommands.NewExcelComponent, (object param) =>
+        {
+            CreateExcelComponentControl();
+        }, (object param) => CanCreateExcelComponent());
+        CreateCommandBinding(WorksheetCommands.InsertOleObject, (object param) =>
+        {
+            CreateOleObjectControl(param as OleObjectControlCreationMethod);
+        }, (object param) => CanCreateOleObjectControl());
+        CreateCommandBinding(WorksheetCommands.NewChartComponent, (object param) =>
+        {
+            CreateChartComponentControl();
+        }, (object param) => CanCreateChartComponent());
+        CreateCommandBinding(WorksheetCommands.NewCollapsibleArea, (object param) =>
+        {
+            CreateCollapsibleAreaControl();
+        }, (object param) => CanCreateControlOfType<ICollapsibleAreaControl>());
+        CreateCommandBinding(WorksheetCommands.NewParagraph, (object param) =>
+        {
+            CreateTextBlockControl(param as string);
+        }, (object param) => CanCreateParagraphControl());
+        CreateCommandBinding(WorksheetCommands.NewIncludeRegion, (object param) =>
+        {
+            CreateIncludeControl(param as string);
+        }, (object param) => CanCreateControlOfType<IIncludeWorksheetControl>());
+        CreateCommandBinding(WorksheetCommands.NewFileNameRegion, (object param) =>
+        {
+            CreateFileNameControl();
+        }, (object param) => CanCreateFileSpecificRegion<IFileNameControl>());
+        CreateCommandBinding(WorksheetCommands.NewFilePathRegion, (object param) =>
+        {
+            CreateFilePathControl();
+        }, (object param) => CanCreateFileSpecificRegion<IFilePathControl>());
+        CreateCommandBinding(WorksheetCommands.NewSavedDateRegion, (object param) =>
+        {
+            CreateSavedDateControl(param as string);
+        }, (object param) => CanCreateSavedDateControl());
+        CreateCommandBinding(WorksheetCommands.NewPageNumberRegion, (object param) =>
+        {
+            CreatePageNumberControl(param as string);
+        }, (object param) => CanCreatePageNumberControl());
+        CreateCommandBinding(WorksheetCommands.NewPageBreak, (object param) =>
+        {
+            InsertPageBreak();
+        }, (object param) => CanCreateControlOfType<IWorksheetPageBreak>());
+        CreateCommandBinding(WorksheetCommands.RemoveFileNameRegion, (object param) =>
+        {
+            RemoveRegionOfType<IFileNameControl>();
+        }, (object param) => CanRemoveRegionOfType<IFileNameControl>());
+        CreateCommandBinding(WorksheetCommands.RemoveFilePathRegion, (object param) =>
+        {
+            RemoveRegionOfType<IFilePathControl>();
+        }, (object param) => CanRemoveRegionOfType<IFilePathControl>());
+        CreateCommandBinding(WorksheetCommands.RemoveSavedDateRegion, (object param) =>
+        {
+            RemoveRegionOfType<ISavedDateControl>();
+        }, (object param) => CanRemoveRegionOfType<ISavedDateControl>());
+        CreateCommandBinding(WorksheetCommands.RemovePageNumberRegion, (object param) =>
+        {
+            RemoveRegionOfType<IPageNumberControl>();
+        }, (object param) => CanRemoveRegionOfType<IPageNumberControl>());
+        CreateCommandBinding(WhiteboardCommands.DeleteActiveItem, (object param) =>
+        {
+            DeleteActiveItem();
+        }, (object param) => CanDeleteActiveItem());
+        CreateCommandBinding(WhiteboardCommands.DeleteSelectedItems, (object param) =>
+        {
+            DeleteSelectedItems();
+        }, (object param) => CanDeleteSelectedItems());
+        CreateCommandBinding(WhiteboardCommands.DeleteActiveOrSelectedItems, (object param) =>
+        {
+            DeleteActiveOrSelectedItems();
+        }, (object param) => CanDeleteActiveOrSelectedItems());
+        CreateCommandBinding(WorksheetCommands.TogglePageLayout, (object param) =>
+        {
+            WorksheetPageLayoutMode = (PageLayoutMode)param;
+        }, (object param) => CanTogglePageLayout(param));
+        CreateCommandBinding(WorksheetCommands.ControlEnterContextCommand, (object param) =>
+        {
+            HandleControlEnter();
+        });
+        CreateCommandBinding(WhiteboardCommands.SelectAllRegions, (object param) =>
+        {
+            HandleSelectAll();
+        });
+        CreateCommandBinding(WorksheetCommands.GotoPage, (object param) =>
+        {
+            HandleGoToPage(param);
+        }, (object param) => CanGotopage(param));
+        CreateCommandBinding(ApplicationCommands.Copy, (object param) =>
+        {
+            CopySelection();
+        }, (object param) => CanCopySelection());
+        CreateCommandBinding(ApplicationCommands.Cut, (object param) =>
+        {
+            CutSelection();
+        }, (object param) => CanCutSelection());
+        CreatePreviewCommandBinding(ApplicationCommands.Paste, (object param) =>
+        {
+            Paste();
+        }, (object param) => CanPaste());
+        CreateCommandBinding(WorksheetCommands.InsertSpace, (object param) =>
+        {
+            InsertSpace(param as int?);
+        }, (object param) => CanInsertSpace());
+        CreateCommandBinding(WorksheetCommands.RemoveSpaceBelow, (object param) =>
+        {
+            RemoveSpace(param as int?, Direction.Down);
+        }, (object param) => CanRemoveSpace(Direction.Down));
+        CreateCommandBinding(WorksheetCommands.RemoveSpaceAbove, (object param) =>
+        {
+            RemoveSpace(param as int?, Direction.Up);
+        }, (object param) => CanRemoveSpace(Direction.Up));
+        CreateCommandBinding(WorksheetCommands.InsertPage, (object param) =>
+        {
+            InsertSpace(LinesPerPage);
+        }, (object param) => CanInsertSpace());
+        CreateCommandBinding(WorksheetCommands.ToggleShowGrid, (object param) =>
+        {
+            ToggleShowGrid();
+        });
+        CreateCommandBinding(WorksheetCommands.ToggleSolveBlockLabelsVisibilityCommand, (object param) =>
+        {
+            ToggleIsSolveBlockLabelVisible();
+        }, (object param) => CanToggleIsSolveBlockLabelVisible());
+        CreateCommandBinding(WorksheetCommands.ShowMajorGridlinesCommand, (object param) =>
+        {
+            ToggleShowMajorGridlines();
+        });
+        CreateCommandBinding(WorksheetCommands.ToggleShowFrame, (object param) =>
+        {
+            ToggleShowFrame();
+        });
+        CreateCommandBinding(EquationCommands.Commit, (object param) =>
+        {
+            Evaluate();
+        });
+        CreateCommandBinding(EquationCommands.ToggleHideFromCalculationContext, (object param) =>
+        {
+            ToggleHideFromCalculationContext();
+        }, (object param) => CanToggleHideFromCalculationContext());
+        CreateCommandBinding(WorksheetCommands.GoToFirstError, (object param) =>
+        {
+            GoToFirstError();
+        }, (object param) => ErrorCanTraceBackward());
+        CreateCommandBinding(WorksheetCommands.GoToPreviousError, (object param) =>
+        {
+            GoToPreviousError();
+        }, (object param) => ErrorCanTraceBackward());
+        CreateCommandBinding(WorksheetCommands.GoToLastError, (object param) =>
+        {
+            GoToLastError();
+        }, (object param) => ErrorCanTraceForward());
+        CreateCommandBinding(WorksheetCommands.GoToNextError, (object param) =>
+        {
+            GoToNextError();
+        }, (object param) => ErrorCanTraceForward());
+        CreateCommandBinding(WorksheetCommands.StopRunningCalculations, (object param) =>
+        {
+            HandleStopRunningCalculations();
+        });
+        CreateCommandBinding(WorksheetCommands.RecalculateWorksheet, (object param) =>
+        {
+            FireRecalculateAll();
+        });
+        CreateCommandBinding(WorksheetCommands.CalculateNow, (object param) =>
+        {
+            FireCalculateNow();
+        });
+        CreateCommandBinding(WorksheetCommands.ToggleAutoCalculation, (object param) =>
+        {
+            HandleToggleAutoCalculation((bool)param);
+        });
+        CreateCommandBinding(WorksheetCommands.RemoveAnnotations, (object param) =>
+        {
+            HandleRemoveAnnotations();
+        }, (object param) => RemoveAnnotationsCanExecute());
+        CreateCommandBinding(WhiteboardCommands.SeparateOverlappedItemsVertically, (object param) =>
+        {
+            SeparateOverlappedItems(Dimension.Vertical);
+        }, (object param) => CanSeparateOverlappedItems(Dimension.Vertical));
+        CreateCommandBinding(WhiteboardCommands.SeparateOverlappedItemsHorizontally, (object param) =>
+        {
+            SeparateOverlappedItems(Dimension.Horizontal);
+        }, (object param) => CanSeparateOverlappedItems(Dimension.Horizontal));
+        CreateCommandBinding(IORegionCommands.ToggleInputRegion, (object param) =>
+        {
+            ToggleInputRegions();
+        }, (object param) => CanToggleRegionsAsInput());
+        CreateCommandBinding(IORegionCommands.ToggleOutputRegion, (object param) =>
+        {
+            ToggleOutputRegions();
+        }, (object param) => CanToggleRegionsAsOutput());
+        CreateCommandBinding(EditingCommands.MoveUpByPage, (object param) =>
+        {
+            PageUp();
+        });
+        CreateCommandBinding(EditingCommands.MoveDownByPage, (object param) =>
+        {
+            PageDown();
+        });
+        CreateCommandBinding(RichTextBase.AddToDictionaryCommand, (object param) =>
+        {
+            HandleAddToDictionary();
+        }, (object param) => CanAddToDictionary());
+        CreateCommandBinding(RichTextBase.TextStyleCreateFromCommand, (object param) =>
+        {
+            HandleCreateStyleFrom();
+        }, (object param) => CanCreateStyleFrom());
+        CreateCommandBinding(RegionCommands.TagCommand, (object param) =>
+        {
+            HandleBookmarkTag();
+        }, (object param) => CanBookmarkTag());
+        CreateCommandBinding(RegionCommands.RemoveTagCommand, (object param) =>
+        {
+            HandleRemoveBookmarkTag();
+        }, (object param) => CanRemoveBookmarkTag());
+        CreateCommandBinding(WorksheetCommands.EditHeader, (object param) =>
+        {
+            ToggleHeaderActivation();
+        });
+        CreateCommandBinding(WorksheetCommands.EditFooter, (object param) =>
+        {
+            ToggleFooterActivation();
+        });
+    }
 
 private void ToggleHeaderActivation()
     {
