@@ -38,11 +38,7 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IEnumerable<string> GetOpenFilesList() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void UnhandledDispatcherExceptionHandler(object sender, global::System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private bool AttemptToSaveWorksheetCopy(global::Quire.Controls.Core.IEngineeringDocument doc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UnhandledExceptionHandler(object sender, global::System.UnhandledExceptionEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleWindowLoaded(bool isEmbedding) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
