@@ -120,27 +120,9 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
     [global::Quire.Mirror.MirrorStub]
     public void AutoLabelID() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool IsContainerSlot(int slotIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsReadonlySlot(int slotIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsChildAllowed(string childName, int childIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool AllowCaretOn(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsParentAllowed(string parentName, int indexInParent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Parsing.Panacea MediateChildInsertionDispute(string childName, int childIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Parsing.Panacea MediateParentRestriction(string parentName, int indexInParent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsDescendentAllowed(string descendantAllowed, int childIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsAncestorTreeAllowed(global::System.Collections.Generic.IEnumerable<global::Quire.Pair<string, int>> ancestors) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Parsing.Panacea MediateAncestorRestriction(global::System.Collections.Generic.IEnumerable<global::Quire.Pair<string, int>> ancestors) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.Parsing.Panacea MitigateChildPatternProhibition(global::System.Collections.Generic.IList<string> children) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool CheckIsMultiline(bool stopAtMonoline) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

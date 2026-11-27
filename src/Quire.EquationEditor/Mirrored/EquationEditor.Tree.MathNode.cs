@@ -1006,6 +1006,41 @@ public partial class MathNode
         return (childIndex - FirstElementDescriptor.ChildCount) / ActualMiddleElementDescriptor.ChildCount + 1;
     }
 
+    public bool IsContainerSlot(int slotIndex)
+    {
+        if (AllChildSlotsAreContainerSlots && slotIndex < ChildCount)
+        {
+            return true;
+        }
+        return d__.IsContainerSlot(slotIndex);
+    }
+
+    public bool IsReadonlySlot(int slotIndex) => d__.IsReadonlySlot(slotIndex);
+
+    public bool IsChildAllowed(string childName, int childIndex)
+    {
+        MathNodeDescriptor descriptor = d__;
+        childIndex = a(childIndex, ref descriptor);
+        return descriptor.IsChildAllowed(childName, childIndex);
+    }
+
+    public bool AllowCaretOn(Direction direction) => d__.AllowCaretOn(direction);
+
+    public bool IsParentAllowed(string parentName, int indexInParent)
+    {
+        MathNodeDescriptor descriptor = Parent.Descriptor;
+        indexInParent = Parent.a(indexInParent, ref descriptor);
+        return d__.IsParentAllowed(descriptor.DescriptorName, indexInParent);
+    }
+
+    public bool IsDescendentAllowed(string descendantAllowed, int childIndex) => d__.IsDescendentAllowed(descendantAllowed, childIndex);
+
+    public bool IsAncestorTreeAllowed(IEnumerable<Pair<string, int>> ancestors) => d__.IsAncestorTreeAllowed(ancestors);
+
+    public Panacea MediateAncestorRestriction(IEnumerable<Pair<string, int>> ancestors) => d__.MediateAncestorRestriction(ancestors);
+
+    public Panacea MitigateChildPatternProhibition(IList<string> children) => d__.MitigateChildPatternProhibition(children);
+
     [System.Runtime.CompilerServices.SkipLocalsInit]
     private int a(int childIndex, ref MathNodeDescriptor descriptor)
     {
