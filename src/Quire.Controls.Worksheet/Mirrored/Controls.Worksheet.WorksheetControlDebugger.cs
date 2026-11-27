@@ -1,7 +1,9 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using Quire.Controls.Core;
 
 namespace Quire.Controls.Worksheet;
@@ -20,6 +22,55 @@ public partial class WorksheetControlDebugger
         }
 
         Application.Current.MainWindow.Closing += OnSpiritMainWindowClosing;
+    }
+
+    public void OnModeChanged(object spiritMainWindow, DependencyProperty activeDocumentProperty, ExecutedRoutedEventArgs e)
+    {
+        if (!_isDebugMode)
+        {
+            return;
+        }
+
+        string text = ((RoutedUICommand)e.Command).Text;
+        if (text == "Visible Objects Debugging Command")
+        {
+            goto visibleObjectsCommand;
+        }
+        if (text == "WorksheetControl UI Debugging Command")
+        {
+            goto worksheetControlUICommand;
+        }
+
+        return;
+
+        // Keep the command bodies in Mathcad's branch-target order.
+        visibleObjectsCommand:
+        if (_visibleObjects == null)
+        {
+            _visibleObjects = new VisibleObjects(spiritMainWindow, activeDocumentProperty);
+            _visibleObjects.AskedCloseInstance += OnAskedCloseInstanceOfVisibleObjectsDebuggedObjects;
+        }
+        else
+        {
+            _visibleObjects.AskedCloseInstance -= OnAskedCloseInstanceOfVisibleObjectsDebuggedObjects;
+            _visibleObjects.Dispose();
+            _visibleObjects = null;
+        }
+
+        return;
+
+        worksheetControlUICommand:
+        if (_worksheetControlUI == null)
+        {
+            _worksheetControlUI = new WorksheetControlUI(spiritMainWindow, activeDocumentProperty);
+            _worksheetControlUI.AskedCloseInstance += OnAskedCloseInstanceOfWorksheetControlUIDebuggedObjects;
+        }
+        else
+        {
+            _worksheetControlUI.AskedCloseInstance -= OnAskedCloseInstanceOfWorksheetControlUIDebuggedObjects;
+            _worksheetControlUI.Dispose();
+            _worksheetControlUI = null;
+        }
     }
 
     private void DestroyInstance()
@@ -152,6 +203,81 @@ public partial class WorksheetControlDebugger
     {
         private readonly int _propertyNameEnumCount = global::System.Enum.GetNames(typeof(PropertyName)).Count();
         private readonly int _coordinateSystemNameEnumCount = global::System.Enum.GetNames(typeof(CoordinateSystemName)).Count();
+
+        private void InitializeDebugWindow()
+        {
+            if (_win == null)
+            {
+                _grid = new Grid();
+                for (int row = 0; row < _propertyNameEnumCount; row++)
+                {
+                    _grid.RowDefinitions.Add(new RowDefinition
+                    {
+                        Height = new GridLength(0.0, GridUnitType.Auto)
+                    });
+                    for (int column = 0; column < _coordinateSystemNameEnumCount; column++)
+                    {
+                        _grid.ColumnDefinitions.Add(new ColumnDefinition
+                        {
+                            Width = new GridLength(0.0, GridUnitType.Auto)
+                        });
+                        TextBox textBox = new TextBox
+                        {
+                            Background = row % 2 == 0 ? Brushes.LightSkyBlue : Brushes.LightGray,
+                            FontWeight = column == 0 || row == 0 ? FontWeights.Bold : FontWeights.Normal,
+                            VerticalAlignment = VerticalAlignment.Stretch,
+                            HorizontalAlignment = HorizontalAlignment.Stretch,
+                            IsHitTestVisible = false
+                        };
+                        if (row == 0 && column == 0)
+                        {
+                            textBox.Text = "Property / Coordinate System";
+                        }
+                        else if (row == 0)
+                        {
+                            textBox.Text = global::System.Enum.GetName(typeof(CoordinateSystemName), column);
+                        }
+                        else if (column == 0)
+                        {
+                            Type type = ((PropertyName)row).GetType();
+                            Attribute customAttribute;
+                            PropertyName propertyName = (PropertyName)row;
+                            customAttribute = Attribute.GetCustomAttribute(
+                                type.GetField(propertyName.ToString()),
+                                typeof(DescriptionAttribute));
+                            if (customAttribute == null || customAttribute.IsDefaultAttribute())
+                            {
+                                textBox.Text = global::System.Enum.GetName(typeof(PropertyName), row);
+                            }
+                        }
+
+                        textBox.SetValue(Grid.ColumnProperty, column);
+                        textBox.SetValue(Grid.RowProperty, row);
+                        _grid.Children.Add(textBox);
+                    }
+                }
+
+                ScrollViewer content = new ScrollViewer
+                {
+                    VerticalScrollBarVisibility = ScrollBarVisibility.Auto,
+                    HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,
+                    Content = _grid
+                };
+                _win = new Window
+                {
+                    Content = content,
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    SizeToContent = SizeToContent.WidthAndHeight,
+                    Title = "WorksheetCotrol UI Debugger",
+                    Topmost = true,
+                    ShowActivated = false,
+                    ResizeMode = ResizeMode.CanResizeWithGrip,
+                    Height = 731.0
+                };
+                _win.Closed += WorksheetControlUIDebugClosed;
+                _win.Show();
+            }
+        }
 
         public WorksheetControlUI(object spiritMainWindow, DependencyProperty activeDocumentProperty)
             : base(spiritMainWindow, activeDocumentProperty)
@@ -407,6 +533,32 @@ public partial class WorksheetControlDebugger
 
     private sealed partial class VisibleObjects
     {
+        private T TryFindVisualChild<T>(DependencyObject parent) where T : class
+        {
+            if (parent == null)
+            {
+                return null;
+            }
+
+            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+            for (int index = 0; index < childrenCount; index++)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(parent, index);
+                if (child is T result)
+                {
+                    return result;
+                }
+
+                T descendant = TryFindVisualChild<T>(child);
+                if (descendant != null)
+                {
+                    return descendant;
+                }
+            }
+
+            return null;
+        }
+
         protected override void DestructUI()
         {
             RemoveStatusBarItemFromStatusBar();
@@ -582,6 +734,44 @@ public partial class WorksheetControlDebugger
             global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             _textPages = string.Format("Pages: [{0}]", WorksheetControlInst.PageManager.Pages.Count);
+        }
+
+        private void WorksheetVisiblePagesCollectionChanged(
+            object sender,
+            global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            int firstPageNumber = 0;
+            int lastPageNumber = 0;
+            int count = WorksheetViewModelInst.VisiblePages.Count;
+            if (count > 0)
+            {
+                firstPageNumber = WorksheetViewModelInst.VisiblePages.First().PageNumber;
+                lastPageNumber = WorksheetViewModelInst.VisiblePages.Last().PageNumber;
+            }
+
+            _textVisiblePages = string.Format("Visible Pages: ({0}) [#{1} - #{2}]", count, firstPageNumber, lastPageNumber);
+            UpdateIndicationInStatusBar();
+            if (e != null)
+            {
+                if (e.NewItems != null)
+                {
+                    foreach (IWorksheetPage newItem in e.NewItems)
+                    {
+                        UpdatePageZombiesVisibility(newItem, toBeClipped: true);
+                        global::Quire.Wpf.WpfUtils.ExecuteOnLoad(newItem as FrameworkElement, UpdatePreviewVisual);
+                    }
+                }
+
+                if (e.OldItems != null)
+                {
+                    foreach (IWorksheetPage oldItem in e.OldItems)
+                    {
+                        UpdatePageZombiesVisibility(oldItem);
+                        UpdatePreviewVisual();
+                    }
+                }
+
+            }
         }
 
         private void OnPageManagerContentActivated()

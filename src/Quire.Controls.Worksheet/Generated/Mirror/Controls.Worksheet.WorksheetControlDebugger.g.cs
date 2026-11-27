@@ -21,8 +21,6 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
     private global::Quire.Controls.Worksheet.WorksheetControlDebugger.WorksheetControlUI _worksheetControlUI;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Worksheet.WorksheetControlDebugger.VisibleObjects _visibleObjects;
-    [global::Quire.Mirror.MirrorStub]
-    public void OnModeChanged(object spiritMainWindow, global::System.Windows.DependencyProperty activeDocumentProperty, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlDebugger+DebuggedObject, Ptc.Controls.Worksheet")]
     private abstract partial class DebuggedObject : global::System.IDisposable
@@ -57,9 +55,6 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         private global::System.Windows.Window _win;
         [global::Quire.Mirror.MirrorStub]
         private global::System.Windows.Controls.Grid _grid;
-        [global::Quire.Mirror.MirrorStub]
-        private void InitializeDebugWindow() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
         [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetControlDebugger+WorksheetControlUI+PropertyName, Ptc.Controls.Worksheet")]
         private enum PropertyName
         {
@@ -147,11 +142,7 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         [global::Quire.Mirror.MirrorStub]
         public VisibleObjects(object spiritMainWindow, global::System.Windows.DependencyProperty activeDocumentProperty) : base(default(object), default(global::System.Windows.DependencyProperty)) { }
         [global::Quire.Mirror.MirrorStub]
-        private T TryFindVisualChild<T>(global::System.Windows.DependencyObject parent) where T : class => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         private void AddStatusBarItemToStatusBar() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void WorksheetVisiblePagesCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         private void UpdateVisibleItemsCounter() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
