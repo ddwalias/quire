@@ -236,3 +236,19 @@
 - Batch 43: UpdateNonprintableSpaceIndicator, RemoveGridRestrictedAreaForItem, OverlapsRightMargin, UpdateSizeLimit.
 - Blocker, `SetStyleValues`: Mathcad emits `conv.r8` on `style.FontSize.Value` (the original source value is float); Quire's `ITextStyle.FontSize` is `double`, so the callsite differs. Fix needed in `src/Quire.Core/Generated/Mirror/ITextStyle.g.cs` (the member type must match Mathcad) before this method can be exact. Parked, stub kept.
 - Parked Execute-shape members (new-object `WorksheetCommand.Execute` call vs callvirt): HandleDelete, HandleBackspace, DeleteActiveItem, HandleRemoveAnnotations, InsertPageBreak(Point), HandleAddToDictionary; and MoveItemsBy.
+
+## Batches 48-69 — WorksheetViewModel wrap-up (haiku-worksheet-20261123)
+
+- Owner: Claude worker (haiku-worksheet-20261123). Last landed: `25f8c4453` (batch 69), on `origin/main`.
+- Landed in this stretch (each Release IL gate PASS): batch 48 `DisplayMessageId`; 51 `CanToggleIORegions<T>`; 61 `CreateIncludeControl(string)`; 62 `CanCreateInputControl` (static); 63 `SetStyleValues` (explicit `(double)` cast on `FontSize.Value`); 64 `CreateExcelComponentControl`, `CreateChartComponentControl` (try/catch `ApplicationException`); 65 `CommitActive` (static), `SetPagebreakVisualOffset`; 66 `InitializeXYZPlotControl`, `HandleBookmarkTag`, `HandleRemoveBookmarkTag`; 67 `HandleItemGotFocus` (`activeDescendant != item` branch order); 68 `CreateOleObjectControl` (the other three create members came from `mirror/worksheet-vm-plain-b2`); 69 `ActivateHeader(Point)`, `ActivateFooter(Point)`, `ScrollToActiveArea()`.
+- Remaining stubs in `Generated/Mirror/Controls.Worksheet.WorksheetViewModel.g.cs`: 158 lines. By classifier: 50 with no IL body (properties and accessors, other), 72 closure-bearing, 11 execute-shape, 25 closure-free (listed below).
+- Closure-free, still stubbed: `UNITTEST_CanCreate*` (4, wrappers over the closure-based `CanCreate*`), `UpdateFirstPageHeaderFooter`, `GetCalculatableFromVisibleWhiteBoardItem`, `CreateSpecTableControl` (x3 overloads), `FindOnce`, `CanTogglePageLayout`, `CanCreateInputControlOfType`, `CanCreateParagraphControl`, `CanPaste`, `HandleProtectedStateChanged`, `HandleCreateStyleFrom`, `MoveByPage`, `SelectItemsInBounds`, `HandleHeaderFooterNavigation`, `HandleHeaderFooterPageUp`, `HandleHeaderFooterPageDown`, `UpdateCalculationButtonStatus`, `ResizeItemToFit`, `RequestNavigateHandler`, `HandlePreviewMouseUp`, `HandleMouseUp`, `HandlePreviewMouseDown`.
+- Parked, with reasons:
+  - `CanPaste`: Mathcad allocates the `bool` return local (slot 0) before the `using` resource (slot 1). With `return` inside the `using`, Roslyn allocates the resource first. The `result`-declared-before-`using` form changes branch shape. Not resolved.
+  - `InitializePlotControl`: signature mismatch. The Mathcad header is non-generic `IPlotControl`, while the body calls the generic `AddEquations` without a cast.
+  - `HandleCaretLeavesTextArea`: needs the exact enum names for the switch.
+  - Execute-shape (about 11-16 members, e.g. `HandleDelete`, `HandleBackspace`, `DeleteActiveItem`, `InsertPageBreak(Point)`, `HandleAddToDictionary`): `new WorksheetCommand` `.Execute` call versus `callvirt`. Not resolved.
+  - `DeleteItemIfNeeded`: Mathcad inline-return guard shape.
+  - `UNITTEST_CanCreate*`: depend on the closure-based private `CanCreate*`, so they wait for the compile-order layout.
+- Blocked on compile-order layout (closure ordinals): the 72 closure-bearing members need a whole-type hand-written partial in Mathcad IL order before they can match. Handed to the Luna worker.
+- Release IL gate for batch 69: PASS, 2193 checked, 0 failures. Batch 68 gate: PASS, 2061 checked, 0 failures.
