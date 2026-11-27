@@ -24,3 +24,10 @@
   - `Controls.Internal.VectorizationLayoutManager.FindClosestChild`: parked due to Roslyn compiler emitting `.maxstack 2` while Mathcad 12 binary has `.maxstack 3` on identical 115 IL instructions.
   - `Controls.InputControls.ComboBoxRow.AllButFirstCell`: parked due to Roslyn optimizer in Release mode eliminating `stloc.0/ldloc.0` return of local variable, whereas Mathcad's compiler emitted `stloc.0; ldloc.0; ret`.
 - Release IL: PASS; 2807 checked (0 failures, 2147 unfinished stubs remaining).
+
+## Round 4 local checkpoint — GetImeWindowPosition
+
+- Owner: luna-rtf; branch `feature/luna-equationcontrol-round4`, based on `main` at `a5865b318`.
+- Implemented `EquationControl.GetImeWindowPosition`; Release IL passed with 4,121 checked (`.mirror-cache/release-il-23bbc7969f42/release-il.json`). Kept local for the next combined landing.
+- Parked `HideFromCalculationContext.set`: Mathcad uses a `<>c__DisplayClass66_0` closure, so the simple forwarding setter has a different body and closure layout.
+- Parked `OnSetNumberFormatField`: comparison order and body were aligned, but the candidate still emits `brfalse.s 14` where Mathcad emits `brfalse 87`.

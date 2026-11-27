@@ -987,7 +987,42 @@ public partial class EquationControl
     }
     protected override void OnGotKeyboardFocus(global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => base.OnGotKeyboardFocus(e);
     protected override void OnKeyDown(global::System.Windows.Input.KeyEventArgs e) => base.OnKeyDown(e);
-    public global::System.Windows.Point GetImeWindowPosition() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::System.Windows.Point GetImeWindowPosition()
+    {
+        global::System.Windows.Point position = new global::System.Windows.Point(0.0, 0.0);
+        global::Quire.Controls.Internal.VisualMathNode visualMathNode = _map.AssociateNode(_model.CurrentModeNavigatorState.Current) as global::Quire.Controls.Internal.VisualMathNode;
+        if (CurrentNodeCaretSide == global::Quire.Direction.Left)
+        {
+            position = visualMathNode.TransformToAncestor(this).Transform(new global::System.Windows.Point(0.0, 0.0));
+        }
+        else if (CurrentNodeCaretSide == global::Quire.Direction.Right)
+        {
+            position = visualMathNode.TransformToAncestor(this).Transform(new global::System.Windows.Point(visualMathNode.ActualWidth, 0.0));
+        }
+        else if (CurrentNodeCaretPosition < 0)
+        {
+            position = visualMathNode.TransformToAncestor(this).Transform(new global::System.Windows.Point(0.0, 0.0));
+        }
+        else
+        {
+            global::System.Collections.Generic.IList<double> characterWidths = new global::System.Collections.Generic.List<double>();
+            if (visualMathNode is global::Quire.EquationEditor.View.IVisualTextNode visualTextNode)
+            {
+                characterWidths = visualTextNode.CharacterWidths;
+            }
+            if (visualMathNode is global::Quire.EquationEditor.View.IVisualIdNode visualIdNode)
+            {
+                characterWidths = visualIdNode.CharacterWidths;
+            }
+            double x = 0.0;
+            for (int index = 0; index < CurrentNodeCaretPosition; index++)
+            {
+                x += characterWidths[index];
+            }
+            position = visualMathNode.TransformToAncestor(this).Transform(new global::System.Windows.Point(x, 0.0));
+        }
+        return position;
+    }
     protected override void OnTextInput(global::System.Windows.Input.TextCompositionEventArgs e) => base.OnTextInput(e);
     protected void AnimateShow()
     {
