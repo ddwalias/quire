@@ -1744,36 +1744,6 @@ public void ExpandToIncludePoint(global::System.Windows.Point pointToInclude)
         ItemManager.BlockUntilLoaded();
     }
 
-private global::Quire.Core.TextFormat _contentTextFormat;
-
-private readonly global::Quire.Controls.Worksheet.IWorksheetModel _model;
-
-private readonly global::Quire.Controls.Worksheet.WorksheetViewModel.WorksheetMouseDownHandler _worksheetMouseDownHandler;
-
-private readonly global::Quire.Controls.Worksheet.IWorksheetPageManager _pageManager;
-
-private readonly global::Quire.Controls.Worksheet.IWorksheetPasteHandler _pasteHandler;
-
-private int _pageCount;
-
-private readonly global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid _worksheetGrid;
-
-private global::Quire.Controls.Core.PageLayoutMode _viewMode;
-
-private global::Quire.Controls.Worksheet.IWorksheetSection _activeSection;
-
-private bool _isContentActive;
-
-private global::Quire.Controls.Worksheet.IWorksheetPage _activePage;
-
-private double _widthWithNonprintableSpace;
-
-private global::System.Windows.Thickness _nonprintableSpaceButtonPosition;
-
-private double _nonprintableSpaceButtonHeight;
-
-private bool _displayGrid;
-
 public void PopulateZombies()
     {
         foreach (IWorksheetPage page in Pages)
@@ -1952,6 +1922,36 @@ public void FireRecalculateAll()
         WpfUtils.DoWork(() => _model.FireRecalculateAll());
         PreRecalculateAll = false;
     }
+
+private global::Quire.Core.TextFormat _contentTextFormat;
+
+private readonly global::Quire.Controls.Worksheet.IWorksheetModel _model;
+
+private readonly global::Quire.Controls.Worksheet.WorksheetViewModel.WorksheetMouseDownHandler _worksheetMouseDownHandler;
+
+private readonly global::Quire.Controls.Worksheet.IWorksheetPageManager _pageManager;
+
+private readonly global::Quire.Controls.Worksheet.IWorksheetPasteHandler _pasteHandler;
+
+private int _pageCount;
+
+private readonly global::Quire.Controls.Core.IRestrictedAreaAlignmentGrid _worksheetGrid;
+
+private global::Quire.Controls.Core.PageLayoutMode _viewMode;
+
+private global::Quire.Controls.Worksheet.IWorksheetSection _activeSection;
+
+private bool _isContentActive;
+
+private global::Quire.Controls.Worksheet.IWorksheetPage _activePage;
+
+private double _widthWithNonprintableSpace;
+
+private global::System.Windows.Thickness _nonprintableSpaceButtonPosition;
+
+private double _nonprintableSpaceButtonHeight;
+
+private bool _displayGrid;
 
 public void FireCalculateNow()
     {
