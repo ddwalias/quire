@@ -182,8 +182,14 @@ public partial class SpecTableColumn
     public void RemoveDataCell(int index) => throw MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorBlocked("unfinished")]
-    private void c(IEquationModel cell) => throw MirrorStub.NotImplemented();
+    [MirrorVerified("Release IL")]
+    private void c(IEquationModel cell)
+    {
+        if (d__ != null)
+        {
+            d__.Invoke(cell);
+        }
+    }
 
     [global::Quire.Mirror.MirrorStub]
     [global::Quire.Mirror.MirrorBlocked("unfinished: iterator")]
@@ -202,32 +208,73 @@ public partial class SpecTableColumn
     public void ClearIsExpressionValueModified() => throw MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorBlocked("unfinished: the setter is Mathcad method b")]
-    public IEquationModel ErrorCell { get => throw MirrorStub.NotImplemented(); private set => throw MirrorStub.NotImplemented(); }
+    [MirrorVerified("Release IL")]
+    public IEquationModel ErrorCell => g;
 
     [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorBlocked("unfinished")]
-    private void b(IEquationModel value) => throw MirrorStub.NotImplemented();
+    [MirrorVerified("Release IL")]
+    private void b(IEquationModel value) => g = value;
 
     [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorBlocked("unfinished")]
-    private bool b() => throw MirrorStub.NotImplemented();
+    [MirrorVerified("Release IL")]
+    private bool b() => f;
 
     [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorBlocked("unfinished")]
-    private void a(bool isRestrictedReadonly) => throw MirrorStub.NotImplemented();
+    [MirrorVerified("Release IL")]
+    private void a(bool value)
+    {
+        if (value)
+        {
+            a();
+        }
+        f = value;
+    }
 
     [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorBlocked("unfinished")]
-    private void a() => throw MirrorStub.NotImplemented();
+    [MirrorVerified("Release IL")]
+    private void a()
+    {
+        if (ErrorCell != null)
+        {
+            ErrorCell.HandleError(null, 0);
+        }
+        b(null);
+    }
 
     [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorBlocked("unfinished: calls the unfinished helpers")]
-    public void HandleError(Quire.Calculation.Core.EngineError calculationError) => throw MirrorStub.NotImplemented();
+    [MirrorVerified("Release IL")]
+    public void HandleError(Quire.Calculation.Core.EngineError calculationError)
+    {
+        a();
+        if (calculationError != null)
+        {
+            if (calculationError.NodeHandle < 1 || calculationError.NodeHandle > e.Count)
+            {
+                return;
+            }
+            b(e[(int)calculationError.NodeHandle - 1].First);
+            uint second = e[(int)calculationError.NodeHandle - 1].Second;
+            if (ErrorCell.FindChildWithMatchingId(second) == null)
+            {
+                b(null);
+            }
+            if (ErrorCell != null)
+            {
+                calculationError.NodeHandle = second;
+                ErrorCell.HandleError(calculationError, 0);
+            }
+        }
+    }
 
     [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorBlocked("unfinished")]
-    private void a(IEquationModel cell, int index) => throw MirrorStub.NotImplemented();
+    [MirrorVerified("Release IL")]
+    private void a(IEquationModel cell, int index)
+    {
+        cell.ExpressionValueChanged += a;
+        a(true);
+        c__.Insert(index, cell);
+        c(cell);
+    }
 
     [global::Quire.Mirror.MirrorStub]
     [global::Quire.Mirror.MirrorBlocked("unfinished")]
