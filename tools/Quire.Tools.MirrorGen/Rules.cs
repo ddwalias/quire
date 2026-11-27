@@ -183,7 +183,7 @@ public sealed class Rules
     /// file names: the -mgd suffix does not mean C++/CLI. Every Ptc assembly not listed here and MathcadPrime are C#.
     /// </summary>
     private static readonly Dictionary<string, (Language Language, string Name)> Assemblies = Table(
-        (Language.CSharp, ["automation", "automationmgd", "componentsmgd", "efiio-csharp", "efiplot_", "efisixsigma_",
+        (Language.CSharp, ["automation", "automationmgd", "componentsmgd", "devcomponents.wpfdock", "devcomponents.wpfribbon", "efiio-csharp", "efiplot_", "efisixsigma_",
             "interop.mathcad", "interop.mathcadautomationprivate", "interop.mathcadold", "interop.vsinterfaceslib", "mcmisc", "mplasb", "mplrun", "utilsmgd"]),
         (Language.CppCli, ["efibessel_", "eficalculus_", "eficore_", "efidata_", "efidebug_", "efidiffeq_",
             "efifinance_", "efifitting_", "efifourier_", "efigraphics_", "efiimage_", "efiio_", "efimatrix_",
@@ -239,6 +239,8 @@ public sealed class Rules
         "interop.mathcad" => "Quire.Interop.Mathcad",
         "interop.mathcadold" => "Quire.Interop.MathcadOld",
         "interop.vsinterfaceslib" => "Quire.Interop.VSInterfacesLib",
+        "devcomponents.wpfdock" => "Quire.DevComponents.WpfDock",
+        "devcomponents.wpfribbon" => "Quire.DevComponents.WpfRibbon",
         _ when Assemblies.TryGetValue(asm, out var a) =>
             (a.Language == Language.Native ? "Quire.Native." : "Quire.") + NativeAssemblyName(a.Name),
         _ => throw new ArgumentException($"no project rule for {asm}"),

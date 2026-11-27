@@ -1,12 +1,17 @@
 # Current project decisions
 
-## D33: ribbon/dock components come from the Mathcad install (2026-11-27)
+## D33: mirror PTC's in-house DevComponents assemblies (2026-11-27)
 
-D6 is resolved for mirroring: what Quire used before is obsolete and does not constrain the mirror. DevComponents
-DotNetBar (`DevComponents.WpfRibbon`, `DevComponents.WpfDock`) is a commercial component, not open source (a search found
-no repository or open licence). The install ships both DLLs, so under D27 the build references them from the install
-(`MATHCAD_DIR`) and the windows/connectors that derive from them (FunctionBrowserWindow, InputOutputDesignationWindow,
-ButtonEx/ButtonDropDown connectors) are mirrored against the real types. They are never committed (D15).
+PTC builds `DevComponents.WpfDock.dll` and `DevComponents.WpfRibbon.dll` from its in-house
+DotNetBar 4.0.0.1 source. They are first-party Mathcad dependencies, not commercial packages
+to substitute. Mirror both as separate C# projects, `Quire.DevComponents.WpfDock` and
+`Quire.DevComponents.WpfRibbon`, following D20. Do not reference either DLL from the install.
+The PDB source paths identify PTC's private DotNetBar checkout. `Xenocode.Client.dll` is not
+shipped in the install; its only use in these assemblies is the `RenameSymbol` metadata
+attribute, which is recorded as an external metadata dependency and has no runtime member
+counterpart. Ribbon's `Ptc.Core` calls continue to bind to `Quire.Core`.
+
+This supersedes D6's proposed Fluent.Ribbon/AvalonDock substitutions for these two assemblies.
 
 ## D34: Ptc.OleInterop is in scope (2026-11-27)
 
@@ -19,7 +24,6 @@ The user lifted D5's deferral of `Ptc.OleInterop`. It is mirrored now as a C++/C
 Roslyn cannot emit. Mathcad does not build them with C++/CLI (mcdepman is the exception, D32). The user chose to investigate
 `Quire.Mpl.Emit` as the route to exact IL; a scout (lane-mpl-emit-scout.md) reports before any worker is assigned to these
 types. Engine.Native types that originate from C++/CLI follow D20 (C++/CLI projects), not C# stand-ins.
-
 ## D32: mcdepman C++/CLI migration (2026-11-10)
 
 The mcdepman members move from their C# host in `Quire.Mcd` to the C++/CLI project
@@ -387,8 +391,8 @@ mode, which supersedes D25's parking for functions that a `/GL` build reproduces
 
 ## Open dependency choices
 
-- **D6:** Commercial-component replacements remain undecided: Fluent.Ribbon/AvalonDock,
-  IPOPT/NLopt, and MathNet.Numerics are candidates listed in [scope](scope.md).
+- **D6:** Commercial-component replacements remain undecided: IPOPT/NLopt and MathNet.Numerics
+  are candidates listed in [scope](scope.md). The DevComponents substitution was superseded by D33.
 - **D7:** The NRtfTree library is vendored as an LGPL-3.0-or-later compatibility fork under
   `third_party/NRtfTree`; its upstream notices and licenses are retained, and the fork's
   Mathcad compatibility patches are listed in its [README](../../third_party/NRtfTree/README.md).

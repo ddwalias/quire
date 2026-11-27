@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <AssemblyName>Quire.DevComponents.WpfDock</AssemblyName>
+    <RootNamespace>Quire.DevComponents.WpfDock</RootNamespace>
+  </PropertyGroup>
+  <Import Project="Generated\Mirror.props" />
+</Project>
