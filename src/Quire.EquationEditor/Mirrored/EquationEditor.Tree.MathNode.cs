@@ -432,6 +432,28 @@ public partial class MathNode
 
     public bool IsLeafOperator => d__.IsLeafOperator;
 
+    public int[] InherentChildren
+    {
+        get
+        {
+            if (IsPairNary)
+            {
+                List<int> children = new();
+                for (int childIndex = 0; childIndex < ChildCount; childIndex++)
+                {
+                    MathNodeDescriptor descriptor = d__;
+                    int position = a(childIndex, ref descriptor);
+                    if (Array.IndexOf(descriptor.InherentChildren, position) >= 0)
+                    {
+                        children.Add(childIndex);
+                    }
+                }
+                return children.ToArray();
+            }
+            return d__.InherentChildren;
+        }
+    }
+
     public bool JumpIntoChildren => d__.JumpIntoChildren;
 
     public bool HasContainerSlot => ContainerSlots.Length > 0;
