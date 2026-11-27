@@ -26,10 +26,6 @@ public partial class AddonsCollection
     [global::Quire.Mirror.MirrorStub]
     public string GetDisplayTitle(string filePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool CallAddonsToGeneratePdfFile(global::Quire.Controls.Core.IEngineeringDocument doc, string pdfFile) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CopyViewable(object tempPdfFile) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void CallAddonsWhenDocumentOpened(global::Quire.Controls.Core.IEngineeringDocument doc, string documentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void CallAddonsWhenDocumentClosing(string documentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

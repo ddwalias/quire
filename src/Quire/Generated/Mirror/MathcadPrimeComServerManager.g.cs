@@ -30,29 +30,11 @@ internal partial class MathcadPrimeComServerManager
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Collections.Generic.IDictionary<string, string> _listOfControlledWorksheets;
     [global::Quire.Mirror.MirrorStub]
-    private string RuntimeKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal string RuntimeKeyHex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.MathcadPrimeComServerManager Instance { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Application PrimeApp { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.SpiritMainWindow PrimeWindow { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public ulong CallsCounter { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IDictionary<string, string> ListOfControlledWorksheets { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private static bool Succeeded(int hResult) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void GenerateRuntimeKey() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal bool ValidateEngNotebookLicKey(string receivedLicKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private MathcadPrimeComServerManager() { }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsInitialized() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ClosePrimeWindow() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -69,14 +51,4 @@ internal partial class MathcadPrimeComServerManager
     public void SetComServerReady() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void EnableMessageBoxManager(bool isUiInteractiveModeDisabled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Wpf.IDialogManager GetDialogManager() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Wpf.IMessageBoxManager GetMessageBoxManager() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void DisableMessageBoxManager(bool isUiInteractiveModeDisabled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddWorksheet(string name, string fullName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RemoveWorksheet(string name, string fullName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

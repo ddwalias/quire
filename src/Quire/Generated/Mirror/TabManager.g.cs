@@ -60,8 +60,6 @@ public partial class TabManager : global::System.Windows.Controls.Primitives.Sel
     [global::Quire.Mirror.MirrorStub]
     private void UpdateItemsOrder() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private bool IsIndexInCollectionRange(int targetId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void SwitchAdjacentTabs(int sourceId, int targetId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Controls.ContentPresenter TabItemContainerAtIndex(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

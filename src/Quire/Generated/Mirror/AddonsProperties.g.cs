@@ -38,12 +38,6 @@ internal static partial class AddonsProperties
     [global::Quire.Mirror.MirrorStub]
     private static string ReadOpenFromWcCmdText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.AddonsProperties.AddonsData[] GetAddonsProperties(bool isComInstance) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static string GetAddonPath(string[] value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool CheckIfAddonsShouldBeLoaded(bool isComInstance) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool GetPtcPlacesConnectionStatus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetPtcPlacesConnectionStatus(bool enable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

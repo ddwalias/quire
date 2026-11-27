@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
+using System.Threading;
 using System.Windows.Threading;
 using Quire.Wpf;
 
@@ -365,5 +366,40 @@ public partial class AddonsCollection
     private string CallAddonsToGetDisplayName(string fileName)
     {
         return string.Empty;
+    }
+
+    private void CopyViewable(object tempPdfFile)
+    {
+        if (tempPdfFile != null)
+        {
+            string viewablePath = Path.GetDirectoryName(tempPdfFile.ToString()) + "\\Viewable.pdf";
+            bool copied = false;
+            while (!copied)
+            {
+                if (File.Exists(tempPdfFile.ToString()))
+                {
+                    File.Copy(tempPdfFile.ToString(), viewablePath, true);
+                    copied = true;
+                }
+            }
+        }
+    }
+
+    public bool CallAddonsToGeneratePdfFile(global::Quire.Controls.Core.IEngineeringDocument doc, string pdfFile)
+    {
+        if (IsAddonsCollectionNotEmpty() && _spiritMainWindow.IntegrationCommands.WcEnable && pdfFile.EndsWith("\\McadViewableOut\\Viewable.pdf"))
+        {
+            string viewablePdfFile = Path.GetDirectoryName(pdfFile) + "\\Viewable_.pdf";
+            if (_spiritMainWindow.SaveDocumentAsPdf_ForApiOnly(doc, viewablePdfFile))
+            {
+                WpfUtils.DoEvents(Dispatcher.CurrentDispatcher, DispatcherPriority.ContextIdle);
+                Thread copyThread = new Thread(new ParameterizedThreadStart(CopyViewable));
+                copyThread.Start(viewablePdfFile);
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

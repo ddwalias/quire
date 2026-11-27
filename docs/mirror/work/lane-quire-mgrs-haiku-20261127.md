@@ -10,3 +10,9 @@
   - AddonsCollection `GetDisplayTitle`: calls `SpiritMainWindow.get_OpenDocuments`; Quire exposes `OpenDocumentsList` (window lane).
   - AddonsCollection `CallAddonsWhenDocumentOpened`/`Closing`: branch layout (previously parked).
 - Not started: AddonsProperties members other than the non-literal ones, TabManager, MathcadPrimeComServerManager, Behaviors.BaseUIFunctionalityAttachedBehavior.
+
+## Batch 2 (branch mirror/quire-mgrs-haiku-20261127b)
+
+- Landed members (20 method and accessor rows): MathcadPrimeComServerManager Instance, PrimeApp, PrimeWindow, IsInitialized, ListOfControlledWorksheets, AddWorksheet, RemoveWorksheet, GetDialogManager, GetMessageBoxManager, DisableMessageBoxManager, Succeeded, plus auto-property accessors for CallsCounter, RuntimeKey and RuntimeKeyHex; AddonsProperties GetAddonsProperties, GetAddonPath, CheckIfAddonsShouldBeLoaded; AddonsCollection CopyViewable, CallAddonsToGeneratePdfFile; TabManager IsIndexInCollectionRange.
+- Gate: none of the changed members fails; project failures are the pre-existing SpiritMainWindow stubs (18).
+- Parked (unchanged): the AddonsProperties registry literals and resource URI, the Addon renamed-export members, GetDisplayTitle, CallAddonsWhenDocument*.
