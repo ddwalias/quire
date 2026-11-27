@@ -179,12 +179,12 @@ public static partial class WorksheetPropertiesManager
     private static void OnWorksheetPropertyChangeInfoChanged(DependencyObject dObj, DependencyPropertyChangedEventArgs eArgs)
     {
         WorksheetPropertiesChangeInfo worksheetPropertiesChangeInfo = eArgs.NewValue as WorksheetPropertiesChangeInfo;
-        WorksheetPropertiesChangeInfo worksheetPropertiesChangeInfo2 = eArgs.OldValue as WorksheetPropertiesChangeInfo;
+        WorksheetPropertiesChangeInfo previousChangeInfo = eArgs.OldValue as WorksheetPropertiesChangeInfo;
         if (worksheetPropertiesChangeInfo != null)
         {
             string[] propertyNames;
             IWorksheetProperties oldProperties;
-            if (worksheetPropertiesChangeInfo2 == null)
+            if (previousChangeInfo == null)
             {
                 propertyNames = WorksheetPropertyNames.GetNames();
                 oldProperties = GetWorksheetPropertiesSource(dObj);
@@ -196,11 +196,11 @@ public static partial class WorksheetPropertiesManager
             }
             UpdateTarget(dObj as IWorksheetPropertiesTarget, propertyNames, oldProperties, worksheetPropertiesChangeInfo.PropertiesSource);
         }
-        else if (worksheetPropertiesChangeInfo2 != null)
+        else if (previousChangeInfo != null)
         {
-            if (!WpfUtils.HasLocalValue(dObj, eArgs.Property) && worksheetPropertiesChangeInfo2.PropertiesSource != dObj)
+            if (!WpfUtils.HasLocalValue(dObj, eArgs.Property) && previousChangeInfo.PropertiesSource != dObj)
             {
-                SetWorksheetPropertiesSource(dObj, worksheetPropertiesChangeInfo2.CachedWorksheetProperties);
+                SetWorksheetPropertiesSource(dObj, previousChangeInfo.CachedWorksheetProperties);
             }
             else
             {

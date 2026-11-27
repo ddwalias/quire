@@ -80,11 +80,11 @@ internal partial class IntegrationRegionSerializer : IXElementSerializable
     private void ReadIOAliases(DependencyObject ioRegion, XElement xElement, bool isInp)
     {
         string text = (isInp ? "inputAliases" : "outputAliases");
-        XElement xElement2 = xElement.Element(IntegrationDataSerializer.GetXNameWithIntegrationNameSpace(text));
-        if (xElement2 != null)
+        XElement aliasesElement = xElement.Element(IntegrationDataSerializer.GetXNameWithIntegrationNameSpace(text));
+        if (aliasesElement != null)
         {
             List<string> list = new List<string>();
-            foreach (XElement item in xElement2.Elements(IntegrationDataSerializer.GetXNameWithIntegrationNameSpace("alias")))
+            foreach (XElement item in aliasesElement.Elements(IntegrationDataSerializer.GetXNameWithIntegrationNameSpace("alias")))
             {
                 list.Add(item.Value);
             }
@@ -122,15 +122,15 @@ internal partial class IntegrationRegionSerializer : IXElementSerializable
     private XElement WriteRegion(IIORegion element)
     {
         XElement xElement = new XElement(IntegrationDataSerializer.GetXNameWithIntegrationNameSpace("region"));
-        XElement xElement2 = WriteIOAliases(element, true);
-        if (!xElement2.IsEmpty)
+        XElement aliasesElement = WriteIOAliases(element, true);
+        if (!aliasesElement.IsEmpty)
         {
-            xElement.Add(xElement2);
+            xElement.Add(aliasesElement);
         }
-        xElement2 = WriteIOAliases(element, false);
-        if (!xElement2.IsEmpty)
+        aliasesElement = WriteIOAliases(element, false);
+        if (!aliasesElement.IsEmpty)
         {
-            xElement.Add(xElement2);
+            xElement.Add(aliasesElement);
         }
         UIElement uIElement = element as UIElement;
         xElement.SetAttributeValue("region-id", _serializationHelper.GetRegionId(uIElement));
@@ -146,9 +146,9 @@ internal partial class IntegrationRegionSerializer : IXElementSerializable
         {
             foreach (string item in aliases)
             {
-                XElement xElement2 = new XElement(IntegrationDataSerializer.GetXNameWithIntegrationNameSpace("alias"));
-                xElement2.SetValue(item);
-                xElement.Add(xElement2);
+                XElement aliasesElement = new XElement(IntegrationDataSerializer.GetXNameWithIntegrationNameSpace("alias"));
+                aliasesElement.SetValue(item);
+                xElement.Add(aliasesElement);
             }
         }
         return xElement;

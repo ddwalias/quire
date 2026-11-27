@@ -141,7 +141,7 @@ public static partial class MC14ConversionAnnotation
 
     private static void RemoveAnnotations(FrameworkElement element)
     {
-        FrameworkElement element2 = element;
+        FrameworkElement annotationElement = element;
         if (element is IIndirectMessageAdornerOwner)
         {
             (element as IIndirectMessageAdornerOwner).OnAdornedElementReady -= ElementIsLoadedSetAnnotations;
@@ -168,14 +168,14 @@ public static partial class MC14ConversionAnnotation
                 }
             }
         }
-        IList<VisualAdornerBase> topLevelAnnotationAdorners = GetTopLevelAnnotationAdorners(element2);
+        IList<VisualAdornerBase> topLevelAnnotationAdorners = GetTopLevelAnnotationAdorners(annotationElement);
         if (topLevelAnnotationAdorners != null)
         {
             topLevelAnnotationAdorners.Each(item =>
             {
                 item.Remove();
             });
-            ClearTopLevelAnnotationAdorners(element2);
+            ClearTopLevelAnnotationAdorners(annotationElement);
         }
     }
 

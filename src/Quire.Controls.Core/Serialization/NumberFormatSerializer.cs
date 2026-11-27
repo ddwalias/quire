@@ -473,11 +473,11 @@ public partial class NumberFormatSerializer
 
     public resultFormatType GetDataObject(IResultManager resultManager)
     {
-        resultFormatType resultFormatType2 = new resultFormatType();
+        resultFormatType resultFormatData = new resultFormatType();
         switch (NumberStyle)
         {
         case NumberFormat.NumberStyles.Engineering:
-            resultFormatType2.Item = new resultFormatEngineeringType
+            resultFormatData.Item = new resultFormatEngineeringType
             {
                 useenotation = ExponentStyleIsENotation,
                 precision = Precision,
@@ -487,7 +487,7 @@ public partial class NumberFormatSerializer
             };
             break;
         case NumberFormat.NumberStyles.Scientific:
-            resultFormatType2.Item = new resultFormatScientificType
+            resultFormatData.Item = new resultFormatScientificType
             {
                 useenotation = ExponentStyleIsENotation,
                 precision = Precision,
@@ -497,7 +497,7 @@ public partial class NumberFormatSerializer
             };
             break;
         case NumberFormat.NumberStyles.Decimal:
-            resultFormatType2.Item = new resultFormatDecimalType
+            resultFormatData.Item = new resultFormatDecimalType
             {
                 precision = Precision,
                 showtrailingzeros = _numberFormat.ShowTrailingDecimalZeros,
@@ -506,7 +506,7 @@ public partial class NumberFormatSerializer
             };
             break;
         case NumberFormat.NumberStyles.Percent:
-            resultFormatType2.Item = new resultFormatPercentType
+            resultFormatData.Item = new resultFormatPercentType
             {
                 precision = Precision,
                 showtrailingzeros = _numberFormat.ShowTrailingDecimalZeros,
@@ -515,7 +515,7 @@ public partial class NumberFormatSerializer
             };
             break;
         case NumberFormat.NumberStyles.General:
-            resultFormatType2.Item = new resultFormatTypeGeneral
+            resultFormatData.Item = new resultFormatTypeGeneral
             {
                 precision = Precision,
                 showtrailingzeros = _numberFormat.ShowTrailingDecimalZeros,
@@ -526,10 +526,10 @@ public partial class NumberFormatSerializer
             };
             break;
         default:
-            resultFormatType2.Item = null;
+            resultFormatData.Item = null;
             break;
         }
-        return resultFormatType2;
+        return resultFormatData;
     }
 
     public void SetDataObject(resultFormatType resultFormat, IResultManager resultManager)

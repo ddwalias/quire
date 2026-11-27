@@ -195,20 +195,20 @@ public partial class Mathcad14TextStyle
                 break;
             case "f":
             {
-                XmlAttribute xmlAttribute2 = attributes["family"];
-                XmlAttribute xmlAttribute3 = attributes["size"];
-                if (xmlAttribute2 != null)
+                XmlAttribute familyAttribute = attributes["family"];
+                XmlAttribute sizeAttribute = attributes["size"];
+                if (familyAttribute != null)
                 {
-                    _fontFamily = (xmlAttribute2.Value.Equals("inherit") ? null : new FontFamily(xmlAttribute2.Value));
+                    _fontFamily = (familyAttribute.Value.Equals("inherit") ? null : new FontFamily(familyAttribute.Value));
                 }
-                if (xmlAttribute3 != null)
+                if (sizeAttribute != null)
                 {
-                    if (double.TryParse(xmlAttribute3.Value, NumberStyles.Float, CultureInfo.InvariantCulture, out var result))
+                    if (double.TryParse(sizeAttribute.Value, NumberStyles.Float, CultureInfo.InvariantCulture, out var result))
                     {
                         _fontSize = result;
                         break;
                     }
-                    DebugTools.DevAssert(xmlAttribute3.Value.Equals("inherit"), null, Array.Empty<object>());
+                    DebugTools.DevAssert(sizeAttribute.Value.Equals("inherit"), null, Array.Empty<object>());
                     _fontSize = null;
                 }
                 break;
@@ -454,19 +454,19 @@ public partial class Mathcad14TextStyle
         {
             BaseStyleName = xAttribute.Value;
         }
-        XElement xElement2 = xElement.Descendants(_namespace + "inlineAttr").FirstOrDefault();
-        if (xElement2 != null)
+        XElement inlineAttributesElement = xElement.Descendants(_namespace + "inlineAttr").FirstOrDefault();
+        if (inlineAttributesElement != null)
         {
-            ReadInlineAttr(xElement2);
+            ReadInlineAttr(inlineAttributesElement);
         }
         else
         {
             DebugTools.DevAssert(false, null, Array.Empty<object>());
         }
-        XElement xElement3 = xElement.Descendants(_namespace + "blockAttr").FirstOrDefault();
-        if (xElement3 != null)
+        XElement blockAttributesElement = xElement.Descendants(_namespace + "blockAttr").FirstOrDefault();
+        if (blockAttributesElement != null)
         {
-            ReadBlockAttr(xElement3);
+            ReadBlockAttr(blockAttributesElement);
         }
         else
         {

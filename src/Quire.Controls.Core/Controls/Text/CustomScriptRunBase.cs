@@ -210,19 +210,19 @@ public abstract partial class CustomScriptRunBase : Run, ICustomFontSizeOwner
         {
             TextPointer positionAtOffset = range.Start.GetPositionAtOffset(0);
             int offsetToPosition = flowDocument.ContentStart.GetOffsetToPosition(range.Start);
-            int offsetToPosition2 = flowDocument.ContentEnd.GetOffsetToPosition(range.End);
+            int endOffset = flowDocument.ContentEnd.GetOffsetToPosition(range.End);
             if (positionAtOffset?.Parent is Run run && run.ContentStart.CompareTo(positionAtOffset) < 0)
             {
                 CustomScriptServiceFunctions.SplitRun(positionAtOffset);
             }
-            TextPointer positionAtOffset2 = flowDocument.ContentEnd.GetPositionAtOffset(offsetToPosition2);
-            if (positionAtOffset2?.Parent is Run run2 && run2.ContentEnd.CompareTo(positionAtOffset2) > 0)
+            TextPointer endPosition = flowDocument.ContentEnd.GetPositionAtOffset(endOffset);
+            if (endPosition?.Parent is Run run2 && run2.ContentEnd.CompareTo(endPosition) > 0)
             {
-                CustomScriptServiceFunctions.SplitRun(positionAtOffset2);
+                CustomScriptServiceFunctions.SplitRun(endPosition);
             }
-            positionAtOffset2 = flowDocument.ContentEnd.GetPositionAtOffset(offsetToPosition2);
+            endPosition = flowDocument.ContentEnd.GetPositionAtOffset(endOffset);
             positionAtOffset = flowDocument.ContentStart.GetPositionAtOffset(offsetToPosition);
-            List<Run> list = new System.Windows.Documents.TextRange(positionAtOffset, positionAtOffset2).EnumerateRunsInRange().ToList();
+            List<Run> list = new System.Windows.Documents.TextRange(positionAtOffset, endPosition).EnumerateRunsInRange().ToList();
             switch (switchToScript)
             {
                 case ScriptState.Subscript:

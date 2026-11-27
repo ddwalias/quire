@@ -72,9 +72,9 @@ public partial class RestrictedAreaAlignmentGrid : AlignmentGrid, IRestrictedAre
                     return candidate;
                 }
                 Point nearestIntersectionInDirection = GetNearestIntersectionInDirection(candidate, Direction.Up);
-                Point nearestIntersectionInDirection2 = GetNearestIntersectionInDirection(candidate, Direction.Down);
+                Point lowerIntersection = GetNearestIntersectionInDirection(candidate, Direction.Down);
                 Func<Point, bool> func = (Point pt) => (pt.Y.IsGreaterThanOrEqual(0.0) || directionsToIgnore.Contains(Direction.Up, null)) && (pt.Y.IsLessThanOrEqual(HighestValidY) || directionsToIgnore.Contains(Direction.Down, null));
-                bool flag = func(nearestIntersectionInDirection2);
+                bool flag = func(lowerIntersection);
                 bool canMoveDown = func(nearestIntersectionInDirection);
                 Point result;
                 if (!flag)
@@ -83,11 +83,11 @@ public partial class RestrictedAreaAlignmentGrid : AlignmentGrid, IRestrictedAre
                 }
                 else if (!canMoveDown)
                 {
-                    result = nearestIntersectionInDirection2;
+                    result = lowerIntersection;
                 }
                 else
                 {
-                    result = (Math.Abs(candidate.Y - nearestIntersectionInDirection.Y) < Math.Abs(nearestIntersectionInDirection2.Y - candidate.Y)) ? nearestIntersectionInDirection : nearestIntersectionInDirection2;
+                    result = (Math.Abs(candidate.Y - nearestIntersectionInDirection.Y) < Math.Abs(lowerIntersection.Y - candidate.Y)) ? nearestIntersectionInDirection : lowerIntersection;
                 }
                 return result;
             }

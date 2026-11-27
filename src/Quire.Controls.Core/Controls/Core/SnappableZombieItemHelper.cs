@@ -75,11 +75,11 @@ public partial class SnappableZombieItemHelper
         }
         GeneralTransform transformFromPoint = snappingHelper.TransformFromPoint;
         Point? point = SnappableItemBaseHelper.CalculateOffset(ItemElement, WpfUtils.GroupTransformsAsFrozen(transformFromPoint, _zombie.ItemToZombieTransform));
-        Point? point2 = SnappableItemBaseHelper.CalculateOffset(snappingHelper.ItemElement, transformFromPoint);
-        if (!point.HasValue || !point2.HasValue)
+        Point? transformedPoint = SnappableItemBaseHelper.CalculateOffset(snappingHelper.ItemElement, transformFromPoint);
+        if (!point.HasValue || !transformedPoint.HasValue)
         {
             return null;
         }
-        return new Point(point.Value.X - point2.Value.X, point.Value.Y - point2.Value.Y);
+        return new Point(point.Value.X - transformedPoint.Value.X, point.Value.Y - transformedPoint.Value.Y);
     }
 }

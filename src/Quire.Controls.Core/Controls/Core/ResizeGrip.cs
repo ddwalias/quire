@@ -27,9 +27,9 @@ public partial class ResizeGrip : Shape
         get
         {
             RectangleGeometry geometry = new RectangleGeometry(new Rect(-1.0, -8.0, 2.0, 2.0));
-            RectangleGeometry geometry2 = new RectangleGeometry(new Rect(-1.0, -1.0, 2.0, 2.0));
-            RectangleGeometry geometry3 = new RectangleGeometry(new Rect(-1.0, 6.0, 2.0, 2.0));
-            CombinedGeometry combinedGeometry = new CombinedGeometry(GeometryCombineMode.Union, geometry, new CombinedGeometry(GeometryCombineMode.Union, geometry2, geometry3));
+            RectangleGeometry centerGeometry = new RectangleGeometry(new Rect(-1.0, -1.0, 2.0, 2.0));
+            RectangleGeometry bottomGeometry = new RectangleGeometry(new Rect(-1.0, 6.0, 2.0, 2.0));
+            CombinedGeometry combinedGeometry = new CombinedGeometry(GeometryCombineMode.Union, geometry, new CombinedGeometry(GeometryCombineMode.Union, centerGeometry, bottomGeometry));
             if (DockSide == Dock.Top || DockSide == Dock.Bottom)
             {
                 combinedGeometry.Transform = new RotateTransform(90.0);

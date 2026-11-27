@@ -569,7 +569,7 @@ public partial class WorksheetPageLayout
         {
             pageSize = PageSize.A3;
         }
-        PageSize pageSize2 = PageSize;
+        PageSize previousPageSize = PageSize;
         if (updateCustomMargins)
         {
             UpdatePropertyAndDelayNotification(UpdateAction);
@@ -578,7 +578,7 @@ public partial class WorksheetPageLayout
         {
             PageSize = pageSize;
         }
-        if (pageSize2 != PageSize)
+        if (previousPageSize != PageSize)
         {
             WorksheetRecreateSuggested?.Invoke();
         }
@@ -594,7 +594,7 @@ public partial class WorksheetPageLayout
 
     public void SetPageOrientation(PageOrientation pageOrientation, bool updateCustomMargins)
     {
-        PageOrientation pageOrientation2 = PageOrientation;
+        PageOrientation previousPageOrientation = PageOrientation;
         if (updateCustomMargins)
         {
             UpdatePropertyAndDelayNotification(UpdateAction);
@@ -603,7 +603,7 @@ public partial class WorksheetPageLayout
         {
             PageOrientation = pageOrientation;
         }
-        if (pageOrientation2 != PageOrientation)
+        if (previousPageOrientation != PageOrientation)
         {
             WorksheetRecreateSuggested?.Invoke();
         }
@@ -620,9 +620,9 @@ public partial class WorksheetPageLayout
 
     public void SetMarginType(PageMarginType marginType)
     {
-        PageMarginType marginType2 = MarginType;
+        PageMarginType previousMarginType = MarginType;
         MarginType = marginType;
-        if (marginType2 != MarginType)
+        if (previousMarginType != MarginType)
         {
             WorksheetRecreateSuggested?.Invoke();
         }

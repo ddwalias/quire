@@ -13,30 +13,30 @@ public partial class FindUtilities
     public static int? GetIndexInText(string haystack, string needle, LogicalDirection direction, FindOptions options)
     {
         StringComparison comparisonType = options.HasFlag(FindOptions.MatchCase) ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase;
-        DelegateFunction1<int, int> delegateFunction2;
+        DelegateFunction1<int, int> findIndex;
         DelegateFunction1<bool, int> delegateFunction = (int i) => i > -1 && i < haystack.Length;
-        DelegateFunction1<int, int> delegateFunction3;
+        DelegateFunction1<int, int> advanceIndex;
         int num;
         if (LogicalDirection.Forward == direction)
         {
-            delegateFunction2 = (int i) => haystack.IndexOf(needle, i, comparisonType);
-            delegateFunction3 = (int i) => ++i;
+            findIndex = (int i) => haystack.IndexOf(needle, i, comparisonType);
+            advanceIndex = (int i) => ++i;
             num = 0;
         }
         else
         {
-            delegateFunction2 = (int i) => haystack.LastIndexOf(needle, i, comparisonType);
-            delegateFunction3 = (int i) => i + needle.Length - 2;
+            findIndex = (int i) => haystack.LastIndexOf(needle, i, comparisonType);
+            advanceIndex = (int i) => i + needle.Length - 2;
             num = haystack.Length;
         }
         bool flag;
         do
         {
-            num = delegateFunction2(num);
+            num = findIndex(num);
             flag = -1 != num;
             if (flag && (options & FindOptions.WholeWordOnly) != 0 && !(flag = IsWholeWord(haystack, num, needle.Length)))
             {
-                num = delegateFunction3(num);
+                num = advanceIndex(num);
             }
         }
         while (!flag && delegateFunction(num));

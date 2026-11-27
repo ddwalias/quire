@@ -50,10 +50,10 @@ internal partial class MathStyles : IXmlSerializable, IXElementSerializable
         {
             return;
         }
-        XElement xElement2 = xElement.Element(XName.Get("mathStyles", nameSpace.NamespaceName));
-        if (xElement2 != null)
+        XElement mathStylesElement = xElement.Element(XName.Get("mathStyles", nameSpace.NamespaceName));
+        if (mathStylesElement != null)
         {
-            foreach (XElement item in xElement2.Elements(MathStyleName))
+            foreach (XElement item in mathStylesElement.Elements(MathStyleName))
             {
                 MathStyle mathStyle = new MathStyle(nameSpace);
                 mathStyle.ReadXml(item);
@@ -68,11 +68,11 @@ internal partial class MathStyles : IXmlSerializable, IXElementSerializable
 
     public void WriteXml(XElement xElement)
     {
-        XElement xElement2 = new XElement(XName.Get("mathStyles", nameSpace.NamespaceName));
+        XElement mathStylesElement = new XElement(XName.Get("mathStyles", nameSpace.NamespaceName));
         foreach (KeyValuePair<IdLabels, ExtendedFont> item in document.LabeledIdFormat)
         {
-            new MathStyle(item.Key, item.Value, nameSpace).WriteXml(xElement2);
+            new MathStyle(item.Key, item.Value, nameSpace).WriteXml(mathStylesElement);
         }
-        xElement.Add(xElement2);
+        xElement.Add(mathStylesElement);
     }
 }

@@ -243,9 +243,9 @@ public abstract partial class OleContainerViewModel<TModel, TIPublicModel, TPers
         {
             if (AutoResize && !oleViewportSize.IsEmpty)
             {
-                Size size2 = new Size(Width, Height);
+                Size newSize = new Size(Width, Height);
                 double diagonalForUndo = CalculateDiagonalLength(size);
-                double diagonalForRedo = CalculateDiagonalLength(size2);
+                double diagonalForRedo = CalculateDiagonalLength(newSize);
                 if (!diagonalForUndo.IsEqualTo(diagonalForRedo))
                 {
                     CommandBuffer.Execute("OnOleViewChangedSync on OleObject", () => true, () =>
@@ -500,13 +500,13 @@ public abstract partial class OleContainerViewModel<TModel, TIPublicModel, TPers
             double minWidth = MinWidth;
             double minHeight = MinHeight;
             MinSizeValue = value;
-            double minWidth2 = MinWidth;
-            double minHeight2 = MinHeight;
-            if (minWidth != minWidth2)
+            double updatedMinWidth = MinWidth;
+            double updatedMinHeight = MinHeight;
+            if (minWidth != updatedMinWidth)
             {
                 OnPropertyChanged("MinWidth");
             }
-            if (minHeight != minHeight2)
+            if (minHeight != updatedMinHeight)
             {
                 OnPropertyChanged("MinHeight");
             }

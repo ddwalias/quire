@@ -82,21 +82,21 @@ public abstract partial class DeserializationStrategy : IDeserializationStrategy
                         value = ((object)regionPersistentData.Control).GetType().Name;
                     }
                 }
-                IRegionPersistentData regionPersistentData2 = RegionFactory.CreateFailedRegionPersistentData();
-                if (regionPersistentData2 != null)
+                IRegionPersistentData failedRegionData = RegionFactory.CreateFailedRegionPersistentData();
+                if (failedRegionData != null)
                 {
                     if (region is IRegionInWhiteboardType regionInWhiteboardType)
                     {
-                        regionPersistentData2.Location = regionInWhiteboardType.Location;
+                        failedRegionData.Location = regionInWhiteboardType.Location;
                     }
-                    AddRegion(regionPersistentData2, skipRegionsNotAffectingCalculation);
+                    AddRegion(failedRegionData, skipRegionsNotAffectingCalculation);
                     ex.Data.Add("RegionType", value);
                     ex.Data.Add("RegionId", region.regionid);
                     ex.Data.Add("Tag", region.Tag);
                     ex.Data.Add("RegionIndex", regions.IndexOf(region));
                     ex.Data.Add("ShowBorder", region.ShowBorder);
-                    regionPersistentData2.DeserializationException = ex;
-                    list.Add(regionPersistentData2);
+                    failedRegionData.DeserializationException = ex;
+                    list.Add(failedRegionData);
                 }
             }
         }

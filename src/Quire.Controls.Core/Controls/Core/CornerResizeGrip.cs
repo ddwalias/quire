@@ -18,9 +18,9 @@ public partial class CornerResizeGrip : ResizeGrip
         get
         {
             RectangleGeometry geometry = new RectangleGeometry(new Rect(-1.0, -4.0, 2.0, 2.0));
-            RectangleGeometry geometry2 = new RectangleGeometry(new Rect(-1.0, -1.0, 2.0, 2.0));
-            RectangleGeometry geometry3 = new RectangleGeometry(new Rect(-4.0, -1.0, 2.0, 2.0));
-            CombinedGeometry combinedGeometry = new CombinedGeometry(GeometryCombineMode.Union, geometry3, new CombinedGeometry(GeometryCombineMode.Union, geometry, geometry2));
+            RectangleGeometry centerGeometry = new RectangleGeometry(new Rect(-1.0, -1.0, 2.0, 2.0));
+            RectangleGeometry leftGeometry = new RectangleGeometry(new Rect(-4.0, -1.0, 2.0, 2.0));
+            CombinedGeometry combinedGeometry = new CombinedGeometry(GeometryCombineMode.Union, leftGeometry, new CombinedGeometry(GeometryCombineMode.Union, geometry, centerGeometry));
             if (DockSide == Dock.Left)
             {
                 combinedGeometry.Transform = new ScaleTransform(-1.0, 1.0);

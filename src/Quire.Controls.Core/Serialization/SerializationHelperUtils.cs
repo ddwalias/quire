@@ -86,13 +86,13 @@ public static partial class SerializationHelperUtils
     public static void CopyObfuscatedStream(Stream source, Stream target, int maxBufferSize = 16384)
     {
         Stream seekableStream;
-        Stream seekableStream2;
+        Stream targetStream;
         string tempFilePath = InitializeSeekableFileStream(source, out seekableStream);
-        string tempFilePath2 = InitializeSeekableFileStream(target, out seekableStream2, false);
+        string targetTempFilePath = InitializeSeekableFileStream(target, out targetStream, false);
         long length = seekableStream.Length;
         int num = (int)Math.Min((long)maxBufferSize, length);
         byte[] array = new byte[num];
-        seekableStream2.SetLength(length);
+        targetStream.SetLength(length);
         seekableStream.Position = 0L;
         int bytesRead;
         long totalBytesRead = 0L;
@@ -100,14 +100,14 @@ public static partial class SerializationHelperUtils
         {
             Obfuscate(array, bytesRead);
             totalBytesRead += bytesRead;
-            seekableStream2.Position = length - totalBytesRead;
-            seekableStream2.Write(array, 0, bytesRead);
-            seekableStream2.Flush();
+            targetStream.Position = length - totalBytesRead;
+            targetStream.Write(array, 0, bytesRead);
+            targetStream.Flush();
         }
-        seekableStream2.Position = 0L;
+        targetStream.Position = 0L;
         DebugTools.DevAssert(length == totalBytesRead, null);
         FinalizeSeekableStream(seekableStream, tempFilePath);
-        FinalizeSeekableStream(seekableStream2, tempFilePath2, target);
+        FinalizeSeekableStream(targetStream, targetTempFilePath, target);
     }
 
     private static void FinalizeSeekableStream(Stream seekableStream, string tempFilePath, Stream originalStream = null)

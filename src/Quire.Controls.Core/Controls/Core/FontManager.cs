@@ -106,9 +106,9 @@ public partial class FontManager
         _fontCacheMru[key] = DateTime.Now;
         if (_fontCache.Count > 100)
         {
-            FontKey key2 = _fontCacheMru.MinBy(kv => kv.Value).Key;
-            _fontCache.Remove(key2);
-            _fontCacheMru.Remove(key2);
+            FontKey leastRecentlyUsedKey = _fontCacheMru.MinBy(kv => kv.Value).Key;
+            _fontCache.Remove(leastRecentlyUsedKey);
+            _fontCacheMru.Remove(leastRecentlyUsedKey);
         }
     }
 

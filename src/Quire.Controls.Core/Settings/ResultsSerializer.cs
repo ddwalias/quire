@@ -64,10 +64,10 @@ public partial class ResultsSerializer
             case "scientific":
             case "fraction":
             {
-                using (XmlReader xmlReader2 = item.CreateReader())
+                using (XmlReader resultXmlReader = item.CreateReader())
                 {
-                    xmlReader2.Read();
-                    numberFormatSerializer.ReadXml(xmlReader2);
+                    resultXmlReader.Read();
+                    numberFormatSerializer.ReadXml(resultXmlReader);
                 }
                 break;
             }
@@ -89,13 +89,13 @@ public partial class ResultsSerializer
 
     public void WriteXml(XElement xElement)
     {
-        XElement xElement2 = new XElement(XName.Get("results", nameSpace.NamespaceName));
-        using (XmlWriter writer = xElement2.CreateWriter())
+        XElement resultsElement = new XElement(XName.Get("results", nameSpace.NamespaceName));
+        using (XmlWriter writer = resultsElement.CreateWriter())
         {
             numberFormatSerializer.WriteXml(writer);
             matrixFormatSerializer.WriteXml(writer);
         }
-        unitSerializer.WriteXml(xElement2);
-        xElement.Add(xElement2);
+        unitSerializer.WriteXml(resultsElement);
+        xElement.Add(resultsElement);
     }
 }

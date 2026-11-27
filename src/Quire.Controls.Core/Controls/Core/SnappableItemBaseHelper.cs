@@ -41,8 +41,8 @@ public abstract partial class SnappableItemBaseHelper : ISnappableItemHelper, IS
             return null;
         }
         Point point = generalTransform.Transform(new Point(0.0, 0.0));
-        Point point2 = new Point(DoubleExtension.Floor(point.X, 1E-05), DoubleExtension.Floor(point.Y, 1E-05));
-        return inverse.Transform(point2);
+        Point snappedPoint = new Point(DoubleExtension.Floor(point.X, 1E-05), DoubleExtension.Floor(point.Y, 1E-05));
+        return inverse.Transform(snappedPoint);
     }
 
     protected SnappableItemBaseHelper(UIElement itemElement, bool isPageDescendant)

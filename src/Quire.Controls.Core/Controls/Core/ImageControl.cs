@@ -154,16 +154,16 @@ public partial class ImageControl
             {
                 Uri packageUri = PackUriHelper.GetPackageUri(sourceUri);
                 Uri partUri = PackUriHelper.GetPartUri(sourceUri);
-                using (FileStream fileStream2 = PackageOperationsProvider.OpenFileStreamForReadWithFullShare(packageUri.LocalPath))
+                using (FileStream packageFileStream = PackageOperationsProvider.OpenFileStreamForReadWithFullShare(packageUri.LocalPath))
                 {
-                    using (Package package = Package.Open(fileStream2))
+                    using (Package package = Package.Open(packageFileStream))
                     {
                         PackagePart part = package.GetPart(partUri);
                         using (MemoryStream memoryStream = new MemoryStream())
                         {
-                            using (Stream stream2 = part.GetStream())
+                            using (Stream partStream = part.GetStream())
                             {
-                                stream2.CopyTo(memoryStream);
+                                partStream.CopyTo(memoryStream);
                                 memoryStream.Position = 0L;
                                 action(memoryStream);
                             }

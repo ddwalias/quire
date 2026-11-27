@@ -78,12 +78,12 @@ public partial class ExcelReader
     private ExcelCell CreateExcelCel(XmlElement element)
     {
         string attribute = element.GetAttribute("r");
-        string attribute2 = element.GetAttribute("t");
+        string cellType = element.GetAttribute("t");
         string value = string.Empty;
         XmlNode xmlNode = element.SelectSingleNode("s:v", _nsManager);
         if (xmlNode != null)
         {
-            switch (attribute2)
+            switch (cellType)
             {
                 case "b":
                     value = xmlNode.InnerText == "1" ? "TRUE" : "FALSE";
@@ -217,12 +217,12 @@ public partial class ExcelReader
                 foreach (XmlElement item in xmlNodeList)
                 {
                     string attribute = item.GetAttribute("r:id");
-                    string attribute2 = item.GetAttribute("name");
+                    string cellType = item.GetAttribute("name");
                     OpenXmlPart partById = _doc.WorkbookPart.GetPartById(attribute);
-                    PackagePart part2 = _doc.Package.GetPart(partById.Uri);
-                    XmlDocument xmlDocument2 = new XmlDocument();
-                    xmlDocument2.Load(part2.GetStream());
-                    list.Add(CreateExcelSheet(xmlDocument2.DocumentElement, attribute2));
+                    PackagePart workbookPart = _doc.Package.GetPart(partById.Uri);
+                    XmlDocument worksheetDocument = new XmlDocument();
+                    worksheetDocument.Load(workbookPart.GetStream());
+                    list.Add(CreateExcelSheet(worksheetDocument.DocumentElement, cellType));
                 }
             }
             WorkBook = new ExcelBook
