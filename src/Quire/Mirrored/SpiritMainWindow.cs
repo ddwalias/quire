@@ -375,6 +375,7 @@ public partial class SpiritMainWindow
     public global::System.Nullable<global::System.Windows.Thickness> LastCustomMarginValueSetting
     {
         get => _lastCustomMarginValueSetting;
+        [global::Quire.Mirror.MirrorStub]
         set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
