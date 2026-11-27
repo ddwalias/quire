@@ -109,7 +109,7 @@ public static class AssemblyMap
             string project = Rules.ProjectFor(asm);
             var language = Rules.LanguageOf(asm);
             if (language is Language.Native)
-                return (project, null, language.ToString(), File.Exists(Path.Combine(rules.Repo, "src", project, project + ".vcxproj")));
+                return (project, null, language.ToString(), File.Exists(ProjectLayout.ProjectFile(rules.Repo, project, ".vcxproj")));
             return (project, rules.HostFor(asm), language.ToString(), rules.IsSplit(asm));
         }
         catch (ArgumentException) { return (null, null, null, false); }

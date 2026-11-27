@@ -215,7 +215,8 @@ class LaneMergeTests(unittest.TestCase):
         self.assertEqual(self.checks, [])
 
     def test_shared_inputs_are_revalidated(self):
-        for path in ('Directory.Build.props', 'docs/mirror/type-map.csv', 'tools/Quire.Tools.MethodAudit/Program.cs'):
+        for path in ('Directory.Build.props', 'docs/mirror/type-map.csv', 'docs/mirror/source-layout.json',
+                     'tools/Quire.Tools.MethodAudit/Program.cs'):
             self.assertFalse(lane_merge.inputs_untouched([path], self.lane, ['P'], []), path)
         self.assertTrue(lane_merge.inputs_untouched(['docs/x.md', 'src/Q/Q.cs'], self.lane, ['P'], []))
         self.assertFalse(lane_merge.inputs_untouched(['src/Directory.Build.props'], self.lane, ['P'], []))
@@ -223,6 +224,14 @@ class LaneMergeTests(unittest.TestCase):
         # A project the compared one references, here through its Generated/Mirror.props.
         self.write(self.lane, 'src/P/Generated/Mirror.props', r'<ProjectReference Include="..\Q\Q.csproj" />')
         self.assertFalse(lane_merge.inputs_untouched(['src/Q/Q.cs'], self.lane, ['P'], []))
+
+    def test_nested_child_input_does_not_dirty_parent_project(self):
+        self.write(self.lane, 'docs/mirror/source-layout.json',
+                   '{"Parent":"ThirdParty/Parent","Child":"ThirdParty/Parent/Child"}')
+        self.write(self.lane, 'src/ThirdParty/Parent/Parent.csproj', '<Project />')
+        self.write(self.lane, 'src/ThirdParty/Parent/Child/Child.csproj', '<Project />')
+        self.assertTrue(lane_merge.inputs_untouched(
+            ['src/ThirdParty/Parent/Child/Child.cs'], self.lane, ['Parent'], []))
 
     def test_a_conflicting_rebase_is_aborted_and_reported(self):
         tip = git(self.lane, 'rev-parse', 'work')

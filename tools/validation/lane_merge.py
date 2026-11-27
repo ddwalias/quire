@@ -28,6 +28,7 @@ import uuid
 from merge_lock import held
 import il_merge
 import release_il
+from layout import project_dir, project_of
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'lint'))
 import lint
@@ -68,15 +69,23 @@ def inputs_untouched(paths, root, projects, natives):
     under src/ and at the repository root (but *.md), the type map, the registry of generated assemblies (which rule
     judges a project), the judge (MethodAudit, MirrorGen) and gate rules
     (tools/validation), and for affected native projects their directories and docs/mirror/native/."""
-    dirs = {d.name for d in release_il.build_closure(root, projects)} | set(natives)
+    closure = release_il.build_closure(root, projects)
+    input_projects = {d.name for d in closure} | set(natives)
+    dirs = {d.relative_to(root / 'src').as_posix() for d in closure}
+    dirs |= {project_dir(root, n).relative_to(root / 'src').as_posix() for n in natives}
     prefixes = ['tools/Quire.Tools.MethodAudit/', 'tools/Quire.Tools.MirrorGen/', 'tools/validation/',
                 *(f'src/{d}/' for d in dirs),
                 # native_gate reads the manifest and finds each project's original through the assembly map.
                 *(['docs/mirror/native/', 'docs/mirror/assembly-map.json'] if natives else [])]
     for path in paths:
         parts = path.split('/')
+        owner = project_of(path, root) if parts[0] == 'src' else None
+        if owner is not None:
+            if owner in input_projects:
+                return False
+            continue
         if len(parts) == 1 and not path.endswith('.md') or parts[0] == 'src' and len(parts) < 3 \
-                or path in (release_il.TYPE_MAP, release_il.GENERATED_ASSEMBLIES) \
+                or path in (release_il.TYPE_MAP, release_il.SOURCE_LAYOUT, release_il.GENERATED_ASSEMBLIES) \
                 or path.startswith(tuple(prefixes)):
             return False
     return True

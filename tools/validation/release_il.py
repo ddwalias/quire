@@ -19,7 +19,7 @@ The report's "skipped" names every member the run did not verify against Mathcad
     python tools/validation/release_il.py --base main --project Quire.Engine.Utl --candidate-vcxproj PATH
 
 builds the candidate from a Windows C++/CLI .vcxproj (MSBuild, Release|x64) instead of
-src/<project>/<project>.csproj; the base is still the C# Release build. In a mixed-mode candidate
+the resolved project directory's <project>.csproj; the base is still the C# Release build. In a mixed-mode candidate
 (D19), compiler-support methods without a Mathcad counterpart and native bodies whose counterpart
 is native are compared by their machine code (native_bodies); every other method follows the usual rules.
 """
@@ -41,6 +41,7 @@ import uuid
 from xml.sax.saxutils import quoteattr
 
 import merge_lock
+from layout import project_dir, project_of, projects as layout_projects
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_INSTALL = (r'C:\Program Files\PTC\Mathcad Prime 12.0.1.0' if os.name == 'nt'
@@ -58,11 +59,12 @@ def git(*args, cwd=ROOT):
 
 
 def production_projects(root=ROOT):
-    return {p.stem for p in (root / 'src').glob('*/*.csproj')}
+    return layout_projects(root, '.csproj')
 
 
 # MethodAudit pairs every production type through the type map, so a change to it can change any verdict.
 TYPE_MAP = 'docs/mirror/type-map.csv'
+SOURCE_LAYOUT = 'docs/mirror/source-layout.json'
 # Projects whose assembly is generated (no source [MirrorOf]); MethodAudit binds them through this registry.
 GENERATED_ASSEMBLIES = 'docs/mirror/generated-assemblies.json'
 
@@ -80,11 +82,12 @@ def affected_projects(base, root=ROOT):
     projects = present | {Path(p).stem for p in git('ls-tree', '-r', '--name-only', base, '--', 'src', cwd=root).splitlines()
                           if p.endswith('.csproj')}
     # Shared compiler inputs can change every output, so they require the full IL scan.
-    if any('/' not in p and p.endswith(('.props', '.targets', '.json', '.slnx')) or p in (TYPE_MAP, GENERATED_ASSEMBLIES)
+    if any('/' not in p and p.endswith(('.props', '.targets', '.json', '.slnx'))
+           or p in (TYPE_MAP, SOURCE_LAYOUT, GENERATED_ASSEMBLIES)
            for p in paths):
         return sorted(projects)
-    changed = {parts[1] for p in paths if len(parts := p.split('/')) >= 3 and parts[0] == 'src'}
-    references = {name: project_references(root, root / 'src' / name) for name in present}
+    changed = {owner for p in paths if (owner := project_of(p, root)) is not None}
+    references = {name: project_references(root, project_dir(root, name)) for name in present}
     return sorted((changed & projects) | {p for p in present if changed & closure_names(references, p)})
 
 
@@ -753,9 +756,9 @@ def project_references(root, directory):
         if p.suffix.lower() in ('.csproj', '.props', '.targets'):
             for include in PROJECT_REFERENCE.findall(p.read_text(encoding='utf-8', errors='replace')):
                 # MSBuild resolves an imported .props' relative paths against the importing project.
-                target = (directory / include.replace('\\', os.sep)).resolve().parent
-                if target.parent == (root / 'src').resolve():
-                    names.append(target.name)
+                target = (directory / include.replace('\\', os.sep)).resolve()
+                if name := project_of(target, root):
+                    names.append(name)
     return names
 
 
@@ -765,7 +768,7 @@ def build_closure(root, projects):
     it is a build target, else (a reference built in Debug) its IL-only C# stand-in."""
     seen, resolved_seen, todo = [], set(), list(projects)
     while todo:
-        directory = root / 'src' / todo.pop()
+        directory = project_dir(root, todo.pop())
         resolved = directory.resolve()
         if resolved in resolved_seen or not resolved.is_dir():
             continue
@@ -839,7 +842,7 @@ def build_and_scan(root, projects, tool, work, install, dotnet, log, timeout, vc
             run([msbuild(), vcxproj, '-t:Rebuild', '-p:Configuration=Release', '-p:Platform=x64',
                  f'-p:OutDir={assemblies}{os.sep}', f'-p:IntDir={work / "obj"}{os.sep}', '-nologo', '-v:m'],
                 root, log, timeout, env)
-        targets = [] if vcxproj else [root / 'src' / project / f'{project}.csproj' for project in projects]
+        targets = [] if vcxproj else [project_dir(root, project) / f'{project}.csproj' for project in projects]
         if missing := [t for t in targets if not t.is_file()]:
             raise RuntimeError(f'production project missing from comparison: {missing[0]}')
         if targets:
@@ -1060,11 +1063,13 @@ def slice_keys(root, commit, judge, projects, install):
     install = Path(install)
     dlls = sorted((str(p.relative_to(install)), s.st_size, s.st_mtime_ns) for p in install.rglob('*.dll') for s in [p.stat()])
     # The native comparison's rules decide the native_* fields of the stored rows.
-    recipe = [hashlib.sha256(p.read_bytes()).hexdigest() for p in (Path(__file__), *NATIVE_RULES)]
+    recipe = [hashlib.sha256(p.read_bytes()).hexdigest()
+              for p in (Path(__file__), Path(__file__).with_name('layout.py'), *NATIVE_RULES)]
     manifest = hashlib.sha256(TOOLCHAIN_MANIFEST.read_bytes()).hexdigest() if TOOLCHAIN_MANIFEST.is_file() else None
     common = [CACHE_FORMAT, recipe, manifest, judge, root_files(root, commit),
               [path if kind == 'tree' else f'{path} {sha}' for _, kind, sha, path in src],
               git('rev-parse', f'{commit}:{TYPE_MAP}', cwd=root),
+              git('ls-tree', commit, '--', SOURCE_LAYOUT, cwd=root),
               git('ls-tree', commit, '--', GENERATED_ASSEMBLIES, cwd=root),  # MethodAudit binds registered projects by it
               str(install), dlls]  # every DLL's size and mtime: hashing the DLLs would cost more than it saves
     dirs = build_closure(root, projects)
@@ -1197,7 +1202,7 @@ def check(base, projects, results, types=(), methods=(), dotnet='dotnet', timeou
                 proposed = candidate_judge(root, work, cache, dotnet, log, timeout) if judge == 'candidate' else tool
             report['judge'].update(base=tool.parent.parent.name, candidate=proposed.parent.parent.name)
             # A project the candidate adds has no base build; its members start as new (or moved) rows.
-            existing = [p for p in projects if (original / 'src' / p / f'{p}.csproj').is_file()]
+            existing = [p for p in projects if (project_dir(original, p) / f'{p}.csproj').is_file()]
             judged = tool.parent.parent.name  # build_judge's key: entries judged by another judge never hit
             keys = slice_keys(original, base, judged, existing, install) if existing else {}
             before = cached_slices(cache, keys) if keys else {'methods': []}

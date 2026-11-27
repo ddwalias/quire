@@ -849,6 +849,16 @@ class ScopeTests(unittest.TestCase):
         self.repo.write('src/Top/T.cs', '')
         self.assertEqual(self.affected(), ['Top'])
 
+    def test_nested_source_layout_selects_the_longest_project_directory(self):
+        parent = 'ThirdParty/Parent'
+        child = f'{parent}/Child'
+        self.repo.write('docs/mirror/source-layout.json', json.dumps({'Parent': parent, 'Child': child}))
+        self.repo.write(f'src/{parent}/Parent.csproj', '<Project />')
+        self.repo.write(f'src/{child}/Child.csproj', '<Project />')
+        self.base = self.repo.commit()
+        self.repo.write(f'src/{child}/Nested.cs', 'child')
+        self.assertEqual(self.affected(), ['Child'])
+
     def test_type_map_selects_every_project_but_the_judge_selects_none(self):
         self.repo.write('docs/mirror/type-map.csv', 'b\n')
         self.assertEqual(self.affected(), ['Emit', 'Mpl', 'Other', 'Top'])
@@ -856,6 +866,10 @@ class ScopeTests(unittest.TestCase):
         self.repo.write('tools/Quire.Tools.MethodAudit/Program.cs', '')
         self.repo.write('tools/Quire.Tools.MirrorGen/Model.cs', 'x')
         self.assertEqual(self.affected(), [])
+
+    def test_source_layout_change_selects_every_project(self):
+        self.repo.write('docs/mirror/source-layout.json', '{"Emit":"ThirdParty/Emit"}')
+        self.assertEqual(self.affected(), ['Emit', 'Mpl', 'Other', 'Top'])
 
 
 class CheckTests(unittest.TestCase):

@@ -3,7 +3,7 @@
 Run from the main checkout: python tools/validation/merge_gate.py BRANCH [--apply]
 The candidate is built in a temporary clone. --apply holds the merge lock, checks
 the current base, validates that exact committed tip, then fast-forwards main.
-Native projects (src/<P>/ with a .vcxproj and no .csproj) the branch affects are
+Native projects (the resolved source-layout directory with a .vcxproj and no .csproj) the branch affects are
 checked by native_gate after the IL check; both must pass. Without --apply, --base
 may name a full ref (refs/remotes/origin/main).
 The record of a run is <results>/gate.json, beside the run's inventories and logs. A run that
@@ -22,12 +22,14 @@ import uuid
 
 from merge_lock import held
 import release_il
+import layout
 
 ROOT = Path(__file__).resolve().parents[2]
 
 
 # Inputs of every native project's check (native_gate): a change to them selects all native projects.
 NATIVE_SHARED = ('docs/mirror/native/internal-targets.json', 'docs/mirror/assembly-map.json',
+                 'docs/mirror/source-layout.json',
                  'tools/validation/native_bytes.py', 'tools/validation/native_gate.py',
                  'tools/validation/native_linked.py')
 
@@ -37,15 +39,16 @@ def git(*args, cwd=None):
 
 
 def native_projects(root):
-    """src/<P>/ with <P>.vcxproj and no <P>.csproj: native_gate's definition, for when it is missing."""
-    return {p.stem for p in (root / 'src').glob('*/*.vcxproj') if not p.with_suffix('.csproj').is_file()}
+    """Resolved source directories with <P>.vcxproj and no <P>.csproj: native_gate's definition, for when missing."""
+    return {p for p in layout.projects(root, '.vcxproj')
+            if not (layout.project_dir(root, p) / f'{p}.csproj').is_file()}
 
 
-def affected_native(changed, natives):
-    """Native projects with a changed file under src/<P>/, or all of them when a shared native input changed."""
+def affected_native(changed, natives, root=ROOT):
+    """Native projects owning a changed source file, or all of them when a shared native input changed."""
     if any(p in NATIVE_SHARED for p in changed):
         return sorted(natives)
-    return sorted({parts[1] for p in changed if len(parts := p.split('/')) >= 3 and parts[0] == 'src'} & set(natives))
+    return sorted({owner for p in changed if (owner := layout.project_of(p, root)) in natives})
 
 
 # Landing receipts, in the main checkout's .mirror-cache. Nothing in this repository deletes them.
@@ -115,7 +118,7 @@ def gate(args):
             if unknown:
                 raise RuntimeError(f'unknown or removed production projects: {sorted(unknown)}')
             module = native_gate()
-            natives = affected_native(changed, (module.native_projects if module else native_projects)(tree))
+            natives = affected_native(changed, (module.native_projects if module else native_projects)(tree), tree)
             record['projects'], record['native_projects'] = projects, natives
             if projects:
                 report = release_il.check(base, projects, results / 'run', args.type, args.method,

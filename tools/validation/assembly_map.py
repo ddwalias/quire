@@ -22,6 +22,7 @@ import subprocess
 import sys
 
 from release_il import ROOT, native_pair, toolset_support
+from layout import project_dir, projects as layout_projects
 
 
 def command(args):
@@ -72,8 +73,9 @@ def reduced_edges(graph):
 
 def source_stubs(project):
     count = 0
-    for path in (p for pattern in ('*.cs', '*.cpp', '*.h') for p in (ROOT / 'src' / project).rglob(pattern)):
-        if not {'bin', 'obj'}.intersection(path.relative_to(ROOT / 'src' / project).parts):
+    directory = project_dir(ROOT, project)
+    for path in (p for pattern in ('*.cs', '*.cpp', '*.h') for p in directory.rglob(pattern)):
+        if not {'bin', 'obj'}.intersection(path.relative_to(directory).parts):
             text = path.read_text(encoding='utf-8-sig', errors='replace')
             count += text.count('MirrorStub.NotImplemented(') + text.count('MirrorStub::NotImplemented(')
     return count
@@ -262,13 +264,14 @@ def main(argv=None):
 
     # C++/CLI projects are not evaluated: the .NET SDK cannot load the Visual C++ targets, and their original
     # references already give their edges.
-    paths = sorted((ROOT / 'src').glob('*/*.csproj'))
+    paths = sorted(project_dir(ROOT, name) / f'{name}.csproj' for name in layout_projects(ROOT, '.csproj'))
     print('Evaluating Release project references', flush=True)
     with ThreadPoolExecutor(max_workers=4) as pool:
         projects = {p['name']: p for p in pool.map(lambda p: evaluate(p, args.dotnet), paths)}
     revision = command(['git', 'rev-parse', 'HEAD']).strip()
     clean_sources = not command(['git', 'status', '--porcelain', '--', 'src',
-                                 'Directory.Build.props', 'Directory.Build.targets', 'global.json']).strip()
+                                 'docs/mirror/source-layout.json', 'Directory.Build.props', 'Directory.Build.targets',
+                                 'global.json']).strip()
     audits = recorded_audits()
     hosted = defaultdict(list)
     for a in originals:

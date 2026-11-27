@@ -4,5 +4,6 @@
     <!-- Reuse the metadata decoder as source; inspect Windows assemblies without loading them. -->
     <Compile Include="../Quire.Tools.MirrorGen/Model.cs" Link="Model.cs" />
     <Compile Include="../Quire.Tools.MirrorGen/MetadataLoader.cs" Link="MetadataLoader.cs" />
+    <Compile Include="../Quire.Tools.MirrorGen/ProjectLayout.cs" Link="ProjectLayout.cs" />
   </ItemGroup>
 </Project>

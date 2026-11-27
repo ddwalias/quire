@@ -38,6 +38,7 @@ import time
 from pathlib import Path
 
 import native_linked
+from layout import project_dir as resolve_project_dir
 from native_bytes import DEFAULT_TARGETS, PeImage, load_targets
 from native_gate import code_of, original_dll, strict
 from release_il import ROOT, mathcad_install, msbuild, msvc_mismatch
@@ -643,7 +644,7 @@ class Scorer:
 
 
 def search(args):
-    project_dir = (args.project_dir or ROOT / "src" / args.project).resolve()
+    project_dir = (args.project_dir or resolve_project_dir(ROOT, args.project)).resolve()
     source = Source(project_dir, args.function, args.source, args.inline or ())
     print(f"loading the original {original_dll(ROOT, args.project)} ...", flush=True)
     original = native_linked.Linked.load(Path(args.install or mathcad_install()) / original_dll(ROOT, args.project))
@@ -957,7 +958,7 @@ def final_report(scorer, built):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--project", required=True, help="native project name (its original DLL comes from the map)")
-    parser.add_argument("--project-dir", type=Path, help="project directory to copy (default: src/<project>)")
+    parser.add_argument("--project-dir", type=Path, help="project directory to copy (default from source-layout.json)")
     parser.add_argument("--source", help="file holding the searched functions, relative to the project")
     parser.add_argument("--function", action="append", required=True,
                         help="body to search: name, or file:name relative to the project (repeatable)")

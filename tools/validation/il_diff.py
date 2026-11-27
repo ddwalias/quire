@@ -12,6 +12,7 @@ import sys
 import tempfile
 
 from release_il import ROOT, mathcad_install, run
+from layout import project_dir
 
 
 def main(argv=None):
@@ -30,7 +31,7 @@ def main(argv=None):
             run([args.dotnet, 'build', ROOT / 'tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj',
                  '-c', 'Release', '-o', work / 'tool', '-nologo', '-v:q'], ROOT, log, args.timeout)
             for project in projects:
-                run([args.dotnet, 'build', ROOT / 'src' / project / f'{project}.csproj',
+                run([args.dotnet, 'build', project_dir(ROOT, project) / f'{project}.csproj',
                      '-c', 'Release', '--no-incremental', '-o', work / 'assemblies', '-nologo', '-v:q'], ROOT, log, args.timeout)
             return subprocess.run([args.dotnet, str(work / 'tool/Quire.Tools.MethodAudit.dll'),
                 '--repo', str(ROOT), '--assemblies', str(work / 'assemblies'), '--install', install,

@@ -274,15 +274,12 @@ public sealed class Rules
     /// <summary>The project file other projects reference: the .csproj when there is one, else the .vcxproj.</summary>
     public string ReferenceFile(string project) => IsCppProject(project) ? VcxProject(project)! : ProjectFile(project, ".csproj");
 
-    private string ProjectFile(string project, string extension) => Path.Combine(Repo, "src", project, project + extension);
+    private string ProjectFile(string project, string extension) => ProjectLayout.ProjectFile(Repo, project, extension);
 
     private string? VcxProject(string project)
     {
-        string dir = Path.Combine(Repo, "src", project);
-        return Directory.Exists(dir)
-            ? Directory.EnumerateFiles(dir, project + ".vcxproj", SearchOption.AllDirectories)
-                .FirstOrDefault(p => !Path.GetRelativePath(dir, p).Split(Path.DirectorySeparatorChar).Any(s => s is "bin" or "obj"))
-            : null;
+        string path = ProjectFile(project, ".vcxproj");
+        return File.Exists(path) ? path : null;
     }
 
     /// <summary>

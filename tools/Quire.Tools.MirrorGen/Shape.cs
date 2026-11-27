@@ -136,13 +136,14 @@ public static class Shape
     /// <summary>Each src project's newest Release build output: for a mixed-mode project (D19), the C++/CLI DLL it ships.</summary>
     public static IEnumerable<(string Project, string Dll)> BuiltProjects(string repo)
     {
-        foreach (var dir in Directory.GetDirectories(Path.Combine(repo, "src")).OrderBy(d => d, StringComparer.Ordinal))
-            if (ReleaseOutput(repo, Path.GetFileName(dir)) is { } dll) yield return (Path.GetFileName(dir), dll);
+        foreach (var project in ProjectLayout.Projects(repo, ".csproj").Concat(ProjectLayout.Projects(repo, ".vcxproj"))
+                     .Distinct(StringComparer.Ordinal).Order(StringComparer.Ordinal))
+            if (ReleaseOutput(repo, project) is { } dll) yield return (project, dll);
     }
 
     private static string? ReleaseOutput(string repo, string project)
     {
-        string bin = Path.Combine(repo, "src", project, "bin", "Release");
+        string bin = Path.Combine(ProjectLayout.ProjectDir(repo, project), "bin", "Release");
         return Directory.Exists(bin)
             ? Directory.GetDirectories(bin).Select(d => Path.Combine(d, project + ".dll")).Where(File.Exists)
                 .OrderByDescending(File.GetLastWriteTimeUtc).FirstOrDefault()
@@ -157,7 +158,7 @@ public static class Shape
     {
         var dll = ReleaseOutput(repo, project);
         if (dll == null || IsILOnly(dll)) return dll;
-        string standIn = Path.Combine(repo, "src", project, "obj", "Release", Path.GetFileName(Path.GetDirectoryName(dll))!, project + ".dll");
+        string standIn = Path.Combine(ProjectLayout.ProjectDir(repo, project), "obj", "Release", Path.GetFileName(Path.GetDirectoryName(dll))!, project + ".dll");
         return File.Exists(standIn) ? standIn : null;
     }
 

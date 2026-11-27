@@ -196,8 +196,18 @@ class NativeGateTests(GateRepo):
         with patch:
             self.assertEqual(il_merge.gate(self.args()), 0)
         self.assertEqual(module.check.call_args.args[1], ['M', 'N'])
-        self.assertEqual(il_merge.affected_native(['src/P/x.cs', 'src/N/a.h'], {'N', 'M'}), ['N'])
+        self.assertEqual(il_merge.affected_native(['src/P/x.cs', 'src/N/a.h'], {'N', 'M'}, self.root), ['N'])
         self.assertEqual(il_merge.affected_native(['tools/validation/native_bytes.py'], {'N', 'M'}), ['M', 'N'])
+
+    def test_nested_native_project_owns_its_files(self):
+        (self.root / 'docs/mirror').mkdir(parents=True, exist_ok=True)
+        (self.root / 'src/ThirdParty/Parent/Child').mkdir(parents=True)
+        (self.root / 'src/ThirdParty/Parent/Parent.vcxproj').touch()
+        (self.root / 'src/ThirdParty/Parent/Child/Child.vcxproj').touch()
+        (self.root / 'docs/mirror/source-layout.json').write_text(
+            '{"Parent":"ThirdParty/Parent","Child":"ThirdParty/Parent/Child"}')
+        self.assertEqual(il_merge.affected_native(['src/ThirdParty/Parent/Child/a.cpp'], {'Parent', 'Child'}, self.root),
+                         ['Child'])
 
     def test_a_missing_native_gate_fails_closed(self):
         self.native_candidate()

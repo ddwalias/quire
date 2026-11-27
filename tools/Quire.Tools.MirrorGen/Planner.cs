@@ -465,27 +465,29 @@ public sealed class HandWritten
             var model = MetadataLoader.Load(dll);
             if (model == null) continue;
             foreach (var t in model.Types) hw._types[(project, t.FullName)] = t;
-            hw.ScanSourceBindings(Path.Combine(repo, "src", project));
+            hw.ScanSourceBindings(ProjectLayout.ProjectDir(repo, project), ProjectLayout.NestedProjectDirs(repo, project));
         }
         return hw;
     }
 
     /// <summary>A project's hand-written C#: its .cs files outside Generated/, bin and obj; none without a directory.</summary>
-    public static IEnumerable<string> Sources(string projectDir)
+    public static IEnumerable<string> Sources(string projectDir, IEnumerable<string>? nestedProjects = null)
     {
         if (!Directory.Exists(projectDir)) return [];
         var generated = Path.Combine(projectDir, Emit.GeneratedDir) + Path.DirectorySeparatorChar;
+        var nested = (nestedProjects ?? []).Select(p => Path.GetFullPath(p) + Path.DirectorySeparatorChar).ToArray();
         return Directory.EnumerateFiles(projectDir, "*.cs", SearchOption.AllDirectories)
             .Where(file => !file.StartsWith(generated, StringComparison.OrdinalIgnoreCase)
                 && !file.Contains($"{Path.DirectorySeparatorChar}obj{Path.DirectorySeparatorChar}")
-                && !file.Contains($"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}"));
+                && !file.Contains($"{Path.DirectorySeparatorChar}bin{Path.DirectorySeparatorChar}")
+                && !nested.Any(directory => Path.GetFullPath(file).StartsWith(directory, StringComparison.OrdinalIgnoreCase)));
     }
 
     /// <summary>[MirrorOf] arguments written in hand-written sources (outside Generated/), which metadata can't tell
     /// apart from the generator's.</summary>
-    private void ScanSourceBindings(string projectDir)
+    private void ScanSourceBindings(string projectDir, IEnumerable<string>? nestedProjects = null)
     {
-        foreach (var file in Sources(projectDir))
+        foreach (var file in Sources(projectDir, nestedProjects))
         {
             // Code only the stub-free build compiles (-p:MirrorStubs=false) is not part of the normal build read here.
             string text = System.Text.RegularExpressions.Regex.Replace(File.ReadAllText(file),

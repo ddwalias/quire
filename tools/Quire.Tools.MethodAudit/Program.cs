@@ -491,7 +491,8 @@ var originalNames = matched.Where(m => m.Counterpart != null)
 // assembly, so it cannot match a Mathcad type of the same name elsewhere; framework types stay unqualified, and a
 // module's own compiler types (<Module>, <PrivateImplementationDetails>) are its own (StructureReader).
 // Every Mathcad assembly the type map lists, loaded or not, so a project's rows do not depend on what else is audited.
-var products = Directory.GetDirectories(Path.Combine(repo, "src")).Select(d => Path.GetFileName(d).ToLowerInvariant())
+var products = ProjectLayout.Projects(repo, ".csproj").Concat(ProjectLayout.Projects(repo, ".vcxproj"))
+    .Select(p => p.ToLowerInvariant())
     .Concat(quire.Select(a => a.Name.ToLowerInvariant())).Concat(mathcadAssemblies).ToHashSet();
 var structures = new Dictionary<Artifact, StructureReader>();
 StructureReader Reader(Artifact a, bool isQuire) => structures.TryGetValue(a, out var reader) ? reader

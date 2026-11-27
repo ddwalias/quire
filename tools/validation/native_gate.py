@@ -2,7 +2,7 @@
 
     python tools/validation/native_gate.py --base main --project Quire.Native.Utl
 
-The native analog of release_il.py. A native project is a directory src/<P>/ holding <P>.vcxproj and no <P>.csproj; its
+The native analog of release_il.py. A native project is its resolved source-layout directory holding <P>.vcxproj and no <P>.csproj; its
 original DLL is the one docs/mirror/assembly-map.json maps <P> to, and a project the map does not list fails closed.
 The base is built from a temporary checkout and the candidate is the current working tree, each with the pinned MSVC
 (Release|x64, outputs in a temporary directory). native_bytes.py compares every object
@@ -34,15 +34,16 @@ import native_bytes
 import native_linked
 from native_bytes import anonymous
 from release_il import RAW_BYTES, ROOT, git, mathcad_install, msbuild, msvc_mismatch, run
+from layout import project_file, projects as layout_projects
 
 ASSEMBLY_MAP = Path('docs') / 'mirror' / 'assembly-map.json'
 MANIFEST = Path('docs') / 'mirror' / 'native' / 'internal-targets.json'
 
 
 def native_projects(root=ROOT):
-    """src/<P>/ directories with <P>.vcxproj and no <P>.csproj."""
-    return {d.name for d in (Path(root) / 'src').iterdir()
-            if (d / f'{d.name}.vcxproj').is_file() and not (d / f'{d.name}.csproj').is_file()}
+    """Resolved project directories with <P>.vcxproj and no <P>.csproj."""
+    return {p for p in layout_projects(root, '.vcxproj')
+            if not project_file(root, p, '.csproj').is_file()}
 
 
 def original_dll(root, project):
@@ -56,7 +57,7 @@ def original_dll(root, project):
 
 def linked(root, project):
     """Whether `project` builds with /GL (WholeProgramOptimization), so the gate compares its linked DLL (D30)."""
-    text = (Path(root) / 'src' / project / f'{project}.vcxproj').read_text(encoding='utf-8', errors='replace')
+    text = project_file(root, project, '.vcxproj').read_text(encoding='utf-8', errors='replace')
     return '<WholeProgramOptimization>true</WholeProgramOptimization>' in text
 
 
@@ -66,7 +67,7 @@ def build(root, project, work, log, timeout, link_map=False, whole_program=None)
     out, obj = work / 'bin', work / 'obj'
     env = {**os.environ, '_LINK_': f'/MAP:{out / "candidate.map"}'} if link_map else None
     override = [] if whole_program is None else [f'-p:WholeProgramOptimization={str(whole_program).lower()}']
-    run([msbuild(), root / 'src' / project / f'{project}.vcxproj', '-t:Rebuild', '-p:Configuration=Release',
+    run([msbuild(), project_file(root, project, '.vcxproj'), '-t:Rebuild', '-p:Configuration=Release',
          '-p:Platform=x64', f'-p:OutDir={out}{os.sep}', f'-p:IntDir={obj}{os.sep}', '-nologo', '-v:m', *override],
         root, log, timeout, env)
     dlls = sorted(out.glob('*.dll'))
@@ -201,7 +202,7 @@ def check(base, projects, results, root=ROOT, install=None, timeout=1800):
                 report['originals'][project] = image.sha256
                 linked_original = functools.cache(functools.partial(native_linked.Linked.load, dll))
                 print(f'Building {project} (base and candidate)', flush=True)
-                existing = (original_tree / 'src' / project / f'{project}.vcxproj').is_file()
+                existing = project_file(original_tree, project, '.vcxproj').is_file()
                 before = scan_project(dll, original_tree, project, work / project / 'before', log, timeout,
                                       base_manifest, linked_original) if existing else {}
                 linked_mode = linked(root, project)

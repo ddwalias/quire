@@ -19,10 +19,10 @@ public static class Emit
         // Hand-written members are read from the Release build: without one they would read as missing and be
         // regenerated as stubs.
         var unbuilt = projects.Where(p => !rules.IsCppProject(p) && Shape.BuiltAssembly(repo, p) == null
-            && HandWritten.Sources(Path.Combine(repo, "src", p)).Any()).ToList();
+            && HandWritten.Sources(ProjectLayout.ProjectDir(repo, p), ProjectLayout.NestedProjectDirs(repo, p)).Any()).ToList();
         if (unbuilt.Count > 0)
             throw new InvalidOperationException("no Release build of " + string.Join(", ", unbuilt) + ", which have hand-written C# "
-                + "(src/<project>/bin/Release; for a mixed-mode project, its C# stand-in in obj/Release): "
+                + "(the resolved project directory's bin/Release; for a mixed-mode project, its C# stand-in in obj/Release): "
                 + "run `dotnet build Quire.slnx -c Release` before emit");
         var handWritten = HandWritten.Load(repo, projects);
         var plan = new Planner(mapper, externals, handWritten, Friends(mathcad, rules, projects));
@@ -42,7 +42,7 @@ public static class Emit
         int files = 0, skipped = 0;
         foreach (var project in csharp)
         {
-            string dir = Path.Combine(repo, "src", project, GeneratedDir, MirrorDir);
+            string dir = Path.Combine(ProjectLayout.ProjectDir(repo, project), GeneratedDir, MirrorDir);
             Directory.CreateDirectory(dir);
             var written = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (var t in mapper.Types.Where(t => t.Project == project && t.DeclaringType == null).OrderBy(t => t.FullName, StringComparer.Ordinal))
@@ -166,12 +166,15 @@ public static class Emit
     /// <summary>Packages used by using directives in hand-written source, outside generated mirror output.</summary>
     public static IEnumerable<Package> HandWrittenPackages(string repo, string project)
     {
-        string dir = Path.Combine(repo, "src", project);
+        string dir = ProjectLayout.ProjectDir(repo, project);
         if (!Directory.Exists(dir)) yield break;
         var namespaces = Externals.Packages.Keys.Distinct(StringComparer.Ordinal)
             .ToDictionary(name => name, name => name, StringComparer.Ordinal);
         var found = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var file in Directory.EnumerateFiles(dir, "*.cs", SearchOption.AllDirectories))
+        var nested = ProjectLayout.NestedProjectDirs(repo, project)
+            .Select(path => Path.GetFullPath(path) + Path.DirectorySeparatorChar).ToArray();
+        foreach (var file in Directory.EnumerateFiles(dir, "*.cs", SearchOption.AllDirectories)
+                     .Where(file => !nested.Any(child => Path.GetFullPath(file).StartsWith(child, StringComparison.OrdinalIgnoreCase))))
         {
             string relative = Path.GetRelativePath(dir, file);
             if (relative.Split(Path.DirectorySeparatorChar).Any(part => part is "Generated" or "Mirrored" or "obj" or "bin")) continue;
@@ -236,7 +239,7 @@ public static class Emit
 
     private static bool IsWindowsProject(string repo, string project)
     {
-        string csproj = Path.Combine(repo, "src", project, project + ".csproj");
+        string csproj = Path.Combine(ProjectLayout.ProjectDir(repo, project), project + ".csproj");
         return File.Exists(csproj) && File.ReadAllText(csproj).Contains("-windows");
     }
 
@@ -244,10 +247,9 @@ public static class Emit
     {
         var graph = new Dictionary<string, HashSet<string>>();
         foreach (var (p, refs) in generated) graph[p] = [.. refs];
-        foreach (var dir in Directory.GetDirectories(Path.Combine(repo, "src")))
+        foreach (var name in ProjectLayout.Projects(repo, ".csproj"))
         {
-            string name = Path.GetFileName(dir), csproj = Path.Combine(dir, name + ".csproj");
-            if (!File.Exists(csproj)) continue;
+            string csproj = Path.Combine(ProjectLayout.ProjectDir(repo, name), name + ".csproj");
             if (!graph.TryGetValue(name, out var set)) graph[name] = set = [];
             foreach (Match m in Regex.Matches(File.ReadAllText(csproj), @"ProjectReference Include=""[^""]*\\([^\\""]+)\.csproj"""))
                 set.Add(m.Groups[1].Value);
@@ -281,7 +283,7 @@ public static class Emit
 
     private static void WriteProject(string repo, string project, ProjectDeps d, Rules rules)
     {
-        string dir = Path.Combine(repo, "src", project);
+        string dir = ProjectLayout.ProjectDir(repo, project);
         string csproj = Path.Combine(dir, project + ".csproj");
         const string import = @"  <Import Project=""Generated\Mirror.props"" />";
         if (!File.Exists(csproj))
@@ -326,7 +328,7 @@ public static class Emit
         foreach (var p in d.Projects.Prepend("Quire.Mirror").Distinct())
         {
             // D20: a split C++/CLI project is referenced through its .vcxproj.
-            string reference = Path.GetRelativePath(Path.Combine(repo, "src", project), rules.ReferenceFile(p));
+            string reference = Path.GetRelativePath(ProjectLayout.ProjectDir(repo, project), rules.ReferenceFile(p));
             if (!existing.Contains($"\\{p}.csproj\"") && !existing.Contains($"\\{p}.vcxproj\""))
                 sb.AppendLine($@"    <ProjectReference Include=""{reference}"" />");
         }
@@ -358,7 +360,8 @@ public static class Emit
         srcEnd = lines.FindIndex(srcEnd, l => l.Contains("</Folder>"));
         foreach (var p in projects.OrderByDescending(p => p, StringComparer.Ordinal))
         {
-            string entry = $"    <Project Path=\"src/{p}/{p}.csproj\" />";
+            string projectPath = Path.GetRelativePath(repo, Path.Combine(ProjectLayout.ProjectDir(repo, p), p + ".csproj")).Replace('\\', '/');
+            string entry = $"    <Project Path=\"{projectPath}\" />";
             if (!lines.Any(l => l.Trim() == entry.Trim())) lines.Insert(srcEnd, entry);
         }
         var src = lines.Select((l, i) => (l, i)).Where(x => x.l.Contains("Path=\"src/")).ToList();

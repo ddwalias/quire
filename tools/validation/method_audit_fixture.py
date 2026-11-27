@@ -8,6 +8,8 @@ from pathlib import Path
 import shutil
 import subprocess
 
+from layout import project_dir
+
 ROOT = Path(__file__).resolve().parents[2]
 # What the gate's judge is built from (release_il.TOOL_TREES and the root build configuration).
 JUDGE_SOURCES = ('tools/Quire.Tools.MethodAudit', 'tools/Quire.Tools.MirrorGen')
@@ -61,6 +63,7 @@ class Case:
         self.repo, self.install, self.assemblies = self.work / 'repo', self.work / 'install', self.work / 'assemblies'
         for directory in (self.repo / 'docs/mirror', self.repo / 'src', self.install, self.assemblies):
             directory.mkdir(parents=True)
+        (self.repo / 'docs/mirror/source-layout.json').write_text('{}\n', encoding='utf-8')
         self.projects = []
 
     def compile(self, name, source, output):
@@ -76,7 +79,9 @@ class Case:
 
     def quire(self, project, source):
         """The Release assembly of a Quire project; its types bind with [Quire.Mirror.MirrorOf("Type, Assembly")]."""
-        (self.repo / 'src' / project).mkdir()
+        directory = project_dir(self.repo, project)
+        directory.mkdir(parents=True)
+        (directory / f'{project}.csproj').touch()
         self.compile(project, MIRROR_OF + source, self.assemblies)
         self.projects.append(project)
 
