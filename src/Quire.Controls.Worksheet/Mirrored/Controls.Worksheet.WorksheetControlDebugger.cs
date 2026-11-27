@@ -2,6 +2,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using Quire.Controls.Core;
 
 namespace Quire.Controls.Worksheet;
 
@@ -216,6 +217,31 @@ public partial class WorksheetControlDebugger
             UpdateWindowCellWorksheet(PropertyName.WorksheetHeight, WorksheetViewModelInst.WorksheetHeight.ToString("0.00"));
             UpdateDebugWindowCellsAll(PropertyName.ActivePageNumber, WorksheetViewModelInst.CurrentPageNumber.ToString());
             UpdateDebugWindowCellsAll(PropertyName.PagesCount, WorksheetControlInst.PageManager.Pages.Count.ToString());
+        }
+
+        private void OnWorksheetContentInsertionPointSet()
+        {
+            UpdateWindowCellWorksheet(PropertyName.InsertionPointX, WorksheetViewModelInst.InsertionPoint.X.ToString("0.00"));
+            UpdateWindowCellWorksheet(PropertyName.InsertionPointY, WorksheetViewModelInst.InsertionPoint.Y.ToString("0.00"));
+            Point pagePoint = WorksheetViewModelInst.InsertionPoint;
+            int pageIndex = WorksheetViewModelInst.PageManager.GetPageIndex(pagePoint.Y);
+            double pageOffsetY = pagePoint.Y - WorksheetViewModelInst.PageLayout.PageBodyHeight * pageIndex;
+            pagePoint = new Point(pagePoint.X, pageOffsetY);
+            UpdateDebugWindowCellPage(PropertyName.InsertionPointX, pagePoint.X.ToString("0.00"));
+            UpdateDebugWindowCellPage(PropertyName.InsertionPointY, pagePoint.Y.ToString("0.00"));
+            double canvasX = (WorksheetViewModelInst.WorksheetPageLayoutMode == PageLayoutMode.PageMode
+                ? WorksheetViewModelInst.PageLayout.PageMargin.Left
+                : 0.0) + WorksheetViewModelInst.InsertionPoint.X;
+            double canvasY = ((WorksheetViewModelInst.WorksheetPageLayoutMode == PageLayoutMode.PageMode
+                ? (WorksheetViewModelInst.PageLayout.DisplayHeight - WorksheetViewModelInst.PageLayout.PageBodyHeight) * pageIndex
+                : 0.0)
+                + (WorksheetViewModelInst.WorksheetPageLayoutMode == PageLayoutMode.PageMode
+                    ? WorksheetViewModelInst.PageLayout.PageMargin.Top
+                    : 0.0)) + WorksheetViewModelInst.InsertionPoint.Y;
+            Point canvasPoint = new Point(canvasX, canvasY);
+            UpdateWindowCellWorksheetItemsCanvas(PropertyName.InsertionPointX, canvasPoint.X.ToString("0.00"));
+            UpdateWindowCellWorksheetItemsCanvas(PropertyName.InsertionPointY, canvasPoint.Y.ToString("0.00"));
+            UpdateDebugWindowCellsAll(PropertyName.InsertionPointOnPageNumber, (pageIndex + 1).ToString());
         }
 
         private void OnVisiblePagesCollectionChanged(
