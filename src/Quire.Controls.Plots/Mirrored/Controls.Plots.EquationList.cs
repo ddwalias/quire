@@ -17,11 +17,32 @@ using Quire.Controls.Core;
 using Quire.Controls.Plots.Presenter;
 using Quire.Controls.Plots.ViewModel;
 using Quire.Undo;
+using Quire.Wpf;
 
 namespace Quire.Controls.Plots;
 
 public partial class EquationList
 {
+
+    private static void HandleItemsMarginChanged(DependencyObject dObj, DependencyPropertyChangedEventArgs eArgs)
+    {
+        ((EquationList)(object)dObj).SetMinMaxWidth();
+    }
+    static EquationList()
+    {
+        _typeOfThis = typeof(EquationList);
+        ItemMarginProperty = DependencyProperty.Register("ItemMargin", typeof(uint), _typeOfThis, new PropertyMetadata(20u, HandleItemsMarginChanged));
+        InfiniteSize = new Size(double.PositiveInfinity, double.PositiveInfinity);
+        FrameworkElement.WidthProperty.OverrideMetadata(typeof(EquationList), new FrameworkPropertyMetadata(double.NaN, WidthListChanged));
+    }
+    private static readonly global::System.Type _typeOfThis;
+    private const uint ItemMarginDefault = 20u;
+    private global::Quire.Controls.Plots.IEquationListViewModel _viewModel;
+    private readonly global::System.Windows.RoutedEventHandler _focusChangeEventHandler;
+    public static readonly global::System.Windows.DependencyProperty ItemMarginProperty;
+    private static readonly global::System.Windows.Size InfiniteSize;
+    internal global::Quire.Controls.Plots.EquationListContents EquationListGrid;
+    private bool _contentLoaded;
     public IEquationListViewModel ViewModel
     {
         get
@@ -63,67 +84,17 @@ public partial class EquationList
             ((DependencyObject)this).SetValue(ItemMarginProperty, (object)value);
         }
     }
-
-    public int EquationCount => EquationListGrid.Children.Count;
-
-    internal int Columns
+    public event global::System.Action<int, int> RequestAddEquation;
+    public event global::System.Action<global::Quire.Controls.Plots.Presenter.IPlotEquation, int, int, global::Quire.Direction> EquationRemoved;
+    public EquationList()
     {
-        get
+        _focusChangeEventHandler = (object sender, RoutedEventArgs routedEventArgs) =>
         {
-            return EquationListGrid.Columns;
-        }
-        set
-        {
-            if (EquationListGrid.Columns != value)
-            {
-                EquationListGrid.Columns = value;
-                EquationListGrid.InvalidateMeasure();
-                SetMinMaxWidth();
-            }
-        }
-    }
-
-    internal double MaxListWidth { get; set; }
-
-    internal double MaxListHeight { get; set; }
-
-    public int SelectedItemIndex { get; private set; }
-
-    public EquationListItem SelectedItem => EquationListGrid.Children[SelectedItemIndex] as EquationListItem;
-
-    public bool InCustomInitialization { get; set; }
-
-    public bool EquationItemWOUnit { get; set; }
-
-    public IPlotEquation this[int itemIndex] => ((EquationListItem)EquationListGrid.Children[itemIndex]).Equation;
-
-    private IEnumerable<EquationListItem> EquationListItemsEnumerable => EquationListGrid.Children.Cast<EquationListItem>();
-
-    private bool ContainsLabels
-    {
-        get
-        {
-            bool result = false;
-            foreach (UIElement child in EquationListGrid.Children)
-            {
-                if (child is EquationListItem)
-                {
-                    result = (child as EquationListItem).ContainsLabels;
-                }
-            }
-            return result;
-        }
-    }
-
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    public IMathFormat DeserializeMathFormat { get; set; }
-
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    public IDictionary<IdLabels, ExtendedFont> DeserializeLabeledIdFormat { get; set; }
-
-    private static void HandleItemsMarginChanged(DependencyObject dObj, DependencyPropertyChangedEventArgs eArgs)
-    {
-        ((EquationList)(object)dObj).SetMinMaxWidth();
+            ViewModel.EquationListHasFocus = this.IsLogicalFocusWithin();
+        };
+        RightDraggerVisibility = Visibility.Visible;
+        InitializeComponent();
+        BindCommands();
     }
 
     private void BindCommands()
@@ -178,6 +149,25 @@ public partial class EquationList
     public EquationListItem GetItem(int index)
     {
         return EquationListGrid.Children[index] as EquationListItem;
+    }
+
+    public int EquationCount => EquationListGrid.Children.Count;
+
+    internal int Columns
+    {
+        get
+        {
+            return EquationListGrid.Columns;
+        }
+        set
+        {
+            if (EquationListGrid.Columns != value)
+            {
+                EquationListGrid.Columns = value;
+                EquationListGrid.InvalidateMeasure();
+                SetMinMaxWidth();
+            }
+        }
     }
 
     private void MoveToEquation(int i, bool shouldMoveToEnd)
@@ -238,6 +228,12 @@ public partial class EquationList
         return SelectedItem;
     }
 
+    public EquationListItem SelectedItem => EquationListGrid.Children[SelectedItemIndex] as EquationListItem;
+
+    internal double MaxListWidth { get; set; }
+    internal global::Quire.Controls.Plots.Presenter.IEquationListItem AddItemToLegend(int index, global::Quire.Controls.Plots.Presenter.IEquationListItem equationListItem, bool focus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private global::Quire.Controls.Plots.Presenter.IPlotEquation GetNewEquation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
     private void RegisterToEvents(IEquationListItem equationListItem)
     {
         IPlotEquation equation = equationListItem.Equation;
@@ -280,6 +276,9 @@ public partial class EquationList
     {
         eq?.ShowOrHideScaling(IsKeyboardFocusWithin);
     }
+
+    internal double MaxListHeight { get; set; }
+    private void OnIsKeyboardFocusWithinChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     private void FireActiveEquationChanged(IPlotEquation equationControl)
     {
@@ -406,6 +405,8 @@ public partial class EquationList
     {
         SetMinMaxWidth(MaxListWidth, 0.0);
     }
+    public void ArrangeEquationsHorizontally() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void SetMinMaxWidth(double previousWidth, double newWidth) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     private double GetEffectiveEquationWidth(IPlotEquation equation)
     {
@@ -460,6 +461,11 @@ public partial class EquationList
         }
     }
 
+    public IPlotEquation this[int itemIndex] => ((EquationListItem)EquationListGrid.Children[itemIndex]).Equation;
+
+    private IEnumerable<EquationListItem> EquationListItemsEnumerable => EquationListGrid.Children.Cast<EquationListItem>();
+    private global::Quire.Controls.Plots.EquationListItem GetEquationListItem(global::Quire.Controls.Plots.Presenter.IPlotEquation plotEquation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
     public void AddTraceToEquation(IPlotTrace trace, IPlotEquation plotEquation)
     {
         GetEquationListItem(plotEquation).AddTrace(trace);
@@ -503,6 +509,24 @@ public partial class EquationList
         return AddItem(SelectedItemIndex + 1);
     }
 
+    private bool ContainsLabels
+    {
+        get
+        {
+            bool result = false;
+            foreach (UIElement child in EquationListGrid.Children)
+            {
+                if (child is EquationListItem)
+                {
+                    result = (child as EquationListItem).ContainsLabels;
+                }
+            }
+            return result;
+        }
+    }
+    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotEquation> Equations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    private void HandleInsertItemToLegendCommand(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
     [DebuggerNonUserCode]
     [GeneratedCode("PresentationBuildTasks", "10.0.11.0")]
     public void InitializeComponent()
@@ -537,4 +561,17 @@ public partial class EquationList
             _contentLoaded = true;
         }
     }
+    public event global::System.Action<global::Quire.Controls.Plots.Presenter.IPlotEquation> ActiveEquationChanged;
+
+    public int SelectedItemIndex { get; private set; }
+
+    public bool InCustomInitialization { get; set; }
+
+    public bool EquationItemWOUnit { get; set; }
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public IMathFormat DeserializeMathFormat { get; set; }
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public IDictionary<IdLabels, ExtendedFont> DeserializeLabeledIdFormat { get; set; }
 }

@@ -11,44 +11,4 @@ namespace Quire.Controls.Plots;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.EquationList, Ptc.Controls.Plots")]
 public partial class EquationList : global::Quire.Controls.Plots.PlotItem, global::Quire.Controls.Core.IMathFormatForDeserialization, global::Quire.Controls.Core.ISupportCustomInitialization, global::System.Windows.Markup.IComponentConnector
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Type _typeOfThis;
-    [global::Quire.Mirror.MirrorStub]
-    private const uint ItemMarginDefault = 20u;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.IEquationListViewModel _viewModel;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.RoutedEventHandler _focusChangeEventHandler;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ItemMarginProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.Size InfiniteSize;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Controls.Plots.EquationListContents EquationListGrid;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotEquation> Equations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<int, int> RequestAddEquation;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Controls.Plots.Presenter.IPlotEquation, int, int, global::Quire.Direction> EquationRemoved;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Controls.Plots.Presenter.IPlotEquation> ActiveEquationChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public EquationList() { }
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.Presenter.IPlotEquation GetNewEquation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.Controls.Plots.Presenter.IEquationListItem AddItemToLegend(int index, global::Quire.Controls.Plots.Presenter.IEquationListItem equationListItem, bool focus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnIsKeyboardFocusWithinChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ArrangeEquationsHorizontally() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetMinMaxWidth(double previousWidth, double newWidth) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleInsertItemToLegendCommand(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.EquationListItem GetEquationListItem(global::Quire.Controls.Plots.Presenter.IPlotEquation plotEquation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -22,6 +22,148 @@ namespace Quire.Controls.Plots.Contour.View;
 
 public partial class VisualDataCollection
 {
+    public static readonly global::System.Windows.Input.RoutedCommand SetColorSchemeCommand;
+    private global::Quire.Controls.Plots.Contour.View.ViewModelHelper _viewModelHelper;
+    private global::Quire.Controls.Plots.Contour.Model.IContourPlotModel _model;
+    private static readonly global::System.Type TypeOfThis;
+    private static readonly global::System.Windows.Rect DefaultLogicalRect;
+    private global::System.Windows.Media.Transform _plotRenderTransform = Transform.Identity;
+    public VisualDataCollection(IContourPlotModel model)
+        {
+            _model = model;
+            ModelPropertyChanged("LineStyle");
+            ModelPropertyChanged("ContoursColor");
+            _viewModelHelper = new ViewModelHelper();
+            Action<object> execute = (object param) =>
+            {
+                if ((AssertionE)DebugTools.DevAssert(param is double, null) == AssertionE.Passed)
+                {
+                    SetLineWeight((double)param);
+                }
+            };
+            Action<object> execute2 = (object param) =>
+            {
+                Color? color = null;
+                if (param is SolidColorBrush)
+                {
+                    color = ((SolidColorBrush)param).Color;
+                }
+                else if (param is Color)
+                {
+                    color = (Color)param;
+                }
+                if (color.HasValue)
+                {
+                    SetContoursLineColor(color.Value);
+                }
+                else
+                {
+                    DebugTools.DevAssert(false, null);
+                }
+            };
+            Action<object> execute3 = (object param) =>
+            {
+                EnumHelper.TryCallAction<ColorScheme>(param, SetColorScheme);
+            };
+            _viewModelHelper.HelperCreateCommandBinding(SetColorSchemeCommand, execute3);
+        _viewModelHelper.HelperCreateCommandBinding(global::Quire.Controls.Plots.View.PlotControlBase.ChangeTraceLineCommand, SetContoursLineStyle);
+        _viewModelHelper.HelperCreateCommandBinding(global::Quire.Controls.Plots.View.PlotControlBase.ChangeTraceWeightCommand, execute);
+        _viewModelHelper.HelperCreateCommandBinding(global::Quire.Controls.Plots.View.PlotControlBase.ChangeTraceColorCommand, execute2);
+            _model.PropertyChanged += (object? sender, PropertyChangedEventArgs eArgs) =>
+            {
+                ModelPropertyChanged(eArgs.PropertyName);
+            };
+        }
+
+    private void ModelPropertyChanged(string propertyName)
+    {
+        switch (propertyName)
+        {
+            case "LineStyle":
+                DashStyle = TraceRenderer._TraceLineDictionary[_model.LineStyle];
+                Stroke = ((LineStyle != LineStyle.None) ? new SolidColorBrush(ContoursColor) : null);
+                break;
+            case "ContoursColor":
+                if (LineStyle != LineStyle.None)
+                {
+                    Stroke = new SolidColorBrush(ContoursColor);
+                }
+                break;
+        }
+        if (TypeDescriptor.GetProperties(this)[propertyName] != null)
+        {
+            OnPropertyChanged(propertyName);
+        }
+    }
+
+    private void OnSizeChanged()
+    {
+        if (_isResizing)
+        {
+            PlotRenderTransform = new ScaleTransform(Width / _sizeBeforeResizing.Width, Height / _sizeBeforeResizing.Height);
+        }
+        else
+        {
+            WpfUtils.DoWork(UpdateVisualPoints);
+        }
+    }
+    private global::System.Windows.Size _sizeBeforeResizing;
+    private bool _isResizing;
+    private static readonly global::Quire.Controls.Plots.Contour.Model.ContourLogicalDataCollection DefaultContourLogicalDataCollection;
+    private global::Quire.Controls.Plots.Contour.Model.ContourLogicalDataCollection _contourLogicalData = DefaultContourLogicalDataCollection;
+    public static readonly global::System.Windows.DependencyProperty HeightProperty;
+    public static readonly global::System.Windows.DependencyProperty WidthProperty;
+    private void UpdateVisualPoints() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static readonly global::System.Windows.DependencyProperty LabelVisibilityProperty;
+    private void LogicalDataChanged(global::Quire.Controls.Plots.Contour.Model.ContourLogicalDataCollection newValue, global::Quire.Controls.Plots.Contour.Model.ContourLogicalDataCollection oldValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private void InitializeContourVisualData(ContourLogicalDataCollection value)
+    {
+        int length = value.Length;
+        if (length > 0)
+        {
+            _visualData = new VisualData[length + 1];
+            _visualData[0] = CreateVisualDataRaw(value.BoundingContour);
+            for (int num = 0; num < length; num++)
+            {
+                _visualData[num + 1] = CreateContourVisualData(value.Contours[num]);
+            }
+            PositionLabels();
+        }
+        else
+        {
+            _visualData = new VisualData[0];
+        }
+    }
+
+    private static void HeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        ((VisualDataCollection)(object)d).OnSizeChanged();
+    }
+
+    private static void WidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        ((VisualDataCollection)(object)d).OnSizeChanged();
+    }
+
+    private static void OnLabelVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        VisualDataCollection obj = d as VisualDataCollection;
+        DebugTools.DevAssert(d != null, null);
+        obj.PositionLabels();
+    }
+
+    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+    {
+        return GetEnumerator();
+    }
+    internal void PositionLabels() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static readonly global::System.Windows.DependencyProperty LabelFormatterProperty;
+    private bool _reversed;
+    private global::Quire.Controls.Plots.Contour.View.VisualData[] _visualData = new VisualData[0];
+    private bool _initialized;
+    private global::System.Windows.Media.DashStyle _dashStyle;
+    private global::System.Windows.Media.Brush _stroke;
 
     public bool IsResizing
     {
@@ -124,6 +266,46 @@ public partial class VisualDataCollection
             ((DependencyObject)this).SetValue(LabelFormatterProperty, (object)value);
         }
     }
+    public global::System.Collections.Generic.IEnumerator<global::Quire.Controls.Plots.Contour.View.VisualData> GetEnumerator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private global::Quire.Controls.Plots.Contour.View.VisualData CreateContourVisualData(global::Quire.Controls.Plots.Contour.Model.ContourLogicalData contourLogicalData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    private VisualData CreateVisualDataRaw(ContourLogicalData contourLogicalData)
+    {
+        return new VisualData(contourLogicalData.Points, HorizontalValueToScreen, VerticalValueToScreen);
+    }
+
+    private void FireCollectionReset()
+    {
+        if (CollectionChanged != null)
+        {
+            CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        }
+    }
+
+    public void Add(VisualData item)
+    {
+        throw new NotSupportedException();
+    }
+
+    public void Clear()
+    {
+        throw new NotSupportedException();
+    }
+
+    public bool Contains(VisualData item)
+    {
+        return _visualData.Contains(item, null);
+    }
+
+    public void CopyTo(VisualData[] array, int arrayIndex)
+    {
+        _visualData.CopyTo(array, arrayIndex);
+    }
+
+    public bool Remove(VisualData item)
+    {
+        throw new NotSupportedException();
+    }
 
     public bool Reversed
     {
@@ -144,10 +326,6 @@ public partial class VisualDataCollection
     public int Count => _visualData.Count();
 
     public bool IsReadOnly => true;
-
-    private IValueToScreen VerticalValueToScreen { get; set; }
-
-    private IValueToScreen HorizontalValueToScreen { get; set; }
 
     public DashStyle DashStyle
     {
@@ -216,142 +394,7 @@ public partial class VisualDataCollection
             _model.ContoursColor = value;
         }
     }
-
-    public bool ShowLabels
-    {
-        get
-        {
-            return _model.ShowLabels;
-        }
-        set
-        {
-            _model.ShowLabels = value;
-        }
-    }
-
-    public double LineWeight
-    {
-        get
-        {
-            return _model.LineWeight;
-        }
-        set
-        {
-            _model.LineWeight = value;
-        }
-    }
-
-    private void ModelPropertyChanged(string propertyName)
-    {
-        switch (propertyName)
-        {
-            case "LineStyle":
-                DashStyle = TraceRenderer._TraceLineDictionary[_model.LineStyle];
-                Stroke = ((LineStyle != LineStyle.None) ? new SolidColorBrush(ContoursColor) : null);
-                break;
-            case "ContoursColor":
-                if (LineStyle != LineStyle.None)
-                {
-                    Stroke = new SolidColorBrush(ContoursColor);
-                }
-                break;
-        }
-        if (TypeDescriptor.GetProperties(this)[propertyName] != null)
-        {
-            OnPropertyChanged(propertyName);
-        }
-    }
-
-    private void OnSizeChanged()
-    {
-        if (_isResizing)
-        {
-            PlotRenderTransform = new ScaleTransform(Width / _sizeBeforeResizing.Width, Height / _sizeBeforeResizing.Height);
-        }
-        else
-        {
-            WpfUtils.DoWork(UpdateVisualPoints);
-        }
-    }
-
-    private void InitializeContourVisualData(ContourLogicalDataCollection value)
-    {
-        int length = value.Length;
-        if (length > 0)
-        {
-            _visualData = new VisualData[length + 1];
-            _visualData[0] = CreateVisualDataRaw(value.BoundingContour);
-            for (int num = 0; num < length; num++)
-            {
-                _visualData[num + 1] = CreateContourVisualData(value.Contours[num]);
-            }
-            PositionLabels();
-        }
-        else
-        {
-            _visualData = new VisualData[0];
-        }
-    }
-
-    private static void HeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    {
-        ((VisualDataCollection)(object)d).OnSizeChanged();
-    }
-
-    private static void WidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    {
-        ((VisualDataCollection)(object)d).OnSizeChanged();
-    }
-
-    private static void OnLabelVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-    {
-        VisualDataCollection obj = d as VisualDataCollection;
-        DebugTools.DevAssert(d != null, null);
-        obj.PositionLabels();
-    }
-
-    System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-
-    private VisualData CreateVisualDataRaw(ContourLogicalData contourLogicalData)
-    {
-        return new VisualData(contourLogicalData.Points, HorizontalValueToScreen, VerticalValueToScreen);
-    }
-
-    private void FireCollectionReset()
-    {
-        if (CollectionChanged != null)
-        {
-            CollectionChanged(this, new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
-        }
-    }
-
-    public void Add(VisualData item)
-    {
-        throw new NotSupportedException();
-    }
-
-    public void Clear()
-    {
-        throw new NotSupportedException();
-    }
-
-    public bool Contains(VisualData item)
-    {
-        return _visualData.Contains(item, null);
-    }
-
-    public void CopyTo(VisualData[] array, int arrayIndex)
-    {
-        _visualData.CopyTo(array, arrayIndex);
-    }
-
-    public bool Remove(VisualData item)
-    {
-        throw new NotSupportedException();
-    }
+    public void Initialize(global::Quire.Controls.Plots.Presenter.IValueToScreen horizontalTransformer, global::Quire.Controls.Plots.Presenter.IValueToScreen verticalTransformer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public void UpdateBrushes(Brush[] brushes)
     {
@@ -381,6 +424,37 @@ public partial class VisualDataCollection
         }
     }
 
+    public bool ShowLabels
+    {
+        get
+        {
+            return _model.ShowLabels;
+        }
+        set
+        {
+            _model.ShowLabels = value;
+        }
+    }
+
+    public double LineWeight
+    {
+        get
+        {
+            return _model.LineWeight;
+        }
+        set
+        {
+            _model.LineWeight = value;
+        }
+    }
+    internal global::System.Windows.Input.CommandBindingCollection CommandBindings { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public event global::System.Collections.Specialized.NotifyCollectionChangedEventHandler CollectionChanged;
+    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+    private void SetContoursLineStyle(object parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void SetColorScheme(global::Quire.Controls.Plots.Contour.ColorScheme newColorScheme) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void SetLineWeight(double newLineWeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void SetContoursLineColor(global::System.Windows.Media.Color newLinesColor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
     private void OnPropertyChanged(string propertyName)
     {
         if (PropertyChanged != null)
@@ -388,4 +462,17 @@ public partial class VisualDataCollection
             PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+
+    [global::Quire.Mirror.MirrorOf("Ptc.Controls.Plots.Contour.View.VisualDataCollection+PropertyNames, Ptc.Controls.Plots")]
+    public static partial class PropertyNames
+    {
+        [global::Quire.Mirror.MirrorStub]
+        public const string IsResizing = "IsResizing";
+        [global::Quire.Mirror.MirrorStub]
+        public const string PlotRenderTransform = "PlotRenderTransform";
+    }
+
+    private IValueToScreen VerticalValueToScreen { get; set; }
+
+    private IValueToScreen HorizontalValueToScreen { get; set; }
 }
