@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -2559,4 +2560,263 @@ internal partial class WorksheetViewModel
 
         SetActivePage(item);
     }
+
+    public void HandleCaretLeavesTextArea(IWorksheetControl worksheetControl, CommonRoutedEvents.CaretLeavesTextRegionEventArgs args)
+    {
+        Direction direction = Direction.Down;
+        switch (args.LeavingDirection)
+        {
+            case CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection.Down:
+                direction = Direction.Down;
+                break;
+            case CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection.Up:
+                direction = Direction.Up;
+                break;
+            case CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection.Left:
+                direction = Direction.Left;
+                break;
+            case CommonRoutedEvents.CaretLeavesTextRegionEventArgs.TextAreaLeavingDirection.Right:
+                direction = Direction.Right;
+                break;
+        }
+        DirectionalMoveHandler(direction);
+    }
+
+    private void HandlePagebreaksChanged(object sender, NotifyCollectionChangedEventArgs e)
+    {
+        if (e.Action == NotifyCollectionChangedAction.Add)
+        {
+            e.NewItems.OfType<IWorksheetPageBreak>().Each(SetPagebreakVisualOffset);
+            return;
+        }
+        DebugTools.DevAssert(e.NewItems == null, "Got new items on unsupported action: {0}", e.Action);
+    }
+
+    private void HandleItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
+    {
+        switch (args.Action)
+        {
+            case NotifyCollectionChangedAction.Add:
+                HandleItemsAdded(args.NewItems.OfType<IWhiteboardItem>());
+                break;
+            case NotifyCollectionChangedAction.Remove:
+                HandleItemsRemoved(args.OldItems.OfType<IWhiteboardItem>());
+                break;
+            default:
+                DebugTools.FailAssertion("Unsupported action: {0}", args.Action);
+                break;
+            case NotifyCollectionChangedAction.Move:
+                break;
+        }
+    }
+
+    private void HandleActiveItemChanged(IWhiteboardItem oldItem, IWhiteboardItem newItem)
+    {
+        DeleteItemIfNeeded(oldItem);
+        if (IsContentActive)
+        {
+            UpdateIsRegionBorderShownState();
+            UpdateCalculationButtonStatus();
+            OnPropertyChanged("ActiveItem");
+        }
+        if (oldItem is IWhiteboardItemContainer)
+        {
+            oldItem.PropertyChanged -= HandleActiveContainerPropertyChanged;
+        }
+        if (newItem is IWhiteboardItemContainer)
+        {
+            newItem.PropertyChanged += HandleActiveContainerPropertyChanged;
+        }
+    }
+
+    private void AddItemAtInsertionPointAndActivate(IWhiteboardItem item, string name)
+    {
+        IWhiteboardItemContainer whiteboardItemContainer = ActiveItem as IWhiteboardItemContainer;
+        if (item is IEquationControl equationControl && ((whiteboardItemContainer != null && !(whiteboardItemContainer is CollapsibleAreaControl { ActiveItem: null })) || ActiveSection is HeaderFooterControl))
+        {
+            equationControl.ProhibitInputControl = true;
+        }
+        if (whiteboardItemContainer != null)
+        {
+            whiteboardItemContainer.AddItem(item);
+        }
+        else
+        {
+            // Release IL calls Execute through a local (callvirt); a new(...).Execute() call compiles to call.
+            AddItemAtInsertionPointAndActivateCommand command = new AddItemAtInsertionPointAndActivateCommand(this, item, name);
+            command.Execute();
+        }
+    }
+
+    public IPageNumberControl CreatePageNumberControl(string template)
+    {
+        IPageNumberControl pageNumberControl = ActiveItem as IPageNumberControl;
+        if (pageNumberControl == null)
+        {
+            IEnumerable<IPageNumberControl> source = SelectedItems.OfType<IPageNumberControl>();
+            if (source.Count() > 0)
+            {
+                pageNumberControl = source.First();
+            }
+        }
+        if (pageNumberControl != null)
+        {
+            pageNumberControl.TemplateFormat = template;
+            return pageNumberControl;
+        }
+        pageNumberControl = ControlCreator.CreatePageNumberControl(template, GetCurrentTextFormat());
+        AddItemAtInsertionPointAndActivate(pageNumberControl, "Add PageNumber Region");
+        return pageNumberControl;
+    }
+
+    public ISavedDateControl CreateSavedDateControl(string template)
+    {
+        ISavedDateControl savedDateControl = ActiveItem as ISavedDateControl;
+        if (savedDateControl == null)
+        {
+            IEnumerable<ISavedDateControl> source = SelectedItems.OfType<ISavedDateControl>();
+            if (source.Count() > 0)
+            {
+                savedDateControl = source.First();
+            }
+        }
+        if (savedDateControl != null)
+        {
+            savedDateControl.TemplateFormat = template;
+            return savedDateControl;
+        }
+        savedDateControl = ControlCreator.CreateSavedDateControl(template, GetCurrentTextFormat());
+        AddItemAtInsertionPointAndActivate(savedDateControl, "Add Saved Date Region");
+        return savedDateControl;
+    }
+
+    private void InitializePlotControl(IPlotControl control, string xSExpression, string ySExpression)
+    {
+        control.AddEquations(new XyEquation(xSExpression, ySExpression));
+        control.Width = PageLayout.PageBodyWidth / 2.0;
+        control.Height = control.Width;
+    }
+
+    private void InsertPageBreak(Point location)
+    {
+        // Release IL calls Execute through a local (callvirt); a new(...).Execute() call compiles to call.
+        PageBreakCommand command = new PageBreakCommand(this, location);
+        command.Execute();
+    }
+
+    public IImageControl CreateImageControl(string fileName)
+    {
+        IImageControl imageControl = new ImageControl();
+        imageControl.OriginalImageUri = new Uri(fileName);
+        if (imageControl.OriginalImageUri != null)
+        {
+            AddItemAtInsertionPointAndActivate(imageControl, "Add Image");
+            return imageControl;
+        }
+        return null;
+    }
+
+    public IEquationControl CreateNewEquation(string sExpression)
+    {
+        IEquationControl equationControl = ControlCreator.CreateEquationControl(sExpression);
+        equationControl.ChangeToTextBox += CreateTextRegionFromEquationControl;
+        AddItemAtInsertionPointAndActivate(equationControl, "Add EquationControl");
+        return equationControl;
+    }
+
+    private IEquationControl CreateNewEquation(ICommand command, object parameter)
+    {
+        IEquationControl equationControl = ControlCreator.CreateEquationControl();
+        if (command is EquationInsertCommand { Name: "InsertValue" })
+        {
+            equationControl.ChangeToTextBox += CreateTextRegionFromEquationControl;
+        }
+        if (!VisualHelper.ExecuteCommandOnItem(equationControl, command, parameter))
+        {
+            return null;
+        }
+        AddItemAtInsertionPointAndActivate(equationControl, "Add EquationControl and execute command");
+        if (equationControl.IsCommitted)
+        {
+            equationControl.Commit();
+        }
+        return equationControl;
+    }
+
+    public IPlotControl CreateXYPlotControl()
+    {
+        return CreateXYPlotControl(string.Empty, string.Empty);
+    }
+
+    private IPlotControl CreateXYPlotControl(XyEquation xyEquation)
+    {
+        if (xyEquation != null)
+        {
+            return CreateXYPlotControl(xyEquation.XsExpression, xyEquation.YsExpression);
+        }
+        return CreateXYPlotControl();
+    }
+
+    public IPlotControl CreatePolarPlotControl()
+    {
+        return CreatePolarPlotControl(string.Empty, string.Empty);
+    }
+
+    private IPlotControl CreatePolarPlotControl(XyEquation xyEquation)
+    {
+        if (xyEquation != null)
+        {
+            return CreatePolarPlotControl(xyEquation.XsExpression, xyEquation.YsExpression);
+        }
+        return CreatePolarPlotControl();
+    }
+
+    public IPlotControl<XyzEquation> CreateContourPlotControl()
+    {
+        return CreateContourPlotControl(null, null, null);
+    }
+
+    public IPlotControl<XyzEquation> CreateContourPlotControl(string xSExpression, string ySExpression, string zSExpression)
+    {
+        IPlotControl<XyzEquation> plotControl = ControlCreator.CreateContourPlotControl();
+        InitializeXYZPlotControl(plotControl, xSExpression, ySExpression, zSExpression);
+        AddItemAtInsertionPointAndActivate(plotControl, "Add ContourPlot.");
+        return plotControl;
+    }
+
+    private IPlotControl<XyzEquation> CreateContourPlotControl(XyzEquation xyzEquation)
+    {
+        if (xyzEquation != null)
+        {
+            return CreateContourPlotControl(xyzEquation.XsExpression, xyzEquation.YsExpression, xyzEquation.ZsExpression);
+        }
+        return CreateContourPlotControl();
+    }
+
+    public IPlotControl<XyzEquation> Create3DPlotControl()
+    {
+        return Create3DPlotControl(null, null, null);
+    }
+
+    public IPlotControl<XyzEquation> Create3DPlotControl(string xSExpression, string ySExpression, string zSExpression)
+    {
+        IPlotControl<XyzEquation> plotControl;
+        using (new CommandScope(new CompoundCommand()))
+        {
+            plotControl = ControlCreator.Create3DPlotControl();
+            InitializeXYZPlotControl(plotControl, xSExpression, ySExpression, zSExpression);
+        }
+        AddItemAtInsertionPointAndActivate(plotControl, "Add 3D plot.");
+        return plotControl;
+    }
+
+    private IPlotControl<XyzEquation> Create3DPlotControl(XyzEquation xyzEquation)
+    {
+        if (xyzEquation != null)
+        {
+            return Create3DPlotControl(xyzEquation.XsExpression, xyzEquation.YsExpression, xyzEquation.ZsExpression);
+        }
+        return Create3DPlotControl();
+    }
+
 }

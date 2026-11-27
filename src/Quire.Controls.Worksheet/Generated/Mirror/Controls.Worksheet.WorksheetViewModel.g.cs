@@ -92,29 +92,7 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     public void AddItemAtLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IEquationControl CreateNewEquation(string sExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.IEquationControl CreateNewEquation(global::System.Windows.Input.ICommand command, object parameter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.IImageControl CreateImageControl(string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Worksheet.IPageNumberControl CreatePageNumberControl(string template) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Worksheet.ISavedDateControl CreateSavedDateControl(string template) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void RemoveRegionOfType<T>() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.IPlotControl CreateXYPlotControl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.IPlotControl CreatePolarPlotControl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.IPlotControl<global::Quire.Controls.Plots.XyzEquation> CreateContourPlotControl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.IPlotControl<global::Quire.Controls.Plots.XyzEquation> Create3DPlotControl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.IPlotControl<global::Quire.Controls.Plots.XyzEquation> CreateContourPlotControl(string xSExpression, string ySExpression, string zSExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Plots.IPlotControl<global::Quire.Controls.Plots.XyzEquation> Create3DPlotControl(string xSExpression, string ySExpression, string zSExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.ISpecTableControl CreateSpecTableControl(object dimensions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -145,8 +123,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     protected override void OnPropertyChanged(string propertyName) => base.OnPropertyChanged(propertyName);
     [global::Quire.Mirror.MirrorStub]
     public void OnRequestMoveAndResize(global::Quire.Controls.Worksheet.IWorksheetControl worksheetControl, global::Quire.Controls.Core.ResizeEventMouseArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleCaretLeavesTextArea(global::Quire.Controls.Worksheet.IWorksheetControl worksheetControl, global::Quire.Controls.Core.CommonRoutedEvents.CaretLeavesTextRegionEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ActivateHeader(global::System.Windows.Point pt) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -192,16 +168,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     private bool CanCreateParagraphControl() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void InitializePlotControl(global::Quire.Controls.Plots.IPlotControl control, string xSExpression, string ySExpression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.IPlotControl CreateXYPlotControl(global::Quire.Controls.Plots.XyEquation xyEquation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.IPlotControl CreatePolarPlotControl(global::Quire.Controls.Plots.XyEquation xyEquation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.IPlotControl<global::Quire.Controls.Plots.XyzEquation> CreateContourPlotControl(global::Quire.Controls.Plots.XyzEquation xyzEquation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Plots.IPlotControl<global::Quire.Controls.Plots.XyzEquation> Create3DPlotControl(global::Quire.Controls.Plots.XyzEquation xyzEquation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private bool OverlapsVerticallyWithRegionOfType<T>(global::System.Windows.Point point) where T : global::Quire.Controls.Core.IWhiteboardItem => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool CanPaste() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -209,8 +175,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     private void Paste() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void Evaluate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void AddItemAtInsertionPointAndActivate(global::Quire.Controls.Core.IWhiteboardItem item, string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandlePageWideSizableDeletion(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -223,8 +187,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     public void OnZombieInitializationComplete() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleItemsCollectionChanging(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleItemsCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleItemAddedWithoutNotification(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -241,8 +203,6 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     private void SetEqResizable(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleSelectedItemsChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleActiveItemChanged(global::Quire.Controls.Core.IWhiteboardItem oldItem, global::Quire.Controls.Core.IWhiteboardItem newItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandlePagesCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -288,11 +248,7 @@ internal partial class WorksheetViewModel : global::Quire.Controls.Core.ViewMode
     [global::Quire.Mirror.MirrorStub]
     private void RecreateDocumentAfterPageSizeChange() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void InsertPageBreak(global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void RemovePageBreakForPageResize(global::Quire.Controls.Core.IWorksheetPageBreak pageBreak) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandlePagebreaksChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Size FindSizeLimit(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
