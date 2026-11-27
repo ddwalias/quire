@@ -29,6 +29,9 @@ from merge_lock import held
 import il_merge
 import release_il
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'lint'))
+import lint
+
 
 REEXEC = 'QUIRE_LANE_MERGE_FROM_MAIN'
 
@@ -106,6 +109,16 @@ def tool_tests(lane, base, timeout):
     TESTED.add(tree)
 
 
+def style_lint(lane, base):
+    """Fail before the long IL gate when the branch adds an ILSpy-style local name or an unexplained goto/label
+    (tools/lint/lint.py, a per-file ratchet against the base: existing debt never blocks)."""
+    lint.ROOT = Path(lane)
+    items = lint.regressions(base)
+    if items:
+        lint.report(items)
+        raise RuntimeError('style lint failed (see LINT lines above): rename the locals / comment the gotos and retry')
+
+
 def land(main_dir, tip):
     if git('status', '--porcelain', cwd=main_dir):
         raise RuntimeError('main checkout changed; retry')
@@ -172,6 +185,7 @@ def attempt(args, main_dir, lane, number):
     git('update-ref', pin(args.branch), 'refs/remotes/origin/main')
     rebase(args.branch, pin(args.branch))
     tool_tests(lane, pin(args.branch), args.timeout)
+    style_lint(lane, pin(args.branch))
     receipt = il_merge.ROOT / '.mirror-cache' / f'gate-il-{uuid.uuid4().hex[:12]}'
     args.base, args.apply, args.results = pin(args.branch), False, receipt
     code = il_merge.gate(args)
