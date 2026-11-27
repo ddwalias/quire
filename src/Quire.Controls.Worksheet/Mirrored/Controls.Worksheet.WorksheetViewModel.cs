@@ -1050,11 +1050,12 @@ public global::System.Windows.Thickness NonprintableSpaceButtonPosition
         get => _nonprintableSpaceButtonPosition;
         set
         {
-            if (!(_nonprintableSpaceButtonPosition == value))
+            if (_nonprintableSpaceButtonPosition == value)
             {
-                _nonprintableSpaceButtonPosition = value;
-                OnPropertyChanged("NonprintableSpaceButtonPosition");
+                return;
             }
+            _nonprintableSpaceButtonPosition = value;
+            OnPropertyChanged("NonprintableSpaceButtonPosition");
         }
     }
 
