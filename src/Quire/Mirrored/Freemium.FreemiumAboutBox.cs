@@ -83,7 +83,8 @@ public partial class FreemiumAboutBox
             enumFunctionalityKey = FunctionalitiesLimitationDictionary.GetParentFunctionalityKey(enumFunctionalityKey);
             text = resourceDictionary[enumFunctionalityKey] as string;
         }
-        DebugTools.AssertNotNull(text, $"Could not find the Suitable Resource for {functionalityKey} functionality in the {resourceDictionary.Source}.");
+        // Release IL requires string.Format here; an interpolated string compiles to DefaultInterpolatedStringHandler.
+        DebugTools.AssertNotNull(text, string.Format("Could not find the Suitable Resource for {0} functionality in the {1}.", functionalityKey, resourceDictionary.Source));
         return text;
     }
 
