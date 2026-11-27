@@ -1,5 +1,6 @@
 #nullable disable
 using System.Linq;
+using Quire.Core;
 using Quire.Mirror;
 
 namespace Quire.EquationEditor.SpecTable.Model;
@@ -15,6 +16,8 @@ public partial class SpecTableModel
     internal int CellCount => b__[0].CellCount;
 
     public string SExpression => "(@TABLE " + string.Join(" ", Columns.Select(SpecTableColumn.GetSExpression)) + ")";
+
+    public bool IsEmpty => b__.All(column => column.IsEmpty);
 
     public bool IsExtraDataCellOrEmptyScale(IEquationModel cell)
     {

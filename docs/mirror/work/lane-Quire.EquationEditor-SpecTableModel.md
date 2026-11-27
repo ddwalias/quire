@@ -16,6 +16,12 @@
 
 ## Batch 3 — expressions and wrappers
 
-- Added `SExpression`, `CreateMemento`, and `GetColumnWrapper`; removed their generated stubs.
+- Added `SExpression`, `IsEmpty`, `CreateMemento`, and `GetColumnWrapper`; removed their generated stubs.
+- Release IL report: pending in the lane gate; lint passes.
+- Remaining: other SpecTableModel members and nested/closure types.
+
+## Batch 4 — emptiness query
+
+- Added `IsEmpty` with its predicate; removed its generated stub.
 - Release IL report: pending in the lane gate; lint passes.
 - Remaining: other SpecTableModel members and nested/closure types.
