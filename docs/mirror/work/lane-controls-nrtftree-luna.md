@@ -13,3 +13,10 @@
 - Owner: luna-rtf; branch `feature/luna-equationcontrol-round4`.
 - Recovered the original Release IL from Mathcad and implemented `ApplyBackgroundColor`, reusing the first `SolidColorBrush` local for the optional border brush and preserving repeated `Color` property reads.
 - Release IL: Core PASS, 3,432 checked (`.mirror-cache/release-il-8c3c07ed114e/release-il.json`). `PrepareRtf` remains parked.
+
+## Survey follow-up — Engine.Scan
+
+- Owner: luna-rtf; branch `feature/luna-equationcontrol-round4`.
+- Read original Release IL with `python tools/reference/reference.py Engine.Scan --assembly mcfront12 --il`. The implementation attempt was reverted after `.mirror-cache/release-il-d6802128af6b/release-il.json` reported 33 mismatching methods.
+- Blocker: the C# `Quire.Engine.Native` target does not reproduce the original C++/CLI `call`/`callvirt`, constructor field-store order before `base()`, `.maxstack`, delegate comparison, and `initlocals` shapes. Per maintainer direction, do not claim other `Quire.Engine.Native` types.
+- Kept local for the combined landing: exact `EquationControl.GetImeWindowPosition` and `RtfHelper.ApplyBackgroundColor`; their passing reports are recorded above and in `lane-quire-controls-equationcontrol.md`.
