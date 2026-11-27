@@ -261,6 +261,7 @@ static string ParseInterfaceModuleName(string interfaceText)
         .Select(line => line.Trim()).Where(line => line.Length > 0).ToList();
     if (declarations.Any(line => !line.StartsWith("import ", StringComparison.Ordinal)
         && !line.StartsWith("data ", StringComparison.Ordinal)
+        && !Regex.IsMatch(line, @"\Ainfix(?:l|r)?\s+[0-9]+\s+.+;\z", RegexOptions.CultureInvariant)
         && !line.StartsWith("|", StringComparison.Ordinal)
         && !line.Contains(" :: ", StringComparison.Ordinal)))
         throw new InvalidDataException("Interface-only sources support imports, data declarations, and signatures only.");

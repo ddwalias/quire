@@ -16,7 +16,9 @@ CACHE = ROOT / ".mirror-cache/mpl-interface-emitter"
 COMPILER_OUT = CACHE / "compiler"
 AUDIT_OUT = CACHE / "method-audit"
 MODULES = ["EfiAffine", "EfiFourier", "EfiSpecial", "EfiFinance", "EfiBessel",
-           "EfiSixsigma", "EfiData", "EfiIO", "EfiWavelets", "EfiSignal", "EfiImage", "EfiStatistics", "McdEfi"]
+           "EfiSixsigma", "EfiData", "EfiIO", "EfiWavelets", "EfiSignal", "EfiImage", "EfiStatistics", "McdEfi",
+           "Mpl"]
+PROJECTS = {"Mpl": "Quire.MplModule"}
 ATTRIBUTE = re.compile(
     r"\.custom instance void \[[^]]+\]([^\s]+)::\.ctor\(string\) = \(\s*((?:[0-9a-fA-F]{2}\s*)+)\)", re.S)
 
@@ -68,7 +70,7 @@ class InterfaceModuleTests(unittest.TestCase):
         compiler = COMPILER_OUT / "Quire.Mpl.Compiler.dll"
         for module in MODULES:
             source = SOURCES / f"{module}.mpl"
-            project = f"Quire.{module}"
+            project = PROJECTS.get(module, f"Quire.{module}")
             run("dotnet", str(compiler), "--interface", str(source), str(OUTPUT / f"{project}.dll"),
                 str(INSTALL), project)
         run("dotnet", "build", "tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj",
@@ -80,7 +82,7 @@ class InterfaceModuleTests(unittest.TestCase):
                   if unit.get("language") == "Mpl"}
         auditor = AUDIT_OUT / "Quire.Tools.MethodAudit.dll"
         for module in MODULES:
-            project = f"Quire.{module}"
+            project = PROJECTS.get(module, f"Quire.{module}")
             original_path = INSTALL / mapped[module.lower()]["original"]["file"]
             candidate_path = OUTPUT / f"{project}.dll"
             original_il = run("ilspycmd", "-il", str(original_path))
