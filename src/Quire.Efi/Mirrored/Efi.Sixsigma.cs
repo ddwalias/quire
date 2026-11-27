@@ -1070,4 +1070,60 @@ public partial struct Sixsigma
         return doeLabel.coded2Real(matVal2);
     }
 
+    public static MatVal MonteCarlo(object arg1, object arg2, object arg3, object arg4, object arg5)
+    {
+        Function function = arg1 as Function;
+        if (function == null)
+        {
+            AppException.Raise("must be function", 1u);
+        }
+        int nsamples = (int)Utl.as_pint(arg2, 2u);
+        if (!DimVal.IsDimOf(arg2, Dim.identity))
+        {
+            AppException.Raise("must be dimless", 2u);
+        }
+        MatVal matVal = Utl.as_matrix(arg3, 3u);
+        if (matVal.HasImag)
+        {
+            AppException.Raise("must be real", 3u);
+        }
+        if (matVal.Cols != 3)
+        {
+            AppException.Raise("array must have three columns", 3u);
+        }
+        MonteCarlo monteCarlo = null;
+        if (arg4 == null && arg5 == null)
+        {
+            monteCarlo = new MonteCarlo(function, nsamples, matVal);
+        }
+        else if (arg4 != null && arg5 == null)
+        {
+            monteCarlo = new MonteCarlo(function, nsamples, matVal, Utl.as_matrix(arg4, 4u));
+        }
+        else
+        {
+            monteCarlo = new MonteCarlo(function, nsamples, matVal, Utl.as_matrix(arg4, 4u), Utl.as_matrix(arg5, 5u));
+        }
+        return monteCarlo.Sample_();
+    }
+
+    public static MatVal Pareto(object arg1)
+    {
+        MatVal matVal = new MatVal(Utl.as_matrix(arg1, 1u));
+        if (matVal.HasImag)
+        {
+            AppException.Raise("must be real", 1u);
+        }
+        if (matVal.Cols != 2)
+        {
+            AppException.Raise("must be matrix of 2 columns", 2u);
+        }
+        if (!Utl.as_rmatrix(matVal.Column(1), 1u, "values in 2nd column must be positive").IsUniformScalar)
+        {
+            AppException.Raise("data must be dimless or uniform", 1u);
+        }
+        Plots plots = new Plots();
+        return plots.ParetoPlot(matVal);
+    }
+
 }

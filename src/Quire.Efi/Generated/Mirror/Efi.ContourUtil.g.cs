@@ -14,8 +14,6 @@ public partial class ContourUtil
     [global::Quire.Mirror.MirrorStub]
     private double interpGridData(double x, double y, global::Quire.Efi.glMesh grid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private double shape_Qd(double s, double t, int node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private double get_nearest_in_vertex_value(global::Quire.Efi.shpPoint3D p0, global::Quire.Efi.shpPoint3D p1, global::Quire.Efi.shpPoint3D p2, global::Quire.Efi.shpPoint3D p3, global::Quire.Efi.shpPoint3D p4, global::Quire.Efi.shpPoint3D pi, global::Quire.Efi.glMesh grid) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Mcd.NumVal BGpoint(global::System.Collections.Generic.List<global::System.Collections.Generic.List<global::Quire.Efi.shpPoint3D>> allcontours, global::System.Collections.Generic.List<int> bCntrIdx, global::Quire.Efi.LRect3 rect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

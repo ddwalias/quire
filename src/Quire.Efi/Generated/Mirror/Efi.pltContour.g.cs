@@ -12,7 +12,5 @@ namespace Quire.Efi;
 internal partial class pltContour
 {
     [global::Quire.Mirror.MirrorStub]
-    private void defaultLevels() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private int traceInterior(int col_, int row_, int levelNum, global::Quire.Efi.pltGridCell cell, global::Quire.Efi.BoolMap gridMap, bool isSecond) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

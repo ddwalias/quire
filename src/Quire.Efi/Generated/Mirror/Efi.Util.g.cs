@@ -18,39 +18,11 @@ internal static partial class Util
     [global::Quire.Mirror.MirrorStub]
     internal static readonly global::Quire.Mcd.NumVal VAL_NEG_MARKER;
     [global::Quire.Mirror.MirrorStub]
-    internal static bool FuzzyEquals(double val, double tst) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static bool SameSign(double a, double b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static double Round(double val, double delta) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static double ToDouble(object obj) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal static double ToDouble(object obj, int paramno) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static object Evaluate(global::Quire.Mpl.Run.Function lambda) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static object Evaluate(global::Quire.Mpl.Run.Function lambda, object arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static object Evaluate(global::Quire.Mpl.Run.Function lambda, object[] args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static double Evaluate(global::Quire.Mpl.Run.Function lambda, double arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static bool IsPureReal(global::Quire.Mcd.NumVal num) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static void CheckDim(object val, int tag, ref global::Quire.Mcd.Dim dim) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static double CheckValue(object val, int tag, ref global::Quire.Mcd.Dim dim) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static double CheckLimit(object o, bool isAuto, ref global::Quire.Mcd.Dim dim) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static bool IsFinite(double x) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static bool IsBad(double real, bool log) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static double Median(double[] values, int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static void FixOutliers(double[] values, int n, ref double lowerBound, ref double upperBound) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static void FixOutliers(double[] values, int n, ref double lowerBound, ref double upperBound, out double median) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -105,4 +105,21 @@ public partial class ContourUtil
         return 1;
     }
 
+    private double shape_Qd(double s, double t, int node)
+    {
+        if (node == 0)
+        {
+            return (1.0 - s) * (1.0 - t) / 4.0;
+        }
+        if (node == 1)
+        {
+            return (1.0 + s) * (1.0 - t) / 4.0;
+        }
+        if (node == 2)
+        {
+            return (1.0 + s) * (1.0 + t) / 4.0;
+        }
+        return (1.0 - s) * (1.0 + t) / 4.0;
+
+    }
 }

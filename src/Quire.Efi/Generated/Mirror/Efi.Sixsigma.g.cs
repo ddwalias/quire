@@ -12,10 +12,6 @@ namespace Quire.Efi;
 [global::System.Runtime.InteropServices.StructLayout(global::System.Runtime.InteropServices.LayoutKind.Sequential, Size = 1)]
 public partial struct Sixsigma
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.MatVal MonteCarlo(object arg1, object arg2, object arg3, object arg4, object arg5) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.Mcd.MatVal Pareto(object arg1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Efi.Sixsigma+polyfit_del, efisixsigma_")]
     public delegate global::Quire.Mcd.NumVal polyfit_del(object arg);

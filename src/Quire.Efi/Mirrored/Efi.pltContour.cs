@@ -250,4 +250,22 @@ internal partial class pltContour
         return true;
     }
 
+    private void defaultLevels()
+    {
+        myLevels = new double[myNlevels];
+        double zMin = myZmin;
+        double levelStep = (myZmax - zMin) / (double)(myNlevels - 1);
+        double zeroTol = levelStep * 0.001;
+        double level;
+        for (int i = 0; i < myNlevels; i++)
+        {
+            level = zMin + (double)i * levelStep;
+            if (Math.Abs(level) < zeroTol)
+            {
+                level = 0.0;
+            }
+            myLevels[i] = level;
+        }
+
+    }
 }

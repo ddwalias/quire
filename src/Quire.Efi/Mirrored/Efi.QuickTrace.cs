@@ -230,4 +230,59 @@ internal partial class QuickTrace
         double ysing = Util.MARKER;
         return HasSingularityX(new List<Pair<double>>(array), 3, ref ysing);
     }
+
+    private void AdjustDomain(AxisOptions axis, ref double xLow, ref double xHigh)
+    {
+        double t;
+        for (int i = 0; i < 2; i++)
+        {
+            double step = (xHigh - xLow) / (double)(Size - 1);
+            bool lowMoved = false;
+            if (axis.isLLAuto() && GetFirstValidX(xLow, step, out t) >= 0 && t < xHigh - step)
+            {
+                xLow = t;
+                lowMoved = true;
+            }
+            bool highMoved = false;
+            if (axis.isULAuto() && GetFirstValidX(xHigh, -step, out t) >= 0 && t >= xLow + step)
+            {
+                xHigh = t;
+                highMoved = true;
+            }
+            if (!lowMoved && !highMoved)
+            {
+                break;
+            }
+        }
+    }
+
+    public bool HasSingularityY(List<Pair<double>> trace, int i, ref double xsing)
+    {
+        if (i < 3 || trace[i].y == -Util.MARKER || trace[i - 1].y == -Util.MARKER || trace[i - 2].y == -Util.MARKER || trace[i - 3].y == -Util.MARKER)
+        {
+            return false;
+        }
+        return HasSingularity(new ArraySegment<Pair<double>>(new Pair<double>[4]
+        {
+            new Pair<double>(trace[i - 3].x, trace[i - 3].y),
+            new Pair<double>(trace[i - 2].x, trace[i - 2].y),
+            new Pair<double>(trace[i - 1].x, trace[i - 1].y),
+            new Pair<double>(trace[i].x, trace[i].y)
+        }), lambdaY, SAMPLE_DEPTH, ref xsing);
+    }
+
+    public bool HasSingularityX(List<Pair<double>> trace, int i, ref double ysing)
+    {
+        if (i < 3 || trace[i].x == -Util.MARKER || trace[i - 1].x == -Util.MARKER || trace[i - 2].x == -Util.MARKER || trace[i - 3].x == -Util.MARKER)
+        {
+            return false;
+        }
+        return HasSingularity(new ArraySegment<Pair<double>>(new Pair<double>[4]
+        {
+            new Pair<double>(trace[i - 3].y, trace[i - 3].x),
+            new Pair<double>(trace[i - 2].y, trace[i - 2].x),
+            new Pair<double>(trace[i - 1].y, trace[i - 1].x),
+            new Pair<double>(trace[i].y, trace[i].x)
+        }), lambdaX, SAMPLE_DEPTH, ref ysing);
+    }
 }

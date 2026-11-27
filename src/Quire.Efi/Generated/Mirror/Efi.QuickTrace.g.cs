@@ -12,13 +12,7 @@ namespace Quire.Efi;
 internal partial class QuickTrace : global::Quire.Efi.Trace
 {
     [global::Quire.Mirror.MirrorStub]
-    private void AdjustDomain(global::Quire.Efi.AxisOptions axis, ref double xLow, ref double xHigh) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IEnumerator<global::Quire.Efi.Pair<object>> PointEnumerator(global::Quire.Efi.Engine plot) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override bool AddPoint(double x, double y, global::Quire.Efi.AxisOptions X, global::Quire.Efi.AxisOptions Y) => base.AddPoint(x, y, X, Y);
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasSingularityY(global::System.Collections.Generic.List<global::Quire.Efi.Pair<double>> trace, int i, ref double xsing) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasSingularityX(global::System.Collections.Generic.List<global::Quire.Efi.Pair<double>> trace, int i, ref double ysing) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
