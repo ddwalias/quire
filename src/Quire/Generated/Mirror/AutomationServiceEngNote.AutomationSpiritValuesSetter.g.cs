@@ -11,6 +11,4 @@ namespace Quire.AutomationServiceEngNote;
 [global::Quire.Mirror.MirrorOf("Spirit.AutomationServiceEngNote.AutomationSpiritValuesSetter, MathcadPrime")]
 public partial class AutomationSpiritValuesSetter : global::Quire.EngNotebook.Automation.IMathcadPrimeValuesSetter
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EngNotebook.Automation.IMathcadPrimeSetValueResults SetValues(int secondsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

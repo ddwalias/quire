@@ -1,3 +1,5 @@
+using System.Windows.Threading;
+
 namespace Quire.AutomationServiceEngNotePlus;
 
 public partial class AutomationSpiritValuesSetter
@@ -51,6 +53,20 @@ public partial class AutomationSpiritValuesSetter
         catch
         {
         }
+    }
+
+    public global::Quire.EngNotebookPlus.Automation.IMathcadPrimeSetValueResults SetValues(int secondsArg)
+    {
+        try
+        {
+            DelegateFunction0<global::Quire.Controls.Core.IORegions.ISetValueResults> methodDelegate = () => DoSetValues(secondsArg);
+            return (MathcadPrimeComServerManager.Instance.InvokeDelegate(methodDelegate, (DispatcherPriority)9) is global::Quire.Controls.Core.IORegions.ISetValueResults setValuesResults) ? new AutomationSpiritSetValueResults(setValuesResults) : null;
+        }
+        catch
+        {
+        }
+
+        return null;
     }
 
     private global::Quire.Controls.Core.IORegions.ISetValueResults DoSetValues(int seconds)

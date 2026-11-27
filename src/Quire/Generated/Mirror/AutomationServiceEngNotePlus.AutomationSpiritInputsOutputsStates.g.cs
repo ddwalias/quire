@@ -11,16 +11,4 @@ namespace Quire.AutomationServiceEngNotePlus;
 [global::Quire.Mirror.MirrorOf("Spirit.AutomationServiceEngNotePlus.AutomationSpiritInputsOutputsStates, MathcadPrime")]
 public partial class AutomationSpiritInputsOutputsStates : global::Quire.EngNotebookPlus.Automation.IMathcadPrimeInputsOutputsStates
 {
-    [global::Quire.Mirror.MirrorStub]
-    public int ScalarInputsCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int ScalarOutputsCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public int GetInputScalarStateByIndex(int indexArg, out string aliasArg, out double valueArg, out string unitsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int GetOutputScalarStateByIndex(int indexArg, out string aliasArg, out double valueArg, out string unitsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int GetInputScalarStateByAlias(string aliasArg, out double valueArg, out string unitsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int GetOutputScalarStateByAlias(string aliasArg, out double valueArg, out string unitsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

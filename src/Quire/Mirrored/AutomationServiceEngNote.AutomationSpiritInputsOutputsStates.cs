@@ -1,17 +1,122 @@
+using System.Collections.Generic;
 using System.Linq;
+using Quire.Controls.Core.IORegions;
+
 namespace Quire.AutomationServiceEngNote;
 
 public partial class AutomationSpiritInputsOutputsStates
 {
-    private readonly global::Quire.Controls.Core.IORegions.IInputOutputItemsStates _itemsWithStates;
-    private global::System.Collections.Generic.IDictionary<string, global::Quire.Controls.Core.IORegions.IScalarItemWithOriginalState> _inputAliasToItemStatesMap;
-    private global::System.Collections.Generic.IDictionary<string, global::Quire.Controls.Core.IORegions.IScalarItem> _outputAliasToItemStatesMap;
+    private readonly IInputOutputItemsStates _itemsWithStates;
+    private IDictionary<string, IScalarItemWithOriginalState> _inputAliasToItemStatesMap;
+    private IDictionary<string, IScalarItem> _outputAliasToItemStatesMap;
 
-    public AutomationSpiritInputsOutputsStates(global::Quire.Controls.Core.IORegions.IInputOutputItemsStates itemsWithValues) { _itemsWithStates = itemsWithValues; }
+    public AutomationSpiritInputsOutputsStates(IInputOutputItemsStates itemsWithValues) { _itemsWithStates = itemsWithValues; }
 
-    private global::Quire.Controls.Core.IORegions.IScalarItemWithOriginalState GetInputItem(int idx, out string alias)
+    public int ScalarInputsCount
     {
-        global::Quire.Controls.Core.IORegions.IScalarItemWithOriginalState item;
+        get
+        {
+            try
+            {
+                return (_itemsWithStates != null && _itemsWithStates.InputItems != null) ? _itemsWithStates.InputItems.Count : 0;
+            }
+            catch
+            {
+            }
+
+            return 0;
+        }
+    }
+
+    public int ScalarOutputsCount
+    {
+        get
+        {
+            try
+            {
+                return (_itemsWithStates != null && _itemsWithStates.OutputItems != null) ? _itemsWithStates.OutputItems.Count : 0;
+            }
+            catch
+            {
+            }
+
+            return 0;
+        }
+    }
+
+    public int GetInputScalarStateByIndex(int indexArg, out string aliasArg, out double valueArg, out string unitsArg)
+    {
+        IOManagerErrorCode result;
+        try
+        {
+            result = GetInputItem(indexArg, out aliasArg).GetScalarState(out valueArg, out unitsArg);
+        }
+        catch
+        {
+            result = IOManagerErrorCode.UnknownError;
+            aliasArg = null;
+            valueArg = double.NaN;
+            unitsArg = null;
+        }
+
+        return (int)result;
+    }
+
+    public int GetOutputScalarStateByIndex(int indexArg, out string aliasArg, out double valueArg, out string unitsArg)
+    {
+        IOManagerErrorCode result;
+        try
+        {
+            result = GetOutputItem(indexArg, out aliasArg).GetScalarState(out valueArg, out unitsArg);
+        }
+        catch
+        {
+            result = IOManagerErrorCode.UnknownError;
+            aliasArg = null;
+            valueArg = double.NaN;
+            unitsArg = null;
+        }
+
+        return (int)result;
+    }
+
+    public int GetInputScalarStateByAlias(string aliasArg, out double valueArg, out string unitsArg)
+    {
+        IOManagerErrorCode result;
+        try
+        {
+            result = GetInputItem(aliasArg).GetScalarState(out valueArg, out unitsArg);
+        }
+        catch
+        {
+            result = IOManagerErrorCode.UnknownError;
+            valueArg = double.NaN;
+            unitsArg = null;
+        }
+
+        return (int)result;
+    }
+
+    public int GetOutputScalarStateByAlias(string aliasArg, out double valueArg, out string unitsArg)
+    {
+        IOManagerErrorCode result;
+        try
+        {
+            result = GetOutputItem(aliasArg).GetScalarState(out valueArg, out unitsArg);
+        }
+        catch
+        {
+            result = IOManagerErrorCode.UnknownError;
+            valueArg = double.NaN;
+            unitsArg = null;
+        }
+
+        return (int)result;
+    }
+
+    private IScalarItemWithOriginalState GetInputItem(int idx, out string alias)
+    {
+        IScalarItemWithOriginalState item;
         if (idx >= 0 && idx < ScalarInputsCount)
         {
             item = _itemsWithStates.InputItems[idx];
@@ -26,9 +131,9 @@ public partial class AutomationSpiritInputsOutputsStates
         return item;
     }
 
-    private global::Quire.Controls.Core.IORegions.IScalarItem GetOutputItem(int idx, out string alias)
+    private IScalarItem GetOutputItem(int idx, out string alias)
     {
-        global::Quire.Controls.Core.IORegions.IScalarItem item;
+        IScalarItem item;
         if (idx >= 0 && idx < ScalarOutputsCount)
         {
             item = _itemsWithStates.OutputItems[idx];
@@ -43,7 +148,7 @@ public partial class AutomationSpiritInputsOutputsStates
         return item;
     }
 
-    private global::Quire.Controls.Core.IORegions.IScalarItemWithOriginalState GetInputItem(string alias)
+    private IScalarItemWithOriginalState GetInputItem(string alias)
     {
         if (_inputAliasToItemStatesMap == null && _itemsWithStates.InputItems.Any())
         {
@@ -58,7 +163,7 @@ public partial class AutomationSpiritInputsOutputsStates
         return _inputAliasToItemStatesMap[alias];
     }
 
-    private global::Quire.Controls.Core.IORegions.IScalarItem GetOutputItem(string alias)
+    private IScalarItem GetOutputItem(string alias)
     {
         if (_outputAliasToItemStatesMap == null && _itemsWithStates.OutputItems.Any())
         {
