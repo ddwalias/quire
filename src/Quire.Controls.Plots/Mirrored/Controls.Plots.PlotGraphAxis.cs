@@ -52,27 +52,92 @@ public abstract partial class PlotGraphAxis
 
     protected PlotGraphAxis(global::Quire.Controls.Plots.EquationList equationList, int defaultTickMarks, double defaultTickMagnitudeThreshold) { }
 
-    internal void FireShowGridLinesChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal void FireShowGridLinesChanged()
+    {
+        // Read the event once so the null check and the invocation use the same delegate.
+        Action showGridLinesChanged = ShowGridLinesChanged;
+        if (showGridLinesChanged != null)
+        {
+            showGridLinesChanged();
+        }
+        FireChanged();
+    }
 
-    internal void FireTickMarksChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal void FireTickMarksChanged()
+    {
+        // Read the event once so the null check and the invocation use the same delegate.
+        Action tickMarksChanged = TickMarksChangedEvent;
+        if (tickMarksChanged != null)
+        {
+            tickMarksChanged();
+        }
+    }
 
-    internal void GridLineColorPropertyChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal void GridLineColorPropertyChanged()
+    {
+        FireChanged();
+    }
 
     protected override void HookToViewModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private void OnEndExpressionEqnRequestFocus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnEndExpressionEqnRequestFocus()
+    {
+        ViewModel.LimitEquationRequestFocus();
+        ActivateEndLimitEditor(false);
+    }
 
-    private void OnSecondTickExpressionEqnRequestFocus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnSecondTickExpressionEqnRequestFocus()
+    {
+        ViewModel.LimitEquationRequestFocus();
+        ActivateSecondTickLimitEditor(false);
+    }
 
-    private void OnStartExpressionEqnRequestFocus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnStartExpressionEqnRequestFocus()
+    {
+        ViewModel.LimitEquationRequestFocus();
+        ActivateStartLimitEditor(false);
+    }
 
     protected override void UnhookFromViewModel() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public bool CanTraverse(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public bool CanTraverse(global::System.Windows.Input.FocusNavigationDirection direction)
+    {
+        if (direction != global::System.Windows.Input.FocusNavigationDirection.Next)
+        {
+            return StartExpressionEqn.IsKeyboardFocusWithin;
+        }
+        return EndExpressionEqn.IsKeyboardFocusWithin;
+    }
 
-    public void HandleTraverse(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void HandleTraverse(global::System.Windows.Input.FocusNavigationDirection direction)
+    {
+        if (direction == global::System.Windows.Input.FocusNavigationDirection.Next)
+        {
+            if (Orientation == global::System.Windows.Controls.Orientation.Horizontal)
+            {
+                OnNavigateLeft(this, null);
+            }
+            else
+            {
+                OnNavigateUp(this, null);
+            }
+            return;
+        }
+        if (Orientation == global::System.Windows.Controls.Orientation.Horizontal)
+        {
+            OnNavigateRight(this, null);
+        }
+        else
+        {
+            OnNavigateDown(this, null);
+        }
+    }
 
-    public virtual double GetPerpendicularAxisPositionRatio() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual double GetPerpendicularAxisPositionRatio()
+    {
+        DebugTools.DevAssert(false);
+        return 0.5;
+    }
 
     [global::Quire.Mirror.MirrorStub]
     [global::Quire.Mirror.MirrorBlocked("auto-property layout placeholder")]
@@ -80,27 +145,71 @@ public abstract partial class PlotGraphAxis
 
     private void BindCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private void OnNavigateDown(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnNavigateDown(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        ExpressionEqnNavigateOffOfEquation(global::Quire.Wpf.WpfUtils.GetFocusedAncestorOfTypeElement<EquationControl>(this, false), Direction.Down, false);
+    }
 
-    private void OnNavigateUp(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnNavigateUp(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        ExpressionEqnNavigateOffOfEquation(global::Quire.Wpf.WpfUtils.GetFocusedAncestorOfTypeElement<EquationControl>(this, false), Direction.Up, false);
+    }
 
-    private void OnNavigateRight(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnNavigateRight(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        ExpressionEqnNavigateOffOfEquation(global::Quire.Wpf.WpfUtils.GetFocusedAncestorOfTypeElement<EquationControl>(this, false), Direction.Right, false);
+    }
 
-    private void OnNavigateLeft(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnNavigateLeft(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        ExpressionEqnNavigateOffOfEquation(global::Quire.Wpf.WpfUtils.GetFocusedAncestorOfTypeElement<EquationControl>(this, false), Direction.Left, false);
+    }
 
-    private void HandleActiveEquationChanged(global::Quire.Controls.Plots.Presenter.IPlotEquation equation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleActiveEquationChanged(global::Quire.Controls.Plots.Presenter.IPlotEquation equation)
+    {
+        if (ActiveEquationChanged != null)
+        {
+            ActiveEquationChanged(equation);
+        }
+    }
 
-    private void HandleEquationRemoved(global::Quire.Controls.Plots.Presenter.IPlotEquation equation, int deletedItemIndex, int priviousItemIndex, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleEquationRemoved(global::Quire.Controls.Plots.Presenter.IPlotEquation equation, int deletedItemIndex, int priviousItemIndex, global::Quire.Direction direction)
+    {
+        if (EquationRemoved != null)
+        {
+            EquationRemoved(equation, deletedItemIndex, priviousItemIndex, direction);
+        }
+    }
 
-    private void HandleEquationAdded(int index, int previousIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleEquationAdded(int index, int previousIndex)
+    {
+        if (RequestAddEquation != null)
+        {
+            RequestAddEquation(index, previousIndex);
+        }
+    }
 
-    public void OnNumberFormatInitialized(global::Quire.Controls.Core.NumberFormat numberFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void OnNumberFormatInitialized(global::Quire.Controls.Core.NumberFormat numberFormat)
+    {
+        DebugTools.DevAssert(numberFormat != null);
+        DisplayNumberFormat = numberFormat.Clone();
+    }
 
     private global::System.Action<double> _legendWidthChanged;
 
     event global::System.Action<double> global::Quire.Controls.Plots.Presenter.IPlotAxisView.LegendWidthChanged { add { } remove { } }
 
-    private void EquationListSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void EquationListSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e)
+    {
+        if (e.PreviousSize.Width != e.NewSize.Width)
+        {
+            LegendPrevWidth = EquationList.ActualWidth;
+            if (_legendWidthChanged != null)
+            {
+                _legendWidthChanged(e.NewSize.Width);
+            }
+        }
+    }
 
     private bool HasEquationList() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -114,9 +223,32 @@ public abstract partial class PlotGraphAxis
 
     internal void SetLegendWidthWhenLayoutReady() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private bool CanSetLegendWidth(double width) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private bool CanSetLegendWidth(double width)
+    {
+        if (HasEquationList())
+        {
+            return width != 0.0;
+        }
+        return false;
+    }
 
-    private void InternalSetLegendWidth(double width) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void InternalSetLegendWidth(double width)
+    {
+        if (!CanSetLegendWidth(width))
+        {
+            return;
+        }
+        PlotControl plotControl = global::Quire.Wpf.WpfUtils.TryFindVisualAncestor<PlotControl>(this, false);
+        if (DebugTools.AssertNotNull(plotControl).Passed)
+        {
+            if (global::Quire.Controls.Core.Serialization.SerializationHelperUtils.IsConvertedFromMathcad14(plotControl) && ShouldArrangeConvertedEquationsHorizontally())
+            {
+                EquationList.ArrangeEquationsHorizontally();
+                return;
+            }
+            EquationList.Width = width;
+        }
+    }
 
     protected virtual bool ShouldArrangeConvertedEquationsHorizontally() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -208,9 +340,15 @@ public abstract partial class PlotGraphAxis
 
     public global::Quire.Controls.Plots.Presenter.IPlotEquation this[int index] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 
-    public double Screen2Point(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public double Screen2Point(double value)
+    {
+        return (value - GetAxisStartPosition()) / (GetAxisEndPosition() - GetAxisStartPosition()) * (LinearizedEnd - LinearizedStart) + LinearizedStart;
+    }
 
-    public double Point2Screen(double offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public double Point2Screen(double offset)
+    {
+        return Helper.Point2Screen(offset);
+    }
 
     public virtual global::Quire.Controls.Plots.PlotGraphAxis.Point2ScreenHelper Helper { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 
@@ -232,7 +370,11 @@ public abstract partial class PlotGraphAxis
     [global::Quire.Mirror.MirrorBlocked("auto-property layout placeholder")]
     protected double[] TickmarksPattern { get; set; }
 
-    public void SetTickmarkPattern(double startGap, double[] pattern) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SetTickmarkPattern(double startGap, double[] pattern)
+    {
+        TickmarksStartGap = startGap;
+        TickmarksPattern = pattern;
+    }
 
     [global::Quire.Mirror.MirrorStub]
     [global::Quire.Mirror.MirrorBlocked("auto-property layout placeholder")]
@@ -284,7 +426,10 @@ public abstract partial class PlotGraphAxis
 
     private static void StartChanged(global::System.Windows.DependencyObject dependencyObject, global::System.Windows.DependencyPropertyChangedEventArgs arguments) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    protected virtual void HandleStartChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void HandleStartChanged()
+    {
+        FirePropertyChanged("StartValue");
+    }
 
     public static readonly global::System.Windows.DependencyProperty StartProperty;
 
@@ -294,7 +439,10 @@ public abstract partial class PlotGraphAxis
 
     private static void EndChanged(global::System.Windows.DependencyObject dependencyObject, global::System.Windows.DependencyPropertyChangedEventArgs arguments) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    protected virtual void HandleEndChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void HandleEndChanged()
+    {
+        FirePropertyChanged("EndValue");
+    }
 
     public static readonly global::System.Windows.DependencyProperty EndProperty;
 
@@ -314,7 +462,18 @@ public abstract partial class PlotGraphAxis
 
     private static void LabelsChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    protected virtual void HandleLabelChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void HandleLabelChanged()
+    {
+        if (!IsDiscrete)
+        {
+            _firstLabel.Content = Labels[0];
+            _lastLabel.Content = Labels[Labels.Length - 1];
+            if (Labels.Length > 1)
+            {
+                _secondLabel.Content = Labels[1];
+            }
+        }
+    }
 
     public static readonly global::System.Windows.DependencyProperty LabelsProperty;
 
@@ -332,7 +491,10 @@ public abstract partial class PlotGraphAxis
 
     private static void DiscretePropertyChanged(global::System.Windows.DependencyObject dependencyObject, global::System.Windows.DependencyPropertyChangedEventArgs arguments) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    protected virtual void HandleDiscreteChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void HandleDiscreteChanged()
+    {
+
+    }
 
     public static readonly global::System.Windows.DependencyProperty IsDiscreteProperty;
 
@@ -352,7 +514,13 @@ public abstract partial class PlotGraphAxis
 
     private void RegisterHandleTickmarksFormattingChanged(global::Quire.Controls.Core.NumberFormat oldFormat, global::Quire.Controls.Core.NumberFormat newFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private void HandleTickmarksFormattingChanged(string propertyName, object newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleTickmarksFormattingChanged(string propertyName, object newValue)
+    {
+        if (NumberFormatChanged != null)
+        {
+            NumberFormatChanged(DisplayNumberFormat, IsDisplayNumberFormatLocal);
+        }
+    }
 
     public static readonly global::System.Windows.DependencyProperty DisplayNumberFormatProperty;
 
@@ -400,33 +568,100 @@ public abstract partial class PlotGraphAxis
 
     internal event global::System.Action TickMarksChangedEvent;
 
-    protected void FireChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void FireChanged()
+    {
+        if (Changed != null)
+        {
+            Changed();
+        }
+        RaiseEvent(new global::System.Windows.RoutedEventArgs(ContentChangedEvent));
+    }
 
-    protected override void ShowLimitsExpressions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected override void ShowLimitsExpressions()
+    {
+        ShowStartExpression();
+        if (Scaling != global::Quire.Controls.Plots.Presenter.AxisScaling.Logarithmic)
+        {
+            ShowSecondTickExpression();
+        }
+        ShowEndExpression();
+    }
 
-    protected override void HideLimitsExpressions() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected override void HideLimitsExpressions()
+    {
+        HideStartExpression();
+        if (Scaling != global::Quire.Controls.Plots.Presenter.AxisScaling.Logarithmic)
+        {
+            HideSecondTickExpression();
+        }
+        HideEndExpression();
+    }
 
-    private static void ShowTicksPropertyChanged(global::System.Windows.DependencyObject dependencyObject, global::System.Windows.DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void ShowTicksPropertyChanged(global::System.Windows.DependencyObject dependencyObject, global::System.Windows.DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs)
+    {
+        ((PlotGraphAxis)dependencyObject).ShowTicksPropertyChanged((bool)dependencyPropertyChangedEventArgs.NewValue);
+    }
 
-    private void ShowTicksPropertyChanged(bool newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ShowTicksPropertyChanged(bool newValue)
+    {
+        if (ViewModel != null)
+        {
+            ViewModel.ShowTicks = newValue;
+        }
+        FireShowTicksChanged();
+    }
 
-    private void FireShowTicksChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void FireShowTicksChanged()
+    {
+        // Read the event once so the null check and the invocation use the same delegate.
+        Action showTicksChanged = ShowTicksChanged;
+        if (showTicksChanged != null)
+        {
+            showTicksChanged();
+        }
+        FireChanged();
+    }
 
     private static void ShowNumbersPropertyChanged(global::System.Windows.DependencyObject dependencyObject, global::System.Windows.DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     private void ShowNumbersPropertyChanged(bool newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private void FireShowNumbersChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void FireShowNumbersChanged()
+    {
+        // Read the event once so the null check and the invocation use the same delegate.
+        Action showNumbersChanged = ShowNumbersChanged;
+        if (showNumbersChanged != null)
+        {
+            showNumbersChanged();
+        }
+        FireChanged();
+    }
 
-    protected virtual void SetOtherAxis(global::Quire.Controls.Plots.PlotGraphAxis value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void SetOtherAxis(global::Quire.Controls.Plots.PlotGraphAxis value)
+    {
+        _otherAxis = value;
+    }
 
     public abstract global::Quire.Controls.Plots.Presenter.Positions Position { get; set; }
 
     public abstract void UpdateAxisOriginPositions();
 
-    private double Length { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    private double Length
+    {
+        get
+        {
+            if (Orientation != global::System.Windows.Controls.Orientation.Horizontal)
+            {
+                return ActualHeight;
+            }
+            return ActualWidth;
+        }
+    }
 
-    protected virtual double GetAxisStartPosition() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual double GetAxisStartPosition()
+    {
+        return Length / (TickMarks + 1);
+    }
 
     protected virtual double GetAxisEndPosition() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -434,17 +669,45 @@ public abstract partial class PlotGraphAxis
 
     public global::System.Nullable<bool> IsLinearizedRangeAssertEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 
-    public bool HasAxisError() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public bool HasAxisError()
+    {
+        return StartLimitEditor.ErrorCount > 0 || EndLimitEditor.ErrorCount > 0;
+    }
 
     private global::System.Nullable<double> LinearizeStartEnd(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private double Linearize(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private double Linearize(double value)
+    {
+        if (Scaling != global::Quire.Controls.Plots.Presenter.AxisScaling.Linear)
+        {
+            // !(value > 0) sends NaN to the -infinity branch, the ordered-compare shape the Release IL requires.
+            if (!(value > 0))
+            {
+                return double.NegativeInfinity;
+            }
+            return Math.Log10(value);
+        }
+        return value;
+    }
 
-    protected double UnLinearize(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected double UnLinearize(double value)
+    {
+        if (Scaling != global::Quire.Controls.Plots.Presenter.AxisScaling.Linear)
+        {
+            return Math.Pow(10, value);
+        }
+        return value;
+    }
 
     private static global::System.Windows.Media.Animation.DoubleAnimation CreateDoubleAnimation(double toValue, global::System.Windows.DependencyProperty property, double seconds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public void SetRange(double start, double end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SetRange(double start, double end)
+    {
+        Start = start;
+        End = end;
+        FireRangeChanged();
+        LimitSExpressionChanging = false;
+    }
 
     internal void ClearDisplayNumberFormatWithCommand() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -462,27 +725,67 @@ public abstract partial class PlotGraphAxis
 
     protected abstract void ApplyTickNumber(int value, bool b);
 
-    public void SetStartExpression(string expression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SetStartExpression(string expression)
+    {
+        new PlotCommands.AxisSetStartExpressionCommand(this, expression).Execute();
+    }
 
-    public void SetEndExpression(string expression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SetEndExpression(string expression)
+    {
+        new PlotCommands.AxisSetEndExpressionCommand(this, expression).Execute();
+    }
 
-    public string GetFormattedMin() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public string GetFormattedMin()
+    {
+        return Labels[0];
+    }
 
-    public string GetFormattedMax() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public string GetFormattedMax()
+    {
+        return Labels[Labels.Length - 1];
+    }
 
-    public void SetScaling(global::Quire.Controls.Plots.Presenter.AxisScaling axisScaling) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SetScaling(global::Quire.Controls.Plots.Presenter.AxisScaling axisScaling)
+    {
+        new PlotCommands.AxisSetScalingCommand(this, axisScaling).Execute();
+    }
 
     public event global::System.Action<object> ValueToScreenChanged;
 
-    private void FireRangeChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void FireRangeChanged()
+    {
+        // Read the event once so the null check and the invocation use the same delegate.
+        Action<object> valueToScreenChanged = ValueToScreenChanged;
+        if (valueToScreenChanged != null)
+        {
+            valueToScreenChanged(this);
+        }
+    }
 
     double global::Quire.Controls.Plots.Presenter.IValueToScreen.CoerceScreenValue(double screenValue, bool toEdges) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public global::Quire.Controls.Plots.Presenter.EdgeBelongingStatus GetEdgeBelongingStatusForCoordinate(double d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::Quire.Controls.Plots.Presenter.EdgeBelongingStatus GetEdgeBelongingStatusForCoordinate(double d)
+    {
+        if (Start == d)
+        {
+            return global::Quire.Controls.Plots.Presenter.EdgeBelongingStatus.Start;
+        }
+        if (d == End)
+        {
+            return global::Quire.Controls.Plots.Presenter.EdgeBelongingStatus.End;
+        }
+        return global::Quire.Controls.Plots.Presenter.EdgeBelongingStatus.None;
+    }
 
-    double global::Quire.Controls.Plots.Presenter.IValueToScreen.ValueToScreen(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    double global::Quire.Controls.Plots.Presenter.IValueToScreen.ValueToScreen(double value)
+    {
+        return Point2Screen(Linearize(value));
+    }
 
-    double global::Quire.Controls.Plots.Presenter.IValueToScreen.ScreenToValue(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    double global::Quire.Controls.Plots.Presenter.IValueToScreen.ScreenToValue(double value)
+    {
+        return UnLinearize(Screen2Point(value));
+    }
 
     internal static global::Quire.Controls.Plots.PlotAxis GetPlotAxis(global::Quire.Controls.Plots.Presenter.IPlotAxisView axisView) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -492,11 +795,35 @@ public abstract partial class PlotGraphAxis
 
     public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
 
-    private static void FirePropertyChanged(global::Quire.Controls.Plots.PlotGraphAxis owner, string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void FirePropertyChanged(global::Quire.Controls.Plots.PlotGraphAxis owner, string propertyName)
+    {
+        if (owner == null)
+        {
+            DebugTools.DevAssert(false);
+            return;
+        }
+        owner.FirePropertyChanged(propertyName);
+    }
 
-    protected void FirePropertyChanged(string propertyName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected void FirePropertyChanged(string propertyName)
+    {
+        if (PropertyChanged != null)
+        {
+            PropertyChanged(this, new global::System.ComponentModel.PropertyChangedEventArgs(propertyName));
+        }
+    }
 
-    private void ClearBinding(global::System.Windows.DependencyProperty dependencyProperty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ClearBinding(global::System.Windows.DependencyProperty dependencyProperty)
+    {
+        global::System.Windows.Data.BindingOperations.ClearBinding(this, dependencyProperty);
+    }
 
-    private void SetBinding(global::System.Windows.DependencyProperty dependencyProperty) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void SetBinding(global::System.Windows.DependencyProperty dependencyProperty)
+    {
+        global::System.Windows.Data.BindingOperations.SetBinding(this, dependencyProperty, new global::System.Windows.Data.Binding
+        {
+            Source = ViewModel,
+            Path = new global::System.Windows.PropertyPath(dependencyProperty.Name),
+        });
+    }
 }
