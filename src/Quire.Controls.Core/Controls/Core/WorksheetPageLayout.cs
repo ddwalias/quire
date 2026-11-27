@@ -161,10 +161,10 @@ public partial class WorksheetPageLayout
         internal set
         {
             double num = Math.Round(value / GridCellSize.Height);
-            double num2 = num * GridCellSize.Height;
-            if (!num2.AreSame(_pageBodyHeight))
+            double pageBodyHeight = num * GridCellSize.Height;
+            if (!pageBodyHeight.AreSame(_pageBodyHeight))
             {
-                _pageBodyHeight = num2;
+                _pageBodyHeight = pageBodyHeight;
                 OnPropertyChanged("PageBodyHeight");
             }
         }

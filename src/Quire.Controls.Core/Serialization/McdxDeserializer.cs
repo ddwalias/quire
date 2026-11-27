@@ -103,12 +103,12 @@ public partial class McdxDeserializer
         XmlNodeList xmlNodeList = xmlContentDocument.SelectNodes(xpath, NameSpaceManager);
         if (xmlNodeList != null)
         {
-            string value2 = 3.ToString();
+            string formatVersion = 3.ToString();
             foreach (XmlNode item in xmlNodeList)
             {
                 if (DebugTools.DevAssert(item is XmlAttribute xmlAttribute && xmlAttribute.Name == "precision" && xmlAttribute.Value == string.Empty, null).Passed)
                 {
-                    item.Value = value2;
+                    item.Value = formatVersion;
                 }
             }
         }

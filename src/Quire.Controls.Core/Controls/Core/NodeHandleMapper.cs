@@ -35,14 +35,14 @@ public partial class NodeHandleMapper
             return new Pair<string[], uint[]>(new string[0], new uint[0]);
         }
         string[] array = rl.Split(new string[1] { ":0x" }, StringSplitOptions.None);
-        uint[] array2 = new uint[array.Length - 1];
-        for (int i = 0; i < array2.Length; i++)
+        uint[] handles = new uint[array.Length - 1];
+        for (int i = 0; i < handles.Length; i++)
         {
             int num = i + 1;
-            array2[i] = uint.Parse(array[num].Substring(0, 8), NumberStyles.HexNumber);
+            handles[i] = uint.Parse(array[num].Substring(0, 8), NumberStyles.HexNumber);
             array[num] = array[num].Substring(8);
         }
-        return new Pair<string[], uint[]>(array, array2);
+        return new Pair<string[], uint[]>(array, handles);
     }
 
     public string GetReplacedRl(ICalculatable equationControl, string rl)

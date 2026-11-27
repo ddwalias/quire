@@ -75,13 +75,13 @@ public partial class RestrictedAreaAlignmentGrid : AlignmentGrid, IRestrictedAre
                 Point nearestIntersectionInDirection2 = GetNearestIntersectionInDirection(candidate, Direction.Down);
                 Func<Point, bool> func = (Point pt) => (pt.Y.IsGreaterThanOrEqual(0.0) || directionsToIgnore.Contains(Direction.Up, null)) && (pt.Y.IsLessThanOrEqual(HighestValidY) || directionsToIgnore.Contains(Direction.Down, null));
                 bool flag = func(nearestIntersectionInDirection2);
-                bool flag2 = func(nearestIntersectionInDirection);
+                bool canMoveDown = func(nearestIntersectionInDirection);
                 Point result;
                 if (!flag)
                 {
                     result = nearestIntersectionInDirection;
                 }
-                else if (!flag2)
+                else if (!canMoveDown)
                 {
                     result = nearestIntersectionInDirection2;
                 }

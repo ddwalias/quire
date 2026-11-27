@@ -211,7 +211,7 @@ public partial class TextStylesCollectionManager
             }
 
             string baseOnKey = null;
-            string text2 = (string)style.Resources[StyleResourceKey + item.Key];
+            string styleName = (string)style.Resources[StyleResourceKey + item.Key];
             if (text == "Normal")
             {
                 style = UpdateStyleToLimbo(style, textStyles);
@@ -225,12 +225,12 @@ public partial class TextStylesCollectionManager
                 baseOnKey = baseOnKey?.Substring(6);
             }
 
-            if (stylesCollection.ContainsKey(text2))
+            if (stylesCollection.ContainsKey(styleName))
             {
-                text2 = RenameStyleNameToCounter(text2);
+                styleName = RenameStyleNameToCounter(styleName);
             }
 
-            stylesCollection.Add(text2, new TextStyleData(text2, text, style, baseOnKey));
+            stylesCollection.Add(styleName, new TextStyleData(styleName, text, style, baseOnKey));
         }
     }
 

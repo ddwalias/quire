@@ -26,13 +26,13 @@ internal partial class UnitSystemCustomized : XElementSerializable
         IList<UnitDescriptor> list = new List<UnitDescriptor>();
         if (thisElement != null)
         {
-            foreach (XElement item2 in thisElement.Descendants())
+            foreach (XElement unitElement in thisElement.Descendants())
             {
-                UnitDescriptor item = DefaultUnitDescriptorTable.Instance[(string)item2.Attribute("unit-name")];
+                UnitDescriptor item = DefaultUnitDescriptorTable.Instance[(string)unitElement.Attribute("unit-name")];
                 UnitDescriptor unitDescriptor = new UnitDescriptor
                 {
-                    CanonicalName = (string)item2.Attribute("unit-name"),
-                    Quantity = (string)item2.Attribute("quantity-name")
+                    CanonicalName = (string)unitElement.Attribute("unit-name"),
+                    Quantity = (string)unitElement.Attribute("quantity-name")
                 };
                 list.Add(item);
             }
@@ -45,9 +45,9 @@ internal partial class UnitSystemCustomized : XElementSerializable
                 {
                     return;
                 }
-                List<object> list2 = _engineeringDocument.CustomBaseUnitDescriptors.Select(x => new UnitSystemSerializer(x, _nameSpaceUri)).ToList<object>();
-                Children = new object[list2.Count];
-                list2.CopyTo(Children, 0);
+                List<object> baseUnitSerializers = _engineeringDocument.CustomBaseUnitDescriptors.Select(x => new UnitSystemSerializer(x, _nameSpaceUri)).ToList<object>();
+                Children = new object[baseUnitSerializers.Count];
+                baseUnitSerializers.CopyTo(Children, 0);
             }
             else
             {
@@ -55,9 +55,9 @@ internal partial class UnitSystemCustomized : XElementSerializable
                 {
                     return;
                 }
-                List<object> list3 = _engineeringDocument.CustomDerivedUnitDescriptors.Select(x => new UnitSystemSerializer(x, _nameSpaceUri)).ToList<object>();
-                Children = new object[list3.Count];
-                list3.CopyTo(Children, 0);
+                List<object> derivedUnitSerializers = _engineeringDocument.CustomDerivedUnitDescriptors.Select(x => new UnitSystemSerializer(x, _nameSpaceUri)).ToList<object>();
+                Children = new object[derivedUnitSerializers.Count];
+                derivedUnitSerializers.CopyTo(Children, 0);
             }
         }
         else if (_localName == "baseUnits")

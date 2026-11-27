@@ -260,17 +260,17 @@ public partial class NumberFormat
         }
         else
         {
-            Nullable<int> num2 = ExponentialThreshold;
-            if (num2 == 0)
+            Nullable<int> upperExponentThreshold = ExponentialThreshold;
+            if (upperExponentThreshold == 0)
             {
-                num2 = 1;
+                upperExponentThreshold = 1;
             }
-            Nullable<int> num3 = num2 - 1;
+            Nullable<int> lowerExponentThreshold = upperExponentThreshold - 1;
             if (DecimalPlaces == -1)
             {
-                num3 = Math.Max(num3.Value, 15);
+                lowerExponentThreshold = Math.Max(lowerExponentThreshold.Value, 15);
             }
-            result = value < Math.Pow(num, (-num3).Value) || value >= Math.Pow(num, num2.Value);
+            result = value < Math.Pow(num, (-lowerExponentThreshold).Value) || value >= Math.Pow(num, upperExponentThreshold.Value);
         }
         return result;
     }

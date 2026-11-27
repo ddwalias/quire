@@ -35,41 +35,41 @@ public abstract partial class ItemResizerBase
         {
             double num = OriginalWidth / OriginalHeight;
             DebugTools.DevAssert(!changeWidth || !changeHeight, null);
-            double num2;
-            double num3;
+            double width;
+            double height;
             if (changeWidth && offset.X != 0.0)
             {
-                num2 = Math.Max(element.MinWidth, Math.Min(element.MaxWidth, OriginalWidth + offset.X));
-                num3 = num2 / num;
-                if (num3.IsLessThan(element.MinHeight))
+                width = Math.Max(element.MinWidth, Math.Min(element.MaxWidth, OriginalWidth + offset.X));
+                height = width / num;
+                if (height.IsLessThan(element.MinHeight))
                 {
-                    num3 = element.MinHeight;
-                    num2 = num3 * num;
+                    height = element.MinHeight;
+                    width = height * num;
                 }
-                else if (num3.IsGreaterThan(element.MaxHeight))
+                else if (height.IsGreaterThan(element.MaxHeight))
                 {
-                    num3 = element.MaxHeight;
-                    num2 = num3 * num;
+                    height = element.MaxHeight;
+                    width = height * num;
                 }
-                element.Width = num2;
-                element.Height = num3;
+                element.Width = width;
+                element.Height = height;
             }
             else if (changeHeight && offset.Y != 0.0)
             {
-                num3 = Math.Max(element.MinHeight, Math.Min(element.MaxHeight, OriginalHeight + offset.Y));
-                num2 = num3 * num;
-                if (num2.IsLessThan(element.MinWidth))
+                height = Math.Max(element.MinHeight, Math.Min(element.MaxHeight, OriginalHeight + offset.Y));
+                width = height * num;
+                if (width.IsLessThan(element.MinWidth))
                 {
-                    num2 = element.MinWidth;
-                    num3 = num2 / num;
+                    width = element.MinWidth;
+                    height = width / num;
                 }
-                else if (num2.IsGreaterThan(element.MaxWidth))
+                else if (width.IsGreaterThan(element.MaxWidth))
                 {
-                    num2 = element.MaxWidth;
-                    num3 = num2 / num;
+                    width = element.MaxWidth;
+                    height = width / num;
                 }
-                element.Width = num2;
-                element.Height = num3;
+                element.Width = width;
+                element.Height = height;
             }
         }
         else if (element is IEquationControl equationControl && equationControl.IsResizableInputControl)

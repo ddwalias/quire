@@ -657,22 +657,22 @@ public partial class RegionBorder
         if (_border != null && _header != null)
         {
             bool flag;
-            bool flag2;
+            bool showHeaderBorder;
             if (IsActive || IsSelected)
             {
-                flag = (flag2 = true);
+                flag = (showHeaderBorder = true);
             }
             else
             {
                 flag = false;
-                flag2 = ForceBorder == ForceBorderType.HeaderOnly || ForceBorder == ForceBorderType.BorderAndHeader;
+                showHeaderBorder = ForceBorder == ForceBorderType.HeaderOnly || ForceBorder == ForceBorderType.BorderAndHeader;
             }
             _border.Visibility = (!ShowBusy ? Visibility.Visible : visibility);
             if (!BorderVisibility && !flag)
             {
                 _border.Visibility = visibility;
             }
-            _header.Visibility = (flag2 ? Visibility.Visible : visibility);
+            _header.Visibility = (showHeaderBorder ? Visibility.Visible : visibility);
         }
     }
 

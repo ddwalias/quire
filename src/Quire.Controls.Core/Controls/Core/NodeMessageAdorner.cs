@@ -186,8 +186,8 @@ public partial class NodeMessageAdorner
     {
         IEnumerable<NodeMessageAdorner> allNodeMessageAdorners = GetAllNodeMessageAdorners();
         List<NodeMessageAdorner> list = new List<NodeMessageAdorner>();
-        List<NodeMessageAdorner> list2 = new List<NodeMessageAdorner>();
-        List<NodeMessageAdorner> list3 = new List<NodeMessageAdorner>();
+        List<NodeMessageAdorner> warnings = new List<NodeMessageAdorner>();
+        List<NodeMessageAdorner> notifications = new List<NodeMessageAdorner>();
         if (allNodeMessageAdorners != null)
         {
             foreach (NodeMessageAdorner item in allNodeMessageAdorners)
@@ -198,11 +198,11 @@ public partial class NodeMessageAdorner
                 }
                 if (item._type == NodeMessageAdornerType.Warning)
                 {
-                    list2.Add(item);
+                    warnings.Add(item);
                 }
                 if (item._type == NodeMessageAdornerType.Notification)
                 {
-                    list3.Add(item);
+                    notifications.Add(item);
                 }
             }
             if (current._type == NodeMessageAdornerType.Error)
@@ -212,13 +212,13 @@ public partial class NodeMessageAdorner
             }
             if (current._type == NodeMessageAdornerType.Warning)
             {
-                int idx2 = list2.IndexOf(current);
-                return CalculateOffset(list, list.Count) + CalculateOffset(list2, idx2);
+                int warningIndex = warnings.IndexOf(current);
+                return CalculateOffset(list, list.Count) + CalculateOffset(warnings, warningIndex);
             }
             if (current._type == NodeMessageAdornerType.Notification)
             {
-                int idx3 = list3.IndexOf(current);
-                return CalculateOffset(list, list.Count) + CalculateOffset(list2, list2.Count) + CalculateOffset(list3, idx3);
+                int notificationIndex = notifications.IndexOf(current);
+                return CalculateOffset(list, list.Count) + CalculateOffset(warnings, warnings.Count) + CalculateOffset(notifications, notificationIndex);
             }
         }
         return 0.0;

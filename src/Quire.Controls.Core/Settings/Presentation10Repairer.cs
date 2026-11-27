@@ -95,11 +95,11 @@ internal static partial class Presentation10Repairer
             XElement[] array = null;
             foreach (string childrenLocalName in childrenLocalNames)
             {
-                XElement[] array2 = oldParent.Elements(XName.Get(childrenLocalName, newParentNS)).ToArray();
-                if (array2 != null)
+                XElement[] matchingChildren = oldParent.Elements(XName.Get(childrenLocalName, newParentNS)).ToArray();
+                if (matchingChildren != null)
                 {
-                    array = ((array == null) ? array2 : array.Union(array2).ToArray());
-                    array2.Each((XElement elem) =>
+                    array = ((array == null) ? matchingChildren : array.Union(matchingChildren).ToArray());
+                    matchingChildren.Each((XElement elem) =>
                     {
                         elem.Remove();
                     });

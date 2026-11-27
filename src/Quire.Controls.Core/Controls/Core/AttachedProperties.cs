@@ -136,7 +136,7 @@ public static partial class AttachedProperties
             return;
         }
         IDictionary<IdLabels, ExtendedFont> dictionary = args.OldValue as IDictionary<IdLabels, ExtendedFont>;
-        IDictionary<IdLabels, ExtendedFont> dictionary2 = args.NewValue as IDictionary<IdLabels, ExtendedFont>;
+        IDictionary<IdLabels, ExtendedFont> fontOverrides = args.NewValue as IDictionary<IdLabels, ExtendedFont>;
         if (dictionary != null)
         {
             foreach (KeyValuePair<IdLabels, ExtendedFont> item in dictionary)
@@ -144,11 +144,11 @@ public static partial class AttachedProperties
                 item.Value.FormatChanged -= idLabelOwner.HandleLabeledIdFormatChanged;
             }
         }
-        if (dictionary2 != null)
+        if (fontOverrides != null)
         {
-            foreach (KeyValuePair<IdLabels, ExtendedFont> item2 in dictionary2)
+            foreach (KeyValuePair<IdLabels, ExtendedFont> labelOverride in fontOverrides)
             {
-                item2.Value.FormatChanged += idLabelOwner.HandleLabeledIdFormatChanged;
+                labelOverride.Value.FormatChanged += idLabelOwner.HandleLabeledIdFormatChanged;
             }
         }
         idLabelOwner.HandleLabeledIdFormatDictionaryChanged(args);

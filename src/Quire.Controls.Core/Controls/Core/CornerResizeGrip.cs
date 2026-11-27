@@ -54,21 +54,21 @@ public partial class CornerResizeGrip : ResizeGrip
     public override Point GetLocation(Rect regionBorderBoundingRect, double gripThickness)
     {
         double num = 0.0;
-        double num2 = 0.0;
+        double y = 0.0;
         switch (DockSide)
         {
             case Dock.Left:
                 num = regionBorderBoundingRect.Left + gripThickness / 2.0;
-                num2 = regionBorderBoundingRect.Bottom - gripThickness / 2.0;
+                y = regionBorderBoundingRect.Bottom - gripThickness / 2.0;
                 break;
             case Dock.Right:
                 num = regionBorderBoundingRect.Right - gripThickness / 2.0;
-                num2 = regionBorderBoundingRect.Bottom - gripThickness / 2.0;
+                y = regionBorderBoundingRect.Bottom - gripThickness / 2.0;
                 break;
             default:
                 DebugTools.DevAssert(false, null);
                 break;
         }
-        return new Point(num, num2);
+        return new Point(num, y);
     }
 }

@@ -104,19 +104,19 @@ public partial class WhiteboardItemsCollection : SerializableCollection<IWhitebo
                         WhiteboardItemContainerExtensions.ItemManager.ClearContainedInCollapsedWhiteboard(item);
                     }
                 }
-                foreach (IWhiteboardItem item2 in (args.NewItems ?? list).OfType<IWhiteboardItem>())
+                foreach (IWhiteboardItem whiteboardItem in (args.NewItems ?? list).OfType<IWhiteboardItem>())
                 {
                     if (_parentIsOnVisiblePage.HasValue)
                     {
-                        WhiteboardItemContainerExtensions.ItemManager.SetItemIsOnVisiblePage(item2, ParentIsOnVisiblePage);
+                        WhiteboardItemContainerExtensions.ItemManager.SetItemIsOnVisiblePage(whiteboardItem, ParentIsOnVisiblePage);
                     }
                     if (_parentSupportsInputsOutputs.HasValue)
                     {
-                        WhiteboardItemContainerExtensions.ItemManager.SetItemSupportsInputsOutputs(item2, ParentSupportsInputsOutputs);
+                        WhiteboardItemContainerExtensions.ItemManager.SetItemSupportsInputsOutputs(whiteboardItem, ParentSupportsInputsOutputs);
                     }
                     if (_containedInCollapsedWhiteboard.HasValue)
                     {
-                        WhiteboardItemContainerExtensions.ItemManager.SetContainedInCollapsedWhiteboard(item2, ContainedInCollapsedWhiteboard);
+                        WhiteboardItemContainerExtensions.ItemManager.SetContainedInCollapsedWhiteboard(whiteboardItem, ContainedInCollapsedWhiteboard);
                     }
                 }
                 break;

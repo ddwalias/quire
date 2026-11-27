@@ -149,17 +149,17 @@ public partial class AlignmentGrid
     {
         Point pt = startPoint;
         double num = 0.0;
-        double num2 = 0.0;
+        double verticalOffset = 0.0;
         Size gridCellSize;
         switch (direction)
         {
             case Direction.Up:
                 gridCellSize = GridCellSize;
-                num2 = -gridCellSize.Height;
+                verticalOffset = -gridCellSize.Height;
                 break;
             case Direction.Down:
                 gridCellSize = GridCellSize;
-                num2 = gridCellSize.Height;
+                verticalOffset = gridCellSize.Height;
                 break;
             case Direction.Left:
                 gridCellSize = GridCellSize;
@@ -170,7 +170,7 @@ public partial class AlignmentGrid
                 num = gridCellSize.Width;
                 break;
         }
-        pt.Offset(num, num2);
+        pt.Offset(num, verticalOffset);
         return FixRoundingError(pt);
     }
 

@@ -34,17 +34,17 @@ public partial class RowColumnHelper
     public void GetRowIndices(int cellIndexA, int cellIndexB, out int minRowIndex, out int maxRowIndex)
     {
         int val = RowIndexFromCellIndex(cellIndexA);
-        int val2 = RowIndexFromCellIndex(cellIndexB);
-        minRowIndex = Math.Min(val, val2);
-        maxRowIndex = Math.Max(val, val2);
+        int rowIndexB = RowIndexFromCellIndex(cellIndexB);
+        minRowIndex = Math.Min(val, rowIndexB);
+        maxRowIndex = Math.Max(val, rowIndexB);
     }
 
     public void GetColumnsIndices(int cellIndexA, int cellIndexB, out int minColumnIndex, out int maxColumnIndex)
     {
         int val = ColIndexFromCellIndex(cellIndexA);
-        int val2 = ColIndexFromCellIndex(cellIndexB);
-        minColumnIndex = Math.Min(val, val2);
-        maxColumnIndex = Math.Max(val, val2);
+        int columnIndexB = ColIndexFromCellIndex(cellIndexB);
+        minColumnIndex = Math.Min(val, columnIndexB);
+        maxColumnIndex = Math.Max(val, columnIndexB);
     }
 
     public void GetMinMaxRowColIndices(int corner1, int corner2, out int left, out int right, out int top, out int bottom)

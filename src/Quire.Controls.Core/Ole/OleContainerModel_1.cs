@@ -448,11 +448,11 @@ public abstract partial class OleContainerModel<TPersistentData> : IPublicOleCon
         Size size = new Size(Width, Height);
         DebugTools.LogData(string.Format("OleContainerModel.SetVisibleSize: {0} => {1}: Start", OleViewportSize, size));
         int num = WpfUtils.DipsToHimetric(Width);
-        int num2 = WpfUtils.DipsToHimetric(Height);
+        int heightHimetric = WpfUtils.DipsToHimetric(Height);
         if (!isPostCreate
             && !OleViewportSize.IsEmpty
             && num == WpfUtils.DipsToHimetric(OleViewportSize.Width)
-            && num2 == WpfUtils.DipsToHimetric(OleViewportSize.Height))
+            && heightHimetric == WpfUtils.DipsToHimetric(OleViewportSize.Height))
         {
             return;
         }
@@ -462,7 +462,7 @@ public abstract partial class OleContainerModel<TPersistentData> : IPublicOleCon
             {
                 if (CheckServerAvailable(forceRun, (IsOleSiteManagerRunning | forceRun) ? OleContainerMessageKeysDict.ResizeMessageKeys : null))
                 {
-                    SetExtent(new System.Drawing.Size(num, num2), forceRun);
+                    SetExtent(new System.Drawing.Size(num, heightHimetric), forceRun);
                 }
             }
             catch (COMException ex)

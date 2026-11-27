@@ -33,15 +33,15 @@ public partial class BusyClock
             bool flag = BusyClockAngle < 360.0;
             double num = (flag ? BusyClockAngle : (BusyClockAngle - 360.0));
             PathFigure pathFigure = new PathFigure();
-            double num2 = ActualWidth / 2.0;
-            double num3 = ActualHeight / 2.0;
-            pathFigure.StartPoint = new Point(num2, num3);
+            double centerX = ActualWidth / 2.0;
+            double centerY = ActualHeight / 2.0;
+            pathFigure.StartPoint = new Point(centerX, centerY);
             pathFigure.IsClosed = true;
             pathFigure.IsFilled = true;
-            pathFigure.Segments.Add(new LineSegment(pathFigure.StartPoint - new Vector(0.0, num3), true));
+            pathFigure.Segments.Add(new LineSegment(pathFigure.StartPoint - new Vector(0.0, centerY), true));
             pathFigure.Segments.Add(new ArcSegment(
-                pathFigure.StartPoint + new Vector(num2 * Math.Sin(Math.PI * 2.0 * num / 360.0), -num3 * Math.Cos(Math.PI * 2.0 * num / 360.0)),
-                new Size(num2, num3),
+                pathFigure.StartPoint + new Vector(centerX * Math.Sin(Math.PI * 2.0 * num / 360.0), -centerY * Math.Cos(Math.PI * 2.0 * num / 360.0)),
+                new Size(centerX, centerY),
                 num,
                 flag ? (num > 180.0) : (num < 180.0),
                 flag ? SweepDirection.Clockwise : SweepDirection.Counterclockwise,

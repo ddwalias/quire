@@ -116,7 +116,7 @@ public abstract partial class CustomScriptRunBase : Run, ICustomFontSizeOwner
 
     private static object CoerceCustomScriptFontSizeCallback(DependencyObject depObj, object value)
     {
-        double num2;
+        double fontSize;
         double num = (double)value;
         if (!(depObj is CustomScriptRunBase customScriptRunBase))
         {
@@ -129,25 +129,25 @@ public abstract partial class CustomScriptRunBase : Run, ICustomFontSizeOwner
         {
             customScriptRunBase.DataContextChanged += ScriptBaseRun_DataContextChanged;
             customScriptRunBase.FontSizeForReport = num;
-            num2 = num * CustomScriptsSettings.FontRatio;
+            fontSize = num * CustomScriptsSettings.FontRatio;
         }
         else if (customScriptRunBase.IsInSerialization && !customScriptRunBase.RevertCoerceAfterSerializationProcess)
         {
-            num2 = customScriptRunBase.FontSizeForReport;
+            fontSize = customScriptRunBase.FontSizeForReport;
         }
         else if (customScriptRunBase.FontSizeToRestore.HasValue && DebugTools.DevAssert(EnvironmentScope.IsCurrentlyInsideUndoOrRedo, null).Passed)
         {
             customScriptRunBase.FontSizeForReport = customScriptRunBase.FontSizeToRestore.Value;
-            num2 = customScriptRunBase.FontSizeToRestore.Value * CustomScriptsSettings.FontRatio;
+            fontSize = customScriptRunBase.FontSizeToRestore.Value * CustomScriptsSettings.FontRatio;
         }
         else if (customScriptRunBase.RevertCoerceAfterSerializationProcess)
         {
-            num2 = customScriptRunBase.FontSizeForReport * CustomScriptsSettings.FontRatio;
+            fontSize = customScriptRunBase.FontSizeForReport * CustomScriptsSettings.FontRatio;
         }
         else if ((customScriptRunBase.WpfRecreateScripts && valueSource.IsCoerced) || (customScriptRunBase.WpfRecreateScripts && customScriptRunBase.HasLocalValue(TextElement.FontSizeProperty)))
         {
             customScriptRunBase.FontSizeForReport = num / CustomScriptsSettings.FontRatio;
-            num2 = num;
+            fontSize = num;
         }
         else
         {
@@ -155,20 +155,20 @@ public abstract partial class CustomScriptRunBase : Run, ICustomFontSizeOwner
                 richTextBase.DequeueSplitFontSizeData() is double valueOrDefault)
             {
                 customScriptRunBase.FontSizeForReport = valueOrDefault;
-                num2 = customScriptRunBase.FontSizeForReport * CustomScriptsSettings.FontRatio;
+                fontSize = customScriptRunBase.FontSizeForReport * CustomScriptsSettings.FontRatio;
             }
             else
             {
                 customScriptRunBase.FontSizeForReport = num;
-                num2 = num * CustomScriptsSettings.FontRatio;
+                fontSize = num * CustomScriptsSettings.FontRatio;
             }
         }
-        if (num2 < CustomScriptsSettings.FontRatio)
+        if (fontSize < CustomScriptsSettings.FontRatio)
         {
             DebugTools.FailAssertion(null, Array.Empty<object>());
-            num2 = CustomScriptsSettings.FontRatio;
+            fontSize = CustomScriptsSettings.FontRatio;
         }
-        return num2;
+        return fontSize;
     }
 
     private static void ScriptBaseRun_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
@@ -278,9 +278,9 @@ public abstract partial class CustomScriptRunBase : Run, ICustomFontSizeOwner
     {
         List<Run> list = range.EnumerateRunsInRange().Where(shouldConvertPredicate).ToList();
         SetSpanPropToRunIfNeeded(list);
-        List<T> list2 = list.Select((Run run) => CustomScriptServiceFunctions.ConvertScriptLevelInternal(run, typeof(T), double.NaN)).Cast<T>().ToList();
-        DebugTools.DevAssert(list.Count == list2.Count, null);
-        return list2;
+        List<T> convertedRuns = list.Select((Run run) => CustomScriptServiceFunctions.ConvertScriptLevelInternal(run, typeof(T), double.NaN)).Cast<T>().ToList();
+        DebugTools.DevAssert(list.Count == convertedRuns.Count, null);
+        return convertedRuns;
     }
 
     private static void SetSpanPropToRunIfNeeded(List<Run> runsToConvert)

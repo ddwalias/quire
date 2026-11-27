@@ -94,18 +94,18 @@ public static partial class SerializationHelperUtils
         byte[] array = new byte[num];
         seekableStream2.SetLength(length);
         seekableStream.Position = 0L;
-        int num3;
-        long num2 = 0L;
-        while ((num3 = seekableStream.Read(array, 0, num)) > 0)
+        int bytesRead;
+        long totalBytesRead = 0L;
+        while ((bytesRead = seekableStream.Read(array, 0, num)) > 0)
         {
-            Obfuscate(array, num3);
-            num2 += num3;
-            seekableStream2.Position = length - num2;
-            seekableStream2.Write(array, 0, num3);
+            Obfuscate(array, bytesRead);
+            totalBytesRead += bytesRead;
+            seekableStream2.Position = length - totalBytesRead;
+            seekableStream2.Write(array, 0, bytesRead);
             seekableStream2.Flush();
         }
         seekableStream2.Position = 0L;
-        DebugTools.DevAssert(length == num2, null);
+        DebugTools.DevAssert(length == totalBytesRead, null);
         FinalizeSeekableStream(seekableStream, tempFilePath);
         FinalizeSeekableStream(seekableStream2, tempFilePath2, target);
     }
@@ -147,14 +147,14 @@ public static partial class SerializationHelperUtils
     public static void Obfuscate(byte[] arrData, int length = int.MaxValue)
     {
         int num = 0;
-        int num2 = Math.Min(arrData.Length, length) - 1;
-        while (num <= num2)
+        int lastIndex = Math.Min(arrData.Length, length) - 1;
+        while (num <= lastIndex)
         {
             byte data = arrData[num];
-            arrData[num] = Mask(arrData[num2]);
-            arrData[num2] = Mask(data);
+            arrData[num] = Mask(arrData[lastIndex]);
+            arrData[lastIndex] = Mask(data);
             num++;
-            num2--;
+            lastIndex--;
         }
     }
 

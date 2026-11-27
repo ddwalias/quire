@@ -195,30 +195,30 @@ public abstract partial class TableLayoutManager : ICloneable
     public int CellIndexFromPoint(Point point)
     {
         int num = _rowMetrics.Length - 1;
-        int num2 = Columns - 1;
-        double num3 = Padding.Left;
+        int columnIndex = Columns - 1;
+        double columnBoundary = Padding.Left;
         for (int i = 0; i < Columns; i++)
         {
-            num3 += _columnWidths[i] + PaddingX / 2.0;
-            if (point.X < num3)
+            columnBoundary += _columnWidths[i] + PaddingX / 2.0;
+            if (point.X < columnBoundary)
             {
-                num2 = i;
+                columnIndex = i;
                 break;
             }
-            num3 += PaddingX / 2.0;
+            columnBoundary += PaddingX / 2.0;
         }
-        double num4 = Padding.Top;
+        double rowBoundary = Padding.Top;
         for (int j = 0; j < _rowMetrics.Length; j++)
         {
-            num4 += _rowMetrics[j].RowHeight + PaddingY / 2.0;
-            if (point.Y < num4)
+            rowBoundary += _rowMetrics[j].RowHeight + PaddingY / 2.0;
+            if (point.Y < rowBoundary)
             {
                 num = j;
                 break;
             }
-            num4 += PaddingY / 2.0;
+            rowBoundary += PaddingY / 2.0;
         }
-        return num * Columns + num2;
+        return num * Columns + columnIndex;
     }
 
     public void Measure(bool isResultMatrix, params LayoutMetrics[] cells)
@@ -238,58 +238,58 @@ public abstract partial class TableLayoutManager : ICloneable
         _cellArrangements = new List<Rect>();
         int num = (int)Math.Ceiling((double)_cellsInfo.Count / (double)Columns);
         MaxMatrixWidth[] array = CalculateRowAndColumnMetrics(num, _cellsInfo, cellsContent, alignment == ColumnAlignments.DecimalPointAlign);
-        double num2 = Padding.Top;
-        int num3 = num / 2;
+        double rowTop = Padding.Top;
+        int middleRowIndex = num / 2;
         for (int i = 0; i < num; i++)
         {
-            double num4 = Padding.Left;
+            double cellLeft = Padding.Left;
             RowMetric rowMetric = _rowMetrics[i];
-            double rowBottom = num2 + rowMetric.RowHeight;
-            if (i == num3) { }
+            double rowBottom = rowTop + rowMetric.RowHeight;
+            if (i == middleRowIndex) { }
             rowMetric.RowBottom = rowBottom;
             _rowMetrics[i] = rowMetric;
             for (int j = 0; j < Columns; j++)
             {
-                double num5 = _columnWidths[j];
-                int num6 = i * Columns + j;
-                if (num6 >= _cellsInfo.Count)
+                double columnWidth = _columnWidths[j];
+                int cellIndex = i * Columns + j;
+                if (cellIndex >= _cellsInfo.Count)
                 {
                     break;
                 }
-                double num7 = rowMetric.RowBaseline - _cellsInfo[num6].Baseline;
-                double num9;
-                if (alignment == ColumnAlignments.DecimalPointAlign && _cellsInfo[num6].ItegralTextWidth != -1.0)
+                double baselineOffset = rowMetric.RowBaseline - _cellsInfo[cellIndex].Baseline;
+                double horizontalOffset;
+                if (alignment == ColumnAlignments.DecimalPointAlign && _cellsInfo[cellIndex].ItegralTextWidth != -1.0)
                 {
-                    double num8 = 0.0;
+                    double decimalOffset = 0.0;
                     double maxFractional = array[j].MaxFractional;
                     double maxIntegral = array[j].MaxIntegral;
                     double maxVisualNode = array[j].MaxVisualNode;
                     if (maxVisualNode > maxIntegral + maxFractional)
                     {
-                        num8 = (maxVisualNode - (maxIntegral + maxFractional)) / 2.0;
+                        decimalOffset = (maxVisualNode - (maxIntegral + maxFractional)) / 2.0;
                     }
-                    num9 = num8 + maxIntegral - _cellsInfo[num6].ItegralTextWidth;
+                    horizontalOffset = decimalOffset + maxIntegral - _cellsInfo[cellIndex].ItegralTextWidth;
                 }
                 else if (alignment == ColumnAlignments.LeftAlign || alignment == ColumnAlignments.Stretch)
                 {
-                    num9 = 0.0;
+                    horizontalOffset = 0.0;
                 }
                 else
                 {
-                    num9 = (num5 - _cellsInfo[num6].OverallSize.Width) / 2.0;
+                    horizontalOffset = (columnWidth - _cellsInfo[cellIndex].OverallSize.Width) / 2.0;
                 }
-                Point val = new Point(num4 + num9, num2 + num7);
-                Size val2 = (alignment == ColumnAlignments.Stretch)
-                    ? new Size(num5, _cellsInfo[num6].OverallSize.Height)
-                    : _cellsInfo[num6].OverallSize;
-                _cellArrangements.Add(new Rect(val, val2));
-                num4 += num5 + _paddingX;
+                Point val = new Point(cellLeft + horizontalOffset, rowTop + baselineOffset);
+                Size cellSize = (alignment == ColumnAlignments.Stretch)
+                    ? new Size(columnWidth, _cellsInfo[cellIndex].OverallSize.Height)
+                    : _cellsInfo[cellIndex].OverallSize;
+                _cellArrangements.Add(new Rect(val, cellSize));
+                cellLeft += columnWidth + _paddingX;
             }
-            num2 += rowMetric.RowHeight + _paddingY;
+            rowTop += rowMetric.RowHeight + _paddingY;
         }
-        double num10 = ((_columnWidths.Length != 0) ? ((double)(_columnWidths.Length - 1) * PaddingX) : 0.0);
-        double num11 = ((_rowMetrics.Length != 0) ? ((double)(_rowMetrics.Length - 1) * PaddingY) : 0.0);
-        _matrixSize = new Size(_columnWidths.Sum() + num10 + Padding.Left + Padding.Right, _rowMetrics.Sum((RowMetric row) => row.RowHeight) + num11 + Padding.Top + Padding.Bottom);
+        double horizontalPadding = ((_columnWidths.Length != 0) ? ((double)(_columnWidths.Length - 1) * PaddingX) : 0.0);
+        double verticalPadding = ((_rowMetrics.Length != 0) ? ((double)(_rowMetrics.Length - 1) * PaddingY) : 0.0);
+        _matrixSize = new Size(_columnWidths.Sum() + horizontalPadding + Padding.Left + Padding.Right, _rowMetrics.Sum((RowMetric row) => row.RowHeight) + verticalPadding + Padding.Top + Padding.Bottom);
         _matrixBaseline = _matrixSize.Height / 2.0 + _baselineToMidPointAdjustment;
     }
 
@@ -307,29 +307,29 @@ public abstract partial class TableLayoutManager : ICloneable
         for (int i = 0; i < rows; i++)
         {
             double num = 0.0;
-            double num2 = 0.0;
+            double maxBelowBaseline = 0.0;
             for (int j = 0; j < Columns; j++)
             {
-                int num3 = i * Columns + j;
-                if (num3 >= cellsInfo.Count)
+                int cellIndex = i * Columns + j;
+                if (cellIndex >= cellsInfo.Count)
                 {
                     break;
                 }
-                LayoutMetrics layoutMetrics = cellsInfo[num3];
+                LayoutMetrics layoutMetrics = cellsInfo[cellIndex];
                 num = Math.Max(num, layoutMetrics.Baseline);
                 double val = layoutMetrics.OverallSize.Height - layoutMetrics.Baseline;
-                num2 = Math.Max(num2, val);
+                maxBelowBaseline = Math.Max(maxBelowBaseline, val);
                 if (isResultMatrix && layoutMetrics.ItegralTextWidth != -1.0)
                 {
-                    double num4 = array[j].MaxIntegral - cellsInfo[num3].ItegralTextWidth;
-                    _columnWidths[j] = Math.Max(_columnWidths[j], layoutMetrics.OverallSize.Width + num4);
+                    double integralTextExtra = array[j].MaxIntegral - cellsInfo[cellIndex].ItegralTextWidth;
+                    _columnWidths[j] = Math.Max(_columnWidths[j], layoutMetrics.OverallSize.Width + integralTextExtra);
                 }
                 else
                 {
                     _columnWidths[j] = Math.Max(_columnWidths[j], layoutMetrics.OverallSize.Width);
                 }
             }
-            double rowHeight = num + num2;
+            double rowHeight = num + maxBelowBaseline;
             _rowMetrics[i] = new RowMetric(rowHeight, num);
         }
         return array;

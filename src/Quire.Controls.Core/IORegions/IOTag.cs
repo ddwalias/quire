@@ -14,23 +14,23 @@ public static partial class IOTag
 
     private static void HandleIOTagPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        bool flag = IOTagType.Input == ((IOTagType)e.NewValue & IOTagType.Input) && IOTagType.Input != ((IOTagType)e.OldValue & IOTagType.Input);
-        bool flag2 = IOTagType.Input != ((IOTagType)e.NewValue & IOTagType.Input) && IOTagType.Input == ((IOTagType)e.OldValue & IOTagType.Input);
-        bool flag3 = IOTagType.Output == ((IOTagType)e.NewValue & IOTagType.Output) && IOTagType.Output != ((IOTagType)e.OldValue & IOTagType.Output);
-        bool flag4 = IOTagType.Output != ((IOTagType)e.NewValue & IOTagType.Output) && IOTagType.Output == ((IOTagType)e.OldValue & IOTagType.Output);
-        if (flag && IOTagSet != null)
+        bool isInputAdded = IOTagType.Input == ((IOTagType)e.NewValue & IOTagType.Input) && IOTagType.Input != ((IOTagType)e.OldValue & IOTagType.Input);
+        bool isInputRemoved = IOTagType.Input != ((IOTagType)e.NewValue & IOTagType.Input) && IOTagType.Input == ((IOTagType)e.OldValue & IOTagType.Input);
+        bool isOutputAdded = IOTagType.Output == ((IOTagType)e.NewValue & IOTagType.Output) && IOTagType.Output != ((IOTagType)e.OldValue & IOTagType.Output);
+        bool isOutputRemoved = IOTagType.Output != ((IOTagType)e.NewValue & IOTagType.Output) && IOTagType.Output == ((IOTagType)e.OldValue & IOTagType.Output);
+        if (isInputAdded && IOTagSet != null)
         {
             IOTagSet(d, true);
         }
-        if (flag3 && IOTagSet != null)
+        if (isOutputAdded && IOTagSet != null)
         {
             IOTagSet(d, false);
         }
-        if (flag2 && IOTagUnSet != null)
+        if (isInputRemoved && IOTagUnSet != null)
         {
             IOTagUnSet(d, true);
         }
-        if (flag4 && IOTagUnSet != null)
+        if (isOutputRemoved && IOTagUnSet != null)
         {
             IOTagUnSet(d, false);
         }

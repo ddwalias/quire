@@ -87,20 +87,20 @@ public abstract partial class OleContainerViewModel<TModel, TIPublicModel, TPers
         {
             MaxWidth = double.PositiveInfinity;
             MaxHeight = double.PositiveInfinity;
-            double num2;
-            double num3;
+            double minimumWidth;
+            double minimumHeight;
             double num = automaticSize.Width / automaticSize.Height;
             if (automaticSize.Width.IsGreaterThan(automaticSize.Height))
             {
-                num2 = 9.600000000000001;
-                num3 = Math.Max(4.800000000000001, num2 / num);
+                minimumWidth = 9.600000000000001;
+                minimumHeight = Math.Max(4.800000000000001, minimumWidth / num);
             }
             else
             {
-                num3 = 9.600000000000001;
-                num2 = Math.Max(4.800000000000001, num3 * num);
+                minimumHeight = 9.600000000000001;
+                minimumWidth = Math.Max(4.800000000000001, minimumHeight * num);
             }
-            MinSize = new Size(num2, num3);
+            MinSize = new Size(minimumWidth, minimumHeight);
             CoerceAndUpdateSize(Size.Empty, CalculateDiagonalLength(new Size(Width, Height)));
         }
         RequestResizeToFit?.Invoke();
@@ -699,7 +699,7 @@ public abstract partial class OleContainerViewModel<TModel, TIPublicModel, TPers
     protected Size CalculateSize(Size size, double diagonal)
     {
         double num = size.Width / size.Height;
-        double num2 = Math.Sqrt(Math.Pow(diagonal, 2.0) / (Math.Pow(num, 2.0) + 1.0));
-        return new Size(num * num2, num2);
+        double height = Math.Sqrt(Math.Pow(diagonal, 2.0) / (Math.Pow(num, 2.0) + 1.0));
+        return new Size(num * height, height);
     }
 }

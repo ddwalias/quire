@@ -72,16 +72,16 @@ public abstract partial class MessageDialogBase<T> : Window where T : struct
             }
             if (cancelButtonKey != null)
             {
-                Button value2;
-                if (_buttonsDict.TryGetValue(cancelButtonKey, out value2))
+                Button cancelButton;
+                if (_buttonsDict.TryGetValue(cancelButtonKey, out cancelButton))
                 {
-                    value2.IsCancel = true;
+                    cancelButton.IsCancel = true;
                 }
                 else
                 {
                     DebugTools.FailAssertion("MessageDialogWithOptions cancel button key must be null or in range of buttonsData");
                 }
-                CancelButton = value2;
+                CancelButton = cancelButton;
             }
         }
         Result = null;

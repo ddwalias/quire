@@ -93,26 +93,26 @@ public partial class ResizeGrip : Shape
     public virtual Point GetLocation(Rect regionBorderBoundingRect, double gripThickness)
     {
         double num;
-        double num2;
+        double y;
         switch (DockSide)
         {
             case Dock.Left:
                 num = regionBorderBoundingRect.Left + gripThickness / 2.0;
-                num2 = regionBorderBoundingRect.Top + regionBorderBoundingRect.Height / 2.0;
+                y = regionBorderBoundingRect.Top + regionBorderBoundingRect.Height / 2.0;
                 break;
             case Dock.Right:
                 num = regionBorderBoundingRect.Right - gripThickness / 2.0;
-                num2 = regionBorderBoundingRect.Top + regionBorderBoundingRect.Height / 2.0;
+                y = regionBorderBoundingRect.Top + regionBorderBoundingRect.Height / 2.0;
                 break;
             case Dock.Bottom:
                 num = regionBorderBoundingRect.Left + regionBorderBoundingRect.Width / 2.0;
-                num2 = regionBorderBoundingRect.Bottom - gripThickness / 2.0;
+                y = regionBorderBoundingRect.Bottom - gripThickness / 2.0;
                 break;
             default:
                 num = regionBorderBoundingRect.Left + regionBorderBoundingRect.Width / 2.0;
-                num2 = regionBorderBoundingRect.Top + gripThickness / 2.0;
+                y = regionBorderBoundingRect.Top + gripThickness / 2.0;
                 break;
         }
-        return new Point(num, num2);
+        return new Point(num, y);
     }
 }

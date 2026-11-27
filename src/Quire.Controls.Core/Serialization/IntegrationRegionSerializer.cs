@@ -24,7 +24,7 @@ internal partial class IntegrationRegionSerializer : IXElementSerializable
     public void ReadXml(XElement xElement)
     {
         List<IInputRegion> list = new List<IInputRegion>();
-        List<IOutputRegion> list2 = new List<IOutputRegion>();
+        List<IOutputRegion> outputRegions = new List<IOutputRegion>();
         IEnumerable<XElement> enumerable = xElement.Elements(IntegrationDataSerializer.GetXNameWithIntegrationNameSpace("region"));
         List<UIElement> regions = _documentArea.IORegions.OfType<UIElement>().ToList();
         foreach (XElement item in enumerable)
@@ -62,7 +62,7 @@ internal partial class IntegrationRegionSerializer : IXElementSerializable
                     if (outputRegion.IsSuitableForOutputTagging())
                     {
                         ReadIOAliases(uIElement, item, false);
-                        list2.Add(outputRegion);
+                        outputRegions.Add(outputRegion);
                     }
                     else
                     {
@@ -74,7 +74,7 @@ internal partial class IntegrationRegionSerializer : IXElementSerializable
             DebugTools.DevAssert(condition, null);
         }
         _documentArea.InputOutputRegionManager.ToggleInputRegions(list);
-        _documentArea.InputOutputRegionManager.ToggleOutputRegions(list2);
+        _documentArea.InputOutputRegionManager.ToggleOutputRegions(outputRegions);
     }
 
     private void ReadIOAliases(DependencyObject ioRegion, XElement xElement, bool isInp)
