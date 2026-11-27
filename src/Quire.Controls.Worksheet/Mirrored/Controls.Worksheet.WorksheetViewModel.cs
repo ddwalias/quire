@@ -1754,7 +1754,25 @@ public void InsertPageBreak()
         InsertPageBreak(InsertionPoint);
     }
 
-public void ExpandToIncludePoint(global::System.Windows.Point pointToInclude) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+public void ExpandToIncludePoint(global::System.Windows.Point pointToInclude)
+    {
+        global::System.Windows.Point point = VisualHelper.TranslateWorksheetItemsCanvasPointToWorksheet(pointToInclude, this, global::Quire.Direction.Down);
+        global::System.Windows.Rect gridArea = _worksheetGrid.GridArea;
+        if (gridArea.Contains(point))
+        {
+            return;
+        }
+        if (point.Y > 0.0)
+        {
+            int pageIndex = GetPageIndex(point.Y);
+            Pages.Count.UpTo(pageIndex, (int num) =>
+            {
+                _pageManager.AppendNewPage();
+            });
+        }
+        WorksheetContent.SetWidthWithNonprintableSpace(point.X);
+        ItemManager.BlockUntilLoaded();
+    }
 
 public void PopulateZombies()
     {
