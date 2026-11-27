@@ -781,3 +781,39 @@
 - `CollectSizes_ForTestsOnly`: not attempted; Mathcad's bottom-tested `for` with `continue` loop shape not reproduced.
 - `IsSelectedChanged(bool)` (instance): not attempted; batch 107 covered the static `DependencyObject` handler only.
 - `IsActiveChanged(bool)` (instance): not attempted; batch 107 covered the static `DependencyObject` handler only.
+
+## Reopen: 29 placeholders, up to three variants each
+
+- Owner: haiku-equationcontrol-20261123; branch `haiku-equationcontrol-20261123-b100-next`.
+- Landed in this batch (Release IL PASS, 4115 exact, zero failures): 14 members.
+
+- Landed: `CreateWithTextInput`: explicit `char key = s[0]` local (ldarg order).
+- Landed: `ExecuteOnRootLoaded`: lambda guard `if (RootNode == null) return;` (brtrue layout).
+- Landed: `EditNode(string, int)`: direct call, no change in shape.
+- Landed: `History` (getter): `List<string>` as a local so `ToArray` is a `callvirt`.
+- Landed: `SetNavigatorStateFromLabel(string, int)`: direct construction.
+- Landed: `UpdateLhsVisibleOnView`: guard `if (LhsOfDefinitionVisibility == visibility) return;` (opposite polarity).
+- Landed: `SetMatrixForResizeAdorner`: guard `if (mathNode == null || ...) return;` (opposite polarity).
+- Landed: `OnInsertId`: guard `if (!(e.Parameter is X p) || p.Name == null) return;` (opposite polarity).
+- Landed: `ConvertToDisplayMatrix`: `bool isSmall = ... <= maxCells` explicit local (materialised compare).
+- Landed: `GetEquationSizes_ForTestsOnly`: `string.Format` for the message (the IL formats, not concatenates). It calls `CollectSizes_ForTestsOnly`, which is still a placeholder and throws at run time.
+- Landed: `Clone(newParent)` (nested): direct copy of the members.
+- Landed: `WriteWrappedSizesToString` (nested): `numDecimalPlaces < 0 ? size : ...` (opposite polarity) and `string.Format` for the braces.
+- Landed: `ReadWrappedSizesFromString` (nested): idiomatic `Trim`/`Split`/`Select(Size.Parse)`.
+- Landed: `IsSelectedChanged(bool)` and `IsActiveChanged(bool)` (instance): call `CreateOrClearTemporaryResultMatrixFormat`.
+
+- Parked after three variants: `HideFromCalculationContext` (property): three variants; the setter still differs in the boolean materialisation (`bne.un` / `ldc.i4.0` / `brfalse` layout).
+- Parked after three variants: `HandleSizeChanged(object, SizeChangedEventArgs)` (private): three variants; the `clip` local's `ldnull` / `brtrue` layout differs at IL #8.
+- Parked after three variants: `FixCaretToRightMostPositionAfterClipping`: three variants; Mathcad emits `conv.r8` before the `Point` constructor, ours does not.
+- Parked after three variants: `XFromNavigatorState`: three variants; the `IVisualIdNode` ternary's `CharacterWidths` call order differs from Mathcad's (branch sense).
+- Parked after three variants: `ToggleAlgorithmOption`: three variants; Mathcad calls `ToggleMultiStart` before the `AlgorithmOptions` property is read.
+- Parked after three variants: `OnSetNumberFormatField`: three variants; the branch layout at IL #35 differs (Mathcad's `brfalse` jumps far, to the end of the method).
+- Parked after three variants: `InputControlOnEquationActivated`: switch and if-chain both differ; constants and branch count (Mathcad 3 conditional branches, ours 7).
+- Parked after three variants: `UpdateMatrixForResizeAdorner`: three variants; the first branch on `_matrixResizeAdorner` differs (Mathcad `brtrue`, ours `brfalse`).
+- Parked after three variants: `ConvertAnyFormattedMatrixToDisplayMatrix`: three variants (`as`, `is`, reordered pattern locals); Mathcad's `stloc.0` slot differs from ours at IL #18.
+
+- Not attempted: `ComponentCookieMultiThreaded` (property): not attempted; auto-property shape.
+- Not attempted: `Clone()` (public): not attempted; the 40-line body is still to be transcribed.
+- Not attempted: `CollectSizes_ForTestsOnly` (private static): not attempted; the bottom-tested `for` with `continue` shape.
+- Not attempted: `EngineResultForSerialization` (property): not attempted; the getter's `is` pattern and conditional expression.
+- Not attempted: `GetImeWindowPosition`: not attempted again; Mathcad constructs the unused `Point` with `call .ctor` on a local address, ours uses `newobj`.

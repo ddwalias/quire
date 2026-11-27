@@ -501,7 +501,15 @@ public partial class EquationControl
     {
         private global::Quire.Controls.EquationControl _parent;
         public EquationControlChildCalculatable(global::Quire.Controls.EquationControl parent) { }
-        public global::Quire.Controls.EquationControl.EquationControlChildCalculatable Clone(global::Quire.Controls.EquationControl newParent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public global::Quire.Controls.EquationControl.EquationControlChildCalculatable Clone(global::Quire.Controls.EquationControl newParent)
+        {
+            EquationControlChildCalculatable equationControlChildCalculatable = new EquationControlChildCalculatable(newParent);
+            equationControlChildCalculatable.RlIndex = RlIndex;
+            equationControlChildCalculatable.Rl = Rl;
+            equationControlChildCalculatable.SetSynchronizationStatus(SynchronizationStatus);
+            equationControlChildCalculatable.SetCalculatingStatus(CalculatingStatus);
+            return equationControlChildCalculatable;
+        }
         public override void SetSynchronizationStatus(global::Quire.Calculation.Core.SynchronizationStatus syncStatus) => base.SetSynchronizationStatus(syncStatus);
         public override void SetCalculatingStatus(global::Quire.Calculation.Core.CalculatingStatus computingStatus) => base.SetCalculatingStatus(computingStatus);
         public override void SetResult(global::Quire.Calculation.Core.IResultNode result) => base.SetResult(result);
@@ -513,8 +521,15 @@ public partial class EquationControl
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.EquationControl+SizeList2String, Ptc.Controls.EquationControl")]
     internal static partial class SizeList2String
     {
-        public static string WriteWrappedSizesToString(global::System.Collections.Generic.List<global::System.Windows.Size> sizeData, int numDecimalPlaces = -1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        public static global::System.Collections.Generic.List<global::System.Windows.Size> ReadWrappedSizesFromString(string sizesString) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public static string WriteWrappedSizesToString(List<Size> sizeData, int numDecimalPlaces = -1)
+        {
+            Func<Size, Size> doRound = size => numDecimalPlaces < 0 ? size : new Size(Math.Round(size.Width, numDecimalPlaces), Math.Round(size.Height, numDecimalPlaces));
+            return string.Join(", ", sizeData.Select(sizeItem => string.Format("{{{0}}}", doRound(sizeItem))).ToList());
+        }
+        public static global::System.Collections.Generic.List<global::System.Windows.Size> ReadWrappedSizesFromString(string sizesString)
+        {
+            return sizesString.Trim('{', '}').Split(new[] { "}, {" }, StringSplitOptions.RemoveEmptyEntries).Select(Size.Parse).ToList();
+        }
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.Controls.EquationControl+PropertyNames, Ptc.Controls.EquationControl")]
@@ -708,7 +723,28 @@ public partial class EquationControl
     [global::Quire.Mirror.MirrorStub, global::Quire.Mirror.MirrorBlocked("Constructor body not mirrored yet; the this() chain keeps the field initializers out of this constructor.")]
     public EquationControl(string sExpression, bool isForEngineCalculation) : this(sExpression) { }
 
-    public static global::Quire.Controls.EquationControl CreateWithTextInput(string s) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static global::Quire.Controls.EquationControl CreateWithTextInput(string s)
+    {
+        if (string.IsNullOrEmpty(s))
+        {
+            return null;
+        }
+        using (new CommandScope("Create equation from text input"))
+        {
+            EquationControl equationControl = new EquationControl();
+            char key = s[0];
+            equationControl._view.AutomateKeypress(key);
+            if (!equationControl._model.EquationRoot.IsPlaceholder)
+            {
+                for (int i = 1; i < s.Length; i++)
+                {
+                    equationControl._view.AutomateKeypress(s[i]);
+                }
+                return equationControl;
+            }
+        }
+        return null;
+    }
     public double TextBaselineY => _view.TextBaselineY;
     public bool AtLeftEdge => _model.AtLeftEdge();
 
@@ -1237,7 +1273,30 @@ public partial class EquationControl
         }
     }
 
-    public void ExecuteOnRootLoaded(global::System.Action action) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void ExecuteOnRootLoaded(global::System.Action action)
+    {
+        Action postponedAction = null;
+        if (_view.RootNode == null)
+        {
+            postponedAction = () =>
+            {
+                if (_view.RootNode == null)
+                {
+                    return;
+                }
+                if (postponedAction != null)
+                {
+                    _view.RootNodeChanged -= postponedAction;
+                }
+                global::Quire.Services.AppServiceRegistry.GetService<IFrameworkElementFacade>().ExecuteOnLoad(_view.RootNode as global::System.Windows.FrameworkElement, action);
+            };
+            _view.RootNodeChanged += postponedAction;
+        }
+        else
+        {
+            global::Quire.Services.AppServiceRegistry.GetService<IFrameworkElementFacade>().ExecuteOnLoad(_view.RootNode as global::System.Windows.FrameworkElement, action);
+        }
+    }
     private void ExecuteOnRootSizeChanged(global::System.Action action)
     {
         if (_view.RootNode is FrameworkElement frameworkElement)
@@ -1364,7 +1423,14 @@ public partial class EquationControl
         return mathType2;
     }
     public string TypeoverSExpression => _model.TypeoverSExpression;
-    public string[] History { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public string[] History
+    {
+        get
+        {
+            List<string> history = new global::System.Collections.Generic.List<string>(_model.VisualHistory);
+            return history.ToArray();
+        }
+    }
     public int GetRegionHistoryCount()
     {
         return History.Length;
@@ -1414,7 +1480,11 @@ public partial class EquationControl
     {
         EditNodeOnCaretSide(label, global::Quire.Direction.Indeterminate);
     }
-    public void EditNode(string label, int caretPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void EditNode(string label, int caretPosition)
+    {
+        MathNode node = _model.Root.FindDescendant(label);
+        _model.EditNode(node, caretPosition);
+    }
     public void EditNodeOnCaretSide(string label, global::Quire.Direction caretSide)
     {
         MathNode node = _model.Root.FindDescendant(label);
@@ -2111,7 +2181,12 @@ public partial class EquationControl
         global::Quire.EquationEditor.Tree.Navigation.NavigatorState navigatorState = new global::Quire.EquationEditor.Tree.Navigation.NavigatorState(current, caretSide, nodeSide);
         _model.NavigatorState = navigatorState;
     }
-    internal void SetNavigatorStateFromLabel(string label, int caretPosition) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal void SetNavigatorStateFromLabel(string label, int caretPosition)
+    {
+        MathNode current = _model.Root.FindDescendant(label);
+        global::Quire.EquationEditor.Tree.Navigation.NavigatorState navigatorState = new global::Quire.EquationEditor.Tree.Navigation.NavigatorState(current, caretPosition);
+        _model.NavigatorState = navigatorState;
+    }
 
     private void BindCommands()
     {
@@ -2512,7 +2587,14 @@ public partial class EquationControl
             _view.FireKeypress(c2);
         }
     }
-    private void OnInsertId(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnInsertId(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        if (!(e.Parameter is InsertIdCommandParameter insertIdCommandParameter) || insertIdCommandParameter.Name == null)
+        {
+            return;
+        }
+        _view.FireInsertId(insertIdCommandParameter.Name, insertIdCommandParameter.Label);
+    }
     private void OnInsertString(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
     {
         string text = e.Parameter as string;
@@ -2741,7 +2823,22 @@ public partial class EquationControl
         UpdateLhsVisibleOnView();
     }
 
-    private void UpdateLhsVisibleOnView() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void UpdateLhsVisibleOnView()
+    {
+        bool isVisible = ErrorCount > 0 || _view.VisibleWarningMessage != null || (_view.IsLogicalFocusWithin && !_view.IsLogicalFocusWithinScriptableControl) || VisibleLhsOfDefinition == Visibility.Visible;
+        bool canCollapse = ErrorCount <= 0 && _view.VisibleWarningMessage == null && (!_view.IsLogicalFocusWithin || _view.IsLogicalFocusWithinScriptableControl) && VisibleLhsOfDefinition == Visibility.Collapsed;
+        Visibility visibility = isVisible ? Visibility.Visible : (canCollapse ? Visibility.Collapsed : Visibility.Hidden);
+        if (_view.LhsOfDefinitionVisibility == visibility)
+        {
+            return;
+        }
+        _view.LhsOfDefinitionVisibility = visibility;
+        if (_view.LhsOfDefinitionVisibility != Visibility.Visible)
+        {
+            RemoveMatrixResizeAdornerIfNotNeeded();
+        }
+        ReApplyBackground();
+    }
     private void OnConvertToOperator(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
     {
         _view.FireConvertToOperator();
@@ -3119,7 +3216,28 @@ public partial class EquationControl
         global::Quire.EquationEditor.Tree.MathNode node = _map.AssociateNode(visualMatrix);
         return GetFormatForMatrix(node);
     }
-    internal void SetMatrixForResizeAdorner(global::Quire.EquationEditor.View.IVisualMatrixNode matrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal void SetMatrixForResizeAdorner(global::Quire.EquationEditor.View.IVisualMatrixNode matrix)
+    {
+        if (!IsScriptableControl && DebugTools.DevAssert(_view.LhsOfDefinitionVisibility == Visibility.Visible, null).Failed)
+        {
+            return;
+        }
+        MathNode mathNode = _map.AssociateNode(matrix);
+        if (mathNode == null || mathNode.IsInSymbolicResult)
+        {
+            return;
+        }
+        VisualMatrixNode visualMatrixNode = matrix as VisualMatrixNode;
+        if (_matrixResizeAdorner == null)
+        {
+            _matrixResizeAdorner = new global::Quire.Controls.ControlAdorners.MatrixResizeAdorner(this, visualMatrixNode);
+            _matrixResizeAdorner.CanActivate = AttachedProperties.GetCanActivate(this);
+        }
+        else if (!_matrixResizeAdorner.VisualMatrix.Equals(visualMatrixNode) && (!_matrixResizeAdorner.VisualMatrix.IsMouseOver || !visualMatrixNode.IsAncestorOf(_matrixResizeAdorner.VisualMatrix)))
+        {
+            _matrixResizeAdorner.VisualMatrix = visualMatrixNode;
+        }
+    }
     internal void UpdateMatrixForResizeAdorner(global::Quire.EquationEditor.View.IVisualMatrixNode matrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
         private static bool AreTableCoordinateListsEqual(IList<TableCoordinate> oneNestedMatrixPosition, IList<TableCoordinate> theOtherNestedMatrixPosition)
@@ -3349,7 +3467,48 @@ public partial class EquationControl
     // Measured: closure ordinals count these fields after ConvertAnyFormattedMatrixToDisplayMatrix, not before ShowError.
     private bool _temporaryResultMatrixFormatShouldClear;
     private global::System.Collections.Generic.IList<global::Quire.TableCoordinate> _nestedMatrixPositionWhichFormatShouldClear;
-    private static global::Quire.Calculation.Core.IMatrixResultNode ConvertToDisplayMatrix(global::Quire.Calculation.Core.IMatrixResultNode originalMatrix, global::Quire.Controls.Core.MatrixFormat matrixFormat, bool useEagerMatrixForSmallMatrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static global::Quire.Calculation.Core.IMatrixResultNode ConvertToDisplayMatrix(global::Quire.Calculation.Core.IMatrixResultNode originalMatrix, global::Quire.Controls.Core.MatrixFormat matrixFormat, bool useEagerMatrixForSmallMatrix)
+    {
+        if (useEagerMatrixForSmallMatrix)
+        {
+            int maxCells = 2500;
+            bool isSmall = originalMatrix.Rows * originalMatrix.Columns <= maxCells;
+            if (isSmall)
+            {
+                return ConvertToEagerMatrix(originalMatrix, matrixFormat, useEagerMatrixForSmallMatrix);
+            }
+        }
+        int rows = originalMatrix.Rows;
+        int columns = originalMatrix.Columns;
+        TableCoordinate offset = matrixFormat.Offset;
+        TableSize size = matrixFormat.Size;
+        if (offset.Row >= rows)
+        {
+            offset.Row = rows - 1;
+        }
+        if (offset.Column >= columns)
+        {
+            offset.Column = columns - 1;
+        }
+        if (offset.Row + size.Rows > rows)
+        {
+            size.Rows = rows - offset.Row;
+        }
+        if (offset.Column + size.Columns > columns)
+        {
+            size.Columns = columns - offset.Column;
+        }
+        IDisplayMatrixResultNode displayMatrixResultNode = new SimpleResultNodeFactory().CreateDisplayMatrixResultNode(rows, columns, offset, size);
+        for (int i = 0; i < size.Rows; i++)
+        {
+            for (int j = 0; j < size.Columns; j++)
+            {
+                IResultNode displayMatrixCell = GetDisplayMatrixCell(originalMatrix, matrixFormat, i + offset.Row, j + offset.Column, useEagerMatrixForSmallMatrix);
+                displayMatrixResultNode.Viewport.SetElementAt(i, j, displayMatrixCell);
+            }
+        }
+        return displayMatrixResultNode;
+    }
     private static global::Quire.Calculation.Core.IResultNode GetDisplayMatrixCell(global::Quire.Calculation.Core.IMatrixResultNode matrix, global::Quire.Controls.Core.MatrixFormat matrixFormat, int r, int c, bool useEagerMatrixForSmallMatrix)
     {
         global::Quire.Calculation.Core.IResultNode resultNode = matrix[r, c];
@@ -3460,7 +3619,16 @@ public partial class EquationControl
     {
         return SizeList2String.WriteWrappedSizesToString(GetEquationSizes_ForTestsOnly(), numDecimalPlaces);
     }
-    public global::System.Collections.Generic.List<global::System.Windows.Size> GetEquationSizes_ForTestsOnly() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::System.Collections.Generic.List<global::System.Windows.Size> GetEquationSizes_ForTestsOnly()
+    {
+        DebugTools.DevAssert(DesiredSize == RenderSize, null);
+        List<Size> list = new List<Size>();
+        list.Add(RenderSize);
+        string text = CollectSizes_ForTestsOnly(_view, list);
+        // The IL formats this message with String.Format rather than a concatenation.
+        DebugTools.DevAssert(text == null, string.Format("Sexpr: {0} has wrong measure: {1}", EquationSExpression, text));
+        return list;
+    }
     private static string CollectSizes_ForTestsOnly(global::Quire.Controls.Internal.VisualMathNode node, global::System.Collections.Generic.List<global::System.Windows.Size> output) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public IBookmarksManager BookmarksManager { get; set; }
     private static readonly global::System.Type _typeOfThis;
@@ -3702,8 +3870,14 @@ public partial class EquationControl
             (d as EquationControl).IsActiveChanged((bool)e.NewValue);
         }
     }
-    private void IsSelectedChanged(bool isSelected) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void IsActiveChanged(bool isActive) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void IsSelectedChanged(bool isSelected)
+    {
+        CreateOrClearTemporaryResultMatrixFormat(isSelected);
+    }
+    private void IsActiveChanged(bool isActive)
+    {
+        CreateOrClearTemporaryResultMatrixFormat(isActive);
+    }
 
     internal partial class TestHelper
     {
