@@ -36,8 +36,6 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
     [global::Quire.Mirror.MirrorStub]
     private T ShowMessage<T>(global::System.Func<global::System.Windows.Window, string, T> messageDisplayDelegate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void OnEngNotebookConnectionStatusChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal static void EnsureLicenseManagerInstance() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public SpiritMainWindow(bool isEmbedding = false, bool handleExceptions = false) { }
@@ -45,8 +43,6 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
     private void AnyDocumentRequestToUpdateInputsEnabledCheck() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OpenDocumentsListChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DocumentPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void InitializeTemplatesLocations() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -56,19 +52,13 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
     [global::Quire.Mirror.MirrorStub]
     private void UnhandledDispatcherExceptionHandler(object sender, global::System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HandleException(global::System.Exception exception, string message) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private bool AttemptToSaveWorksheetCopy(global::Quire.Controls.Core.IEngineeringDocument doc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UnhandledExceptionHandler(object sender, global::System.UnhandledExceptionEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void SpiritOptionPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HelpManagerPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void IsVisibleChangedEventHandler(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ContextMenuOpeningEventHandler(object sender, global::System.Windows.Controls.ContextMenuEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HookupLicense(bool isEmbedding) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -107,8 +97,6 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
     private void DisplayCriticalWarning(string displayedMessage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void BindCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleDocumentZoomIn(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool AreAliasesValidForUpdateInputs(global::Quire.Controls.Core.IEngineeringDocument doc, global::System.Collections.Generic.IEnumerable<string> aliases) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
