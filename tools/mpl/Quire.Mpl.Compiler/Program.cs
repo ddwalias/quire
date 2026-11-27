@@ -3,10 +3,18 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Text.RegularExpressions;
 using MplAssemblyBuilder = System.Reflection.Emit.Quire.Mpl.AssemblyBuilder;
+using MplILGenerator = System.Reflection.Emit.Quire.Mpl.ILGenerator;
 
 if (args.Length == 5 && args[0] == "--interface")
 {
     CompileInterfaceModule(Path.GetFullPath(args[1]), Path.GetFullPath(args[2]),
+        Path.GetFullPath(args[3]), args[4]);
+    return 0;
+}
+
+if (args.Length == 5 && args[0] == "--thin")
+{
+    CompileThinModule(Path.GetFullPath(args[1]), Path.GetFullPath(args[2]),
         Path.GetFullPath(args[3]), args[4]);
     return 0;
 }
@@ -84,6 +92,134 @@ static void CompileInterfaceModule(string sourcePath, string outputPath, string 
     assembly.Save(outputPath);
 }
 
+static void CompileThinModule(string sourcePath, string outputPath, string install, string project)
+{
+    var source = File.ReadAllText(sourcePath, Encoding.UTF8).Replace("\r\n", "\n", StringComparison.Ordinal)
+        .Replace('\r', '\n');
+    const string marker = "\n-- implementation\n";
+    var parts = source.Split(marker, 2, StringSplitOptions.None);
+    if (parts.Length != 2)
+        throw new InvalidDataException("Thin-module source needs an -- implementation section after its interface.");
+    var interfaceText = parts[0].TrimStart('\uFEFF');
+    var commentEnd = interfaceText.IndexOf('\n');
+    if (commentEnd < 0 || !interfaceText[..commentEnd].StartsWith("-- ", StringComparison.Ordinal))
+        throw new InvalidDataException("Thin-module source needs one authored comment before its interface.");
+    interfaceText = interfaceText[(commentEnd + 1)..];
+    var moduleName = ParseInterfaceModuleName(interfaceText);
+    if (project != "Quire." + moduleName)
+        throw new InvalidDataException($"Source module {moduleName} does not map to output project {project}.");
+
+    var bindings = new List<(string Name, string[] Args, string Expression)>();
+    foreach (var raw in parts[1].Split('\n'))
+    {
+        var line = raw.Trim();
+        if (line.Length == 0 || line.StartsWith("--", StringComparison.Ordinal)) continue;
+        var separator = line.IndexOf(" = ", StringComparison.Ordinal);
+        if (separator < 1) throw new InvalidDataException($"Unsupported thin Mpl definition: {line}");
+        var head = line[..separator].Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        bindings.Add((head[0], head.Skip(1).ToArray(), line[(separator + 3)..]));
+    }
+
+    var globalBindings = bindings.Where(binding => binding.Args.Length == 0).ToArray();
+    var functions = bindings.Where(binding => binding.Args.Length > 0).ToArray();
+    if (functions.Length == 0)
+        throw new InvalidDataException("The thin compiler subset needs at least one value function.");
+
+    var runtime = Assembly.LoadFrom(Path.Combine(install, "mplrun.dll"));
+    var moduleTextCtor = runtime.GetType("Mpl.Run.ModuleTextAttribute", throwOnError: true)!
+        .GetConstructor([typeof(string)]) ?? throw new MissingMethodException("ModuleTextAttribute..ctor(string)");
+    var moduleInterfaceCtor = runtime.GetType("Mpl.Run.ModuleInterfaceAttribute", throwOnError: true)!
+        .GetConstructor([typeof(string)]) ?? throw new MissingMethodException("ModuleInterfaceAttribute..ctor(string)");
+    var assembly = CreateAssembly(project);
+    var module = assembly.DefineDynamicModule(Path.GetFileName(outputPath));
+    var values = module.DefineType(project + ".values", TypeAttributes.Public | TypeAttributes.Class);
+    SetStringAttribute(values, moduleTextCtor, "");
+    SetStringAttribute(values, moduleInterfaceCtor, interfaceText);
+    AddMirrorOf(values, moduleName + ".values, " + moduleName);
+    var fields = globalBindings.ToDictionary(binding => binding.Name,
+        binding => values.DefineField(binding.Name, typeof(object), FieldAttributes.Public | FieldAttributes.Static),
+        StringComparer.Ordinal);
+
+    var update = values.DefineMethod("Update", MethodAttributes.Public | MethodAttributes.Static,
+        typeof(void), Type.EmptyTypes);
+    var updateIl = update.GetILGenerator();
+    foreach (var binding in globalBindings)
+    {
+        EmitExternalStaticField(updateIl, binding.Expression, install);
+        updateIl.Emit(OpCodes.Stsfld, fields[binding.Name]);
+    }
+    updateIl.Emit(OpCodes.Ret);
+
+    foreach (var function in functions)
+    {
+        var method = values.DefineMethod(function.Name, MethodAttributes.Public | MethodAttributes.Static,
+            typeof(object), Enumerable.Repeat(typeof(object), function.Args.Length).ToArray());
+        var expression = function.Expression.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (expression.Length < 2 || !expression[0].Contains('.', StringComparison.Ordinal))
+            throw new InvalidDataException($"Expected a qualified function application: {function.Expression}");
+        var arguments = expression.Skip(1).ToArray();
+        var il = method.GetILGenerator();
+        foreach (var argument in arguments)
+        {
+            var argumentIndex = Array.IndexOf(function.Args, argument);
+            if (argumentIndex >= 0)
+            {
+                switch (argumentIndex)
+                {
+                    case 0: il.Emit(OpCodes.Ldarg_0); break;
+                    case 1: il.Emit(OpCodes.Ldarg_1); break;
+                    case 2: il.Emit(OpCodes.Ldarg_2); break;
+                    case 3: il.Emit(OpCodes.Ldarg_3); break;
+                    default: il.Emit(OpCodes.Ldarg, (short)argumentIndex); break;
+                }
+            }
+            else
+                EmitExternalStaticField(il, argument, install);
+        }
+        il.Emit(OpCodes.Tailcall);
+        il.Emit(OpCodes.Call, ResolveExternalMethod(expression[0], arguments.Length, install));
+        il.Emit(OpCodes.Ret);
+    }
+
+    var initializer = values.DefineConstructor(MethodAttributes.Public | MethodAttributes.Static,
+        CallingConventions.Standard, Type.EmptyTypes);
+    var initializerIl = initializer.GetILGenerator();
+    initializerIl.Emit(OpCodes.Call, update);
+    initializerIl.Emit(OpCodes.Ret);
+    values.CreateType();
+    Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+    assembly.Save(outputPath);
+}
+
+static void EmitExternalStaticField(MplILGenerator il, string qualifiedName, string install)
+{
+    var field = ResolveExternalField(qualifiedName, install);
+    il.Emit(OpCodes.Ldsfld, field);
+}
+
+static FieldInfo ResolveExternalField(string qualifiedName, string install)
+{
+    var parts = qualifiedName.Split('.', 2);
+    if (parts.Length != 2) throw new InvalidDataException($"Expected module.field: {qualifiedName}");
+    var assembly = Assembly.LoadFrom(Path.Combine(install, parts[0] + ".dll"));
+    var type = assembly.GetType(parts[0] + ".values", throwOnError: true)!;
+    return type.GetField(parts[1], BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+        ?? throw new MissingFieldException(type.FullName, parts[1]);
+}
+
+static MethodInfo ResolveExternalMethod(string qualifiedName, int parameterCount, string install)
+{
+    var parts = qualifiedName.Split('.', 2);
+    if (parts.Length != 2) throw new InvalidDataException($"Expected module.method: {qualifiedName}");
+    var assembly = Assembly.LoadFrom(Path.Combine(install, parts[0] + ".dll"));
+    var type = assembly.GetType(parts[0] + ".values", throwOnError: true)!;
+    var method = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+        .SingleOrDefault(candidate => candidate.Name == parts[1]
+            && candidate.GetParameters().Length == parameterCount
+            && candidate.GetParameters().All(parameter => parameter.ParameterType == typeof(object)));
+    return method ?? throw new MissingMethodException(type.FullName, parts[1]);
+}
+
 static void SetStringAttribute(System.Reflection.Emit.Quire.Mpl.TypeBuilder type,
     ConstructorInfo constructor, string value)
 {
@@ -131,8 +267,6 @@ static string ParseInterfaceModuleName(string interfaceText)
     if (declarations.Any(line => line.Contains(" = ", StringComparison.Ordinal)
         && !line.StartsWith("data ", StringComparison.Ordinal)))
         throw new InvalidDataException("Interface-only modules cannot contain value definitions.");
-    if (!declarations.Any(line => line.Contains(" :: ", StringComparison.Ordinal)))
-        throw new InvalidDataException("Interface-only source must declare at least one signature.");
     return match.Groups[1].Value;
 }
 

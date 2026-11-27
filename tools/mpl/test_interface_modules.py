@@ -16,7 +16,7 @@ CACHE = ROOT / ".mirror-cache/mpl-interface-emitter"
 COMPILER_OUT = CACHE / "compiler"
 AUDIT_OUT = CACHE / "method-audit"
 MODULES = ["EfiAffine", "EfiFourier", "EfiSpecial", "EfiFinance", "EfiBessel",
-           "EfiSixsigma", "EfiData", "EfiIO", "EfiWavelets", "EfiSignal"]
+           "EfiSixsigma", "EfiData", "EfiIO", "EfiWavelets", "EfiSignal", "EfiImage", "EfiStatistics", "McdEfi"]
 ATTRIBUTE = re.compile(
     r"\.custom instance void \[[^]]+\]([^\s]+)::\.ctor\(string\) = \(\s*((?:[0-9a-fA-F]{2}\s*)+)\)", re.S)
 
