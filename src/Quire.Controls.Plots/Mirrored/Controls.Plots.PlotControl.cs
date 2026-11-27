@@ -320,7 +320,61 @@ public partial class PlotControl
             plotControl.Graph.SetIsResizing(plotControl.IsResizing);
         }
     }
-    private void PlotControlLoaded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void PlotControlLoaded() {
+		bool num = !IsActiveRegion && _resultEquations.Visibility == HiddenExpressionsVisibility;
+		Size plotGraphSize = PlotGraphSize;
+		InitializeResizeEventsAfterLoading();
+		SelectAllTraces();
+		Size graphSize = _model.GraphSize;
+		if (!graphSize.IsEmpty && SerializationHelperUtils.IsConvertedFromMathcad14((DependencyObject)(object)this))
+		{
+			ForceMc14GraphSize();
+		}
+		if (num)
+		{
+			_model.GraphSize = plotGraphSize;
+			_referenceSizeForPostUnfixate = Size.Empty;
+			_expressionVisibilityChangeInProgress = false;
+			_plotSizeChanging = true;
+			if (SerializationHelperUtils.IsConvertedFromMathcad14((DependencyObject)(object)this))
+			{
+				return;
+			}
+			if (PlotType == PlotType.Polar)
+			{
+				DebugTools.DevAssert(Graph.ActualWidth.IsEqualTo(Graph.ActualHeight, 1E-05), null);
+				double maximumGraphDimension = Math.Max(plotGraphSize.Width, plotGraphSize.Height);
+				double polarWidthDifference = Graph.ActualWidth - maximumGraphDimension;
+				if (polarWidthDifference.IsGreaterThan(0.0, 1E-05))
+				{
+					Width -= polarWidthDifference;
+					Height -= polarWidthDifference;
+				}
+				return;
+			}
+			double graphWidthDifference = Graph.ActualWidth - plotGraphSize.Width;
+			double graphHeightDifference = Graph.ActualHeight - plotGraphSize.Height;
+			if (graphWidthDifference.IsGreaterThan(0.0, 1E-05))
+			{
+				Width -= graphWidthDifference;
+			}
+			if (graphHeightDifference.IsGreaterThan(0.0, 1E-05))
+			{
+				Height -= graphHeightDifference;
+			}
+		}
+		else if (!ShowAxisExpressions && !IsActiveRegion && !_isActivationPending)
+		{
+			SwitchExpressionsVisibility(HiddenExpressionsVisibility);
+			if (PlotType == PlotType.Polar)
+			{
+				_expressionVisibilityChangeInProgress = false;
+				_plotSizeChanging = true;
+				_model.GraphSize = plotGraphSize;
+			}
+			_referenceSizeForPostUnfixate = Size.Empty;
+		}
+	}
     private void SelectAllTraces() {
 		SelectedTraces = new List<IPlotTrace>(Traces);
 	}
@@ -487,7 +541,20 @@ public partial class PlotControl
     public static readonly global::System.Windows.Input.RoutedUICommand DeleteMarkerCommand;
     public static readonly global::System.Windows.DependencyProperty IsCalculatingProperty;
     public static readonly global::System.Windows.DependencyPropertyKey PlotXMinGapPropertyKey;
-    private void PlaceholderSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void PlaceholderSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) {
+		if (IsLoaded || !IsInPrinting)
+		{
+			WpfUtils.ExecuteOnLoad(this, () =>
+			{
+				PlotItemPlaceholder plotItemPlaceholder = (PlotItemPlaceholder)sender;
+				Thickness padding = plotItemPlaceholder.Padding;
+				plotItemPlaceholder.AdjustPadding();
+				_plotStrategy.SetMinWidthHeight(this);
+				DebugTools.DevAssert(SnapToGrid == plotItemPlaceholder.SnapToGrid, null);
+				DebugTools.DevAssert(_doubleComparer.Compare(padding.Left, plotItemPlaceholder.Padding.Left) == 0 && _doubleComparer.Compare(padding.Right, plotItemPlaceholder.Padding.Right) == 0 && _doubleComparer.Compare(padding.Top, plotItemPlaceholder.Padding.Top) == 0 && _doubleComparer.Compare(padding.Bottom, plotItemPlaceholder.Padding.Bottom) == 0, null);
+			}, HasWorksheetProperties);
+		}
+	}
     private void InitializeAxes() {
 		_plotStrategy.InitializeAxes(XAxisTitle, YAxisTitle, _plotTitle, _rangeEquations, _resultEquations, out _rangeAxis, out _primaryResultAxis);
 	}
@@ -566,8 +633,30 @@ public partial class PlotControl
 			}
 		}
 	}
-    private void PlotTitlePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void PlotLegendPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void PlotTitlePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) {
+		if (e.PropertyName == "ShowTitle" && sender is PlotTitleViewModel { TitleType: var titleType } plotTitleViewModel)
+		{
+			switch (titleType)
+			{
+			case PlotTitleType.Plot:
+				UpdatePlotTitlePlaceholderVisibility();
+				break;
+			case PlotTitleType.XAxis:
+			case PlotTitleType.YAxis:
+				UpdateAxisTitlePlaceholderVisibility(plotTitleViewModel);
+				break;
+			default:
+				DebugTools.FailAssertionDoNotThrow("Plot Title Type is not recognized after ShowTitle has been changed");
+				break;
+			}
+		}
+	}
+    private void PlotLegendPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) {
+		if (sender is PlotLegendViewModel && e.PropertyName == "ShowPlotLegend")
+		{
+			UpdatePlotLegendPlaceholderVisibility();
+		}
+	}
     internal void UpdateStaticXPlaceholdersVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void UpdatePlotTitlePlaceholderVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void UpdatePlotLegendPlaceholderVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -672,7 +761,20 @@ public partial class PlotControl
             equationList[i].Commit(fireEvent: false);
         }
     }
-    private void OnRequestMoveAndResize(object sender, global::Quire.Controls.Core.ResizeEventMouseArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void OnRequestMoveAndResize(object sender, global::Quire.Controls.Core.ResizeEventMouseArgs args) {
+		DragMode dragMode = args.DragMode;
+		UIElement sourceElement = args.SourceElement;
+		Point startPosition = sourceElement.TranslatePoint(args.StartPoint, this);
+		if (sourceElement != this)
+		{
+			PlotDragger resizer = new PlotDragger(this, startPosition, dragMode, sourceElement, args.Automation);
+			if (args.Automation)
+			{
+				args.Resizer = resizer;
+			}
+			args.Handled = true;
+		}
+	}
 
     private static bool TraceCanIncrease(IPlotTrace trace)
     {
@@ -715,7 +817,29 @@ public partial class PlotControl
     private static readonly global::System.Windows.DependencyProperty SelectedTraceTypeProperty;
     public static readonly global::System.Windows.DependencyProperty SelectedTracesProperty;
     private global::Quire.PersistentDataObjects.plotEquation[] _xEquationsToAdd;
-    private void TogglePlotTitleCommandExecute(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void TogglePlotTitleCommandExecute(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) {
+		if (_plotTitle == null || Model?.PlotTitleModel == null)
+		{
+			return;
+		}
+		new TogglePlotTitleCommand(this).Execute();
+		if (_plotTitleViewModel.ShowTitle)
+		{
+			WpfUtils.ExecuteOnLoad(_plotTitle.Title, () =>
+			{
+				_plotTitle.Title.Focus();
+			});
+			WpfUtils.ExecuteOnLoad(_plotTitle.Title, () =>
+			{
+				_plotTitle.Title.SelectAll();
+			});
+		}
+		else
+		{
+			DelegateFocus();
+		}
+		RaiseEvent(new RoutedEventArgs(ContentChangedEvent));
+	}
 
     private void AddRowCommandExecute(object sender, ExecutedRoutedEventArgs e)
     {
@@ -844,7 +968,12 @@ public partial class PlotControl
     protected override void HandleLostFocus(global::System.Windows.DependencyObject oldFocused, global::System.Windows.DependencyObject newFocused) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     protected override void HandleGotFocusOverride(global::System.Windows.DependencyObject newFocused) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     internal global::Quire.Controls.EquationControl GetMarkerEquation(global::Quire.Controls.Plots.ViewModel.BaseMarkerViewModel baseMarkerViewModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    internal void HandlePlotGridSplitterMouseDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal void HandlePlotGridSplitterMouseDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) {
+		if (!IsKeyboardFocusWithin)
+		{
+			DelegateFocus();
+		}
+	}
     protected virtual void RegisterLegendsToEvents(global::System.Collections.Generic.IEnumerable<global::System.Windows.Controls.ContentControl> legendsPositionsArray) {
 		if (legendsPositionsArray == null)
 		{
@@ -865,7 +994,43 @@ public partial class PlotControl
 			item.SizeChanged -= PlaceholderSizeChanged;
 		}
 	}
-    private void ContentControlDrop(object sender, global::System.Windows.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ContentControlDrop(object sender, global::System.Windows.DragEventArgs e) {
+		if (e.Data.GetDataPresent(typeof(PlotItem).Name))
+		{
+			PlotItem plotItem = e.Data.GetData(typeof(PlotItem).Name, autoConvert: true) as PlotItem;
+			ContentControl dropTarget = DropTarget;
+			if (dropTarget != null)
+			{
+				int moveToIndex = int.Parse(dropTarget.Tag.ToString(), CultureInfo.InvariantCulture);
+				if (plotItem == _rangeEquations)
+				{
+					MoveLegendXToIndex(moveToIndex);
+				}
+				else if (plotItem == _resultEquations)
+				{
+					MoveLegendYToIndex(moveToIndex);
+				}
+				else if (plotItem == _plotLegend)
+				{
+					if (PlotLegendPositionIndex != 0 && Graph != null && _doubleComparer.Compare(Graph.ActualHeight, 0.0) > 0)
+					{
+						_graphHeightBeforeShowingLegendBelow = Graph.ActualHeight;
+					}
+					MovePlotLegendToIndex(moveToIndex);
+					if (PlotLegendPositionIndex == 0)
+					{
+						PreserveGraphHeightAfterShowingBelowLegend();
+					}
+				}
+				else
+				{
+					MovePlotTitleToIndex(moveToIndex);
+				}
+				DropTarget = null;
+			}
+		}
+		e.Handled = true;
+	}
     public void MoveLegendXToIndex(int moveToIndex) {
 		new ChangeXLegendPositionCommand(this, moveToIndex).Execute();
 	}
@@ -1253,16 +1418,46 @@ public partial class PlotControl
     private static void SelectedTracesChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     protected override bool ShouldSerializeProperty(global::System.Windows.DependencyProperty dp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public global::Quire.Controls.Plots.Presenter.IPlotTrace AddTrace() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void HasEquationErrorPropertyChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HasEquationErrorPropertyChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) {
+		ShowHidePseudoErrorFrame(_resultEquations.Visibility);
+	}
     public void RemoveTrace(global::Quire.Controls.Plots.Presenter.IPlotTrace trace) {
 		Graph.RemoveTrace(trace);
 	}
-    public void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void FireCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calculatable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void FireXLegendPositionsIndexChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void FireYLegendPositionsIndexChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void FirePlotTitlePositionsIndexChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void FirePlotLegendPositionsIndexChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void FireCalculatableAdded(global::Quire.Calculation.Core.ICalculatable calculatable) {
+		if (calculatable is ICalculationHideableChild calculationHideableChild)
+		{
+			calculationHideableChild.HideFromCalculationContext = HideFromCalculationContext;
+		}
+		_childHider.ChildAdded(calculatable);
+	}
+    public void FireCalculatableRemoved(global::Quire.Calculation.Core.ICalculatable calculatable) {
+		_childHider.ChildRemoved(calculatable);
+	}
+    private void FireXLegendPositionsIndexChanged() {
+		if (XLegendPositionsIndexChanged != null)
+		{
+			XLegendPositionsIndexChanged(XLegendPositionIndex);
+		}
+	}
+    private void FireYLegendPositionsIndexChanged() {
+		if (YLegendPositionsIndexChanged != null)
+		{
+			YLegendPositionsIndexChanged(YLegendPositionIndex);
+		}
+	}
+    private void FirePlotTitlePositionsIndexChanged() {
+		if (PlotTitlePositionsIndexChanged != null)
+		{
+			PlotTitlePositionsIndexChanged((LegendPositions.PlotTitlePosition)PlotTitlePositionIndex);
+		}
+	}
+    private void FirePlotLegendPositionsIndexChanged() {
+		if (PlotLegendPositionsIndexChanged != null)
+		{
+			PlotLegendPositionsIndexChanged(PlotLegendPositionIndex);
+		}
+	}
     public void AddEquations(global::Quire.Controls.Plots.XyEquation xyEquation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public int ErrorCount() {
 		int errorCount = 0;
@@ -1329,15 +1524,49 @@ public partial class PlotControl
     public global::Quire.Controls.Plots.Presenter.IPlotTrace[] Traces { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     protected override global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotEquation> GetPlotEquations() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public override bool HideFromCalculationContext { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    public void UpdateAxisOriginPositions(bool modelHasOriginPositioning) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void UpdateAxisOriginPositions(bool modelHasOriginPositioning) {
+		HasOriginPositioning = modelHasOriginPositioning;
+		if (HasOriginPositioning)
+		{
+			_rangeAxis.UpdateAxisOriginPositions();
+			_primaryResultAxis.UpdateAxisOriginPositions();
+		}
+	}
     public global::Quire.PersistentDataObjects.plotEquation[] PrimaryYAxisEquationDataObjects { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    private static global::Quire.PersistentDataObjects.plotEquation[] GetPlotEquationDataObjects(global::Quire.Controls.Plots.Presenter.IPlotAxisView axisView) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static void SetPlotEquationDataObjects(global::Quire.Controls.Plots.Presenter.IPlotAxisView axisView, global::Quire.PersistentDataObjects.plotEquation[] dataObjects) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static global::Quire.PersistentDataObjects.plotEquation[] GetPlotEquationDataObjects(global::Quire.Controls.Plots.Presenter.IPlotAxisView axisView) {
+		plotEquation[] array = new plotEquation[axisView.EquationCount];
+		for (int num = 0; num < axisView.EquationCount; num++)
+		{
+			array[num] = axisView[num].GetDataObject();
+		}
+		return array;
+	}
+    private static void SetPlotEquationDataObjects(global::Quire.Controls.Plots.Presenter.IPlotAxisView axisView, global::Quire.PersistentDataObjects.plotEquation[] dataObjects) {
+		for (int num = 0; num < dataObjects.Length; num++)
+		{
+			axisView[num].SetDataObject(dataObjects[num]);
+		}
+	}
     private static void AddEquations(global::Quire.Controls.Plots.Presenter.IPlotAxisView axisView, int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private static global::Quire.PersistentDataObjects.textType[] GetPlotLegendItemsDataObjects(global::Quire.Controls.Plots.PlotLegend plotLegend) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void SetPlotLegendItemsDataObjects(global::Quire.Controls.Plots.PlotLegend plotLegend, global::Quire.PersistentDataObjects.textType[] legendlabelitems) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public virtual void SetGraphSizeForXamlSerialization() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public override void EndInit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public virtual void SetGraphSizeForXamlSerialization() {
+	}
+    public override void EndInit() {
+		base.EndInit();
+		if (ViewModel != null)
+		{
+			ViewModel.UpdateFromModel();
+		}
+		if (_engineResults != null)
+		{
+			ResultManager.DispatchResults(_engineResults, ResultOwners);
+		}
+		if (InCustomInitialization)
+		{
+			InCustomInitialization = false;
+		}
+	}
     public global::Quire.PersistentDataObjects.plotEquation[] XAxisEquationDataObjects { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     public global::Quire.PersistentDataObjects.plotBaseTypeLegend PlotLegendDataObject { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     public global::Quire.PersistentDataObjects.plotTitleType PlotTitleDataObject { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -1369,9 +1598,64 @@ public partial class PlotControl
     private void UpdateSelectedTracesNumOfPointsProperty() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private int CalculateNumberOfPointsInSelectedTraces() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public override void DeserializeEpilog() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected override void PropagateTextStyleChangedHandler() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected override void PropagateInitialTextFormat() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public override void DeserializeEpilog() {
+		_model.DeserializeEpilog(SerializationHelperUtils.IsConvertedFromMathcad14((DependencyObject)(object)this));
+	}
+    protected override void PropagateTextStyleChangedHandler() {
+		base.PropagateTextStyleChangedHandler();
+		ITextStyleChangedHandler textStyleChangedHandler = TextStyleChangedHandler;
+		if (textStyleChangedHandler == null)
+		{
+			return;
+		}
+		if (_plotTitle?.Title != null)
+		{
+			_plotTitle.Title.TextStyleChangedHandler = textStyleChangedHandler;
+		}
+		if (XAxisTitle?.Title != null)
+		{
+			XAxisTitle.Title.TextStyleChangedHandler = textStyleChangedHandler;
+		}
+		if (YAxisTitle?.Title != null)
+		{
+			YAxisTitle.Title.TextStyleChangedHandler = textStyleChangedHandler;
+		}
+		if (_plotLegend == null)
+		{
+			return;
+		}
+		_plotLegend.TextStyleChangedHandler = textStyleChangedHandler;
+		foreach (IPlotLegendItem item in _plotLegend.PlotLegendListEnumerable)
+		{
+			if (item is PlotLegendItem { LegendLabel: not null } plotLegendItem)
+			{
+				plotLegendItem.LegendLabel.TextStyleChangedHandler = textStyleChangedHandler;
+			}
+		}
+	}
+    protected override void PropagateInitialTextFormat() {
+		base.PropagateInitialTextFormat();
+		TextFormat initialTextFormat = InitialTextFormat;
+		if (initialTextFormat == null)
+		{
+			return;
+		}
+		_plotTitle?.Title?.ApplyInitialTextFormat(initialTextFormat);
+		XAxisTitle?.Title?.ApplyInitialTextFormat(initialTextFormat);
+		YAxisTitle?.Title?.ApplyInitialTextFormat(initialTextFormat);
+		if (_plotLegend == null)
+		{
+			return;
+		}
+		_plotLegend.InitialTextFormat = initialTextFormat;
+		foreach (IPlotLegendItem item in _plotLegend.PlotLegendListEnumerable)
+		{
+			if (item is PlotLegendItem { LegendLabel: { } legendLabel })
+			{
+				legendLabel.ApplyInitialTextFormat(initialTextFormat);
+			}
+		}
+	}
 
     [DebuggerNonUserCode]
     [GeneratedCode("PresentationBuildTasks", "10.0.11.0")]

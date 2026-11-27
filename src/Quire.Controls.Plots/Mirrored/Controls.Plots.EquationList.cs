@@ -152,6 +152,7 @@ public partial class EquationList
     }
 
     public int EquationCount => EquationListGrid.Children.Count;
+    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotEquation> Equations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 
     internal int Columns
     {
@@ -228,11 +229,14 @@ public partial class EquationList
         return SelectedItem;
     }
 
-    public EquationListItem SelectedItem => EquationListGrid.Children[SelectedItemIndex] as EquationListItem;
-
     internal double MaxListWidth { get; set; }
+    internal double MaxListHeight { get; set; }
+    public int SelectedItemIndex { get; private set; }
+    public EquationListItem SelectedItem => EquationListGrid.Children[SelectedItemIndex] as EquationListItem;
     internal global::Quire.Controls.Plots.Presenter.IEquationListItem AddItemToLegend(int index, global::Quire.Controls.Plots.Presenter.IEquationListItem equationListItem, bool focus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private global::Quire.Controls.Plots.Presenter.IPlotEquation GetNewEquation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public bool InCustomInitialization { get; set; }
+    public bool EquationItemWOUnit { get; set; }
 
     private void RegisterToEvents(IEquationListItem equationListItem)
     {
@@ -277,7 +281,6 @@ public partial class EquationList
         eq?.ShowOrHideScaling(IsKeyboardFocusWithin);
     }
 
-    internal double MaxListHeight { get; set; }
     private void OnIsKeyboardFocusWithinChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     private void FireActiveEquationChanged(IPlotEquation equationControl)
@@ -524,7 +527,6 @@ public partial class EquationList
             return result;
         }
     }
-    public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Plots.Presenter.IPlotEquation> Equations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     private void HandleInsertItemToLegendCommand(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [DebuggerNonUserCode]
@@ -562,12 +564,6 @@ public partial class EquationList
         }
     }
     public event global::System.Action<global::Quire.Controls.Plots.Presenter.IPlotEquation> ActiveEquationChanged;
-
-    public int SelectedItemIndex { get; private set; }
-
-    public bool InCustomInitialization { get; set; }
-
-    public bool EquationItemWOUnit { get; set; }
 
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public IMathFormat DeserializeMathFormat { get; set; }
