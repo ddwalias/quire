@@ -41,19 +41,22 @@ public partial class OptionsWindow
                 OptOutQualityAgentCheckBox = (global::System.Windows.Controls.CheckBox)target;
                 return;
             case 6:
-                ((global::System.Windows.Controls.CheckBox)target).Unchecked += RestCustomMyTemplatesLocation;
+                CustomMyTemplatesLocationCheckBox = (global::System.Windows.Controls.CheckBox)target;
+                CustomMyTemplatesLocationCheckBox.Unchecked += RestCustomMyTemplatesLocation;
                 return;
             case 7:
                 CustomMyTemplatesLocationTextBox = (global::System.Windows.Controls.TextBox)target;
                 return;
             case 8:
-                ((global::System.Windows.Controls.CheckBox)target).Unchecked += ResetCustomSharedTemplatesLocation;
+                CustomSharedTemplatesLocationCheckBox = (global::System.Windows.Controls.CheckBox)target;
+                CustomSharedTemplatesLocationCheckBox.Unchecked += ResetCustomSharedTemplatesLocation;
                 return;
             case 9:
                 CustomSharedTemplatesLocationTextBox = (global::System.Windows.Controls.TextBox)target;
                 return;
             case 10:
-                ((global::System.Windows.Controls.CheckBox)target).Unchecked += RestPathToDefaultTemplateForNewDocument;
+                CustomPathToDefaultTemplateForNewDocumentCheckBox = (global::System.Windows.Controls.CheckBox)target;
+                CustomPathToDefaultTemplateForNewDocumentCheckBox.Unchecked += RestPathToDefaultTemplateForNewDocument;
                 return;
             case 11:
                 CustomPathToDefaultTemplateForNewDocumentTextBox = (global::System.Windows.Controls.TextBox)target;
@@ -68,7 +71,8 @@ public partial class OptionsWindow
                 ScriptingRunWorksheetRecalculateCheckBox = (global::System.Windows.Controls.CheckBox)target;
                 return;
             case 15:
-                ((global::System.Windows.Controls.CheckBox)target).Unchecked += RestCustomPythonDirPath;
+                CustomPathToPythonDirCheckBox = (global::System.Windows.Controls.CheckBox)target;
+                CustomPathToPythonDirCheckBox.Unchecked += RestCustomPythonDirPath;
                 return;
             case 16:
                 CustomPythonDirLocationTextBox = (global::System.Windows.Controls.TextBox)target;
