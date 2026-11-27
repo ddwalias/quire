@@ -2988,11 +2988,7 @@ private void SetupDefaultPageLayout()
             }
             if (ActiveSection.IsCrosshairVisible)
             {
-                IRestrictedAreaAlignmentGrid worksheetGrid = _worksheetGrid;
-                Point insertionPoint = InsertionPoint;
-                double gridX = insertionPoint.X / oldSize.Width;
-                insertionPoint = InsertionPoint;
-                InsertionPoint = worksheetGrid.ConvertGridCoordinatesToDips(new Point(gridX, insertionPoint.Y / oldSize.Height));
+                InsertionPoint = _worksheetGrid.ConvertGridCoordinatesToDips(new Point(InsertionPoint.X / oldSize.Width, InsertionPoint.Y / oldSize.Height));
             }
             foreach (IWorksheetPageBreak pageBreak in PageBreaks.ToList())
             {
@@ -3005,7 +3001,7 @@ private void SetupDefaultPageLayout()
                 ((ICollapsibleAreaControl)area).GridCellSizeChangedAction = () =>
                 {
                     IList<WhiteboardItemSizeChangedEventHandler> sizeChangedHandlers = _itemSizeChangedHandlerMap[area];
-                    _itemSizeChangedHandlerMap[area].Each(handler => ItemManager.UnhookSizeChanged(area, handler));
+                    _itemSizeChangedHandlerMap[area].Each(new Action<WhiteboardItemSizeChangedEventHandler>(handler => ItemManager.UnhookSizeChanged(area, handler)));
                     Size size = ItemManager.GetSize(area);
                     double height = size.Height * newSize.Height / oldSize.Height;
                     ItemManager.SetHeight(area, height);
@@ -3025,10 +3021,7 @@ private void SetupDefaultPageLayout()
             Footer.UpdateItemLocationsAfterGridSizeChanged(oldSize);
             if (Header.IsCrosshairVisible || Footer.IsCrosshairVisible)
             {
-                Point insertionPoint = InsertionPoint;
-                double gridX = insertionPoint.X / oldSize.Width * newSize.Width;
-                insertionPoint = InsertionPoint;
-                InsertionPoint = new Point(gridX, insertionPoint.Y / oldSize.Height * newSize.Height);
+                InsertionPoint = new Point(InsertionPoint.X / oldSize.Width * newSize.Width, InsertionPoint.Y / oldSize.Height * newSize.Height);
             }
         };
         PageLayout.WorksheetRecreateSuggested += RecreateDocumentAfterPageSizeChange;
