@@ -182,7 +182,7 @@ public partial class EquationControl
     }
 
     public bool CanHideFromCalculationContext => true;
-    public bool HideFromCalculationContext { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public bool HideFromCalculationContext { get => CalcIsDisabled; set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     private void UpdateSynchronizationStatus()
     {
         SynchronizationStatus synchronizationStatus = SynchronizationStatus.Synchronized;
@@ -3240,7 +3240,7 @@ public partial class EquationControl
     }
     internal void UpdateMatrixForResizeAdorner(global::Quire.EquationEditor.View.IVisualMatrixNode matrix) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-        private static bool AreTableCoordinateListsEqual(IList<TableCoordinate> oneNestedMatrixPosition, IList<TableCoordinate> theOtherNestedMatrixPosition)
+    private static bool AreTableCoordinateListsEqual(IList<TableCoordinate> oneNestedMatrixPosition, IList<TableCoordinate> theOtherNestedMatrixPosition)
     {
         bool areEqual = true;
         if (oneNestedMatrixPosition == null && theOtherNestedMatrixPosition == null)
@@ -3454,7 +3454,28 @@ public partial class EquationControl
         }
         throw new InvalidOperationException("Property is valid only for Matrices!");
     }
-    public global::Quire.Calculation.Core.EngineResult EngineResultForSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public global::Quire.Calculation.Core.EngineResult EngineResultForSerialization
+    {
+        get
+        {
+            global::Quire.Calculation.Core.IResultNode resultNode = ConvertAnyFormattedMatrixToDisplayMatrix(
+                (DataExchangeModel is global::Quire.Calculation.Core.IDataExchangeScriptingModel scriptingModel && EngineResult.Errors == null)
+                    ? scriptingModel.EngineResultForSerialization
+                    : EngineResult.ResultNode,
+                ResultMatrixFormat ?? new global::Quire.Controls.Core.MatrixFormat(),
+                true);
+            if (resultNode == EngineResult.ResultNode)
+            {
+                return EngineResult;
+            }
+            return new global::Quire.Calculation.Core.EngineResult(resultNode, EngineResult.Errors, EngineResult.Warnings, EngineResult.SynchronizationStatus);
+        }
+        set
+        {
+            _model.EngineResultForSerialization = value.ResultNode;
+            EngineResult = value;
+        }
+    }
     private static bool IsUnitedMatrixUniform(global::Quire.Calculation.Core.IUnitedValueResultNode unitedElement)
     {
         if (unitedElement.Value is LazyMatrixSimpleResultNode lazyMatrixSimpleResultNode)
