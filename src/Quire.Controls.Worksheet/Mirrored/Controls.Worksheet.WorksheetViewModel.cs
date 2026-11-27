@@ -278,7 +278,8 @@ private void Initialize()
         WorksheetContent.NonprintableSpaceWidthIncrease += newWidth =>
         {
             Size gridCellSize = _worksheetGrid.GridCellSize;
-            _widthWithNonprintableSpace = newWidth + 2.0 * gridCellSize.Width;
+            double widthWithNonprintableSpace = newWidth + 2.0 * gridCellSize.Width;
+            WidthWithNonprintableSpace = widthWithNonprintableSpace;
         };
         HookupCollectionChangedHandlers();
         OleObjectAutoResize = true;
@@ -3020,48 +3021,7 @@ public void OnRequestRestoreInsertionPoint(IWorksheetControl worksheetControl, R
         eventArgs.Handled = true;
     }
 
-    public void Activate(global::Quire.Controls.Worksheet.IWorksheetControl worksheetControl)
-    {
-        if (ActiveDescendant != null)
-        {
-            ItemManager.SuppressBringIntoViewIfNeededAndExecute(ActiveDescendant, () =>
-            {
-                ActiveDescendant.Activate(isActive: true);
-            }, suppressBringToView: true);
-        }
-        else
-        {
-            if (!PageManager.VisiblePages.IsNotEmpty())
-            {
-                return;
-            }
-            if (!PageManager.VisiblePages.Contains(ActivePage))
-            {
-                WorksheetVisiblePages.PassFocusToPagesAncestor(worksheetControl);
-                return;
-            }
-            IWorksheetPageSection pageSection;
-            IWhiteboardControl activePageSectionWhiteboardControl;
-            if (IsHeaderActive)
-            {
-                pageSection = (IWorksheetPageSection)(activePageSectionWhiteboardControl = ((ActiveSection == FirstPageHeader) ? FirstPageHeader : Header));
-            }
-            else if (IsFooterActive)
-            {
-                pageSection = (IWorksheetPageSection)(activePageSectionWhiteboardControl = ((ActiveSection == FirstPageFooter) ? FirstPageFooter : Footer));
-            }
-            else
-            {
-                DebugTools.DevAssert(IsContentActive, null);
-                pageSection = ActivePage.PageBody;
-                activePageSectionWhiteboardControl = ActivePage.PageBody;
-            }
-            VisualHelper.SuppressBringIntoViewAndExecute(pageSection, () =>
-            {
-                activePageSectionWhiteboardControl.ActivateWhiteboard(isActive: true);
-            });
-        }
-    }
+    public void Activate(global::Quire.Controls.Worksheet.IWorksheetControl worksheetControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private bool CanAddToDictionary()
     {
@@ -3179,11 +3139,11 @@ private global::Quire.Controls.Core.IWhiteboardItem FindNextItemForTabNavigation
 
 private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GetTabNavigatableItems(bool includingActiveItem = false)
     {
-        if (!includingActiveItem)
+        if (includingActiveItem)
         {
-            return WorksheetItems.Where(item => ItemManager.IsTabNavigatable(item));
+            return WorksheetItems.Where(item => ItemManager.IsTabNavigatable(item) || item == ActiveItem);
         }
-        return WorksheetItems.Where(item => ItemManager.IsTabNavigatable(item) || item == ActiveItem);
+        return WorksheetItems.Where(item => ItemManager.IsTabNavigatable(item));
     }
 
 private void ActivateSection(global::Quire.Controls.Worksheet.IWorksheetSection section, global::Quire.Controls.Worksheet.IWorksheetPage page, global::System.Nullable<global::System.Windows.Point> position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
