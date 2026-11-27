@@ -82,8 +82,6 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
     [global::Quire.Mirror.MirrorStub]
     private int ShouldPromptForFileNameOnSave(global::Quire.Controls.Core.IEngineeringDocument doc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private string AskForSaveFileName(global::Quire.Controls.Core.IEngineeringDocument doc, global::System.Collections.Generic.IList<global::Quire.Controls.Core.FileDialogFilterPair> filterList, string defaultFileExtension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static global::System.Collections.Generic.IList<T> ExtractCaseInsensitiveDuplicates<T>(global::System.Collections.Generic.IEnumerable<T> allItems, out global::System.Collections.Generic.IList<string> duplicates) where T : global::Quire.Controls.Core.IORegions.IItemAlias => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.IORegions.IInputOutputItemsStates GenerateInputOutputStatesOnSave(global::Quire.Controls.Core.IEngineeringDocument doc, string dlgTitle, out bool cancelSave, out global::Quire.SpiritMainWindow.SaveAndSyncFinalMessage needsFinalMessage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -155,6 +153,4 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
         [global::Quire.Mirror.MirrorStub]
         public bool OK { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     }
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnCWDChanged(string directory) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
