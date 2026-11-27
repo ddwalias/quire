@@ -8,11 +8,32 @@ using Quire.EquationEditor.Tree.Navigation;
 using Quire.Mirror;
 using Quire.Wpf;
 using System.Windows;
+using Quire.EquationEditor.Tree.Transform;
 
 namespace Quire.EquationEditor.Equation;
 
 public partial class EquationModel
 {
+    private volatile CalculatingStatus aw;
+    private bool a6;
+    private bool bb;
+    [MirrorName("r")]
+    private IEquationEditorSettings r__;
+    [MirrorName("s")]
+    private readonly RootMathNode s__;
+    [MirrorName("t")]
+    private ScriptingError t__;
+    [MirrorName("v")]
+    private MathNode v__;
+    [MirrorName("w")]
+    private bool w__;
+    [MirrorName("b")]
+    private readonly SExpressionToMathNodeTransform b__;
+    [MirrorName("aa")]
+    private List<string> aa__;
+    [MirrorName("ad")]
+    private bool ad__;
+
     private Action<bool> af;
 
     [MirrorVerified("Release IL")]
@@ -599,6 +620,109 @@ public partial class EquationModel
                 previous = Interlocked.CompareExchange(ref be, updated, current);
             }
             while ((object)previous != current);
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public CalculatingStatus CalculatingStatus { get => aw; set => aw = value; }
+
+    [MirrorVerified("Release IL")]
+    public IEquationEditorSettings Settings { get => r__; set => r__ = value; }
+
+    [MirrorVerified("Release IL")]
+    public RootMathNode Root => s__;
+
+    [MirrorVerified("Release IL")]
+    public ScriptingError ScriptingError { get => t__; set => t__ = value; }
+
+    [MirrorVerified("Release IL")]
+    public bool IsScriptError => ScriptingError != null;
+
+    [MirrorVerified("Release IL")]
+    public bool IsEvaluatable => EquationRoot.IsEvaluatable;
+
+    [MirrorVerified("Release IL")]
+    public string EquationSExpression => Root.SExpression;
+
+    [MirrorVerified("Release IL")]
+    public string SerializedContent => Root.SExpression;
+
+    [MirrorVerified("Release IL")]
+    public bool HasVisualHistoryItems => aa__.Count > 1;
+
+    [MirrorVerified("Release IL")]
+    public bool IsEmpty => EquationRoot.IsPlaceholder;
+
+    [MirrorVerified("Release IL")]
+    public bool IsRestrictedReadOnly
+    {
+        get => a6;
+        set
+        {
+            if (value == a6)
+            {
+                return;
+            }
+
+            a6 = value;
+            if (a5 != null)
+            {
+                a5(IsRestrictedReadOnly);
+            }
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public bool InCustomInitialization
+    {
+        get => bb;
+        set
+        {
+            if (value != bb)
+            {
+                bb = value;
+                if (ak != null)
+                {
+                    ak();
+                }
+            }
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public MathNode ResultScalingFactor { get => v__; set => v__ = value; }
+
+    [MirrorVerified("Release IL")]
+    public bool ResultScalingModified { get => w__; set => w__ = value; }
+
+    [MirrorVerified("Release IL")]
+    public string ResultScalingSExpression
+    {
+        get
+        {
+            if (v__ == null)
+            {
+                return string.Empty;
+            }
+
+            return v__.SExpression;
+        }
+
+        set => v__ = b__.Transform(value);
+    }
+
+    [MirrorVerified("Release IL")]
+    public bool AllowExpressionsOnly
+    {
+        get => ad__;
+        set
+        {
+            if (IsEvaluatable)
+            {
+                return;
+            }
+
+            ad__ = value;
         }
     }
 }

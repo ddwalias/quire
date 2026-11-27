@@ -15,9 +15,6 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     [global::Quire.Mirror.MirrorName("a")]
     private static readonly global::Quire.Calculation.Core.IResultConverter a__;
     [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("b")]
-    private readonly global::Quire.EquationEditor.Tree.Transform.SExpressionToMathNodeTransform b__;
-    [global::Quire.Mirror.MirrorStub]
     [global::Quire.Mirror.MirrorName("c")]
     private readonly global::Quire.EquationEditor.Tree.Transform.XmlNodeToMathNodeTransform c__;
     [global::Quire.Mirror.MirrorStub]
@@ -53,23 +50,8 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.EquationEditor.Equation.EquationModel.b_ n;
     [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("r")]
-    private global::Quire.EquationEditor.IEquationEditorSettings r__;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("s")]
-    private readonly global::Quire.EquationEditor.Tree.RootMathNode s__;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("t")]
-    private global::Quire.EquationEditor.ScriptingError t__;
-    [global::Quire.Mirror.MirrorStub]
     [global::Quire.Mirror.MirrorName("u")]
     private global::Quire.Native.PtcEquationEditor.t u__;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("v")]
-    private global::Quire.EquationEditor.Tree.MathNode v__;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("w")]
-    private bool w__;
     [global::Quire.Mirror.MirrorStub]
     [global::Quire.Mirror.MirrorName("y")]
     private int y__;
@@ -77,31 +59,19 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     [global::Quire.Mirror.MirrorName("z")]
     private global::Quire.Calculation.Core.EngineError z__;
     [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("aa")]
-    private global::System.Collections.Generic.List<string> aa__;
-    [global::Quire.Mirror.MirrorStub]
     [global::Quire.Mirror.MirrorName("ab")]
     private global::Quire.EquationEditor.Tree.MathNode ab__;
     [global::Quire.Mirror.MirrorStub]
     [global::Quire.Mirror.MirrorName("ac")]
     private bool ac__;
     [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("ad")]
-    private bool ad__;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.Dictionary<string, string> ae;
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Calculation.Core.CalculatingStatus aw;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.IDataExchangeModel a3;
-    [global::Quire.Mirror.MirrorStub]
-    private bool a6;
     [global::Quire.Mirror.MirrorStub]
     private bool a8;
     [global::Quire.Mirror.MirrorStub]
     private bool a9;
-    [global::Quire.Mirror.MirrorStub]
-    private bool bb;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.List<global::System.ValueTuple<global::Quire.EquationEditor.RedefinitionWarning, global::Quire.EquationEditor.Tree.MathNode>> bd;
     [global::Quire.Mirror.MirrorStub]
@@ -109,23 +79,11 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     [global::Quire.Mirror.MirrorStub]
     private bool bg;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.CalculatingStatus CalculatingStatus { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsScriptError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.IEquationEditorSettings Settings { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string ResultScalingSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string EquationSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlNode EquationXmlNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string EquationSExpressionWithResolvedLabels { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public string CurrentSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.RootMathNode Root { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode EquationRoot { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -135,19 +93,13 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.IDataExchangeModel DataExchangeModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.ScriptingError ScriptingError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.EngineError CalculationError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.List<global::System.ValueTuple<global::Quire.EquationEditor.RedefinitionWarning, global::Quire.EquationEditor.Tree.MathNode>> Warnings { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool IsEvaluatable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool HasNumericEvaluation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsReadonly { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsRestrictedReadOnly { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState NavigatorState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -157,23 +109,13 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<string> VisualHistory { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool HasVisualHistoryItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool AllowExpressionsOnly { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool ProhibitComboBox { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool ProhibitInputControl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool IsEmpty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool InCustomInitialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private bool IsSimpleComboBoxDefinition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Visibility VisibleLhsOfDefinition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string SerializedContent { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.EquationEditor.Tree.MathNode GetFirstScopedNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -188,10 +130,6 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     public bool IsExpressionValueModified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private bool PreserveExistingScalingWhenFormattingResults { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.MathNode ResultScalingFactor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ResultScalingModified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public EquationModel(string rootMathNodeName) { }
     [global::Quire.Mirror.MirrorStub]
