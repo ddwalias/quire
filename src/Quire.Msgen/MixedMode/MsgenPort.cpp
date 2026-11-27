@@ -524,9 +524,9 @@ namespace Quire { namespace gen {
         }
         Closure^ closure = IlAssembler()->ModuleClosure();
         cli::array<Type^>^ a_ = MplParameterTypes();
-        Type^ a_2 = ReturnType();
-        String^ a_3 = IlAsm::NewName(Name());
-        MethodFunction^ methodFunction = closure->NewMethodFunction(a_3, closure, a_2, a_);
+        Type^ constructorReturnType = ReturnType();
+        String^ methodName = IlAsm::NewName(Name());
+        MethodFunction^ methodFunction = closure->NewMethodFunction(methodName, closure, constructorReturnType, a_);
         int nargs = MplParameterTypes()->Length;
         cli::array<Type^>^ parameters = MplParameterTypes();
         Type^ return_type = ReturnType();
@@ -543,10 +543,10 @@ namespace Quire { namespace gen {
             }
             while (num < Arity());
         }
-        cli::array<Type^>^ parameters2 = MplParameterTypes();
-        Type^ return_type2 = ReturnType();
-        int nargs2 = Arity();
-        CallFunc(methodFunction, nargs2, true, nullptr, return_type2, parameters2);
+        cli::array<Type^>^ parameterTypes = MplParameterTypes();
+        Type^ returnType = ReturnType();
+        int argumentCount = Arity();
+        CallFunc(methodFunction, argumentCount, true, nullptr, returnType, parameterTypes);
         methodFunction->emit_return();
         m_method_function = methodFunction;
         m_method = methodFunction->GetMethod(false);
@@ -615,18 +615,18 @@ namespace Quire { namespace gen {
     {
         cli::array<MetaObj^>^ array = Ctxt::NewCtxtEnv(static_cast<int>(args.size()));
         int num = m_clo->ClosureArgs();
-        int num2 = 0;
-        cli::array<Type^>^ array2 = MplParameterTypes();
+        int parameterOffset = 0;
+        cli::array<Type^>^ parameterTypes = MplParameterTypes();
         for (unsigned int i = 0; i < args.size(); i++)
         {
-            if (array2[i] == IlAsm::VoidType())
+            if (parameterTypes[i] == IlAsm::VoidType())
             {
                 array[i] = gcnew VoidConstructor(IlAssembler(), args[i]);
             }
             else
             {
-                array[i] = MetaObj::NewMetaObj(args[i], num2 + num);
-                num2++;
+                array[i] = MetaObj::NewMetaObj(args[i], parameterOffset + num);
+                parameterOffset++;
             }
         }
         GC::KeepAlive(this);
@@ -656,8 +656,8 @@ namespace Quire { namespace gen {
             }
             else
             {
-                MethodInfo^ method2 = ::Quire::Mpl::Run::AppException::typeid->GetMethod("RestoreStack");
-                emit_instr(OpCodes::Call, method2);
+                MethodInfo^ restoreStackMethod = ::Quire::Mpl::Run::AppException::typeid->GetMethod("RestoreStack");
+                emit_instr(OpCodes::Call, restoreStackMethod);
             }
         }
     }
@@ -733,13 +733,13 @@ namespace Quire { namespace gen {
     {
         cli::array<MetaObj^>^ array = Ctxt::NewCtxtEnv(Arity());
         Type^ type = RepresentationType();
-        cli::array<String^>^ array2 = IlAsm::FieldNames(Arity());
+        cli::array<String^>^ fieldNames = IlAsm::FieldNames(Arity());
         int num = 0;
         if (0 < Arity())
         {
             do
             {
-                FieldInfo^ field = type->GetField(array2[num]);
+                FieldInfo^ field = type->GetField(fieldNames[num]);
                 MetaObj^ metaObj = MetaObj::NewMetaObj(vs[num], loc, field);
                 array[num] = metaObj;
                 num++;
