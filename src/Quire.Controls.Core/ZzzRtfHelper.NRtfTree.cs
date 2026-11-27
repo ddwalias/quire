@@ -180,9 +180,38 @@ public static partial class RtfHelper
         node.AppendTextNode(placeholder);
     }
 
-    [global::Quire.Mirror.MirrorStub]
     private static void ApplyBackgroundColor(this RtfTreeNode node, Brush background, int insertIndex, bool hasBorder, Brush borderColor)
-        => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    {
+        if (background is not SolidColorBrush solidColorBrush)
+        {
+            return;
+        }
+
+        RtfColorTable colorTable = node.Tree.GetColorTable();
+        Color color = Color.FromArgb(solidColorBrush.Color.A, solidColorBrush.Color.R, solidColorBrush.Color.G, solidColorBrush.Color.B);
+        int colorId = node.Tree.GetColorID(colorTable, color);
+        node.InsertKeywordNode("cbpat", colorId, insertIndex++);
+        if (hasBorder)
+        {
+            solidColorBrush = borderColor as SolidColorBrush;
+            if (solidColorBrush == null)
+            {
+                return;
+            }
+
+            Color border = Color.FromArgb(solidColorBrush.Color.A, solidColorBrush.Color.R, solidColorBrush.Color.G, solidColorBrush.Color.B);
+            int borderColorId = node.Tree.GetColorID(colorTable, border);
+            node.InsertTextBoxFrameBorder("brdrl", TextboxFrameThicknessTwips, borderColorId, insertIndex);
+            node.InsertTextBoxFrameBorder("brdrr", TextboxFrameThicknessTwips, borderColorId, insertIndex);
+            node.InsertTextBoxFrameBorder("brdrb", TextboxFrameThicknessTwips, borderColorId, insertIndex);
+            node.InsertTextBoxFrameBorder("brdrt", TextboxFrameThicknessTwips, borderColorId, insertIndex);
+        }
+        else
+        {
+            node.InsertFrameBorder("brdrl", 50, colorId, insertIndex);
+            node.InsertFrameBorder("brdrr", 50, colorId, insertIndex);
+        }
+    }
 
     private static void InsertFrameBorder(this RtfTreeNode node, string orientationTag, int width, int color, int index)
     {

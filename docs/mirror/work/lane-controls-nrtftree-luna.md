@@ -7,3 +7,9 @@
 - Implemented: `TextToRtfTree`, `NormalizeHighlightColor`, the hyperlink serialization/key-value repair chain, and `ToEnumerable`; the whole-type declaration order now produces the Mathcad closure ordinals.
 - Release IL: Core PASS, 3,431 checked (`.mirror-cache/release-il-2a9c7f267d18/release-il.json`); Worksheet PASS, 1,976 checked (`.mirror-cache/release-il-0717a47d3baf/release-il.json`).
 - Parked: `ApplyBackgroundColor` because the current Roslyn compiler folds repeated `SolidColorBrush.Color` reads and changes the Release IL; `PrepareRtf` retains its private-call/callvirt mismatch.
+
+## Follow-up — ApplyBackgroundColor
+
+- Owner: luna-rtf; branch `feature/luna-equationcontrol-round4`.
+- Recovered the original Release IL from Mathcad and implemented `ApplyBackgroundColor`, reusing the first `SolidColorBrush` local for the optional border brush and preserving repeated `Color` property reads.
+- Release IL: Core PASS, 3,432 checked (`.mirror-cache/release-il-8c3c07ed114e/release-il.json`). `PrepareRtf` remains parked.
