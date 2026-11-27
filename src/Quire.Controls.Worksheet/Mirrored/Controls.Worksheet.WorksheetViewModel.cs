@@ -795,7 +795,7 @@ public void CreateTextRegionFromEquationControl(IEquationControl sender)
     {
         string content = sender.CurrentNodeSExpression + " ";
         bool isRegionBorderVisible = WhiteboardDependencyProperties.GetIsRegionBorderVisible((DependencyObject)((sender is DependencyObject) ? sender : null));
-        XmlLanguage language = XmlLanguage.GetLanguage(InputLanguage.CurrentInputLanguage.Culture.Name);
+        XmlLanguage language = XmlLanguage.GetLanguage(global::System.Windows.Forms.InputLanguage.CurrentInputLanguage.Culture.Name);
         IRichTextBase textRegion = ControlCreator.CreateTextboxControl(GetCurrentTextFormatClone(GetCurrentTextFormat()), language, content, System.Windows.DataFormats.Text, caretPositionAtTheEnd: true, _textStylesManager.TextStyleChangedHandler, isRegionBorderVisible);
         WorksheetCommand worksheetCommand = null;
         if (ActiveItem is EquationControl)
