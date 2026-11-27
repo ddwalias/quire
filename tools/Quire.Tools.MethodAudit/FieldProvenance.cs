@@ -29,7 +29,7 @@ static class FieldProvenance
         return rows;
     }
 
-    private static string AttributeType(MetadataReader md, CustomAttribute attribute) => attribute.Constructor.Kind switch
+    internal static string AttributeType(MetadataReader md, CustomAttribute attribute) => attribute.Constructor.Kind switch
     {
         HandleKind.MemberReference => Parent(md, md.GetMemberReference((MemberReferenceHandle)attribute.Constructor).Parent),
         HandleKind.MethodDefinition => FullName(md, md.GetMethodDefinition((MethodDefinitionHandle)attribute.Constructor).GetDeclaringType()),
@@ -46,7 +46,7 @@ static class FieldProvenance
     }
 
     /// <summary>The metadata full name of a type of this module (nested types with '+'), as Structure names it.</summary>
-    private static string FullName(MetadataReader md, TypeDefinitionHandle handle)
+    internal static string FullName(MetadataReader md, TypeDefinitionHandle handle)
     {
         var type = md.GetTypeDefinition(handle);
         string name = md.GetString(type.Name);
