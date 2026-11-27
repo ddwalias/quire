@@ -265,6 +265,23 @@ public partial class MathNode
 
     public int[] ChildrenToRemoveOnDelete => d__.ChildrenToRemoveOnDelete;
 
+    public int[] ContainerSlots
+    {
+        get
+        {
+            if (AllChildSlotsAreContainerSlots)
+            {
+                int[] slots = new int[ChildCount];
+                for (int i = 0; i < ChildCount; i++)
+                {
+                    slots[i] = i;
+                }
+                return slots;
+            }
+            return d__.ContainerSlots;
+        }
+    }
+
     public bool AllChildSlotsAreContainerSlots => d__.AllChildSlotsAreContainerSlots;
 
     public bool IgnoreOperandsOnOvertype => d__.IgnoreOperandsOnOvertype;
@@ -363,6 +380,28 @@ public partial class MathNode
     public bool PreFenceNavigatable => d__.PreFenceNavigatable;
 
     public bool PostFenceNavigatable => d__.PostFenceNavigatable;
+
+    public int NavigablePartCount
+    {
+        get
+        {
+            if (IsPairNary)
+            {
+                int count = 0;
+                int elementsCount = ElementsCount;
+                count += FirstElementDescriptor.NavigablePartCount;
+                elementsCount--;
+                if (HasLastElement)
+                {
+                    count += LastElementDescriptor.NavigablePartCount;
+                    elementsCount--;
+                }
+                count += ActualMiddleElementDescriptor.NavigablePartCount * elementsCount;
+                return count;
+            }
+            return d__.NavigablePartCount;
+        }
+    }
 
     public int? PrimalChildPosition => d__.PrimalChildPosition;
 
