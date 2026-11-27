@@ -687,7 +687,71 @@ public bool IsValidInsertionPoint(Point point)
         return WorksheetContent.IsValidInsertionPoint(point);
     }
 
-public void ApplyWorksheetData(global::Quire.PersistentData.IWorksheetPersistentData worksheetData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+public void ApplyWorksheetData(IWorksheetPersistentData worksheetData)
+    {
+        PageLayout.WorksheetRecreateSuggested -= RecreateDocumentAfterPageSizeChange;
+        HasScriptableControls = worksheetData.WorksheetContent.MsgId == worksheetMessageIdType.ScriptableWarning;
+        try
+        {
+            if (worksheetData.LayoutSize != null && Enum.IsDefined(typeof(PageSize), worksheetData.LayoutSize))
+            {
+                PageLayout.SetPageSize((PageSize)Enum.Parse(typeof(PageSize), worksheetData.LayoutSize, ignoreCase: false), updateCustomMargins: false);
+            }
+            if (worksheetData.GridSize != null && Enum.IsDefined(typeof(GridSize), worksheetData.GridSize))
+            {
+                PageLayout.GridSize = (GridSize)Enum.Parse(typeof(GridSize), worksheetData.GridSize, ignoreCase: false);
+            }
+            if (worksheetData.PageOrientation != null && Enum.IsDefined(typeof(PageOrientation), worksheetData.PageOrientation))
+            {
+                PageLayout.SetPageOrientation((PageOrientation)Enum.Parse(typeof(PageOrientation), worksheetData.PageOrientation, ignoreCase: false), updateCustomMargins: false);
+            }
+            _ = worksheetData.PageBackgroundColor;
+            PageLayout.PageBackgroundColor = worksheetData.PageBackgroundColor;
+            Thickness? pageMargin = worksheetData.PageMargin;
+            PageMarginType? pageMarginType = null;
+            if (worksheetData.MarginType != null && Enum.IsDefined(typeof(PageMarginType), worksheetData.MarginType))
+            {
+                pageMarginType = (PageMarginType)Enum.Parse(typeof(PageMarginType), worksheetData.MarginType, ignoreCase: false);
+            }
+            if (pageMarginType.HasValue)
+            {
+                bool flag = pageMarginType.Value == PageMarginType.Custom;
+                if (flag && pageMargin.HasValue)
+                {
+                    PageLayout.SetCustomMargin(pageMargin.Value);
+                }
+                else
+                {
+                    if (!flag)
+                    {
+                        PageLayout.SetMarginType(pageMarginType.Value);
+                    }
+                    DebugTools.DevAssert(pageMargin.HasValue == flag, null);
+                }
+            }
+            DisplayGrid = worksheetData.DisplayGrid;
+            DisplayHFGrid = worksheetData.DisplayHFGrid;
+            DisplayFrame = worksheetData.DisplayFrame;
+            DisplayHeaderFrame = worksheetData.DisplayHeaderFrame;
+            DisplayFooterFrame = worksheetData.DisplayFooterFrame;
+            UseMajorGridLines = worksheetData.UseMajorGridLines;
+            UseHFMajorGridLines = worksheetData.UseHFMajorGridLines;
+            OleObjectAutoResize = worksheetData.OleObjectAutoResize;
+            IsSolveBlockLabelVisible = worksheetData.IsSolveBlockLabelVisible;
+            StartingPageNumber = worksheetData.StartingPageNumber;
+            TotalPagesOffset = worksheetData.TotalPagesOffset;
+            IsFirstPageHeaderFooterDifferent = worksheetData.IsFirstPageHeaderFooterDifferent;
+            CurrentProofingLanguage = worksheetData.ProofingLanguage ?? XmlLanguageHelper.FallbackXmlLanguage;
+        }
+        finally
+        {
+            PageLayout.WorksheetRecreateSuggested += RecreateDocumentAfterPageSizeChange;
+        }
+        foreach (IWorksheetPage page in _pageManager.Pages)
+        {
+            page.PageBody.GridCellSize = PageLayout.GridCellSize;
+        }
+    }
 
 public void TraverseWhiteboardItems(IEnumerable<IWhiteboardItem> wbiCollection, Func<IWhiteboardItem, bool, bool> function, bool isWorksheetContentItems)
     {
@@ -723,68 +787,35 @@ public global::Quire.Wpf.INotifyCollectionRangeChanged<global::Quire.Controls.Co
 
 public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> ActiveOrSelectedItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 
-public bool CanDeleteVerticalSpace(Direction direction)
-    {
-        if (!IsContentActive)
-        {
-            return false;
-        }
-        if (ActiveOrSelectedItems.Count() > 0)
-        {
-            return false;
-        }
-        Size gridCellSize = PageLayout.GridCellSize;
-        double cellHeight = gridCellSize.Height;
-        if (direction == Direction.Up)
-        {
-            Point nextIntersection = _worksheetGrid.GetNextIntersection(InsertionPoint, direction);
-            double value = nextIntersection.Y;
-            if (value.IsLessThan(0.0))
-            {
-                return false;
-            }
-            if (value.IsLessThan(cellHeight) && WorksheetItems.Any((IWhiteboardItem item) =>
-            {
-                Point worksheetSectionItemLocation = GetWorksheetSectionItemLocation(item);
-                return worksheetSectionItemLocation.Y == cellHeight;
-            }))
-            {
-                return false;
-            }
-        }
-        else if (!IsValidInsertionPoint(_worksheetGrid.GetNextIntersectionIgnoringRestrictedAreas(InsertionPoint, direction)))
-        {
-            return false;
-        }
-        bool flag = false;
-        if (WorksheetItems.Any((IWhiteboardItem item) =>
-        {
-            Point val = GetWorksheetSectionItemLocation(item);
-            double index = val.Y;
-            val = InsertionPoint;
-            return index == val.Y;
-        }))
-        {
-            flag = ((direction == Direction.Down) ? WorksheetItems.Any((IWhiteboardItem item) =>
-            {
-                Point val = GetWorksheetSectionItemLocation(item);
-                double index = val.Y;
-                val = InsertionPoint;
-                return index == val.Y + cellHeight;
-            }) : WorksheetItems.Any((IWhiteboardItem item) =>
-            {
-                Point val = GetWorksheetSectionItemLocation(item);
-                double index = val.Y;
-                val = InsertionPoint;
-                return index == val.Y - cellHeight;
-            }));
-        }
-        return !flag;
-    }
+public bool CanDeleteVerticalSpace(Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 public void DeleteActiveItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-public void CreateTextRegionFromEquationControl(global::Quire.Controls.Core.IEquationControl sender) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+public void CreateTextRegionFromEquationControl(IEquationControl sender)
+    {
+        string content = sender.CurrentNodeSExpression + " ";
+        bool isRegionBorderVisible = WhiteboardDependencyProperties.GetIsRegionBorderVisible((DependencyObject)((sender is DependencyObject) ? sender : null));
+        XmlLanguage language = XmlLanguage.GetLanguage(InputLanguage.CurrentInputLanguage.Culture.Name);
+        IRichTextBase textRegion = ControlCreator.CreateTextboxControl(GetCurrentTextFormatClone(GetCurrentTextFormat()), language, content, System.Windows.DataFormats.Text, caretPositionAtTheEnd: true, _textStylesManager.TextStyleChangedHandler, isRegionBorderVisible);
+        WorksheetCommand worksheetCommand = null;
+        if (ActiveItem is EquationControl)
+        {
+            worksheetCommand = new CreateTextRegionFromEquationControlCommand(this, textRegion, sender);
+        }
+        else if (ActiveItem is CollapsibleAreaControl { ActiveItem: SolveBlockControl activeItem } && activeItem.ActiveItem is EquationControl)
+        {
+            worksheetCommand = new CreateTextRegionFromWhiteboardControlCommand((IMathboardViewModel)activeItem.DataContext, textRegion, sender);
+        }
+        else if (ActiveItem is CollapsibleAreaControl collapsibleAreaControl2 && collapsibleAreaControl2.ActiveItem is EquationControl)
+        {
+            worksheetCommand = new CreateTextRegionFromWhiteboardControlCommand((IMathboardViewModel)collapsibleAreaControl2.DataContext, textRegion, sender);
+        }
+        else if (ActiveItem is SolveBlockControl solveBlockControl && solveBlockControl.ActiveItem is EquationControl)
+        {
+            worksheetCommand = new CreateTextRegionFromWhiteboardControlCommand((IMathboardViewModel)solveBlockControl.DataContext, textRegion, sender);
+        }
+        worksheetCommand?.Execute();
+    }
 
 public double NonprintableSpaceButtonHeight
     {
@@ -1506,7 +1537,15 @@ public ISpecTableControl CreateSpecTableControl(object dimensions)
         return CreateSpecTableControl((dimensions as TableCoordinate?) ?? (TypeDescriptor.GetConverter(typeof(TableCoordinate)).ConvertFrom(dimensions) as TableCoordinate?));
     }
 
-public global::Quire.Controls.ISpecTableControl CreateSpecTableControl(global::System.Nullable<global::Quire.TableCoordinate> dimensions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+public ISpecTableControl CreateSpecTableControl(TableCoordinate? dimensions)
+    {
+        using (new CommandScope("CreateSpecTableControl"))
+        {
+            ISpecTableControl specTableControl = ControlCreator.CreateSpecTableControl(dimensions);
+            AddItemAtInsertionPointAndActivate(specTableControl, "Add SpecTable");
+            return specTableControl;
+        }
+    }
 
 public IAggregateMathboardControl CreateSolveBlockControl()
     {
@@ -1634,66 +1673,7 @@ public IWorksheetPageBreak CreatePageBreakControl()
         return ControlCreator.CreatePageBreakControl();
     }
 
-private bool CanMoveInDirection(Direction direction)
-    {
-        if (!IsContentActive)
-        {
-            return true;
-        }
-        if (SelectedItems.Count() == 0)
-        {
-            return true;
-        }
-        if (!DirectionOps.IsVertical(direction))
-        {
-            return true;
-        }
-        if (direction == Direction.Down && SelectedItems.OrderBy((IWhiteboardItem item) =>
-        {
-            Point worksheetSectionItemLocation = GetWorksheetSectionItemLocation(item);
-            return worksheetSectionItemLocation.Y;
-        }).Last() is ICollapsibleAreaControl)
-        {
-            return true;
-        }
-        IEnumerable<IWhiteboardItem> source = from item in WorksheetItems.Except(SelectedItems)
-            where item is ICollapsibleAreaControl
-            select item;
-        double itemsEdge = 0.0;
-        Size gridCellSize;
-        if (direction == Direction.Down)
-        {
-            itemsEdge = SelectedItems.Max((IWhiteboardItem item) =>
-            {
-                Rect itemRect = GetItemRect(item);
-                return itemRect.Bottom;
-            });
-            double index = itemsEdge;
-            gridCellSize = _worksheetGrid.GridCellSize;
-            itemsEdge = index + gridCellSize.Height;
-        }
-        if (direction == Direction.Up)
-        {
-            itemsEdge = SelectedItems.Min((IWhiteboardItem item) =>
-            {
-                Rect itemRect = GetItemRect(item);
-                return itemRect.Top;
-            });
-            double lastIndex = itemsEdge;
-            gridCellSize = _worksheetGrid.GridCellSize;
-            itemsEdge = lastIndex - gridCellSize.Height;
-        }
-        return !source.Any((IWhiteboardItem item) =>
-        {
-            Rect itemRect = GetItemRect(item);
-            if (itemRect.Top.IsLessThanOrEqual(itemsEdge))
-            {
-                itemRect = GetItemRect(item);
-                return itemRect.Bottom.IsGreaterThanOrEqual(itemsEdge);
-            }
-            return false;
-        });
-    }
+private bool CanMoveInDirection(Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private void DirectionalMoveHandler(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -2324,69 +2304,7 @@ public int GetItemWorksheetPageIndex(IWhiteboardItem item)
         return _pageManager.GetPageIndex(item);
     }
 
-public bool FindOnce(string text, bool startFromCaret, LogicalDirection direction, FindOptions options, List<Pair<int, int>> subscriptPositions)
-    {
-        IHeaderFooterControl firstPageHeader;
-        if (!IsContentActive)
-        {
-            if (IsFirstPageHeaderFooterDifferent)
-            {
-                IWorksheetPage activePage = ActivePage;
-                if (activePage != null && activePage.PageNumber == 1)
-                {
-                    firstPageHeader = FirstPageHeader;
-                }
-            }
-            firstPageHeader = Header;
-        }
-        IEnumerable<IFindRestrictor> enumerable = ((LogicalDirection.Forward != direction) ? GetSearchableRegions(null, startFromCaret ? (ActiveItem ?? _model.FirstItemInDirection(WorksheetItems, Direction.Left, InsertionPoint)) : null).Reverse() : GetSearchableRegions(startFromCaret ? (ActiveItem ?? _model.FirstItemInDirection(WorksheetItems, Direction.Right, InsertionPoint)) : null, null));
-        startFromCaret = startFromCaret && enumerable.IsNotEmpty() && enumerable.First().SearchableRegion == ActiveItem;
-        foreach (IFindRestrictor item in enumerable)
-        {
-            if (item.FindOnce(text, startFromCaret, direction, options, subscriptPositions))
-            {
-                return true;
-            }
-            startFromCaret = false;
-        }
-        return false;
-        IHeaderFooterControl headerFooter;
-        IFindRestrictor findRestrictor = HeaderFooterSearchRestrictor.CreateFindRestrictor(headerFooter);
-        IHeaderFooterControl firstPageFooter;
-        IFindRestrictor findRestrictor2 = HeaderFooterSearchRestrictor.CreateFindRestrictor(firstPageFooter);
-        if (!findRestrictor.CanSearch || !findRestrictor2.CanSearch)
-        {
-            return false;
-        }
-        if (startFromCaret)
-        {
-            if (direction == LogicalDirection.Forward && IsFooterActive)
-            {
-                return findRestrictor2.FindOnce(text, startFromCaret: true, direction, options, subscriptPositions);
-            }
-            if (direction == LogicalDirection.Backward && IsHeaderActive)
-            {
-                return findRestrictor.FindOnce(text, startFromCaret: true, direction, options, subscriptPositions);
-            }
-        }
-        IFindRestrictor findRestrictor3 = ((direction == LogicalDirection.Forward) ? findRestrictor : findRestrictor2);
-        IFindRestrictor findRestrictor4 = ((findRestrictor3 == findRestrictor) ? findRestrictor2 : findRestrictor);
-        if (!findRestrictor3.FindOnce(text, startFromCaret, direction, options, subscriptPositions))
-        {
-            return findRestrictor4.FindOnce(text, startFromCaret: false, direction, options, subscriptPositions);
-        }
-        return true;
-        headerFooter = firstPageHeader;
-        if (IsFirstPageHeaderFooterDifferent)
-        {
-            IWorksheetPage activePage2 = ActivePage;
-            if (activePage2 != null && activePage2.PageNumber == 1)
-            {
-                firstPageFooter = FirstPageFooter;
-            }
-        }
-        firstPageFooter = Footer;
-    }
+public bool FindOnce(string text, bool startFromCaret, LogicalDirection direction, FindOptions options, List<Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 public Point GetDescendantInsertionPoint()
     {
@@ -2485,37 +2403,36 @@ private bool CanDeleteActiveOrSelectedItems()
 
 private bool CanTogglePageLayout(object param)
     {
-        if (param is PageLayoutMode && (PageLayoutMode)param != PageLayoutMode.PageMode)
+        if (param is not PageLayoutMode || (PageLayoutMode)param == PageLayoutMode.PageMode)
         {
-            return true;
-        }
-        if (ActiveItem != null)
-        {
-            if (ActiveItem is IParagraphControl)
+            if (ActiveItem != null)
             {
-                return true;
-            }
-            IWhiteboardItem activeItem = ActiveItem;
-            double value = PageLayout.PageBodyWidth + PageLayout.PageMargin.Right;
-            Point val = GetWorksheetSectionItemLocation(activeItem);
-            double index = val.X;
-            if (ActiveItem is ICollapsibleAreaControl collapsibleAreaControl)
-            {
-                if (collapsibleAreaControl.ActiveItem == null)
+                if (ActiveItem is IParagraphControl)
                 {
                     return true;
                 }
-                activeItem = collapsibleAreaControl.ActiveItem;
-                val = collapsibleAreaControl.GetItemLocation(activeItem);
-                index = val.X;
+                IWhiteboardItem activeItem = ActiveItem;
+                double pageRight = PageLayout.PageBodyWidth + PageLayout.PageMargin.Right;
+                Point itemLocation = GetWorksheetSectionItemLocation(activeItem);
+                double itemLeft = itemLocation.X;
+                if (ActiveItem is ICollapsibleAreaControl collapsibleAreaControl)
+                {
+                    if (collapsibleAreaControl.ActiveItem == null)
+                    {
+                        return true;
+                    }
+                    activeItem = collapsibleAreaControl.ActiveItem;
+                    itemLocation = collapsibleAreaControl.GetItemLocation(activeItem);
+                    itemLeft = itemLocation.X;
+                }
+                if (itemLeft.IsGreaterThan(pageRight))
+                {
+                    return true;
+                }
+                double itemRight = itemLeft;
+                Size desiredSize = ItemManager.GetDesiredSize(activeItem);
+                return (itemRight + desiredSize.Width).IsLessThan(pageRight);
             }
-            if (index.IsGreaterThan(value))
-            {
-                return true;
-            }
-            double lastIndex = index;
-            Size desiredSize = ItemManager.GetDesiredSize(activeItem);
-            return (lastIndex + desiredSize.Width).IsLessThan(value);
         }
         return true;
     }
@@ -2590,7 +2507,18 @@ private static bool CanCreateInputControl(Type containerType, IWhiteboardItem co
         return true;
     }
 
-private bool CanCreateFileSpecificRegion<T>() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private bool CanCreateFileSpecificRegion<T>()
+    {
+        if (!CanCreateControlOfType<T>())
+        {
+            return false;
+        }
+        if (ActiveSection.WhiteboardItems.Any((IWhiteboardItem item) => item is T))
+        {
+            return false;
+        }
+        return true;
+    }
 
 private bool CanCreateSavedDateControl()
     {
@@ -2622,7 +2550,10 @@ private bool CanCreatePageNumberControl()
         return !ActiveSection.WhiteboardItems.Any((IWhiteboardItem item) => item is IPageNumberControl);
     }
 
-private bool CanRemoveRegionOfType<T>() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private bool CanRemoveRegionOfType<T>()
+    {
+        return ActiveSection.WhiteboardItems.Any((IWhiteboardItem item) => item is T);
+    }
 
 private bool CanCreateParagraphControl()
     {
@@ -2631,9 +2562,9 @@ private bool CanCreateParagraphControl()
             return false;
         }
         Point insertionPoint;
-        if (ActiveItem is IWhiteboardControl whiteboardControl)
+        if (ActiveItem is IWhiteboardControl)
         {
-            insertionPoint = whiteboardControl.InsertionPoint;
+            insertionPoint = ((IWhiteboardControl)ActiveItem).InsertionPoint;
             return insertionPoint.X <= PageLayout.PageBodyWidth;
         }
         insertionPoint = InsertionPoint;
@@ -2933,7 +2864,24 @@ private static void RemoveZombiesFromPage(IWorksheetPage page)
         page.Footer = null;
     }
 
-private void HandleItemsCollectionChanging(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private void HandleItemsCollectionChanging(object sender, NotifyCollectionChangedEventArgs args)
+    {
+        switch (args.Action)
+        {
+        case NotifyCollectionChangedAction.Remove:
+        case NotifyCollectionChangedAction.Move:
+            args.OldItems.OfType<IWhiteboardItem>().Each((IWhiteboardItem item) =>
+            {
+                ItemManager.SetHandleChangesEnabled(item, value: false);
+            });
+            break;
+        default:
+            DebugTools.FailAssertion("Unsupported action: {0}", args.Action);
+            break;
+        case NotifyCollectionChangedAction.Add:
+            break;
+        }
+    }
 
 private void HandleItemsCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
     {
@@ -2983,38 +2931,7 @@ private void CheckFlagsAndSplitItemIfNeeded(IWhiteboardItem item, bool isOnVisib
 
 private void HandleItemAddedWithoutNotification(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-private void HandleProtectedStateChanged(IProtectableControl control)
-    {
-        ICollapsibleAreaControl collapsibleAreaControl = control as ICollapsibleAreaControl;
-        if (DebugTools.AssertNotNull(collapsibleAreaControl, null).Failed || DebugTools.DevAssert(IsContentActive, null).Failed)
-        {
-            return;
-        }
-        if (!collapsibleAreaControl.ProtectionLevel.IsProtected())
-        {
-            if (!collapsibleAreaControl.IsCollapsed)
-            {
-                RemoveGridRestrictedAreaForItem(collapsibleAreaControl);
-                ActivateAndNavigateIntoArea(collapsibleAreaControl);
-            }
-            return;
-        }
-        UpdateGridRestrictedAreaForItem(collapsibleAreaControl);
-        bool index = !_itemManager.GetCanActivate(collapsibleAreaControl) && ActiveItem == collapsibleAreaControl;
-        bool flag = !collapsibleAreaControl.GetCanSelect() && SelectedItems.Contains(collapsibleAreaControl);
-        if (index | flag)
-        {
-            if (flag)
-            {
-                ActiveSection.UnSelectItem(collapsibleAreaControl);
-            }
-            NavigateOutsideMovingAreaDownIfNeeded(collapsibleAreaControl, Direction.Up, moveDown: true);
-        }
-        else
-        {
-            DebugTools.DevAssert(_itemManager.GetCanActivate(collapsibleAreaControl) || !GetItemRect(collapsibleAreaControl).ContainsAccountingForMeasurementError(InsertionPoint), null);
-        }
-    }
+private void HandleProtectedStateChanged(IProtectableControl control) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private void HandleActivatePartContainingChildRequested(IWhiteboardItemContainer wbContainer, IWhiteboardItem item)
     {
@@ -3760,37 +3677,7 @@ private bool CanAddToDictionary()
 
 private void HandleAddToDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-private void HandleCreateStyleFrom()
-    {
-        TextFormat textFormat = ((IRichTextWithEmbeddedItem)ActiveDescendant).CurrentTextFormat.Clone();
-        if (ActiveDescendant is IRichTextWithEmbeddedItem richTextWithEmbeddedItem && richTextWithEmbeddedItem.Document.Blocks.FirstBlock is System.Windows.Documents.Paragraph paragraph)
-        {
-            textFormat.TextIndent = paragraph.TextIndent;
-            InlineCollection inlines = paragraph.Inlines;
-            if (inlines != null && inlines.Count > 0)
-            {
-                TextDecorationCollection textDecorations = paragraph.Inlines.FirstInline.TextDecorations;
-                if (textDecorations != null && textDecorations.Count > 0)
-                {
-                    textFormat.TextDecorations = paragraph.Inlines.FirstInline.TextDecorations;
-                }
-            }
-            if (richTextWithEmbeddedItem.Document.Background != null && textFormat.Background == null)
-            {
-                textFormat.Background = richTextWithEmbeddedItem.Document.Background;
-            }
-        }
-        if (ActiveDescendant is IRichTextWithEmbeddedItem richTextWithEmbeddedItem2 && richTextWithEmbeddedItem2.Document.Blocks.LastBlock is List list)
-        {
-            textFormat.MarkerStyle = list.MarkerStyle;
-            textFormat.TextAlignment = list.ListItems.LastListItem.Blocks.FirstBlock.TextAlignment;
-            if (list.ListItems.LastListItem.Blocks.FirstBlock is System.Windows.Documents.Paragraph paragraph2)
-            {
-                textFormat.TextIndent = paragraph2.TextIndent;
-            }
-        }
-        ((IRichTextWithEmbeddedItem)ActiveDescendant).CurrentTextFormat.StyleKey = _textStylesManager.StyleCreateRequest(textFormat);
-    }
+private void HandleCreateStyleFrom() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private bool CanCreateStyleFrom()
     {
@@ -3844,66 +3731,7 @@ private void FireDictionaryUpdated()
 
 private bool CanInsertOperator(object operatorName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-private void MoveByPage(Direction direction)
-    {
-        if ((direction != Direction.Up && direction != Direction.Down) || !IsContentActive || SelectedDescendants.Any())
-        {
-            return;
-        }
-        IWorksheetPage activePage = ActivePage;
-        IScrollInfo scrollViewerRect = VisualHelper.GetScrollViewerRect(activePage, out var mainScrollViewerBounds);
-        if (scrollViewerRect == null)
-        {
-            DebugTools.FailAssertion("ScrollViewer is null.");
-            return;
-        }
-        IWorksheetControl wc = VisualHelper.FindWorksheetControlAncestor(activePage);
-        Point descendantInsertionPoint = GetDescendantInsertionPoint();
-        double index = VisualHelper.TranslateWorksheetLocationToScrollViewport(scrollViewerRect, wc, descendantInsertionPoint.Y);
-        if (index.IsLessThanOrEqual(mainScrollViewerBounds.Top) || index.IsGreaterThanOrEqual(mainScrollViewerBounds.Bottom))
-        {
-            index = ((direction == Direction.Up) ? mainScrollViewerBounds.Bottom : mainScrollViewerBounds.Top);
-        }
-        double lastIndex = ((direction == Direction.Up) ? mainScrollViewerBounds.Top : (scrollViewerRect.ExtentHeight - mainScrollViewerBounds.Bottom));
-        double offsetIndex = (lastIndex.IsGreaterThan(mainScrollViewerBounds.Height) ? mainScrollViewerBounds.Height : lastIndex);
-        if (direction == Direction.Up)
-        {
-            offsetIndex = 0.0 - offsetIndex;
-        }
-        double yLocationInScrollViewport = index + offsetIndex;
-        double finalIndex = VisualHelper.TranslateScrollViewportLocationToWorksheet(scrollViewerRect, wc, yLocationInScrollViewport, direction);
-        Point nearestInsertionPointIgnoringRestrictedAreas = _worksheetGrid.GetNearestInsertionPointIgnoringRestrictedAreas(new Point(descendantInsertionPoint.X, finalIndex));
-        double value = nearestInsertionPointIgnoringRestrictedAreas.Y;
-        Rect gridArea = _worksheetGrid.GridArea;
-        if (value.IsGreaterThanOrEqual(gridArea.Height))
-        {
-            gridArea = _worksheetGrid.GridArea;
-            double height = gridArea.Height;
-            Size gridCellSize = PageLayout.GridCellSize;
-            nearestInsertionPointIgnoringRestrictedAreas.Y = height - gridCellSize.Height;
-        }
-        if (nearestInsertionPointIgnoringRestrictedAreas.Y.IsLessThan(0.0))
-        {
-            nearestInsertionPointIgnoringRestrictedAreas.Y = 0.0;
-        }
-        if (direction == Direction.Up)
-        {
-            scrollViewerRect.PageUp();
-        }
-        else
-        {
-            scrollViewerRect.PageDown();
-        }
-        if (nearestInsertionPointIgnoringRestrictedAreas.Y != descendantInsertionPoint.Y)
-        {
-            InsertionPoint = nearestInsertionPointIgnoringRestrictedAreas;
-            IWhiteboardItem activeDescendant = ActiveDescendant;
-            if (activeDescendant != null && !(activeDescendant is IWhiteboardControl))
-            {
-                activeDescendant.NavigateIntoItem(direction);
-            }
-        }
-    }
+private void MoveByPage(Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private bool CanSeparateOverlappedItems(global::Quire.Dimension dimension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -3966,31 +3794,7 @@ private void MakeContentActive()
         }
     }
 
-public void SelectItemsInBounds(IWorksheetControl worksheet, Point start, Point end)
-    {
-        IEnumerable<IWhiteboardItem> enumerable = ItemsInRelativeBounds(new Rect(start, end), worksheet);
-        if (enumerable.Any())
-        {
-            ClearSelection();
-            try
-            {
-                SelectItems(enumerable);
-                return;
-            }
-            catch (InvalidOperationException ex)
-            {
-                DebugTools.FailAssertion(ex.StackTrace);
-                return;
-            }
-        }
-        IWorksheetPageSection worksheetPageSection = VisualHelper.FindPageSectionContainingPoint(end, worksheet);
-        if (worksheetPageSection is IWorksheetPageBody)
-        {
-            Point val = VisualHelper.TranslatePoint(end, worksheet, worksheetPageSection);
-            IWorksheetPage item = VisualHelper.FindWorksheetPageAncestor(worksheetPageSection);
-            InsertionPoint = new Point(val.X, val.Y + PageLayout.PageBodyHeight * (double)Pages.IndexOf(item));
-        }
-    }
+public void SelectItemsInBounds(IWorksheetControl worksheet, Point start, Point end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private void HandleDragSelection(global::System.Windows.UIElement originalSource, global::System.Windows.Point position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -4084,90 +3888,11 @@ private void HandlePageWideSizableSizeChanged(IWhiteboardItem item, Size oldSize
         HandlePageWideSizableHeightChanged(item, oldSize, newSize);
     }
 
-private void HandleHeaderFooterNavigation(Direction direction)
-    {
-        Point val;
-        double lastIndex;
-        IHeaderFooterControl firstPageFooter;
-        if (IsHeaderActive)
-        {
-            IHeaderFooterControl headerFooterControl = ((ActiveSection == FirstPageHeader) ? FirstPageHeader : Header);
-            double index;
-            if (ActiveItem != null)
-            {
-                val = headerFooterControl.GetItemLocation(ActiveItem);
-                index = val.X;
-            }
-            else
-            {
-                val = InsertionPoint;
-                index = val.X;
-            }
-            lastIndex = index;
-            if (IsFirstPageHeaderFooterDifferent)
-            {
-                IWorksheetPage activePage = ActivePage;
-                if (activePage != null && activePage.PageNumber == 1)
-                {
-                    firstPageFooter = FirstPageFooter;
-                }
-            }
-            firstPageFooter = Footer;
-        }
-        if (!IsFooterActive)
-        {
-            return;
-        }
-        IHeaderFooterControl headerFooterControl2 = ((ActiveSection == FirstPageFooter) ? FirstPageFooter : Footer);
-        double offsetIndex;
-        if (ActiveItem != null)
-        {
-            val = headerFooterControl2.GetItemLocation(ActiveItem);
-            offsetIndex = val.X;
-        }
-        else
-        {
-            val = InsertionPoint;
-            offsetIndex = val.X;
-        }
-        double finalIndex = offsetIndex;
-        IHeaderFooterControl firstPageHeader;
-        if (IsFirstPageHeaderFooterDifferent)
-        {
-            IWorksheetPage activePage2 = ActivePage;
-            if (activePage2 != null && activePage2.PageNumber == 1)
-            {
-                firstPageHeader = FirstPageHeader;
-            }
-        }
-        firstPageHeader = Header;
-        IHeaderFooterControl section = firstPageHeader;
-        if (direction == Direction.Down && ActivePage != Pages.Last())
-        {
-            IWorksheetPage page = Pages[Pages.IndexOf(ActivePage) + 1];
-            ActivateSection(Header, page, new Point(finalIndex, 0.0));
-        }
-        if (direction == Direction.Up)
-        {
-            ActivateSection(section, ActivePage, new Point(finalIndex, PageLayout.PageMargin.Top));
-        }
-        return;
-        IHeaderFooterControl section2 = firstPageFooter;
-        if (direction == Direction.Down)
-        {
-            ActivateSection(section2, ActivePage, new Point(lastIndex, 0.0));
-        }
-        if (direction == Direction.Up && ActivePage != Pages.First())
-        {
-            IWorksheetPage page2 = Pages[Pages.IndexOf(ActivePage) - 1];
-            ActivateSection(Footer, page2, new Point(lastIndex, PageLayout.PageMargin.Bottom));
-        }
-    }
+private void HandleHeaderFooterNavigation(Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private void HandleHeaderFooterPageUp()
     {
-        IWorksheetPage activePage = ActivePage;
-        bool flag = activePage != null && activePage.PageNumber == 1;
+        bool isFirstPage = ActivePage?.PageNumber == 1;
         if (IsHeaderActive)
         {
             if (ActivePage != Pages.First())
@@ -4178,18 +3903,17 @@ private void HandleHeaderFooterPageUp()
         }
         else if (IsFooterActive)
         {
-            IHeaderFooterControl section = ((IsFirstPageHeaderFooterDifferent & flag) ? FirstPageHeader : Header);
+            IHeaderFooterControl section = ((IsFirstPageHeaderFooterDifferent & isFirstPage) ? FirstPageHeader : Header);
             ActivateSection(section, ActivePage, InsertionPoint);
         }
     }
 
 private void HandleHeaderFooterPageDown()
     {
-        IWorksheetPage activePage = ActivePage;
-        bool flag = activePage != null && activePage.PageNumber == 1;
+        bool isFirstPage = ActivePage?.PageNumber == 1;
         if (IsHeaderActive)
         {
-            IHeaderFooterControl section = ((IsFirstPageHeaderFooterDifferent & flag) ? FirstPageFooter : Footer);
+            IHeaderFooterControl section = ((IsFirstPageHeaderFooterDifferent & isFirstPage) ? FirstPageFooter : Footer);
             ActivateSection(section, ActivePage, InsertionPoint);
         }
         else if (IsFooterActive && ActivePage != Pages.Last())
@@ -4199,7 +3923,14 @@ private void HandleHeaderFooterPageDown()
         }
     }
 
-private void HookupCollectionChangedHandlers() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private void HookupCollectionChangedHandlers()
+    {
+        Pages.RangeChanged += HandlePagesCollectionChanged;
+        PageBreaks.RangeChanged += HandlePagebreaksChanged;
+        WorksheetItems.RangeChanging += HandleItemsCollectionChanging;
+        WorksheetItems.RangeChanged += HandleItemsCollectionChanged;
+        WorksheetContent.SelectedItems.RangeChanged += HandleSelectedItemsChanged;
+    }
 
 private void SetupDisplayFormats()
     {
@@ -4262,47 +3993,7 @@ private static bool IsPageWideSizablePredicate(IWhiteboardItem item)
         return item is IPageWideSizable;
     }
 
-private void UpdateCalculationButtonStatus()
-    {
-        if (!IsContentActive)
-        {
-            HideFromCalculationButtonEnabled = false;
-            HideFromCalculationButtonChecked = false;
-            return;
-        }
-        bool flag = false;
-        List<ICalculationHideableChild> list = new List<ICalculationHideableChild>();
-        foreach (IWhiteboardItem selectedItem in SelectedItems)
-        {
-            if (selectedItem is ICalculationHideableChild calculationHideableChild)
-            {
-                flag |= calculationHideableChild.CanHideFromCalculationContext;
-                if (calculationHideableChild.CanHideFromCalculationContext)
-                {
-                    list.Add(calculationHideableChild);
-                }
-            }
-        }
-        if (ActiveItem != null && ActiveItem is ICalculationHideableChild calculationHideableChild2)
-        {
-            flag |= calculationHideableChild2.CanHideFromCalculationContext;
-            if (calculationHideableChild2.CanHideFromCalculationContext)
-            {
-                list.Add(calculationHideableChild2);
-            }
-        }
-        bool hideFromCalculationButtonChecked = list.Count > 0;
-        foreach (ICalculationHideableChild item in list)
-        {
-            if (!item.HideFromCalculationContext)
-            {
-                hideFromCalculationButtonChecked = false;
-                break;
-            }
-        }
-        HideFromCalculationButtonEnabled = flag;
-        HideFromCalculationButtonChecked = hideFromCalculationButtonChecked;
-    }
+private void UpdateCalculationButtonStatus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private bool ErrorCanTraceBackward()
     {
@@ -4350,77 +4041,14 @@ public bool CanImportData()
         return false;
     }
 
-public bool HandleRequestBringIntoView(DependencyObject intoViewObject, Rect bringIntoViewRect)
-    {
-        IWhiteboardItem whiteboardItem = intoViewObject?.TryFindAncestorIncludingSelf<IWhiteboardItem>();
-        if (whiteboardItem == null)
-        {
-            return false;
-        }
-        if (ItemManager.IsSuppressBringIntoView(whiteboardItem))
-        {
-            return true;
-        }
-        IWhiteboardItem whiteboardItem2 = VisualHelper.FindTopWhiteboardItemAncestorIncludingSelf((whiteboardItem is DependencyObject) ? whiteboardItem : null);
-        if (ItemManager.IsSuppressBringIntoView(whiteboardItem2))
-        {
-            return true;
-        }
-        if (ItemManager.SmartDescendantsSatisfyingCondition(whiteboardItem, IsSuppressBringIntoViewAndNotIsResizing).FirstOrDefault() != null)
-        {
-            return true;
-        }
-        if (DebugTools.IsDebug && whiteboardItem2 is EquationControl { IsScriptableControl: false })
-        {
-            DebugTools.DevAssert(!WpfUtils.AtLeastOneChildSatisfyPassedCondition((DependencyObject)((whiteboardItem2 is DependencyObject) ? whiteboardItem2 : null), (Predicate<IWhiteboardItem>)IsSuppressBringIntoViewAndNotIsResizing, out IWhiteboardItem satisfiesCondition), satisfiesCondition?.GetType().Name);
-        }
-        Rect val = bringIntoViewRect;
-        if (whiteboardItem != intoViewObject)
-        {
-            if (val.IsEmpty)
-            {
-                val = new Rect(ItemManager.GetRenderSize(intoViewObject));
-            }
-            val = ItemManager.TransformBoundsToAncestor(intoViewObject, whiteboardItem, val);
-        }
-        IWhiteboardItem whiteboardItem3 = ItemManager.SmartDescendantsSatisfyingCondition(whiteboardItem, ItemManager.IsResizingItem).FirstOrDefault();
-        if (whiteboardItem3 == null)
-        {
-            _pageManager.ActivateWorksheetItemPartForcingSplitIfNeeded(whiteboardItem2, whiteboardItem, val, replaceOnly: true);
-            if (whiteboardItem2 == ActiveItem)
-            {
-                SetActivePage(whiteboardItem2);
-            }
-        }
-        else if (DebugTools.IsDebug)
-        {
-            DebugTools.DevAssert(WpfUtils.AtLeastOneChildSatisfyPassedCondition((DependencyObject)((whiteboardItem2 is DependencyObject) ? whiteboardItem2 : null), (Predicate<IWhiteboardItem>)ItemManager.IsResizingItem, out IWhiteboardItem satisfiesCondition2) && whiteboardItem3 == satisfiesCondition2, null);
-        }
-        return false;
-        static bool IsSuppressBringIntoViewAndNotIsResizing(IWhiteboardItem item)
-        {
-            if (ItemManager.IsSuppressBringIntoView(item))
-            {
-                return !ItemManager.IsResizingItem(item);
-            }
-            return false;
-        }
-    }
+public bool HandleRequestBringIntoView(DependencyObject intoViewObject, Rect bringIntoViewRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 public IDictionary<IdLabels, ExtendedFont> GetDefaultLabeledIdFormat()
     {
         return VisualHelper.GetDefaultLabeledIdFormat();
     }
 
-private IEnumerable<IFindRestrictor> GetSearchableRegions(IWhiteboardItem fromElement, IWhiteboardItem toElement)
-    {
-        int index = ((fromElement != null) ? WorksheetItems.IndexOf(fromElement) : 0);
-        int lastIndex = ((toElement == null) ? WorksheetItems.Count : (WorksheetItems.IndexOf(toElement) + 1));
-        DebugTools.DevAssert(-1 != index && -1 != lastIndex && index <= lastIndex, null);
-        return from restrictor in WorksheetItems.Skip(index).Take(lastIndex - index).Select(WhiteboardItemSearchRestrictor.TryCreateFindRestrictor)
-            where restrictor != null
-            select restrictor;
-    }
+private IEnumerable<IFindRestrictor> GetSearchableRegions(IWhiteboardItem fromElement, IWhiteboardItem toElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private bool CanToggleIORegions<T>() where T : IIORegion
     {
@@ -4476,8 +4104,10 @@ private void ResizeItemToFit(IResizeToFitWhiteboardItem item, bool assertIsNotRe
             return;
         }
         Size size = ItemManager.GetSize(item);
-        if (!DebugTools.DevAssert(size.Width.IsValid() && size.Height.IsValid(), null).Failed)
+        if (DebugTools.DevAssert(size.Width.IsValid() && size.Height.IsValid(), null).Failed)
         {
+            return;
+        }
             double index = PageLayout.PageBodyWidth;
             double lastIndex = PageLayout.PageBodyHeight;
             Size size2 = size;
@@ -4501,7 +4131,6 @@ private void ResizeItemToFit(IResizeToFitWhiteboardItem item, bool assertIsNotRe
                 size2.Height = size2.Width / offsetIndex;
             }
             ItemManager.SetSize(item, size2);
-        }
     }
 
 private bool CanBookmarkTag()
@@ -4529,14 +4158,7 @@ private void HandleBookmarkTag()
         }
     }
 
-private bool CanRemoveBookmarkTag()
-    {
-        if (!IsHeaderActive && !IsFooterActive)
-        {
-            return ActiveOrSelectedItems.Any((IWhiteboardItem item) => BookmarkTag.HasBookmarkTag((DependencyObject)((item is DependencyObject) ? item : null)));
-        }
-        return false;
-    }
+private bool CanRemoveBookmarkTag() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private void HandleRemoveBookmarkTag()
     {
@@ -4552,28 +4174,7 @@ private void HandleRemoveBookmarkTag()
         }
     }
 
-public void RequestNavigateHandler(IWorksheetControl worksheetControl, global::System.Windows.Navigation.RequestNavigateEventArgs eventArgs)
-    {
-        if (DebugTools.AssertNotNull(eventArgs, null).Failed || DebugTools.AssertNotNull(eventArgs.Uri, null).Failed || DebugTools.AssertNotNull(eventArgs.OriginalSource, null).Failed)
-        {
-            return;
-        }
-        string text = eventArgs.Uri.ToString();
-        if (text.Length <= 1)
-        {
-            return;
-        }
-        string valueTag = text.Substring(1);
-        IWhiteboardItem whiteboardItem = worksheetControl.TraverseWhiteboardItemsForBookmarkTag(WorksheetItems, valueTag);
-        if (whiteboardItem != null)
-        {
-            VisualHelper.BringIntoView(whiteboardItem);
-            if (eventArgs.OriginalSource is Hyperlink dObj)
-            {
-                HyperlinkProperties.SetLinkVisited((DependencyObject)(object)dObj, value: true);
-            }
-        }
-    }
+public void RequestNavigateHandler(IWorksheetControl worksheetControl, global::System.Windows.Navigation.RequestNavigateEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetViewModel+WorksheetCommand, Ptc.Controls.Worksheet")]
     internal abstract partial class WorksheetCommand : global::Quire.Undo.IUndoableCommand
