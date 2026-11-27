@@ -48,6 +48,8 @@ public partial class MathNode
         }
     }
 
+    public IMathNodeList Children => b__;
+
     public virtual MathNode ContainerRoot
     {
         get
@@ -70,6 +72,12 @@ public partial class MathNode
             }
             return Parent.EquationRootNode;
         }
+    }
+
+    public string Algorithm
+    {
+        get => e__;
+        set => e__ = value;
     }
 
     public string AlgorithmSExpression => Algorithm + AlgorithmOptions.ToSExpression();
@@ -140,6 +148,8 @@ public partial class MathNode
             }
         }
     }
+
+    public bool IsRoot => a__ == null;
 
     public bool IsRooted => RootNode is RootMathNode;
 
