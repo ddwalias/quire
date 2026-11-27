@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Quire.FunctionalitiesLimitation;
@@ -17,20 +16,18 @@ public partial class BaseUIFunctionalityAttachedBehavior
         d.SetValue(_uiFunctionalityBehaviorKeyPropertyKey, functionalityBehaviorKey);
     }
 
-    protected static Image GetImage(object value)
+    protected void UpdateUIElementImageForButtonDropDown(object buttonDropDownImage, object buttonDropDownImageSmall, object buttonDropDownHeaderImage, EnumFunctionalityBehaviorKey functionalityBehaviorKey)
     {
-        Image image = value as Image;
-        if (image == null)
+        if (ShouldReplaceWithLockImages(functionalityBehaviorKey))
         {
-            Panel panel = value as Panel;
-            if (panel != null)
-            {
-                return panel.Children.OfType<Image>().FirstOrDefault();
-            }
-
-            return null;
+            ReplaceWithAppropiateLockImageIfOriginalImageExist(_originalImageSource, buttonDropDownImage);
+            ReplaceWithAppropiateLockImageIfOriginalImageExist(_originalImageSmallSource, buttonDropDownImageSmall);
+            ReplaceWithAppropiateLockImageForHeaderImageIfOriginalImageExist(_originalHeaderImageSource, buttonDropDownHeaderImage);
+            return;
         }
 
-        return image;
+        RestoreOriginalImagesIfExist(_originalImageSource, buttonDropDownImage);
+        RestoreOriginalImagesIfExist(_originalImageSmallSource, buttonDropDownImageSmall);
+        RestoreOriginalImagesIfExist(_originalHeaderImageSource, buttonDropDownHeaderImage);
     }
 }

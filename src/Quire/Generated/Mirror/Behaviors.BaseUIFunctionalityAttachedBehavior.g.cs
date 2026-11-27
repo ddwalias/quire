@@ -32,11 +32,11 @@ public partial class BaseUIFunctionalityAttachedBehavior : global::Microsoft.Xam
     [global::Quire.Mirror.MirrorStub]
     protected override void OnAttached() => base.OnAttached();
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorStub]
+    protected static global::System.Windows.Controls.Image GetImage(object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     protected virtual void OnLoaded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void GetLockImages(global::System.Windows.FrameworkElement uiElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected void UpdateUIElementImageForButtonDropDown(object buttonDropDownImage, object buttonDropDownImageSmall, object buttonDropDownHeaderImage, global::Quire.FunctionalitiesLimitation.EnumFunctionalityBehaviorKey functionalityBehaviorKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected void UpdateUIElementImageForPrimeContextMenu(object primeContextMenuIconImage, global::Quire.FunctionalitiesLimitation.EnumFunctionalityBehaviorKey functionalityBehaviorKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
