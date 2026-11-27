@@ -374,6 +374,18 @@ public partial class MathNode
 
     public bool HasContainerSlot => ContainerSlots.Length > 0;
 
+    public bool IsFullContainer
+    {
+        get
+        {
+            if (AllChildSlotsAreContainerSlots)
+            {
+                return true;
+            }
+            return d__.IsFullContainer;
+        }
+    }
+
     public bool IsPairNary => d__.IsPairNary;
 
     public string FirstElementDescriptorName => d__.FirstElementDescriptorName;
@@ -390,16 +402,45 @@ public partial class MathNode
 
     public string ParentPairNaryDescriptorName => d__.ParentPairNaryDescriptorName;
 
-    public bool IsFullContainer
+    public string OperatorText => d__.OperatorText;
+
+    public bool IsBinOctHexModeOn => d__.BinOctHexModeOn;
+
+    public MathNodeDescriptor FirstElementDescriptor => DefaultDescriptorTable.Default[FirstElementDescriptorName];
+
+    public MathNodeDescriptor MiddleElementDescriptor => DefaultDescriptorTable.Default[MiddleElementDescriptorName];
+
+    public MathNodeDescriptor LastElementDescriptor => DefaultDescriptorTable.Default[LastElementDescriptorName];
+
+    public MathNodeDescriptor AlternateMiddleElementDescriptor => DefaultDescriptorTable.Default[AlternateMiddleElementDescriptorName];
+
+    public MathNodeDescriptor ActualMiddleElementDescriptor
     {
         get
         {
-            if (AllChildSlotsAreContainerSlots)
+            if (!IsAlternateFormPairNary)
             {
-                return true;
+                return MiddleElementDescriptor;
             }
-            return d__.IsFullContainer;
+            return AlternateMiddleElementDescriptor;
         }
+    }
+
+    public bool IsAlternateFormPairNary
+    {
+        get
+        {
+            if (!IsPairNary)
+            {
+                return false;
+            }
+            if (ChildCount <= FirstElementDescriptor.ChildCount + LastElementDescriptor.ChildCount)
+            {
+                return false;
+            }
+            return j_;
+        }
+        set => j_ = value;
     }
 
     public bool HasLastElement
