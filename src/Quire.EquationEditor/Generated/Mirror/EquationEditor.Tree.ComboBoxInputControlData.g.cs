@@ -60,8 +60,6 @@ public partial class ComboBoxInputControlData : global::Quire.EquationEditor.Tre
     [global::Quire.Mirror.MirrorStub]
     private static bool a(global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode> A_0, global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode> A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.EquationEditor.Tree.ComboBoxInputControlData CreateComboBoxInputControlData(int rows, int cols, int selectedId, string tableName, global::System.Collections.Generic.IList<string> titlesList, global::System.Collections.Generic.IList<string> unitsList, global::System.Collections.Generic.IList<string> valuesList, global::Quire.EquationEditor.Tree.StringToComboBoxMathTransformer transformer) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal static global::Quire.EquationEditor.Tree.ComboBoxInputControlData a(int A_0, int A_1, int A_2, string A_3, global::System.Collections.Generic.IList<string> A_4, global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode> A_5, global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode> A_6, bool A_7 = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void MakeReadOnly() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

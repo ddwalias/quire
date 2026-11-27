@@ -121,8 +121,6 @@ public partial class MathNodeToRlTransformer
     [global::Quire.Mirror.MirrorStub]
     private static string d(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static string UnescapeLiteral(string str) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static string EscapeIdentifier(string oldVal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static string UnescapeIdentifier(string oldVal) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -137,11 +135,7 @@ public partial class MathNodeToRlTransformer
     [global::Quire.Mirror.MirrorStub]
     public MathNodeToRlTransformer(global::System.Collections.Generic.Dictionary<string, string> nodeNameToRlFormat, global::System.Collections.Generic.Dictionary<string, global::Quire.DelegateFunction1<string, global::Quire.EquationEditor.Tree.MathNode>> specialCaseMap) { }
     [global::Quire.Mirror.MirrorStub]
-    public string SetRlidAndTransform(global::Quire.EquationEditor.Tree.MathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public string SetRlidAndTransformWithResultScalingFactor(global::Quire.EquationEditor.Tree.MathNode node, global::Quire.EquationEditor.Tree.MathNode resultScalingFactor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsValidRl(string rl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IList<string> TransformForAggregateWithReplacementScalingFactor(global::Quire.EquationEditor.Tree.MathNode node, global::Quire.EquationEditor.Tree.MathNode resultScalingFactor, bool isWithinSolveBlock = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -150,8 +144,6 @@ public partial class MathNodeToRlTransformer
     private global::System.Collections.Generic.IList<string> a(global::Quire.EquationEditor.Tree.MathNode A_0, global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode> A_1, global::Quire.EquationEditor.Tree.MathNode A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.EquationEditor.Tree.MathNode GetEvaluationNodeForRlIndex(int rlIndex, global::Quire.EquationEditor.Tree.MathNode rootNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int GetRlIndexForEvaluationNode(global::Quire.EquationEditor.Tree.MathNode evalNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static int GetRlCount(global::Quire.EquationEditor.Tree.MathNode rootNode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -174,8 +166,6 @@ public partial class MathNodeToRlTransformer
     private string d(global::Quire.EquationEditor.Tree.MathNode A_0, string A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public string GetLabelRLSuffix(global::Quire.EquationEditor.Tree.MathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string GetLabelRLSuffix(global::Quire.EquationEditor.Tree.MathNode node, string labelForNoLabel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private string c(global::Quire.EquationEditor.Tree.MathNode A_0, string A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -230,8 +220,6 @@ public partial class MathNodeToRlTransformer
     private string j(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private string i(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsNumeric(object expression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private string h(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
