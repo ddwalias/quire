@@ -2381,9 +2381,13 @@ private bool CanDeleteActiveOrSelectedItems()
 
 private bool CanTogglePageLayout(object param)
     {
-        if (param is PageLayoutMode pageLayoutMode && pageLayoutMode != PageLayoutMode.PageMode)
+        if (param is PageLayoutMode)
         {
-            return true;
+            PageLayoutMode pageLayoutMode = (PageLayoutMode)param;
+            if (pageLayoutMode != PageLayoutMode.PageMode)
+            {
+                return true;
+            }
         }
         if (ActiveItem == null)
         {
@@ -2541,13 +2545,14 @@ private bool CanCreateParagraphControl()
             return false;
         }
         IWhiteboardControl whiteboardControl = ActiveItem as IWhiteboardControl;
+        Point insertionPoint;
         if (whiteboardControl != null)
         {
-            Point insertionPoint = whiteboardControl.InsertionPoint;
+            insertionPoint = whiteboardControl.InsertionPoint;
             return insertionPoint.X <= PageLayout.PageBodyWidth;
         }
-        Point fallbackInsertionPoint = InsertionPoint;
-        return fallbackInsertionPoint.X <= PageLayout.PageBodyWidth;
+        insertionPoint = InsertionPoint;
+        return insertionPoint.X <= PageLayout.PageBodyWidth;
     }
 
 private void InitializePlotControl(IPlotControl control, string xSExpression, string ySExpression)
