@@ -1107,3 +1107,8 @@
 - Still parked, with the exact IL diff:
   - `IPlotAxisView.LegendActualWidth` setter: the closure name is `<Quire.Controls.Plots.Presenter.IPlotAxisView.set_LegendActualWidth>b__0`, Mathcad's is `<Ptc.Controls.Plots.Presenter.IPlotAxisView.set_LegendActualWidth>b__0`. `tools/Quire.Tools.MethodAudit` normalizes only ordinals (`ordinalless`), not namespaces in lambda names, and the explicit-interface name cannot be spelled `Ptc.` in Quire. Needs a gate-side rule or a decision to accept the name difference.
   - `GetMajorTickmaks`: Mathcad materializes the whole `&&`/`||` condition as a value (`ldc.i4.0`/`ldc.i4.1`, `br.s`, then `brtrue.s IL_0100`) and compares `Labels` with `MemoryExtensions.SequenceEqual<string>` over `ReadOnlySpan<string>` via `op_Implicit`. The C# `if` form has no materialization; the first difference is at `brfalse` (Quire target 72, Mathcad 78, Quire is 6 bytes shorter). Parked (placeholder).
+
+## Orca task `task_3b0fb5d1b5ec` — EquationList closure calibration
+
+- After declaration reordering and the second placeholder-only lambda build, these anchors match Mathcad: `get_Equations` b36, `AddItemToLegend` b60, `OnIsKeyboardFocusWithinChanged` b73, `ArrangeEquationsHorizontally` b87, and `SetMinMaxWidth(double,double)` b88.
+- Remaining anchor deltas: `GetEquationListItem` candidate b97 vs Mathcad b96 (+1); `HandleInsertItemToLegendCommand` candidate b107 vs Mathcad b108 (-1). Keep these two members as placeholders until their ordinals are aligned; calibration used dummy lambdas and does not verify the member bodies.

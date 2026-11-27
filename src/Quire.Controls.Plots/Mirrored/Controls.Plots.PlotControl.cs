@@ -6,6 +6,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,6 +18,7 @@ using System.Windows.Markup;
 using Quire.Calculation.Core;
 using Quire.Calculation.Core.Trace2DResults;
 using Quire.Controls.Core;
+using Quire.Controls.Core.Serialization;
 using Quire.Controls.Internal;
 using Quire.FunctionalitiesLimitation;
 using Quire.Wpf;
@@ -24,6 +26,8 @@ using Quire.Controls.Plots.Presenter;
 using Quire.Controls.Plots.Model;
 using Quire.Controls.Plots.ViewModel;
 using Quire.Controls.Plots.View;
+using Quire.PersistentDataObjects;
+using Quire.Core;
 using Quire.Controls.Plots.PlotCommands;
 using Quire.Undo;
 
@@ -320,61 +324,7 @@ public partial class PlotControl
             plotControl.Graph.SetIsResizing(plotControl.IsResizing);
         }
     }
-    private void PlotControlLoaded() {
-		bool num = !IsActiveRegion && _resultEquations.Visibility == HiddenExpressionsVisibility;
-		Size plotGraphSize = PlotGraphSize;
-		InitializeResizeEventsAfterLoading();
-		SelectAllTraces();
-		Size graphSize = _model.GraphSize;
-		if (!graphSize.IsEmpty && SerializationHelperUtils.IsConvertedFromMathcad14((DependencyObject)(object)this))
-		{
-			ForceMc14GraphSize();
-		}
-		if (num)
-		{
-			_model.GraphSize = plotGraphSize;
-			_referenceSizeForPostUnfixate = Size.Empty;
-			_expressionVisibilityChangeInProgress = false;
-			_plotSizeChanging = true;
-			if (SerializationHelperUtils.IsConvertedFromMathcad14((DependencyObject)(object)this))
-			{
-				return;
-			}
-			if (PlotType == PlotType.Polar)
-			{
-				DebugTools.DevAssert(Graph.ActualWidth.IsEqualTo(Graph.ActualHeight, 1E-05), null);
-				double maximumGraphDimension = Math.Max(plotGraphSize.Width, plotGraphSize.Height);
-				double polarWidthDifference = Graph.ActualWidth - maximumGraphDimension;
-				if (polarWidthDifference.IsGreaterThan(0.0, 1E-05))
-				{
-					Width -= polarWidthDifference;
-					Height -= polarWidthDifference;
-				}
-				return;
-			}
-			double graphWidthDifference = Graph.ActualWidth - plotGraphSize.Width;
-			double graphHeightDifference = Graph.ActualHeight - plotGraphSize.Height;
-			if (graphWidthDifference.IsGreaterThan(0.0, 1E-05))
-			{
-				Width -= graphWidthDifference;
-			}
-			if (graphHeightDifference.IsGreaterThan(0.0, 1E-05))
-			{
-				Height -= graphHeightDifference;
-			}
-		}
-		else if (!ShowAxisExpressions && !IsActiveRegion && !_isActivationPending)
-		{
-			SwitchExpressionsVisibility(HiddenExpressionsVisibility);
-			if (PlotType == PlotType.Polar)
-			{
-				_expressionVisibilityChangeInProgress = false;
-				_plotSizeChanging = true;
-				_model.GraphSize = plotGraphSize;
-			}
-			_referenceSizeForPostUnfixate = Size.Empty;
-		}
-	}
+    private void PlotControlLoaded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void SelectAllTraces() {
 		SelectedTraces = new List<IPlotTrace>(Traces);
 	}
@@ -541,20 +491,7 @@ public partial class PlotControl
     public static readonly global::System.Windows.Input.RoutedUICommand DeleteMarkerCommand;
     public static readonly global::System.Windows.DependencyProperty IsCalculatingProperty;
     public static readonly global::System.Windows.DependencyPropertyKey PlotXMinGapPropertyKey;
-    private void PlaceholderSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) {
-		if (IsLoaded || !IsInPrinting)
-		{
-			WpfUtils.ExecuteOnLoad(this, () =>
-			{
-				PlotItemPlaceholder plotItemPlaceholder = (PlotItemPlaceholder)sender;
-				Thickness padding = plotItemPlaceholder.Padding;
-				plotItemPlaceholder.AdjustPadding();
-				_plotStrategy.SetMinWidthHeight(this);
-				DebugTools.DevAssert(SnapToGrid == plotItemPlaceholder.SnapToGrid, null);
-				DebugTools.DevAssert(_doubleComparer.Compare(padding.Left, plotItemPlaceholder.Padding.Left) == 0 && _doubleComparer.Compare(padding.Right, plotItemPlaceholder.Padding.Right) == 0 && _doubleComparer.Compare(padding.Top, plotItemPlaceholder.Padding.Top) == 0 && _doubleComparer.Compare(padding.Bottom, plotItemPlaceholder.Padding.Bottom) == 0, null);
-			}, HasWorksheetProperties);
-		}
-	}
+    private void PlaceholderSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void InitializeAxes() {
 		_plotStrategy.InitializeAxes(XAxisTitle, YAxisTitle, _plotTitle, _rangeEquations, _resultEquations, out _rangeAxis, out _primaryResultAxis);
 	}
@@ -633,30 +570,8 @@ public partial class PlotControl
 			}
 		}
 	}
-    private void PlotTitlePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) {
-		if (e.PropertyName == "ShowTitle" && sender is PlotTitleViewModel { TitleType: var titleType } plotTitleViewModel)
-		{
-			switch (titleType)
-			{
-			case PlotTitleType.Plot:
-				UpdatePlotTitlePlaceholderVisibility();
-				break;
-			case PlotTitleType.XAxis:
-			case PlotTitleType.YAxis:
-				UpdateAxisTitlePlaceholderVisibility(plotTitleViewModel);
-				break;
-			default:
-				DebugTools.FailAssertionDoNotThrow("Plot Title Type is not recognized after ShowTitle has been changed");
-				break;
-			}
-		}
-	}
-    private void PlotLegendPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) {
-		if (sender is PlotLegendViewModel && e.PropertyName == "ShowPlotLegend")
-		{
-			UpdatePlotLegendPlaceholderVisibility();
-		}
-	}
+    private void PlotTitlePropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void PlotLegendPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     internal void UpdateStaticXPlaceholdersVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void UpdatePlotTitlePlaceholderVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void UpdatePlotLegendPlaceholderVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -761,20 +676,7 @@ public partial class PlotControl
             equationList[i].Commit(fireEvent: false);
         }
     }
-    private void OnRequestMoveAndResize(object sender, global::Quire.Controls.Core.ResizeEventMouseArgs args) {
-		DragMode dragMode = args.DragMode;
-		UIElement sourceElement = args.SourceElement;
-		Point startPosition = sourceElement.TranslatePoint(args.StartPoint, this);
-		if (sourceElement != this)
-		{
-			PlotDragger resizer = new PlotDragger(this, startPosition, dragMode, sourceElement, args.Automation);
-			if (args.Automation)
-			{
-				args.Resizer = resizer;
-			}
-			args.Handled = true;
-		}
-	}
+    private void OnRequestMoveAndResize(object sender, global::Quire.Controls.Core.ResizeEventMouseArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     private static bool TraceCanIncrease(IPlotTrace trace)
     {
@@ -817,29 +719,7 @@ public partial class PlotControl
     private static readonly global::System.Windows.DependencyProperty SelectedTraceTypeProperty;
     public static readonly global::System.Windows.DependencyProperty SelectedTracesProperty;
     private global::Quire.PersistentDataObjects.plotEquation[] _xEquationsToAdd;
-    private void TogglePlotTitleCommandExecute(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) {
-		if (_plotTitle == null || Model?.PlotTitleModel == null)
-		{
-			return;
-		}
-		new TogglePlotTitleCommand(this).Execute();
-		if (_plotTitleViewModel.ShowTitle)
-		{
-			WpfUtils.ExecuteOnLoad(_plotTitle.Title, () =>
-			{
-				_plotTitle.Title.Focus();
-			});
-			WpfUtils.ExecuteOnLoad(_plotTitle.Title, () =>
-			{
-				_plotTitle.Title.SelectAll();
-			});
-		}
-		else
-		{
-			DelegateFocus();
-		}
-		RaiseEvent(new RoutedEventArgs(ContentChangedEvent));
-	}
+    private void TogglePlotTitleCommandExecute(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     private void AddRowCommandExecute(object sender, ExecutedRoutedEventArgs e)
     {
@@ -1598,64 +1478,9 @@ public partial class PlotControl
     private void UpdateSelectedTracesNumOfPointsProperty() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private int CalculateNumberOfPointsInSelectedTraces() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public override void DeserializeEpilog() {
-		_model.DeserializeEpilog(SerializationHelperUtils.IsConvertedFromMathcad14((DependencyObject)(object)this));
-	}
-    protected override void PropagateTextStyleChangedHandler() {
-		base.PropagateTextStyleChangedHandler();
-		ITextStyleChangedHandler textStyleChangedHandler = TextStyleChangedHandler;
-		if (textStyleChangedHandler == null)
-		{
-			return;
-		}
-		if (_plotTitle?.Title != null)
-		{
-			_plotTitle.Title.TextStyleChangedHandler = textStyleChangedHandler;
-		}
-		if (XAxisTitle?.Title != null)
-		{
-			XAxisTitle.Title.TextStyleChangedHandler = textStyleChangedHandler;
-		}
-		if (YAxisTitle?.Title != null)
-		{
-			YAxisTitle.Title.TextStyleChangedHandler = textStyleChangedHandler;
-		}
-		if (_plotLegend == null)
-		{
-			return;
-		}
-		_plotLegend.TextStyleChangedHandler = textStyleChangedHandler;
-		foreach (IPlotLegendItem item in _plotLegend.PlotLegendListEnumerable)
-		{
-			if (item is PlotLegendItem { LegendLabel: not null } plotLegendItem)
-			{
-				plotLegendItem.LegendLabel.TextStyleChangedHandler = textStyleChangedHandler;
-			}
-		}
-	}
-    protected override void PropagateInitialTextFormat() {
-		base.PropagateInitialTextFormat();
-		TextFormat initialTextFormat = InitialTextFormat;
-		if (initialTextFormat == null)
-		{
-			return;
-		}
-		_plotTitle?.Title?.ApplyInitialTextFormat(initialTextFormat);
-		XAxisTitle?.Title?.ApplyInitialTextFormat(initialTextFormat);
-		YAxisTitle?.Title?.ApplyInitialTextFormat(initialTextFormat);
-		if (_plotLegend == null)
-		{
-			return;
-		}
-		_plotLegend.InitialTextFormat = initialTextFormat;
-		foreach (IPlotLegendItem item in _plotLegend.PlotLegendListEnumerable)
-		{
-			if (item is PlotLegendItem { LegendLabel: { } legendLabel })
-			{
-				legendLabel.ApplyInitialTextFormat(initialTextFormat);
-			}
-		}
-	}
+    public override void DeserializeEpilog() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected override void PropagateTextStyleChangedHandler() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected override void PropagateInitialTextFormat() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [DebuggerNonUserCode]
     [GeneratedCode("PresentationBuildTasks", "10.0.11.0")]

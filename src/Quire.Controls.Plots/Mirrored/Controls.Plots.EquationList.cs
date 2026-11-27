@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Input;
+using System.Windows.Threading;
 using Quire;
 using Quire.Controls.Core;
 using Quire.Controls.Plots.Presenter;
@@ -254,36 +255,7 @@ public partial class EquationList
 		ChangeSelectedItem((EquationListItem)equationListItem);
 		return equationListItem;
 	}
-    private global::Quire.Controls.Plots.Presenter.IPlotEquation GetNewEquation() {
-		IPlotEquation plotEquation2;
-		if (!EquationItemWOUnit)
-		{
-			IPlotEquation plotEquation = new PlotEquation
-			{
-				ViewModel = new PlotEquationViewModelBase()
-			};
-			plotEquation2 = plotEquation;
-		}
-		else
-		{
-			IPlotEquation plotEquation = new PlotEquationWOUnit();
-			plotEquation2 = plotEquation;
-		}
-		IPlotEquation plotEquation3 = plotEquation2;
-		if (InCustomInitialization)
-		{
-			plotEquation3.InCustomInitialization = InCustomInitialization;
-		}
-		if (DeserializeMathFormat != null)
-		{
-			plotEquation3.DeserializeMathFormat = DeserializeMathFormat;
-		}
-		if (DeserializeLabeledIdFormat != null)
-		{
-			plotEquation3.DeserializeLabeledIdFormat = DeserializeLabeledIdFormat;
-		}
-		return plotEquation3;
-	}
+    private global::Quire.Controls.Plots.Presenter.IPlotEquation GetNewEquation() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public bool InCustomInitialization { get; set; }
     public bool EquationItemWOUnit { get; set; }
 
@@ -469,30 +441,7 @@ public partial class EquationList
     {
         SetMinMaxWidth(MaxListWidth, 0.0);
     }
-    public void ArrangeEquationsHorizontally() {
-		if (MaxListWidth == 0.0)
-		{
-			SetMinMaxWidth();
-		}
-		double totalWidth = 0.0;
-		if (Visibility == Visibility.Collapsed)
-		{
-			foreach (EquationListItem item in EquationListGrid.Children.OfType<EquationListItem>())
-			{
-				FrameworkElement frameworkElement = (FrameworkElement)item.Equation;
-				ForceMeasure(frameworkElement);
-				double widthBeforeAdding = totalWidth;
-				Size desiredSize = frameworkElement.DesiredSize;
-				totalWidth = widthBeforeAdding + desiredSize.Width;
-			}
-			totalWidth += (double)(EquationCount * ItemMargin);
-		}
-		else
-		{
-			totalWidth = EquationListGrid.Children.OfType<EquationListItem>().Sum((EquationListItem item) => item.Equation.ActualWidth) + (double)(EquationCount * ItemMargin);
-		}
-		Width = totalWidth;
-	}
+    public void ArrangeEquationsHorizontally() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void SetMinMaxWidth(double previousWidth, double newWidth) {
 		if (EquationListGrid.Children.OfType<EquationListItem>().IsNullOrEmpty())
 		{
