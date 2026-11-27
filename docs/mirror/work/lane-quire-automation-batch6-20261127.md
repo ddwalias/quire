@@ -16,5 +16,19 @@
 
 ## Parked
 
-- Root `CMathcadPrimeApplication` (57) and `CMathcadPrimeWorksheet` (98): structural mismatch (no `Ping` member; constructor with no Mathcad counterpart).
 - Remaining non-parked automation members in the AutomationSpirit family are exhausted after this batch.
+
+### Root `Quire.CMathcadPrimeApplication` (57): maps to `Spirit.CMathcadPrimeApplication`
+
+- Mathcad declares two constructors: `public .ctor()` and `internal .ctor(bool isUiInteractiveModeDisabled)`. The generated root file (`src/Quire/Generated/Mirror/CMathcadPrimeApplication.g.cs`) declares only `public CMathcadPrimeApplication()`. The `(bool)` constructor has no Quire counterpart, so it cannot be implemented in the root partial.
+- The Mathcad root has no `Ping` member, in the members table or the decompiled source. The Ping handling (`_isSubscribedPing`, `_isPinging`, `OnPingClient`) lives in `src/Quire/Mirrored/AutomationServiceEngNote.CMathcadPrimeApplication.cs`, which mirrors the non-root `Spirit.AutomationServiceEngNote.CMathcadPrimeApplication`. The root partial has no such code to match.
+- No hand-written root partial exists (`src/Quire/Mirrored/CMathcadPrimeApplication.cs` is absent), so its generated stubs (106 `MirrorStub` lines, attributes included) remain stubs.
+
+### Root `Quire.CMathcadPrimeWorksheet` (98): maps to `Spirit.CMathcadPrimeWorksheet`
+
+- Mathcad's constructor is `public .ctor(IEngineeringDocument, bool isUiInteractiveModeDisabled)`. The generated root file declares the same two-parameter signature, but there is no hand-written root partial to implement it.
+- The hand-written counterpart (`src/Quire/Mirrored/AutomationServiceEngNote.CMathcadPrimeWorksheet.cs` and the Plus variant) declares a three-parameter constructor with an extra `bool isComClientControlled = false`. That signature does not exist in the Mathcad root, so the non-root partial cannot be reused for the root type.
+- The nested `WorksheetData` type is mirrored under the root (`Spirit.CMathcadPrimeWorksheet+WorksheetData`, generated at `CMathcadPrimeWorksheet.g.cs:200`). Its implementation exists only in the non-root partial, so the root mapping does not reach it.
+- The root generated file still has 191 `MirrorStub` lines, attributes included.
+
+Mapping decision for the MirrorGen side (maintainer): the root Quire types need their own mapping, or the non-root partials need a documented policy for the root `Spirit.*` types. Until then both root types stay parked.
