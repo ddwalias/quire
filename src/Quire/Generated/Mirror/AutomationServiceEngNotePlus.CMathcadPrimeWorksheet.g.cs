@@ -32,11 +32,7 @@ public partial class CMathcadPrimeWorksheet : global::Quire.EngNotebookPlus.Auto
     [global::Quire.Mirror.MirrorStub]
     public int DefaultCalculationTimeout { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    private bool DoGetModified() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void SetTitle(string titleArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string DoGetTitle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool DoSave(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -88,16 +84,6 @@ public partial class CMathcadPrimeWorksheet : global::Quire.EngNotebookPlus.Auto
     [global::Quire.Mirror.MirrorStub]
     private bool IsAssociatedEngineeringDocument(global::Quire.Controls.Core.IEngineeringDocument engineeringDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private string DoGetWorksheetTabIcon() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string DoGetWorksheetTabName() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string DoGetClosingPrompt() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string DoGetWorksheetDisplayedFilePath() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string DoGetWorksheetWorkingDirectory() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public object GetWorksheetReadOnlyOptionValue(global::Quire.EngNotebookPlus.Automation.WorksheetReadonlyOptionNames optionNameArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private object DoGetWorksheetReadOnlyOptionValue(global::Quire.EngNotebookPlus.Automation.WorksheetReadonlyOptionNames optionName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -106,15 +92,9 @@ public partial class CMathcadPrimeWorksheet : global::Quire.EngNotebookPlus.Auto
     [global::Quire.Mirror.MirrorStub]
     public int SetStringValue(string aliasArg, string valueArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public string InputGetStringValue(string aliasArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string OutputGetStringValue(string aliasArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private string DoGetStringValue(string alias, bool isInput) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public int SetSExprValue(string aliasArg, string sexpressionArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string InputGetSExprValue(string aliasArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private string DoInputGetSExprValue(string alias) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -123,8 +103,6 @@ public partial class CMathcadPrimeWorksheet : global::Quire.EngNotebookPlus.Auto
     public global::Quire.EngNotebookPlus.Automation.IMathcadPrimeGetValueResult OutputGetValue(string aliasArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Controls.Core.IORegions.ICommonValueItem DoGetCommonValue(string alias, bool isInput) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private int DoGetDefaultCalculationTimeout() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void DoSetDefaultCalculationTimeout(int defaultCalculationTimeout) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
