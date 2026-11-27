@@ -11,24 +11,4 @@ namespace Quire.Controls.Worksheet;
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.SingleWorksheetItemCopyVisitor, Ptc.Controls.Worksheet")]
 public partial class SingleWorksheetItemCopyVisitor : global::Quire.Controls.Worksheet.IWorksheetItemCopyVisitor, global::Quire.ISpecialCopyVisitor
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Windows.DataObject _dataObject;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.Controls.Worksheet.RtfItemWrapperHelper _helper;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly bool _copyAsImage;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.RegionImageSettings GenericImageSettings { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public SingleWorksheetItemCopyVisitor(global::System.Windows.DataObject dataObject, global::Quire.Controls.Worksheet.RtfItemWrapperHelper helper, bool copyAsImage) { }
-    [global::Quire.Mirror.MirrorStub]
-    public void Visit(global::Quire.Controls.Core.IEquationControl equationControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Visit(global::Quire.Controls.Core.IRichTextWithEmbeddedItem textBox) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Visit(global::Quire.Controls.Core.ICollapsibleAreaControl collapsibleArea) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void VisitGeneric(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void VisitAll(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
