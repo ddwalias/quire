@@ -792,30 +792,7 @@ public bool CanDeleteVerticalSpace(Direction direction) => throw global::Quire.M
 public void DeleteActiveItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 public void CreateTextRegionFromEquationControl(IEquationControl sender)
-    {
-        string content = sender.CurrentNodeSExpression + " ";
-        bool isRegionBorderVisible = WhiteboardDependencyProperties.GetIsRegionBorderVisible((DependencyObject)((sender is DependencyObject) ? sender : null));
-        XmlLanguage language = XmlLanguage.GetLanguage(global::System.Windows.Forms.InputLanguage.CurrentInputLanguage.Culture.Name);
-        IRichTextBase textRegion = ControlCreator.CreateTextboxControl(GetCurrentTextFormatClone(GetCurrentTextFormat()), language, content, System.Windows.DataFormats.Text, caretPositionAtTheEnd: true, _textStylesManager.TextStyleChangedHandler, isRegionBorderVisible);
-        WorksheetCommand worksheetCommand = null;
-        if (ActiveItem is EquationControl)
-        {
-            worksheetCommand = new CreateTextRegionFromEquationControlCommand(this, textRegion, sender);
-        }
-        else if (ActiveItem is CollapsibleAreaControl { ActiveItem: SolveBlockControl activeItem } && activeItem.ActiveItem is EquationControl)
-        {
-            worksheetCommand = new CreateTextRegionFromWhiteboardControlCommand((IMathboardViewModel)activeItem.DataContext, textRegion, sender);
-        }
-        else if (ActiveItem is CollapsibleAreaControl collapsibleAreaControl2 && collapsibleAreaControl2.ActiveItem is EquationControl)
-        {
-            worksheetCommand = new CreateTextRegionFromWhiteboardControlCommand((IMathboardViewModel)collapsibleAreaControl2.DataContext, textRegion, sender);
-        }
-        else if (ActiveItem is SolveBlockControl solveBlockControl && solveBlockControl.ActiveItem is EquationControl)
-        {
-            worksheetCommand = new CreateTextRegionFromWhiteboardControlCommand((IMathboardViewModel)solveBlockControl.DataContext, textRegion, sender);
-        }
-        worksheetCommand?.Execute();
-    }
+    => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 public double NonprintableSpaceButtonHeight
     {
@@ -1539,12 +1516,13 @@ public ISpecTableControl CreateSpecTableControl(object dimensions)
 
 public ISpecTableControl CreateSpecTableControl(TableCoordinate? dimensions)
     {
+        ISpecTableControl specTableControl;
         using (new CommandScope("CreateSpecTableControl"))
         {
-            ISpecTableControl specTableControl = ControlCreator.CreateSpecTableControl(dimensions);
+            specTableControl = ControlCreator.CreateSpecTableControl(dimensions);
             AddItemAtInsertionPointAndActivate(specTableControl, "Add SpecTable");
-            return specTableControl;
         }
+        return specTableControl;
     }
 
 public IAggregateMathboardControl CreateSolveBlockControl()
@@ -2403,38 +2381,39 @@ private bool CanDeleteActiveOrSelectedItems()
 
 private bool CanTogglePageLayout(object param)
     {
-        if (param is not PageLayoutMode || (PageLayoutMode)param == PageLayoutMode.PageMode)
+        if (param is PageLayoutMode pageLayoutMode && pageLayoutMode != PageLayoutMode.PageMode)
         {
-            if (ActiveItem != null)
-            {
-                if (ActiveItem is IParagraphControl)
-                {
-                    return true;
-                }
-                IWhiteboardItem activeItem = ActiveItem;
-                double pageRight = PageLayout.PageBodyWidth + PageLayout.PageMargin.Right;
-                Point itemLocation = GetWorksheetSectionItemLocation(activeItem);
-                double itemLeft = itemLocation.X;
-                if (ActiveItem is ICollapsibleAreaControl collapsibleAreaControl)
-                {
-                    if (collapsibleAreaControl.ActiveItem == null)
-                    {
-                        return true;
-                    }
-                    activeItem = collapsibleAreaControl.ActiveItem;
-                    itemLocation = collapsibleAreaControl.GetItemLocation(activeItem);
-                    itemLeft = itemLocation.X;
-                }
-                if (itemLeft.IsGreaterThan(pageRight))
-                {
-                    return true;
-                }
-                double itemRight = itemLeft;
-                Size desiredSize = ItemManager.GetDesiredSize(activeItem);
-                return (itemRight + desiredSize.Width).IsLessThan(pageRight);
-            }
+            return true;
         }
-        return true;
+        if (ActiveItem == null)
+        {
+            return true;
+        }
+        if (ActiveItem is IParagraphControl)
+        {
+            return true;
+        }
+        IWhiteboardItem activeItem = ActiveItem;
+        double pageRight = PageLayout.PageBodyWidth + PageLayout.PageMargin.Right;
+        Point itemLocation = GetWorksheetSectionItemLocation(activeItem);
+        double itemLeft = itemLocation.X;
+        if (ActiveItem is ICollapsibleAreaControl collapsibleAreaControl)
+        {
+            if (collapsibleAreaControl.ActiveItem == null)
+            {
+                return true;
+            }
+            activeItem = collapsibleAreaControl.ActiveItem;
+            itemLocation = collapsibleAreaControl.GetItemLocation(activeItem);
+            itemLeft = itemLocation.X;
+        }
+        if (itemLeft.IsGreaterThan(pageRight))
+        {
+            return true;
+        }
+        double itemRight = itemLeft;
+        Size desiredSize = ItemManager.GetDesiredSize(activeItem);
+        return (itemRight + desiredSize.Width).IsLessThan(pageRight);
     }
 
 private void DeleteActiveOrSelectedItems()
@@ -2561,14 +2540,14 @@ private bool CanCreateParagraphControl()
         {
             return false;
         }
-        Point insertionPoint;
-        if (ActiveItem is IWhiteboardControl)
+        IWhiteboardControl whiteboardControl = ActiveItem as IWhiteboardControl;
+        if (whiteboardControl != null)
         {
-            insertionPoint = ((IWhiteboardControl)ActiveItem).InsertionPoint;
+            Point insertionPoint = whiteboardControl.InsertionPoint;
             return insertionPoint.X <= PageLayout.PageBodyWidth;
         }
-        insertionPoint = InsertionPoint;
-        return insertionPoint.X <= PageLayout.PageBodyWidth;
+        Point fallbackInsertionPoint = InsertionPoint;
+        return fallbackInsertionPoint.X <= PageLayout.PageBodyWidth;
     }
 
 private void InitializePlotControl(IPlotControl control, string xSExpression, string ySExpression)
