@@ -211,7 +211,10 @@ public abstract partial class PlotGraphAxis
         }
     }
 
-    private bool HasEquationList() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private bool HasEquationList()
+    {
+        return EquationList != null;
+    }
 
     [global::Quire.Mirror.MirrorStub]
     [global::Quire.Mirror.MirrorBlocked("auto-property layout placeholder")]
@@ -221,7 +224,15 @@ public abstract partial class PlotGraphAxis
 
     private global::System.Nullable<double> _pendingWidth;
 
-    internal void SetLegendWidthWhenLayoutReady() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal void SetLegendWidthWhenLayoutReady()
+    {
+        if (_pendingWidth.HasValue)
+        {
+            double width = _pendingWidth.Value;
+            _pendingWidth = null;
+            InternalSetLegendWidth(width);
+        }
+    }
 
     private bool CanSetLegendWidth(double width)
     {
@@ -250,7 +261,10 @@ public abstract partial class PlotGraphAxis
         }
     }
 
-    protected virtual bool ShouldArrangeConvertedEquationsHorizontally() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual bool ShouldArrangeConvertedEquationsHorizontally()
+    {
+        return false;
+    }
 
     private void BindLimitLabelVisibility(global::System.Windows.Controls.Label limitLabel, global::Quire.Controls.EquationControl control)
     {
@@ -296,7 +310,26 @@ public abstract partial class PlotGraphAxis
 
     private void ActivateAxisExpression(global::Quire.Controls.EquationControl eq, bool suppressBringIntoView) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private void ExpressionEqnNavigateOffOfEquation(global::Quire.Controls.Core.IEquationControl equationControl, global::Quire.Direction direction, bool isJumpNavigation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ExpressionEqnNavigateOffOfEquation(global::Quire.Controls.Core.IEquationControl equationControl, global::Quire.Direction direction, bool isJumpNavigation)
+    {
+        if (!isJumpNavigation)
+        {
+            if (equationControl == StartExpressionEqn)
+            {
+                StartExpressionEqnNavigateOffOfEquation(direction);
+                return;
+            }
+            if (equationControl == SecondTickExpressionEqn)
+            {
+                SecondTickExpressionEqn_NavigateOffOfEquation(direction);
+                return;
+            }
+            if (equationControl == EndExpressionEqn)
+            {
+                EndExpressionEqnNavigateOffOfEquation(direction);
+            }
+        }
+    }
 
     private void ActivateSecondOrBoundaryTick(bool forward, bool navigateRegionStart) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -480,7 +513,20 @@ public abstract partial class PlotGraphAxis
 
     public global::Quire.Controls.Plots.PlotGraphAxis OtherAxis { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 
-    private global::Quire.Controls.Plots.Presenter.TickScale CreateMajorTickmaks() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private global::Quire.Controls.Plots.Presenter.TickScale CreateMajorTickmaks()
+    {
+        return new global::Quire.Controls.Plots.Presenter.TickScale
+        {
+            Count = TickMarks,
+            MagnitudeThreashold = _tickMagnitudeThreashold,
+            UseMagnitudeThreashold = Scaling == global::Quire.Controls.Plots.Presenter.AxisScaling.Linear,
+            Labels = Labels != null ? global::System.Linq.Enumerable.ToArray(Labels) : null,
+            Pattern = TickmarksPattern,
+            Show = ShowTicks,
+            StartGap = TickmarksStartGap,
+            VisabilityPattern = TickMarksVisabilityPattern,
+        };
+    }
 
     private global::Quire.Controls.Plots.Presenter.TickScale _majorTickmaks;
 
