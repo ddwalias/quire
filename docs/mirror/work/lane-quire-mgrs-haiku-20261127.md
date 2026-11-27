@@ -22,3 +22,10 @@
 - `DebugTools.DevAssert`: present in Quire.Core (`DebugTools.cs:62`, `(bool, string, params object[])`, returns `AssertionResult`); not a missing member. The IL-level difference, if any, is in the call shape of the members that use it, not the signature.
 - `WpfUtils.ExecuteOnLayoutUpdated`: present in Quire.Core (`Wpf/WpfUtils.cs:229`, `(UIElement, Action)`); not a missing member.
 - DockWindow (DevComponents.WpfDock): stays parked (D6).
+
+## Batch 3 (branch mirror/quire-mgrs-haiku-20261127c, not landed)
+
+- Gate: Release IL passes for the batch members (1897 checked; 44 failures in SpiritMainWindow and Automation types from other lanes after main moved).
+- Members (11): AddonsCollection CallAddonsWhenDocumentOpened, CallAddonsWhenDocumentClosing; ComServerManager SetComServerReady, EnableMessageBoxManager, Initialize; BaseUI GetUIFunctionalityBehaviorKey, SetUIFunctionalityBehaviorKey, UpdateUIElementImageForButtonDropDown; TabManager OnApplyTemplate, ItemsCollection, TabItemContainerAtIndex.
+- Parked in batch 3: BaseUI `GetImage` (Mathcad's `brtrue` targets an inline `return image` block; two layouts tried, both differ at #4); BaseUI `.ctor` (Interactivity vs Xaml.Behaviors base type); TabManager `get_ViewItems`, `set_SelectedViewIndex`, `GetTabIndexForWindow`, `GetDataTupleForWindow` (DockWindow, D6); ComServerManager `InvokeDelegate` (retry loop with try/catch around Dispatcher.Invoke; not attempted), `ClosePrimeWindow` (cached `Ptc.Delegate0` closure).
+- Remaining short of 20: 9 members, which need the parked shapes above or DockWindow.
