@@ -40,15 +40,9 @@ internal partial class MathcadPrimeComServerManager
     [global::Quire.Mirror.MirrorStub]
     public object InvokeDelegate(global::System.Delegate methodDelegate, global::System.Windows.Threading.DispatcherPriority priority = (global::System.Windows.Threading.DispatcherPriority)(9)) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void Initialize(bool isComServer, bool isApplicationObsolete, bool isEmbeddingEngNote, bool isEmbeddingEngNotePlus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void OnApplicationExit(object sender, global::System.Windows.ExitEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void RegisterMathcadPrimeComServer(bool isApplicationObsolete, bool isEmbeddingEngNote, bool isEmbeddingEngNotePlus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void UnRegisterMathcadPrimeComServer() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetComServerReady() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void EnableMessageBoxManager(bool isUiInteractiveModeDisabled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

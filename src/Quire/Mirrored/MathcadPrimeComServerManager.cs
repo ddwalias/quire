@@ -117,4 +117,42 @@ internal partial class MathcadPrimeComServerManager
             ((ICollection<KeyValuePair<string, string>>)_listOfControlledWorksheets).Remove(worksheet);
         }
     }
+
+    public void SetComServerReady()
+    {
+        _isComServerReady = true;
+    }
+
+    public void EnableMessageBoxManager(bool isUiInteractiveModeDisabled)
+    {
+        if (isUiInteractiveModeDisabled)
+        {
+            IMessageBoxManager messageBoxManager = AppServiceRegistry.GetService<IMessageBoxManager>();
+            if (messageBoxManager != null)
+            {
+                messageBoxManager.IsDisabled = false;
+            }
+        }
+    }
+
+    public void Initialize(bool isComServer, bool isApplicationObsolete, bool isEmbeddingEngNote, bool isEmbeddingEngNotePlus)
+    {
+        if (!isComServer)
+        {
+            return;
+        }
+
+        if (_isRegistered)
+        {
+            return;
+        }
+
+        if (isEmbeddingEngNote | isEmbeddingEngNotePlus)
+        {
+            GenerateRuntimeKey();
+        }
+
+        RegisterMathcadPrimeComServer(isApplicationObsolete, isEmbeddingEngNote, isEmbeddingEngNotePlus);
+        PrimeApp.Exit += OnApplicationExit;
+    }
 }
