@@ -36,7 +36,7 @@ Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
 switch (program.Module)
 {
     case "Hashtable":
-        CompileHashtable(program, outputPath);
+        CompileHashtable(program, outputPath, install);
         break;
     case "McdUnitSystemUS":
         CompileUnitSystemUs(program, outputPath, install);
@@ -270,24 +270,53 @@ static string ParseInterfaceModuleName(string interfaceText)
     return match.Groups[1].Value;
 }
 
-static void CompileHashtable(MplModule program, string output)
+static void CompileHashtable(MplModule program, string output, string install)
 {
     Require(program, "Update", "() = ()");
     Require(program, "mlookupInv", "table key = hlookup (Map.Field2 table) key");
     var assembly = CreateAssembly("Quire.Mpl.Modules");
     var module = assembly.DefineDynamicModule("Quire.Mpl.Modules.dll");
-    var mapType = module.DefineType("Quire.Hashtable.Map", TypeAttributes.Public | TypeAttributes.Class);
-    var field = mapType.DefineField("Field2", typeof(object), FieldAttributes.Public);
-    AddMirrorOf(mapType, "Hashtable.Map, Hashtable");
     var values = module.DefineType("Quire.Hashtable.values", TypeAttributes.Public | TypeAttributes.Class);
     AddMirrorOf(values, "Hashtable.values, Hashtable");
+    var mapHashSet = values.DefineField("$$5d_64c00f80", typeof(object), FieldAttributes.Public | FieldAttributes.Static);
+    MplCompilerContext.Fields["$$5d_64c00f80"] = mapHashSet;
+    var dAllowType = module.DefineType("Quire.Hashtable.DAllow", TypeAttributes.Public | TypeAttributes.Class);
+    AddMirrorOf(dAllowType, "Hashtable.DAllow, Hashtable");
+    var dAllowSingleton = dAllowType.DefineField("singleton", dAllowType, FieldAttributes.Public | FieldAttributes.Static);
+    var dAllowCtor = dAllowType.DefineConstructor(MethodAttributes.Public | MethodAttributes.HideBySig
+        | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName, CallingConventions.Standard, Type.EmptyTypes);
+    dAllowCtor.GetILGenerator().Emit(OpCodes.Ldarg_0);
+    dAllowCtor.GetILGenerator().Emit(OpCodes.Call, typeof(object).GetConstructor(Type.EmptyTypes)!);
+    dAllowCtor.GetILGenerator().Emit(OpCodes.Ret);
+    var dAllowInitializer = dAllowType.DefineConstructor(MethodAttributes.Public | MethodAttributes.Static,
+        CallingConventions.Standard, Type.EmptyTypes);
+    dAllowInitializer.GetILGenerator().Emit(OpCodes.Newobj, dAllowCtor);
+    dAllowInitializer.GetILGenerator().Emit(OpCodes.Stsfld, dAllowSingleton);
+    dAllowInitializer.GetILGenerator().Emit(OpCodes.Ret);
+    var mapType = module.DefineType("Quire.Hashtable.Map", TypeAttributes.Public | TypeAttributes.Class);
+    var field1 = mapType.DefineField("Field1", typeof(object), FieldAttributes.Public);
+    var field2 = mapType.DefineField("Field2", typeof(object), FieldAttributes.Public);
+    var mapCtor = mapType.DefineConstructor(MethodAttributes.Public | MethodAttributes.HideBySig
+        | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName, CallingConventions.Standard,
+        [typeof(object), typeof(object)]);
+    MplCompilerContext.Constructors["Map"] = mapCtor;
+    var mapCtorIl = mapCtor.GetILGenerator();
+    mapCtorIl.Emit(OpCodes.Ldarg_0);
+    mapCtorIl.Emit(OpCodes.Call, typeof(object).GetConstructor(Type.EmptyTypes)!);
+    mapCtorIl.Emit(OpCodes.Ldarg_0);
+    mapCtorIl.Emit(OpCodes.Ldarg_1);
+    mapCtorIl.Emit(OpCodes.Stfld, field1);
+    mapCtorIl.Emit(OpCodes.Ldarg_0);
+    mapCtorIl.Emit(OpCodes.Ldarg_2);
+    mapCtorIl.Emit(OpCodes.Stfld, field2);
+    mapCtorIl.Emit(OpCodes.Ret);
+    AddMirrorOf(mapType, "Hashtable.Map, Hashtable");
     var update = values.DefineMethod("Update", MethodAttributes.Public | MethodAttributes.Static,
         typeof(void), Type.EmptyTypes);
     update.GetILGenerator().Emit(OpCodes.Ret);
     var hlookup = values.DefineMethod("hlookup", MethodAttributes.Public | MethodAttributes.Static,
         typeof(object), [typeof(object), typeof(object)]);
-    hlookup.GetILGenerator().Emit(OpCodes.Ldnull);
-    hlookup.GetILGenerator().Emit(OpCodes.Ret);
+    CompileExpressionBody(program, "hlookup", hlookup, install);
     var mlookupInv = values.DefineMethod("mlookupInv", MethodAttributes.Public | MethodAttributes.Static,
         typeof(object), [typeof(object), typeof(object)]);
     var il = mlookupInv.GetILGenerator();
@@ -298,11 +327,86 @@ static void CompileHashtable(MplModule program, string output)
     il.Emit(OpCodes.Ldloc, valueLocal);
     il.Emit(OpCodes.Stloc, mapLocal);
     il.Emit(OpCodes.Ldloc, mapLocal);
-    il.Emit(OpCodes.Ldfld, field);
+    il.Emit(OpCodes.Ldfld, field2);
     il.Emit(OpCodes.Ldarg_1);
     il.Emit(OpCodes.Tailcall);
     il.Emit(OpCodes.Call, hlookup);
     il.Emit(OpCodes.Ret);
+    var mlookup = values.DefineMethod("mlookup", MethodAttributes.Public | MethodAttributes.Static,
+        typeof(object), [typeof(object), typeof(object)]);
+    var blookupInv = values.DefineMethod("blookupInv", MethodAttributes.Public | MethodAttributes.Static,
+        typeof(object), [typeof(object), typeof(object)]);
+    var blookup = values.DefineMethod("blookup", MethodAttributes.Public | MethodAttributes.Static,
+        typeof(object), [typeof(object), typeof(object)]);
+    var safeAdd = values.DefineMethod("safe_add", MethodAttributes.Public | MethodAttributes.Static,
+        typeof(object), [typeof(object), typeof(object), typeof(object)]);
+    var addWithCheck = values.DefineMethod("add_with_check", MethodAttributes.Public | MethodAttributes.Static,
+        typeof(object), [typeof(object), typeof(object), typeof(object), typeof(object)]);
+    var localMethods = new Dictionary<string, System.Reflection.Emit.Quire.Mpl.MethodBuilder>(StringComparer.Ordinal)
+    {
+        ["hlookup"] = hlookup,
+        ["safe_add"] = safeAdd,
+        ["add_with_check"] = addWithCheck,
+    };
+    CompileExpressionBody(program, "safe_add", safeAdd, install, localMethods);
+    CompileExpressionBody(program, "add_with_check", addWithCheck, install, localMethods);
+    var addEntries = values.DefineMethod("add_entries", MethodAttributes.Public | MethodAttributes.Static,
+        typeof(object), [typeof(object), typeof(object), typeof(object)]);
+    var makeMap = values.DefineMethod("make_map", MethodAttributes.Public | MethodAttributes.Static,
+        typeof(object), [typeof(object), typeof(object)]);
+    var makeManyToOne = values.DefineMethod("make_many_to_one_map", MethodAttributes.Public | MethodAttributes.Static,
+        typeof(object), [typeof(object)]);
+    var makeBijective = values.DefineMethod("make_bijective_map", MethodAttributes.Public | MethodAttributes.Static,
+        typeof(object), [typeof(object)]);
+    localMethods["add_entries"] = addEntries;
+    localMethods["make_map"] = makeMap;
+    var aliases = new Dictionary<string, Type>(StringComparer.Ordinal)
+    {
+        ["array"] = typeof(object[]),
+        ["Map"] = mapType,
+        ["int"] = typeof(int),
+        ["Hashtable"] = typeof(System.Collections.Hashtable),
+        ["DAllow"] = dAllowType,
+    };
+    CompileExpressionBody(program, "mlookup", mlookup, install, localMethods, aliases);
+    CompileExpressionBody(program, "blookupInv", blookupInv, install, localMethods, aliases);
+    CompileExpressionBody(program, "blookup", blookup, install, localMethods, aliases);
+    CompileExpressionBody(program, "add_entries", addEntries, install, localMethods, aliases);
+    CompileExpressionBody(program, "make_map", makeMap, install, localMethods, aliases);
+    CompileExpressionBody(program, "make_many_to_one_map", makeManyToOne, install, localMethods, aliases);
+    CompileExpressionBody(program, "make_bijective_map", makeBijective, install, localMethods, aliases);
+    var hashSetContains = values.DefineMethod("hash_set_contains", MethodAttributes.Public | MethodAttributes.Static,
+        typeof(object), [typeof(object), typeof(object)]);
+    CompileExpressionBody(program, "hash_set_contains", hashSetContains, install, localMethods);
+    var makeHashMap = values.DefineMethod("make_hash_map", MethodAttributes.Public | MethodAttributes.Static,
+        typeof(object), [typeof(object)]);
+    CompileExpressionBody(program, "make_hash_map", makeHashMap, install, localMethods, aliases);
+    var makeHashSet = values.DefineMethod("make_hash_set", MethodAttributes.Public | MethodAttributes.Static,
+        typeof(object), [typeof(object)]);
+    localMethods["make_hash_map"] = makeHashMap;
+    CompileExpressionBody(program, "make_hash_set", makeHashSet, install, localMethods, aliases);
+    var mapHashSetAdapter = values.DefineMethod("$$5d_64c00f8", MethodAttributes.Public | MethodAttributes.Static,
+        typeof(object), [typeof(object)]);
+    CompileExpressionBody(program, "$$5d_64c00f8", mapHashSetAdapter, install, localMethods, aliases);
+    var initializer = values.DefineConstructor(MethodAttributes.Public | MethodAttributes.Static,
+        CallingConventions.Standard, Type.EmptyTypes);
+    var initializerIl = initializer.GetILGenerator();
+    var runtime = Assembly.LoadFrom(Path.Combine(install, "mplrun.dll"));
+    var genericDelegate = runtime.GetType("Mpl.Run.F`2", throwOnError: true)!.MakeGenericType(typeof(object), typeof(object));
+    var delegateCtor = genericDelegate.GetConstructor([typeof(object), typeof(IntPtr)])
+        ?? throw new MissingMethodException(genericDelegate.FullName, ".ctor(object, IntPtr)");
+    var makeDelegate = runtime.GetType("Mpl.Run.DelegateFunction", throwOnError: true)!
+        .GetMethod("make", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static,
+            binder: null, [typeof(Delegate), typeof(int)], modifiers: null)
+        ?? throw new MissingMethodException("Mpl.Run.DelegateFunction.make(Delegate, int)");
+    initializerIl.Emit(OpCodes.Ldnull);
+    initializerIl.Emit(OpCodes.Ldftn, mapHashSetAdapter);
+    initializerIl.Emit(OpCodes.Newobj, delegateCtor);
+    initializerIl.Emit(OpCodes.Ldc_I4_1);
+    initializerIl.Emit(OpCodes.Call, makeDelegate);
+    initializerIl.Emit(OpCodes.Stsfld, mapHashSet);
+    initializerIl.Emit(OpCodes.Call, update);
+    initializerIl.Emit(OpCodes.Ret);
     mapType.CreateType();
     values.CreateType();
     assembly.Save(output);
@@ -360,7 +464,691 @@ static void Require(MplModule program, string name, string body)
         throw new InvalidDataException($"{program.Module}.{name} must have body: {body}");
 }
 
+static void CompileExpressionBody(MplModule program, string name,
+    System.Reflection.Emit.Quire.Mpl.MethodBuilder method, string install,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.MethodBuilder>? methods = null,
+    IReadOnlyDictionary<string, Type>? typeAliases = null)
+{
+    if (!program.Functions.TryGetValue(name, out var body))
+        throw new InvalidDataException($"Missing Mpl definition {name}.");
+    var bodyStart = body.IndexOf(" = ", StringComparison.Ordinal);
+    if (bodyStart < 0) throw new InvalidDataException($"Missing function arguments in definition {name}.");
+    var arguments = body[..bodyStart].Split(' ', StringSplitOptions.RemoveEmptyEntries);
+    var expression = MplExpressionParser.Parse(body[(bodyStart + 3)..]);
+    var il = method.GetILGenerator();
+    var locals = new Dictionary<string, System.Reflection.Emit.Quire.Mpl.LocalBuilder>(StringComparer.Ordinal);
+    EmitReturningExpression(expression, il, locals, arguments,
+        methods ?? new Dictionary<string, System.Reflection.Emit.Quire.Mpl.MethodBuilder>(StringComparer.Ordinal),
+        typeAliases ?? new Dictionary<string, Type>(StringComparer.Ordinal), install, name);
+}
+
+static void EmitReturningExpression(MplExpr expression,
+    System.Reflection.Emit.Quire.Mpl.ILGenerator il,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.LocalBuilder> locals, string[] arguments,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.MethodBuilder> methods,
+    IReadOnlyDictionary<string, Type> typeAliases, string install, string methodName)
+{
+    switch (expression)
+    {
+        case MplLet let:
+            EmitValue(let.Value, il, locals, arguments, methods, typeAliases, install);
+            var localType = let.TypeName is not null && typeAliases.TryGetValue(let.TypeName, out var declaredType)
+                ? declaredType : typeof(object);
+            var local = il.DeclareLocal(localType);
+            locals.Add(let.Name, local);
+            il.Emit(OpCodes.Stloc, local);
+            EmitReturningExpression(let.Body, il, locals, arguments, methods, typeAliases, install, methodName);
+            return;
+        case MplIfNull conditional:
+            EmitNullBoolean(conditional.Value, il, locals, install);
+            var elseLabel = il.DefineLabel();
+            il.Emit(OpCodes.Brfalse, elseLabel);
+            EmitValue(conditional.WhenNull, il, locals, arguments, methods, typeAliases, install);
+            il.Emit(OpCodes.Ret);
+            il.MarkLabel(elseLabel);
+            EmitValue(conditional.WhenNonNull, il, locals, arguments, methods, typeAliases, install);
+            il.Emit(OpCodes.Ret);
+            return;
+        case MplIfTruthy conditional:
+        {
+            var thenLabel = il.DefineLabel();
+            if (conditional.Condition is MplCall)
+            {
+                EmitValue(conditional.Condition, il, locals, arguments, methods, typeAliases, install);
+                il.Emit(OpCodes.Dup);
+                il.Emit(OpCodes.Brtrue, thenLabel);
+                il.Emit(OpCodes.Pop);
+                EmitReturningExpression(conditional.WhenFalse, il, locals, arguments, methods, typeAliases, install, methodName);
+                il.MarkLabel(thenLabel);
+                il.Emit(OpCodes.Pop);
+                EmitReturningExpression(conditional.WhenTrue, il, locals, arguments, methods, typeAliases, install, methodName);
+            }
+            else
+            {
+                EmitValue(conditional.Condition, il, locals, arguments, methods, typeAliases, install);
+                il.Emit(OpCodes.Brtrue, thenLabel);
+                EmitReturningExpression(conditional.WhenFalse, il, locals, arguments, methods, typeAliases, install, methodName);
+                il.MarkLabel(thenLabel);
+                EmitReturningExpression(conditional.WhenTrue, il, locals, arguments, methods, typeAliases, install, methodName);
+            }
+            return;
+        }
+        case MplSequence sequence:
+            foreach (var item in sequence.Expressions.Take(sequence.Expressions.Count - 1))
+                EmitStatement(item, il, locals, arguments, methods, typeAliases, install);
+            EmitReturningExpression(sequence.Expressions[^1], il, locals, arguments, methods, typeAliases, install, methodName);
+            return;
+        case MplCaseCons pattern:
+        {
+            var runtime = Assembly.LoadFrom(Path.Combine(install, "mplrun.dll"));
+            var consType = runtime.GetType("Mpl.Run.Cons", throwOnError: true)!;
+            var emptyLabel = il.DefineLabel();
+            EmitValue(pattern.Value, il, locals, arguments, methods, typeAliases, install);
+            il.Emit(OpCodes.Dup);
+            il.Emit(OpCodes.Brfalse, emptyLabel);
+            var consLocal = il.DeclareLocal(consType);
+            locals.Add(pattern.Name, consLocal);
+            il.Emit(OpCodes.Stloc, consLocal);
+            EmitReturningExpression(pattern.WhenCons, il, locals, arguments, methods, typeAliases, install, methodName);
+            il.MarkLabel(emptyLabel);
+            il.Emit(OpCodes.Pop);
+            EmitReturningExpression(pattern.WhenEmpty, il, locals, arguments, methods, typeAliases, install, methodName);
+            return;
+        }
+        case MplForList loop:
+            EmitForList(loop, il, locals, arguments, methods, typeAliases, install);
+            return;
+        default:
+            EmitTailValue(expression, il, locals, arguments, methods, typeAliases, install, methodName);
+            return;
+    }
+}
+
+static void EmitForList(MplForList loop,
+    System.Reflection.Emit.Quire.Mpl.ILGenerator il,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.LocalBuilder> locals, string[] arguments,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.MethodBuilder> methods,
+    IReadOnlyDictionary<string, Type> typeAliases, string install)
+{
+    var runtime = Assembly.LoadFrom(Path.Combine(install, "mplrun.dll"));
+    var consType = runtime.GetType("Mpl.Run.Cons", throwOnError: true)!;
+    var collectionLocal = il.DeclareLocal(typeof(object));
+    var resultLocal = il.DeclareLocal(typeof(object));
+    var consLocal = il.DeclareLocal(consType);
+    var elementLocal = il.DeclareLocal(typeof(object[]));
+    var capacityLocal = il.DeclareLocal(typeof(int));
+    locals.Add(loop.CollectionName, collectionLocal);
+    locals.Add(loop.ResultName, resultLocal);
+    locals.Add(loop.ElementName, elementLocal);
+
+    var initialize = il.DefineLabel();
+    var head = il.DefineLabel();
+    var exitLoop = il.DefineLabel();
+    il.Emit(OpCodes.Br, initialize);
+    il.MarkLabel(head);
+    il.Emit(OpCodes.Ldloc, collectionLocal);
+    il.Emit(OpCodes.Dup);
+    il.Emit(OpCodes.Brfalse, exitLoop);
+    il.Emit(OpCodes.Stloc, consLocal);
+    var consField = consType.GetField("Field1", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+        ?? throw new MissingFieldException(consType.FullName, "Field1");
+    il.Emit(OpCodes.Ldloc, consLocal);
+    il.Emit(OpCodes.Ldfld, consField);
+    il.Emit(OpCodes.Stloc, elementLocal);
+    EmitStatement(loop.Action, il, locals, arguments, methods, typeAliases, install);
+    var tailField = consType.GetField("Field2", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+        ?? throw new MissingFieldException(consType.FullName, "Field2");
+    il.Emit(OpCodes.Ldloc, consLocal);
+    il.Emit(OpCodes.Ldfld, tailField);
+    il.Emit(OpCodes.Ldloc, resultLocal);
+    il.Emit(OpCodes.Stloc, resultLocal);
+    il.Emit(OpCodes.Stloc, collectionLocal);
+    il.Emit(OpCodes.Br, head);
+
+    il.MarkLabel(exitLoop);
+    il.Emit(OpCodes.Pop);
+    il.Emit(OpCodes.Ldloc, resultLocal);
+    il.Emit(OpCodes.Ret);
+
+    il.MarkLabel(initialize);
+    locals.Remove(loop.CollectionName);
+    locals.Remove(loop.ResultName);
+    locals.Remove(loop.ElementName);
+    EmitValue(loop.Capacity, il, locals, arguments, methods, typeAliases, install);
+    il.Emit(OpCodes.Stloc, capacityLocal);
+    EmitValue(loop.Collection, il, locals, arguments, methods, typeAliases, install);
+    var hashtableType = typeof(System.Collections.Hashtable);
+    var hashtableCtor = hashtableType.GetConstructor([typeof(int)])
+        ?? throw new MissingMethodException(hashtableType.FullName, ".ctor(int)");
+    il.Emit(OpCodes.Ldloc, capacityLocal);
+    il.Emit(OpCodes.Newobj, hashtableCtor);
+    il.Emit(OpCodes.Stloc, resultLocal);
+    il.Emit(OpCodes.Stloc, collectionLocal);
+    il.Emit(OpCodes.Br, head);
+    locals.Add(loop.CollectionName, collectionLocal);
+    locals.Add(loop.ResultName, resultLocal);
+    locals.Add(loop.ElementName, elementLocal);
+}
+
+static void EmitTailValue(MplExpr expression,
+    System.Reflection.Emit.Quire.Mpl.ILGenerator il,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.LocalBuilder> locals, string[] arguments,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.MethodBuilder> methods,
+    IReadOnlyDictionary<string, Type> typeAliases, string install, string methodName)
+{
+    if (expression is MplTail tailExpression)
+    {
+        if (tailExpression.Expression is not MplCall explicitCall)
+            throw new InvalidDataException("tail applies to a function application.");
+        EmitCall(explicitCall, il, locals, arguments, methods, typeAliases, install, tail: true);
+        il.Emit(OpCodes.Ret);
+        return;
+    }
+    if (expression is MplCall call && call.Function is MplVariable { Name: "Just" })
+    {
+        EmitValue(expression, il, locals, arguments, methods, typeAliases, install);
+        il.Emit(OpCodes.Ret);
+        return;
+    }
+    if (expression is MplCall tailCall)
+    {
+        EmitCall(tailCall, il, locals, arguments, methods, typeAliases, install, tail: false);
+        il.Emit(OpCodes.Ret);
+        return;
+    }
+    EmitValue(expression, il, locals, arguments, methods, typeAliases, install);
+    il.Emit(OpCodes.Ret);
+}
+
+static void EmitStatement(MplExpr expression,
+    System.Reflection.Emit.Quire.Mpl.ILGenerator il,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.LocalBuilder> locals, string[] arguments,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.MethodBuilder> methods,
+    IReadOnlyDictionary<string, Type> typeAliases, string install)
+{
+    if (expression is MplSetIndex set)
+    {
+        EmitValue(set.Table, il, locals, arguments, methods, typeAliases, install);
+        EmitValue(set.Key, il, locals, arguments, methods, typeAliases, install);
+        EmitValue(set.Value, il, locals, arguments, methods, typeAliases, install);
+        var setItem = typeof(System.Collections.Hashtable).GetMethod("set_Item",
+            BindingFlags.Public | BindingFlags.Instance, binder: null, [typeof(object), typeof(object)], modifiers: null)
+            ?? throw new MissingMethodException("System.Collections.Hashtable.set_Item");
+        il.Emit(OpCodes.Call, setItem);
+        return;
+    }
+    if (expression is MplCall call)
+    {
+        EmitCall(call, il, locals, arguments, methods, typeAliases, install, tail: false);
+        if (CallReturnType(call, methods, install) != typeof(void)) il.Emit(OpCodes.Pop);
+        return;
+    }
+    throw new NotSupportedException($"Statement lowering is not implemented for {expression}.");
+}
+
+static Type CallReturnType(MplCall call,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.MethodBuilder> methods, string install)
+{
+    if (call.Function is MplVariable { Name: "Just" }) return typeof(object);
+    if (call.Function is MplVariable local && methods.TryGetValue(local.Name, out var method)) return method.ReturnType;
+    var name = ((MplVariable)call.Function).Name;
+    var dot = name.LastIndexOf('.');
+    var assemblyName = name[..dot];
+    var methodName = name[(dot + 1)..];
+    var assembly = Assembly.LoadFrom(Path.Combine(install, assemblyName + ".dll"));
+    var type = assembly.GetType(assemblyName + ".values", throwOnError: true)!;
+    var external = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+        .Single(candidate => candidate.Name == methodName && candidate.GetParameters().Length == call.Arguments.Count);
+    return external.ReturnType;
+}
+
+static void EmitCall(MplCall call,
+    System.Reflection.Emit.Quire.Mpl.ILGenerator il,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.LocalBuilder> locals, string[] arguments,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.MethodBuilder> methods,
+    IReadOnlyDictionary<string, Type> typeAliases, string install, bool tail)
+{
+    if (call.Function is not MplVariable function) throw new NotSupportedException("Function values are not supported yet.");
+    foreach (var argument in call.Arguments) EmitValue(argument, il, locals, arguments, methods, typeAliases, install);
+    if (function.Name == "Just")
+    {
+        var prelude = Assembly.LoadFrom(Path.Combine(install, "MplPrelude.dll"));
+        var justCtor = prelude.GetType("MplPrelude.Just", throwOnError: true)!
+            .GetConstructor([typeof(object)]) ?? throw new MissingMethodException("MplPrelude.Just..ctor(object)");
+        il.Emit(OpCodes.Newobj, justCtor);
+        return;
+    }
+    if (methods.TryGetValue(function.Name, out var localMethod))
+    {
+        if (tail) il.Emit(OpCodes.Tailcall);
+        il.Emit(OpCodes.Call, localMethod);
+        return;
+    }
+    if (function.Name == "length")
+    {
+        var prelude = Assembly.LoadFrom(Path.Combine(install, "MplPrelude.dll"));
+        var values = prelude.GetType("MplPrelude.values", throwOnError: true)!;
+        var length = values.GetMethod("length", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static,
+            binder: null, [typeof(object)], modifiers: null)
+            ?? throw new MissingMethodException(values.FullName, "length");
+        if (tail) il.Emit(OpCodes.Tailcall);
+        il.Emit(OpCodes.Call, length);
+        il.Emit(OpCodes.Unbox, typeof(int));
+        il.Emit(OpCodes.Ldobj, typeof(int));
+        return;
+    }
+    if (function.Name == "AppException.Raise")
+    {
+        var runtime = Assembly.LoadFrom(Path.Combine(install, "mplrun.dll"));
+        var appException = runtime.GetType("Mpl.Run.AppException", throwOnError: true)!;
+        var raise = appException.GetMethod("Raise", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static,
+            binder: null, [typeof(string)], modifiers: null) ?? throw new MissingMethodException(appException.FullName, "Raise");
+        if (tail) il.Emit(OpCodes.Tailcall);
+        il.Emit(OpCodes.Call, raise);
+        return;
+    }
+    if (function.Name.Contains('.', StringComparison.Ordinal))
+    {
+        var dot = function.Name.LastIndexOf('.');
+        var assemblyName = function.Name[..dot];
+        var memberName = function.Name[(dot + 1)..];
+        var assembly = Assembly.LoadFrom(Path.Combine(install, assemblyName + ".dll"));
+        var type = assembly.GetType(assemblyName + ".values", throwOnError: true)!;
+        var external = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+            .Single(candidate => candidate.Name == memberName && candidate.GetParameters().Length == call.Arguments.Count
+                && candidate.GetParameters().All(parameter => parameter.ParameterType == typeof(object)));
+        if (tail) il.Emit(OpCodes.Tailcall);
+        il.Emit(OpCodes.Call, external);
+        return;
+    }
+    throw new NotSupportedException($"Call target {function.Name} has not been lowered.");
+}
+
+static void EmitNullBoolean(string name,
+    System.Reflection.Emit.Quire.Mpl.ILGenerator il,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.LocalBuilder> locals, string install)
+{
+    var local = locals[name];
+    var nonNull = il.DefineLabel();
+    var end = il.DefineLabel();
+    var runtime = Assembly.LoadFrom(Path.Combine(install, "mplrun.dll"));
+    var truth = runtime.GetType("Mpl.Run.True", throwOnError: true)!
+        .GetField("singleton", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+        ?? throw new MissingFieldException("Mpl.Run.True", "singleton");
+    il.Emit(OpCodes.Ldloc, local);
+    il.Emit(OpCodes.Dup);
+    il.Emit(OpCodes.Brtrue, nonNull);
+    il.Emit(OpCodes.Pop);
+    il.Emit(OpCodes.Ldsfld, truth);
+    il.Emit(OpCodes.Br, end);
+    il.MarkLabel(nonNull);
+    il.Emit(OpCodes.Pop);
+    il.Emit(OpCodes.Ldnull);
+    il.MarkLabel(end);
+}
+
+static void EmitValue(MplExpr expression,
+    System.Reflection.Emit.Quire.Mpl.ILGenerator il,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.LocalBuilder> locals, string[] arguments,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.MethodBuilder> methods,
+    IReadOnlyDictionary<string, Type> typeAliases, string install)
+{
+    switch (expression)
+    {
+        case MplVariable variable when locals.TryGetValue(variable.Name, out var local):
+            il.Emit(OpCodes.Ldloc, local);
+            return;
+        case MplVariable variable when Array.IndexOf(arguments, variable.Name) is var argumentIndex && argumentIndex >= 0:
+            EmitLoadArgument(il, argumentIndex);
+            return;
+        case MplVariable { Name: "True.singleton" }:
+            var runtime = Assembly.LoadFrom(Path.Combine(install, "mplrun.dll"));
+            var truth = runtime.GetType("Mpl.Run.True", throwOnError: true)!
+                .GetField("singleton", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+                ?? throw new MissingFieldException("Mpl.Run.True", "singleton");
+            il.Emit(OpCodes.Ldsfld, truth);
+            return;
+        case MplVariable { Name: "DAllow.singleton" }:
+            il.Emit(OpCodes.Ldsfld, typeAliases["DAllow"].GetField("singleton",
+                BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+                ?? throw new MissingFieldException("Quire.Hashtable.DAllow", "singleton"));
+            return;
+        case MplVariable variable when MplCompilerContext.Fields.TryGetValue(variable.Name, out var staticField):
+            il.Emit(OpCodes.Ldsfld, staticField);
+            return;
+        case MplNull:
+            il.Emit(OpCodes.Ldnull);
+            return;
+        case MplIfTruthy conditional:
+        {
+            var elseLabel = il.DefineLabel();
+            var endLabel = il.DefineLabel();
+            EmitValue(conditional.Condition, il, locals, arguments, methods, typeAliases, install);
+            il.Emit(OpCodes.Brfalse, elseLabel);
+            EmitValue(conditional.WhenTrue, il, locals, arguments, methods, typeAliases, install);
+            il.Emit(OpCodes.Br, endLabel);
+            il.MarkLabel(elseLabel);
+            EmitValue(conditional.WhenFalse, il, locals, arguments, methods, typeAliases, install);
+            il.MarkLabel(endLabel);
+            return;
+        }
+        case MplNew creation:
+        {
+            var type = typeAliases.TryGetValue(creation.TypeName, out var aliasedType)
+                ? aliasedType : throw new InvalidDataException($"Unknown constructor type {creation.TypeName}.");
+            var argumentTypes = creation.Arguments.Select(argument => ExpressionType(argument, locals, typeAliases)).ToArray();
+            foreach (var argument in creation.Arguments)
+                EmitValue(argument, il, locals, arguments, methods, typeAliases, install);
+            var constructor = MplCompilerContext.Constructors.TryGetValue(creation.TypeName, out var emittedConstructor)
+                ? emittedConstructor
+                : type.GetConstructors(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+                    .Single(candidate => candidate.GetParameters().Length == argumentTypes.Length
+                        && candidate.GetParameters().Select(parameter => parameter.ParameterType).Zip(argumentTypes)
+                        .All(pair => pair.First == pair.Second || pair.First == typeof(object)
+                            || pair.First.IsAssignableFrom(pair.Second)));
+            il.Emit(OpCodes.Newobj, constructor);
+            return;
+        }
+        case MplInteger integer:
+            switch (integer.Value)
+            {
+                case 0: il.Emit(OpCodes.Ldc_I4_0); break;
+                case 1: il.Emit(OpCodes.Ldc_I4_1); break;
+                default: il.Emit(OpCodes.Ldc_I4, integer.Value); break;
+            }
+            return;
+        case MplField field:
+            EmitValue(field.Receiver, il, locals, arguments, methods, typeAliases, install);
+            il.Emit(OpCodes.Ldfld, ResolveField(field.Receiver, field.Name, locals, arguments, typeAliases, install));
+            return;
+        case MplIndex index:
+        {
+            var tableType = ExpressionType(index.Table, locals, typeAliases);
+            EmitValue(index.Table, il, locals, arguments, methods, typeAliases, install);
+            EmitValue(index.Key, il, locals, arguments, methods, typeAliases, install);
+            if (tableType == typeof(object[]))
+            {
+                il.Emit(OpCodes.Ldelem_Ref);
+                return;
+            }
+            var getItem = typeof(System.Collections.Hashtable).GetMethod("get_Item",
+                BindingFlags.Public | BindingFlags.Instance, binder: null, [typeof(object)], modifiers: null)
+                ?? throw new MissingMethodException("System.Collections.Hashtable.get_Item");
+            il.Emit(OpCodes.Call, getItem);
+            return;
+        }
+        case MplString value:
+            il.Emit(OpCodes.Ldstr, value.Value);
+            return;
+        case MplArray array:
+            EmitInteger(array.Items.Count, il);
+            il.Emit(OpCodes.Newarr, typeof(object));
+            for (var i = 0; i < array.Items.Count; i++)
+            {
+                il.Emit(OpCodes.Dup);
+                EmitInteger(i, il);
+                EmitValue(array.Items[i], il, locals, arguments, methods, typeAliases, install);
+                il.Emit(OpCodes.Stelem_Ref);
+            }
+            return;
+        case MplCall call:
+            EmitCall(call, il, locals, arguments, methods, typeAliases, install, tail: false);
+            return;
+        default:
+            throw new NotSupportedException($"Expression lowering is not implemented for {expression}.");
+    }
+}
+
+static Type ExpressionType(MplExpr expression,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.LocalBuilder> locals,
+    IReadOnlyDictionary<string, Type> typeAliases)
+{
+    return expression switch
+    {
+        MplVariable variable when locals.TryGetValue(variable.Name, out var local) => local.LocalType,
+        MplVariable variable when typeAliases.TryGetValue(variable.Name, out var type) => type,
+        MplInteger => typeof(int),
+        MplString => typeof(string),
+        MplArray => typeof(object[]),
+        MplNew creation when typeAliases.TryGetValue(creation.TypeName, out var constructedType) => constructedType,
+        MplIndex => typeof(object),
+        _ => typeof(object),
+    };
+}
+
+static FieldInfo ResolveField(MplExpr receiver, string name,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.LocalBuilder> locals, string[] arguments,
+    IReadOnlyDictionary<string, Type> typeAliases, string install)
+{
+    Type type;
+    if (receiver is MplVariable variable && locals.TryGetValue(variable.Name, out var local))
+        type = local.LocalType;
+    else if (receiver is MplVariable alias && typeAliases.TryGetValue(alias.Name, out var aliasType))
+        type = aliasType;
+    else
+        type = ExpressionType(receiver, locals, typeAliases);
+    return type.GetField(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)
+        ?? throw new MissingFieldException(type.FullName, name);
+}
+
+static void EmitLoadArgument(System.Reflection.Emit.Quire.Mpl.ILGenerator il, int index)
+{
+    switch (index)
+    {
+        case 0: il.Emit(OpCodes.Ldarg_0); break;
+        case 1: il.Emit(OpCodes.Ldarg_1); break;
+        case 2: il.Emit(OpCodes.Ldarg_2); break;
+        case 3: il.Emit(OpCodes.Ldarg_3); break;
+        default: il.Emit(OpCodes.Ldarg, (short)index); break;
+    }
+}
+
+static void EmitInteger(int value, System.Reflection.Emit.Quire.Mpl.ILGenerator il)
+{
+    switch (value)
+    {
+        case 0: il.Emit(OpCodes.Ldc_I4_0); break;
+        case 1: il.Emit(OpCodes.Ldc_I4_1); break;
+        case 2: il.Emit(OpCodes.Ldc_I4_2); break;
+        default: il.Emit(OpCodes.Ldc_I4, value); break;
+    }
+}
+
 internal sealed record MplModule(string Module, Dictionary<string, string> Functions);
+
+internal abstract record MplExpr;
+internal sealed record MplVariable(string Name) : MplExpr;
+internal sealed record MplNull : MplExpr;
+internal sealed record MplIndex(MplExpr Table, MplExpr Key) : MplExpr;
+internal sealed record MplLet(string Name, string? TypeName, MplExpr Value, MplExpr Body) : MplExpr;
+internal sealed record MplIfNull(string Value, MplExpr WhenNull, MplExpr WhenNonNull) : MplExpr;
+internal sealed record MplIfTruthy(MplExpr Condition, MplExpr WhenTrue, MplExpr WhenFalse) : MplExpr;
+internal sealed record MplCall(MplExpr Function, IReadOnlyList<MplExpr> Arguments) : MplExpr;
+internal sealed record MplSetIndex(MplExpr Table, MplExpr Key, MplExpr Value) : MplExpr;
+internal sealed record MplSequence(IReadOnlyList<MplExpr> Expressions) : MplExpr;
+internal sealed record MplString(string Value) : MplExpr;
+internal sealed record MplInteger(int Value) : MplExpr;
+internal sealed record MplArray(IReadOnlyList<MplExpr> Items) : MplExpr;
+internal sealed record MplField(MplExpr Receiver, string Name) : MplExpr;
+internal sealed record MplCaseCons(MplExpr Value, string Name, MplExpr WhenCons, MplExpr WhenEmpty) : MplExpr;
+internal sealed record MplTail(MplExpr Expression) : MplExpr;
+internal sealed record MplNew(string TypeName, IReadOnlyList<MplExpr> Arguments) : MplExpr;
+internal sealed record MplForList(string ElementName, MplExpr Collection, string CollectionName,
+    MplExpr Capacity, string ResultName, MplExpr Action) : MplExpr;
+
+internal static class MplExpressionParser
+{
+    public static MplExpr Parse(string source) => new Parser(source).Parse();
+
+    private sealed class Parser
+    {
+        private readonly string[] _tokens;
+        private int _position;
+
+        public Parser(string source) => _tokens = Regex.Matches(source,
+                """==|:=|->|[A-Za-z_$][A-Za-z0-9_.$]*|[0-9]+|"[^"]*"|\[|\]|\(|\)|,|;|\||:|=""")
+            .Select(match => match.Value).ToArray();
+
+        public MplExpr Parse()
+        {
+            var expression = ParseExpression();
+            if (_position != _tokens.Length) throw new InvalidDataException("Trailing tokens in Mpl expression.");
+            return expression;
+        }
+
+        private MplExpr ParseExpression()
+        {
+            if (Take("tail")) return new MplTail(ParseExpression());
+            if (Take("case"))
+            {
+                var value = ReadIdentifier();
+                Expect("of");
+                Expect("Cons");
+                var name = ReadIdentifier();
+                Expect("->");
+                var whenCons = ParseExpression();
+                Expect("|");
+                Expect("null");
+                Expect("->");
+                return new MplCaseCons(new MplVariable(value), name, whenCons, ParseExpression());
+            }
+            if (Take("let"))
+            {
+                var name = ReadIdentifier();
+                string? typeName = null;
+                if (Take(":")) typeName = ReadIdentifier();
+                Expect("=");
+                var value = ParseExpression();
+                Expect("in");
+                return new MplLet(name, typeName, value, ParseExpression());
+            }
+            if (Take("if"))
+            {
+                var condition = ParseApplication();
+                if (Take("=="))
+                {
+                    Expect("null");
+                    Expect("then");
+                    var whenNull = ParseExpression();
+                    Expect("else");
+                    return new MplIfNull(RequireVariable(condition), whenNull, ParseExpression());
+                }
+                Expect("then");
+                var whenTrue = ParseExpression();
+                Expect("else");
+                return new MplIfTruthy(condition, whenTrue, ParseExpression());
+            }
+            if (Take("for"))
+            {
+                var elementName = ReadIdentifier();
+                Expect("in");
+                var collection = ParseApplication();
+                Expect("using");
+                var capacity = ParseApplication();
+                Expect("into");
+                var resultName = ReadIdentifier();
+                Expect("do");
+                return new MplForList(elementName, collection, RequireVariable(collection), capacity,
+                    resultName, ParseExpression());
+            }
+            var expressions = new List<MplExpr> { ParseApplication() };
+            while (Take(";")) expressions.Add(ParseApplication());
+            return expressions.Count == 1 ? expressions[0] : new MplSequence(expressions);
+        }
+
+        private MplExpr ParseApplication()
+        {
+            var function = ParseAtom();
+            if (Take(":="))
+            {
+                if (function is not MplIndex index) throw new InvalidDataException("Assignment target must be an indexed map.");
+                return new MplSetIndex(index.Table, index.Key, ParseAtom());
+            }
+            var arguments = new List<MplExpr>();
+            while (_position < _tokens.Length && _tokens[_position] is not ("in" or "then" or "else" or "=="
+                or "using" or "into" or "do" or ")" or "]" or "," or ";" or "|"))
+                arguments.Add(ParseAtom());
+            return arguments.Count == 0 ? function : new MplCall(function, arguments);
+        }
+
+        private MplExpr ParseAtom()
+        {
+            if (Take("new"))
+            {
+                var typeName = ReadIdentifier();
+                Expect("(");
+                var constructorArguments = new List<MplExpr>();
+                if (!Take(")"))
+                {
+                    do constructorArguments.Add(ParseExpression()); while (Take(","));
+                    Expect(")");
+                }
+                return new MplNew(typeName, constructorArguments);
+            }
+            if (Take("("))
+            {
+                var expression = ParseExpression();
+                Expect(")");
+                return expression;
+            }
+            if (Take("["))
+            {
+                var items = new List<MplExpr> { ParseExpression() };
+                while (Take(",")) items.Add(ParseExpression());
+                Expect("]");
+                return new MplArray(items);
+            }
+            if (Take("null")) return new MplNull();
+            if (_position < _tokens.Length && _tokens[_position].StartsWith('"'))
+                return new MplString(_tokens[_position++][1..^1]);
+            if (_position < _tokens.Length && int.TryParse(_tokens[_position], out var integer))
+            {
+                _position++;
+                return new MplInteger(integer);
+            }
+            var name = ReadIdentifier();
+            MplExpr variable = name.Contains('.', StringComparison.Ordinal) && char.IsLower(name[0])
+                ? new MplField(new MplVariable(name[..name.IndexOf('.')]), name[(name.IndexOf('.') + 1)..])
+                : new MplVariable(name);
+            if (Take("["))
+            {
+                var key = ParseAtom();
+                Expect("]");
+                return new MplIndex(variable, key);
+            }
+            return variable;
+        }
+
+        private static string RequireVariable(MplExpr expression) => expression is MplVariable variable
+            ? variable.Name : throw new InvalidDataException("Null comparison currently requires a variable.");
+
+        private string ReadIdentifier()
+        {
+            if (_position >= _tokens.Length || !Regex.IsMatch(_tokens[_position], @"\A[A-Za-z_$][A-Za-z0-9_.$]*\z"))
+                throw new InvalidDataException($"Expected an identifier in Mpl expression at token {_position}: "
+                    + (_position < _tokens.Length ? _tokens[_position] : "<end>"));
+            return _tokens[_position++];
+        }
+
+        private bool Take(string token)
+        {
+            if (_position >= _tokens.Length || _tokens[_position] != token) return false;
+            _position++;
+            return true;
+        }
+
+        private void Expect(string token)
+        {
+            if (!Take(token)) throw new InvalidDataException($"Expected '{token}' in Mpl expression.");
+        }
+    }
+}
+
+internal static class MplCompilerContext
+{
+    public static Dictionary<string, ConstructorInfo> Constructors { get; } = new(StringComparer.Ordinal);
+    public static Dictionary<string, System.Reflection.Emit.Quire.Mpl.FieldBuilder> Fields { get; } = new(StringComparer.Ordinal);
+}
 
 internal static class MplSubsetParser
 {

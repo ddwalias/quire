@@ -52,7 +52,23 @@ class MplPrototypeTests(unittest.TestCase):
 
     def test_hashtable_methods_match_installed_release_il(self):
         self.assert_release_method_exact("Quire.Mpl.Modules", "Quire.Hashtable.values::Update")
+        self.assert_release_method_exact("Quire.Mpl.Modules", "Quire.Hashtable.values::hlookup")
         self.assert_release_method_exact("Quire.Mpl.Modules", "Quire.Hashtable.values::mlookupInv")
+        self.assert_release_method_exact("Quire.Mpl.Modules", "Quire.Hashtable.values::mlookup")
+        self.assert_release_method_exact("Quire.Mpl.Modules", "Quire.Hashtable.values::safe_add")
+        self.assert_release_method_exact("Quire.Mpl.Modules", "Quire.Hashtable.values::add_with_check")
+        self.assert_release_method_exact("Quire.Mpl.Modules", "Quire.Hashtable.values::hash_set_contains")
+        self.assert_release_method_exact("Quire.Mpl.Modules", "Quire.Hashtable.values::add_entries")
+        self.assert_release_method_exact("Quire.Mpl.Modules", "Quire.Hashtable.values::make_many_to_one_map")
+        self.assert_release_method_exact("Quire.Mpl.Modules", "Quire.Hashtable.values::make_bijective_map")
+        self.assert_release_method_exact("Quire.Mpl.Modules", "Quire.Hashtable.values::make_map")
+        self.assert_release_method_exact("Quire.Mpl.Modules", "Quire.Hashtable.values::blookupInv")
+        self.assert_release_method_exact("Quire.Mpl.Modules", "Quire.Hashtable.values::blookup")
+        self.assert_release_method_exact("Quire.Mpl.Modules", "Quire.Hashtable.values::make_hash_map")
+        self.assert_release_method_exact("Quire.Mpl.Modules", "Quire.Hashtable.values::make_hash_set")
+        self.assert_release_method_exact("Quire.Mpl.Modules", "Quire.Hashtable.values::$$5d_64c00f8")
+        self.assert_release_method_exact("Quire.Mpl.Modules", "Quire.Hashtable.values::.cctor")
+        self.assert_release_method_exact("Quire.Mpl.Modules", "Quire.Hashtable.values::.ctor")
 
     def test_unit_operation_matches_installed_release_il(self):
         self.assert_release_method_exact("Quire.McdUnitSystemUS", "Quire.McdUnitSystemUS.values::op_L")
