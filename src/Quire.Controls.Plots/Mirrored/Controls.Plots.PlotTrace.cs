@@ -18,6 +18,7 @@ using Quire.Calculation.Core;
 using Quire.Calculation.Core.Trace2DResults;
 using Quire.Controls.Core;
 using Quire.Controls.Plots.Presenter;
+using Quire.Wpf;
 
 namespace Quire.Controls.Plots;
 
@@ -911,7 +912,12 @@ public partial class PlotTrace
             FireErrorChanged();
         }
     }
-    protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected override void OnRender(global::System.Windows.Media.DrawingContext drawingContext) {
+		WpfUtils.DoWork(() =>
+		{
+			DoOnRender(drawingContext);
+		});
+	}
 
     private void DoOnRender(DrawingContext drawingContext)
     {
@@ -948,7 +954,11 @@ public partial class PlotTrace
             _renderer.Render(drawingContext);
         }
     }
-    protected override void OnMouseLeftButtonDown(global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected override void OnMouseLeftButtonDown(global::System.Windows.Input.MouseButtonEventArgs e) {
+		base.OnMouseLeftButtonDown(e);
+		fireTraceClicked();
+		e.Handled = true;
+	}
 
     public void fireTraceClicked()
     {

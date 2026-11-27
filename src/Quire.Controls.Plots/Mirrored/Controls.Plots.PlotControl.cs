@@ -21,6 +21,7 @@ using Quire.Wpf;
 using Quire.Controls.Plots.Presenter;
 using Quire.Controls.Plots.Model;
 using Quire.Controls.Plots.ViewModel;
+using Quire.Controls.Plots.PlotCommands;
 
 namespace Quire.Controls.Plots;
 
@@ -316,14 +317,35 @@ public partial class PlotControl
         }
     }
     private void PlotControlLoaded() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void SelectAllTraces() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void SelectAllTraces() {
+		SelectedTraces = new List<IPlotTrace>(Traces);
+	}
     private const string PlotTitleDataObjectPropertyName = "PlotTitleDataObject";
     private const string TracesPropertyName = "Traces";
     private void InitializeResizeEventsAfterLoading() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected virtual void PostInitializeResizeEventsAfterLoading() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void OnPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected virtual void PostInitializeResizeEventsAfterLoading() {
+		_rangeAxis.SetLegendWidthWhenLayoutReady();
+		_primaryResultAxis.SetLegendWidthWhenLayoutReady();
+		_plotLegend?.SetLegendWidthWhenLayoutReady();
+		if (_postInitializeResizeEventsCallback != null)
+		{
+			_postInitializeResizeEventsCallback();
+		}
+		_postInitializeResizeEventsCallback = null;
+	}
+    private void OnPropertyChanged(object sender, global::System.ComponentModel.PropertyChangedEventArgs e) {
+		if (e.PropertyName == "GridCellSize")
+		{
+			UpdatePlaceholders();
+		}
+	}
     protected override void BindCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected override global::System.Collections.Generic.List<global::Quire.Controls.EquationControl> BuildEquationList() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected override global::System.Collections.Generic.List<global::Quire.Controls.EquationControl> BuildEquationList() {
+		List<EquationControl> list = new List<EquationControl>();
+		AddEquationsFromList(_resultEquations, list);
+		AddEquationsFromList(_rangeEquations, list);
+		return list;
+	}
     protected override global::System.Collections.Generic.List<global::Quire.Controls.Text.RichTextTitle> BuildLabelsList() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     protected override global::System.Collections.Generic.List<global::Quire.Controls.EquationControl> CreateTickMarksAndMarkersList() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     protected override void OnTraversedFocusEvent(object sender, global::Quire.Wpf.CustomRoutedEventArgs<global::System.Windows.Input.FocusNavigationDirection> args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -593,10 +615,18 @@ public partial class PlotControl
     protected virtual void RegisterLegendsToEvents(global::System.Collections.Generic.IEnumerable<global::System.Windows.Controls.ContentControl> legendsPositionsArray) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     protected void UnRegisterLegendsToEvents(global::System.Collections.Generic.IEnumerable<global::System.Windows.Controls.ContentControl> legendsPositionsArray) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void ContentControlDrop(object sender, global::System.Windows.DragEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void MoveLegendXToIndex(int moveToIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void MoveLegendYToIndex(int moveToIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void MovePlotTitleToIndex(int moveToIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void MovePlotLegendToIndex(int moveToIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void MoveLegendXToIndex(int moveToIndex) {
+		new ChangeXLegendPositionCommand(this, moveToIndex).Execute();
+	}
+    public void MoveLegendYToIndex(int moveToIndex) {
+		new ChangeYLegendPositionCommand(this, moveToIndex).Execute();
+	}
+    public void MovePlotTitleToIndex(int moveToIndex) {
+		new ChangePlotTitlePositionCommand(this, moveToIndex).Execute();
+	}
+    public void MovePlotLegendToIndex(int moveToIndex) {
+		new ChangPlotLegendPositionCommand(this, moveToIndex).Execute();
+	}
     private void HandleActiveEquationChanged(global::Quire.Controls.Plots.Presenter.IPlotEquation equationControl) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public override void ChangeOriginPositioning(bool newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private static readonly global::System.Windows.RoutedEvent ContentChangedEvent;
