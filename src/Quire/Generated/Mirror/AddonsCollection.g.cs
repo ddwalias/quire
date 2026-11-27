@@ -24,45 +24,7 @@ public partial class AddonsCollection
     [global::Quire.Mirror.MirrorStub]
     private static bool _isPtcPlacesForced;
     [global::Quire.Mirror.MirrorStub]
-    public AddonsCollection(global::Quire.SpiritMainWindow mainWindow) { }
-    [global::Quire.Mirror.MirrorStub]
-    private bool LoadAddonsAndAddToCollection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void StartOnIdleTimeProcessing() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnIdleTimeProcessing(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void UpdateRibbonMenuItems(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DisableInRibbonAllAddonsMenuItems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SetAddonsMenuItemsStatus(bool wcAddonEnable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ForcePtcPlacesEnableIfNeeds() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string CallAddonsToGetResolvedFileNameForOpen(string openedFileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CallAddonsOnOpenDialogOpening(ref global::Microsoft.Win32.OpenFileDialog ofd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CallAddonsOnOpenDialogOpening(ref global::System.Windows.Forms.OpenFileDialog ofd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string GetInitialDirectoryOnOpen(ref bool checkFileExist) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CallAddonsOnOpenDialogClosing() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CallAddonsOnSaveDialogOpening(ref global::System.Windows.Forms.SaveFileDialog sfd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string GetInitialDirectoryOnSave(ref bool checkPathExists) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string CallAddonsToGetDefaultDirectory(int dlgType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal string CallAddonsToOpenFromWindchill() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string GetDisplayNameForDocName(string filePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public string GetDisplayTitle(string filePath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string CallAddonsToGetDisplayName(string fileName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool CallAddonsToGeneratePdfFile(global::Quire.Controls.Core.IEngineeringDocument doc, string pdfFile) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

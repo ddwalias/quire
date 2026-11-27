@@ -4,6 +4,8 @@ namespace Quire;
 
 public partial class Addon
 {
+    private nint _hModule = nint.Zero;
+
     public void UnloadAddon()
     {
         if (_hModule != nint.Zero)
@@ -161,5 +163,142 @@ public partial class Addon
         catch
         {
         }
+    }
+
+    internal Addon(string addOnId)
+    {
+        AddOnId = addOnId;
+    }
+
+    public string AddOnId { get; private set; }
+
+    public bool LoadAddon(string pathToAddonLoader, global::Quire.Automation.IMathcadPrimeApplication mathcadPrimeApplicationPtr)
+    {
+        bool loaded = false;
+        try
+        {
+            _hModule = AddonsLoaderHelper.LoadLibrary(pathToAddonLoader);
+            if (_hModule != nint.Zero)
+            {
+                loaded = CallAddonInitialize(mathcadPrimeApplicationPtr);
+            }
+        }
+        catch
+        {
+        }
+
+        return loaded;
+    }
+
+    private bool CallAddonInitialize(global::Quire.Automation.IMathcadPrimeApplication cMathcadPrimeApplicationPtr)
+    {
+        bool initialized = false;
+        try
+        {
+            nint functionAddress = GetAddressOfFunction(FnInitializeAddOnForPrime);
+            if (functionAddress != nint.Zero)
+            {
+                Initialize initialize = Marshal.GetDelegateForFunctionPointer(functionAddress, typeof(Initialize)) as Initialize;
+                if (initialize != null)
+                {
+                    initialize.Invoke(cMathcadPrimeApplicationPtr);
+                }
+
+                initialized = true;
+            }
+        }
+        catch
+        {
+        }
+
+        return initialized;
+    }
+
+    public string CallAddonToGetResolvedFileNameForOpenAlloc(string documentPath)
+    {
+        string resolvedFileName = null;
+        try
+        {
+            nint functionAddress = GetAddressOfFunction(FnGetResolvedFileNameAlloc);
+            if (functionAddress != nint.Zero)
+            {
+                GetResolvedFileNameAlloc getResolvedFileNameAlloc = Marshal.GetDelegateForFunctionPointer(functionAddress, typeof(GetResolvedFileNameAlloc)) as GetResolvedFileNameAlloc;
+                if (getResolvedFileNameAlloc != null)
+                {
+                    resolvedFileName = Marshal.PtrToStringAuto(getResolvedFileNameAlloc.Invoke(0, documentPath));
+                }
+            }
+        }
+        catch
+        {
+        }
+
+        return resolvedFileName;
+    }
+
+    public string CallAddonToGetDefaultDirectory(int dlgType)
+    {
+        string defaultDirectory = null;
+        try
+        {
+            nint functionAddress = GetAddressOfFunction(FnGetDefaultDirectoryForPrime);
+            if (functionAddress != nint.Zero)
+            {
+                GetDefaultDirectory getDefaultDirectory = Marshal.GetDelegateForFunctionPointer(functionAddress, typeof(GetDefaultDirectory)) as GetDefaultDirectory;
+                if (getDefaultDirectory != null)
+                {
+                    defaultDirectory = Marshal.PtrToStringAuto(getDefaultDirectory.Invoke(dlgType));
+                }
+            }
+        }
+        catch
+        {
+        }
+
+        return defaultDirectory;
+    }
+
+    public bool CallAddonUpdateMenuItem(int cmdID)
+    {
+        bool updated = false;
+        try
+        {
+            nint functionAddress = GetAddressOfFunction(FnOnUpdateUIForPrime);
+            if (functionAddress != nint.Zero)
+            {
+                UpdateMenuItem updateMenuItem = Marshal.GetDelegateForFunctionPointer(functionAddress, typeof(UpdateMenuItem)) as UpdateMenuItem;
+                if (updateMenuItem != null)
+                {
+                    updated = updateMenuItem.Invoke(cmdID) != 0;
+                }
+            }
+        }
+        catch
+        {
+        }
+
+        return updated;
+    }
+
+    public bool CallAddonToCheckIsAddOnActive()
+    {
+        bool isActive = false;
+        try
+        {
+            nint functionAddress = GetAddressOfFunction(FnIsAddOnActive);
+            if (functionAddress != nint.Zero)
+            {
+                IsAddOnActive isAddOnActive = Marshal.GetDelegateForFunctionPointer(functionAddress, typeof(IsAddOnActive)) as IsAddOnActive;
+                if (isAddOnActive != null)
+                {
+                    isActive = isAddOnActive.Invoke() != 0;
+                }
+            }
+        }
+        catch
+        {
+        }
+
+        return isActive;
     }
 }
