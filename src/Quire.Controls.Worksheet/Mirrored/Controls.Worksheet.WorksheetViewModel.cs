@@ -2447,4 +2447,93 @@ internal partial class WorksheetViewModel
             _model.BookmarksManager.RemoveBookmarkTagCommand(item, bookmarkTag);
         }
     }
+
+    private void HandleRequestResizeToFitOrClearRestriction(IResizeToFitWhiteboardItem item)
+    {
+        item.RequestResizeToFitOrClearRestriction -= HandleRequestResizeToFitOrClearRestriction;
+        ResizeItemToFit(item, assertIsNotReady: true);
+    }
+
+    private void HandleItemsRemoved(IEnumerable<IWhiteboardItem> items)
+    {
+        items.Each(HandleItemRemovedWithoutNotification);
+        if (_disposeStatus == DisposeStatus.Alive)
+        {
+            FireChanged();
+        }
+    }
+
+    private void HandleItemsAdded(IEnumerable<IWhiteboardItem> items)
+    {
+        items.Each(HandleItemAddedWithoutNotification);
+        if (DebugTools.DevAssert(_disposeStatus == DisposeStatus.Alive, null).Passed)
+        {
+            FireChanged();
+        }
+    }
+
+    public void MoveItemsBy(IEnumerable<IWhiteboardItem> items, Vector offset)
+    {
+        if (IsContentActive)
+        {
+            // Release IL calls Execute through a local (callvirt); a new(...).Execute() call compiles to call.
+            MoveItemsCommand command = new MoveItemsCommand(this, offset, items, bringItemsIntoView: true);
+            command.Execute();
+        }
+        else
+        {
+            ActiveSection.MoveItemsBy(items, offset);
+        }
+    }
+
+    private partial class WorksheetMouseDownHandler
+    {
+        public bool HandleMouseDown(object originalSource, bool alreadyHandled)
+        {
+            ResetBringIntoViewOfParentItem(originalSource);
+            return true;
+        }
+
+        public void HandleBlockedPreviewMouseButton(object originalSource)
+        {
+            ResetBringIntoViewOfParentItem(originalSource);
+        }
+
+        public void ResetBringIntoViewOfParentItem(object originalSource)
+        {
+            IWhiteboardItem whiteboardItem = GetWhiteboardItem(originalSource);
+            if (whiteboardItem != null)
+            {
+                ItemManager.SetIsBringToView(whiteboardItem, value: true);
+            }
+        }
+
+        private IWhiteboardItem GetWhiteboardItem(object originalSource)
+        {
+            return _worksheetViewModel.VisualHelper.FindWhiteboardItemAncestorIncludingSelf(originalSource);
+        }
+
+        private IWhiteboardItem GetWhiteboardItemTopAncestor(IWhiteboardItem item)
+        {
+            return _worksheetViewModel.VisualHelper.FindTopWhiteboardItemAncestorIncludingSelf(item);
+        }
+
+        private Point GetTranslatedPoint(object originalSource, object target, Point position)
+        {
+            return ItemManager.TranslatePoint(originalSource, target, position);
+        }
+
+        private Point GetInsertionPoint(Point position, IWorksheetPage page)
+        {
+            return new Point(position.X, position.Y + _worksheetViewModel.PageLayout.PageBodyHeight * (double)_worksheetViewModel.Pages.IndexOf(page));
+        }
+    }
+
+    internal partial class RemoveItemCommand
+    {
+        private void RemoveItem()
+        {
+            ViewModel._model.RemoveItem(_item);
+        }
+    }
 }
