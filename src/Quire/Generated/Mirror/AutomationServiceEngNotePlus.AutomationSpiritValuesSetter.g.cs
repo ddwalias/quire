@@ -13,6 +13,4 @@ public partial class AutomationSpiritValuesSetter : global::Quire.EngNotebookPlu
 {
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EngNotebookPlus.Automation.IMathcadPrimeSetValueResults SetValues(int secondsArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Controls.Core.IORegions.ISetValueResults DoSetValues(int seconds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

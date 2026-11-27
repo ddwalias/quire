@@ -11,8 +11,4 @@ namespace Quire.AutomationServiceEngNotePlus;
 [global::Quire.Mirror.MirrorOf("Spirit.AutomationServiceEngNotePlus.AutomationSpiritMatrix, MathcadPrime")]
 public partial class AutomationSpiritMatrix : global::Quire.EngNotebookPlus.Automation.IMathcadPrimeMatrix
 {
-    [global::Quire.Mirror.MirrorStub]
-    public int SetMatrixElement(int rowIndexArg, int columnIndexArg, double valueArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int GetMatrixElement(int rowIndexArg, int columnIndexArg, out double valueArg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
