@@ -66,45 +66,9 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.Dictionary<string, string> ae;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<bool> af;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action ag;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<bool> ah;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action ai;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action aj;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action ak;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action al;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<global::Quire.Wpf.PropertyChangedEventArgs<global::Quire.Calculation.Core.EngineError>> am;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<global::Quire.EquationEditor.Equation.ScopeStateChangeEventArgs> an;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<global::Quire.EquationEditor.NavigatorStateChangeEventArgs> ao;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<global::Quire.EquationEditor.TypeoverChangeEventArgs> ap;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<global::Quire.Calculation.Core.IResultNode> aq;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<global::Quire.EquationEditor.Tree.Navigation.NavigatorState> ar;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<global::Quire.Direction> @as;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<global::Quire.EquationEditor.IEquationModel> at;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<global::Quire.EquationEditor.IEquationModel> au;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.EventHandler<global::Quire.EquationEditor.Tree.RequestRestoreInsertionPointEventArgs> av;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.CalculatingStatus aw;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.IDataExchangeModel a3;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<bool> a5;
     [global::Quire.Mirror.MirrorStub]
     private bool a6;
     [global::Quire.Mirror.MirrorStub]
@@ -115,8 +79,6 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     private bool bb;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.List<global::System.ValueTuple<global::Quire.EquationEditor.RedefinitionWarning, global::Quire.EquationEditor.Tree.MathNode>> bd;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<global::System.Windows.Visibility> be;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Visibility bf;
     [global::Quire.Mirror.MirrorStub]
@@ -205,44 +167,6 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     public global::Quire.EquationEditor.Tree.MathNode ResultScalingFactor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool ResultScalingModified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<bool> EquationChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action ExpressionValueChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<bool> AlgorithmChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action EvaluationErrorOccurred;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action WarningsOccurred;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action InCustomInitializationChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action ContentChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Wpf.PropertyChangedEventArgs<global::Quire.Calculation.Core.EngineError>> CalculationErrorChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.EquationEditor.Equation.ScopeStateChangeEventArgs> ScopeChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.EquationEditor.NavigatorStateChangeEventArgs> NavigatorStateChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.EquationEditor.TypeoverChangeEventArgs> TypeoverChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Calculation.Core.IResultNode> NumericResultChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.EquationEditor.Tree.Navigation.NavigatorState> NodeMayBeReplaced;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Direction> RequestRemoveEquation;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.EquationEditor.IEquationModel> RequestEvaluation;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.EquationEditor.IEquationModel> RequestFocus;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.EventHandler<global::Quire.EquationEditor.Tree.RequestRestoreInsertionPointEventArgs> RequestRestoreInsertionPoint;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<bool> RestrictedReadonlyChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::System.Windows.Visibility> VisibleLhsOfDefinitionChanged;
     [global::Quire.Mirror.MirrorStub]
     public EquationModel(string rootMathNodeName) { }
     [global::Quire.Mirror.MirrorStub]
