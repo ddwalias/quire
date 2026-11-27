@@ -62,12 +62,12 @@ public abstract partial class ListResultNode<T> : IListResultNode<T>, IListResul
         }
         List<T> list = new List<T>(minLength);
         list.AddRange(data);
-        IList<T> list2 = list;
+        IList<T> extendedData = list;
         for (int i = num; i < minLength; i++)
         {
-            list2.Add(paddingValue);
+            extendedData.Add(paddingValue);
         }
-        return list2;
+        return extendedData;
     }
 
     public abstract bool IsMeaningfulValue(T valueIndex);

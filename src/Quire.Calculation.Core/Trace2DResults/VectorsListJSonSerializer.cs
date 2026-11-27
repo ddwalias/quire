@@ -30,27 +30,27 @@ public static partial class VectorsListJSonSerializer<T>
     public static IList<IListResultNode> Read(Stream stream, int singleVectorLength)
     {
         IList<T> list = Read(stream);
-        List<IList<T>> list2;
+        List<IList<T>> vectors;
         if (singleVectorLength == list.Count)
         {
-            list2 = new List<IList<T>> { list };
+            vectors = new List<IList<T>> { list };
         }
         else
         {
-            list2 = new List<IList<T>>(list.Count / singleVectorLength);
-            List<T> list3 = null;
+            vectors = new List<IList<T>>(list.Count / singleVectorLength);
+            List<T> currentVector = null;
             int num = 0;
             foreach (T item in list)
             {
                 if (num++ % singleVectorLength == 0)
                 {
-                    list3 = new List<T>(singleVectorLength);
-                    list2.Add(list3);
+                    currentVector = new List<T>(singleVectorLength);
+                    vectors.Add(currentVector);
                 }
-                list3.Add(item);
+                currentVector.Add(item);
             }
         }
-        return list2.Select(CreateListNode).ToList();
+        return vectors.Select(CreateListNode).ToList();
     }
 
     [MirrorVerified("PtcCalculationCoreTrace2DResultsVectorsListJSonSerializer1MechanicalDifferentialTests")]

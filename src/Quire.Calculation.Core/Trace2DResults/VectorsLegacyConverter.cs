@@ -130,15 +130,15 @@ internal partial class VectorsLegacyConverter : VectorsConverterBase, IMatrixToV
             return null;
         }
         IListResultNode result = null;
-        IList<double> list2;
+        IList<double> numericValues;
         IList<string> list;
         switch (firstMeaningfulValueType.Value)
         {
             case ResultValueType.Numeric:
-                list2 = ReadDoubleValues(iVector, firstMeaningfullValueIndex);
-                if (list2 != null)
+                numericValues = ReadDoubleValues(iVector, firstMeaningfullValueIndex);
+                if (numericValues != null)
                 {
-                    result = new DoubleListResultNode(list2);
+                    result = new DoubleListResultNode(numericValues);
                     primaryDataType = PlainDataTypes.Double;
                 }
                 break;

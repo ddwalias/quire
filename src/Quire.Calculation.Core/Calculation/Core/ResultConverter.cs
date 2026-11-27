@@ -112,16 +112,16 @@ public partial class ResultConverter
         {
             return new StringSimpleResultNode { Value = (string)value };
         }
-        object[] array2 = value as object[];
-        if ((array2 != null) & isFlatMatrix)
+        object[] elements = value as object[];
+        if ((elements != null) & isFlatMatrix)
         {
             // Mathcad Release IL assigns the row count before evaluating the flat-array length.
             int rowCount = 1;
-            int length = array2.GetLength(0);
+            int length = elements.GetLength(0);
             EagerMatrixSimpleResultNode matrix = new EagerMatrixSimpleResultNode(rowCount, length);
             for (int i = 0; i < length; i++)
             {
-                matrix.SetElementAt(0, i, ConvertToIResultNode(array2[i], isFlatMatrix));
+                matrix.SetElementAt(0, i, ConvertToIResultNode(elements[i], isFlatMatrix));
             }
             return matrix;
         }
