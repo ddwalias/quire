@@ -1006,6 +1006,56 @@ public partial class MathNode
         return (childIndex - FirstElementDescriptor.ChildCount) / ActualMiddleElementDescriptor.ChildCount + 1;
     }
 
+    private bool HasNonLabeledIdDescendants
+    {
+        get
+        {
+            if (InfoType == typeof(IdentifierNodeInfo) && !(NodeInfo as IdentifierNodeInfo).IdLabel.HasValue)
+            {
+                return true;
+            }
+            foreach (MathNode child in Children)
+            {
+                if (child.HasNonLabeledIdDescendants)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+
+    public bool IsNonLabeledIdDescendantAllowed
+    {
+        get
+        {
+            int indexInParent = IndexInParent;
+            MathNode parent = Parent;
+            do
+            {
+                if (!parent.Descriptor.IsNonLabeledIdDescendantAllowed(indexInParent))
+                {
+                    return false;
+                }
+                indexInParent = parent.IndexInParent;
+                parent = parent.Parent;
+            }
+            while (parent != null);
+            return true;
+        }
+    }
+
+    protected bool IsNonLabeledId
+    {
+        get
+        {
+            if (InfoType == typeof(IdentifierNodeInfo) && !(NodeInfo as IdentifierNodeInfo).IdLabel.HasValue)
+            {
+                return true;
+            }
+            return false;
+        }
+    }
     public bool IsContainerSlot(int slotIndex)
     {
         if (AllChildSlotsAreContainerSlots && slotIndex < ChildCount)
