@@ -479,7 +479,20 @@ public partial class WorksheetControlDebugger
 
         private void UpdateDebugWindowCell(PropertyName propertyName, CoordinateSystemName coordinateSystemName, string text)
         {
-            throw global::Quire.Mirror.MirrorStub.NotImplemented();
+            int propertyIndex = (int)propertyName;
+            int coordinateIndex = (int)coordinateSystemName;
+            if (propertyIndex != 0)
+            {
+                if (coordinateIndex != 0)
+                {
+                    goto UpdateCell;
+                }
+            }
+            return;
+
+        UpdateCell:
+            global::Quire.DebugTools.DevAssert(_grid != null, "Grid still is not initialized.");
+            ((TextBox)_grid.Children[propertyIndex * _coordinateSystemNameEnumCount + coordinateIndex]).Text = text;
         }
 
         private void UpdateWindowCellWorksheetItemsCanvas(PropertyName propertyName, string text)
@@ -509,12 +522,50 @@ public partial class WorksheetControlDebugger
 
         private void OnHeaderActivated()
         {
-            throw global::Quire.Mirror.MirrorStub.NotImplemented();
+            double x;
+            int pageIndex;
+            double pageTop;
+            Point point;
+            UpdateDebugWindowCellHeaderFooter(
+                PropertyName.InsertionPointHeaderX,
+                WorksheetViewModelInst.Header.InsertionPoint.X.ToString("0.00"));
+            UpdateDebugWindowCellHeaderFooter(
+                PropertyName.InsertionPointHeaderY,
+                WorksheetViewModelInst.Header.InsertionPoint.Y.ToString("0.00"));
+            x = WorksheetViewModelInst.PageLayout.HeaderMargin.Left
+                + WorksheetViewModelInst.Header.InsertionPoint.X;
+            pageIndex = WorksheetViewModelInst.CurrentPageNumber - 1;
+            pageTop = WorksheetViewModelInst.PageLayout.DisplayHeight * pageIndex
+                + WorksheetViewModelInst.PageLayout.HeaderMargin.Top
+                + WorksheetViewModelInst.Header.InsertionPoint.Y;
+            point = new Point(x, pageTop);
+            UpdateWindowCellWorksheetItemsCanvas(PropertyName.InsertionPointHeaderX, point.X.ToString("0.00"));
+            UpdateWindowCellWorksheetItemsCanvas(PropertyName.InsertionPointHeaderY, point.Y.ToString("0.00"));
         }
 
         private void OnFooterActivated()
         {
-            throw global::Quire.Mirror.MirrorStub.NotImplemented();
+            double x;
+            int pageIndex;
+            double pageTop;
+            Point point;
+            UpdateDebugWindowCellHeaderFooter(
+                PropertyName.InsertionPointFooterX,
+                WorksheetViewModelInst.Footer.InsertionPoint.X.ToString("0.00"));
+            UpdateDebugWindowCellHeaderFooter(
+                PropertyName.InsertionPointFooterY,
+                WorksheetViewModelInst.Footer.InsertionPoint.Y.ToString("0.00"));
+            x = WorksheetViewModelInst.PageLayout.FooterMargin.Left
+                + WorksheetViewModelInst.Footer.InsertionPoint.X;
+            pageIndex = WorksheetViewModelInst.CurrentPageNumber - 1;
+            pageTop = WorksheetViewModelInst.PageLayout.DisplayHeight * pageIndex
+                + WorksheetViewModelInst.PageLayout.PageMargin.Top
+                + WorksheetViewModelInst.PageLayout.PageBodyHeight
+                + WorksheetViewModelInst.PageLayout.FooterMargin.Top
+                + WorksheetViewModelInst.Footer.InsertionPoint.Y;
+            point = new Point(x, pageTop);
+            UpdateWindowCellWorksheetItemsCanvas(PropertyName.InsertionPointFooterX, point.X.ToString("0.00"));
+            UpdateWindowCellWorksheetItemsCanvas(PropertyName.InsertionPointFooterY, point.Y.ToString("0.00"));
         }
 
         private void UpdateDebugWindowCellsAll(PropertyName propertyName, string text)
@@ -533,6 +584,10 @@ public partial class WorksheetControlDebugger
 
     private sealed partial class VisibleObjects
     {
+        private string _textPages = string.Empty;
+        private string _textVisiblePages = string.Empty;
+        private string _textItemsPart = string.Empty;
+
         private T TryFindVisualChild<T>(DependencyObject parent) where T : class
         {
             if (parent == null)
@@ -557,6 +612,17 @@ public partial class WorksheetControlDebugger
             }
 
             return null;
+        }
+
+        public VisibleObjects(object spiritMainWindow, DependencyProperty activeDocumentProperty)
+            : base(spiritMainWindow, activeDocumentProperty)
+        {
+            _statusBar = TryFindVisualChild<global::System.Windows.Controls.Primitives.StatusBar>(
+                spiritMainWindow as DependencyObject);
+            global::Quire.DebugTools.DevAssert(_statusBar != null, "StatusBar was not found");
+            AddStatusBarItemToStatusBar();
+            InitializePreviewWindow();
+            base.InitializeUI();
         }
 
         protected override void DestructUI()
@@ -587,6 +653,37 @@ public partial class WorksheetControlDebugger
             }
             _indicationTextBlock = null;
             _indicationStatusBarItem = null;
+        }
+
+        private void AddStatusBarItemToStatusBar()
+        {
+            if (_indicationTextBlock == null)
+            {
+                _indicationTextBlock = new TextBlock
+                {
+                    Foreground = Brushes.DarkRed,
+                    FontWeight = FontWeights.Bold,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Visibility = Visibility.Visible
+                };
+            }
+            if (_indicationStatusBarItem == null)
+            {
+                string toolTip = string.Format(
+                    "{0}\n{1}\n{2}\n{3}",
+                    [
+                        "Counter of Pages and Items:",
+                        "Pages: [t]                   -> (t) - number of pages",
+                        "Visible Pages: (t) [#f - #l] -> (t) - number of visible pages, (f) - the first visible page number, (l) - the last visible page number",
+                        "Items: [v(+ve)/t(+te)]       -> (v) - number of visible items, (+ve) - number of visible embedded items, (t) - number of items, (+te) - number of embedded items"
+                    ]);
+                _indicationStatusBarItem = new global::System.Windows.Controls.Primitives.StatusBarItem
+                {
+                    Content = _indicationTextBlock,
+                    ToolTip = toolTip
+                };
+            }
+            _statusBar.Items.Insert(4, _indicationStatusBarItem);
         }
 
         private void UpdateIndicationInStatusBar()
@@ -722,6 +819,33 @@ public partial class WorksheetControlDebugger
             global::System.Windows.Controls.Grid.SetRow(secondBorder, 1);
             _grid2.Children.Add(_viewbox);
             global::System.Windows.Controls.Grid.SetRow(_viewbox, 1);
+        }
+
+        // Keep this declaration here to preserve Mathcad's b__25_0 lambda ordinal.
+        private void UpdateVisibleItemsCounter()
+        {
+            int visibleItems = WorksheetControlInst.WorksheetItems.Sum(
+                item => WorksheetViewModel.ItemManager.GetItemIsOnVisiblePage(item) ? 1 : 0);
+            int embeddedItems = 0;
+            int visibleEmbeddedItems = 0;
+            foreach (IWhiteboardItem item in WorksheetControlInst.WorksheetItems)
+            {
+                if (item is global::Quire.Controls.Core.Whiteboard.IWhiteboardControl)
+                {
+                    global::Quire.Controls.Core.Whiteboard.IWhiteboardControl control =
+                        item as global::Quire.Controls.Core.Whiteboard.IWhiteboardControl;
+                    embeddedItems += control.WhiteboardItems.Count;
+                    if (WorksheetViewModel.ItemManager.GetItemIsOnVisiblePage(item))
+                    {
+                        visibleEmbeddedItems += control.WhiteboardItems.Count;
+                    }
+                }
+            }
+            int itemCount = WorksheetControlInst.WorksheetItems.Count;
+            _textItemsPart = string.Format(
+                "Items: [{0}(+{1}e)/{2}(+{3}e)]",
+                [visibleItems, visibleEmbeddedItems, itemCount, embeddedItems]);
+            UpdateIndicationInStatusBar();
         }
 
         private void WorksheetControlSizeChanged(object sender, SizeChangedEventArgs e)

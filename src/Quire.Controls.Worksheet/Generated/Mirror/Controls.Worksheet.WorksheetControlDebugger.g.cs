@@ -124,12 +124,6 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         [global::Quire.Mirror.MirrorStub]
         private global::System.Windows.Controls.Primitives.StatusBarItem _indicationStatusBarItem;
         [global::Quire.Mirror.MirrorStub]
-        private string _textPages;
-        [global::Quire.Mirror.MirrorStub]
-        private string _textVisiblePages;
-        [global::Quire.Mirror.MirrorStub]
-        private string _textItemsPart;
-        [global::Quire.Mirror.MirrorStub]
         private global::System.Windows.Window _win2;
         [global::Quire.Mirror.MirrorStub]
         private global::System.Windows.Controls.Grid _grid2;
@@ -139,12 +133,6 @@ public partial class WorksheetControlDebugger : global::Quire.Controls.Worksheet
         private const int InitialWinWidth = 200;
         [global::Quire.Mirror.MirrorStub]
         private const int InitialWinHeight = 731;
-        [global::Quire.Mirror.MirrorStub]
-        public VisibleObjects(object spiritMainWindow, global::System.Windows.DependencyProperty activeDocumentProperty) : base(default(object), default(global::System.Windows.DependencyProperty)) { }
-        [global::Quire.Mirror.MirrorStub]
-        private void AddStatusBarItemToStatusBar() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void UpdateVisibleItemsCounter() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         private void UpdateWorksheetItemsVisibilityAdorner(object uiElement, bool isItemOnVisiblePage, bool toBeClipped = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
