@@ -306,7 +306,18 @@ public abstract partial class PlotGraphAxis
     [global::Quire.Mirror.MirrorBlocked("auto-property layout placeholder")]
     private double LegendPrevWidth { get; set; }
 
-    double global::Quire.Controls.Plots.Presenter.IPlotAxisView.LegendActualWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    double global::Quire.Controls.Plots.Presenter.IPlotAxisView.LegendActualWidth
+    {
+        get
+        {
+            if (EquationList.IsVisible)
+            {
+                return EquationList.ActualWidth;
+            }
+            return LegendPrevWidth;
+        }
+        set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
 
     internal void SetLegendWidthWhenLayoutReady()
     {
@@ -873,7 +884,15 @@ public abstract partial class PlotGraphAxis
         {
             return _axisTitle;
         }
-        set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        set
+        {
+            // Early return on equality: Mathcad branches to the store with bne.un, not beq.
+            if (_axisTitle == value)
+            {
+                return;
+            }
+            _axisTitle = value;
+        }
     }
 
     private static void PositionTickMarkChanged(global::System.Windows.DependencyObject dependencyObject, global::System.Windows.DependencyPropertyChangedEventArgs arguments)
@@ -1333,7 +1352,17 @@ public abstract partial class PlotGraphAxis
         {
             return _isLinearizedRangeAssertEnabled;
         }
-        set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        set
+        {
+            // Early return on equality: Mathcad's lifted Nullable<bool> compare branches to the store on brfalse.
+            if (_isLinearizedRangeAssertEnabled == value)
+            {
+                return;
+            }
+            _isLinearizedRangeAssertEnabled = value;
+            _ = LinearizedStart;
+            _ = LinearizedEnd;
+        }
     }
 
     public bool HasAxisError()

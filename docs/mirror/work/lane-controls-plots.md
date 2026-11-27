@@ -1100,3 +1100,10 @@
   - `AxisTitle` setter and `IsLinearizedRangeAssertEnabled` setter: Mathcad uses `bne.un.s` over a `br.s` for the reference and nullable `!=`; Roslyn emits `beq.s`/`brtrue.s`, and `if (a == b) { } else { ... }` gives the same IL. Parked (placeholders).
   - `GetMajorTickmaks`: the `||` condition chain is 6 bytes shorter than Mathcad's. Parked (placeholder).
   - Auto-property placeholders (`MirrorBlocked`) are unchanged.
+
+## Batch 128 — PlotGraphAxis parked members retried (task_c669a7b53f26)
+
+- Landed in this batch: `AxisTitle` setter and `IsLinearizedRangeAssertEnabled` setter (Mathcad branches to the store on `brfalse`/`bne.un`, so the early return on equality is the shape that matches), and the `LegendActualWidth` getter (no closure).
+- Still parked, with the exact IL diff:
+  - `IPlotAxisView.LegendActualWidth` setter: the closure name is `<Quire.Controls.Plots.Presenter.IPlotAxisView.set_LegendActualWidth>b__0`, Mathcad's is `<Ptc.Controls.Plots.Presenter.IPlotAxisView.set_LegendActualWidth>b__0`. `tools/Quire.Tools.MethodAudit` normalizes only ordinals (`ordinalless`), not namespaces in lambda names, and the explicit-interface name cannot be spelled `Ptc.` in Quire. Needs a gate-side rule or a decision to accept the name difference.
+  - `GetMajorTickmaks`: Mathcad materializes the whole `&&`/`||` condition as a value (`ldc.i4.0`/`ldc.i4.1`, `br.s`, then `brtrue.s IL_0100`) and compares `Labels` with `MemoryExtensions.SequenceEqual<string>` over `ReadOnlySpan<string>` via `op_Implicit`. The C# `if` form has no materialization; the first difference is at `brfalse` (Quire target 72, Mathcad 78, Quire is 6 bytes shorter). Parked (placeholder).
