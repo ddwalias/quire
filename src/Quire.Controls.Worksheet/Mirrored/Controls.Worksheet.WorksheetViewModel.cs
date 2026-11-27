@@ -2890,8 +2890,10 @@ private void HandleProtectedStateChanged(IProtectableControl control)
             {
                 RemoveGridRestrictedAreaForItem(collapsibleAreaControl);
                 ActivateAndNavigateIntoArea(collapsibleAreaControl);
+                return;
             }
-            return;
+            // Release IL branches collapsed areas to the shared method exit.
+            goto Done;
         }
         UpdateGridRestrictedAreaForItem(collapsibleAreaControl);
         bool cannotActivate = !_itemManager.GetCanActivate(collapsibleAreaControl) && ActiveItem == collapsibleAreaControl;
@@ -2908,6 +2910,8 @@ private void HandleProtectedStateChanged(IProtectableControl control)
         {
             DebugTools.DevAssert(_itemManager.GetCanActivate(collapsibleAreaControl) || !GetItemRect(collapsibleAreaControl).ContainsAccountingForMeasurementError(InsertionPoint), null);
         }
+    Done:
+        ;
     }
 
 private void HandleActivatePartContainingChildRequested(IWhiteboardItemContainer wbContainer, IWhiteboardItem item)
