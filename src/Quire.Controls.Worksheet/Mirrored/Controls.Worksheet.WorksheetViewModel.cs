@@ -277,8 +277,7 @@ private void Initialize()
         _pageManager.ContentActivated += () => ActiveSection = WorksheetContent;
         WorksheetContent.NonprintableSpaceWidthIncrease += newWidth =>
         {
-            double widthWithNonprintableSpace = newWidth + 2.0 * _worksheetGrid.GridCellSize.Width;
-            WidthWithNonprintableSpace = widthWithNonprintableSpace;
+            this.WidthWithNonprintableSpace = newWidth + 2.0 * _worksheetGrid.GridCellSize.Width;
         };
         HookupCollectionChangedHandlers();
         OleObjectAutoResize = true;
