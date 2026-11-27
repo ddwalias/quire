@@ -179,6 +179,10 @@ public partial class MathNode
         }
     }
 
+    public string NodeInfoValueAsString => NodeInfoExtensions.ValueAsString(NodeInfo, ValueType);
+
+    public int NodeInfoValueLength => NodeInfoExtensions.ValueLength(NodeInfo, ValueType);
+
     public MathNode RootNode
     {
         get
@@ -257,9 +261,34 @@ public partial class MathNode
 
     public bool IsEvaluatable => d__.IsEvaluatable;
 
+    public bool IsEvaluation
+    {
+        get
+        {
+            if (d__ is MathNodeDescriptorPiggyback)
+            {
+                return f;
+            }
+            return d__.IsEvaluation;
+        }
+        set => f = value;
+    }
+
     public bool IsNary => d__.IsNary;
 
     public bool IsLinearNary => d__.IsLinearNary;
+
+    public bool IsScopable
+    {
+        get
+        {
+            if (d__.IsScopable && IsLinearNary && !HasVisualRepresentation && ChildCount == 1)
+            {
+                return false;
+            }
+            return d__.IsScopable;
+        }
+    }
 
     public bool IsScopingBoundary => d__.IsScopingBoundary;
 
