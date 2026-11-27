@@ -329,7 +329,7 @@ public partial class EngineeringDocument
             double verticalOffset = scrollViewer.VerticalOffset + halfViewportHeight;
             double zoomScale = zoomNewValue / zoomOldValue;
             double scaledExtentWidth = scrollViewer.ExtentWidth * zoomScale;
-            if (scrollViewer.ExtentWidth.IsLessThan(scrollViewer.ViewportWidth) && value.IsGreaterThan(scrollViewer.ViewportWidth))
+            if (scrollViewer.ExtentWidth.IsLessThan(scrollViewer.ViewportWidth) && scaledExtentWidth.IsGreaterThan(scrollViewer.ViewportWidth))
             {
                 Point val = TranslatePoint(default, scrollViewer);
                 horizontalOffset -= val.X;
