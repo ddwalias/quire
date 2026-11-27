@@ -9,6 +9,7 @@ using Quire.Mirror;
 using Quire.Wpf;
 using System.Windows;
 using Quire.EquationEditor.Tree.Transform;
+using Quire.Native.PtcEquationEditor;
 
 namespace Quire.EquationEditor.Equation;
 
@@ -725,4 +726,158 @@ public partial class EquationModel
             ad__ = value;
         }
     }
+
+    [MirrorVerified("Release IL")]
+    public void CanPerformIdLabelOperations(ref bool canPerformIdLabelOperations) => canPerformIdLabelOperations = z();
+
+    [MirrorVerified("Release IL")]
+    public void CanPerformColumnOperations(ref bool canPerformColumnOperation) => canPerformColumnOperation = u();
+
+    [MirrorVerified("Release IL")]
+    public void CanPerformLinearNaryOperations(ref bool canPerformLinearNaryOperations) => canPerformLinearNaryOperations = s();
+
+    [MirrorVerified("Release IL")]
+    public void CanPerformRowOperations(ref bool canPerformRowOperations) => canPerformRowOperations = r();
+
+    [MirrorVerified("Release IL")]
+    public void CanCopy(ref bool canCopy) => canCopy = CanCopy();
+
+    [MirrorVerified("Release IL")]
+    public void CanCut(ref bool canCut) => canCut = CanCut();
+
+    [MirrorVerified("Release IL")]
+    public void CanPaste(ref bool canPaste) => canPaste = CanPaste();
+
+    [MirrorVerified("Release IL")]
+    public void ClearError()
+    {
+        ErrorNode = null;
+        CalculationError = null;
+    }
+
+    [MirrorVerified("Release IL")]
+    public bool SetIsReplacingPreviouseOperator(bool isReplacingPreviouseOperator)
+    {
+        // Mathcad combines the two bools with a non-short-circuit `and`, so this is `&`, not `&&`.
+        if (PrevStepForMultiKeyOpFailed & isReplacingPreviouseOperator)
+        {
+            return false;
+        }
+
+        IsReplacingPreviouseOperator = isReplacingPreviouseOperator;
+        return true;
+    }
+
+    [MirrorVerified("Release IL")]
+    public string GetDefinitionSExpression(string idSExpr)
+    {
+        MathNode definition = d(idSExpr).LastOrDefault();
+        if (definition != null)
+        {
+            return definition.SExpression;
+        }
+
+        return null;
+    }
+
+    [MirrorVerified("Release IL")]
+    public void EnterNode(Direction direction, MathNode nodeToEnter) => NavigatorState = bq.c(direction, nodeToEnter).f();
+
+    [MirrorVerified("Release IL")]
+    public virtual void HandleScriptingEngineError(string error)
+    {
+        if (error == null)
+        {
+            t__ = null;
+        }
+        else
+        {
+            t__ = new ScriptingError(error);
+        }
+
+        ai?.Invoke();
+    }
+
+    [MirrorVerified("Release IL")]
+    public NavigatorState GetNavigatorStateFromScoperCaretSide() => g__.a();
+
+    [MirrorVerified("Release IL")]
+    public void FireAlgorithmChanged()
+    {
+        IsExpressionValueModified = true;
+        ah(true);
+        FireNavigatorStateChanged();
+    }
+
+    [MirrorVerified("Release IL")]
+    public bool CanInsertKeyword()
+    {
+        if (Mode != 0)
+        {
+            return false;
+        }
+
+        if (AllowExpressionsOnly)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    [MirrorVerified("Release IL")]
+    public void FireRequestFocus()
+    {
+        if (au != null)
+        {
+            au(this);
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public void FireExpressionValueChanged(NavigatorState navigatorState, bool shouldRegenerate = true)
+    {
+        IsExpressionValueModified = true;
+        ag?.Invoke();
+        FireEquationChanged(shouldRegenerate);
+        a(navigatorState);
+    }
+
+    [MirrorVerified("Release IL")]
+    public void FireEquationChanged(bool shouldRegenerate = true)
+    {
+        IsModified = true;
+        af?.Invoke(shouldRegenerate);
+        FireContentChanged();
+    }
+
+    [MirrorVerified("Release IL")]
+    public void FireContentChanged()
+    {
+        if (al != null)
+        {
+            al();
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public void FireNavigatorStateChanged()
+    {
+        if (ao != null)
+        {
+            ao(new NavigatorStateChangeEventArgs(NavigatorState));
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public void FireNodeMayBeReplaced(NavigatorState navigatorState)
+    {
+        if (ar != null)
+        {
+            ar(navigatorState);
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public void HookupDescendantsMatrixFormatChanged() => HookupDescendantsMatrixFormatChanged(EquationRoot);
 }
