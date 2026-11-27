@@ -25,7 +25,7 @@ public abstract partial class BaseMarkerViewModel
     protected BaseMarkerViewModel(BaseMarker baseMarker)
     {
         _baseMarker = baseMarker;
-        _baseMarker.PropertyChanged += (object? obj, PropertyChangedEventArgs e2) => OnPropertyChanged(e2.PropertyName);
+        _baseMarker.PropertyChanged += (object? obj, PropertyChangedEventArgs e) => OnPropertyChanged(e.PropertyName);
         CreateCommandBinding(ActivateCommand, (object arg) => Activate());
         CreateCommandBinding(PlotControlBase.ChangeTraceColorCommand, (object color) => ChangeColor(color as SolidColorBrush));
     }

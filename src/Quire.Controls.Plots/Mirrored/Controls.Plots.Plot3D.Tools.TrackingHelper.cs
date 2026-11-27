@@ -157,6 +157,7 @@ internal partial class TrackingHelper : ITrackingHelper
             Viewport.IsHitTestVisible = true;
             PointHitTestParameters hitTestParameters = new PointHitTestParameters(position);
             Point3D? point3D = initialHit;
+            // The lambda's captured local is a display-class field, and its name is in Release IL.
             Point3D? current2 = null;
             VisualTreeHelper.HitTest(Viewport, null, (HitTestResult result) => HitTestResultCallback(result, out current2), hitTestParameters);
             DebugTools.DevAssert(!point3D.HasValue || !current2.HasValue || (DoubleComparer.DefaultDoubleComparer.Compare(point3D.Value.X, current2.Value.X) == 0 && DoubleComparer.DefaultDoubleComparer.Compare(point3D.Value.Y, current2.Value.Y) == 0 && DoubleComparer.DefaultDoubleComparer.Compare(point3D.Value.Z, current2.Value.Z) == 0), null);

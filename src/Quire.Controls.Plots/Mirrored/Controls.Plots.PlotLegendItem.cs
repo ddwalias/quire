@@ -75,11 +75,11 @@ public partial class PlotLegendItem
             {
                 return;
             }
-            LegendLabel.PreviewKeyDown += (object obj, KeyEventArgs e2) =>
+            LegendLabel.PreviewKeyDown += (object obj, KeyEventArgs e) =>
             {
-                if (e2.Key == Key.Return)
+                if (e.Key == Key.Return)
                 {
-                    e2.Handled = true;
+                    e.Handled = true;
                 }
             };
             LegendLabel.LostFocus += OnLegendLabelLostFocus;
@@ -122,7 +122,7 @@ public partial class PlotLegendItem
             VerticalAlignment = VerticalAlignment.Top,
             Margin = MiniTraceDefaultMargin
         };
-        plotTrace.TraceClicked += (IPlotTrace plotTrace2) =>
+        plotTrace.TraceClicked += (IPlotTrace trace) =>
         {
             if (LegendLabel != null && LegendLabel.IsEnabled)
             {
