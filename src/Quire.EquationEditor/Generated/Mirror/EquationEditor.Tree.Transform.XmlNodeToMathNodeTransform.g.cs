@@ -122,15 +122,10 @@ public partial class XmlNodeToMathNodeTransform
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.EquationEditor.Tree.MathNode h(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static bool g(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static void a(ref string A_0, out int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
+    private static bool g(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private static bool a(double A_0, string A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool f(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static string RemoveMinusSignFromString(string text) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.EquationEditor.Tree.MathNode f(global::System.Xml.XmlElement A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -151,8 +146,6 @@ public partial class XmlNodeToMathNodeTransform
     private static string e(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Nullable<global::Quire.Controls.Core.IdLabels> a(global::System.Xml.XmlElement A_0, string A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsMC14Document(global::System.Xml.XmlNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Nullable<global::Quire.Controls.Core.IdLabels> a(global::System.Xml.XmlNode A_0, string A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

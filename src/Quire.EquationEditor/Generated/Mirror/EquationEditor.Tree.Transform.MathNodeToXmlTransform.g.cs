@@ -29,8 +29,6 @@ public partial class MathNodeToXmlTransform
     [global::Quire.Mirror.MirrorStub]
     public MathNodeToXmlTransform(global::System.Collections.Generic.Dictionary<string, global::Quire.EquationEditor.Tree.Transform.MathNodeToXmlTransform.MathNodeToXmlNodeTransformation> formatMap) { }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Xml.XmlNode Transform(global::Quire.EquationEditor.Tree.MathNode node, global::Quire.EquationEditor.Tree.MathNode resultScalingFactor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Xml.XmlNode b(global::System.Xml.XmlDocument A_0, global::Quire.EquationEditor.Tree.MathNode A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::System.Xml.XmlNode[] ConvertChildNodes(global::System.Xml.XmlDocument document, global::Quire.EquationEditor.Tree.MathNode node) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

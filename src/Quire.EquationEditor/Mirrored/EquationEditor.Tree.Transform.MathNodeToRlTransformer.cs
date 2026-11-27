@@ -57,4 +57,19 @@ public partial class MathNodeToRlTransformer
 
         return a(evaluationNodes)[evalNode];
     }
+
+    public string TransformLhsOfDef(MathNode node)
+    {
+        return d(node, j__);
+    }
+
+    public string SetRlidAndTransformWithResultScalingFactor(MathNode node, MathNode resultScalingFactor)
+    {
+        node.SetRlidForTree();
+        var previous = k__;
+        k__ = resultScalingFactor;
+        var result = Transform(node, (IDictionary<string, PositionsToLabel>)null);
+        k__ = previous;
+        return result;
+    }
 }

@@ -117,4 +117,10 @@ public partial class MathNodeToXmlTransform
 
         return result;
     }
+
+    public XmlNode Transform(MathNode node, MathNode resultScalingFactor)
+    {
+        c__ = resultScalingFactor;
+        return Transform(node);
+    }
 }
