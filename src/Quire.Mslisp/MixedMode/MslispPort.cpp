@@ -3184,10 +3184,10 @@ namespace Quire { namespace mslisp {
             {
                 do
                 {
-                    array[0] = enumerator2->Current;
+                    array[0] = sourceEnumerator->Current;
                     pCons = gcnew Quire::Engine::PCons(function->Invoke(array), pCons);
                 }
-                while (enumerator2->MoveNext());
+                while (sourceEnumerator->MoveNext());
             }
             return Quire::Engine::PCons::nreverse(pCons);
         }
@@ -3229,7 +3229,7 @@ namespace Quire { namespace mslisp {
             {
                 do
                 {
-                    array[num] = enumerator2->Current;
+                    array[num] = sourceEnumerator->Current;
                     num++;
                     if (num == *val)
                     {
@@ -3237,7 +3237,7 @@ namespace Quire { namespace mslisp {
                         num = 0;
                     }
                 }
-                while (enumerator2->MoveNext());
+                while (sourceEnumerator->MoveNext());
             }
             return Quire::Engine::PCons::nreverse(pCons);
         }
