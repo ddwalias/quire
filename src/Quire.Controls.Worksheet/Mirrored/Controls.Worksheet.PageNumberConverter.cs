@@ -22,15 +22,15 @@ public partial class PageNumberConverter : IMultiValueConverter
         }
         string format = (string)values[0];
         int num = (int)values[1];
-        int num2 = (int)values[2];
+        int totalPages = (int)values[2];
         if (values.Length == 5)
         {
-            int num3 = (int)values[3] - 1;
-            int num4 = (int)values[4];
-            num += num3;
-            num2 += num3 + num4;
+            int pageOffset = (int)values[3] - 1;
+            int pageCount = (int)values[4];
+            num += pageOffset;
+            totalPages += pageOffset + pageCount;
         }
-        return string.Format(format, num, num2);
+        return string.Format(format, num, totalPages);
     }
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

@@ -39,30 +39,30 @@ internal partial class WorksheetItemsCanvas : Canvas
                 IWhiteboardItem whiteboardItem = ((WorksheetItemPresenter)internalChild).Child as IWhiteboardItem;
                 DebugTools.DevAssert(whiteboardItem != null, "Object must be IWhiteboardItem");
                 WhiteboardViewModel.WhiteboardItemMgr.ClearHandleChangesEnabled(whiteboardItem);
-                double num = 0.0;
-                double num2 = 0.0;
+                double leftOffset = 0.0;
+                double topOffset = 0.0;
                 int pageIndex = pageManager.GetPageIndex(whiteboardItem);
                 switch (worksheetPageLayoutMode)
                 {
                     case PageLayoutMode.PageMode:
-                        num = pageManager.PageLayout.PageMargin.Left;
-                        num2 = pageManager.PageLayout.DisplayHeight * (double)pageIndex + pageManager.PageLayout.PageMargin.Top;
+                        leftOffset = pageManager.PageLayout.PageMargin.Left;
+                        topOffset = pageManager.PageLayout.DisplayHeight * (double)pageIndex + pageManager.PageLayout.PageMargin.Top;
                         break;
                     case PageLayoutMode.DraftMode:
-                        num = 0.0;
-                        num2 = pageManager.PageLayout.PageBodyHeight * (double)pageIndex;
+                        leftOffset = 0.0;
+                        topOffset = pageManager.PageLayout.PageBodyHeight * (double)pageIndex;
                         break;
                     default:
-                        num = 0.0;
-                        num2 = 0.0;
+                        leftOffset = 0.0;
+                        topOffset = 0.0;
                         DebugTools.FailAssertion("Unexpected PageLayoutMode: " + worksheetPageLayoutMode);
                         break;
                 }
                 Point itemLocation = ItemManager.GetItemLocation(whiteboardItem);
-                double length = itemLocation.X + num;
-                double length2 = itemLocation.Y + num2 + whiteboardItem.VerticalAlignmentOffset;
-                Canvas.SetLeft(internalChild, length);
-                Canvas.SetTop(internalChild, length2);
+                double left = itemLocation.X + leftOffset;
+                double top = itemLocation.Y + topOffset + whiteboardItem.VerticalAlignmentOffset;
+                Canvas.SetLeft(internalChild, left);
+                Canvas.SetTop(internalChild, top);
             }
         }
         return base.ArrangeOverride(finalSize);

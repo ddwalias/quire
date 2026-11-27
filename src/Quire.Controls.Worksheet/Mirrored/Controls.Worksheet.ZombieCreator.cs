@@ -59,11 +59,11 @@ public partial class ZombieCreator
 
     public static int CompareLocation(double value1, double value2)
     {
-        double num = RoundLocation(value1);
-        double num2 = RoundLocation(value2);
-        if (num != num2)
+        double firstRoundedLocation = RoundLocation(value1);
+        double secondRoundedLocation = RoundLocation(value2);
+        if (firstRoundedLocation != secondRoundedLocation)
         {
-            if (!(num > num2))
+            if (!(firstRoundedLocation > secondRoundedLocation))
             {
                 return -1;
             }

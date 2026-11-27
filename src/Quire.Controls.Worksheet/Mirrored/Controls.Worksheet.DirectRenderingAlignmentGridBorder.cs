@@ -284,26 +284,26 @@ public partial class DirectRenderingAlignmentGridBorder
         for (double num = 0.0; num <= borderSize.Width; num += majorGridLines)
         {
             double value = Math.Min(num + majorGridLines, borderSize.Width);
-            for (double num2 = num + gridCellSize.Width; num2.IsLessThan(value); num2 += gridCellSize.Width)
+            for (double minorLineX = num + gridCellSize.Width; minorLineX.IsLessThan(value); minorLineX += gridCellSize.Width)
             {
-                drawingContext.DrawLine(minorLinePen, new Point(num2, 0.0), new Point(num2, borderSize.Height));
+                drawingContext.DrawLine(minorLinePen, new Point(minorLineX, 0.0), new Point(minorLineX, borderSize.Height));
             }
         }
         for (double num3 = 0.0; num3 <= borderSize.Height; num3 += majorGridLines)
         {
-            double value2 = Math.Min(num3 + majorGridLines, borderSize.Height);
-            for (double num4 = num3 + gridCellSize.Height; num4.IsLessThan(value2); num4 += gridCellSize.Height)
+            double nextMajorLineY = Math.Min(num3 + majorGridLines, borderSize.Height);
+            for (double minorLineY = num3 + gridCellSize.Height; minorLineY.IsLessThan(nextMajorLineY); minorLineY += gridCellSize.Height)
             {
-                drawingContext.DrawLine(minorLinePen, new Point(0.0, num4), new Point(borderSize.Width, num4));
+                drawingContext.DrawLine(minorLinePen, new Point(0.0, minorLineY), new Point(borderSize.Width, minorLineY));
             }
         }
-        for (double num5 = majorGridLines; num5.IsLessThan(borderSize.Width); num5 += majorGridLines)
+        for (double majorLineX = majorGridLines; majorLineX.IsLessThan(borderSize.Width); majorLineX += majorGridLines)
         {
-            drawingContext.DrawLine(majorLinePen, new Point(num5, 0.0), new Point(num5, borderSize.Height));
+            drawingContext.DrawLine(majorLinePen, new Point(majorLineX, 0.0), new Point(majorLineX, borderSize.Height));
         }
-        for (double num6 = majorGridLines; num6.IsLessThan(borderSize.Height); num6 += majorGridLines)
+        for (double majorLineY = majorGridLines; majorLineY.IsLessThan(borderSize.Height); majorLineY += majorGridLines)
         {
-            drawingContext.DrawLine(majorLinePen, new Point(0.0, num6), new Point(borderSize.Width, num6));
+            drawingContext.DrawLine(majorLinePen, new Point(0.0, majorLineY), new Point(borderSize.Width, majorLineY));
         }
     }
 

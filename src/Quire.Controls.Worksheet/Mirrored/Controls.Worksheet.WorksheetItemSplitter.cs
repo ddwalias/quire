@@ -237,20 +237,20 @@ internal partial class WorksheetItemSplitter
         IWhiteboardItemZombie zombie = list.OfType<IWhiteboardItemZombie>().First();
         double num = ZombieCreator.ConvertYcoordFromItemToZombie(pt.Y, zombie);
         IWhiteboardItem whiteboardItem = null;
-        foreach (IWhiteboardItem item2 in list)
+        foreach (IWhiteboardItem part in list)
         {
-            Rect bounds = ItemManager.GetItemClipGeometry(item2).Bounds;
-            double value = ((item2 == item) ? pt.Y : num);
-            if (ZombieCreator.CompareLocation(value, bounds.Top) < 0)
+            Rect bounds = ItemManager.GetItemClipGeometry(part).Bounds;
+            double location = ((part == item) ? pt.Y : num);
+            if (ZombieCreator.CompareLocation(location, bounds.Top) < 0)
             {
                 if (DebugTools.DevAssert(whiteboardItem == null, null).Passed)
                 {
-                    whiteboardItem = item2;
+                    whiteboardItem = part;
                 }
                 break;
             }
-            whiteboardItem = item2;
-            if (ZombieCreator.CompareLocation(value, bounds.Bottom) <= 0 && ZombieCreator.CompareLocation(value, bounds.Bottom) < 0)
+            whiteboardItem = part;
+            if (ZombieCreator.CompareLocation(location, bounds.Bottom) <= 0 && ZombieCreator.CompareLocation(location, bounds.Bottom) < 0)
             {
                 break;
             }
@@ -286,10 +286,10 @@ internal partial class WorksheetItemSplitter
             return false;
         }
         int num = containingPage.PageNumber - containingPage2.PageNumber;
-        double num2 = ZombieCreator.ConvertYcoordFromItemToZombie(ptIn.Y, whiteboardItemZombie);
+        double zombieRelativeY = ZombieCreator.ConvertYcoordFromItemToZombie(ptIn.Y, whiteboardItemZombie);
         Point val = containingPage2.PageBody.GetItemLocation(item) + new Vector(0.0, whiteboardItemZombie.ItemVerticalAlignmentOffset);
-        Point val2 = containingPage.PageBody.GetItemLocation(whiteboardItemZombie) + new Vector(0.0, whiteboardItemZombie.VerticalAlignmentOffset);
-        ptOut = new Point(ptIn.X, PageLayout.DisplayHeight * (double)num - val.Y + val2.Y + num2);
+        Point zombieLocation = containingPage.PageBody.GetItemLocation(whiteboardItemZombie) + new Vector(0.0, whiteboardItemZombie.VerticalAlignmentOffset);
+        ptOut = new Point(ptIn.X, PageLayout.DisplayHeight * (double)num - val.Y + zombieLocation.Y + zombieRelativeY);
         return true;
     }
 

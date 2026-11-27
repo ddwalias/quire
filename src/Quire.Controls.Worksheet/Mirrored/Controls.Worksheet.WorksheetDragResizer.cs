@@ -129,7 +129,7 @@ internal partial class WorksheetDragResizer
     {
         ResizeElementBasedOnOffset(ElementToResize, offset, changeWidth, changeHeight);
         Size arg = new Size(WidthIsAuto ? double.NaN : OriginalWidth, HeightIsAuto ? double.NaN : OriginalHeight);
-        Size arg2 = new Size(ElementToResize.Width, ElementToResize.Height);
-        DragDone(arg, arg2, _mode);
+        Size originalSize = new Size(ElementToResize.Width, ElementToResize.Height);
+        DragDone(arg, originalSize, _mode);
     }
 }

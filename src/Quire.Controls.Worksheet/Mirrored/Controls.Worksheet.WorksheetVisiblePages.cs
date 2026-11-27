@@ -112,9 +112,9 @@ public partial class WorksheetVisiblePages
             if (Math.Min((int)((verticalOffset + viewportHeight) / pageHeight), _pages.Count - 1) >= num)
             {
                 _visiblePagesRange.Update(FirstVisiblePageIndex, num);
-                for (int num2 = lastVisiblePageIndex + 1; num2 <= num; num2++)
+                for (int pageIndex = lastVisiblePageIndex + 1; pageIndex <= num; pageIndex++)
                 {
-                    AddToEnd(num2);
+                    AddToEnd(pageIndex);
                 }
             }
         }
@@ -127,9 +127,9 @@ public partial class WorksheetVisiblePages
             int lastVisiblePageIndex = LastVisiblePageIndex;
             int num = Math.Max(indexOfFirstRemovedPage - 1, 0);
             _visiblePagesRange.Update(FirstVisiblePageIndex, num);
-            for (int num2 = lastVisiblePageIndex; num2 > num; num2--)
+            for (int pageIndex = lastVisiblePageIndex; pageIndex > num; pageIndex--)
             {
-                RemoveFromEnd(num2);
+                RemoveFromEnd(pageIndex);
             }
         }
     }
@@ -162,25 +162,25 @@ public partial class WorksheetVisiblePages
             }
             if (newFirstIndex < firstVisiblePageIndex)
             {
-                for (int num2 = Math.Min(firstVisiblePageIndex - 1, newLastIndex); num2 >= newFirstIndex; num2--)
+                for (int pageIndex = Math.Min(firstVisiblePageIndex - 1, newLastIndex); pageIndex >= newFirstIndex; pageIndex--)
                 {
-                    AddToBeginning(num2);
+                    AddToBeginning(pageIndex);
                 }
             }
             if (newLastIndex < lastVisiblePageIndex)
             {
-                int num3 = Math.Max(firstVisiblePageIndex, newLastIndex + 1);
-                for (int num4 = lastVisiblePageIndex; num4 >= num3; num4--)
+                int firstPageToRemove = Math.Max(firstVisiblePageIndex, newLastIndex + 1);
+                for (int pageIndex = lastVisiblePageIndex; pageIndex >= firstPageToRemove; pageIndex--)
                 {
-                    RemoveFromEnd(num4);
+                    RemoveFromEnd(pageIndex);
                 }
             }
             if (newFirstIndex > firstVisiblePageIndex)
             {
-                int num5 = Math.Min(lastVisiblePageIndex, newFirstIndex - 1);
-                for (int num6 = firstVisiblePageIndex; num6 <= num5; num6++)
+                int lastPageToRemove = Math.Min(lastVisiblePageIndex, newFirstIndex - 1);
+                for (int pageIndex = firstVisiblePageIndex; pageIndex <= lastPageToRemove; pageIndex++)
                 {
-                    RemoveFromBeginning(num6);
+                    RemoveFromBeginning(pageIndex);
                 }
             }
         }
@@ -245,29 +245,29 @@ public partial class WorksheetVisiblePages
 
     internal static void PassFocusToPagesAncestor(IWorksheetControl worksheetControl)
     {
-        WorksheetControl worksheetControl2 = (WorksheetControl)worksheetControl;
-        if (worksheetControl2 != null && !worksheetControl2.VisiblePagesControl.IsFocused)
+        WorksheetControl visibleWorksheetControl = (WorksheetControl)worksheetControl;
+        if (visibleWorksheetControl != null && !visibleWorksheetControl.VisiblePagesControl.IsFocused)
         {
             ScrollViewer scrollViewer = null;
             double offset = 0.0;
-            if (worksheetControl2.WorksheetPageLayoutMode == PageLayoutMode.DraftMode)
+            if (visibleWorksheetControl.WorksheetPageLayoutMode == PageLayoutMode.DraftMode)
             {
-                scrollViewer = worksheetControl2.TryFindAncestorIncludingSelf<ScrollViewer>();
+                scrollViewer = visibleWorksheetControl.TryFindAncestorIncludingSelf<ScrollViewer>();
                 if (scrollViewer != null)
                 {
                     offset = scrollViewer.HorizontalOffset;
                 }
             }
-            bool flag = worksheetControl2.VisiblePagesControl.Focus();
-            if ((scrollViewer != null) & flag)
+            bool focused = visibleWorksheetControl.VisiblePagesControl.Focus();
+            if ((scrollViewer != null) & focused)
             {
                 scrollViewer.ScrollToHorizontalOffset(offset);
             }
-            DebugTools.DevAssert(flag, "The focus was not passed to VisiblePagesControl.");
+            DebugTools.DevAssert(focused, "The focus was not passed to VisiblePagesControl.");
         }
         else
         {
-            DebugTools.AssertNotNull(worksheetControl2, "WorksheetControl should not be null.");
+            DebugTools.AssertNotNull(visibleWorksheetControl, "WorksheetControl should not be null.");
         }
     }
 }

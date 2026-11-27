@@ -12,9 +12,9 @@ public partial class FirstPageHeaderFooterConditionConverter
             return false;
         }
 
-        if (values[0] is bool flag && values[1] is int num && values[2] is bool flag2)
+        if (values[0] is bool hasHeaderFooter && values[1] is int pageNumber && values[2] is bool isFirstPage)
         {
-            return (flag && num == 1) || !flag2;
+            return (hasHeaderFooter && pageNumber == 1) || !isFirstPage;
         }
 
         return false;

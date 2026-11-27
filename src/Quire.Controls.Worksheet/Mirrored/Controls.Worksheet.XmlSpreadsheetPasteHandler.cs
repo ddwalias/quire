@@ -21,9 +21,9 @@ internal static partial class XmlSpreadsheetPasteHandler
 
     private static string FormatNumber(string value, XmlNode cellNode, XmlNamespaceManager nsManager)
     {
-        double value2 = double.Parse(value, NumberFormatInfo.InvariantInfo);
+        double parsedNumber = double.Parse(value, NumberFormatInfo.InvariantInfo);
         string excelNumberFormat = GetExcelNumberFormat(cellNode, nsManager);
-        return FormatNumber(value2, excelNumberFormat);
+        return FormatNumber(parsedNumber, excelNumberFormat);
     }
 
     private static string FormatNumber(double value, string excelNumberFormat)
@@ -33,19 +33,19 @@ internal static partial class XmlSpreadsheetPasteHandler
         {
             case null:
                 {
-                    int value2;
+                    int decimalPlaces;
                     if (value >= Math.Pow(10.0, 11.0))
                     {
-                        value2 = 5;
+                        decimalPlaces = 5;
                     }
                     else
                     {
                         int num = ((value == 0.0) ? 1 : ((int)Math.Ceiling(Math.Log10(Math.Abs(value)))));
-                        value2 = 10 - num;
+                        decimalPlaces = 10 - num;
                     }
                     numberFormat = new NumberFormat
                     {
-                        DecimalPlaces = value2,
+                        DecimalPlaces = decimalPlaces,
                         ShowTrailingDecimalZeros = false,
                         ExponentialThreshold = 11,
                         NumberStyle = NumberFormat.NumberStyles.General

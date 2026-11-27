@@ -155,12 +155,12 @@ public partial class WorksheetPageViewModel
         {
             return;
         }
-        Rect arg2 = args.TargetRect;
-        if (arg2.IsEmpty && args.OriginalSource is IWhiteboardControl whiteboardControl && whiteboardControl.SelectedItems.IsNullOrEmpty())
+        Rect targetRect = args.TargetRect;
+        if (targetRect.IsEmpty && args.OriginalSource is IWhiteboardControl whiteboardControl && whiteboardControl.SelectedItems.IsNullOrEmpty())
         {
-            arg2 = whiteboardControl.GetInsertionPointRect();
+            targetRect = whiteboardControl.GetInsertionPointRect();
         }
-        RequestScrollTo(arg, arg2);
+        RequestScrollTo(arg, targetRect);
         args.Handled = true;
     }
 

@@ -25,14 +25,14 @@ public partial class CollapsibleAreaHeightConverter
         }
 
         double height = worksheetPageLayout.GridCellSize.Height;
-        double height2 = collapsibleAreaControl.Height;
-        double num = height2 % height;
+        double controlHeight = collapsibleAreaControl.Height;
+        double remainder = controlHeight % height;
         if (num.IsEqualTo(0.0) || num.IsEqualTo(height))
         {
-            return height2;
+            return controlHeight;
         }
 
-        return height2 + (height - num);
+        return controlHeight + (height - remainder);
     }
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

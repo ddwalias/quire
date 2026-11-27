@@ -25,8 +25,8 @@ public static partial class ItemLocationWorksheetStrategyHelper
                 Rect? val = getItemBoundsAndRelativePartLocation(whiteboardItem, 1);
                 if (val.HasValue)
                 {
-                    Rect val2 = Rect.Intersect(contentPartRect, val.Value);
-                    if (!val2.IsEmpty && (value.IsEmpty || val2.Height > value.Height))
+                    Rect intersection = Rect.Intersect(contentPartRect, val.Value);
+                    if (!intersection.IsEmpty && (value.IsEmpty || intersection.Height > value.Height))
                     {
                         result = val;
                         stickingPartRect = value;

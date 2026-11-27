@@ -98,12 +98,12 @@ internal partial class WorksheetVisualHelper
     public Point TranslatePoint(Point point, object transformFrom, object transformTo)
     {
         UIElement uIElement = transformFrom as UIElement;
-        UIElement uIElement2 = transformTo as UIElement;
-        if (uIElement == null || uIElement2 == null)
+        UIElement targetElement = transformTo as UIElement;
+        if (uIElement == null || targetElement == null)
         {
             return point;
         }
-        return uIElement.TranslatePoint(point, uIElement2);
+        return uIElement.TranslatePoint(point, targetElement);
     }
 
     public bool ShouldToggleSelect

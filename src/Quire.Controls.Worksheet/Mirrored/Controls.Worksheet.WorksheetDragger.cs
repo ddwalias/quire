@@ -80,9 +80,9 @@ public partial class WorksheetDragger
         {
             worksheetDragger.UnhookDragSourceEvents(dragSource);
         }
-        if (e.NewValue is WorksheetDragger worksheetDragger2)
+        if (e.NewValue is WorksheetDragger dragger)
         {
-            worksheetDragger2.HookupDragSourceEvents(dragSource);
+            dragger.HookupDragSourceEvents(dragSource);
         }
     }
 
@@ -106,9 +106,9 @@ public partial class WorksheetDragger
         {
             worksheetDragger.UnhookDropTargetEvents(dropTarget);
         }
-        if (e.NewValue is WorksheetDragger worksheetDragger2)
+        if (e.NewValue is WorksheetDragger dragger)
         {
-            worksheetDragger2.HookupDropTargetEvents(dropTarget);
+            dragger.HookupDropTargetEvents(dropTarget);
         }
     }
 
@@ -451,19 +451,19 @@ public partial class WorksheetDragger
     private Point ConvertPageCoordinatesToWorksheetCoordinates(Point pagePoint, IWorksheetPage page)
     {
         WorksheetPageLayout pageLayout = ViewModel.PageLayout;
-        double num = (double)ViewModel.Pages.IndexOf(page) * pageLayout.PageBodyHeight;
-        double num2 = ((ViewModel.WorksheetPageLayoutMode == PageLayoutMode.DraftMode) ? 0.0 : pageLayout.PageMargin.Top);
-        double num3 = num - num2;
-        if (pagePoint.Y < num2)
+        double pageOffset = (double)ViewModel.Pages.IndexOf(page) * pageLayout.PageBodyHeight;
+        double topMargin = ((ViewModel.WorksheetPageLayoutMode == PageLayoutMode.DraftMode) ? 0.0 : pageLayout.PageMargin.Top);
+        double verticalOffset = pageOffset - topMargin;
+        if (pagePoint.Y < topMargin)
         {
-            num3 = num - pagePoint.Y;
+            verticalOffset = pageOffset - pagePoint.Y;
         }
-        if (pagePoint.Y > num2 + pageLayout.PageBodyHeight)
+        if (pagePoint.Y > topMargin + pageLayout.PageBodyHeight)
         {
-            num3 = num - (pagePoint.Y - pageLayout.PageBodyHeight);
+            verticalOffset = pageOffset - (pagePoint.Y - pageLayout.PageBodyHeight);
         }
         double left = pageLayout.PageMargin.Left;
-        return new Point(pagePoint.X + left, pagePoint.Y + num3);
+        return new Point(pagePoint.X + left, pagePoint.Y + verticalOffset);
     }
 
     public WorksheetDragger()
