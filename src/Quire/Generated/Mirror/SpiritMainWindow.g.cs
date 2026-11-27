@@ -30,12 +30,6 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
     [global::Quire.Mirror.MirrorStub]
     public static bool IsWorksheetConverterInstalled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    private void HandlePrepareSnapshotStart(global::Quire.Controls.EngineeringDocument _) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void HandlePrepareSnapshotEnd(global::Quire.Controls.EngineeringDocument _) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private T ShowMessage<T>(global::System.Func<global::System.Windows.Window, string, T> messageDisplayDelegate) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal static void EnsureLicenseManagerInstance() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public SpiritMainWindow(bool isEmbedding = false, bool handleExceptions = false) { }
@@ -97,8 +91,6 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
     private void AddHandlersForWorksheetInputOutputWindowEvents() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void InsertReadExcel(global::Quire.Controls.Core.IEngineeringDocument doc, string fileName, string range, global::System.Windows.IInputElement originalSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ToolTipOpened(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void HandleShowPropertyGrid(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -206,30 +198,17 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
     [global::Quire.Mirror.MirrorStub]
     private void LaunchSystemUnitDialog(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void HandleWorksheetControlDebuggerModeChange(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void SetTabHeaderBindingForNewDocument(global::AvalonDock.Layout.LayoutAnchorable dockWin, global::Quire.Controls.Core.IEngineeringDocument newDoc, bool incrementCounter) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private string GetUntitledHeader(bool incrementIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void InitializeDocument(global::Quire.Controls.EngineeringDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnDocumentLoaded(global::Quire.Controls.Core.IEngineeringDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void OnDocumentTabIconChanged(global::Quire.Controls.Core.IEngineeringDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UnhookFromDocument(global::Quire.Controls.EngineeringDocument document) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
     private void ShowFailedToOpenUrlMessage(string url) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool AskCancelPrintInProgressDialog() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void HandleToggleMultithreadingCalculationOption(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateWarningsDisplayFilterHandler(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ToggleShowWarningsHandler(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() => base.OnCreateAutomationPeer();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnClosing(global::System.ComponentModel.CancelEventArgs e) => base.OnClosing(e);
     [global::Quire.Mirror.MirrorStub]
@@ -242,8 +221,6 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
     private void HandleFindNext(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleFindPrev(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CanFind(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void HandleReplaceAndFindNext(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
