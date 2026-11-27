@@ -42,10 +42,6 @@ public partial class SpecTableColumn : global::Quire.EquationEditor.SpecTable.Mo
     [global::Quire.Mirror.MirrorStub]
     private global::System.Xml.XmlNode a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void SetRestrictedReadonly(bool isRestrictedReadonly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddCell() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void c() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InsertDataCell(int indexToInsert) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

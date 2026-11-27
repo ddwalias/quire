@@ -48,7 +48,8 @@ public partial class SpecTableColumn
     public string Rl => SpecTableColumnToRlTransform.Default.Transform(this, out e);
 
     [MirrorVerified("Release IL")]
-    public string SExpression => $"(:= {Header.EquationSExpression} {GetAllValuesScaledSExpression})";
+    // Mathcad formats these with string.Format; an interpolated string would call DefaultInterpolatedStringHandler.
+    public string SExpression => string.Format("(:= {0} {1})", Header.EquationSExpression, GetAllValuesScaledSExpression);
 
     [MirrorVerified("Release IL")]
     public string GetAllValuesScaledSExpression
@@ -56,10 +57,24 @@ public partial class SpecTableColumn
         get
         {
             int count = c__.Count;
-            string arg = count == 1 ? c__[0].EquationSExpression : $"(@MATRIX {count} 1 {GetDataSExpression()})";
-            return $"(@SCALE {arg} {GetScaleSExpression()})";
+            string arg = count == 1 ? c__[0].EquationSExpression : string.Format("(@MATRIX {0} 1 {1})", count, GetDataSExpression());
+            return string.Format("(@SCALE {0} {1})", arg, GetScaleSExpression());
         }
     }
+
+    [MirrorVerified("Release IL")]
+    public void SetRestrictedReadonly(bool isRestrictedReadonly)
+    {
+        Header.IsRestrictedReadOnly = isRestrictedReadonly;
+        ScalingFactor.IsRestrictedReadOnly = isRestrictedReadonly;
+        foreach (IEquationModel cell in Data)
+        {
+            cell.IsRestrictedReadOnly = isRestrictedReadonly;
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public void AddCell() => InsertDataCell(c__.Count);
 
     [MirrorVerified("Release IL")]
     public string GetHeaderSExpression() => a__.EquationSExpression;
