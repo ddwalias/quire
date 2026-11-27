@@ -84,14 +84,14 @@ internal partial class StarPoints
         {
             throw new ArgumentException("minimal number of points should be 5");
         }
-        findLineCoefficients(out var ac, out var b, primaryPoints[0], primaryPoints[2]);
-        findLineCoefficients(out var ac2, out var b2, primaryPoints[primaryPoints.Length - 1], primaryPoints[1]);
-        Point? val = findIntersectionPoint(ac, b, ac2, b2);
-        if (!val.HasValue)
+        findLineCoefficients(out var firstLineSlope, out var firstLineIntercept, primaryPoints[0], primaryPoints[2]);
+        findLineCoefficients(out var secondLineSlope, out var secondLineIntercept, primaryPoints[primaryPoints.Length - 1], primaryPoints[1]);
+        Point? intersection = findIntersectionPoint(firstLineSlope, firstLineIntercept, secondLineSlope, secondLineIntercept);
+        if (!intersection.HasValue)
         {
             throw new ArgumentException("points declare parallel lines");
         }
-        Vector intersectionVector = new Vector(val.Value.X, val.Value.Y);
+        Vector intersectionVector = new Vector(intersection.Value.X, intersection.Value.Y);
         return intersectionVector.Length;
     }
 
@@ -107,9 +107,9 @@ internal partial class StarPoints
         {
             return null;
         }
-        double num = -(b1 - b2) / (a1 - a2);
-        double y = a1 * num + b1;
-        return new Point(num, y);
+        double intersectionX = -(b1 - b2) / (a1 - a2);
+        double intersectionY = a1 * intersectionX + b1;
+        return new Point(intersectionX, intersectionY);
     }
 
     private Point[] BuildPrimaryPoints()
