@@ -14,6 +14,7 @@ public partial class TypeoverState : global::Quire.EquationEditor.Tree.Scoping.N
     [global::Quire.Mirror.MirrorStub]
     public readonly global::Quire.EquationEditor.Tree.Navigation.NavigatorState NavState;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("c")]
     private bool c__;
     [global::Quire.Mirror.MirrorStub]
     public bool IncludePrimalChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -56,6 +57,7 @@ public partial class TypeoverState : global::Quire.EquationEditor.Tree.Scoping.N
     private sealed partial class a_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.EquationEditor.Tree.Scoping.TypeoverState a__;
         [global::Quire.Mirror.MirrorStub]
         public global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode> b;
@@ -67,6 +69,7 @@ public partial class TypeoverState : global::Quire.EquationEditor.Tree.Scoping.N
     private sealed partial class b_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode> a_;
         [global::Quire.Mirror.MirrorStub]
         internal string a(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -76,16 +79,21 @@ public partial class TypeoverState : global::Quire.EquationEditor.Tree.Scoping.N
     private sealed partial class c_ : global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode>, global::System.Collections.IEnumerable, global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode>, global::System.Collections.IEnumerator, global::System.IDisposable
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         private int a_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("b")]
         private global::Quire.EquationEditor.Tree.MathNode b_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("c")]
         private int c__;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("d")]
         public global::Quire.EquationEditor.Tree.Scoping.TypeoverState d_;
         [global::Quire.Mirror.MirrorStub]
         private global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode> e;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("f")]
         private global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode> f_;
         [global::Quire.Mirror.MirrorStub]
         public c_(int A_0) { }
@@ -113,16 +121,20 @@ public partial class TypeoverState : global::Quire.EquationEditor.Tree.Scoping.N
     private sealed partial class d_ : global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode>, global::System.Collections.IEnumerable, global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode>, global::System.Collections.IEnumerator, global::System.IDisposable
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         private int a_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("b")]
         private global::Quire.EquationEditor.Tree.MathNode b_;
         [global::Quire.Mirror.MirrorStub]
         private int c;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("d")]
         public global::Quire.EquationEditor.Tree.Scoping.TypeoverState d__;
         [global::Quire.Mirror.MirrorStub]
         private global::Quire.EquationEditor.Tree.MathNode e;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("f")]
         private int f_;
         [global::Quire.Mirror.MirrorStub]
         public d_(int A_0) { }

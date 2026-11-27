@@ -11,9 +11,13 @@ namespace Quire.EquationEditor.Tree;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.StringToComboBoxMathTransformerForConvertor, Ptc.EquationEditor")]
 public partial class StringToComboBoxMathTransformerForConvertor : global::Quire.EquationEditor.Tree.StringToComboBoxMathTransformer
 {
+    [global::Quire.Mirror.MirrorStub]
     public readonly bool ShouldWrapUnicodeQuotes;
+    [global::Quire.Mirror.MirrorStub]
     protected static readonly string l;
+    [global::Quire.Mirror.MirrorStub]
     protected static readonly string m;
+    [global::Quire.Mirror.MirrorStub]
     private static readonly string n;
     [global::Quire.Mirror.MirrorStub]
     internal override bool bm(string A_0, out global::System.ValueTuple<bool, string> A_1) => base.bm(A_0, out A_1);

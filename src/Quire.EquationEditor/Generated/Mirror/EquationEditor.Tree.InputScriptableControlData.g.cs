@@ -12,6 +12,7 @@ namespace Quire.EquationEditor.Tree;
 public abstract partial class InputScriptableControlData : global::Quire.EquationEditor.Tree.InputControlDataCalculatedValue, global::Quire.EquationEditor.Tree.IInputScriptableControlData, global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue, global::Quire.EquationEditor.Tree.IInputControlData, global::System.ICloneable
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     protected string a_;
     [global::Quire.Mirror.MirrorStub]
     public string Script { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

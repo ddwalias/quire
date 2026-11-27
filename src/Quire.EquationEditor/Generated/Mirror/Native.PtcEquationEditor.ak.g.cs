@@ -12,24 +12,34 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class ak
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private readonly global::Quire.Native.PtcEquationEditor.aw a__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private readonly global::Quire.Native.PtcEquationEditor.ax b_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("c")]
     private readonly global::Quire.Native.PtcEquationEditor.a4 c_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("d")]
     private readonly global::Quire.EquationEditor.Tree.NearestNeighborSelector d_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("e")]
     private readonly global::Quire.Native.PtcEquationEditor.an e_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("f")]
     private global::Quire.EquationEditor.Tree.Navigation.NavigatorState f_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("g")]
     private global::Quire.Native.PtcEquationEditor.al g_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("h")]
     private readonly global::System.Collections.Generic.Stack<global::Quire.Native.PtcEquationEditor.al> h_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("i")]
     private bool i_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("j")]
     private bool j_;
     [global::Quire.Mirror.MirrorStub]
     public ak() { }
@@ -132,6 +142,7 @@ internal partial class ak
     private partial class a_ : global::Quire.IMemento
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         private readonly global::Quire.Native.PtcEquationEditor.am a__;
         [global::Quire.Mirror.MirrorStub]
         private readonly global::System.Collections.Generic.List<global::Quire.Native.PtcEquationEditor.am> b;

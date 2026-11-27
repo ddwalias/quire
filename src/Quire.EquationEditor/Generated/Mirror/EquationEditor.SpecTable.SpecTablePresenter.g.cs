@@ -12,14 +12,19 @@ namespace Quire.EquationEditor.SpecTable;
 public partial class SpecTablePresenter
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private readonly global::Quire.EquationEditor.SpecTable.ISpecTableView a_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private readonly global::Quire.EquationEditor.SpecTable.ISpecTableModel b_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("c")]
     private readonly global::Quire.EquationEditor.IEquationTriadBuilder c_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("d")]
     private readonly global::Quire.EquationEditor.SpecTable.ISpecTableCellMap d_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("e")]
     private static global::Quire.Controls.Core.IFrameworkElementFacade e_;
     [global::Quire.Mirror.MirrorStub]
     protected static global::Quire.Controls.Core.IFrameworkElementFacade FrameworkElementFacade { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -12,6 +12,7 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class a
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     public const string a_ = "WorksheetConverter";
     [global::Quire.Mirror.MirrorStub]
     public const string b = "WorksheetConverter.exe";

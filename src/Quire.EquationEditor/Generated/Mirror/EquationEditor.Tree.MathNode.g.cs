@@ -12,22 +12,30 @@ namespace Quire.EquationEditor.Tree;
 public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescriptor, global::System.ICloneable
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private global::Quire.EquationEditor.Tree.MathNode a__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private readonly global::Quire.EquationEditor.Tree.MathNode.a_ b__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("c")]
     private string c__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("d")]
     private global::Quire.EquationEditor.Tree.MathNodeDescriptor d__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("e")]
     private string e__;
     [global::Quire.Mirror.MirrorStub]
     protected bool f;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("h")]
     private global::Quire.EquationEditor.Tree.INodeInfo h__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("i")]
     private int i__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("j")]
     private bool j_;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.IMathNodeList Children { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -382,6 +390,7 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
     private sealed partial class a_ : global::Quire.EquationEditor.Tree.IMathNodeList, global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode>, global::System.Collections.IEnumerable
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         internal readonly global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.MathNode> a___;
         [global::Quire.Mirror.MirrorStub]
         internal global::Quire.EquationEditor.Tree.MathNode b;
@@ -414,8 +423,10 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
         private sealed partial class a__
         {
             [global::Quire.Mirror.MirrorStub]
+            [global::Quire.Mirror.MirrorName("a")]
             public global::Quire.EquationEditor.Tree.MathNode a_;
             [global::Quire.Mirror.MirrorStub]
+            [global::Quire.Mirror.MirrorName("b")]
             public global::Quire.EquationEditor.Tree.MathNode b_;
             [global::Quire.Mirror.MirrorStub]
             public global::Quire.EquationEditor.Tree.MathNode.a_ c;
@@ -437,12 +448,15 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
         private sealed partial class b_ : global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode>, global::System.Collections.IEnumerator, global::System.IDisposable
         {
             [global::Quire.Mirror.MirrorStub]
+            [global::Quire.Mirror.MirrorName("a")]
             private int a_;
             [global::Quire.Mirror.MirrorStub]
+            [global::Quire.Mirror.MirrorName("b")]
             private global::Quire.EquationEditor.Tree.MathNode b__;
             [global::Quire.Mirror.MirrorStub]
             public global::Quire.EquationEditor.Tree.MathNode.a_ c;
             [global::Quire.Mirror.MirrorStub]
+            [global::Quire.Mirror.MirrorName("d")]
             private int d_;
             [global::Quire.Mirror.MirrorStub]
             public b_(int A_0) { }
@@ -463,6 +477,7 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
     public static partial class Utilities
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         private static readonly global::Quire.Native.PtcEquationEditor.r a_;
         [global::Quire.Mirror.MirrorStub]
         internal static global::Quire.EquationEditor.Tree.MathNode c(global::Quire.EquationEditor.Tree.MathNode A_0, int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -476,6 +491,7 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
     private sealed partial class b_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.EquationEditor.Tree.MathNode a_;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.MathNodeDescriptor b;
@@ -487,6 +503,7 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
     private sealed partial class c_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.EquationEditor.Tree.MathNodeDescriptor a_;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.INodeInfo b;
@@ -500,6 +517,7 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
     private sealed partial class d_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public string a_;
         [global::Quire.Mirror.MirrorStub]
         internal bool a(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -509,6 +527,7 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
     private sealed partial class e_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public int a_;
         [global::Quire.Mirror.MirrorStub]
         internal void a(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -518,8 +537,10 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
     private sealed partial class f_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.EquationEditor.Tree.MathNode a_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("b")]
         public global::Quire.EquationEditor.Tree.MathNode b_;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.MathNode c;
@@ -533,16 +554,21 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
     private sealed partial class g_ : global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode>, global::System.Collections.IEnumerable, global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode>, global::System.Collections.IEnumerator, global::System.IDisposable
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         private int a_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("b")]
         private global::Quire.EquationEditor.Tree.MathNode b_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("c")]
         private int c_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("d")]
         public global::Quire.EquationEditor.Tree.MathNode d_;
         [global::Quire.Mirror.MirrorStub]
         private global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode> e;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("f")]
         private global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode> f_;
         [global::Quire.Mirror.MirrorStub]
         public g_(int A_0) { }
@@ -570,16 +596,21 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
     private sealed partial class h_ : global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode>, global::System.Collections.IEnumerable, global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode>, global::System.Collections.IEnumerator, global::System.IDisposable
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         private int a_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("b")]
         private global::Quire.EquationEditor.Tree.MathNode b_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("c")]
         private int c_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("d")]
         public global::Quire.EquationEditor.Tree.MathNode d_;
         [global::Quire.Mirror.MirrorStub]
         private global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode> e;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("f")]
         private global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode> f_;
         [global::Quire.Mirror.MirrorStub]
         public h_(int A_0) { }
@@ -607,16 +638,21 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
     private sealed partial class i_ : global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode>, global::System.Collections.IEnumerable, global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode>, global::System.Collections.IEnumerator, global::System.IDisposable
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         private int a_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("b")]
         private global::Quire.EquationEditor.Tree.MathNode b_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("c")]
         private int c_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("d")]
         public global::Quire.EquationEditor.Tree.MathNode d_;
         [global::Quire.Mirror.MirrorStub]
         private global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode> e;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("f")]
         private global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode> f_;
         [global::Quire.Mirror.MirrorStub]
         public i_(int A_0) { }

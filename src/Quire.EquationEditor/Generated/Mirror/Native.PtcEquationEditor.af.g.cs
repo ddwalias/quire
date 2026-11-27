@@ -12,8 +12,10 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class af
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private global::System.Xml.XmlElement a_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private const string b_ = "rows";
     [global::Quire.Mirror.MirrorStub]
     private const string c = "cols";

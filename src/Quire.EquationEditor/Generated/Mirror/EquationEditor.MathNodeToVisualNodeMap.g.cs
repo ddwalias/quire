@@ -12,6 +12,7 @@ namespace Quire.EquationEditor;
 public partial class MathNodeToVisualNodeMap : global::Quire.EquationEditor.IMathNodeToVisualNodeMap
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private readonly global::Quire.Native.PtcEquationEditor.j a_;
     [global::Quire.Mirror.MirrorStub]
     public MathNodeToVisualNodeMap(global::Quire.EquationEditor.View.IVisualFactory factory, global::Quire.EquationEditor.IEquationEditorSettings settings) { }

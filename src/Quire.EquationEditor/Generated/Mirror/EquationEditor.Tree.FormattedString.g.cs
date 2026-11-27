@@ -12,8 +12,10 @@ namespace Quire.EquationEditor.Tree;
 public partial class FormattedString : global::System.ICloneable, global::System.IEquatable<global::Quire.EquationEditor.Tree.FormattedString>, global::Quire.EquationEditor.Tree.IReadOnly, global::Quire.EquationEditor.Tree.IReadOnlyAbstract
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private const string a__ = "Object should be frozen by default";
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private const int b_ = -1;
     [global::Quire.Mirror.MirrorStub]
     private const char c = '\u0086';
@@ -92,8 +94,10 @@ public partial class FormattedString : global::System.ICloneable, global::System
     private partial class a_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         private readonly global::System.Collections.Generic.List<global::System.Windows.Documents.Run> a__;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("b")]
         private readonly global::System.Text.StringBuilder b_;
         [global::Quire.Mirror.MirrorStub]
         private int c;

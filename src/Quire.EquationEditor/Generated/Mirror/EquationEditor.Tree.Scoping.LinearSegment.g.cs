@@ -12,6 +12,7 @@ namespace Quire.EquationEditor.Tree.Scoping;
 public partial class LinearSegment
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private const int a_ = 0;
     [global::Quire.Mirror.MirrorStub]
     private const int b = 1;

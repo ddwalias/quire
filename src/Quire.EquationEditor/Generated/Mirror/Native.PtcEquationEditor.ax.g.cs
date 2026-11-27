@@ -12,8 +12,10 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class ax
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     public static readonly global::Quire.Native.PtcEquationEditor.ax a__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private readonly global::Quire.Native.PtcEquationEditor.a5 b__;
     [global::Quire.Mirror.MirrorStub]
     public ax(global::Quire.Native.PtcEquationEditor.a5 A_0) { }
@@ -104,6 +106,7 @@ internal partial class ax
     private sealed partial class a_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.Native.PtcEquationEditor.ax a__;
         [global::Quire.Mirror.MirrorStub]
         public string b;
@@ -115,6 +118,7 @@ internal partial class ax
     private sealed partial class b_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.Native.PtcEquationEditor.ax a_;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.FormattedString b;
@@ -126,6 +130,7 @@ internal partial class ax
     private sealed partial class c_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.Native.PtcEquationEditor.ax a_;
         [global::Quire.Mirror.MirrorStub]
         public string b;
@@ -137,6 +142,7 @@ internal partial class ax
     private sealed partial class d
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.Native.PtcEquationEditor.ax a_;
         [global::Quire.Mirror.MirrorStub]
         public string b;
@@ -148,6 +154,7 @@ internal partial class ax
     private sealed partial class e
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.Native.PtcEquationEditor.ax a_;
         [global::Quire.Mirror.MirrorStub]
         public string b;
@@ -159,6 +166,7 @@ internal partial class ax
     private sealed partial class f
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.Native.PtcEquationEditor.ax a_;
         [global::Quire.Mirror.MirrorStub]
         public string b;

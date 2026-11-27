@@ -12,8 +12,10 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class g : global::Quire.Native.PtcEquationEditor.c
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private readonly global::Quire.EquationEditor.View.IVisualFactory a__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private readonly global::System.Collections.Generic.List<global::Quire.Native.PtcEquationEditor.g.a_> b__;
     [global::Quire.Mirror.MirrorStub]
     public g(global::Quire.EquationEditor.View.IVisualFactory A_0) { }
@@ -136,6 +138,7 @@ internal partial class g : global::Quire.Native.PtcEquationEditor.c
     private sealed partial class c_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public static readonly global::Quire.Native.PtcEquationEditor.g.c_ a_;
         [global::Quire.Mirror.MirrorStub]
         public static global::System.Func<global::Quire.EquationEditor.View.IVisualMathNode, bool> b;
@@ -159,6 +162,7 @@ internal partial class g : global::Quire.Native.PtcEquationEditor.c
     private sealed partial class d_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public string a_;
         [global::Quire.Mirror.MirrorStub]
         internal bool a(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

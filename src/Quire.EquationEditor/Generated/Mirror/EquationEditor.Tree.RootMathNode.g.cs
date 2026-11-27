@@ -12,5 +12,5 @@ namespace Quire.EquationEditor.Tree;
 public partial class RootMathNode : global::Quire.EquationEditor.Tree.MathNode, global::Quire.EquationEditor.Tree.IRootMathNode
 {
     [global::Quire.Mirror.MirrorStub]
-    public RootMathNode() : base(default(global::Quire.EquationEditor.Tree.MathNodeDescriptor), default(global::Quire.EquationEditor.Tree.MathNode[])) { }
+    public RootMathNode() : this(default(global::Quire.EquationEditor.Tree.MathNode)) { }
 }

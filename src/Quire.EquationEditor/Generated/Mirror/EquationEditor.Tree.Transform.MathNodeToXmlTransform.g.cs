@@ -14,10 +14,13 @@ public partial class MathNodeToXmlTransform
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.EquationEditor.Tree.Transform.MathNodeToXmlTransform Default;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private static global::Quire.Native.PtcEquationEditor.r a__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.EquationEditor.Tree.Transform.MathNodeToXmlTransform.MathNodeToXmlNodeTransformation> b__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("c")]
     private global::Quire.EquationEditor.Tree.MathNode c__;
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Collections.Generic.Dictionary<string, global::Quire.EquationEditor.Tree.Transform.MathNodeToXmlTransform.MathNodeToXmlNodeTransformation> a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -215,6 +218,7 @@ public partial class MathNodeToXmlTransform
     private sealed partial class b_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public string a_;
         [global::Quire.Mirror.MirrorStub]
         internal global::System.Xml.XmlNode a(global::Quire.EquationEditor.Tree.Transform.MathNodeToXmlTransform A_0, global::System.Xml.XmlDocument A_1, global::Quire.EquationEditor.Tree.MathNode A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -224,6 +228,7 @@ public partial class MathNodeToXmlTransform
     private sealed partial class c_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::System.Xml.XmlElement a_;
         [global::Quire.Mirror.MirrorStub]
         internal void a(global::System.Xml.XmlNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -233,6 +238,7 @@ public partial class MathNodeToXmlTransform
     private sealed partial class d_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public string a_;
         [global::Quire.Mirror.MirrorStub]
         internal bool a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -242,6 +248,7 @@ public partial class MathNodeToXmlTransform
     private sealed partial class e_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public string a_;
         [global::Quire.Mirror.MirrorStub]
         internal bool a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -258,6 +265,7 @@ public partial class MathNodeToXmlTransform
     private sealed partial class g_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::System.Xml.XmlElement a_;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.Transform.MathNodeToXmlTransform.f_ b;
@@ -269,6 +277,7 @@ public partial class MathNodeToXmlTransform
     private sealed partial class h_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::System.Xml.XmlElement a_;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.Transform.MathNodeToXmlTransform.f_ b;
@@ -289,6 +298,7 @@ public partial class MathNodeToXmlTransform
     private sealed partial class j
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::System.Xml.XmlElement a_;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.Transform.MathNodeToXmlTransform.i b;
@@ -300,6 +310,7 @@ public partial class MathNodeToXmlTransform
     private sealed partial class k
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::System.Xml.XmlElement a_;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.Transform.MathNodeToXmlTransform.i b;
@@ -311,6 +322,7 @@ public partial class MathNodeToXmlTransform
     private sealed partial class l
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::System.Xml.XmlElement a_;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.Transform.MathNodeToXmlTransform.i b;

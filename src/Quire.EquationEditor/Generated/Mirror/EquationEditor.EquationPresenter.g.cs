@@ -12,24 +12,33 @@ namespace Quire.EquationEditor;
 public partial class EquationPresenter
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private readonly global::Quire.EquationEditor.IEquationModel a__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private readonly global::Quire.EquationEditor.View.IVisualMathRegionNode b__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("c")]
     private readonly global::Quire.EquationEditor.IMathNodeToVisualNodeMap c__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("d")]
     private readonly global::Quire.Native.PtcEquationEditor.c d_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("e")]
     private readonly global::Quire.Native.PtcEquationEditor.b e_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("f")]
     private bool f_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("g")]
     private global::System.Windows.Threading.DispatcherOperation g_;
     [global::Quire.Mirror.MirrorStub]
     public static bool WasSuspendedRegenerate;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("h")]
     private static global::Quire.Controls.Core.IFrameworkElementFacade h_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("i")]
     private global::Quire.EquationEditor.EquationPresenter.a_ i_;
     [global::Quire.Mirror.MirrorStub]
     protected static global::Quire.Controls.Core.IFrameworkElementFacade FrameworkElementFacade { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -136,6 +145,7 @@ public partial class EquationPresenter
     private sealed partial class c_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.EquationEditor.EquationPresenter a_;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.MathNode b;

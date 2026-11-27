@@ -12,8 +12,10 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class ab : global::Quire.Native.PtcEquationEditor.t, global::Quire.Calculation.Core.IDisplayMatrixResultNode, global::Quire.Calculation.Core.IMatrixResultNode, global::Quire.Calculation.Core.IResultNode, global::Quire.IVisitable<global::Quire.Calculation.Core.IResultNodeVisitor>
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private readonly global::Quire.Native.PtcEquationEditor.u a_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private int b_;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Native.PtcEquationEditor.t this[int A_0, int A_1] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

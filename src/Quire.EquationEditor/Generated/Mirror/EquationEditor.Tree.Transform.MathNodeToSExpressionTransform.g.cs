@@ -30,10 +30,13 @@ public partial class MathNodeToSExpressionTransform
     [global::Quire.Mirror.MirrorStub]
     public static readonly string AlgoSexpFormat;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private readonly global::System.Collections.Generic.Dictionary<string, string> a_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.DelegateFunction2<string, global::Quire.EquationEditor.Tree.MathNode, global::Quire.DelegateFunction1<string, global::Quire.EquationEditor.Tree.MathNode>>> b_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("c")]
     private bool c_;
     [global::Quire.Mirror.MirrorStub]
     public bool ShowResolvedIdLabels { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

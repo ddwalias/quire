@@ -11,5 +11,9 @@ namespace Quire.EquationEditor.Tree.Transform;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Transform.InlineToSExpressionTransform, Ptc.EquationEditor")]
 public partial class InlineToSExpressionTransform
 {
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.EquationEditor.Tree.Transform.InlineToSExpressionTransform Default;
+    [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
+    private const string a__ = "(@ID {0})";
 }

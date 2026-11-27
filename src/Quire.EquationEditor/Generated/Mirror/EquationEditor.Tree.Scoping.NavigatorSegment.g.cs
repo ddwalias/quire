@@ -12,6 +12,7 @@ namespace Quire.EquationEditor.Tree.Scoping;
 public partial class NavigatorSegment
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private global::Quire.EquationEditor.Tree.Navigation.NavigatorState a_;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState LeftNavigatorState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

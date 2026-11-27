@@ -12,14 +12,19 @@ namespace Quire.EquationEditor.Tree.Transform;
 public partial class SExpressionParser
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private string a__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private global::Quire.EquationEditor.Tree.Transform.ParsedSExpression b_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("c")]
     private bool c_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("d")]
     private string d_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("e")]
     private static readonly char[] e_;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Collections.Generic.Stack<global::Quire.EquationEditor.Tree.Transform.ParsedSExpression> f;
@@ -58,6 +63,7 @@ public partial class SExpressionParser
     private sealed partial class a_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public char a__;
         [global::Quire.Mirror.MirrorStub]
         internal bool a(char A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

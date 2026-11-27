@@ -24,6 +24,7 @@ public partial class SpecTableMemento : global::Quire.EquationEditor.SpecTable.M
     private sealed partial class a_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public static readonly global::Quire.EquationEditor.SpecTable.Model.SpecTableMemento.a_ a__;
         [global::Quire.Mirror.MirrorStub]
         public static global::System.Func<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn, global::Quire.EquationEditor.SpecTable.Model.IColumnMemento> b;

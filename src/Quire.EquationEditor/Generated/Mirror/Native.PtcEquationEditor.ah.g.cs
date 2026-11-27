@@ -12,16 +12,22 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class ah : global::Quire.EquationEditor.Tree.Transform.IResultTreeFormatter, global::System.ICloneable
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     public const string a_ = "i";
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     public const string b_ = "j";
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("c")]
     private readonly global::Quire.Native.PtcEquationEditor.r c_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("d")]
     private bool d_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("e")]
     private global::Quire.Controls.Core.NumberFormat e_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("f")]
     private global::Quire.Controls.Core.MatrixFormat f_;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.NumberFormat DisplayNumberFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

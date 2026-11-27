@@ -12,6 +12,7 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class bo : global::Quire.Native.PtcEquationEditor.bf
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private readonly global::Quire.EquationEditor.Tree.MathNode a__;
     [global::Quire.Mirror.MirrorStub]
     private readonly int b;
@@ -30,8 +31,10 @@ internal partial class bo : global::Quire.Native.PtcEquationEditor.bf
     private sealed partial class a_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.EquationEditor.Tree.IdentifierNodeInfo a__;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("b")]
         public global::Quire.EquationEditor.Tree.FormattedString b_;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.FormattedString c;

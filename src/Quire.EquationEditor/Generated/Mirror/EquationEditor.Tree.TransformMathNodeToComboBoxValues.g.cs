@@ -20,8 +20,10 @@ public static partial class TransformMathNodeToComboBoxValues
     private sealed partial class a
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public static readonly global::Quire.EquationEditor.Tree.TransformMathNodeToComboBoxValues.a a_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("b")]
         public static global::System.Func<global::Quire.EquationEditor.Tree.MathNode, string> b_;
         [global::Quire.Mirror.MirrorStub]
         public static global::System.Func<global::Quire.EquationEditor.Tree.MathNode, bool> c;

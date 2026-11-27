@@ -12,8 +12,10 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial struct s
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     public static readonly global::Quire.Native.PtcEquationEditor.s a_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private readonly global::Quire.EquationEditor.Tree.MathNode b_;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Collections.Generic.List<int> c;

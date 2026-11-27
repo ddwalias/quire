@@ -12,12 +12,16 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class r
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     public static readonly global::Quire.Native.PtcEquationEditor.r a_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private readonly string b_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("c")]
     private readonly string c_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("d")]
     private readonly global::Quire.EquationEditor.Tree.MathNodeDescriptorTable d_;
     [global::Quire.Mirror.MirrorStub]
     public r(global::Quire.EquationEditor.Tree.MathNodeDescriptorTable A_0, string A_1, string A_2) { }

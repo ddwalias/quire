@@ -11,5 +11,6 @@ namespace Quire.EquationEditor;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.TypeoverChangeEventArgs, Ptc.EquationEditor")]
 public partial class TypeoverChangeEventArgs
 {
+    [global::Quire.Mirror.MirrorStub]
     public readonly global::Quire.EquationEditor.Tree.Scoping.TypeoverState State;
 }

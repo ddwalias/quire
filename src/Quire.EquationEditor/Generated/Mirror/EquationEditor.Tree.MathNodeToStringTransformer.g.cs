@@ -12,8 +12,10 @@ namespace Quire.EquationEditor.Tree;
 public static partial class MathNodeToStringTransformer
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private const string a_ = "NaN";
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private const string b_ = "i";
     [global::Quire.Mirror.MirrorStub]
     private const string c = "j";

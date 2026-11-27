@@ -48,6 +48,7 @@ public partial class ComboBoxControlNodeInfo : global::Quire.EquationEditor.Tree
     private sealed partial class a_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.EquationEditor.Tree.ComboBoxControlNodeInfo a__;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.ComboBoxInputControlData b;

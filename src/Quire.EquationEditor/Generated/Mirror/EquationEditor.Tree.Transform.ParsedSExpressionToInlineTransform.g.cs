@@ -14,6 +14,7 @@ public partial class ParsedSExpressionToInlineTransform
     [global::Quire.Mirror.MirrorStub]
     public const string ComplexIdentifierAtom = "@ID";
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private readonly global::System.Collections.Generic.Dictionary<string, global::System.Func<global::System.Windows.Documents.Inline>> a__;
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Collections.Generic.Dictionary<string, global::System.Func<global::System.Windows.Documents.Inline>> a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -26,14 +27,19 @@ public partial class ParsedSExpressionToInlineTransform
     private sealed partial class a_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public static readonly global::Quire.EquationEditor.Tree.Transform.ParsedSExpressionToInlineTransform.a_ a__;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("b")]
         public static global::System.Func<global::System.Windows.Documents.Inline> b_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("c")]
         public static global::System.Func<global::System.Windows.Documents.Inline> c_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("d")]
         public static global::System.Func<global::System.Windows.Documents.Inline> d_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("e")]
         public static global::System.Func<global::System.Windows.Documents.Inline> e_;
         [global::Quire.Mirror.MirrorStub]
         public static global::System.Func<global::System.Windows.Documents.Inline> f;

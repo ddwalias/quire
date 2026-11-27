@@ -11,8 +11,12 @@ namespace Quire.EquationEditor.Tree.Parsing.Panceaux;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Parsing.Panceaux.ReparentNodeAndPullOutChild, Ptc.EquationEditor")]
 public partial class ReparentNodeAndPullOutChild : global::Quire.EquationEditor.Tree.Parsing.Panacea
 {
+    [global::Quire.Mirror.MirrorStub]
     public readonly string NewParent;
+    [global::Quire.Mirror.MirrorStub]
     public readonly int ChildToExtractIndex;
+    [global::Quire.Mirror.MirrorStub]
     public readonly int ChildIndexInNewParent;
+    [global::Quire.Mirror.MirrorStub]
     public readonly int ParentIndexInNewParent;
 }

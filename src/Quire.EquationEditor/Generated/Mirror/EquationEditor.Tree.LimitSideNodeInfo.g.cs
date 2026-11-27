@@ -24,6 +24,7 @@ public partial class LimitSideNodeInfo : global::Quire.EquationEditor.Tree.Value
     private sealed partial class a
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public static readonly global::Quire.EquationEditor.Tree.LimitSideNodeInfo.a a_;
         [global::Quire.Mirror.MirrorStub]
         internal void a__(global::System.Collections.Generic.KeyValuePair<global::Quire.EquationEditor.Tree.LimitSideNodeInfo.LimitSide, string> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

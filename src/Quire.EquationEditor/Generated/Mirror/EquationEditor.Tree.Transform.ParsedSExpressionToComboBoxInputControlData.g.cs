@@ -45,12 +45,16 @@ public static partial class ParsedSExpressionToComboBoxInputControlData
     private sealed partial class b
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public static readonly global::Quire.EquationEditor.Tree.Transform.ParsedSExpressionToComboBoxInputControlData.b a_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("b")]
         public static global::System.Func<global::Quire.EquationEditor.Tree.Transform.ParsedSExpression, bool> b_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("c")]
         public static global::System.Func<global::Quire.EquationEditor.Tree.Transform.ParsedSExpression, global::Quire.EquationEditor.Tree.MathNode> c_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("d")]
         public static global::System.Func<global::Quire.EquationEditor.Tree.Transform.ParsedSExpression, bool> d_;
         [global::Quire.Mirror.MirrorStub]
         public static global::System.Func<global::Quire.EquationEditor.Tree.Transform.ParsedSExpression, string> e;

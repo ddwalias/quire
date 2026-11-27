@@ -12,5 +12,6 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class ae : global::Quire.Calculation.Core.IResultNodeFactory
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     public static global::Quire.Calculation.Core.IResultNodeFactory a_;
 }

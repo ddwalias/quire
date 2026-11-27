@@ -12,8 +12,10 @@ namespace Quire.EquationEditor.Tree.Transform;
 public partial class XmlNodeToMathNodeTransform
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private readonly global::System.Text.RegularExpressions.Regex a__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private const char b__ = '\u002D';
     [global::Quire.Mirror.MirrorStub]
     public const string ExceptionDataElementNameKey = "ElementName";
@@ -28,32 +30,44 @@ public partial class XmlNodeToMathNodeTransform
     [global::Quire.Mirror.MirrorStub]
     public const string AutoSelectAlgorithm = "autoSelect";
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("c")]
     private const int c__ = 211;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("d")]
     private int d__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("e")]
     private int e_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("f")]
     private bool f_;
     [global::Quire.Mirror.MirrorStub]
     public static readonly string[] NumberSetStrings;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.EquationEditor.Tree.Transform.XmlNodeToMathNodeTransform Default;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("g")]
     private static global::System.Collections.Generic.Dictionary<string, string> g_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("h")]
     private const string h_ = "5-pt-diff";
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("i")]
     private const string i_ = "5-pt-diff";
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("j")]
     private const string j_ = "optimized levenberg-marquardt";
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("k")]
     private const string k_ = "adams/bdf (auto)";
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("l")]
     private const string l_ = "laguerre";
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("m")]
     private readonly global::System.Collections.Generic.Dictionary<string, string> m_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("n")]
     private readonly global::Quire.Native.PtcEquationEditor.r n_;
     [global::Quire.Mirror.MirrorStub]
     private bool o;
@@ -238,6 +252,7 @@ public partial class XmlNodeToMathNodeTransform
     private sealed partial class c_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public static readonly global::Quire.EquationEditor.Tree.Transform.XmlNodeToMathNodeTransform.c_ a_;
         [global::Quire.Mirror.MirrorStub]
         public static global::System.Func<global::System.Xml.XmlElement, string> b;
@@ -247,6 +262,7 @@ public partial class XmlNodeToMathNodeTransform
     private sealed partial class d_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::System.Xml.XmlElement a_;
         [global::Quire.Mirror.MirrorStub]
         internal bool a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -14,8 +14,10 @@ public partial class SExpressionToMathNodeTransform : global::Quire.EquationEdit
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.EquationEditor.Tree.Transform.SExpressionToMathNodeTransform Default;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private readonly global::System.Collections.Generic.Dictionary<string, string> a_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private readonly global::Quire.Native.PtcEquationEditor.r b_;
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Collections.Generic.Dictionary<string, string> a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

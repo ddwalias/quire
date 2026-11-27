@@ -12,6 +12,7 @@ namespace Quire.EquationEditor.Tree;
 public partial class InputScriptableWithInputNodeInfo : global::Quire.EquationEditor.Tree.MatrixNodeInfo, global::Quire.EquationEditor.Tree.IInputScriptableWithInputNodeInfo, global::Quire.EquationEditor.Tree.IInputControlNodeInfo, global::Quire.EquationEditor.Tree.INodeInfoNotifyModel, global::Quire.EquationEditor.Tree.INodeInfo, global::System.ICloneable, global::Quire.EquationEditor.Tree.IReadOnlyAbstract
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private object a__;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Action<global::Quire.DelegateFunction0<bool>, string> c;
@@ -56,6 +57,7 @@ public partial class InputScriptableWithInputNodeInfo : global::Quire.EquationEd
     private sealed partial class a_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.EquationEditor.Tree.InputScriptableWithInputNodeInfo a__;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue b;
@@ -67,6 +69,7 @@ public partial class InputScriptableWithInputNodeInfo : global::Quire.EquationEd
     private sealed partial class b_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public object a_;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.InputScriptableWithInputNodeInfo.a_ b;

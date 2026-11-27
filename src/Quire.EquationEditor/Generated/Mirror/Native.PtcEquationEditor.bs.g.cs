@@ -12,8 +12,10 @@ namespace Quire.Native.PtcEquationEditor;
 internal sealed partial class bs
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     internal static readonly global::Quire.Native.PtcEquationEditor.bs.b_ a__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     internal static readonly global::Quire.Native.PtcEquationEditor.bs.a_ b__;
     [global::Quire.Mirror.MirrorStub]
     internal static global::System.ReadOnlySpan<b> b<a, b>(ref a A_0, int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

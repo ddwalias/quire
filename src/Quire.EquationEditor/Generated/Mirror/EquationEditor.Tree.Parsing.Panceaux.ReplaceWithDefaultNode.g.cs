@@ -11,5 +11,6 @@ namespace Quire.EquationEditor.Tree.Parsing.Panceaux;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Parsing.Panceaux.ReplaceWithDefaultNode, Ptc.EquationEditor")]
 public partial class ReplaceWithDefaultNode : global::Quire.EquationEditor.Tree.Parsing.Panacea
 {
+    [global::Quire.Mirror.MirrorStub]
     public readonly int ChildIndex;
 }

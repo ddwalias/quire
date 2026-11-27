@@ -220,6 +220,7 @@ public partial class DefaultDescriptorTable : global::Quire.EquationEditor.Tree.
     private sealed partial class c_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.EquationEditor.Tree.DefaultDescriptorTable a_;
         [global::Quire.Mirror.MirrorStub]
         public global::System.Collections.Generic.List<string> b;

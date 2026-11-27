@@ -18,6 +18,7 @@ internal partial class a9 : global::Quire.Native.PtcEquationEditor.bf
     private sealed partial class a_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.Native.PtcEquationEditor.a9 a__;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.Direction b;

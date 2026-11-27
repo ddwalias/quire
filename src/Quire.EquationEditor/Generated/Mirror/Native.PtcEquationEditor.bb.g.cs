@@ -12,6 +12,7 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class bb : global::Quire.Native.PtcEquationEditor.bf
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private readonly global::Quire.EquationEditor.Tree.Scoping.LinearSegment a_;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.EquationEditor.Tree.MathNode b;

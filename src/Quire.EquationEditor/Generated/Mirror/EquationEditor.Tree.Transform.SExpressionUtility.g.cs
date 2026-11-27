@@ -12,6 +12,7 @@ namespace Quire.EquationEditor.Tree.Transform;
 public partial class SExpressionUtility
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private static readonly char[] a_;
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Text.RegularExpressions.Regex b;

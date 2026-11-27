@@ -40,6 +40,7 @@ internal partial class n : global::Quire.EquationEditor.Equation.EquationModel.b
     private sealed partial class a_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.Native.PtcEquationEditor.n a__;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.FormattedString b;

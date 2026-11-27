@@ -24,6 +24,7 @@ public abstract partial class ValueNodeInfo : global::Quire.EquationEditor.Tree.
     private sealed partial class a_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.EquationEditor.Tree.ValueNodeInfo a__;
         [global::Quire.Mirror.MirrorStub]
         public object b;
@@ -35,8 +36,10 @@ public abstract partial class ValueNodeInfo : global::Quire.EquationEditor.Tree.
     private sealed partial class b
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public object a_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("b")]
         public global::Quire.EquationEditor.Tree.ValueNodeInfo.a_ b_;
         [global::Quire.Mirror.MirrorStub]
         internal void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

@@ -12,6 +12,7 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class ay
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.Navigation.NavigatorState> a_;
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState this[int A_0] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }

@@ -11,5 +11,6 @@ namespace Quire.EquationEditor;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.NavigatorStateChangeEventArgs, Ptc.EquationEditor")]
 public partial class NavigatorStateChangeEventArgs
 {
+    [global::Quire.Mirror.MirrorStub]
     public readonly global::Quire.EquationEditor.Tree.Navigation.NavigatorState NavigatorState;
 }

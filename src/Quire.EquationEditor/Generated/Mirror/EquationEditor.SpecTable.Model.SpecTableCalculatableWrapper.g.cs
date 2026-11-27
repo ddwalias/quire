@@ -12,6 +12,7 @@ namespace Quire.EquationEditor.SpecTable.Model;
 public partial class SpecTableCalculatableWrapper : global::Quire.Calculation.Core.ICalculatable, global::Quire.Calculation.Core.ICalculatableInfo, global::System.ComponentModel.INotifyPropertyChanged, global::Quire.Calculation.Core.ICalculationHideableChild, global::Quire.Calculation.Core.ICalculationErrorOwner, global::Quire.Calculation.Core.ICalculatableResultOwner
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn a__;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Action<global::Quire.Calculation.Core.ICalculatable> b;
@@ -80,6 +81,7 @@ public partial class SpecTableCalculatableWrapper : global::Quire.Calculation.Co
     private sealed partial class a_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public static readonly global::Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper.a_ a__;
         [global::Quire.Mirror.MirrorStub]
         public static global::System.EventHandler<global::Quire.Calculation.Core.RequestShowErrorEventArgs> b;
@@ -91,8 +93,10 @@ public partial class SpecTableCalculatableWrapper : global::Quire.Calculation.Co
     private sealed partial class b_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper a_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("b")]
         public bool b__;
         [global::Quire.Mirror.MirrorStub]
         internal bool b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

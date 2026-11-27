@@ -11,6 +11,8 @@ namespace Quire.EquationEditor.Tree.Parsing.Panceaux;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Parsing.Panceaux.ReparentNode, Ptc.EquationEditor")]
 public partial class ReparentNode : global::Quire.EquationEditor.Tree.Parsing.Panacea
 {
+    [global::Quire.Mirror.MirrorStub]
     public readonly string NewParent;
+    [global::Quire.Mirror.MirrorStub]
     public readonly int IndexInNewParent;
 }

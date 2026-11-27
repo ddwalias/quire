@@ -30,8 +30,10 @@ public partial class IdentifierNodeInfo : global::Quire.EquationEditor.Tree.Valu
     private sealed partial class a
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.EquationEditor.Tree.IdentifierNodeInfo a_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("b")]
         public global::System.Nullable<global::Quire.Controls.Core.IdLabels> b_;
         [global::Quire.Mirror.MirrorStub]
         public global::System.Nullable<global::Quire.Controls.Core.IdLabels> c;

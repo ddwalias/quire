@@ -12,10 +12,13 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class ap
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private readonly global::System.Collections.Generic.IEnumerable<global::Quire.Native.PtcEquationEditor.ap.a_> a__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private readonly global::System.Collections.Generic.IEnumerable<global::Quire.Native.PtcEquationEditor.ap.a_> b__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("c")]
     private readonly global::Quire.Native.PtcEquationEditor.a5 c__;
     [global::Quire.Mirror.MirrorStub]
     public ap(global::Quire.Native.PtcEquationEditor.a5 A_0) { }
@@ -158,6 +161,7 @@ internal partial class ap
     private sealed partial class c_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.EquationEditor.Tree.MathNode a_;
         [global::Quire.Mirror.MirrorStub]
         public global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.MathNode> b;
@@ -169,6 +173,7 @@ internal partial class ap
     private sealed partial class d_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public int a_;
         [global::Quire.Mirror.MirrorStub]
         public int b;
@@ -180,12 +185,15 @@ internal partial class ap
     private sealed partial class e_ : global::System.Collections.Generic.IEnumerable<global::Quire.Native.PtcEquationEditor.ap.a_>, global::System.Collections.IEnumerable, global::System.Collections.Generic.IEnumerator<global::Quire.Native.PtcEquationEditor.ap.a_>, global::System.Collections.IEnumerator, global::System.IDisposable
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         private int a_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("b")]
         private global::Quire.Native.PtcEquationEditor.ap.a_ b_;
         [global::Quire.Mirror.MirrorStub]
         private int c;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("d")]
         public global::Quire.Native.PtcEquationEditor.ap d_;
         [global::Quire.Mirror.MirrorStub]
         public e_(int A_0) { }

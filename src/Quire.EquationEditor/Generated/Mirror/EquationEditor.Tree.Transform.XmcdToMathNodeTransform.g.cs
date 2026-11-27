@@ -16,8 +16,10 @@ public partial class XmcdToMathNodeTransform : global::Quire.EquationEditor.Tree
     [global::Quire.Mirror.MirrorStub]
     public const string IMAGINARY_CHAR = "i";
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.Calculation.Core.UnitDescriptor> a_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private readonly global::Quire.Native.PtcEquationEditor.r b_;
     [global::Quire.Mirror.MirrorStub]
     internal XmcdToMathNodeTransform(global::Quire.Native.PtcEquationEditor.r A_0, global::System.Collections.Generic.Dictionary<string, global::Quire.Calculation.Core.UnitDescriptor> A_1) { }

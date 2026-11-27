@@ -12,6 +12,7 @@ namespace Quire.EquationEditor.Tree.Transform;
 public partial class MathNodeToRlTransformer
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     internal static global::Quire.Native.PtcEquationEditor.r a__;
     [global::Quire.Mirror.MirrorStub]
     public const uint UnquotedTag = 65535u;
@@ -26,58 +27,84 @@ public partial class MathNodeToRlTransformer
     [global::Quire.Mirror.MirrorStub]
     public const string DefinedBindings = "%bindings";
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private static readonly string b__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("c")]
     private static readonly string c__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("d")]
     private static readonly string d__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("e")]
     internal static readonly string e__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("f")]
     private static readonly string f__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("g")]
     private static readonly string g__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("h")]
     private static readonly string h__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("i")]
     private static readonly string i__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("j")]
     private static readonly string j__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("k")]
     private global::Quire.EquationEditor.Tree.MathNode k__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("l")]
     private bool l__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("m")]
     private const string m_ = "mc_[Mm]aximize{KEYWORD}:0x[0-9A-Fa-f]+";
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("n")]
     private const string n_ = "mc_[Mm]inimize{KEYWORD}:0x[0-9A-Fa-f]+";
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("o")]
     private const string o_ = "numol";
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("p")]
     private const string p_ = "genfit";
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("q")]
     private const string q_ = "maximize";
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("r")]
     private const string r_ = "minimize";
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("s")]
     private const string s_ = "polyroots";
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("t")]
     internal static string[] t_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("u")]
     private static global::System.Collections.Generic.Dictionary<string, int> u_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("v")]
     private static global::System.Collections.Generic.Dictionary<string, int> v_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("w")]
     private static global::System.Collections.Generic.Dictionary<string, int> w_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("x")]
     private static global::System.Collections.Generic.Dictionary<string, int> x_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("y")]
     private static global::System.Collections.Generic.Dictionary<string, string> y_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("z")]
     private static global::System.Collections.Generic.Dictionary<string, string> z_;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.EquationEditor.Tree.Transform.MathNodeToRlTransformer Default;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("aa")]
     private readonly global::System.Collections.Generic.Dictionary<string, string> aa_;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.DelegateFunction1<string, global::Quire.EquationEditor.Tree.MathNode>> ab;
@@ -262,6 +289,7 @@ public partial class MathNodeToRlTransformer
         private sealed partial class a__
         {
             [global::Quire.Mirror.MirrorStub]
+            [global::Quire.Mirror.MirrorName("a")]
             public global::Quire.EquationEditor.Tree.FunctionOperatorDescriptor a_;
             [global::Quire.Mirror.MirrorStub]
             public global::System.Nullable<global::Quire.Controls.Core.IdLabels> b;
@@ -277,6 +305,7 @@ public partial class MathNodeToRlTransformer
         private sealed partial class b_
         {
             [global::Quire.Mirror.MirrorStub]
+            [global::Quire.Mirror.MirrorName("a")]
             public global::System.Text.StringBuilder a_;
             [global::Quire.Mirror.MirrorStub]
             internal void a(object A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -287,8 +316,10 @@ public partial class MathNodeToRlTransformer
     private sealed partial class b_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public static readonly global::Quire.EquationEditor.Tree.Transform.MathNodeToRlTransformer.b_ a_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("b")]
         public static global::System.Func<global::System.Collections.Generic.KeyValuePair<string, global::Quire.EquationEditor.Tree.Transform.MathNodeToRlTransformer.PositionsToLabel>, string> b__;
         [global::Quire.Mirror.MirrorStub]
         public static global::System.Func<global::System.Collections.Generic.KeyValuePair<string, global::Quire.EquationEditor.Tree.Transform.MathNodeToRlTransformer.PositionsToLabel>, global::Quire.EquationEditor.Tree.Transform.MathNodeToRlTransformer.PositionsToLabel> c;
@@ -310,6 +341,7 @@ public partial class MathNodeToRlTransformer
     private sealed partial class c_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.EquationEditor.Tree.Transform.MathNodeToRlTransformer a_;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.MathNode b;
@@ -321,6 +353,7 @@ public partial class MathNodeToRlTransformer
     private sealed partial class d_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::System.Text.StringBuilder a_;
         [global::Quire.Mirror.MirrorStub]
         internal void a(object A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -330,8 +363,10 @@ public partial class MathNodeToRlTransformer
     private sealed partial class e_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::System.Text.StringBuilder a_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("b")]
         public global::System.Text.StringBuilder b_;
         [global::Quire.Mirror.MirrorStub]
         internal void b(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -343,8 +378,10 @@ public partial class MathNodeToRlTransformer
     private sealed partial class f_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::System.Collections.Generic.IList<string> a_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("b")]
         public global::System.Action<string> b_;
         [global::Quire.Mirror.MirrorStub]
         internal void b(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -356,6 +393,7 @@ public partial class MathNodeToRlTransformer
     private sealed partial class g_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::System.Collections.Generic.IList<string> a_;
         [global::Quire.Mirror.MirrorStub]
         internal void a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -365,6 +403,7 @@ public partial class MathNodeToRlTransformer
     private sealed partial class h_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public int a_;
         [global::Quire.Mirror.MirrorStub]
         internal bool a(global::System.Collections.Generic.KeyValuePair<global::Quire.EquationEditor.Tree.MathNode, int> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -374,6 +413,7 @@ public partial class MathNodeToRlTransformer
     private sealed partial class i_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.EquationEditor.Tree.Transform.MathNodeToRlTransformer a_;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.MathNode b;
@@ -387,6 +427,7 @@ public partial class MathNodeToRlTransformer
     private sealed partial class j_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.EquationEditor.Tree.Transform.MathNodeToRlTransformer a_;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.MathNode b;
@@ -398,6 +439,7 @@ public partial class MathNodeToRlTransformer
     private sealed partial class k_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.EquationEditor.Tree.MathNode a_;
         [global::Quire.Mirror.MirrorStub]
         internal string b(global::System.Text.RegularExpressions.Match A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -409,14 +451,18 @@ public partial class MathNodeToRlTransformer
     private sealed partial class l_ : global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode>, global::System.Collections.IEnumerable, global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode>, global::System.Collections.IEnumerator, global::System.IDisposable
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         private int a_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("b")]
         private global::Quire.EquationEditor.Tree.MathNode b_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("c")]
         private int c_;
         [global::Quire.Mirror.MirrorStub]
         private global::Quire.EquationEditor.Tree.MathNode d;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("e")]
         public global::Quire.EquationEditor.Tree.MathNode e_;
         [global::Quire.Mirror.MirrorStub]
         private global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode> f;

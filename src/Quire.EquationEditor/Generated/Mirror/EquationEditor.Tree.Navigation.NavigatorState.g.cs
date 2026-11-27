@@ -11,6 +11,7 @@ namespace Quire.EquationEditor.Tree.Navigation;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Navigation.NavigatorState, Ptc.EquationEditor")]
 public partial struct NavigatorState
 {
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.EquationEditor.Tree.Navigation.NavigatorState Empty;
     [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();

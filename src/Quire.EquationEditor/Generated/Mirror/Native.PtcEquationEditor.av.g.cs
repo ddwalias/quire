@@ -12,9 +12,10 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial struct av
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     public static readonly global::Quire.Native.PtcEquationEditor.av a_;
     [global::Quire.Mirror.MirrorStub]
-    public av(bool A_0, params global::Quire.EquationEditor.Tree.MathNode[] A_1) { }
+    public av(bool A_0, params global::Quire.EquationEditor.Tree.MathNode[] A_1) : this(default(bool), default(global::Quire.Native.PtcEquationEditor.au[])) { }
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Native.PtcEquationEditor.au[] a(global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.MathNode> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

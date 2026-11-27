@@ -12,8 +12,10 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class k
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private string a_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private global::Quire.EquationEditor.IEquationModel b_;
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.Native.PtcEquationEditor.k b(global::Quire.EquationEditor.IEquationModel A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

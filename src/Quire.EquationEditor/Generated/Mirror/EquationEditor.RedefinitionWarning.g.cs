@@ -12,8 +12,10 @@ namespace Quire.EquationEditor;
 public partial class RedefinitionWarning
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private global::Quire.Calculation.Core.EngineRedefInfo a_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private string b_;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Nullable<global::Quire.Controls.Core.IdLabels> c;

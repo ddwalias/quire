@@ -12,6 +12,7 @@ namespace Quire.EquationEditor.Tree;
 public partial class StringToComboBoxMathTransformer : global::Quire.EquationEditor.Tree.IStringToComboBoxMathTransformer
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     protected static string a_;
     [global::Quire.Mirror.MirrorStub]
     protected static string b;

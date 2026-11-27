@@ -12,6 +12,7 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class j : global::Quire.EquationEditor.View.IMathViewTransformer
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private readonly global::Quire.EquationEditor.View.IVisualFactory a__;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::System.Collections.Generic.Dictionary<string, global::Quire.DelegateFunction0<global::Quire.EquationEditor.View.IVisualMathNode>> b;

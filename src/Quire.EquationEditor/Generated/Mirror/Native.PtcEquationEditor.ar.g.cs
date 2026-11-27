@@ -12,19 +12,23 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class ar
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     public static readonly global::Quire.Native.PtcEquationEditor.ar a_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private readonly global::System.Nullable<global::Quire.EquationEditor.Tree.Navigation.NavigatorState> b_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("c")]
     public readonly global::Quire.EquationEditor.Tree.Scoping.TypeoverState c_;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("d")]
     public readonly global::Quire.Native.PtcEquationEditor.al d_;
     [global::Quire.Mirror.MirrorStub]
-    public ar(global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_0) { }
+    public ar(global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_0) : this() { }
     [global::Quire.Mirror.MirrorStub]
-    public ar(global::Quire.EquationEditor.Tree.Scoping.TypeoverState A_0) { }
+    public ar(global::Quire.EquationEditor.Tree.Scoping.TypeoverState A_0) : this() { }
     [global::Quire.Mirror.MirrorStub]
-    public ar(global::Quire.Native.PtcEquationEditor.al A_0) { }
+    public ar(global::Quire.Native.PtcEquationEditor.al A_0) : this() { }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.Navigation.NavigatorState e() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

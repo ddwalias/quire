@@ -30,6 +30,7 @@ internal partial class m : global::Quire.EquationEditor.Equation.EquationModel.b
     private sealed partial class a_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public static readonly global::Quire.Native.PtcEquationEditor.m.a_ a__;
         [global::Quire.Mirror.MirrorStub]
         public static global::System.Func<global::Quire.EquationEditor.Tree.MathNode, bool> b;

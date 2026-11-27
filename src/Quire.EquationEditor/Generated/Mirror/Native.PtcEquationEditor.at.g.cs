@@ -12,12 +12,16 @@ namespace Quire.Native.PtcEquationEditor;
 internal partial class at
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private readonly global::Quire.Native.PtcEquationEditor.r a__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("b")]
     private readonly global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.Navigation.NavigatorState> b__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("c")]
     public static readonly global::Quire.Native.PtcEquationEditor.at c__;
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("d")]
     private static readonly string d_;
     [global::Quire.Mirror.MirrorStub]
     public at(global::Quire.Native.PtcEquationEditor.r A_0) { }
@@ -71,6 +75,7 @@ internal partial class at
     private sealed partial class b_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public global::Quire.Native.PtcEquationEditor.at a_;
         [global::Quire.Mirror.MirrorStub]
         public string b;
@@ -82,16 +87,20 @@ internal partial class at
     private sealed partial class c_ : global::System.Collections.Generic.IEnumerable<global::Quire.Delegate2<global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle>, global::Quire.Native.PtcEquationEditor.aq>>, global::System.Collections.IEnumerable, global::System.Collections.Generic.IEnumerator<global::Quire.Delegate2<global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle>, global::Quire.Native.PtcEquationEditor.aq>>, global::System.Collections.IEnumerator, global::System.IDisposable
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         private int a_;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("b")]
         private global::Quire.Delegate2<global::System.Collections.Generic.LinkedListNode<global::Quire.EquationEditor.Tree.Parsing.MathNodeAnalysisHandle>, global::Quire.Native.PtcEquationEditor.aq> b_;
         [global::Quire.Mirror.MirrorStub]
         private int c;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("d")]
         public global::Quire.Native.PtcEquationEditor.at d_;
         [global::Quire.Mirror.MirrorStub]
         private global::Quire.Native.PtcEquationEditor.aq e;
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("f")]
         public global::Quire.Native.PtcEquationEditor.aq f_;
         [global::Quire.Mirror.MirrorStub]
         public c_(int A_0) { }

@@ -12,9 +12,11 @@ namespace Quire.EquationEditor.Tree.Transform;
 public partial class SExpressionToRlTransform
 {
     [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorName("a")]
     private readonly global::Quire.EquationEditor.Tree.Transform.SExpressionToMathNodeTransform a__;
     [global::Quire.Mirror.MirrorStub]
     private readonly global::Quire.EquationEditor.Tree.Transform.MathNodeToRlTransformer b;
+    [global::Quire.Mirror.MirrorStub]
     public static readonly global::Quire.EquationEditor.Tree.Transform.SExpressionToRlTransform Default;
     [global::Quire.Mirror.MirrorStub]
     private SExpressionToRlTransform(global::Quire.EquationEditor.Tree.Transform.SExpressionToMathNodeTransform A_0, global::Quire.EquationEditor.Tree.Transform.MathNodeToRlTransformer A_1) { }
@@ -27,6 +29,7 @@ public partial class SExpressionToRlTransform
     private sealed partial class a_
     {
         [global::Quire.Mirror.MirrorStub]
+        [global::Quire.Mirror.MirrorName("a")]
         public static readonly global::Quire.EquationEditor.Tree.Transform.SExpressionToRlTransform.a_ a__;
         [global::Quire.Mirror.MirrorStub]
         public static global::System.Func<string, bool> b;
