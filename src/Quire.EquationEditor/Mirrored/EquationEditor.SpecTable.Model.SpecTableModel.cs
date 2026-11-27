@@ -9,6 +9,108 @@ public partial class SpecTableModel
 
     public int ColumnCount => b__.Count;
 
+    internal int NumberOfDataCells => b__.Count != 0 ? b__[0].DataCellCount : 1;
+
+    internal int CellCount => b__[0].CellCount;
+
+    public bool IsExtraDataCellOrEmptyScale(IEquationModel cell)
+    {
+        if (cell == null || !cell.EquationRoot.IsPlaceholder)
+        {
+            return false;
+        }
+
+        if (cell.Root.DescriptorName == "SPEC_TABLE_HEADER")
+        {
+            return false;
+        }
+
+        if (cell.Root.DescriptorName == "SPEC_TABLE_SCALING_CELL")
+        {
+            return true;
+        }
+
+        foreach (ISpecTableColumn column in b__)
+        {
+            for (int dataCellIndex = column.DataCellCount - 1; dataCellIndex > 0; dataCellIndex--)
+            {
+                IEquationModel dataCell = column.GetDataCell(dataCellIndex);
+                if (!dataCell.EquationRoot.IsPlaceholder)
+                {
+                    break;
+                }
+
+                if (dataCell == cell)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public void RemoveEmptyColumns()
+    {
+        for (int columnIndex = ColumnCount - 1; columnIndex >= 0; columnIndex--)
+        {
+            if (GetColumn(columnIndex).IsEmpty)
+            {
+                h(0, columnIndex);
+            }
+        }
+    }
+
+    public bool IsRowEmpty(int rowIndex)
+    {
+        if (rowIndex < 0 || rowIndex >= NumberOfDataCells + 2)
+        {
+            return true;
+        }
+
+        foreach (ISpecTableColumn column in b__)
+        {
+            if (!column.GetCell(rowIndex).EquationRoot.IsPlaceholder)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public bool IsColumnEmpty(int colIndex)
+    {
+        if (colIndex < 0 || colIndex >= ColumnCount)
+        {
+            return true;
+        }
+
+        return b__[colIndex].IsEmpty;
+    }
+
+    public ISpecTableColumn GetColumn(int i) => b__[i];
+
+    public void AddColumnAtEnd()
+    {
+        if (ColumnCount == 0)
+        {
+            AddColumn(Direction.Right, 0, 0);
+        }
+        else
+        {
+            AddColumn(Direction.Right, NumberOfDataCells - 1, ColumnCount - 1);
+        }
+    }
+
+    public void AddRowAtEnd()
+    {
+        if (ColumnCount > 0)
+        {
+            a(Direction.Down, CellCount - 1, ColumnCount - 1, 0);
+        }
+    }
+
     [MirrorVerified("Release IL")]
     public SpecTableModel() : this(1, 1) { }
 

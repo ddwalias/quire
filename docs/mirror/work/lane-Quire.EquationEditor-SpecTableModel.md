@@ -8,4 +8,9 @@
 
 - Implemented `Columns` and `ColumnCount` in the hand-written partial and removed their generated stub declarations.
 - Release IL report: pass against the branch base (`.mirror-cache/release-il-4b6536f7abe7/release-il.json`); lint passes.
-- Remaining: all other SpecTableModel members and nested/closure types.
+
+## Batch 2 — row and column queries
+
+- Added `NumberOfDataCells`, `CellCount`, `IsExtraDataCellOrEmptyScale`, `RemoveEmptyColumns`, `IsRowEmpty`, `IsColumnEmpty`, `GetColumn`, `AddColumnAtEnd`, and `AddRowAtEnd`; removed their generated stubs.
+- Release IL report: pending in the lane gate; lint passes.
+- Remaining: other SpecTableModel members and nested/closure types.

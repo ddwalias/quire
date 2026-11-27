@@ -33,10 +33,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
     [global::Quire.Mirror.MirrorStub]
     public bool IsEmpty { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    internal int NumberOfDataCells { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal int CellCount { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool InCustomInitialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::Quire.Delegate1<global::Quire.EquationEditor.IEquationModel> CellAdded;
@@ -69,14 +65,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
     [global::Quire.Mirror.MirrorStub]
     public void Commit() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool IsExtraDataCellOrEmptyScale(global::Quire.EquationEditor.IEquationModel cell) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RemoveEmptyColumns() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsRowEmpty(int rowIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsColumnEmpty(int colIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.PersistentDataObjects.mathType[] GetColumnsRegionPersistentData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetColumnsRegionPersistentData(global::Quire.PersistentDataObjects.mathType[] columns) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -94,12 +82,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
     private global::Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper f(global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void e(global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn GetColumn(int i) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddColumnAtEnd() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void AddRowAtEnd() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void AddColumn(global::Quire.Direction direction, int activeRow, int activeColumn) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
