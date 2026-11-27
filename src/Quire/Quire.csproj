@@ -7,6 +7,21 @@
     <AssemblyName>Quire</AssemblyName>
     <RootNamespace>Quire</RootNamespace>
   </PropertyGroup>
+  <!-- Temporary compile references for hand-written consumers; removed in the DevComponents consumer switch batch. -->
+  <PropertyGroup>
+    <MathcadInstallDir Condition="'$(MathcadInstallDir)' == '' and '$(MATHCAD_DIR)' != ''">$(MATHCAD_DIR)\</MathcadInstallDir>
+    <MathcadInstallDir Condition="'$(MathcadInstallDir)' == ''">C:\Program Files\PTC\Mathcad Prime 12.0.1.0\</MathcadInstallDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevComponents.WpfRibbon" Condition="Exists('$(MathcadInstallDir)DevComponents.WpfRibbon.dll')">
+      <HintPath>$(MathcadInstallDir)DevComponents.WpfRibbon.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="DevComponents.WpfDock" Condition="Exists('$(MathcadInstallDir)DevComponents.WpfDock.dll')">
+      <HintPath>$(MathcadInstallDir)DevComponents.WpfDock.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Dirkster.AvalonDock" Version="5.0.1" />
     <PackageReference Include="Fluent.Ribbon" Version="11.0.2" />
