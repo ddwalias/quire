@@ -269,6 +269,54 @@ public partial class WorksheetControlDebugger
             UpdateDebugWindowCellHeaderFooter(PropertyName.FooterMargin, WorksheetViewModelInst.PageLayout.FooterMargin.ToString());
         }
 
+        private void OnScrollViewerChanged(
+            object sender,
+            global::System.Windows.Controls.ScrollChangedEventArgs args)
+        {
+            // Use null-test ternaries to preserve Mathcad's branch orientation in Release IL.
+            UpdateDebugWindowCellScrollViewer(
+                PropertyName.ViewportHeight,
+                (args == null ? ScrollViewerInst.ViewportHeight : args.ViewportHeight).ToString("0.00"));
+            UpdateDebugWindowCellScrollViewer(
+                PropertyName.ViewportWidth,
+                (args == null ? ScrollViewerInst.ViewportWidth : args.ViewportWidth).ToString("0.00"));
+            UpdateDebugWindowCellScrollViewer(
+                PropertyName.ExtentHeight,
+                (args == null ? ScrollViewerInst.ExtentHeight : args.ExtentHeight).ToString("0.00"));
+            UpdateDebugWindowCellScrollViewer(
+                PropertyName.ExtentWidth,
+                (args == null ? ScrollViewerInst.ExtentWidth : args.ExtentWidth).ToString("0.00"));
+            UpdateDebugWindowCellScrollViewer(
+                PropertyName.VerticalOffset,
+                (args == null ? ScrollViewerInst.VerticalOffset : args.VerticalOffset).ToString("0.00"));
+            UpdateDebugWindowCellScrollViewer(
+                PropertyName.HorizontalOffset,
+                (args == null ? ScrollViewerInst.HorizontalOffset : args.HorizontalOffset).ToString("0.00"));
+            if (args != null)
+            {
+                UpdateDebugWindowCellScrollViewer(PropertyName.ViewportHeightChange, args.ViewportHeightChange.ToString("0.00"));
+                UpdateDebugWindowCellScrollViewer(PropertyName.ViewportWidthChange, args.ViewportWidthChange.ToString("0.00"));
+                UpdateDebugWindowCellScrollViewer(PropertyName.ExtentHeightChange, args.ExtentHeightChange.ToString("0.00"));
+                UpdateDebugWindowCellScrollViewer(PropertyName.ExtentWidthChange, args.ExtentWidthChange.ToString("0.00"));
+                UpdateDebugWindowCellScrollViewer(PropertyName.VerticalChange, args.VerticalChange.ToString("0.00"));
+                UpdateDebugWindowCellScrollViewer(PropertyName.HorizontalChange, args.HorizontalChange.ToString("0.00"));
+            }
+
+            UpdateWindowCellWorksheet(
+                PropertyName.ViewportHeight,
+                TranslatePoint(
+                    new Point(0.0, args == null ? ScrollViewerInst.ViewportHeight : args.ViewportHeight),
+                    ScrollViewerInst.Content,
+                    WorksheetControlInst).Y.ToString("0.00"));
+            UpdateWindowCellWorksheet(
+                PropertyName.VerticalOffset,
+                TranslatePoint(
+                    new Point(0.0, args == null ? ScrollViewerInst.VerticalOffset : args.VerticalOffset),
+                    ScrollViewerInst.Content,
+                    WorksheetControlInst).Y.ToString("0.00"));
+            UpdateWindowCellWorksheet(PropertyName.VisiblePagesPadding, WorksheetControlInst.VisiblePagesControl.Padding.ToString());
+        }
+
         private void OnVisiblePagesCollectionChanged(
             object sender,
             global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
