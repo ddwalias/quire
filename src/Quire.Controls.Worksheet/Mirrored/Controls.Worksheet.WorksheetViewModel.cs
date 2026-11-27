@@ -2380,41 +2380,7 @@ private bool CanDeleteActiveOrSelectedItems()
     }
 
 private bool CanTogglePageLayout(object param)
-    {
-        if (param is PageLayoutMode && (PageLayoutMode)param != PageLayoutMode.PageMode)
-        {
-            return true;
-        }
-        if (ActiveItem == null)
-        {
-            return true;
-        }
-        if (ActiveItem is IParagraphControl)
-        {
-            return true;
-        }
-        IWhiteboardItem activeItem = ActiveItem;
-        double pageRight = PageLayout.PageBodyWidth + PageLayout.PageMargin.Right;
-        Point itemLocation = GetWorksheetSectionItemLocation(activeItem);
-        double itemLeft = itemLocation.X;
-        if (ActiveItem is ICollapsibleAreaControl collapsibleAreaControl)
-        {
-            if (collapsibleAreaControl.ActiveItem == null)
-            {
-                return true;
-            }
-            activeItem = collapsibleAreaControl.ActiveItem;
-            itemLocation = collapsibleAreaControl.GetItemLocation(activeItem);
-            itemLeft = itemLocation.X;
-        }
-        if (itemLeft.IsGreaterThan(pageRight))
-        {
-            return true;
-        }
-        double itemRight = itemLeft;
-        Size desiredSize = ItemManager.GetDesiredSize(activeItem);
-        return (itemRight + desiredSize.Width).IsLessThan(pageRight);
-    }
+    => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private void DeleteActiveOrSelectedItems()
     {
@@ -2540,8 +2506,9 @@ private bool CanCreateParagraphControl()
         {
             return false;
         }
+        IWhiteboardControl whiteboardControl = ActiveItem as IWhiteboardControl;
         Point insertionPoint;
-        if (ActiveItem is IWhiteboardControl whiteboardControl)
+        if (whiteboardControl != null)
         {
             insertionPoint = whiteboardControl.InsertionPoint;
             return insertionPoint.X <= PageLayout.PageBodyWidth;
@@ -4250,6 +4217,16 @@ public void RequestNavigateHandler(IWorksheetControl worksheetControl, global::S
 
 private partial class WorksheetMouseDownHandler
     {
+        public bool HandlePreviewMouseUp(object originalSource)
+        {
+            IWhiteboardItem whiteboardItem = GetWhiteboardItem(originalSource);
+            if (whiteboardItem != null && !ItemManager.GetIsBringToView(whiteboardItem))
+            {
+                ItemManager.SetIsBringToView(whiteboardItem, value: true);
+            }
+            return false;
+        }
+
         public bool HandleMouseDown(object originalSource, bool alreadyHandled)
         {
             ResetBringIntoViewOfParentItem(originalSource);

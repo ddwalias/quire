@@ -266,3 +266,4 @@
 ## Luna WorksheetViewModel remaining members — batch 2
 
 - `CreateTextRegionFromEquationControl` is parked. Its Release IL differs at #1: Quire uses `castclass System.Windows.DependencyObject`, while Mathcad uses `isinst Ptc.Controls.EquationControl`; Quire has 10 conditional branches and 114 entries versus Mathcad's 9 branches and 109 entries, with the first instruction difference at #7 (`brtrue.s 3` versus `GetIsRegionBorderVisible`).
+- `CanTogglePageLayout` is parked. Its Release IL differs at #2: Quire branches `brfalse.s 6` while Mathcad branches `brfalse.s 8`; Quire has 83 entries versus Mathcad's 85.
