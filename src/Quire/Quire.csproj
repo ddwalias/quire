@@ -7,5 +7,21 @@
     <AssemblyName>Quire</AssemblyName>
     <RootNamespace>Quire</RootNamespace>
   </PropertyGroup>
+  <!-- D33: DevComponents.WpfRibbon and DevComponents.WpfDock are commercial, so they are compiled against from the
+       Mathcad install (D27) and never copied to the output or committed. -->
+  <PropertyGroup>
+    <MathcadInstallDir Condition="'$(MathcadInstallDir)' == '' and '$(MATHCAD_DIR)' != ''">$(MATHCAD_DIR)\</MathcadInstallDir>
+    <MathcadInstallDir Condition="'$(MathcadInstallDir)' == ''">C:\Program Files\PTC\Mathcad Prime 12.0.1.0\</MathcadInstallDir>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevComponents.WpfRibbon" Condition="Exists('$(MathcadInstallDir)DevComponents.WpfRibbon.dll')">
+      <HintPath>$(MathcadInstallDir)DevComponents.WpfRibbon.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="DevComponents.WpfDock" Condition="Exists('$(MathcadInstallDir)DevComponents.WpfDock.dll')">
+      <HintPath>$(MathcadInstallDir)DevComponents.WpfDock.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
   <Import Project="Generated\Mirror.props" />
 </Project>

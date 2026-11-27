@@ -51,6 +51,29 @@ public partial class OptionsWindow
         _spiritMainWindow.SetPathToDefaultTemplateForNewDocument(text);
     }
 
+    private void HandleBrowseForTemplatesFolder(object sender, ExecutedRoutedEventArgs e)
+    {
+        string text = e.Parameter as string;
+        if (string.IsNullOrEmpty(text))
+        {
+            return;
+        }
+        using global::System.Windows.Forms.FolderBrowserDialog folderBrowserDialog = new global::System.Windows.Forms.FolderBrowserDialog();
+        folderBrowserDialog.SelectedPath = _spiritMainWindow.IsGivenKeyMyTemplatesKey(text) ? _spiritMainWindow.GetMyTemplatesLocation() : _spiritMainWindow.GetSharedTemplatesLocation();
+        folderBrowserDialog.ShowNewFolderButton = true;
+        if (folderBrowserDialog.ShowDialog() == global::System.Windows.Forms.DialogResult.OK)
+        {
+            if (_spiritMainWindow.IsGivenKeyMyTemplatesKey(text))
+            {
+                _spiritMainWindow.SetMyTemplatesLocation(folderBrowserDialog.SelectedPath);
+            }
+            else
+            {
+                _spiritMainWindow.SetSharedTemplatesLocation(folderBrowserDialog.SelectedPath);
+            }
+        }
+    }
+
     private void HandleBrowseForPythonDirPath(object sender, ExecutedRoutedEventArgs e)
     {
         using global::System.Windows.Forms.FolderBrowserDialog folderBrowserDialog = new global::System.Windows.Forms.FolderBrowserDialog();

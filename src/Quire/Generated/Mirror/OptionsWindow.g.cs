@@ -52,6 +52,4 @@ public partial class OptionsWindow : global::System.Windows.Window, global::Quir
         LicenseStatusTab = 0,
         OptionsTab = 1,
     }
-    [global::Quire.Mirror.MirrorStub]
-    private void HandleBrowseForTemplatesFolder(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

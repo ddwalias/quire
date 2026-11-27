@@ -181,6 +181,36 @@ public partial class FunctionBrowser
         }
     }
 
+    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target)
+    {
+        switch (connectionId)
+        {
+            case 1:
+                ((CollectionViewSource)target).Filter += FunctionFilter;
+                return;
+            case 2:
+                ((CollectionViewSource)target).Filter += FunctionFilter;
+                return;
+            case 5:
+                matchingTextBox = (TextBox)target;
+                matchingTextBox.TextChanged += matchingTextBox_TextChanged;
+                return;
+            case 6:
+                ((global::DevComponents.WpfRibbon.ButtonEx)target).Click += SearchCommandExecuted;
+                return;
+            case 7:
+                ((TabControl)target).PreviewKeyDown += TabControl_OnPreviewKeyDown;
+                return;
+            case 8:
+                FunctionsTreeView = (TreeView)target;
+                return;
+            case 9:
+                FunctionsListView = (ListView)target;
+                return;
+        }
+        _contentLoaded = true;
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCode]
     public void InitializeComponent()
     {

@@ -16,13 +16,7 @@ public partial class FindControl : global::System.Windows.Controls.UserControl, 
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.FindReplaceRichTextBox FindRichBox;
     [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton FindPreviousButton;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton FindNextButton;
-    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.FindReplaceRichTextBox ReplaceWithRichText;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Fluent.DropDownButton ReplaceButton;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.TextBlock ReplaceButtonTooltipTextBlock;
     [global::Quire.Mirror.MirrorStub]
@@ -49,6 +43,4 @@ public partial class FindControl : global::System.Windows.Controls.UserControl, 
     private void FindReplaceRichText_PreviewKeyDown(object sender, global::System.Windows.Input.KeyEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

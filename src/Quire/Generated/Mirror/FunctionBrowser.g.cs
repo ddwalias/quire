@@ -22,8 +22,6 @@ public partial class FunctionBrowser : global::System.Windows.Controls.UserContr
     [global::Quire.Mirror.MirrorStub]
     private static bool ContainedInCategories(string match, global::System.Collections.Generic.IEnumerable<string> categories) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Markup.IStyleConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.FunctionLabel GetNotFocusedChildLabel(global::System.Windows.Controls.Control item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
