@@ -26,10 +26,10 @@ namespace Quire { namespace Engine {
             String^ text = x->ToString();
             int num = text->LastIndexOf(':');
             String^ obj = (num == -1) ? text : text->Substring(0, num);
-            String^ text2 = y->ToString();
-            int num2 = text2->LastIndexOf(':');
-            String^ value = (num2 == -1) ? text2 : text2->Substring(0, num2);
-            return obj->Equals(value);
+            String^ yWithoutTag = y->ToString();
+            int yTagIndex = yWithoutTag->LastIndexOf(':');
+            String^ yNameWithoutTag = (yTagIndex == -1) ? yWithoutTag : yWithoutTag->Substring(0, yTagIndex);
+            return obj->Equals(yNameWithoutTag);
         }
         return x == y;
     }
@@ -71,14 +71,14 @@ namespace Quire { namespace Engine {
 
             System::Text::StringBuilder^ stringBuilder = gcnew System::Text::StringBuilder(10);
             stringBuilder->Append("0x");
-            for (int num3 = 0; num3 < 4; num3++)
+            for (int idDigitIndex = 0; idDigitIndex < 4; idDigitIndex++)
             {
-                int num4 = (id >> 12) & 0xF;
-                stringBuilder->Append(to_hex(num4));
+                int idDigit = (id >> 12) & 0xF;
+                stringBuilder->Append(to_hex(idDigit));
                 id <<= 4;
             }
-            for (int num5 = 0; num5 < 4; num5++)
-                stringBuilder->Append(to_hex(tag[num5]));
+            for (int tagIndex = 0; tagIndex < 4; tagIndex++)
+                stringBuilder->Append(to_hex(tag[tagIndex]));
             return stringBuilder->ToString();
         }
         throw gcnew Exception("bad region ID: " + id);

@@ -23,10 +23,10 @@ namespace Quire { namespace Engine {
     String^ StringUtils::MangleForXAML(String^ s)
     {
         StringBuilder^ stringBuilder = gcnew StringBuilder();
-        int num2 = s->Length;
-        for (int num = 0; num < num2; num++)
+        int stringLength = s->Length;
+        for (int index = 0; index < stringLength; index++)
         {
-            wchar_t c = s[num];
+            wchar_t c = s[index];
             switch (c)
             {
             default:

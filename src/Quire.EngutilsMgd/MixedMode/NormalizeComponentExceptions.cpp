@@ -15,8 +15,8 @@ namespace Quire { namespace Engine {
         }
         catch (Exception^ ex)
         {
-            Exception^ ex2 = Unwrap(ex);
-            throw (ex2 != nullptr) ? ex2 : ex;
+            Exception^ unwrappedException = Unwrap(ex);
+            throw (unwrappedException != nullptr) ? unwrappedException : ex;
         }
         return nullptr;
     }
@@ -29,9 +29,9 @@ namespace Quire { namespace Engine {
             if (ex != nullptr)
                 return ex;
         }
-        Quire::Mpl::Run::AppException^ ex2 = dynamic_cast<Quire::Mpl::Run::AppException^>(e->InnerException);
-        if (ex2 != nullptr && ex2->Message != nullptr && ex2->Handle != 0)
-            return ex2;
+        Quire::Mpl::Run::AppException^ appException = dynamic_cast<Quire::Mpl::Run::AppException^>(e->InnerException);
+        if (appException != nullptr && appException->Message != nullptr && appException->Handle != 0)
+            return appException;
         return nullptr;
     }
 

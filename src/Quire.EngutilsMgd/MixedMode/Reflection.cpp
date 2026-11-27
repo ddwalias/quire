@@ -11,9 +11,9 @@ namespace Quire { namespace Engine {
         array<Assembly^>^ assemblies = AppDomain::CurrentDomain->GetAssemblies();
         for (int i = 0; i < assemblies->Length; i++)
         {
-            Type^ type2 = assemblies[i]->GetType(tname);
-            if ((Object^)type2 != nullptr)
-                return type2;
+            Type^ assemblyType = assemblies[i]->GetType(tname);
+            if ((Object^)assemblyType != nullptr)
+                return assemblyType;
         }
         return nullptr;
     }

@@ -16,9 +16,9 @@ namespace Quire { namespace Native { namespace EngutilsMgd {
             GC::KeepAlive(this);
             return result;
         }
-        int result2 = (int)m_stack->Pop();
+        int character = (int)m_stack->Pop();
         GC::KeepAlive(this);
-        return result2;
+        return character;
     }
 
 }}}

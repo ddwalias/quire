@@ -17,11 +17,11 @@ namespace Quire { namespace Engine {
         else
             counts[text] = 0;
 
-        String^ text2 = ">";
+        String^ closingBracket = ">";
         ValueType^ valueType = counts[text];
-        String^ text3 = " ";
-        String^ value2 = String::Concat(String::Concat(String::Concat("<" + text, text3), valueType), text2);
-        seen[o] = value2;
+        String^ countSeparator = " ";
+        String^ description = String::Concat(String::Concat(String::Concat("<" + text, countSeparator), valueType), closingBracket);
+        seen[o] = description;
         GC::KeepAlive(this);
         return nullptr;
     }
