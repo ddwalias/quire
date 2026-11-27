@@ -2877,7 +2877,38 @@ private void CheckFlagsAndSplitItemIfNeeded(IWhiteboardItem item, bool isOnVisib
 
 private void HandleItemAddedWithoutNotification(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-private void HandleProtectedStateChanged(IProtectableControl control) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private void HandleProtectedStateChanged(IProtectableControl control)
+    {
+        ICollapsibleAreaControl collapsibleAreaControl = control as ICollapsibleAreaControl;
+        if (DebugTools.AssertNotNull(collapsibleAreaControl, null).Failed || DebugTools.DevAssert(IsContentActive, null).Failed)
+        {
+            return;
+        }
+        if (!collapsibleAreaControl.ProtectionLevel.IsProtected())
+        {
+            if (!collapsibleAreaControl.IsCollapsed)
+            {
+                RemoveGridRestrictedAreaForItem(collapsibleAreaControl);
+                ActivateAndNavigateIntoArea(collapsibleAreaControl);
+            }
+            return;
+        }
+        UpdateGridRestrictedAreaForItem(collapsibleAreaControl);
+        bool cannotActivate = !_itemManager.GetCanActivate(collapsibleAreaControl) && ActiveItem == collapsibleAreaControl;
+        bool cannotSelect = !collapsibleAreaControl.GetCanSelect() && SelectedItems.Contains(collapsibleAreaControl);
+        if (cannotActivate | cannotSelect)
+        {
+            if (cannotSelect)
+            {
+                ActiveSection.UnSelectItem(collapsibleAreaControl);
+            }
+            NavigateOutsideMovingAreaDownIfNeeded(collapsibleAreaControl, Direction.Up, moveDown: true);
+        }
+        else
+        {
+            DebugTools.DevAssert(_itemManager.GetCanActivate(collapsibleAreaControl) || !GetItemRect(collapsibleAreaControl).ContainsAccountingForMeasurementError(InsertionPoint), null);
+        }
+    }
 
 private void HandleActivatePartContainingChildRequested(IWhiteboardItemContainer wbContainer, IWhiteboardItem item)
     {
@@ -4217,16 +4248,6 @@ public void RequestNavigateHandler(IWorksheetControl worksheetControl, global::S
 
 private partial class WorksheetMouseDownHandler
     {
-        public bool HandlePreviewMouseUp(object originalSource)
-        {
-            IWhiteboardItem whiteboardItem = GetWhiteboardItem(originalSource);
-            if (whiteboardItem != null && !ItemManager.GetIsBringToView(whiteboardItem))
-            {
-                ItemManager.SetIsBringToView(whiteboardItem, value: true);
-            }
-            return false;
-        }
-
         public bool HandleMouseDown(object originalSource, bool alreadyHandled)
         {
             ResetBringIntoViewOfParentItem(originalSource);
