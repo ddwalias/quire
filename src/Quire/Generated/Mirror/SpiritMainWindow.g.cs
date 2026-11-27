@@ -44,10 +44,6 @@ public partial class SpiritMainWindow : global::Fluent.RibbonWindow, global::Sys
     [global::Quire.Mirror.MirrorStub]
     private void OnFunctionalityServiceLicenseTypeChanged(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private nint WndProc(nint hwnd, int msg, nint wparam, nint lparam, ref bool handled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool ClassifyWriteFailure(global::System.Exception exception, string fileName, out string displayedMessage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void DisplayWarning(string displayedMessage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void DisplayCriticalWarning(string displayedMessage) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
