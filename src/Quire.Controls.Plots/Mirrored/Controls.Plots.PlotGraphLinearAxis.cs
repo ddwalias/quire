@@ -640,7 +640,37 @@ internal partial class PlotGraphLinearAxis
 
     internal bool SizeFrozen { get; private set; }
 
-    private void FixateSizeOfRowsInner() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void FixateSizeOfRowsInner()
+    {
+        if (double.IsNaN(_savedLength) || SizeFrozen)
+        {
+            return;
+        }
+        if (Splitter == null || Splitter.Parent == null || OtherAxis == null || _savedLength <= 0)
+        {
+            DebugTools.DevAssert(false);
+            return;
+        }
+        double leadingSize = _savedLength * OtherLinearAxis.GetTickRelativePosition(PositionTickMark);
+        double trailingSize = _savedLength - leadingSize;
+        if (DoubleComparer.DefaultDoubleComparer.Compare(trailingSize, 0.0) < 1)
+        {
+            trailingSize = 0.0;
+        }
+        SizeFrozen = true;
+        Grid grid = (Grid)Splitter.Parent;
+        if (Orientation == Orientation.Horizontal)
+        {
+            grid.RowDefinitions[ColOrRowIndex1].Height = new GridLength(leadingSize, GridUnitType.Pixel);
+            grid.RowDefinitions[ColOrRowIndex2].Height = new GridLength(trailingSize, GridUnitType.Pixel);
+        }
+        else
+        {
+            grid.ColumnDefinitions[ColOrRowIndex1].Width = new GridLength(leadingSize, GridUnitType.Pixel);
+            grid.ColumnDefinitions[ColOrRowIndex2].Width = new GridLength(trailingSize, GridUnitType.Pixel);
+        }
+        _savedLength = double.NaN;
+    }
 
     public override double GetPerpendicularAxisPositionRatio()
     {
@@ -651,7 +681,31 @@ internal partial class PlotGraphLinearAxis
         return GetTickRelativePosition(OtherAxis.PositionTickMark);
     }
 
-    internal bool ReleaseAutoReSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    internal bool ReleaseAutoReSize()
+    {
+        if (!SizeFrozen)
+        {
+            return true;
+        }
+        if (Splitter == null || Splitter.Parent == null)
+        {
+            DebugTools.DevAssert(false);
+            return false;
+        }
+        Grid grid = (Grid)Splitter.Parent;
+        if (Orientation == Orientation.Horizontal)
+        {
+            grid.RowDefinitions[ColOrRowIndex1].Height = new GridLength(grid.RowDefinitions[ColOrRowIndex1].Height.Value, GridUnitType.Star);
+            grid.RowDefinitions[ColOrRowIndex2].Height = new GridLength(grid.RowDefinitions[ColOrRowIndex2].Height.Value, GridUnitType.Star);
+        }
+        else
+        {
+            grid.ColumnDefinitions[ColOrRowIndex1].Width = new GridLength(grid.ColumnDefinitions[ColOrRowIndex1].Width.Value, GridUnitType.Star);
+            grid.ColumnDefinitions[ColOrRowIndex2].Width = new GridLength(grid.ColumnDefinitions[ColOrRowIndex2].Width.Value, GridUnitType.Star);
+        }
+        SizeFrozen = false;
+        return true;
+    }
 
     private static readonly global::System.Type _typeOfThis;
 
