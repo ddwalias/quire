@@ -82,11 +82,11 @@ public partial class MessageQueue<Owner, Data, Msg>
     {
         if (m_thread.Name == null)
         {
-            Thread thread = m_thread;
+            Thread namedThread = m_thread;
             string text = ")";
             string ownerName = owner.ToString();
             string name = string.Concat("MsgLoop(" + ownerName, text);
-            thread.Name = name;
+            namedThread.Name = name;
         }
 
         if (bStopThreadOnFinalize)
