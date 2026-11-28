@@ -1724,11 +1724,13 @@ public IWorksheetPageBreak CreatePageBreakControl()
         return ControlCreator.CreatePageBreakControl();
     }
 
+[global::Quire.Mirror.MirrorStub]
 private bool CanMoveInDirection(Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-private void DirectionalMoveHandler(global::Quire.Direction direction)
-    => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+[global::Quire.Mirror.MirrorStub]
+private void DirectionalMoveHandler(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
+[global::Quire.Mirror.MirrorStub]
 private void DirectionalMoveHandler(global::Quire.Direction direction, global::System.Windows.Vector offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 public bool HandleTextInput(string text)
@@ -2540,9 +2542,8 @@ private bool CanDeleteActiveOrSelectedItems()
         return !ActiveOrSelectedItems.IsNullOrEmpty();
     }
 
-    [global::Quire.Mirror.MirrorStub, global::Quire.Mirror.MirrorBlocked("Release IL branch shape differs at the first PageLayoutMode guard; source forms probed")]
-private bool CanTogglePageLayout(object param)
-    => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+[global::Quire.Mirror.MirrorStub]
+private bool CanTogglePageLayout(object param) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private void DeleteActiveOrSelectedItems()
     {
@@ -3101,6 +3102,7 @@ private void CheckFlagsAndSplitItemIfNeeded(IWhiteboardItem item, bool isOnVisib
         }
     }
 
+[global::Quire.Mirror.MirrorStub]
 private void HandleItemAddedWithoutNotification(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private void HandleProtectedStateChanged(IProtectableControl control)
@@ -3221,7 +3223,59 @@ private void HandleItemsRemoved(IEnumerable<IWhiteboardItem> items)
         }
     }
 
-private void HandleItemRemovedWithoutNotification(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private void HandleItemRemovedWithoutNotification(global::Quire.Controls.Core.IWhiteboardItem item)
+    {
+        item.OnGotFocusEvent -= HandleItemGotFocus;
+        item.RequestRemove -= RemoveItemAndSetInsertionPoint;
+        if (item is IMathboardControl mathboardControl)
+        {
+            PageLayout.GridCellSizeChanged -= mathboardControl.GridCellSizeChangedHandler;
+            mathboardControl.RequestActivatePartContainingChild -= HandleActivatePartContainingChildRequested;
+            mathboardControl.RequestMaximumSize -= RequestMaximumSizeHandler;
+            mathboardControl.ChildTriggeredResize -= ChildTriggeredResizeHandler;
+            if (mathboardControl.BookmarksManager != null)
+            {
+                mathboardControl.BookmarksManager = null;
+            }
+        }
+
+        if (item is IIORegionContainer regionContainer)
+        {
+            regionContainer.InputOutputRegionManager = null;
+        }
+
+        if (item is IRichTextWithEmbeddedItem { BookmarksManager: not null } richTextWithEmbeddedItem)
+        {
+            richTextWithEmbeddedItem.BookmarksManager = null;
+        }
+
+        _itemSizeChangedHandlerMap[item].Each((WhiteboardItemSizeChangedEventHandler handler) =>
+            ItemManager.UnhookSizeChanged(item, handler));
+        _itemSizeChangedHandlerMap.Remove(item);
+        ItemManager.RemoveItemIsOnVisiblePageChangedHandler(item, HandleIsOnVisiblePagePropertyChanged);
+
+        if (item is ICollapsibleAreaControl)
+        {
+            (item as ICollapsibleAreaControl).CollapsedStateChanged -= HandleCollapsedStateChanged;
+        }
+
+        if (item is IProtectableControl)
+        {
+            (item as IProtectableControl).ProtectedStateChanged -= HandleProtectedStateChanged;
+        }
+
+        if (item is IResizeToFitWhiteboardItem resizeToFitItem)
+        {
+            resizeToFitItem.RequestResizeToFitOrClearRestriction -= HandleRequestResizeToFitOrClearRestriction;
+        }
+
+        if (item is ICustomSplitItem customSplitItem)
+        {
+            customSplitItem.SplitItemIfNeeded -= HandleItemSplitRequest;
+        }
+
+        RemoveItemFromPage(item, _disposeStatus == DisposeStatus.Alive);
+    }
 
 private void HandleItemSizeChanged(IWhiteboardItem item, Size oldSize, Size newSize)
     {
@@ -3238,6 +3292,7 @@ private void HandleItemSizeChanged(IWhiteboardItem item, Size oldSize, Size newS
         SetEqResizable(item);
     }
 
+ [global::Quire.Mirror.MirrorStub]
 private void SetEqResizable(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private void RemoveItemAndSetInsertionPoint(IWhiteboardItem item, Direction deleteDirection)
@@ -3488,10 +3543,25 @@ private void SetActivePage(IWhiteboardItem activeItem)
         }
     }
 
+[global::Quire.Mirror.MirrorStub]
 private void ChangePageLayoutAndGridAreaIfNeeded(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-private void RemoveActiveSectionItemAndRestoreInsertionPoint(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point insertionPoint) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+ private void RemoveActiveSectionItemAndRestoreInsertionPoint(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point insertionPoint)
+    {
+        if (!IsContentActive)
+        {
+            using (new CommandScope(new CompoundCommand()))
+            {
+                ActiveSection.RemoveItem(item);
+                return;
+            }
+        }
 
+        _model.RemoveItem(item);
+        ItemManager.ExecuteOnUnload(item, () => InsertionPoint = insertionPoint);
+    }
+
+[global::Quire.Mirror.MirrorStub]
 private void SetupDefaultPageLayout() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private void SetupCommandBindings()
@@ -3911,7 +3981,13 @@ private bool CanAddToDictionary()
         return false;
     }
 
-private void HandleAddToDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+ private void HandleAddToDictionary()
+    {
+        if (ActiveDescendant is ISpellCheckRegion spellCheckRegion)
+        {
+            new AddWordToDictionaryCommand(this, spellCheckRegion.GetWordToAddToDictionary()).Execute();
+        }
+    }
 
 private void HandleCreateStyleFrom()
     => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -4052,14 +4128,35 @@ private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Co
         return itemsInBounds;
     }
 
-private global::Quire.Controls.Core.IWhiteboardItem FindNextItemForTabNavigation(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private global::Quire.Controls.Core.IWhiteboardItem FindNextItemForTabNavigation(global::System.Windows.Input.FocusNavigationDirection direction)
+    => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GetTabNavigatableItems(bool includingActiveItem = false)
     {
         throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
-private void ActivateSection(global::Quire.Controls.Worksheet.IWorksheetSection section, global::Quire.Controls.Worksheet.IWorksheetPage page, global::System.Nullable<global::System.Windows.Point> position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private void ActivateSection(global::Quire.Controls.Worksheet.IWorksheetSection section, global::Quire.Controls.Worksheet.IWorksheetPage page, global::System.Nullable<global::System.Windows.Point> position)
+    {
+        if (ActiveSection != section)
+        {
+            ActiveSection.SaveVisualState();
+            ActiveSection.ClearVisualState();
+        }
+
+        ActivePage = page;
+        ActiveSection = section;
+        ItemManager.BlockUntilLoaded();
+        if (position.HasValue)
+        {
+            _pageManager.ScrollToPageIfNeeded(page);
+            ItemManager.ExecuteOnLoad(page, () =>
+            {
+                section.InsertionPoint = position.Value;
+                section.ActivateWhiteboard(isActive: true);
+            });
+        }
+    }
 
 private void MakeContentActive()
     {
@@ -4097,6 +4194,7 @@ public void SelectItemsInBounds(IWorksheetControl worksheet, Point start, Point 
         InsertionPoint = new Point(translatedPoint.X, translatedPoint.Y + PageLayout.PageBodyHeight * Pages.IndexOf(page));
     }
 
+[global::Quire.Mirror.MirrorStub]
 private void HandleDragSelection(global::System.Windows.UIElement originalSource, global::System.Windows.Point position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private void UpdateNonprintableSpaceIndicator(IWorksheetPage page)
@@ -4155,11 +4253,68 @@ private void UpdateSizeLimit(IWhiteboardControl whiteBoard)
         whiteBoard.UpdateSizeLimits(new Size(sizeLimit.Width, sizeLimit.Height));
     }
 
-private global::System.Windows.Size FindSizeLimit(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+ private global::System.Windows.Size FindSizeLimit(global::Quire.Controls.Core.IWhiteboardItem whiteboardItem)
+    {
+        List<IWhiteboardItem> overlappingItems = GetOverlappingItems(whiteboardItem).ToList();
+        WorksheetItems.Where(item => item is IParagraphControl).Each(overlappingItems.Add);
+        bool considerMargin = WorksheetPageLayoutMode == PageLayoutMode.PageMode && !OverlapsRightMargin(whiteboardItem);
+        return FindSizeLimit(whiteboardItem, overlappingItems, considerMargin);
+    }
 
-private global::System.Windows.Size FindSizeLimit(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToIgnore, bool considerMargin) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+ private global::System.Windows.Size FindSizeLimit(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> itemsToIgnore, bool considerMargin)
+    {
+        double minimumWidth = double.PositiveInfinity;
+        double minimumHeight = double.PositiveInfinity;
+        Point itemLocation = GetWorksheetSectionItemLocation(item);
+        Size itemSize = ItemManager.GetRenderSize(item);
+        foreach (IWhiteboardItem worksheetItem in WorksheetItems)
+        {
+            if (item != worksheetItem && !itemsToIgnore.Contains(worksheetItem))
+            {
+                Point worksheetItemLocation = GetWorksheetSectionItemLocation(worksheetItem);
+                worksheetItemLocation.Offset(0.0, worksheetItem.VerticalAlignmentOffset);
+                Size worksheetItemSize = ItemManager.GetRenderSize(worksheetItem);
+                if (worksheetItemSize.Width + worksheetItemLocation.X > itemLocation.X
+                    && worksheetItemLocation.X < itemLocation.X + itemSize.Width
+                    && worksheetItemLocation.Y + worksheetItemSize.Height > itemLocation.Y)
+                {
+                    minimumHeight = Math.Min(minimumHeight, Math.Max(0.0, worksheetItemLocation.Y - itemLocation.Y));
+                }
 
-private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GetOverlappingItems(global::Quire.Controls.Core.IWhiteboardItem item, bool includingNonPrintableArea = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+                if (worksheetItemSize.Height + worksheetItemLocation.Y > itemLocation.Y
+                    && worksheetItemLocation.Y < itemLocation.Y + itemSize.Height
+                    && worksheetItemLocation.X + worksheetItemSize.Width > itemLocation.X)
+                {
+                    minimumWidth = Math.Min(minimumWidth, worksheetItemLocation.X - itemLocation.X);
+                }
+
+                if (itemLocation.X + itemSize.Width == worksheetItemLocation.X
+                    && itemLocation.Y + itemSize.Height == worksheetItemLocation.Y)
+                {
+                    minimumHeight = Math.Min(minimumHeight, Math.Max(0.0, worksheetItemLocation.Y - itemLocation.Y));
+                }
+            }
+        }
+
+        if (considerMargin)
+        {
+            minimumWidth = Math.Min(minimumWidth, PageLayout.PageBodyWidth - itemLocation.X);
+        }
+
+        return new Size(minimumWidth, minimumHeight);
+    }
+
+ private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GetOverlappingItems(global::Quire.Controls.Core.IWhiteboardItem item, bool includingNonPrintableArea = false)
+    {
+        Rect itemRect = GetItemRect(item);
+        if (includingNonPrintableArea && item is IPageWideSizable)
+        {
+            itemRect.Width = double.PositiveInfinity;
+        }
+
+        return WorksheetItems.Where(otherItem =>
+            otherItem != item && itemRect.IntersectsWithAccountingForMeasurementError(GetItemRect(otherItem)));
+    }
 
 private bool OverlapsRightMargin(IWhiteboardItem item)
     {
@@ -4324,12 +4479,16 @@ private bool _displayGrid;
 
 private void HandleItemsOverlapWithPageWideSizables(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
+[global::Quire.Mirror.MirrorStub]
 private void HandlePageWideSizableMoved(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items, double verticalOffset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
+[global::Quire.Mirror.MirrorStub]
 private void HandlePageWideSizablePasted(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> items) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
+[global::Quire.Mirror.MirrorStub]
 private double PushDownPageWideSizableToAvoidOverlap(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> foregroundItems, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> backgroundItems) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
+[global::Quire.Mirror.MirrorStub]
 private void PushDownOverlappedBackgroundItems(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> foregroundPageWideSizables, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> backgroundItems) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private void OffsetItemsVertically(double offset, IEnumerable<IWhiteboardItem> itemsToOffset)
