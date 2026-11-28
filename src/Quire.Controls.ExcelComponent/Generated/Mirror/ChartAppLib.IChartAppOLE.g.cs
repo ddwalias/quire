@@ -11,10 +11,4 @@ namespace Quire.ChartAppLib;
 [global::Quire.Mirror.MirrorOf("ChartAppLib.IChartAppOLE, Ptc.Controls.ExcelComponent")]
 public partial interface IChartAppOLE
 {
-    [global::Quire.Mirror.MirrorStub]
-    void _VtblGap1_1() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void _VtblGap2_1() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    void _VtblGap3_1() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

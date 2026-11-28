@@ -11,6 +11,7 @@ using Quire.OLE;
 using Quire.PersistentData;
 using Quire.Serialization;
 using Quire.Automation;
+using IMatrixValue = Mathcad.IMatrixValue;
 using IValue = Mathcad.IValue;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -121,8 +122,74 @@ public partial class ChartContainerModel
     {
         throw new AddressErrorException(place);
     }
-    [global::Quire.Mirror.MirrorStub, global::Quire.Mirror.MirrorBlocked("IChartAppOLE.setChartMinMax(ref) needs COM ref omission: ChartAppLib must be an embedded COM interface")]
-    private void SetMatrix(string place, IValue value, IValueToIResultNodeTransform resultsTransform) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void SetMatrix(string place, IValue value, IValueToIResultNodeTransform resultsTransform)
+    {
+        DateTime? refTime = DebugTools.LogData(string.Format("ChartContainerModel.SetMatrix: {0}: Start", place));
+        try
+        {
+            IMatrixValue matrixValue = (IMatrixValue)value;
+            if (place == "MinMaxPre" || place == "MinMaxPost")
+            {
+                IResultNode arg = resultsTransform.Transform((IAutomationValue)value);
+                if (DebugTools.AssertNotNull(OnProcessMinMax, null).Failed)
+                {
+                    return;
+                }
+                StringBuilder stringBuilder = new StringBuilder();
+                double[,] array = OnProcessMinMax(arg, (place == "MinMaxPost") ? DataLimits : null, stringBuilder);
+                if (array == null)
+                {
+                    throw new Exception(stringBuilder.ToString());
+                }
+                if (place == "MinMaxPost")
+                {
+                    AddImageFreezeSource(ImageFreezeSources.AsynchronousCalculation);
+                    try
+                    {
+                        ChartMinMax chartMinMax = CreateEmptyChartMinMax();
+                        chartMinMax.m_X = new MinMax
+                        {
+                            m_Min = array[0, 0],
+                            m_Max = array[0, 1]
+                        };
+                        chartMinMax.m_Y = new MinMax
+                        {
+                            m_Min = array[1, 0],
+                            m_Max = array[1, 1]
+                        };
+                        chartMinMax.m_Y2 = new MinMax
+                        {
+                            m_Min = array[2, 0],
+                            m_Max = array[2, 1]
+                        };
+                        chartMinMax.m_Z = new MinMax
+                        {
+                            m_Min = array[3, 0],
+                            m_Max = array[3, 1]
+                        };
+                        ChartObject.setChartMinMax(chartMinMax);
+                    }
+                    catch (Exception ex)
+                    {
+                        RemoveImageFreezeSource(ImageFreezeSources.AsynchronousCalculation);
+                        if (ex is COMException)
+                        {
+                            throw new Exception(ComExceptionEngineErrorCode, ex);
+                        }
+                        throw;
+                    }
+                }
+            }
+            else if (DebugTools.DevAssert(uint.TryParse(place, out var result), null).Passed)
+            {
+                SetTrace(result, matrixValue, resultsTransform);
+            }
+        }
+        finally
+        {
+            DebugTools.LogData(string.Format("ChartContainerModel.SetMatrix: {0}: End", place), ref refTime);
+        }
+    }
     public event Func<IResultNode, double[,], StringBuilder, double[,]> OnProcessMinMax;
     public IEnumerable<uint> CurrentTraceIds
     {
