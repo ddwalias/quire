@@ -205,6 +205,54 @@ public partial class MathNode
         }
     }
 
+    public INodeInfo NodeInfo
+    {
+        get => h__;
+        set
+        {
+            if (h__ == value)
+            {
+                return;
+            }
+            if (h__ is INodeInfoNotifyModel oldNodeInfo)
+                {
+                oldNodeInfo.ValueChanged -= i;
+                oldNodeInfo.RequestUndoableCommandExecution -= a;
+                oldNodeInfo.RequestRestoreInsertionPoint -= a;
+                }
+            if (value is INodeInfoNotifyModel newNodeInfo)
+            {
+                newNodeInfo.ValueChanged += i;
+                newNodeInfo.RequestUndoableCommandExecution += a;
+                newNodeInfo.RequestRestoreInsertionPoint += a;
+            }
+            h__ = value;
+        }
+    }
+
+    private void a(object sender, RequestRestoreInsertionPointEventArgs args)
+    {
+        if (RootNode is IRootMathNode rootMathNode)
+        {
+            rootMathNode.DelegateRequestRestoreInsertionPoint(args);
+        }
+    }
+
+    private void a(DelegateFunction0<bool> command, string description)
+    {
+        if (RootNode is IRootMathNode rootMathNode)
+        {
+            rootMathNode.DispatchRequestUndoableCommandExecution(command, description, this);
+        }
+    }
+
+    private void i()
+    {
+        if (RootNode is IRootMathNode rootMathNode)
+        {
+            rootMathNode.RequestNotifySubTreeNodeValueChanged(this);
+        }
+    }
     public string NodeInfoValueAsString => NodeInfoExtensions.ValueAsString(NodeInfo, ValueType);
 
     public int NodeInfoValueLength => NodeInfoExtensions.ValueLength(NodeInfo, ValueType);
