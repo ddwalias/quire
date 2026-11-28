@@ -22,92 +22,12 @@ public partial class FormattedString : global::System.ICloneable, global::System
     [global::Quire.Mirror.MirrorStub]
     private const char d = '\u0087';
     [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Collections.Generic.Dictionary<global::System.Type, char> e;
-    [global::Quire.Mirror.MirrorStub]
-    public char this[int position] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public void Insert(int insertAt, string stringToInsert, int subscriptDepth) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Append(global::Quire.EquationEditor.Tree.FormattedString stringToAppend) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Append(string stringToAppend) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RemoveRange(int startIndex, int endIndex) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.FormattedString Substring(int startIndex, int length) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public int GetSubscriptDepthAtPosition(int position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Documents.TextRange SelectCharacterAtPosition(int position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.FormattedString Clone() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void a(global::System.Windows.Documents.Inline A_0, global::System.Text.StringBuilder A_1, bool A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Documents.Inline b(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Documents.Span a(char A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private int a(string A_0, int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal static void b(global::System.Windows.Documents.Span A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void a(global::System.Windows.Documents.Inline A_0, int A_1, out global::System.Windows.Documents.Run A_2, out int A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Windows.Documents.Run a(global::System.Windows.Documents.Run A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Documents.Inline a(global::System.Windows.Documents.Span A_0, global::System.Windows.Documents.Run A_1, int A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Windows.Documents.Run a(global::System.Windows.Documents.Run A_0, int A_1, int A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Windows.Documents.Span a(global::System.Windows.Documents.Span A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void MakeReadOnly() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void MakeEditable() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<bool> a(global::Quire.EquationEditor.Tree.FormattedString.a_ A_0, global::System.Windows.Documents.InlineCollection A_1, global::System.Func<string, int> A_2, bool A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Nullable<bool> a(global::Quire.EquationEditor.Tree.FormattedString.a_ A_0, global::System.Windows.Documents.Inline A_1, global::System.Func<string, int> A_2, bool A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool a(global::System.Func<string, int> A_0, bool A_1, out global::Quire.EquationEditor.Tree.FormattedString.a_ A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool SearchValueInFormattedStringScopes(global::System.Func<string, int> searchFunc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void a(global::System.Collections.Generic.IEnumerable<global::System.Windows.Documents.Run> A_0, string A_1, string A_2, ref int A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.EquationEditor.Tree.FormattedString a(global::Quire.EquationEditor.Tree.FormattedString A_0, string A_1, string A_2, global::System.Func<string, int> A_3, bool A_4, out int A_5) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.EquationEditor.Tree.FormattedString ReplaceStringInFormattedString(global::Quire.EquationEditor.Tree.FormattedString formattedString, global::Quire.Controls.Core.FindReplaceQuery findReplaceQuery, out int position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.EquationEditor.Tree.FormattedString ReplaceStringInFormattedStringWithSubscripts(global::Quire.EquationEditor.Tree.FormattedString formattedString, global::Quire.Controls.Core.FindReplaceQuery findReplaceQuery, out int position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.EquationEditor.Tree.FormattedString CreateFormattedStringFromSubscriptsList(string text, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static int a(global::Quire.EquationEditor.Tree.FormattedString A_0, global::Quire.Controls.Core.FindReplaceQuery A_1, global::Quire.EquationEditor.Tree.FormattedString A_2, global::Quire.EquationEditor.Tree.FormattedString A_3) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool a(global::Quire.EquationEditor.Tree.FormattedString A_0, int A_1, int A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool Contains(global::Quire.EquationEditor.Tree.FormattedString formattedString, global::System.StringComparison comparison, bool wholeWordOnly) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.FormattedString+a, Ptc.EquationEditor")]
     private partial class a_
     {
-        [global::Quire.Mirror.MirrorStub]
-        [global::Quire.Mirror.MirrorName("a")]
-        private readonly global::System.Collections.Generic.List<global::System.Windows.Documents.Run> a__;
-        [global::Quire.Mirror.MirrorStub]
-        [global::Quire.Mirror.MirrorName("b")]
-        private readonly global::System.Text.StringBuilder b_;
-        [global::Quire.Mirror.MirrorStub]
-        private int c;
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Collections.Generic.IEnumerable<global::System.Windows.Documents.Run> a(out int A_0, out int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public bool a(global::System.Windows.Documents.Run A_0, global::System.Func<string, int> A_1, bool A_2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public a_() { }
     }
 }
