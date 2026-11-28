@@ -12,54 +12,6 @@ namespace Quire.EquationEditor.SpecTable.Model;
 public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISpecTableModel, global::Quire.Controls.Core.ISupportCustomInitialization
 {
     [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("d")]
-    private global::Quire.Delegate1<global::Quire.EquationEditor.IEquationModel> d__;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("e")]
-    private global::Quire.Delegate0 e__;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("f")]
-    private global::Quire.Delegate1<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn> f__;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("g")]
-    private global::Quire.Delegate1<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn> g__;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("h")]
-    private global::Quire.Delegate0 h__;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("i")]
-    private global::System.Action i__;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<int, int> j;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action k;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Action<bool> l;
-
-    [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Delegate1<global::Quire.EquationEditor.IEquationModel> CellAdded;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Delegate0 TableChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Delegate1<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn> ColumnAdded;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Delegate1<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn> ColumnRemoved;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Delegate0 RequestRemove;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action RequestClearSelection;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<int, int> RequestAddSelection;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action RequestUpdateCellsVisibility;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<bool> RestrictedReadonlyChanged;
-
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsRestrictedReadOnly { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool InCustomInitialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.EquationEditor.SpecTable.Model.SpecTableModel DefinitionsListToSpecTableModel(global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.MathNode> definitionsMathNodesList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private SpecTableModel(global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.MathNode> A_0) { }
@@ -161,8 +113,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
     public global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper> GetWrappedColumns() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode CreateMatrixFromTableCells(global::Quire.DiscreteRect selected) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool a(global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.SpecTable.Model.SpecTableModel+a, Ptc.EquationEditor")]
     internal partial class a_ : global::Quire.Undo.IUndoableCommand
@@ -485,8 +435,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
         [global::Quire.Mirror.MirrorStub]
         [global::Quire.Mirror.MirrorName("a")]
         public bool a_;
-        [global::Quire.Mirror.MirrorStub]
-        internal void a(global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
 }

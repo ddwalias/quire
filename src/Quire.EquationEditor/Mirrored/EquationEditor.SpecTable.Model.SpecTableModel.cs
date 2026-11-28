@@ -21,6 +21,24 @@ public partial class SpecTableModel
     [MirrorName("c")]
     private readonly Dictionary<ISpecTableColumn, SpecTableCalculatableWrapper> c__ = new();
 
+    public event global::Quire.Delegate1<IEquationModel> CellAdded;
+
+    public event global::Quire.Delegate0 TableChanged;
+
+    public event global::Quire.Delegate1<ISpecTableColumn> ColumnAdded;
+
+    public event global::Quire.Delegate1<ISpecTableColumn> ColumnRemoved;
+
+    public event global::Quire.Delegate0 RequestRemove;
+
+    public event global::System.Action RequestClearSelection;
+
+    public event global::System.Action<int, int> RequestAddSelection;
+
+    public event global::System.Action RequestUpdateCellsVisibility;
+
+    public event global::System.Action<bool> RestrictedReadonlyChanged;
+
     private bool m;
 
     private static readonly string n;
@@ -31,13 +49,54 @@ public partial class SpecTableModel
 
     public int ColumnCount => b__.Count;
 
-    internal int NumberOfDataCells => b__.Count != 0 ? b__[0].DataCellCount : 1;
+    internal int e()
+    {
+        if (b__.Count != 0)
+        {
+            return b__[0].DataCellCount;
+        }
 
-    internal int CellCount => b__[0].CellCount;
+        return 1;
+    }
 
-    public string SExpression => "(@TABLE " + string.Join(" ", Columns.Select(SpecTableColumn.GetSExpression)) + ")";
+    internal int d() => b__[0].CellCount;
 
-    public bool IsEmpty => b__.All(column => column.IsEmpty);
+    public string SExpression
+    {
+        // The Mathcad getter emits initlocals False for its cached method-group delegate.
+        [global::System.Runtime.CompilerServices.SkipLocalsInit]
+        get => "(@TABLE " + string.Join(
+            " ",
+            Columns.Select(k_.a ?? (k_.a = new global::System.Func<ISpecTableColumn, string>(SpecTableColumn.GetSExpression)))) + ")";
+    }
+
+    public bool IsRestrictedReadOnly => m;
+
+    public bool IsEmpty => b__.All(l_.g ??= l_.a_.a);
+
+    public bool InCustomInitialization
+    {
+        get
+        {
+            DebugTools.DevAssert(Columns == null || Columns.All(a), null);
+            return o;
+        }
+        set
+        {
+            m_ closure = new();
+            closure.a_ = value;
+            if (o == closure.a_)
+            {
+                return;
+            }
+
+            o = closure.a_;
+            if (Columns != null)
+            {
+                Columns.Each(closure.a);
+            }
+        }
+    }
 
     static SpecTableModel()
     {
@@ -49,7 +108,12 @@ public partial class SpecTableModel
 
     public bool IsExtraDataCellOrEmptyScale(IEquationModel cell)
     {
-        if (cell == null || !cell.EquationRoot.IsPlaceholder)
+        if (cell == null)
+        {
+            return false;
+        }
+
+        if (!cell.EquationRoot.IsPlaceholder)
         {
             return false;
         }
@@ -97,7 +161,7 @@ public partial class SpecTableModel
 
     public bool IsRowEmpty(int rowIndex)
     {
-        if (rowIndex < 0 || rowIndex >= NumberOfDataCells + 2)
+        if (rowIndex < 0 || rowIndex >= e() + 2)
         {
             return true;
         }
@@ -133,16 +197,18 @@ public partial class SpecTableModel
         }
         else
         {
-            AddColumn(Direction.Right, NumberOfDataCells - 1, ColumnCount - 1);
+            AddColumn(Direction.Right, e() - 1, ColumnCount - 1);
         }
     }
 
     public void AddRowAtEnd()
     {
-        if (ColumnCount > 0)
+        if (ColumnCount <= 0)
         {
-            a(Direction.Down, CellCount - 1, ColumnCount - 1, 0);
+            return;
         }
+
+        a(Direction.Down, d() - 1, ColumnCount - 1, 0);
     }
 
     public ISpecTableMemento CreateMemento() => new SpecTableMemento(Columns);
@@ -234,7 +300,7 @@ public partial class SpecTableModel
 
     public void Commit()
     {
-        c__.Values.Each(wrapper => wrapper.Commit());
+        c__.Values.Each(l_.f ??= l_.a_.a);
     }
 
     [MirrorVerified("Release IL")]
@@ -262,9 +328,9 @@ public partial class SpecTableModel
         {
             column.SetRestrictedReadonly(m);
         }
-        if (l != null)
+        if (RestrictedReadonlyChanged != null)
         {
-            l(m);
+            RestrictedReadonlyChanged(m);
         }
     }
 
@@ -288,6 +354,8 @@ public partial class SpecTableModel
 
     partial class l_
     {
+        static l_() => a_ = new l_();
+
         [MirrorVerified("Release IL")]
         public l_() { }
 
@@ -311,7 +379,11 @@ public partial class SpecTableModel
     {
         [MirrorVerified("Release IL")]
         public m_() { }
+
+        internal void a(ISpecTableColumn column) => column.InCustomInitialization = a_;
     }
+
+    private bool a(ISpecTableColumn column) => column.InCustomInitialization == o;
 
     [MirrorOf("Ptc.EquationEditor.SpecTable.Model.SpecTableModel+n, Ptc.EquationEditor")]
     private sealed partial class n_ :
@@ -335,7 +407,11 @@ public partial class SpecTableModel
         [MirrorName("e")]
         private global::System.Collections.Generic.List<ISpecTableColumn>.Enumerator e_;
 
-        public n_(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+        public n_(int A_0)
+        {
+            a_ = A_0;
+            c_ = global::System.Environment.CurrentManagedThreadId;
+        }
 
         void global::System.IDisposable.Dispose() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
