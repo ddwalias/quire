@@ -318,38 +318,7 @@ public partial class VisualDataCollection
         }
     }
     public global::System.Collections.Generic.IEnumerator<global::Quire.Controls.Plots.Contour.View.VisualData> GetEnumerator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private global::Quire.Controls.Plots.Contour.View.VisualData CreateContourVisualData(global::Quire.Controls.Plots.Contour.Model.ContourLogicalData contourLogicalData)
-    {
-        VisualData visualData = CreateVisualDataRaw(contourLogicalData);
-        BindingOperations.SetBinding(binding: new Binding
-        {
-            Source = this,
-            Path = new PropertyPath(LabelFormatterProperty)
-        }, target: (DependencyObject)(object)visualData, dp: VisualData.LabelFormatterProperty);
-        BindingOperations.SetBinding(binding: new Binding
-        {
-            Source = this,
-            Path = new PropertyPath("Stroke")
-        }, target: (DependencyObject)(object)visualData, dp: VisualData.StrokeProperty);
-        BindingOperations.SetBinding((DependencyObject)(object)visualData, VisualData.DashStyleProperty, new Binding
-        {
-            Source = this,
-            Path = new PropertyPath("DashStyle")
-        });
-        BindingOperations.SetBinding((DependencyObject)(object)visualData, VisualData.StrokeThicknessProperty, new Binding
-        {
-            Source = this,
-            Path = new PropertyPath("LineWeight")
-        });
-        BindingOperations.SetBinding((DependencyObject)(object)visualData, VisualData.LabelVisibilityProperty, new Binding
-        {
-            Source = this,
-            Mode = BindingMode.OneWay,
-            Path = new PropertyPath(LabelVisibilityProperty)
-        });
-        visualData.LabelValue = contourLogicalData.ZLevel;
-        return visualData;
-    }
+    private global::Quire.Controls.Plots.Contour.View.VisualData CreateContourVisualData(global::Quire.Controls.Plots.Contour.Model.ContourLogicalData contourLogicalData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     private VisualData CreateVisualDataRaw(ContourLogicalData contourLogicalData)
     {

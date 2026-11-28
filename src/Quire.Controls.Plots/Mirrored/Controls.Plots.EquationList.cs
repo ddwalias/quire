@@ -459,32 +459,7 @@ public partial class EquationList
     {
         SetMinMaxWidth(MaxListWidth, 0.0);
     }
-    public void ArrangeEquationsHorizontally()
-    {
-        if (MaxListWidth == 0.0)
-        {
-            SetMinMaxWidth();
-        }
-        double totalWidth = 0.0;
-        if (Visibility == Visibility.Collapsed)
-        {
-            foreach (EquationListItem item in EquationListGrid.Children.OfType<EquationListItem>())
-            {
-                FrameworkElement frameworkElement = (FrameworkElement)item.Equation;
-                ForceMeasure(frameworkElement);
-                double widthBeforeAdding = totalWidth;
-                Size desiredSize = frameworkElement.DesiredSize;
-                double widthAfterAdding = widthBeforeAdding + desiredSize.Width;
-                totalWidth = widthAfterAdding;
-            }
-            totalWidth += (double)(EquationCount * ItemMargin);
-        }
-        else
-        {
-            totalWidth = EquationListGrid.Children.OfType<EquationListItem>().Sum((EquationListItem item) => item.Equation.ActualWidth) + (double)(EquationCount * ItemMargin);
-        }
-        Width = totalWidth;
-    }
+    public void ArrangeEquationsHorizontally() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void SetMinMaxWidth(double previousWidth, double newWidth) {
 		if (EquationListGrid.Children.OfType<EquationListItem>().IsNullOrEmpty())
 		{
