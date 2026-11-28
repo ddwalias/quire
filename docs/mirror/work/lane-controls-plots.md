@@ -1123,3 +1123,9 @@
 - Exact: both accessors for `PrimaryYAxisEquationDataObjects`, `XAxisEquationDataObjects`, `PlotLegendDataObject`, `PlotTitleDataObject`, `PlotXAxisTitleForXamlSerialization`, `PlotYAxisTitleForXamlSerialization`, `PlotXAxisForXamlSerialization`, `PlotYAxisForXamlSerialization`, and `PlotGraphSizeForXamlSerialization`; plus `GetPlotLegendItemsDataObjects` and `SetPlotLegendItemsDataObjects`.
 - Release IL: PASS — 4624 checked; 0 failures.
 - Closure anchors from attempted PlotControl bodies, reverted where they did not match: `BuildLabelsList` b105 vs b114 (+9); `UpdatePlotTitlePlaceholderVisibility` b149 vs b163 (+14); `AnySelectedTraceIsForcedToDensityPoints` b186 vs b202 (+16); `AnySelectedTraceIsRestrictedToDensityPointsOrSolidLine` b187 vs b203 (+16); `AllSelectedTracesSupportDensityPoints` b188 vs b204 (+16); `IsDensityUsedForAnySelectedTrace` b189 vs b205 (+16); `ToggleAxisTitleVisibilityExecuted` DisplayClass200 vs DisplayClass216 (+16); `TogglePlotLegendVisibilityExecuted` DisplayClass202 vs DisplayClass218 (+16). These members remain placeholders pending layout calibration.
+
+## Orca task `task_3b0fb5d1b5ec` — PlotControl plain helpers batch
+
+- Exact members: `ShouldSerializeProperty`, `Dispose`, `CompareDouble`, `SelectedTracesChanged`, `AddEquations(XyEquation)`, `BuildPlotXmlNodeFromChildren`, `DeserializeEpilog`, and `RetryDelegateFocusAfterResizeEventsInitialized` (8 exact implementations).
+- Release IL (`release_il.py --base origin/main --project Quire.Controls.Plots`): PASS; 4632 checked; 0 failures. Lint (`lint.py --base origin/main`): PASS.
+- `UpdateTraceNumOfPoints`, `ForceMc14GraphSize`, `ArrangeEquationsHorizontally`, and `PlotLegendPropertyChanged` attempts were reverted after IL mismatches; remaining closure anchor deltas are recorded in the calibration sections above.

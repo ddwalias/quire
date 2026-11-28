@@ -1355,7 +1355,15 @@ public partial class PlotControl
 		};
 	}
     public override void DelegateFocus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void RetryDelegateFocusAfterResizeEventsInitialized(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void RetryDelegateFocusAfterResizeEventsInitialized(object sender, global::System.EventArgs e)
+    {
+        if (!_resizeEventsInitialized)
+        {
+            return;
+        }
+        LayoutUpdated -= RetryDelegateFocusAfterResizeEventsInitialized;
+        DelegateFocus();
+    }
     private int IndexByX(global::Quire.Controls.Plots.Presenter.ITraceModel traceModel) {
 		return _rangeAxis.EquationList.IndexOf(traceModel.GetEquation(AxesIndex.Range));
 	}
@@ -1428,8 +1436,40 @@ public partial class PlotControl
     }
     protected override bool ErrorIsNotNull { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     protected override string ErrorMessage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    private static void SelectedTracesChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected override bool ShouldSerializeProperty(global::System.Windows.DependencyProperty dp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void SelectedTracesChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e)
+    {
+        PlotControl plotControl = d as PlotControl;
+        if (AssertionE.Failed == (AssertionE)DebugTools.DevAssert(plotControl != null, null))
+        {
+            return;
+        }
+        if (e.OldValue is global::System.Collections.Generic.List<global::Quire.Controls.Plots.Presenter.IPlotTrace> list)
+        {
+            foreach (global::Quire.Controls.Plots.Presenter.IPlotTrace item in list)
+            {
+                item.NumberOfPointsChanged -= plotControl.UpdateSelectedTracesNumOfPointsProperty;
+                item.IsNumOfPointsMutableChanged -= plotControl.UpdateSelectedTracesNumOfPointsProperty;
+            }
+        }
+        if (e.NewValue is global::System.Collections.Generic.List<global::Quire.Controls.Plots.Presenter.IPlotTrace> list2)
+        {
+            foreach (global::Quire.Controls.Plots.Presenter.IPlotTrace item2 in list2)
+            {
+                item2.NumberOfPointsChanged += plotControl.UpdateSelectedTracesNumOfPointsProperty;
+                item2.IsNumOfPointsMutableChanged += plotControl.UpdateSelectedTracesNumOfPointsProperty;
+            }
+        }
+        plotControl.ShowHideErrorMessage();
+        plotControl.UpdateSelectedTracesNumOfPointsProperty();
+    }
+    protected override bool ShouldSerializeProperty(global::System.Windows.DependencyProperty dp)
+    {
+        if (dp == SelectedTracesProperty)
+        {
+            return false;
+        }
+        return base.ShouldSerializeProperty(dp);
+    }
     public global::Quire.Controls.Plots.Presenter.IPlotTrace AddTrace()
     {
         PlotTrace plotTrace = Graph.AddTrace();
@@ -1480,7 +1520,18 @@ public partial class PlotControl
 			PlotLegendPositionsIndexChanged(PlotLegendPositionIndex);
 		}
 	}
-    public void AddEquations(global::Quire.Controls.Plots.XyEquation xyEquation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void AddEquations(global::Quire.Controls.Plots.XyEquation xyEquation)
+    {
+        if (xyEquation != null && xyEquation.XsExpression != null && xyEquation.YsExpression != null)
+        {
+            RangeAxis.AddEquation(xyEquation.XsExpression);
+            PrimaryResultAxis.AddEquation(xyEquation.YsExpression);
+        }
+        else
+        {
+            DebugTools.DevAssert(false, null);
+        }
+    }
     public int ErrorCount() {
 		int errorCount = 0;
 		for (int index = 0; index < Graph.Count; index++)
@@ -1724,16 +1775,63 @@ public partial class PlotControl
     internal double GraphMinWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     private bool IsNumberOfPointsAvailable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     public override bool InCustomInitialization { get => base.InCustomInitialization; set => base.InCustomInitialization = value; }
-    public override void Dispose() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public override void Dispose()
+    {
+        for (int num = Traces.Length - 1; num > -1; num--)
+        {
+            global::Quire.Controls.Plots.Presenter.IPlotTrace trace = Traces[num];
+            RemoveTrace(trace);
+        }
+        SizeChanged -= PlotControlSizeChanged;
+        LayoutUpdated -= OnLayoutUpdated;
+        if (_graphPlaceholder != null)
+        {
+            _graphPlaceholder.SizeChanged -= GraphSizeChanged;
+        }
+        if (_rangeEquations != null)
+        {
+            _rangeEquations.SizeChanged -= XEquationsSizeChanged;
+        }
+        if (_resultEquations != null)
+        {
+            _resultEquations.SizeChanged -= YEquationsSizeChanged;
+        }
+        if (_plotLegend != null)
+        {
+            _plotLegend.SizeChanged -= PlotLegendSizeChanged;
+        }
+    }
     private static global::System.Xml.XmlNode ConvertToWorkseetXmlDocumentAndValidate(global::Quire.PersistentDataObjects.plotType plotType, bool withOverrides) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void AssertPlotDataXml(global::Quire.PersistentDataObjects.plotType dummyPlotType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     internal PlotItemPlaceholder XAxisTitlePlaceholder { get; set; }
     private static void CompareXmls(global::System.Xml.XmlNode node1, global::System.Xml.XmlNode node2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static bool CompareDouble(double d1, double d2, int digits) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static bool CompareDouble(double d1, double d2, int digits)
+    {
+        if (d1.CompareTo(d2) == 0)
+        {
+            return true;
+        }
+        double firstLogMagnitude = global::System.Math.Round(global::System.Math.Log10(global::System.Math.Abs(d1)));
+        double secondLogMagnitude = global::System.Math.Round(global::System.Math.Log10(global::System.Math.Abs(d2)));
+        if (firstLogMagnitude != secondLogMagnitude)
+        {
+            return false;
+        }
+        double tolerance = global::System.Math.Pow(10.0, firstLogMagnitude - (double)digits);
+        return global::System.Math.Abs(d1 - d2) < tolerance;
+    }
     protected virtual bool SetGraphSize(int numCells) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void ForceMc14GraphSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static global::System.Xml.XmlNode BuildPlotXmlNodeFromChildren(string nodeName, global::System.Xml.XmlNode[] nodes, global::System.Xml.XmlNamespaceManager namespaceManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static global::System.Xml.XmlNode BuildPlotXmlNodeFromChildren(string nodeName, global::System.Xml.XmlNode[] nodes, global::System.Xml.XmlNamespaceManager namespaceManager)
+    {
+        global::System.Xml.XmlElement xmlElement = nodes[0].OwnerDocument.CreateElement(nodeName, namespaceManager.DefaultNamespace);
+        foreach (global::System.Xml.XmlNode newChild in nodes)
+        {
+            xmlElement.AppendChild(newChild);
+        }
+        return xmlElement;
+    }
     public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void ChangeNumOfPointsCommandExecute(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) {
@@ -1757,7 +1855,10 @@ public partial class PlotControl
 	}
     private int CalculateNumberOfPointsInSelectedTraces() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    public override void DeserializeEpilog() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public override void DeserializeEpilog()
+    {
+        _model.DeserializeEpilog(SerializationHelperUtils.IsConvertedFromMathcad14((global::System.Windows.DependencyObject)this));
+    }
     protected override void PropagateTextStyleChangedHandler() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     protected override void PropagateInitialTextFormat() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
