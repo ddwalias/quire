@@ -55,7 +55,38 @@ public partial class EditableComboBoxVisualTable : global::Quire.Controls.Core.V
 
     public event global::System.Action<bool> RequestCloseEditingMode;
 
-    internal EditableComboBoxVisualTable(global::Quire.Controls.InputControls.EditableComboBoxViewModel viewModel, global::Quire.Controls.InputControls.EditableComboBoxTableCellsFontFormats cellsFontFormats, global::Quire.Controls.Core.ExtendedFont operatorFormat) : base(default(global::Quire.Controls.Core.TableLayoutManager)) { throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    internal EditableComboBoxVisualTable(global::Quire.Controls.InputControls.EditableComboBoxViewModel viewModel, global::Quire.Controls.InputControls.EditableComboBoxTableCellsFontFormats cellsFontFormats, global::Quire.Controls.Core.ExtendedFont operatorFormat) : base(new EditableComboBoxLayoutManager())
+    {
+        _viewModel = viewModel;
+        DataContext = _viewModel;
+        InitializeComponent();
+        Loaded += (object sender, global::System.Windows.RoutedEventArgs args) =>
+        {
+            GetChildElemAtRowColumn(_viewModel.SelectedTableRowIndex, 0)?.Focus();
+        };
+        Focusable = true;
+        ColumnSpacing = 4d;
+        RowSpacing = 3d;
+        Padding = new global::System.Windows.Thickness(6d, 4d, 6d, 4d);
+        Margin = new global::System.Windows.Thickness(0d);
+        ColumnAlignment = global::Quire.Controls.Core.ColumnAlignments.CenterAlign;
+        BindCommands();
+        AddHandler(global::System.Windows.UIElement.GotFocusEvent, (global::System.Windows.RoutedEventHandler)((object sender, global::System.Windows.RoutedEventArgs args) =>
+        {
+            _viewModel.SelectedTableRowIndex = GetCellDataFromTextBox(args.Source, out _)?.Row ?? _viewModel.SelectedTableRowIndex;
+        }), true);
+        AddHandler(global::System.Windows.Controls.Primitives.TextBoxBase.TextChangedEvent, (global::System.Windows.Controls.TextChangedEventHandler)((object sender, global::System.Windows.Controls.TextChangedEventArgs args) =>
+        {
+            FireContentChanged();
+        }));
+        AddOrRemoveLostFocusHandler(true);
+        _viewModel.CellsAdded += HandleNewCellsAdded;
+        _viewModel.RowsDeleted += HandleRowsDeleted;
+        _viewModel.ColumnsDeleted += HandleColumnsDeleted;
+        _viewModel.PropertyChanged += OnPropertyChanged;
+        IsVisibleChanged += OnIsVisibleChanged;
+        Refresh(cellsFontFormats, operatorFormat);
+    }
 
     private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
     {
@@ -65,7 +96,21 @@ public partial class EditableComboBoxVisualTable : global::Quire.Controls.Core.V
         }
     }
 
-    public void Refresh(global::Quire.Controls.InputControls.EditableComboBoxTableCellsFontFormats newCellsFontFormats, global::Quire.Controls.Core.ExtendedFont operatorFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void Refresh(global::Quire.Controls.InputControls.EditableComboBoxTableCellsFontFormats newCellsFontFormats, global::Quire.Controls.Core.ExtendedFont operatorFormat)
+    {
+        CellsFontFormats = newCellsFontFormats;
+        OperatorFormat = operatorFormat;
+        if (!IsVisualDataEqualsViewModelTableData())
+        {
+            Children.Clear();
+            UpdateRowsColumnsIndex();
+            _viewModel.AllCells.Each((global::Quire.Controls.InputControls.ICellData cellData) =>
+            {
+                Children.Add(BuildTextBoxControl(cellData));
+            });
+            global::Quire.DebugTools.DevAssert(IsCellCountValid(), null);
+        }
+    }
 
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -89,7 +134,12 @@ public partial class EditableComboBoxVisualTable : global::Quire.Controls.Core.V
 
     private void BindCommands() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private void AddGivenCommandKeyGesturesToInstanceInputBinding(global::System.Windows.Input.RoutedCommand command) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void AddGivenCommandKeyGesturesToInstanceInputBinding(global::System.Windows.Input.RoutedCommand command)
+    {
+        InputBindings.AddRange(global::Quire.Controls.EquationCommands.GetCommandKeyGestures(command)
+            .Select((global::System.Windows.Input.KeyGesture keyGesture) => new global::System.Windows.Input.KeyBinding(command, keyGesture))
+            .ToList());
+    }
 
     private void CanInsertRow(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -118,7 +168,21 @@ public partial class EditableComboBoxVisualTable : global::Quire.Controls.Core.V
 
     private void HandleOnClearSelectedCells(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private void HandleNewCellsAdded(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.ICellData> newCells) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void HandleNewCellsAdded(global::System.Collections.Generic.IEnumerable<global::Quire.Controls.InputControls.ICellData> newCells)
+    {
+        if (!global::Quire.DebugTools.DevAssert(newCells.IsNotEmpty(), null).Failed)
+        {
+            UpdateRowsColumnsIndex();
+            newCells.Select((global::Quire.Controls.InputControls.ICellData cell) => (global::Quire.Matrices.MatrixHelper.IndexOf(cell.Row, cell.Column, Columns), cell: cell))
+                .ToList()
+                .OrderBy(((int index, global::Quire.Controls.InputControls.ICellData cell) item) => item.index)
+                .ToList()
+                .Each(((int index, global::Quire.Controls.InputControls.ICellData cell) item) =>
+                {
+                    Children.Insert(item.index, BuildTextBoxControl(item.cell));
+                });
+        }
+    }
 
     private void MoveFocusedElementAndUpdateSelectedRowAfterRowsDeleted(int fromRowIndex, int toRowIndex, bool isFinishedEditingMode) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -149,7 +213,30 @@ public partial class EditableComboBoxVisualTable : global::Quire.Controls.Core.V
         return ComboBoxCellDataType.Values;
     }
 
-    private global::System.Windows.Controls.TextBox BuildTextBoxControl(global::Quire.Controls.InputControls.ICellData cell) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private global::System.Windows.Controls.TextBox BuildTextBoxControl(global::Quire.Controls.InputControls.ICellData cell)
+    {
+        global::System.Windows.Controls.TextBox textBox = new global::System.Windows.Controls.TextBox
+        {
+            DataContext = cell,
+            FontSize = global::Quire.Wpf.WpfUtils.PointsToDips(global::Quire.Controls.Core.FontConstants.DefaultMathFontSizeInPoints),
+            AcceptsReturn = false
+        };
+        global::Quire.EquationEditor.Tree.ComboBoxCellDataType cellDataType = GetCellDataType(cell);
+        global::Quire.Wpf.WpfUtils.AddPreemptiveCommandBinding(textBox, global::System.Windows.Input.ApplicationCommands.Paste, (object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) =>
+        {
+            _viewModel.TextBox_OnPaste(cell, cellDataType);
+        }, (object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) =>
+        {
+            _viewModel.TextBox_CanPaste(cellDataType, args);
+        }, true);
+        SetTextBoxCellFontFormatProperties(cell, textBox);
+        textBox.InputBindings.AddRange(new global::System.Windows.Input.KeyBinding[2]
+        {
+            new global::System.Windows.Input.KeyBinding(global::Quire.Controls.EquationCommands.InsertColumn, global::Quire.Controls.EquationCommands.GetCommandFirstKeyGesture(global::Quire.Controls.EquationCommands.InsertColumn)),
+            new global::System.Windows.Input.KeyBinding(global::Quire.Controls.EquationCommands.DeleteColumn, global::Quire.Controls.EquationCommands.GetCommandFirstKeyGesture(global::Quire.Controls.EquationCommands.DeleteColumn))
+        });
+        return textBox;
+    }
 
     private void FinishEditingAndFireRequestToCloseEditMode(bool shouldKeepFocus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -237,7 +324,19 @@ public partial class EditableComboBoxVisualTable : global::Quire.Controls.Core.V
 
     private void OnPreviewMoveRightByCharacter(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-    private void MoveFocusFromElementAfterRowColumnWereInserted(global::System.Windows.Input.FocusNavigationDirection direction, global::Quire.EquationEditor.View.IReadonlyCellData cellData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void MoveFocusFromElementAfterRowColumnWereInserted(global::System.Windows.Input.FocusNavigationDirection direction, global::Quire.EquationEditor.View.IReadonlyCellData cellData)
+    {
+        if (global::Quire.DebugTools.DevAssert(!IsMeasureValid, null).Failed)
+        {
+            InvalidateMeasure();
+        }
+        LayoutUpdated += MoveFocusInDirection;
+        void MoveFocusInDirection(object sender, global::System.EventArgs args)
+        {
+            MoveFocusedElement(direction, cellData);
+            LayoutUpdated -= MoveFocusInDirection;
+        }
+    }
 
     private void MoveFocusedElement(global::System.Windows.Input.FocusNavigationDirection direction, global::Quire.EquationEditor.View.IReadonlyCellData cellData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
