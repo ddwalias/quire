@@ -344,6 +344,72 @@ public partial class SpecTableModel
         throw new global::System.ArgumentException("Cell not found", "cell");
     }
 
+    public bool CanNavigationBetweenCells(
+        global::Quire.EquationEditor.IEquationModel cell,
+        global::Quire.Direction navigationDirection,
+        bool isJumpNavigation)
+    {
+        if (cell == null)
+        {
+            return false;
+        }
+
+        if (!isJumpNavigation)
+        {
+            global::Quire.Discrete2DCoordinate coordinate = b(cell);
+            global::Quire.Discrete2DCoordinate nextCoordinate = b(coordinate, navigationDirection);
+            ISpecTableColumn firstColumn = GetColumn(0);
+            if (nextCoordinate.Second < 0
+                || nextCoordinate.Second >= b__.Count
+                || nextCoordinate.First < 0
+                || nextCoordinate.First >= firstColumn.CellCount)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        return true;
+    }
+
+    public void HandleNavigationBetweenCells(
+        global::Quire.EquationEditor.IEquationModel cell,
+        global::Quire.Direction navigationDirection,
+        bool isJumpNavigation)
+    {
+        global::Quire.Discrete2DCoordinate coordinate = b(cell);
+        if (!isJumpNavigation)
+        {
+            a(navigationDirection, coordinate);
+            return;
+        }
+
+        if ((navigationDirection == global::Quire.Direction.Right && coordinate.Second == b__.Count - 1)
+            || (navigationDirection == global::Quire.Direction.Left && coordinate.Second == 0))
+        {
+            return;
+        }
+
+        a(navigationDirection, coordinate).MoveToRegionExtreme(navigationDirection);
+    }
+
+    public void HandleOnTraverseForward(global::Quire.EquationEditor.IEquationModel equationModel)
+    {
+        global::Quire.Discrete2DCoordinate coordinate = b(equationModel);
+        if (!IsRestrictedReadOnly && coordinate.Second == b__.Count - 1 && coordinate.First == e() + 1)
+        {
+            AddRowAtEnd();
+            coordinate.Second = 0;
+            coordinate.First++;
+            a(coordinate, global::Quire.Direction.Right);
+        }
+        else
+        {
+            a(global::Quire.Direction.Right, coordinate);
+        }
+    }
+
     public void HandleOnTraverseBackward(global::Quire.EquationEditor.IEquationModel equationModel)
     {
         global::Quire.Discrete2DCoordinate coordinate = b(equationModel);

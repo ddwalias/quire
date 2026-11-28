@@ -38,12 +38,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
     [global::Quire.Mirror.MirrorStub]
     public void AddRow(global::Quire.EquationEditor.IEquationModel cell, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool CanNavigationBetweenCells(global::Quire.EquationEditor.IEquationModel cell, global::Quire.Direction navigationDirection, bool isJumpNavigation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleNavigationBetweenCells(global::Quire.EquationEditor.IEquationModel cell, global::Quire.Direction navigationDirection, bool isJumpNavigation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleOnTraverseForward(global::Quire.EquationEditor.IEquationModel equationModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void a(global::Quire.Direction A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void HandleRemoveOrClearSelection(global::Quire.EquationEditor.IEquationModel equationModel, int cellIndexA, int cellIndexB, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
