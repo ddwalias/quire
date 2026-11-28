@@ -11,18 +11,4 @@ namespace Quire.DevComponents.WpfRibbon;
 [global::Quire.Mirror.MirrorOf("DevComponents.WpfRibbon.ComboBoxPartColorKeys, DevComponents.WpfRibbon")]
 public static partial class ComboBoxPartColorKeys
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static string Background;
-    [global::Quire.Mirror.MirrorStub]
-    public static string Border;
-    [global::Quire.Mirror.MirrorStub]
-    public static string Foreground;
-    [global::Quire.Mirror.MirrorStub]
-    public static string ExpandForeground;
-    [global::Quire.Mirror.MirrorStub]
-    public static string ExpandBackground;
-    [global::Quire.Mirror.MirrorStub]
-    public static string ExpandBorder;
-    [global::Quire.Mirror.MirrorStub]
-    public static string ExpandBorderInner;
 }

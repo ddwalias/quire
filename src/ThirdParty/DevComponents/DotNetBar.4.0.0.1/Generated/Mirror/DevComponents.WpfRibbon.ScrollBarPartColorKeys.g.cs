@@ -11,20 +11,4 @@ namespace Quire.DevComponents.WpfRibbon;
 [global::Quire.Mirror.MirrorOf("DevComponents.WpfRibbon.ScrollBarPartColorKeys, DevComponents.WpfRibbon")]
 public static partial class ScrollBarPartColorKeys
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static string Background;
-    [global::Quire.Mirror.MirrorStub]
-    public static string Border;
-    [global::Quire.Mirror.MirrorStub]
-    public static string ButtonBackground;
-    [global::Quire.Mirror.MirrorStub]
-    public static string ButtonForeground;
-    [global::Quire.Mirror.MirrorStub]
-    public static string ButtonBorder;
-    [global::Quire.Mirror.MirrorStub]
-    public static string ThumbBackground;
-    [global::Quire.Mirror.MirrorStub]
-    public static string ThumbForeground;
-    [global::Quire.Mirror.MirrorStub]
-    public static string ThumbBorder;
 }

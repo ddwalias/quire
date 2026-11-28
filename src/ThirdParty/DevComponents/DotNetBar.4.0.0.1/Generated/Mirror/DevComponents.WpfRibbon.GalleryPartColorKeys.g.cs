@@ -11,8 +11,4 @@ namespace Quire.DevComponents.WpfRibbon;
 [global::Quire.Mirror.MirrorOf("DevComponents.WpfRibbon.GalleryPartColorKeys, DevComponents.WpfRibbon")]
 public static partial class GalleryPartColorKeys
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static string Background;
-    [global::Quire.Mirror.MirrorStub]
-    public static string Border;
 }

@@ -11,10 +11,4 @@ namespace Quire.DevComponents.WpfRibbon;
 [global::Quire.Mirror.MirrorOf("DevComponents.WpfRibbon.KeyTipColors, DevComponents.WpfRibbon")]
 internal partial class KeyTipColors
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush Background;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Pen Border;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush Foreground;
 }

@@ -11,14 +11,4 @@ namespace Quire.DevComponents.WpfRibbon;
 [global::Quire.Mirror.MirrorOf("DevComponents.WpfRibbon.ToolTipPartColorKeys, DevComponents.WpfRibbon")]
 public static partial class ToolTipPartColorKeys
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static string Background;
-    [global::Quire.Mirror.MirrorStub]
-    public static string Border;
-    [global::Quire.Mirror.MirrorStub]
-    public static string Foreground;
-    [global::Quire.Mirror.MirrorStub]
-    public static string SeparatorBackground;
-    [global::Quire.Mirror.MirrorStub]
-    public static string SeparatorBorder;
 }

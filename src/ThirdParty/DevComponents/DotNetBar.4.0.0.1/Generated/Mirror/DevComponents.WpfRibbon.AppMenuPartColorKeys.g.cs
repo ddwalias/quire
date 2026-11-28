@@ -11,26 +11,4 @@ namespace Quire.DevComponents.WpfRibbon;
 [global::Quire.Mirror.MirrorOf("DevComponents.WpfRibbon.AppMenuPartColorKeys, DevComponents.WpfRibbon")]
 public static partial class AppMenuPartColorKeys
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static string Background;
-    [global::Quire.Mirror.MirrorStub]
-    public static string BackgroundTop;
-    [global::Quire.Mirror.MirrorStub]
-    public static string BackgroundBottom;
-    [global::Quire.Mirror.MirrorStub]
-    public static string Border;
-    [global::Quire.Mirror.MirrorStub]
-    public static string BorderInner;
-    [global::Quire.Mirror.MirrorStub]
-    public static string ContentBorder;
-    [global::Quire.Mirror.MirrorStub]
-    public static string ContentBorderInner;
-    [global::Quire.Mirror.MirrorStub]
-    public static string ContentBackground;
-    [global::Quire.Mirror.MirrorStub]
-    public static string MruBackground;
-    [global::Quire.Mirror.MirrorStub]
-    public static string MruBorder;
-    [global::Quire.Mirror.MirrorStub]
-    public static string MruBorderLight;
 }

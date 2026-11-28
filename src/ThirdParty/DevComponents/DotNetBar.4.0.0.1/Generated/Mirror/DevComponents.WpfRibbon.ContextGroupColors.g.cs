@@ -11,12 +11,4 @@ namespace Quire.DevComponents.WpfRibbon;
 [global::Quire.Mirror.MirrorOf("DevComponents.WpfRibbon.ContextGroupColors, DevComponents.WpfRibbon")]
 public static partial class ContextGroupColors
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static string Orange;
-    [global::Quire.Mirror.MirrorStub]
-    public static string Yellow;
-    [global::Quire.Mirror.MirrorStub]
-    public static string Magenta;
-    [global::Quire.Mirror.MirrorStub]
-    public static string Green;
 }

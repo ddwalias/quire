@@ -11,30 +11,4 @@ namespace Quire.DevComponents.WpfRibbon;
 [global::Quire.Mirror.MirrorOf("DevComponents.WpfRibbon.MenuItemColors, DevComponents.WpfRibbon")]
 public static partial class MenuItemColors
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static string MenuItemClass;
-    [global::Quire.Mirror.MirrorStub]
-    public static string MenuPopupClass;
-    [global::Quire.Mirror.MirrorStub]
-    public static string SeparatorClass;
-    [global::Quire.Mirror.MirrorStub]
-    public static string MenuPopupBorder;
-    [global::Quire.Mirror.MirrorStub]
-    public static string MenuPopupBackground;
-    [global::Quire.Mirror.MirrorStub]
-    public static string MenuPopupIconBackground;
-    [global::Quire.Mirror.MirrorStub]
-    public static string MenuPopupForeground;
-    [global::Quire.Mirror.MirrorStub]
-    public static string MenuItemMouseOverBorder;
-    [global::Quire.Mirror.MirrorStub]
-    public static string MenuItemMouseOverBackground;
-    [global::Quire.Mirror.MirrorStub]
-    public static string MenuItemCheckedBorder;
-    [global::Quire.Mirror.MirrorStub]
-    public static string MenuItemCheckedBackground;
-    [global::Quire.Mirror.MirrorStub]
-    public static string MenuItemDisabledForeground;
-    [global::Quire.Mirror.MirrorStub]
-    public static string SeparatorBorder;
 }

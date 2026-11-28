@@ -11,8 +11,4 @@ namespace Quire.DevComponents.WpfRibbon;
 [global::Quire.Mirror.MirrorOf("DevComponents.WpfRibbon.RibbonBarStateColorKeys, DevComponents.WpfRibbon")]
 public static partial class RibbonBarStateColorKeys
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static string Normal;
-    [global::Quire.Mirror.MirrorStub]
-    public static string Hover;
 }

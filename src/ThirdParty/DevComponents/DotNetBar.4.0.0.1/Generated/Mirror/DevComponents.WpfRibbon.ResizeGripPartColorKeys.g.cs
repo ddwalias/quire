@@ -11,8 +11,4 @@ namespace Quire.DevComponents.WpfRibbon;
 [global::Quire.Mirror.MirrorOf("DevComponents.WpfRibbon.ResizeGripPartColorKeys, DevComponents.WpfRibbon")]
 public static partial class ResizeGripPartColorKeys
 {
-    [global::Quire.Mirror.MirrorStub]
-    public static string ThumbForeground;
-    [global::Quire.Mirror.MirrorStub]
-    public static string ThumbBackground;
 }
