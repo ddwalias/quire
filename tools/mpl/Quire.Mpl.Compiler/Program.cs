@@ -407,7 +407,7 @@ static void CompileMplModule(string sourcePath, string outputPath, string instal
         if (File.Exists(Path.Combine(install, moduleAssembly + ".dll")))
             MplCompilerContext.ImportedTypes.TryAdd(importedModule + ".values", moduleAssembly);
     }
-    foreach (var typeName in new[] { "Mcd.DimVal", "Mcd.MatVal", "Mcd.NumVal", "Mpl.Run.Function", "Mpl.Run.DelegateFunction", "Mpl.Run.Cons" })
+    foreach (var typeName in new[] { "Mcd.DimVal", "Mcd.MatVal", "Mcd.NumVal", "Mpl.Run.Function", "Mpl.Run.DelegateFunction", "Mpl.Run.Cons", "Mpl.Run.VecBuilder" })
         MplCompilerContext.ImportedTypes.TryAdd(typeName, "mplrun");
     var functions = new List<(string Name, string[] Args, string Body)>();
     var globals = new List<(string Name, string? TypeName, bool Static, string Expression)>();
@@ -664,7 +664,9 @@ static FieldInfo ResolveExternalField(string qualifiedName, string install)
     }
     var type = types.Single();
     return type.GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
-        ?? throw new MissingFieldException(type.FullName, fieldName);
+        ?? throw new MissingFieldException($"{type.FullName}.{fieldName} (UTF-16: {string.Join("-", fieldName.Select(character => ((int)character).ToString("X4")))}); similar fields: "
+            + string.Join(", ", type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+                .Where(candidate => candidate.Name.StartsWith("mc_", StringComparison.Ordinal)).Select(candidate => candidate.Name).Take(12)));
 }
 
 static MethodInfo ResolveExternalMethod(string qualifiedName, int parameterCount, string install)
@@ -1353,11 +1355,15 @@ static void EmitCall(MplCall call,
     }
     if (function.Name == "AppException.Raise")
     {
+        if (call.Arguments.Count is < 1 or > 2)
+            throw new InvalidDataException("AppException.Raise supports one or two source arguments.");
         foreach (var argument in call.Arguments) EmitValue(argument, il, locals, arguments, methods, typeAliases, install);
         var runtime = Assembly.LoadFrom(Path.Combine(install, "mplrun.dll"));
         var appException = runtime.GetType("Mpl.Run.AppException", throwOnError: true)!;
-        var raise = appException.GetMethod("Raise", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static,
-            binder: null, [typeof(string)], modifiers: null) ?? throw new MissingMethodException(appException.FullName, "Raise");
+        var raise = appException.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+            .First(candidate => candidate.Name == "Raise" && candidate.GetParameters().Length == call.Arguments.Count
+                && candidate.GetParameters()[0].ParameterType == typeof(string)
+                && (call.Arguments.Count == 1 || candidate.GetParameters()[1].ParameterType == typeof(uint)));
         if (tail) il.Emit(OpCodes.Tailcall);
         il.Emit(OpCodes.Call, raise);
         return;
@@ -1737,7 +1743,10 @@ static void EmitInteger(int value, System.Reflection.Emit.Quire.Mpl.ILGenerator 
         case 7: il.Emit(OpCodes.Ldc_I4_7); break;
         case 8: il.Emit(OpCodes.Ldc_I4_8); break;
         case -1: il.Emit(OpCodes.Ldc_I4_M1); break;
-        default: il.Emit(OpCodes.Ldc_I4, value); break;
+        default:
+            if (value is >= sbyte.MinValue and <= sbyte.MaxValue) il.Emit(OpCodes.Ldc_I4_S, unchecked((byte)(sbyte)value));
+            else il.Emit(OpCodes.Ldc_I4, value);
+            break;
     }
 }
 
@@ -1780,9 +1789,12 @@ internal static class MplExpressionParser
         private readonly string[] _tokens;
         private int _position;
 
-        public Parser(string source) => _tokens = Regex.Matches(source,
-                """==|!=|:=|->|\?\?|\*\.|/\.|[A-Za-z_$][A-Za-z0-9_.$']*|[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?|"[^"]*"|\[|\]|\(|\)|,|;|\||:|=""")
-            .Select(match => match.Value).ToArray();
+        public Parser(string source)
+        {
+            _tokens = Regex.Matches(source,
+                    """==|!=|:=|->|\?\?|\*\.|/\.|[\p{L}_$][\p{L}\p{N}\p{S}_.$']*|[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?|"[^"]*"|\[|\]|\(|\)|,|;|\||:|=""")
+                .Select(match => match.Value).ToArray();
+        }
 
         public MplExpr Parse()
         {
@@ -1904,6 +1916,16 @@ internal static class MplExpressionParser
         private MplExpr ParseApplication()
         {
             var function = ParseAtom();
+            if (function is MplVariable && HasTopLevelCallComma() && Take("("))
+            {
+                var callArguments = new List<MplExpr>();
+                if (!Take(")"))
+                {
+                    do callArguments.Add(ParseExpression()); while (Take(","));
+                    Expect(")");
+                }
+                return callArguments.Count == 0 ? function : new MplCall(function, callArguments);
+            }
             if (Take(":="))
             {
                 if (function is not MplIndex index) throw new InvalidDataException("Assignment target must be an indexed map.");
@@ -1914,6 +1936,23 @@ internal static class MplExpressionParser
                 or "using" or "into" or "do" or ")" or "]" or "," or ";" or "|"))
                 arguments.Add(ParseAtom());
             return arguments.Count == 0 ? function : new MplCall(function, arguments);
+        }
+
+        private bool HasTopLevelCallComma()
+        {
+            if (_position >= _tokens.Length || _tokens[_position] != "(") return false;
+            var depth = 0;
+            var brackets = 0;
+            for (var index = _position; index < _tokens.Length; index++)
+            {
+                var token = _tokens[index];
+                if (token == "(") depth++;
+                else if (token == ")" && --depth == 0) return false;
+                else if (token == "[") brackets++;
+                else if (token == "]") brackets--;
+                else if (token == "," && depth == 1 && brackets == 0) return true;
+            }
+            return false;
         }
 
         private MplExpr ParseAtom()
@@ -1976,7 +2015,7 @@ internal static class MplExpressionParser
 
         private string ReadIdentifier()
         {
-            if (_position >= _tokens.Length || !Regex.IsMatch(_tokens[_position], @"\A[A-Za-z_$][A-Za-z0-9_.$']*\z"))
+            if (_position >= _tokens.Length || !Regex.IsMatch(_tokens[_position], @"\A[\p{L}_$][\p{L}\p{N}\p{S}_.$']*\z"))
                 throw new InvalidDataException($"Expected an identifier in Mpl expression at token {_position}: "
                     + (_position < _tokens.Length ? _tokens[_position] : "<end>"));
             return _tokens[_position++];
@@ -1991,7 +2030,8 @@ internal static class MplExpressionParser
 
         private void Expect(string token)
         {
-            if (!Take(token)) throw new InvalidDataException($"Expected '{token}' in Mpl expression.");
+            if (!Take(token)) throw new InvalidDataException($"Expected '{token}' in Mpl expression at token {_position}: "
+                + (_position < _tokens.Length ? _tokens[_position] : "<end>"));
         }
     }
 }
