@@ -203,14 +203,16 @@ The preceding calibrated closure parent is `ShouldPromptForFileNameOnSave` (`b__
 | `0x0600057c` | method | `HandleGoToPage` | `HandleGoToPage` |
 | `0x0600057d` | method | `OnDictionaryUpdated` | `OnDictionaryUpdated` |
 
-| Candidate member kind | Mathcad member | Quire declaration | Weight |
-|---|---|---|---:|
-| auto-property backing field | `<IsFeLinesInstance>k__BackingField` | explicit placeholder accessors; no backing field | +1 field |
-| auto-property backing field | `<OpenFileExceptionHandler>k__BackingField` | explicit placeholder accessors; no backing field | +1 field |
-| auto-property backing field | `<SaveFileExceptionHandler>k__BackingField` | explicit placeholder accessors; no backing field | +1 field |
-| field | `_mainDockWindowGroup` | no field; `MainDockWindowGroup` is an interface-typed placeholder property | +1 field |
+The direct MethodDef list has no missing named methods in this interval. The missing +4 is the compiler-generated nested type for `ShowFailedToOpenUrlMessage`, whose parent was a placeholder in Quire:
 
-These four field rows sum to +4, but three are declared before `HandleLaunchConverter`; their placement does not fit the failing interval by itself. The remaining ordinal attribution is unresolved until the candidate member-order inventory is compared with the compiled Release type.
+| Kind | Mathcad member in `<>c__DisplayClass358_0` | Quire before fix | Weight |
+|---|---|---|---:|
+| field | `<>4__this : SpiritMainWindow` | absent | +1 |
+| field | `url : string` | absent | +1 |
+| method | `.ctor()` | absent | +1 |
+| method | `<ShowFailedToOpenUrlMessage>b__0(Window, string)` | absent | +1 |
+
+The candidate implementation emitted the four members above, but its nested type was named `<>c__DisplayClass354_0`; Mathcad names it `<>c__DisplayClass358_0`. The Release gate therefore reports `ShowFailedToOpenUrlMessage` as non-exact (18 IL entries on each side, first difference at instruction 0), with the generated constructor and lambda method lacking Mathcad counterparts. The +4 member weight is accounted for by this closure shape, but the four-slot generated-type ordinal gap is not yet accounted for. The other direct methods/accessors in this MethodDef interval are present in the same order; the unresolved comparison is the nested generated type ordinal.
 
 ### `BindCommands` cached delegate field and lambdas
 
