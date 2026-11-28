@@ -303,6 +303,18 @@ public partial class MathNode
         }
     }
 
+    public MathNode SplitNode(int index)
+    {
+        int remainingCount = ChildCount - index;
+        MathNode[] splitChildren = new MathNode[remainingCount];
+        for (int childIndex = index; childIndex < ChildCount; childIndex++)
+        {
+            splitChildren[childIndex - index] = this[childIndex];
+        }
+        RemoveChildren(index, remainingCount);
+        return r.a_.a(DescriptorName, splitChildren);
+    }
+
     public MathNode RootNode
     {
         get

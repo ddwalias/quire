@@ -55,8 +55,6 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
     public bool ContainsOrIs(string mathNodeName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetConstantRlIdDownTheTree(int rlId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.MathNode SplitNode(int index) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.MathNode+a, Ptc.EquationEditor")]
     private sealed partial class a_ : global::Quire.EquationEditor.Tree.IMathNodeList, global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode>, global::System.Collections.IEnumerable
