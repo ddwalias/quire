@@ -31,4 +31,5 @@ internal sealed partial class Settings : global::Quire.ApplicationSettingsSafe
     public string LineWrappingSign { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     public global::System.Drawing.Color ComboBoxColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     public Settings() { }
+    static Settings() { throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
 }
