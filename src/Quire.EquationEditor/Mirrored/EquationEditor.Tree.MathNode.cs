@@ -257,6 +257,8 @@ public partial class MathNode
 
     public int NodeInfoValueLength => NodeInfoExtensions.ValueLength(NodeInfo, ValueType);
 
+    public MathNode Parent => a__;
+
     private void a(MathNode parent)
     {
         f_ command = new f_
