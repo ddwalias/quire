@@ -18,14 +18,8 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
     [global::Quire.Mirror.MirrorName("b")]
     private readonly global::Quire.EquationEditor.Tree.MathNode.a_ b__;
     [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("c")]
-    private string c__;
-    [global::Quire.Mirror.MirrorStub]
     [global::Quire.Mirror.MirrorName("d")]
     private global::Quire.EquationEditor.Tree.MathNodeDescriptor d__;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("e")]
-    private string e__;
     [global::Quire.Mirror.MirrorStub]
     protected bool f;
     [global::Quire.Mirror.MirrorStub]
@@ -51,10 +45,6 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
     public string LeftNeighborSExp { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode[] LeftNeighbors { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal MathNode(global::Quire.EquationEditor.Tree.MathNodeDescriptor A_0, global::Quire.EquationEditor.Tree.INodeInfo A_1, params global::Quire.EquationEditor.Tree.MathNode[] A_2) { }
-    [global::Quire.Mirror.MirrorStub]
-    internal MathNode(global::Quire.EquationEditor.Tree.MathNodeDescriptor A_0, global::Quire.EquationEditor.Tree.INodeInfo A_1, string A_2, params global::Quire.EquationEditor.Tree.MathNode[] A_3) { }
     [global::Quire.Mirror.MirrorStub]
     private void a(object A_0, global::Quire.EquationEditor.Tree.RequestRestoreInsertionPointEventArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

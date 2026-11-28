@@ -13,8 +13,32 @@ namespace Quire.EquationEditor.Tree;
 
 public partial class MathNode
 {
+    [MirrorName("c")]
+    private string c__ = string.Empty;
+    [MirrorName("e")]
+    private string e__ = string.Empty;
     private AlgorithmOptions g;
 
+    internal MathNode(MathNodeDescriptor descriptor, INodeInfo nodeInfo, params MathNode[] children)
+    {
+        MathNode[] childNodes = new MathNode[children.Length];
+        for (int index = 0; index < children.Length; index++)
+        {
+            childNodes[index] = children[index];
+        }
+        b__ = new a_(this, childNodes);
+        b__.a(this);
+        d__ = descriptor;
+        f = d__.IsEvaluation;
+        NodeInfo = CreateNodeInfo(descriptor.InfoType, nodeInfo);
+        g = new AlgorithmOptions();
+    }
+
+    internal MathNode(MathNodeDescriptor descriptor, INodeInfo nodeInfo, string algorithm, params MathNode[] children)
+        : this(descriptor, nodeInfo, children)
+    {
+        e__ = algorithm;
+    }
     public MathNode this[int index]
     {
         get => Children[index];
