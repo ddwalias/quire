@@ -12,11 +12,11 @@ namespace Quire.EquationEditor.SpecTable.Model;
 public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISpecTableModel, global::Quire.Controls.Core.ISupportCustomInitialization
 {
     [global::Quire.Mirror.MirrorStub]
+    private SpecTableModel(global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.MathNode> A_0) { }
+    [global::Quire.Mirror.MirrorStub]
     public SpecTableModel(string[,] data) { }
     [global::Quire.Mirror.MirrorStub]
     public SpecTableModel(int dataRows, int columns) { }
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.Undo.CompoundCommand f() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void AddColumn(global::Quire.Direction direction, int activeRow, int activeColumn) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

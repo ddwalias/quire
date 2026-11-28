@@ -30,7 +30,7 @@ public partial class SpecTableModel
 
     public event global::Quire.Delegate1<ISpecTableColumn> ColumnRemoved;
 
-    public event global::Quire.Delegate0 RequestRemove = l_.c_ ??= l_.a_.c;
+    public event global::Quire.Delegate0 RequestRemove;
 
     public event global::System.Action RequestClearSelection;
 
@@ -220,6 +220,23 @@ public partial class SpecTableModel
         return wrapper;
     }
 
+    private CompoundCommand f()
+    {
+        CompoundCommand command = new();
+        using (new CommandScope(command))
+        {
+            for (int rowIndex = d(); rowIndex > 2; rowIndex--)
+            {
+                if (IsRowEmpty(rowIndex))
+                {
+                    i(rowIndex, 0);
+                }
+            }
+        }
+
+        return command;
+    }
+
     public static SpecTableModel DefinitionsListToSpecTableModel(List<MathNode> definitionsMathNodesList)
     {
         List<MathNode> definitions = definitionsMathNodesList.Where(l_.b_ ??= l_.a_.a).ToList();
@@ -229,18 +246,6 @@ public partial class SpecTableModel
         }
 
         return new SpecTableModel(definitions);
-    }
-
-    private SpecTableModel(List<MathNode> definitions)
-    {
-        int count = definitions.Count;
-        for (int index = 0; index < count; index++)
-        {
-            SpecTableColumn column = new(e, 1);
-            column.Header.EquationRoot = definitions[index].Children[0];
-            column.GetDataCell(0).EquationRoot = definitions[index].Children[1];
-            g(column);
-        }
     }
 
     private SpecTableCalculatableWrapper g(ISpecTableColumn column)
