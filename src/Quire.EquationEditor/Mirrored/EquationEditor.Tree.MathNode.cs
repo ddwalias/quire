@@ -14,6 +14,9 @@ namespace Quire.EquationEditor.Tree;
 
 public partial class MathNode
 {
+    [MirrorName("f")]
+    protected bool f__;
+
     [MirrorName("c")]
     private string c__ = string.Empty;
     [MirrorName("e")]
@@ -30,7 +33,7 @@ public partial class MathNode
         b__ = new a_(this, childNodes);
         b__.a(this);
         d__ = descriptor;
-        f = d__.IsEvaluation;
+        f__ = d__.IsEvaluation;
         NodeInfo = CreateNodeInfo(descriptor.InfoType, nodeInfo);
         g = new AlgorithmOptions();
     }
@@ -282,7 +285,22 @@ public partial class MathNode
     public int RLID
     {
         get => i__;
-        private set => i__ = value;
+    }
+
+    private void b(int value) => i__ = value;
+
+    public void SetRlidForTree()
+    {
+        int index = 0;
+        foreach (MathNode node in RootNode.f())
+        {
+            if ((long)index == 65535)
+            {
+                break;
+            }
+            node.b(index);
+            index++;
+        }
     }
 
     public MathNode RootNode
@@ -398,11 +416,11 @@ public partial class MathNode
         {
             if (d__ is MathNodeDescriptorPiggyback)
             {
-                return f;
+                return f__;
             }
             return d__.IsEvaluation;
         }
-        set => f = value;
+        set => f__ = value;
     }
 
     public bool IsNary => d__.IsNary;
@@ -1591,6 +1609,8 @@ public partial class MathNode
 
     [MirrorVerified("Release IL")]
     public virtual string SExpression => MathNodeToSExpressionTransform.Default.Transform(this);
+
+    private IEnumerable<MathNode> f() => throw MirrorStub.NotImplemented();
 
     [MirrorVerified("Release IL")]
     public bool ContainsOrIsComboBox => ContainsOrIs("ComboBoxControl");

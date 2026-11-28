@@ -21,8 +21,6 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
     [global::Quire.Mirror.MirrorName("d")]
     private global::Quire.EquationEditor.Tree.MathNodeDescriptor d__;
     [global::Quire.Mirror.MirrorStub]
-    protected bool f;
-    [global::Quire.Mirror.MirrorStub]
     [global::Quire.Mirror.MirrorName("h")]
     private global::Quire.EquationEditor.Tree.INodeInfo h__;
     [global::Quire.Mirror.MirrorStub]
@@ -33,8 +31,6 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
     private bool j_;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode> TreeList { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode> TreeListWithoutResultNodes { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal int h() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -57,8 +53,6 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
     public global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode> WalkSubTree() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool ContainsOrIs(string mathNodeName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void SetRlidForTree() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetConstantRlIdDownTheTree(int rlId) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
