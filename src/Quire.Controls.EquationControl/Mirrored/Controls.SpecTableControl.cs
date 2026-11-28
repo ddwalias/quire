@@ -66,6 +66,8 @@ public partial class SpecTableControl : global::System.Windows.Controls.ContentC
         set;
     }
 
+    global::Quire.Controls.Core.IEquationControl global::Quire.Controls.ISpecTableControl.ActiveCell => ActiveCell;
+
     public EquationControl ActiveCell => View.ActiveCell;
 
     public TableCoordinate ActiveCellCoordinate
