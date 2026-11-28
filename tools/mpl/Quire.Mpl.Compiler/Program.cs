@@ -22,6 +22,13 @@ if (args.Length == 5 && args[0] == "--thin")
     return 0;
 }
 
+if (args.Length == 5 && args[0] == "--mpl")
+{
+    CompileMplModule(Path.GetFullPath(args[1]), Path.GetFullPath(args[2]),
+        Path.GetFullPath(args[3]), args[4]);
+    return 0;
+}
+
 if (args.Length != 3)
 {
     Console.Error.WriteLine("usage: Quire.Mpl.Compiler <source.mpl> <output.dll> <Mathcad install>\n"
@@ -358,6 +365,118 @@ static void CompileThinModule(string sourcePath, string outputPath, string insta
     assembly.Save(outputPath);
 }
 
+static void CompileMplModule(string sourcePath, string outputPath, string install, string project)
+{
+    var source = File.ReadAllText(sourcePath, Encoding.UTF8).Replace("\r\n", "\n", StringComparison.Ordinal)
+        .Replace('\r', '\n');
+    const string marker = "\n-- implementation\n";
+    var parts = source.Split(marker, 2, StringSplitOptions.None);
+    if (parts.Length != 2)
+        throw new InvalidDataException("Mpl module source needs an -- implementation section after its interface.");
+    var interfaceText = parts[0].TrimStart('\uFEFF');
+    var commentEnd = interfaceText.IndexOf('\n');
+    if (commentEnd < 0 || !interfaceText[..commentEnd].StartsWith("-- ", StringComparison.Ordinal))
+        throw new InvalidDataException("Mpl module source needs one authored comment before its interface.");
+    interfaceText = interfaceText[(commentEnd + 1)..];
+    var moduleName = ParseInterfaceModuleName(interfaceText);
+    if (project != "Quire." + moduleName)
+        throw new InvalidDataException($"Source module {moduleName} does not map to output project {project}.");
+
+    var signatures = ParseMplSignatures(interfaceText);
+    MplCompilerContext.ImportedTypes = Regex.Matches(interfaceText,
+            """@ "\[([^]]+)\]([A-Za-z_][A-Za-z0-9_.]*)::""")
+        .Select(match => (TypeName: match.Groups[2].Value, AssemblyName: match.Groups[1].Value))
+        .Distinct().ToDictionary(pair => pair.TypeName, pair => pair.AssemblyName, StringComparer.Ordinal);
+    var functions = new List<(string Name, string[] Args, string Body)>();
+    foreach (var raw in parts[1].Split('\n'))
+    {
+        var line = raw.Trim();
+        if (line.Length == 0 || line.StartsWith("--", StringComparison.Ordinal)) continue;
+        var separator = line.IndexOf(" = ", StringComparison.Ordinal);
+        if (separator < 1) throw new InvalidDataException($"Unsupported Mpl definition: {line}");
+        var head = line[..separator].Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (!signatures.TryGetValue(head[0], out var signature))
+            throw new InvalidDataException($"No ModuleInterface signature for {head[0]}.");
+        var arguments = head.Skip(1).ToArray();
+        if (signature.Length != arguments.Length + 1)
+            throw new InvalidDataException($"{head[0]} has {arguments.Length} source arguments but its interface has {signature.Length - 1}.");
+        functions.Add((head[0], arguments, line[(separator + 3)..]));
+    }
+
+    var runtime = Assembly.LoadFrom(Path.Combine(install, "mplrun.dll"));
+    var moduleTextCtor = runtime.GetType("Mpl.Run.ModuleTextAttribute", throwOnError: true)!
+        .GetConstructor([typeof(string)]) ?? throw new MissingMethodException("ModuleTextAttribute..ctor(string)");
+    var moduleInterfaceCtor = runtime.GetType("Mpl.Run.ModuleInterfaceAttribute", throwOnError: true)!
+        .GetConstructor([typeof(string)]) ?? throw new MissingMethodException("ModuleInterfaceAttribute..ctor(string)");
+    var assembly = CreateAssembly(project);
+    var module = assembly.DefineDynamicModule(Path.GetFileName(outputPath));
+    var values = module.DefineType(project + ".values", TypeAttributes.Public | TypeAttributes.Class);
+    SetStringAttribute(values, moduleTextCtor, "");
+    SetStringAttribute(values, moduleInterfaceCtor, interfaceText);
+    AddMirrorOf(values, moduleName + ".values, " + moduleName);
+
+    var update = values.DefineMethod("Update", MethodAttributes.Public | MethodAttributes.Static,
+        typeof(void), Type.EmptyTypes);
+    update.GetILGenerator().Emit(OpCodes.Ret);
+    foreach (var function in functions)
+    {
+        var signature = signatures[function.Name];
+        var method = values.DefineMethod(function.Name, MethodAttributes.Public | MethodAttributes.Static,
+            signature[^1], signature[..^1]);
+        var il = method.GetILGenerator();
+        EmitReturningExpression(MplExpressionParser.Parse(function.Body), il,
+            new Dictionary<string, System.Reflection.Emit.Quire.Mpl.LocalBuilder>(StringComparer.Ordinal),
+            function.Args, new Dictionary<string, System.Reflection.Emit.Quire.Mpl.MethodBuilder>(StringComparer.Ordinal),
+            new Dictionary<string, Type>(StringComparer.Ordinal), install, function.Name);
+    }
+    var initializer = values.DefineConstructor(MethodAttributes.Public | MethodAttributes.Static,
+        CallingConventions.Standard, Type.EmptyTypes);
+    initializer.GetILGenerator().Emit(OpCodes.Call, update);
+    initializer.GetILGenerator().Emit(OpCodes.Ret);
+    values.CreateType();
+    Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+    assembly.Save(outputPath);
+}
+
+static Dictionary<string, Type[]> ParseMplSignatures(string interfaceText)
+{
+    var result = new Dictionary<string, Type[]>(StringComparer.Ordinal);
+    foreach (var raw in interfaceText.Split('\n'))
+    {
+        var line = raw.Trim();
+        var separator = line.IndexOf(" :: ", StringComparison.Ordinal);
+        if (separator < 0) continue;
+        var name = line[..separator].Trim().Trim('(', ')');
+        var signature = line[(separator + 4)..];
+        var foreign = signature.IndexOf(" @ ", StringComparison.Ordinal);
+        if (foreign >= 0) signature = signature[..foreign];
+        signature = signature.TrimEnd(';').Trim();
+        var pieces = SplitMplArrowType(signature);
+        result[name] = pieces.Select(MapPrimitiveMplType).ToArray();
+    }
+    return result;
+}
+
+static IReadOnlyList<string> SplitMplArrowType(string signature)
+{
+    var pieces = new List<string>();
+    var start = 0;
+    var depth = 0;
+    for (var i = 0; i < signature.Length - 1; i++)
+    {
+        if (signature[i] == '(') depth++;
+        else if (signature[i] == ')') depth--;
+        else if (depth == 0 && signature[i] == '-' && signature[i + 1] == '>')
+        {
+            pieces.Add(signature[start..i].Trim().Trim('(', ')'));
+            start = i + 2;
+            i++;
+        }
+    }
+    pieces.Add(signature[start..].Trim().Trim('(', ')'));
+    return pieces;
+}
+
 static void CompilePrimitiveModule(string interfaceText,
     IReadOnlyList<(string Name, string[] Args, string Expression)> functions,
     string outputPath, string install, string project)
@@ -422,6 +541,10 @@ static Type MapPrimitiveMplType(string sourceType)
     {
         "Mpl.I4" => typeof(int),
         "Mpl.F8" => typeof(double),
+        "McdRun.I" => typeof(int),
+        "McdRun.T" => typeof(double),
+        _ when sourceType.Contains("Mpl.I4", StringComparison.Ordinal) => typeof(int),
+        _ when sourceType.Contains("Mpl.F8", StringComparison.Ordinal) => typeof(double),
         _ => typeof(object),
     };
 }
@@ -1054,16 +1177,48 @@ static void EmitCall(MplCall call,
         var dot = function.Name.LastIndexOf('.');
         var assemblyName = function.Name[..dot];
         var memberName = function.Name[(dot + 1)..];
-        var assembly = Assembly.LoadFrom(Path.Combine(install, assemblyName + ".dll"));
-        var type = assembly.GetType(assemblyName + ".values", throwOnError: true)!;
-        var external = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
-            .Single(candidate => candidate.Name == memberName && candidate.GetParameters().Length == call.Arguments.Count
-                && candidate.GetParameters().All(parameter => parameter.ParameterType == typeof(object)));
+        MethodInfo external;
+        if (!File.Exists(Path.Combine(install, assemblyName + ".dll")))
+            external = ResolveImportedMethod(assemblyName, memberName, call.Arguments.Count, install);
+        else
+        {
+            var assembly = Assembly.LoadFrom(Path.Combine(install, assemblyName + ".dll"));
+            var type = assembly.GetType(assemblyName + ".values", throwOnError: true)!;
+            external = type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+                .Single(candidate => candidate.Name == memberName
+                    && candidate.GetParameters().Length == call.Arguments.Count
+                    && candidate.GetParameters().Select(parameter => parameter.ParameterType)
+                        .SequenceEqual(call.Arguments.Select(argument => ExpressionType(argument, locals, typeAliases))));
+        }
         if (tail) il.Emit(OpCodes.Tailcall);
         il.Emit(OpCodes.Call, external);
         return;
     }
     throw new NotSupportedException($"Call target {function.Name} has not been lowered.");
+}
+
+static MethodInfo ResolveImportedMethod(string typeName, string methodName, int parameterCount, string install)
+{
+    var fullTypeNames = typeName.Contains('.', StringComparison.Ordinal)
+        ? [typeName]
+        : MplCompilerContext.ImportedTypes.Keys
+            .Where(fullName => fullName.EndsWith("." + typeName, StringComparison.Ordinal)).ToArray();
+    var methods = new List<MethodInfo>();
+    foreach (var fullTypeName in fullTypeNames)
+    {
+        if (!MplCompilerContext.ImportedTypes.TryGetValue(fullTypeName, out var assemblyName)) continue;
+        var assembly = Assembly.LoadFrom(Path.Combine(install, assemblyName + ".dll"));
+        var type = assembly.GetType(fullTypeName, throwOnError: true)!;
+        methods.AddRange(type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+            .Where(candidate => candidate.Name == methodName
+                && candidate.GetParameters().Length == parameterCount));
+    }
+    return methods.Count switch
+    {
+        1 => methods[0],
+        0 => throw new MissingMethodException($"Imported method {typeName}.{methodName}/{parameterCount} did not match an @-mapped import."),
+        _ => throw new AmbiguousMatchException($"Imported method {typeName}.{methodName}/{parameterCount} matched {methods.Count} methods."),
+    };
 }
 
 static void EmitNullBoolean(string name,
@@ -1245,7 +1400,7 @@ static void EmitLoadArgument(System.Reflection.Emit.Quire.Mpl.ILGenerator il, in
         case 1: il.Emit(OpCodes.Ldarg_1); break;
         case 2: il.Emit(OpCodes.Ldarg_2); break;
         case 3: il.Emit(OpCodes.Ldarg_3); break;
-        default: il.Emit(OpCodes.Ldarg, (short)index); break;
+        default: il.Emit(OpCodes.Ldarg_S, (byte)index); break;
     }
 }
 
@@ -1501,6 +1656,8 @@ internal static class MplCompilerContext
 {
     public static Dictionary<string, ConstructorInfo> Constructors { get; } = new(StringComparer.Ordinal);
     public static Dictionary<string, System.Reflection.Emit.Quire.Mpl.FieldBuilder> Fields { get; } = new(StringComparer.Ordinal);
+    public static IReadOnlyDictionary<string, string> ImportedTypes { get; set; } =
+        new Dictionary<string, string>(StringComparer.Ordinal);
 }
 
 internal static class MplSubsetParser

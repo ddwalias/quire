@@ -15,7 +15,7 @@ OUTPUT = ROOT / "tools/mpl/output"
 CACHE = ROOT / ".mirror-cache/mpl-thin-emitter"
 COMPILER_OUT = CACHE / "compiler"
 AUDIT_OUT = CACHE / "method-audit"
-MODULES = ["McdUnitSystemMKS", "McdUnitSystemUS", "MplConstants", "MplPrimitives"]
+MODULES = ["EfiFitting", "McdUnitSystemMKS", "McdUnitSystemUS", "MplConstants", "MplPrimitives"]
 ATTRIBUTE = re.compile(
     r"\.custom instance void \[[^]]+\]([^\s]+)::\.ctor\(string\) = \(\s*((?:[0-9a-fA-F]{2}\s*)+)\)", re.S)
 
@@ -63,7 +63,8 @@ class ThinModuleTests(unittest.TestCase):
         compiler = COMPILER_OUT / "Quire.Mpl.Compiler.dll"
         for module in MODULES:
             project = f"Quire.{module}"
-            run("dotnet", str(compiler), "--thin", str(SOURCES / f"{module}.mpl"),
+            mode = "--mpl" if module == "EfiFitting" else "--thin"
+            run("dotnet", str(compiler), mode, str(SOURCES / f"{module}.mpl"),
                 str(OUTPUT / f"{project}.dll"), str(INSTALL), project)
         run("dotnet", "build", "tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj",
             "-c", "Release", "-o", str(AUDIT_OUT), "-v", "quiet")
@@ -89,7 +90,7 @@ class ThinModuleTests(unittest.TestCase):
                              ["Mpl.Run.ModuleTextAttribute", "Mpl.Run.ModuleInterfaceAttribute",
                               "Quire.Mirror.MirrorOfAttribute"], module + " candidate attribute order")
             expected_fields = (["gamma", "pi", "e"] if module == "MplConstants"
-                               else [] if module == "MplPrimitives" else ["system"])
+                               else [] if module in ("MplPrimitives", "EfiFitting") else ["system"])
             self.assertEqual(member_names(original_block, "field"), expected_fields, module + " field order")
             self.assertEqual(member_names(candidate_block, "field"), expected_fields,
                              module + " candidate field order")
