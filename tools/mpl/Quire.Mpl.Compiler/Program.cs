@@ -388,6 +388,7 @@ static void CompileMplModule(string sourcePath, string outputPath, string instal
         .Select(match => (TypeName: match.Groups[2].Value, AssemblyName: match.Groups[1].Value))
         .Distinct().ToDictionary(pair => pair.TypeName, pair => pair.AssemblyName, StringComparer.Ordinal);
     var functions = new List<(string Name, string[] Args, string Body)>();
+    var globals = new List<(string Name, string Expression)>();
     foreach (var raw in parts[1].Split('\n'))
     {
         var line = raw.Trim();
@@ -395,6 +396,11 @@ static void CompileMplModule(string sourcePath, string outputPath, string instal
         var separator = line.IndexOf(" = ", StringComparison.Ordinal);
         if (separator < 1) throw new InvalidDataException($"Unsupported Mpl definition: {line}");
         var head = line[..separator].Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        if (head.Length == 1)
+        {
+            globals.Add((head[0], line[(separator + 3)..]));
+            continue;
+        }
         if (!signatures.TryGetValue(head[0], out var signature))
             throw new InvalidDataException($"No ModuleInterface signature for {head[0]}.");
         var arguments = head.Skip(1).ToArray();
@@ -415,9 +421,27 @@ static void CompileMplModule(string sourcePath, string outputPath, string instal
     SetStringAttribute(values, moduleInterfaceCtor, interfaceText);
     AddMirrorOf(values, moduleName + ".values, " + moduleName);
 
+    var fields = globals.ToDictionary(global => global.Name,
+        global => values.DefineField(global.Name, typeof(object), FieldAttributes.Public | FieldAttributes.Static),
+        StringComparer.Ordinal);
+    MplCompilerContext.Fields.Clear();
+    foreach (var (name, field) in fields) MplCompilerContext.Fields.Add(name, field);
+
     var update = values.DefineMethod("Update", MethodAttributes.Public | MethodAttributes.Static,
         typeof(void), Type.EmptyTypes);
-    update.GetILGenerator().Emit(OpCodes.Ret);
+    var updateIl = update.GetILGenerator();
+    var noLocals = new Dictionary<string, System.Reflection.Emit.Quire.Mpl.LocalBuilder>(StringComparer.Ordinal);
+    var noAliases = new Dictionary<string, Type>(StringComparer.Ordinal);
+    foreach (var global in globals)
+    {
+        var expression = MplExpressionParser.Parse(global.Expression);
+        EmitValue(expression, updateIl, noLocals, [],
+            new Dictionary<string, System.Reflection.Emit.Quire.Mpl.MethodBuilder>(StringComparer.Ordinal),
+            noAliases, install);
+        BoxValueIfNeeded(expression, updateIl, noLocals, noAliases);
+        updateIl.Emit(OpCodes.Stsfld, fields[global.Name]);
+    }
+    updateIl.Emit(OpCodes.Ret);
     foreach (var function in functions)
     {
         var signature = signatures[function.Name];
@@ -634,6 +658,7 @@ static string ParseInterfaceModuleName(string interfaceText)
         }
         if (!line.StartsWith("import ", StringComparison.Ordinal)
             && !line.StartsWith("data ", StringComparison.Ordinal)
+            && !line.StartsWith("dimension ", StringComparison.Ordinal)
             && !Regex.IsMatch(line, @"\A(?:infix(?:l|r)?|inline)\s+[0-9]+\s+.+;\z", RegexOptions.CultureInvariant)
             && !line.StartsWith("|", StringComparison.Ordinal)
             && !line.Contains(" :: ", StringComparison.Ordinal))
@@ -1134,6 +1159,22 @@ static void EmitCall(MplCall call,
     IReadOnlyDictionary<string, Type> typeAliases, string install, bool tail)
 {
     if (call.Function is not MplVariable function) throw new NotSupportedException("Function values are not supported yet.");
+    if (function.Name is "mul" or "div")
+    {
+        var prelude = Assembly.LoadFrom(Path.Combine(install, "MplPrelude.dll"));
+        var values = prelude.GetType("MplPrelude.values", throwOnError: true)!;
+        var operatorName = function.Name == "mul" ? "*." : "/.";
+        var method = values.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+            .Single(candidate => candidate.Name == operatorName && candidate.GetParameters().Length == 2);
+        foreach (var argument in call.Arguments)
+        {
+            EmitValue(argument, il, locals, arguments, methods, typeAliases, install);
+            BoxValueIfNeeded(argument, il, locals, typeAliases);
+        }
+        if (tail) il.Emit(OpCodes.Tailcall);
+        il.Emit(OpCodes.Call, method);
+        return;
+    }
     foreach (var argument in call.Arguments) EmitValue(argument, il, locals, arguments, methods, typeAliases, install);
     if (function.Name == "Just")
     {
@@ -1195,6 +1236,15 @@ static void EmitCall(MplCall call,
         return;
     }
     throw new NotSupportedException($"Call target {function.Name} has not been lowered.");
+}
+
+static void BoxValueIfNeeded(MplExpr expression,
+    System.Reflection.Emit.Quire.Mpl.ILGenerator il,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.LocalBuilder> locals,
+    IReadOnlyDictionary<string, Type> typeAliases)
+{
+    var type = ExpressionType(expression, locals, typeAliases);
+    if (type.IsValueType) il.Emit(OpCodes.Box, type);
 }
 
 static MethodInfo ResolveImportedMethod(string typeName, string methodName, int parameterCount, string install)
@@ -1272,6 +1322,9 @@ static void EmitValue(MplExpr expression,
             return;
         case MplVariable variable when MplCompilerContext.Fields.TryGetValue(variable.Name, out var staticField):
             il.Emit(OpCodes.Ldsfld, staticField);
+            return;
+        case MplVariable variable when variable.Name.Contains('.', StringComparison.Ordinal):
+            EmitExternalStaticField(il, variable.Name, install);
             return;
         case MplNull:
             il.Emit(OpCodes.Ldnull);
@@ -1453,7 +1506,7 @@ internal static class MplExpressionParser
         private int _position;
 
         public Parser(string source) => _tokens = Regex.Matches(source,
-                """==|!=|:=|->|\?\?|[A-Za-z_$][A-Za-z0-9_.$]*|[0-9]+(?:\.[0-9]+)?|"[^"]*"|\[|\]|\(|\)|,|;|\||:|=""")
+                """==|!=|:=|->|\?\?|\*\.|/\.|[A-Za-z_$][A-Za-z0-9_.$]*|[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?|"[^"]*"|\[|\]|\(|\)|,|;|\||:|=""")
             .Select(match => match.Value).ToArray();
 
         public MplExpr Parse()
@@ -1553,9 +1606,22 @@ internal static class MplExpressionParser
                 return new MplForList(elementName, collection, RequireVariable(collection), capacity,
                     resultName, ParseExpression());
             }
-            var expressions = new List<MplExpr> { ParseApplication() };
-            while (Take(";")) expressions.Add(ParseApplication());
+            var expressions = new List<MplExpr> { ParseBinary() };
+            while (Take(";")) expressions.Add(ParseBinary());
             return expressions.Count == 1 ? expressions[0] : new MplSequence(expressions);
+        }
+
+        private MplExpr ParseBinary()
+        {
+            var expression = ParseApplication();
+            while (_position < _tokens.Length && _tokens[_position] is "*." or "/.")
+            {
+                var operation = _tokens[_position++];
+                var right = ParseApplication();
+                expression = new MplCall(new MplVariable(operation == "*." ? "mul" : "div"),
+                    [expression, right]);
+            }
+            return expression;
         }
 
         private MplExpr ParseApplication()
@@ -1567,7 +1633,7 @@ internal static class MplExpressionParser
                 return new MplSetIndex(index.Table, index.Key, ParseAtom());
             }
             var arguments = new List<MplExpr>();
-            while (_position < _tokens.Length && _tokens[_position] is not ("in" or "of" or "then" or "else" or "==" or "!="
+            while (_position < _tokens.Length && _tokens[_position] is not ("in" or "of" or "then" or "else" or "==" or "!=" or "*." or "/."
                 or "using" or "into" or "do" or ")" or "]" or "," or ";" or "|"))
                 arguments.Add(ParseAtom());
             return arguments.Count == 0 ? function : new MplCall(function, arguments);
