@@ -1792,7 +1792,7 @@ internal static class MplExpressionParser
         public Parser(string source)
         {
             _tokens = Regex.Matches(source,
-                    """==|!=|:=|->|\?\?|\*\.|/\.|[\p{L}_$][\p{L}\p{N}\p{S}_.$']*|[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?|"[^"]*"|\[|\]|\(|\)|,|;|\||:|=""")
+                    """==|!=|:=|->|\?\?|\*\.|/\.|[\p{L}_$][\p{L}\p{N}\p{S}_.$'#·']*|[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?|"[^"]*"|\[|\]|\(|\)|,|;|\||:|=""")
                 .Select(match => match.Value).ToArray();
         }
 
@@ -2015,7 +2015,7 @@ internal static class MplExpressionParser
 
         private string ReadIdentifier()
         {
-            if (_position >= _tokens.Length || !Regex.IsMatch(_tokens[_position], @"\A[\p{L}_$][\p{L}\p{N}\p{S}_.$']*\z"))
+            if (_position >= _tokens.Length || !Regex.IsMatch(_tokens[_position], @"\A[\p{L}_$][\p{L}\p{N}\p{S}_.$'#·']*\z"))
                 throw new InvalidDataException($"Expected an identifier in Mpl expression at token {_position}: "
                     + (_position < _tokens.Length ? _tokens[_position] : "<end>"));
             return _tokens[_position++];
