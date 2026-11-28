@@ -249,6 +249,14 @@ public partial class SpecTableModel
         a(coordinate, global::Quire.Direction.Right);
     }
 
+    private void a(global::Quire.Direction direction)
+    {
+        if (IsEmpty)
+        {
+            RequestRemove.Invoke();
+        }
+    }
+
     private global::Quire.EquationEditor.IEquationModel a(
         global::Quire.Discrete2DCoordinate coordinate,
         global::Quire.Direction direction)
