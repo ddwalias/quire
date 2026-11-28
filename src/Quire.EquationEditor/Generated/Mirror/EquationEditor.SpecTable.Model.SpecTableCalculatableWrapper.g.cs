@@ -33,16 +33,6 @@ public partial class SpecTableCalculatableWrapper : global::Quire.Calculation.Co
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.EngineError Error { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> RequestEvaluation;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Func<global::Quire.Calculation.Core.ICalculatable, string, global::Quire.Calculation.Core.IResultNode> GetValueOfIdentifierBefore;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> TreatAsUpToDate;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.EventHandler<global::Quire.Calculation.Core.RequestShowErrorEventArgs> RequestShowError;
-    [global::Quire.Mirror.MirrorStub]
     public SpecTableCalculatableWrapper(global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn column) { }
     [global::Quire.Mirror.MirrorStub]
     private void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();

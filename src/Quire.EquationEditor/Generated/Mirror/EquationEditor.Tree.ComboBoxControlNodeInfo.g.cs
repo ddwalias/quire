@@ -18,12 +18,6 @@ public partial class ComboBoxControlNodeInfo : global::Quire.EquationEditor.Tree
     [global::Quire.Mirror.MirrorStub]
     global::Quire.EquationEditor.Tree.ComboBoxInputControlData global::Quire.EquationEditor.Tree.IComboBoxControlNodeInfo.Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.DelegateFunction0<bool>, string> RequestUndoableCommandExecution;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action ValueChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.EventHandler<global::Quire.EquationEditor.Tree.RequestRestoreInsertionPointEventArgs> RequestRestoreInsertionPoint;
-    [global::Quire.Mirror.MirrorStub]
     public ComboBoxControlNodeInfo() { }
     [global::Quire.Mirror.MirrorStub]
     public ComboBoxControlNodeInfo(global::Quire.EquationEditor.Tree.IComboBoxControlNodeInfo other) { }

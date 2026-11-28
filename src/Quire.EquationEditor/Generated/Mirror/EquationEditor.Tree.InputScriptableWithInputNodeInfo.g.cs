@@ -25,12 +25,6 @@ public partial class InputScriptableWithInputNodeInfo : global::Quire.EquationEd
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Controls.Core.InputControlTypes InputControlType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.DelegateFunction0<bool>, string> RequestUndoableCommandExecution;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action ValueChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.EventHandler<global::Quire.EquationEditor.Tree.RequestRestoreInsertionPointEventArgs> RequestRestoreInsertionPoint;
-    [global::Quire.Mirror.MirrorStub]
     public InputScriptableWithInputNodeInfo() { }
     [global::Quire.Mirror.MirrorStub]
     public InputScriptableWithInputNodeInfo(global::Quire.EquationEditor.Tree.IInputControlNodeInfo other) { }

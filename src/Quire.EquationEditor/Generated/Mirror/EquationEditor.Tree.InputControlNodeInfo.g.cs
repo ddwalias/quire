@@ -16,12 +16,6 @@ public abstract partial class InputControlNodeInfo : global::Quire.EquationEdito
     [global::Quire.Mirror.MirrorStub]
     global::Quire.EquationEditor.Tree.IInputControlDataCalculatedValue global::Quire.EquationEditor.Tree.IInputControlNodeInfo.Value { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<global::Quire.DelegateFunction0<bool>, string> RequestUndoableCommandExecution;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action ValueChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.EventHandler<global::Quire.EquationEditor.Tree.RequestRestoreInsertionPointEventArgs> RequestRestoreInsertionPoint;
-    [global::Quire.Mirror.MirrorStub]
     public override bool IsEquivalentTo(global::Quire.EquationEditor.Tree.INodeInfo other) => base.IsEquivalentTo(other);
     [global::Quire.Mirror.MirrorStub]
     protected bool a(global::Quire.EquationEditor.Tree.IInputControlNodeInfo A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

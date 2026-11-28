@@ -69,4 +69,10 @@ public partial class SpecTableCalculatableWrapper
         [MirrorVerified("Release IL")]
         public b_() { }
     }
+
+    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> RequestEvaluation;
+    public event global::System.Func<global::Quire.Calculation.Core.ICalculatable, string, global::Quire.Calculation.Core.IResultNode> GetValueOfIdentifierBefore;
+    public event global::System.Action<global::Quire.Calculation.Core.ICalculatable> TreatAsUpToDate;
+    public event global::System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+    public event global::System.EventHandler<global::Quire.Calculation.Core.RequestShowErrorEventArgs> RequestShowError;
 }
