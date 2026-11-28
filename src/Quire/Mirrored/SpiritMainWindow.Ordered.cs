@@ -1295,7 +1295,7 @@ public partial class SpiritMainWindow
                 {
 
                     // Mathcad sends a false nullable result through the shared default assignment.
-
+                    // lint-ok: Mathcad Release IL shares this branch with the switch's default assignment.
                     goto default;
 
                 }
