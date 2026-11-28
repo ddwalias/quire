@@ -4,6 +4,7 @@ using System.Linq;
 using System.Xml;
 using Quire.Calculation.Core;
 using Quire.Core;
+using Quire.EquationEditor.Tree;
 using Quire.Mirror;
 using Quire.PersistentDataObjects;
 using Quire.Undo;
@@ -29,7 +30,7 @@ public partial class SpecTableModel
 
     public event global::Quire.Delegate1<ISpecTableColumn> ColumnRemoved;
 
-    public event global::Quire.Delegate0 RequestRemove;
+    public event global::Quire.Delegate0 RequestRemove = l_.c_ ??= l_.a_.c;
 
     public event global::System.Action RequestClearSelection;
 
@@ -219,6 +220,103 @@ public partial class SpecTableModel
         return wrapper;
     }
 
+    public static SpecTableModel DefinitionsListToSpecTableModel(List<MathNode> definitionsMathNodesList)
+    {
+        List<MathNode> definitions = definitionsMathNodesList.Where(l_.b_ ??= l_.a_.a).ToList();
+        if (definitions.Count == 0)
+        {
+            return null;
+        }
+
+        return new SpecTableModel(definitions);
+    }
+
+    private SpecTableModel(List<MathNode> definitions)
+    {
+        int count = definitions.Count;
+        for (int index = 0; index < count; index++)
+        {
+            SpecTableColumn column = new(e, 1);
+            column.Header.EquationRoot = definitions[index].Children[0];
+            column.GetDataCell(0).EquationRoot = definitions[index].Children[1];
+            g(column);
+        }
+    }
+
+    private SpecTableCalculatableWrapper g(ISpecTableColumn column)
+    {
+        b__.Add(column);
+        return f(column);
+    }
+
+    private SpecTableCalculatableWrapper f(ISpecTableColumn column)
+    {
+        SpecTableCalculatableWrapper wrapper = new(column);
+        c__[column] = wrapper;
+        return wrapper;
+    }
+
+    private static bool a(IEnumerable<ISpecTableColumn> columns)
+    {
+        if (columns.IsNullOrEmpty())
+        {
+            return false;
+        }
+
+        foreach (ISpecTableColumn column in columns)
+        {
+            if (column == null)
+            {
+                return false;
+            }
+
+            if (column.Header.Root[0].DescriptorName != "IDENTIFIER")
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private void e(ISpecTableColumn column) => c__.Remove(column);
+
+    private void d(ISpecTableColumn column)
+    {
+        if (ColumnAdded != null)
+        {
+            ColumnAdded(column);
+        }
+
+        b();
+    }
+
+    private void c(ISpecTableColumn column)
+    {
+        if (ColumnAdded != null)
+        {
+            ColumnAdded(column);
+        }
+    }
+
+    private void e(IEquationModel equationModel)
+    {
+        d(equationModel);
+        a(equationModel);
+    }
+
+    private void d(IEquationModel equationModel) => equationModel.RequestRemoveEquation += a;
+
+    private void c(IEquationModel equationModel) => equationModel.RequestRemoveEquation -= a;
+
+    public void FireRequestUpdateCellsVisibility()
+    {
+        if (RequestUpdateCellsVisibility != null)
+        {
+            RequestUpdateCellsVisibility();
+        }
+    }
+
     public mathType[] GetColumnsRegionPersistentData()
     {
         IList<mathType> serializedColumns = new List<mathType>();
@@ -373,6 +471,8 @@ public partial class SpecTableModel
 
         [MirrorVerified("Release IL")]
         internal bool a(ISpecTableColumn specTableColumn) => specTableColumn.IsEmpty;
+
+        internal bool a(MathNode mathNode) => mathNode.DescriptorName == "DEFINITION";
     }
 
     partial class m_
