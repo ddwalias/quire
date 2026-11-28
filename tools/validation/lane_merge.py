@@ -128,7 +128,16 @@ def style_lint(lane, base):
         raise RuntimeError('style lint failed (see LINT lines above): rename the locals / comment the gotos and retry')
 
 
+def forget_stale_cherry_pick(main_dir):
+    """A cherry-pick of a commit that is already in main's history (someone's retry) leaves CHERRY_PICK_HEAD behind, and the
+    next integration then dies with 'You have not concluded your cherry-pick'. With a clean tree there is nothing to
+    conclude, so forget the stale state."""
+    if not git('status', '--porcelain', cwd=main_dir) and (Path(main_dir) / '.git' / 'CHERRY_PICK_HEAD').exists():
+        git('cherry-pick', '--quit', cwd=main_dir)
+
+
 def land(main_dir, tip):
+    forget_stale_cherry_pick(main_dir)
     if git('status', '--porcelain', cwd=main_dir):
         raise RuntimeError('main checkout changed; retry')
     git('-c', 'core.hooksPath=', 'merge', '-q', '--ff-only', tip, cwd=main_dir)
@@ -235,6 +244,7 @@ def attempt(args, main_dir, lane, number):
 
 def land_under_lock(args, main_dir, lane, record, base, tip, number, landing):
     git('fetch', '-q', 'origin', cwd=main_dir)
+    forget_stale_cherry_pick(main_dir)
     git('merge', '-q', '--ff-only', 'origin/main', cwd=main_dir)
     current = git('rev-parse', 'refs/heads/main', cwd=main_dir)
     if git('rev-parse', f'refs/heads/{args.branch}') != tip:
