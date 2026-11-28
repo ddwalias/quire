@@ -769,12 +769,22 @@ public partial class PlotControl
             SetSelectedTracesLineWeight((double)e.Parameter);
         }
     }
-    protected static void TraceCommandCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected static void TraceCommandCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) {
+		if (sender is PlotControl plotControl)
+		{
+			args.CanExecute = plotControl.TraceCommandGenCheck();
+		}
+	}
     private bool AnySelectedTraceIsForcedToDensityPoints() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private bool AnySelectedTraceIsRestrictedToDensityPointsOrSolidLine() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private bool AllSelectedTracesSupportDensityPoints() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private bool IsDensityUsedForAnySelectedTrace() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    protected static void TraceLineWeightCommandCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected static void TraceLineWeightCommandCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) {
+		if (sender is PlotControl plotControl)
+		{
+			args.CanExecute = plotControl.TraceCommandGenCheck() && !plotControl.IsDensityUsedForAnySelectedTrace();
+		}
+	}
     private static void TraceSymbolLineCommandCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args, global::System.Func<object, bool> isTypeAlwaysAllowed) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     protected static void TraceSymbolCommandCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     protected static void TraceLineStyleCommandCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -786,15 +796,49 @@ public partial class PlotControl
 			plotControl.SetTraceColor(solidColorBrush.Color);
 		}
 	}
-    protected bool TraceCommandGenCheck() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static void TraceCommandCanExecuteByType(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    protected bool TraceCommandGenCheck() {
+		if (IsActiveRegion)
+		{
+			if (SelectedTraces != null)
+			{
+				return SelectedTraces.Count > 0;
+			}
+			return false;
+		}
+		return true;
+	}
+    private static void TraceCommandCanExecuteByType(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) {
+		if (sender is PlotControl plotControl && e.Parameter is TraceType && plotControl.PlotType != PlotType.Polar)
+		{
+			TraceType traceType = (TraceType)e.Parameter;
+			e.CanExecute = plotControl.TraceCommandGenCheck() && plotControl.TraceCanChangeToType(traceType);
+		}
+	}
     private bool TraceCanChangeToType(global::Quire.Calculation.Core.Trace2DResults.TraceType traceType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void ToggleAxisScalingExecuted(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static void ToggleAxisScalingCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ToggleAxisScalingExecuted(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs args) {
+		DebugTools.DevAssert(ActiveAxis != null, null);
+		AxisScaling axesScaling = ((ActiveAxis.Scaling == AxisScaling.Linear) ? AxisScaling.Logarithmic : AxisScaling.Linear);
+		new AxisSetScalingCommand(ActiveAxis, axesScaling).Execute();
+	}
+    private static void ToggleAxisScalingCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) {
+		if (sender is PlotControl plotControl)
+		{
+			e.CanExecute = plotControl.IsActiveRegion && plotControl.ActiveAxis != null;
+			if (e.CanExecute && plotControl.PlotType == PlotType.Polar)
+			{
+				e.CanExecute = plotControl.ActiveAxis != plotControl.RangeAxis;
+			}
+		}
+	}
     private void ToggleAxisTitleVisibilityExecuted(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private static void ToggleAxisTitleVisibilityCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void TogglePlotLegendVisibilityExecuted(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void TogglePlotLegendVisibilityCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void TogglePlotLegendVisibilityCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) {
+		if (sender is PlotControl plotControl)
+		{
+			e.CanExecute = plotControl.IsActiveRegion && (plotControl.PlotType == PlotType.XY || plotControl.PlotType == PlotType.Polar);
+		}
+	}
     protected override void OnTemplateChanged(global::System.Windows.Controls.ControlTemplate oldTemplate, global::System.Windows.Controls.ControlTemplate newTemplate) {
 		base.OnTemplateChanged(oldTemplate, newTemplate);
 		UnRegisterLegendsToEvents(XLegendsPositions);
@@ -950,12 +994,24 @@ public partial class PlotControl
     }
     private void XMinGapPropertyChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void YMinGapPropertyChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private static void SnapToGridChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static void SnapToGridChanged(global::System.Windows.DependencyObject obj, global::System.Windows.DependencyPropertyChangedEventArgs args) {
+		((PlotControl)(object)obj).UpdatePlaceholders();
+	}
     public static bool GetShowCallouts(global::System.Windows.UIElement uiElement) {
 		return (bool)((DependencyObject)uiElement).GetValue(ShowCalloutsProperty);
 	}
-    public static void SetShowCallouts(global::System.Windows.UIElement uiElement, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void SetTraceColor(global::System.Windows.Media.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public static void SetShowCallouts(global::System.Windows.UIElement uiElement, bool value) {
+		((DependencyObject)uiElement).SetValue(ShowCalloutsProperty, (object)value);
+	}
+    public void SetTraceColor(global::System.Windows.Media.Color color)
+    {
+        if (SelectedTraces.Count > 0)
+        {
+            global::Quire.Controls.Plots.PlotCommands.TraceColorCommand command = new TraceColorCommand(SelectedTraces, color);
+            command.Execute();
+            TraceColor = GetSelectedTracesCommonColor();
+        }
+    }
 
     public override PlotType PlotType
     {
@@ -1264,9 +1320,20 @@ public partial class PlotControl
     internal Quire.Controls.Plots.ViewModel.PlotViewModel ViewModel => _viewModel;
     public void SetTraceLineStyle(global::Quire.Controls.Plots.Presenter.LineStyle lineStyle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public void SetTraceSymbol(global::Quire.Controls.Plots.Presenter.TraceSymbol symbol) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void SetSelectedTracesLineWeight(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void SetSelectedTracesLineWeight(double value)
+    {
+        global::Quire.Controls.Plots.PlotCommands.TraceWeightCommand command = new TraceWeightCommand(SelectedTraces, value);
+        command.Execute();
+        TraceLineWeight = GetSelectedTracesLineWeight();
+    }
     private global::System.Nullable<double> GetSelectedTracesLineWeight() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void SetTraceType(global::Quire.Calculation.Core.Trace2DResults.TraceType traceType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public void SetTraceType(global::Quire.Calculation.Core.Trace2DResults.TraceType traceType)
+    {
+        global::Quire.Controls.Plots.PlotCommands.TraceTypeCommand command = new TraceTypeCommand(SelectedTraces, traceType);
+        command.Execute();
+        SelectedTraceType = GetSelectedTracesType();
+        TraceSymbol = GetSelectedTracesSymbol();
+    }
     private void TraceErrorChanged(global::Quire.Controls.Plots.Presenter.IPlotTrace trace) {
 		ShowHideErrorFrame();
 		ShowHideErrorMessage();
@@ -1363,7 +1430,16 @@ public partial class PlotControl
     protected override string ErrorMessage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     private static void SelectedTracesChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     protected override bool ShouldSerializeProperty(global::System.Windows.DependencyProperty dp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public global::Quire.Controls.Plots.Presenter.IPlotTrace AddTrace() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    public global::Quire.Controls.Plots.Presenter.IPlotTrace AddTrace()
+    {
+        PlotTrace plotTrace = Graph.AddTrace();
+        plotTrace.ErrorChanged += TraceErrorChanged;
+        plotTrace.CalculatingStatusChangedEvent += HandleTraceCalculatingStatusChanged;
+        DependencyPropertyChangeManager.AddPropertyChangedHandler(PlotTrace.XMinGapProperty, plotTrace, XMinGapPropertyChanged);
+        DependencyPropertyChangeManager.AddPropertyChangedHandler(PlotTrace.YMinGapProperty, plotTrace, YMinGapPropertyChanged);
+        DependencyPropertyChangeManager.AddPropertyChangedHandler(PlotTrace.HasEquationErrorProperty, plotTrace, HasEquationErrorPropertyChanged);
+        return plotTrace;
+    }
     private void HasEquationErrorPropertyChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) {
 		ShowHidePseudoErrorFrame(_resultEquations.Visibility);
 	}
@@ -1542,7 +1618,18 @@ public partial class PlotControl
     private static global::System.Xml.XmlNode BuildPlotXmlNodeFromChildren(string nodeName, global::System.Xml.XmlNode[] nodes, global::System.Xml.XmlNamespaceManager namespaceManager) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public global::System.Collections.Generic.IList<global::Quire.Serialization.IRegionPersistentData> SetRegionPersistentData(global::Quire.Serialization.IDeS11NProvider d11NProvider, object data) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public object GetRegionPersistentData(global::Quire.Serialization.IS11NProvider s11NProvider) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void ChangeNumOfPointsCommandExecute(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private void ChangeNumOfPointsCommandExecute(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) {
+		if (sender is PlotControl && e.Parameter != null)
+		{
+			PlotControl plotControl = sender as PlotControl;
+			if (plotControl.SelectedTracesNumOfPoints != ((Pair<int, bool>)e.Parameter).First)
+			{
+				plotControl.RaiseEvent(new RoutedEventArgs(_changedEvent));
+				UpdateSelectedTracesNumOfPoints(NumberOfPointsAction.Set, (Pair<int, bool>)e.Parameter);
+				IsNumberOfPointsAvailableBase = IsNumberOfPointsAvailable;
+			}
+		}
+	}
     public void UpdateTraceNumOfPoints(global::Quire.Controls.Plots.PlotControl.NumberOfPointsAction action, int num) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public event global::Quire.Delegate1<int> XLegendPositionsIndexChanged;
     private void UpdateSelectedTracesNumOfPoints(global::Quire.Controls.Plots.PlotControl.NumberOfPointsAction action, global::Quire.Pair<int, bool> numberOfPointsData) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
