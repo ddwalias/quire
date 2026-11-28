@@ -12,13 +12,5 @@ namespace Quire.DevComponents.WpfRibbon;
 public partial class QatOperationEventArgs : global::System.Windows.RoutedEventArgs
 {
     [global::Quire.Mirror.MirrorStub]
-    public readonly object Item;
-    [global::Quire.Mirror.MirrorStub]
     public bool Cancel;
-    [global::Quire.Mirror.MirrorStub]
-    public QatOperationEventArgs(object item) { }
-    [global::Quire.Mirror.MirrorStub]
-    public QatOperationEventArgs(object item, global::System.Windows.RoutedEvent e) { }
-    [global::Quire.Mirror.MirrorStub]
-    public QatOperationEventArgs(object item, global::System.Windows.RoutedEvent e, object originalSource) { }
 }

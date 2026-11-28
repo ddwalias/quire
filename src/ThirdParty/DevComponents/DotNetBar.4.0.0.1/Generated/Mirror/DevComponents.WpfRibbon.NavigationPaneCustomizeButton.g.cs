@@ -12,23 +12,9 @@ namespace Quire.DevComponents.WpfRibbon;
 public partial class NavigationPaneCustomizeButton : global::System.Windows.Controls.Button
 {
     [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.DependencyPropertyKey IsCustomizeMenuOpenPropertyKey;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsCustomizeMenuOpenProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsCustomizeMenuOpen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnPreviewMouseRightButtonUp(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnPreviewMouseRightButtonUp(e);
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnClick() => base.OnClick();
     [global::Quire.Mirror.MirrorStub]
     private void SetupContextMenu() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void MenuItemSelectPaneClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CustomizeMenuOpened(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ShowNavPaneOptions(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ShowMoreButtonsClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -39,6 +25,4 @@ public partial class NavigationPaneCustomizeButton : global::System.Windows.Cont
     private void CustomizeMenuClosed(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ShowHidePaneItemClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public NavigationPaneCustomizeButton() { }
 }

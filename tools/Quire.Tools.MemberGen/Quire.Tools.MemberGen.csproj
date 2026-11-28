@@ -5,5 +5,7 @@
     <Compile Include="../Quire.Tools.MirrorGen/Model.cs" Link="Model.cs" />
     <Compile Include="../Quire.Tools.MirrorGen/MetadataLoader.cs" Link="MetadataLoader.cs" />
     <Compile Include="../Quire.Tools.MethodAudit/Artifact.cs" Link="Artifact.cs" />
+    <Compile Include="../Quire.Tools.MirrorGen/EventBacking.cs" Link="EventBacking.cs" />
+    <Compile Include="../Quire.Tools.MirrorGen/ProjectLayout.cs" Link="ProjectLayout.cs" />
   </ItemGroup>
 </Project>

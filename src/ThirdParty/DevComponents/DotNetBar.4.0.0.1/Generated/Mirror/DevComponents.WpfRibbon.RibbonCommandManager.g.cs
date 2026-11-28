@@ -12,11 +12,5 @@ namespace Quire.DevComponents.WpfRibbon;
 public static partial class RibbonCommandManager
 {
     [global::Quire.Mirror.MirrorStub]
-    private static global::System.Collections.Generic.Dictionary<global::System.Windows.Input.ICommand, global::Quire.DevComponents.WpfRibbon.IButtonDropDownCommandExtender> m_Commands;
-    [global::Quire.Mirror.MirrorStub]
-    public static void Connect(global::System.Windows.Input.ICommand command, global::Quire.DevComponents.WpfRibbon.IButtonDropDownCommandExtender extender) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void Disconnect(global::System.Windows.Input.ICommand command, global::Quire.DevComponents.WpfRibbon.IButtonDropDownCommandExtender extender) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static global::Quire.DevComponents.WpfRibbon.IButtonDropDownCommandExtender GetExender(global::System.Windows.Input.ICommand command) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

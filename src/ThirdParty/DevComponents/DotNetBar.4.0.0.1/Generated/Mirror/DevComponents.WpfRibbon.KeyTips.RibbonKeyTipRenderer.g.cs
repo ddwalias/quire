@@ -13,6 +13,4 @@ internal partial class RibbonKeyTipRenderer : global::Quire.DevComponents.WpfRib
 {
     [global::Quire.Mirror.MirrorStub]
     public override void Render(global::System.Windows.Media.DrawingContext dc, object elem, global::Quire.DevComponents.WpfRibbon.KeyTipRenderInfo info) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public RibbonKeyTipRenderer() { }
 }

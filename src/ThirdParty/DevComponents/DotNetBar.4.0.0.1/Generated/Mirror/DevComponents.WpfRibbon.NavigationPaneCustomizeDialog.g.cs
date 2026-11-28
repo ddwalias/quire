@@ -12,23 +12,11 @@ namespace Quire.DevComponents.WpfRibbon;
 public partial class NavigationPaneCustomizeDialog : global::System.Windows.Window, global::System.Windows.Markup.IComponentConnector
 {
     [global::Quire.Mirror.MirrorStub]
-    private bool _DataChanged;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _Reordered;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty NavigationPaneProperty;
-    [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.Button ButtonMoveUp;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Controls.Button ButtonMoveDown;
     [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.ListBox PaneItems;
-    [global::Quire.Mirror.MirrorStub]
     private bool _contentLoaded;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfRibbon.NavigationPane NavigationPane { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public NavigationPaneCustomizeDialog() { }
     [global::Quire.Mirror.MirrorStub]
     protected override void OnSourceInitialized(global::System.EventArgs e) => base.OnSourceInitialized(e);
     [global::Quire.Mirror.MirrorStub]
@@ -36,15 +24,9 @@ public partial class NavigationPaneCustomizeDialog : global::System.Windows.Wind
     [global::Quire.Mirror.MirrorStub]
     private void OkButtonClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void CheckedChanged(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void MoveItemUp(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void MoveItemDown(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ResetItems(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfRibbon.PaneItemDescriptionList GetPaneItemDescriptionList() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

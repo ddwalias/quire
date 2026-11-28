@@ -12,11 +12,5 @@ namespace Quire.DevComponents.WpfRibbon;
 public partial class WindowBorder : global::System.Windows.Controls.Border
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty TransparentMarginProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Thickness TransparentMargin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
-    [global::Quire.Mirror.MirrorStub]
-    public WindowBorder() { }
 }

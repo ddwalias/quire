@@ -12,13 +12,9 @@ namespace Quire.DevComponents.WpfRibbon;
 public partial class GalleryScrollViewer : global::System.Windows.Controls.Canvas
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty VerticalOffsetProperty;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedCommand LineDownCommand;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedCommand LineUpCommand;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_Animation;
     [global::Quire.Mirror.MirrorStub]
     private const double DefaultAnimationDuration = 190d;
     [global::Quire.Mirror.MirrorStub]
@@ -28,27 +24,17 @@ public partial class GalleryScrollViewer : global::System.Windows.Controls.Canva
     [global::Quire.Mirror.MirrorStub]
     private bool AnimationEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    internal bool Animation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double VerticalOffset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
     [global::Quire.Mirror.MirrorStub]
     private static void OnQueryScrollCommand(object target, global::System.Windows.Input.CanExecuteRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void OnScrollCommand(object target, global::System.Windows.Input.ExecutedRoutedEventArgs args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void LineDown() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void LineUp() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private double GetSingleLineOffset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnGotKeyboardFocus(global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => base.OnGotKeyboardFocus(e);
     [global::Quire.Mirror.MirrorStub]
     private void BringIntoView(global::System.Windows.UIElement elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void BringIntoView(double Top) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void Animate(double newVerticalOffset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

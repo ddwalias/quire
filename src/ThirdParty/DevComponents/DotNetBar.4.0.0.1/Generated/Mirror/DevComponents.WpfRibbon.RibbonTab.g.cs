@@ -12,15 +12,7 @@ namespace Quire.DevComponents.WpfRibbon;
 public partial class RibbonTab : global::System.Windows.Controls.HeaderedContentControl
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsSelectedProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ContextGroupProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ColorProperty;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty TabColorProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfRibbon.RibbonTabBorder m_TabBorder;
     [global::Quire.Mirror.MirrorStub]
     private const string RibbonTabBorderName = "PART_RibbonTabBorder";
     [global::Quire.Mirror.MirrorStub]
@@ -30,29 +22,17 @@ public partial class RibbonTab : global::System.Windows.Controls.HeaderedContent
     [global::Quire.Mirror.MirrorStub]
     private bool m_IsRibbonMenuOpen;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfRibbon.ContextGroup ContextGroup { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.DevComponents.WpfRibbon.Ribbon ParentRibbon { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfRibbon.eRibbonTabColor Color { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsSelected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private bool RibbonKeyTipsEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal bool IsMinimizedState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal bool IsRibbonMenuOpen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public override void OnApplyTemplate() => base.OnApplyTemplate();
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnContentChanged(object oldContent, object newContent) => base.OnContentChanged(oldContent, newContent);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnAccessKey(global::System.Windows.Input.AccessKeyEventArgs e) => base.OnAccessKey(e);
     [global::Quire.Mirror.MirrorStub]
     private static void OnColorChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnColorChanged(global::Quire.DevComponents.WpfRibbon.eRibbonTabColor newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateTabBorderColorClass() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -64,11 +44,7 @@ public partial class RibbonTab : global::System.Windows.Controls.HeaderedContent
     [global::Quire.Mirror.MirrorStub]
     protected virtual void OnSelected(global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnUnselected(global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnGotKeyboardFocus(global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => base.OnGotKeyboardFocus(e);
-    [global::Quire.Mirror.MirrorStub]
-    private void RaiseSelectedEvents(bool newValue, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnMouseDoubleClick(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnMouseDoubleClick(e);
     [global::Quire.Mirror.MirrorStub]
@@ -76,13 +52,7 @@ public partial class RibbonTab : global::System.Windows.Controls.HeaderedContent
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfRibbon.Ribbon GetRibbon() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override void OnMouseEnter(global::System.Windows.Input.MouseEventArgs e) => base.OnMouseEnter(e);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnMouseLeave(global::System.Windows.Input.MouseEventArgs e) => base.OnMouseLeave(e);
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnMouseMove(global::System.Windows.Input.MouseEventArgs e) => base.OnMouseMove(e);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnIsKeyboardFocusWithinChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => base.OnIsKeyboardFocusWithinChanged(e);
     [global::Quire.Mirror.MirrorStub]
     internal void UpdateBorderRenderState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -91,6 +61,4 @@ public partial class RibbonTab : global::System.Windows.Controls.HeaderedContent
     public static global::Quire.DevComponents.WpfRibbon.eRibbonTabColor GetTabColor(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetTabColor(global::System.Windows.UIElement element, global::Quire.DevComponents.WpfRibbon.eRibbonTabColor tabColor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public RibbonTab() { }
 }

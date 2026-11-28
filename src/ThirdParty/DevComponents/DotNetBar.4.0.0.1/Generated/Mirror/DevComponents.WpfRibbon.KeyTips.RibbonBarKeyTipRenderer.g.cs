@@ -19,6 +19,4 @@ internal partial class RibbonBarKeyTipRenderer : global::Quire.DevComponents.Wpf
     private void ProcessUIElement(global::System.Windows.UIElement e, global::System.Windows.Media.DrawingContext dc, global::Quire.DevComponents.WpfRibbon.KeyTipRenderInfo info, global::Quire.DevComponents.WpfRibbon.RibbonBar rb, global::System.Windows.Size rbSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Point GetSpecKeyTipPosition(global::System.Windows.Size ribbonBarSize, global::System.Windows.Rect elemRect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public RibbonBarKeyTipRenderer() { }
 }

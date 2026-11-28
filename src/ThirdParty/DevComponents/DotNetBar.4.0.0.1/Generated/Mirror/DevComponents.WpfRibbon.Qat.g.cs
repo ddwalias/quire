@@ -14,43 +14,9 @@ public partial class Qat : global::Quire.DevComponents.WpfRibbon.BasePopupContro
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty IsOverflowItemProperty;
     [global::Quire.Mirror.MirrorStub]
-    internal static readonly global::System.Windows.DependencyPropertyKey IsOverflowItemPropertyKey;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty HasOverflowItemsProperty;
-    [global::Quire.Mirror.MirrorStub]
-    internal static readonly global::System.Windows.DependencyPropertyKey HasOverflowItemsPropertyKey;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsOverflowOpenProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsAboveRibbonProperty;
-    [global::Quire.Mirror.MirrorStub]
-    internal static readonly global::System.Windows.DependencyPropertyKey IsAboveRibbonPropertyKey;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsActiveProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsGlassEnabledProperty;
-    [global::Quire.Mirror.MirrorStub]
     private const string OverflowButtonName = "PART_OverflowButton";
     [global::Quire.Mirror.MirrorStub]
     private const string OverflowPanelName = "PART_OverflowPanel";
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfRibbon.QatOverflowPanel m_OverflowPanel;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.DevComponents.WpfRibbon.QatOverflowPanel OverflowPanel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsAboveRibbon { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasOverflowItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsOverflowOpen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsGlassEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override void OnApplyTemplate() => base.OnApplyTemplate();
-    [global::Quire.Mirror.MirrorStub]
-    internal static void SetIsOverflowItem(global::System.Windows.DependencyObject element, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnItemsChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => base.OnItemsChanged(e);
     [global::Quire.Mirror.MirrorStub]
@@ -59,8 +25,6 @@ public partial class Qat : global::Quire.DevComponents.WpfRibbon.BasePopupContro
     private void RegisterToOpenOnLoad() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OpenOnLoad(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private object OpenPopupOnLoad(object arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void OnIsOverflowOpenChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -71,6 +35,4 @@ public partial class Qat : global::Quire.DevComponents.WpfRibbon.BasePopupContro
     private static object CoerceIsOverflowOpen(global::System.Windows.DependencyObject d, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected internal override void OnInternalMenuModeChanged(global::System.EventArgs e) => base.OnInternalMenuModeChanged(e);
-    [global::Quire.Mirror.MirrorStub]
-    public Qat() { }
 }

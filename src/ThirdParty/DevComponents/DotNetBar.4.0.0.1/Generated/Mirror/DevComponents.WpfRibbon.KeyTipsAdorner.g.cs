@@ -12,8 +12,6 @@ namespace Quire.DevComponents.WpfRibbon;
 internal partial class KeyTipsAdorner : global::System.Windows.Documents.Adorner
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.Control m_RootControl;
-    [global::Quire.Mirror.MirrorStub]
     private string m_KeyTipsStack;
     [global::Quire.Mirror.MirrorStub]
     private object m_ContextObject;
@@ -23,8 +21,6 @@ internal partial class KeyTipsAdorner : global::System.Windows.Documents.Adorner
     public string KeyTipsStack { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public object ContextObject { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Controls.Control RootControl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public KeyTipsAdorner(global::System.Windows.UIElement elem) : base(default(global::System.Windows.UIElement)) { }
     [global::Quire.Mirror.MirrorStub]

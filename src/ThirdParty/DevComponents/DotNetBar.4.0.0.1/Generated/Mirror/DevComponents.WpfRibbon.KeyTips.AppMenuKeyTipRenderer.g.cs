@@ -13,6 +13,4 @@ internal partial class AppMenuKeyTipRenderer : global::Quire.DevComponents.WpfRi
 {
     [global::Quire.Mirror.MirrorStub]
     public override void Render(global::System.Windows.Media.DrawingContext dc, object elem, global::Quire.DevComponents.WpfRibbon.KeyTipRenderInfo info) => base.Render(dc, elem, info);
-    [global::Quire.Mirror.MirrorStub]
-    public AppMenuKeyTipRenderer() { }
 }

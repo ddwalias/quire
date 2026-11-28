@@ -14,17 +14,7 @@ public partial class RibbonBar : global::Quire.DevComponents.WpfRibbon.HeaderedP
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.RoutedEvent LaunchDialogEvent;
     [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty DialogLauncherVisibleProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty IsAutoSizeEnabledProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty ResizeOrderIndexProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::System.Windows.DependencyProperty CollapsedImageProperty;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty MinAutoSizeHintProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty CollapsedHeaderProperty;
     [global::Quire.Mirror.MirrorStub]
     private const string RibbonBarBorderName = "PART_RibbonBarBorder";
     [global::Quire.Mirror.MirrorStub]
@@ -40,49 +30,11 @@ public partial class RibbonBar : global::Quire.DevComponents.WpfRibbon.HeaderedP
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfRibbon.ButtonDropDown m_DialogLauncherButton;
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfRibbon.ButtonPanel m_ButtonPanel;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_IsCollapsed;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_MeasureNeedCollapse;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_IsSecondMeasurePass;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Size m_LastPanelMeasureSize;
-    [global::Quire.Mirror.MirrorStub]
-    public int ResizeOrderIndex { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Visibility DialogLauncherVisible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsCollapsed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object CollapsedImage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object CollapsedHeader { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal bool MeasureNeedCollapse { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal bool IsSecondMeasurePass { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Size LastPanelMeasureSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsAutoSizeEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.DevComponents.WpfRibbon.ButtonPanel ButtonPanel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public event global::System.Windows.RoutedEventHandler LaunchDialog;
-    [global::Quire.Mirror.MirrorStub]
-    public RibbonBar() { }
     [global::Quire.Mirror.MirrorStub]
     protected virtual void OnLaunchDialog() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal void InvokeLaunchDialog() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override void OnApplyTemplate() => base.OnApplyTemplate();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnInitialized(global::System.EventArgs e) => base.OnInitialized(e);
-    [global::Quire.Mirror.MirrorStub]
-    private void LauncherClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnMouseEnter(global::System.Windows.Input.MouseEventArgs e) => base.OnMouseEnter(e);
     [global::Quire.Mirror.MirrorStub]
@@ -95,6 +47,4 @@ public partial class RibbonBar : global::Quire.DevComponents.WpfRibbon.HeaderedP
     private static void OnMinAutoSizeHintChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static bool IsMinAutoSizeHintValid(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.DevComponents.WpfRibbon.RibbonBar Copy(bool deepCopy) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

@@ -11,10 +11,4 @@ namespace Quire.DevComponents.WpfRibbon.Properties;
 [global::Quire.Mirror.MirrorOf("DevComponents.WpfRibbon.Properties.Settings, DevComponents.WpfRibbon")]
 internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
 {
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.DevComponents.WpfRibbon.Properties.Settings defaultInstance;
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.DevComponents.WpfRibbon.Properties.Settings Default { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public Settings() { }
 }

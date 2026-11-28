@@ -12,15 +12,11 @@ namespace Quire.DevComponents.WpfRibbon;
 public partial class NavigationPaneSplitter : global::System.Windows.Controls.Control
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty PanePanelProperty;
-    [global::Quire.Mirror.MirrorStub]
     private int _VisibleItemsCount;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Size _FirstElementSize;
     [global::Quire.Mirror.MirrorStub]
     private double _MinContentHeight;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfRibbon.NavigationPanePanel PanePanel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected override void OnMouseLeftButtonDown(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnMouseLeftButtonDown(e);
     [global::Quire.Mirror.MirrorStub]

@@ -13,6 +13,4 @@ internal partial class AutoSizeBagFactory
 {
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.DevComponents.WpfRibbon.ElementAutoSizeBag CreateAutoSizeBag(global::Quire.DevComponents.WpfRibbon.ButtonDropDown item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public AutoSizeBagFactory() { }
 }

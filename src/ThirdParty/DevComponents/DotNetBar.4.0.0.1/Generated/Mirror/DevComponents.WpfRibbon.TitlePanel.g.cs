@@ -12,36 +12,18 @@ namespace Quire.DevComponents.WpfRibbon;
 public partial class TitlePanel : global::System.Windows.Controls.Panel
 {
     [global::Quire.Mirror.MirrorStub]
-    private double m_TabXPosition;
-    [global::Quire.Mirror.MirrorStub]
-    private double m_QatRightPosition;
-    [global::Quire.Mirror.MirrorStub]
-    private double m_TitleChromeHeight;
-    [global::Quire.Mirror.MirrorStub]
-    internal double TabXPosition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal double QatRightPosition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal double TitleChromeHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
-    [global::Quire.Mirror.MirrorStub]
-    private double GetContextGroupHeight() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool IsTabVisible(global::Quire.DevComponents.WpfRibbon.RibbonTab tab) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
     [global::Quire.Mirror.MirrorStub]
     private void ExcludeArea(global::System.Collections.Generic.List<global::System.Windows.Rect> availableArea, global::System.Windows.Rect tabsArea) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public TitlePanel() { }
 
     [global::Quire.Mirror.MirrorOf("DevComponents.WpfRibbon.TitlePanel+RectWidthComparer, DevComponents.WpfRibbon")]
     private partial class RectWidthComparer : global::System.Collections.Generic.IComparer<global::System.Windows.Rect>
     {
         [global::Quire.Mirror.MirrorStub]
         public int Compare(global::System.Windows.Rect x, global::System.Windows.Rect y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public RectWidthComparer() { }
     }
 }

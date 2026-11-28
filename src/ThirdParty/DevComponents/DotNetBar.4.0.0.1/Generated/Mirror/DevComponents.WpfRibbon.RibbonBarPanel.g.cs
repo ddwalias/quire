@@ -14,21 +14,11 @@ public partial class RibbonBarPanel : global::System.Windows.Controls.Panel
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfRibbon.CollapsedRibbonBarControl[] m_CollapsedControls;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.Primitives.RepeatButton m_ScrollLeft;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.Primitives.RepeatButton m_ScrollRight;
-    [global::Quire.Mirror.MirrorStub]
     private double m_AvailableWidth;
-    [global::Quire.Mirror.MirrorStub]
-    private int m_HorizontalOffset;
     [global::Quire.Mirror.MirrorStub]
     private double m_Spacing;
     [global::Quire.Mirror.MirrorStub]
-    private bool IsScrollUsed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     protected override int VisualChildrenCount { get => base.VisualChildrenCount; }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnInitialized(global::System.EventArgs e) => base.OnInitialized(e);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
     [global::Quire.Mirror.MirrorStub]
@@ -56,11 +46,7 @@ public partial class RibbonBarPanel : global::System.Windows.Controls.Panel
     [global::Quire.Mirror.MirrorStub]
     private void ScrollLeft_Click(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void SetScrollOffset(int offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void UpdateScrollButtonVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void DestroyScrollButtons() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void RemoveButton(global::System.Windows.Controls.Primitives.RepeatButton b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -69,9 +55,5 @@ public partial class RibbonBarPanel : global::System.Windows.Controls.Panel
     [global::Quire.Mirror.MirrorOf("DevComponents.WpfRibbon.RibbonBarPanel+ResizeOrderComparer, DevComponents.WpfRibbon")]
     private partial class ResizeOrderComparer : global::System.Collections.Generic.IComparer<global::Quire.DevComponents.WpfRibbon.RibbonBar>
     {
-        [global::Quire.Mirror.MirrorStub]
-        public int Compare(global::Quire.DevComponents.WpfRibbon.RibbonBar x, global::Quire.DevComponents.WpfRibbon.RibbonBar y) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public ResizeOrderComparer() { }
     }
 }

@@ -29,6 +29,4 @@ internal abstract partial class KeyTipRenderer
     protected virtual void RenderKeyTip(global::System.Windows.Media.DrawingContext dc, global::System.Windows.Rect r, global::Quire.DevComponents.WpfRibbon.KeyTipColors c, global::System.Windows.Media.Typeface tf, double fontSize, string keyTip) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual global::Quire.DevComponents.WpfRibbon.KeyTipColors GetColors(global::System.Windows.UIElement elem, global::Quire.DevComponents.WpfRibbon.KeyTipRenderInfo info) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected KeyTipRenderer() { }
 }

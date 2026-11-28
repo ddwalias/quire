@@ -16,11 +16,7 @@ public partial class ButtonDropDownAutomationPeer : global::System.Windows.Autom
     [global::Quire.Mirror.MirrorStub]
     global::System.Windows.Automation.ToggleState global::System.Windows.Automation.Provider.IToggleProvider.ToggleState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public ButtonDropDownAutomationPeer(global::Quire.DevComponents.WpfRibbon.ButtonDropDown owner) : base(default(global::System.Windows.FrameworkElement)) { }
-    [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Automation.Provider.IExpandCollapseProvider.Collapse() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Automation.Peers.AutomationControlType GetAutomationControlTypeCore() => base.GetAutomationControlTypeCore();
     [global::Quire.Mirror.MirrorStub]
     void global::System.Windows.Automation.Provider.IExpandCollapseProvider.Expand() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

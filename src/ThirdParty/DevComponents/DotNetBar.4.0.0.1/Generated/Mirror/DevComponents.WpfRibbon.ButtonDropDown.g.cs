@@ -12,77 +12,13 @@ namespace Quire.DevComponents.WpfRibbon;
 public partial class ButtonDropDown : global::System.Windows.Controls.HeaderedItemsControl, global::System.Windows.Input.ICommandSource
 {
     [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.DependencyProperty ContentExpandsProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsPressedProperty;
-    [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Windows.DependencyPropertyKey IsPressedPropertyKey;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsPopupOpenProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty RoleProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty PartVisibilityProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty FocusChangeKeepsPopupOpenProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ColorClassProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsHighlightedProperty;
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Windows.DependencyPropertyKey IsHighlightedPropertyKey;
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsCheckableProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsCheckedProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ImageProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ImageSmallProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty UseSmallImageProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty RenderImageProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.DependencyPropertyKey RenderImagePropertyKey;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty WrapLabelProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty InlineExpandProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ImagePositionProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ExpandPositionProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty StaysOpenOnClickProperty;
-    [global::Quire.Mirror.MirrorStub]
-    internal static readonly global::System.Windows.DependencyProperty IsSelectedProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty PopupPlacementProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty PopupPlacementTargetProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsPopupAnimationSuspendedProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty InputGestureTextProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsExpandVisibleProperty;
-    [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Windows.DependencyPropertyKey IsExpandVisiblePropertyKey;
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsSimpleHeaderProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.DependencyPropertyKey IsSimpleHeaderPropertyKey;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ExpandVisibilityProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty PopupTypeProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.RoutedEvent ClickEvent;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent PopupOpenedEvent;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.RoutedEvent PopupClosedEvent;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent CheckedEvent;
     [global::Quire.Mirror.MirrorStub]
@@ -90,17 +26,7 @@ public partial class ButtonDropDown : global::System.Windows.Controls.HeaderedIt
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent PreviewClickEvent;
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty CommandProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty CommandParameterProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty CommandTargetProperty;
-    [global::Quire.Mirror.MirrorStub]
     internal static readonly global::System.Windows.RoutedEvent PreviewClickInternalEvent;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty CornerRadiusProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty OptionGroupProperty;
     [global::Quire.Mirror.MirrorStub]
     private const string PopupTemplateName = "PART_Popup";
     [global::Quire.Mirror.MirrorStub]
@@ -120,11 +46,7 @@ public partial class ButtonDropDown : global::System.Windows.Controls.HeaderedIt
     [global::Quire.Mirror.MirrorStub]
     private const string PartExpandInlineName = "PART_ButtonExpandInline";
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.Primitives.Popup m_Popup;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfRibbon.ButtonBorder m_ButtonBorder;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.FrameworkElement m_ButtonImage;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.FrameworkElement m_ButtonContent;
     [global::Quire.Mirror.MirrorStub]
@@ -145,8 +67,6 @@ public partial class ButtonDropDown : global::System.Windows.Controls.HeaderedIt
     private global::System.Windows.Threading.DispatcherTimer m_DelayPopupCloseTimer;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Threading.DispatcherTimer m_LivePreviewOpenTimer;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfRibbon.ElementAutoSizeBag m_AutoSizeBag;
     [global::Quire.Mirror.MirrorStub]
     private bool m_RenderBorder;
     [global::Quire.Mirror.MirrorStub]
@@ -170,107 +90,29 @@ public partial class ButtonDropDown : global::System.Windows.Controls.HeaderedIt
     [global::Quire.Mirror.MirrorStub]
     private bool m_CanExecute;
     [global::Quire.Mirror.MirrorStub]
-    protected virtual bool RaiseLivePreview { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private bool IsOnApplicationMenu { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private bool ShowLivePreviewImmediately { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsOnContextMenu { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private bool ShouldPreventOpenPopup { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected virtual bool HasVisibleItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool IsPressed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfRibbon.eButtonRole Role { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfRibbon.eButtonPartVisibility PartVisibility { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfRibbon.eDropDownType PopupType { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfRibbon.ePopupPlacement PopupPlacement { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.UIElement PopupPlacementTarget { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsSimpleHeader { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Visibility IsExpandVisible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfRibbon.eExpandVisibility ExpandVisibility { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private bool IsUsingInlineExpand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal bool IsSelected { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool ContentExpands { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Controls.Primitives.Popup Popup { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected global::Quire.DevComponents.WpfRibbon.ButtonDropDown HighlightedChild { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal bool ShowKeyTips { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool IsPopupOpen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private bool IsInOptionGroup { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal bool RenderBorder { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool IsCheckable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsChecked { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfRibbon.eExpandPosition ExpandPosition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool WrapLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool InlineExpand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool FocusChangeKeepsPopupOpen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object RenderImage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object Image { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object ImageSmall { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool UseSmallImage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfRibbon.eButtonImagePosition ImagePosition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsHighlighted { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool StaysOpenOnClick { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsPopupAnimationSuspended { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string InputGestureText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.DevComponents.WpfRibbon.ElementAutoSizeBag AutoSizeBag { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Size ImageFixedSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal bool HasImage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string ColorClass { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string OptionGroup { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.CornerRadius CornerRadius { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Input.ICommand Command { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object CommandParameter { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.IInputElement CommandTarget { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected override bool IsEnabledCore { get => base.IsEnabledCore; }
     [global::Quire.Mirror.MirrorStub]
     private bool CanExecute { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsDesignMode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public event global::System.Windows.RoutedEventHandler PreviewClick;
     [global::Quire.Mirror.MirrorStub]
@@ -298,13 +140,7 @@ public partial class ButtonDropDown : global::System.Windows.Controls.HeaderedIt
     [global::Quire.Mirror.MirrorStub]
     private void UpdateImageEnabledState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void OnIsEnabledChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void UpdateEnabledState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public override void OnApplyTemplate() => base.OnApplyTemplate();
-    [global::Quire.Mirror.MirrorStub]
-    private void Popup_Opened(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnHeaderChanged(object oldHeader, object newHeader) => base.OnHeaderChanged(oldHeader, newHeader);
     [global::Quire.Mirror.MirrorStub]
@@ -320,17 +156,9 @@ public partial class ButtonDropDown : global::System.Windows.Controls.HeaderedIt
     [global::Quire.Mirror.MirrorStub]
     protected override void OnVisualParentChanged(global::System.Windows.DependencyObject oldParent) => base.OnVisualParentChanged(oldParent);
     [global::Quire.Mirror.MirrorStub]
-    private void InternalPopupClosed(object source, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnPopupClosed(global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnPopupOpened(global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.DependencyObject GetContainerForItemOverride() => base.GetContainerForItemOverride();
     [global::Quire.Mirror.MirrorStub]
     private static object CoerceToolTipIsEnabled(global::System.Windows.DependencyObject d, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnMouseMove(global::System.Windows.Input.MouseEventArgs e) => base.OnMouseMove(e);
     [global::Quire.Mirror.MirrorStub]
     private void UpdateInactiveButtonPart() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -352,8 +180,6 @@ public partial class ButtonDropDown : global::System.Windows.Controls.HeaderedIt
     [global::Quire.Mirror.MirrorStub]
     private void OnDelayPopupClose(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override void OnMouseLeave(global::System.Windows.Input.MouseEventArgs e) => base.OnMouseLeave(e);
-    [global::Quire.Mirror.MirrorStub]
     private void SetButtonHighlight() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void RemoveButtonHighlight() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -373,8 +199,6 @@ public partial class ButtonDropDown : global::System.Windows.Controls.HeaderedIt
     private void FocusOrSelect() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private object InvokeClickAfterRender(object arg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnClick() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static void ExecuteCommand(global::System.Windows.Input.ICommandSource commandSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -400,33 +224,15 @@ public partial class ButtonDropDown : global::System.Windows.Controls.HeaderedIt
     [global::Quire.Mirror.MirrorStub]
     internal bool OpenPopup() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void OnPopupTypeChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void UpdatePopupTypeTemplate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void OnExpandPositionChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void OnExpandVisibilityChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnInlineExpandChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnItemsChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => base.OnItemsChanged(e);
-    [global::Quire.Mirror.MirrorStub]
     private void UpdateInlineExpandParent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void AccessTextSizeChanged(object sender, global::System.Windows.SizeChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetInlineExpandVisibility(global::System.Windows.Visibility v) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateExpandVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnIsHighlightedChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnIsHighlightedChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnGotKeyboardFocus(global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => base.OnGotKeyboardFocus(e);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnLostKeyboardFocus(global::System.Windows.Input.KeyboardFocusChangedEventArgs e) => base.OnLostKeyboardFocus(e);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnIsKeyboardFocusWithinChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => base.OnIsKeyboardFocusWithinChanged(e);
     [global::Quire.Mirror.MirrorStub]
@@ -435,8 +241,6 @@ public partial class ButtonDropDown : global::System.Windows.Controls.HeaderedIt
     protected virtual global::System.Windows.UIElement GetElementForAdorning() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.UIElement GetKeyTipsParent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnLostFocus(global::System.Windows.RoutedEventArgs e) => base.OnLostFocus(e);
     [global::Quire.Mirror.MirrorStub]
     private static void OnIsPopupOpenChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -452,10 +256,6 @@ public partial class ButtonDropDown : global::System.Windows.Controls.HeaderedIt
     [global::Quire.Mirror.MirrorStub]
     private void OpenOnLoad(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void OnPopupPlacementChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnIsCheckedChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void OnIsCheckedChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateOptionGroupState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -466,15 +266,7 @@ public partial class ButtonDropDown : global::System.Windows.Controls.HeaderedIt
     [global::Quire.Mirror.MirrorStub]
     private void UpdateBorderBehavior() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnChecked(global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnUnchecked(global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnInputGestureTextChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static object CoerceInputGestureText(global::System.Windows.DependencyObject d, object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() => base.OnCreateAutomationPeer();
     [global::Quire.Mirror.MirrorStub]
     internal void OpenPopupWithKeyboard() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -482,13 +274,9 @@ public partial class ButtonDropDown : global::System.Windows.Controls.HeaderedIt
     [global::Quire.Mirror.MirrorStub]
     protected override void OnKeyDown(global::System.Windows.Input.KeyEventArgs e) => base.OnKeyDown(e);
     [global::Quire.Mirror.MirrorStub]
-    protected virtual void ClearChildMouseHighlight() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected virtual void ClearChildMouseHighlight(global::System.Collections.IEnumerable col) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnTextInput(global::System.Windows.Input.TextCompositionEventArgs e) => base.OnTextInput(e);
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.DevComponents.WpfRibbon.ButtonDropDown Copy(bool deepCopy) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void OnCommandChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -497,8 +285,6 @@ public partial class ButtonDropDown : global::System.Windows.Controls.HeaderedIt
     private void RemoveCommand(global::System.Windows.Input.ICommand oldCommand) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void AddCommand(global::System.Windows.Input.ICommand newCommand) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CanExecuteChanged(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void UpdateCanExecute() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -12,8 +12,6 @@ namespace Quire.DevComponents.WpfRibbon;
 internal abstract partial class ColorFactory
 {
     [global::Quire.Mirror.MirrorStub]
-    public ColorFactory() { }
-    [global::Quire.Mirror.MirrorStub]
     public abstract global::System.Windows.Media.Color GetColor(int color);
     [global::Quire.Mirror.MirrorStub]
     public abstract global::System.Windows.Media.Color GetColor(global::System.Windows.Media.Color color);

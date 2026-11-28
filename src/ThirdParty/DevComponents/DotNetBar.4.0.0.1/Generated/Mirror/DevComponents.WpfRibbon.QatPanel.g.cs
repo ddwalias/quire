@@ -24,8 +24,6 @@ public partial class QatPanel : global::System.Windows.Controls.Panel
     [global::Quire.Mirror.MirrorStub]
     internal bool IsCompleteOverflow { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfRibbon.Qat Qat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     internal global::System.Collections.Generic.List<global::System.Windows.UIElement> GeneratedChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfRibbon.QatOverflowPanel OverflowPanel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -45,6 +43,4 @@ public partial class QatPanel : global::System.Windows.Controls.Panel
     private void OnItemsChanged(object sender, global::System.Windows.Controls.Primitives.ItemsChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Media.Visual GetVisualChild(int index) => base.GetVisualChild(index);
-    [global::Quire.Mirror.MirrorStub]
-    public QatPanel() { }
 }

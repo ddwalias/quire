@@ -54,17 +54,7 @@ internal partial class WinApi
     [global::Quire.Mirror.MirrorStub]
     public static void ExtendGlass(nint handle, int glassHeight) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static int LOWORD(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int HIWORD(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int LOWORD(nint n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int HIWORD(nint n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal static void ValidateLicenseKey(string p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public WinApi() { }
 
     [global::Quire.Mirror.MirrorOf("DevComponents.WpfRibbon.WinApi+WindowLongValues, DevComponents.WpfRibbon")]
     public enum WindowLongValues
@@ -225,33 +215,9 @@ internal partial class WinApi
     public partial struct RECT
     {
         [global::Quire.Mirror.MirrorStub]
-        public int Left;
-        [global::Quire.Mirror.MirrorStub]
-        public int Top;
-        [global::Quire.Mirror.MirrorStub]
-        public int Right;
-        [global::Quire.Mirror.MirrorStub]
-        public int Bottom;
-        [global::Quire.Mirror.MirrorStub]
-        public int Height { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public int Width { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Windows.Size Size { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public global::System.Windows.Point Location { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        public RECT(int left_, int top_, int right_, int bottom_) { }
-        [global::Quire.Mirror.MirrorStub]
         public RECT(global::System.Windows.Rect r) { }
         [global::Quire.Mirror.MirrorStub]
-        public global::System.Windows.Rect ToRectangle() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         public static global::Quire.DevComponents.WpfRibbon.WinApi.RECT FromRectangle(global::System.Windows.Rect r) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public override int GetHashCode() => base.GetHashCode();
-        [global::Quire.Mirror.MirrorStub]
-        public static implicit operator global::System.Windows.Rect(global::Quire.DevComponents.WpfRibbon.WinApi.RECT rect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         public static implicit operator global::Quire.DevComponents.WpfRibbon.WinApi.RECT(global::System.Windows.Rect rect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
@@ -276,12 +242,6 @@ internal partial class WinApi
     [global::Quire.Mirror.MirrorOf("DevComponents.WpfRibbon.WinApi+POINT, DevComponents.WpfRibbon")]
     public partial struct POINT
     {
-        [global::Quire.Mirror.MirrorStub]
-        public int x;
-        [global::Quire.Mirror.MirrorStub]
-        public int y;
-        [global::Quire.Mirror.MirrorStub]
-        public POINT(int x, int y) { }
     }
 
     [global::Quire.Mirror.MirrorOf("DevComponents.WpfRibbon.WinApi+MINMAXINFO, DevComponents.WpfRibbon")]

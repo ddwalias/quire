@@ -17,6 +17,4 @@ internal partial class KeyTipColors
     public global::System.Windows.Media.Pen Border;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.Brush Foreground;
-    [global::Quire.Mirror.MirrorStub]
-    public KeyTipColors() { }
 }

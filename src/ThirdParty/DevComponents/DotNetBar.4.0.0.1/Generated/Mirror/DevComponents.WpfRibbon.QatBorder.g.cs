@@ -12,20 +12,6 @@ namespace Quire.DevComponents.WpfRibbon;
 public partial class QatBorder : global::System.Windows.Controls.Decorator
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty BackgroundProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty BorderBrushProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty BorderThicknessProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty LightBorderBrushProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty PaddingProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsBorderVisibleProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsBackgroundVisibleProperty;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Media.StreamGeometry m_BackgroundGeometry;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Media.StreamGeometry m_BorderGeometry;
@@ -33,20 +19,6 @@ public partial class QatBorder : global::System.Windows.Controls.Decorator
     private global::System.Windows.Media.StreamGeometry m_LightBorderGeometry;
     [global::Quire.Mirror.MirrorStub]
     private const int ArcWidth = 12;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush Background { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush BorderBrush { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush LightBorderBrush { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Thickness BorderThickness { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Thickness Padding { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsBorderVisible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsBackgroundVisible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private bool RendersBorder { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -65,8 +37,4 @@ public partial class QatBorder : global::System.Windows.Controls.Decorator
     private static global::System.Windows.Rect DeflateRect(global::System.Windows.Rect r, global::System.Windows.Thickness thick) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Windows.Size GetThicknessSize(global::System.Windows.Thickness t) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool IsZero(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public QatBorder() { }
 }

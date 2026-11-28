@@ -12,51 +12,7 @@ namespace Quire.DevComponents.WpfRibbon;
 public partial class Ribbon : global::System.Windows.Controls.Primitives.Selector, global::Quire.DevComponents.WpfRibbon.IPopupParentControl
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty AutoExpandProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty CanDialogCustomizeQatProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty CanChangeQatPlacementProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsRibbonMenuOpenProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsMinimizedProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ApplicationMenuProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty QuickAccessToolbarProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsQuickAccessToolbarBelowProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty WindowBorderThicknessProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty HorizontalWindowBorderThicknessProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.DependencyPropertyKey HorizontalWindowBorderThicknessPropertyKey;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty SelectedContentProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.DependencyPropertyKey SelectedContentPropertyKey;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty SelectedContentTemplateProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.DependencyPropertyKey SelectedContentTemplatePropertyKey;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty SelectedContentTemplateSelectorProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.DependencyPropertyKey SelectedContentTemplateSelectorPropertyKey;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ContentTemplateSelectorProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ContentTemplateProperty;
-    [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Windows.DependencyPropertyKey ContextGroupsPropertyKey;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ContextGroupsProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsUsingGlassProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.DependencyPropertyKey IsUsingGlassPropertyKey;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty KeyTipProperty;
     [global::Quire.Mirror.MirrorStub]
@@ -66,17 +22,7 @@ public partial class Ribbon : global::System.Windows.Controls.Primitives.Selecto
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty IsCustomizableContextSetProperty;
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty UseSpecKeyTipPositioningProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty AutoHideRibbonContentProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty AutoHideTriggerSizeProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty SystemButtonsProperty;
-    [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Input.RoutedCommand ToggleRibbonMinimize;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty LicenseKeyProperty;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent BeforeRemoveFromQatEvent;
     [global::Quire.Mirror.MirrorStub]
@@ -124,8 +70,6 @@ public partial class Ribbon : global::System.Windows.Controls.Primitives.Selecto
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfRibbon.RibbonBorder m_PanelBorder;
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfRibbon.ParentPopupControlImpl m_PopupHandler;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Controls.ContentPresenter m_QatPresenter;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Controls.ContentPresenter m_AppMenuPresenter;
@@ -140,15 +84,11 @@ public partial class Ribbon : global::System.Windows.Controls.Primitives.Selecto
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfRibbon.RibbonBorder m_PopupBorder;
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfRibbon.RibbonLocalization m_SystemText;
-    [global::Quire.Mirror.MirrorStub]
     private bool m_ShowKeyTips;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfRibbon.KeyTipsAdorner m_KeyTipsAdorner;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Delegate m_EnterMenuModeDelegate;
-    [global::Quire.Mirror.MirrorStub]
-    private static bool _IsLivePreviewActive;
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Reflection.FieldInfo s_ShowKeyboardCues;
     [global::Quire.Mirror.MirrorStub]
@@ -168,65 +108,11 @@ public partial class Ribbon : global::System.Windows.Controls.Primitives.Selecto
     [global::Quire.Mirror.MirrorStub]
     internal bool IsBelowMinimumSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    private bool IsDesignMode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.UIElement PopupBorderContent { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool SystemButtons { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string LicenseKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.UIElement ApplicationMenu { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.UIElement QuickAccessToolbar { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsQuickAccessToolbarBelow { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Thickness WindowBorderThickness { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Thickness HorizontalWindowBorderThickness { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public object SelectedContent { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.DataTemplate SelectedContentTemplate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Controls.DataTemplateSelector SelectedContentTemplateSelector { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.DataTemplate ContentTemplate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Controls.DataTemplateSelector ContentTemplateSelector { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfRibbon.ContextGroupCollection ContextGroups { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfRibbon.RibbonLocalization SystemText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool AutoExpand { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool CanDialogCustomizeQat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool CanChangeQatPlacement { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool AutoHideRibbonContent { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size AutoHideTriggerSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool UseSpecKeyTipPositioning { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsRibbonMenuOpen { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsMinimized { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal bool HasCaption { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool IsUsingGlass { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string QuickAccessToolbarLayout { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     internal bool ShowKeyTips { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal static bool IsLivePreviewActive { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     bool global::Quire.DevComponents.WpfRibbon.IPopupParentControl.IsPopupMode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -254,17 +140,11 @@ public partial class Ribbon : global::System.Windows.Controls.Primitives.Selecto
     [global::Quire.Mirror.MirrorStub]
     public override void OnApplyTemplate() => base.OnApplyTemplate();
     [global::Quire.Mirror.MirrorStub]
-    private void Popup_Opened(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnRenderSizeChanged(global::System.Windows.SizeChangedInfo sizeInfo) => base.OnRenderSizeChanged(sizeInfo);
     [global::Quire.Mirror.MirrorStub]
     private static void OnTabsScrolled(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void UpdatePanelBorderSelectedTabRect() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void UpdatePanelBorderSelectedTabRect(bool invokeAfterRenderIfNeeded) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private object InvokeUpdateBorderAfterRender(object args) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
     [global::Quire.Mirror.MirrorStub]
@@ -272,29 +152,15 @@ public partial class Ribbon : global::System.Windows.Controls.Primitives.Selecto
     [global::Quire.Mirror.MirrorStub]
     private void UpdateSelectedContent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.ContentPresenter GetSelectedContentPresenter() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnSelectionChanged(global::System.Windows.Controls.SelectionChangedEventArgs e) => base.OnSelectionChanged(e);
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnInitialized(global::System.EventArgs e) => base.OnInitialized(e);
     [global::Quire.Mirror.MirrorStub]
     private void SetupRibbonWindow() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnVisualParentChanged(global::System.Windows.DependencyObject oldParent) => base.OnVisualParentChanged(oldParent);
     [global::Quire.Mirror.MirrorStub]
     private void OnGeneratorStatusChanged(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnItemsChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => base.OnItemsChanged(e);
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfRibbon.RibbonTab FindNextTabItem(int startIndex, int direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfRibbon.RibbonTab GetSelectedTabItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnLicenseKeyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnLicenseKeyChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void InitLK(string lk) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void OnApplicationMenuChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -330,8 +196,6 @@ public partial class Ribbon : global::System.Windows.Controls.Primitives.Selecto
     [global::Quire.Mirror.MirrorStub]
     private static void IsMinimizedChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void OnIsMinimizedChanged(bool oldValue, bool newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void UpdateMinimizedContentState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private static void IsRibbonMenuOpenChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -343,8 +207,6 @@ public partial class Ribbon : global::System.Windows.Controls.Primitives.Selecto
     public static string GetKeyTip(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetKeyTip(global::System.Windows.UIElement element, string keytip) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void KeyTipChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool GetIsCustomizable(global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -358,8 +220,6 @@ public partial class Ribbon : global::System.Windows.Controls.Primitives.Selecto
     [global::Quire.Mirror.MirrorStub]
     public static void SetLivePreviewEnabled(global::System.Windows.FrameworkElement element, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void IsCustomizableChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal static bool GetIsCustomizableContextSet(global::System.Windows.FrameworkElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static void SetIsCustomizableContextSet(global::System.Windows.FrameworkElement element, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -370,35 +230,15 @@ public partial class Ribbon : global::System.Windows.Controls.Primitives.Selecto
     [global::Quire.Mirror.MirrorStub]
     public bool IsElementOnQat(global::System.Windows.FrameworkElement elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected override void OnContextMenuClosing(global::System.Windows.Controls.ContextMenuEventArgs e) => base.OnContextMenuClosing(e);
-    [global::Quire.Mirror.MirrorStub]
     private void HandleContextMenuClosing(global::System.Windows.Controls.ContextMenuEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Controls.ContextMenu GetCustomizeContextMenu() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ContextMenuRemoveFromQatClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void ContextMenuMinMaxRibbonClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ContextMenuQatChangePlacementClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ContextMenuCustomizeQatClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void ContextMenuAddToQatClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal void ToggleRibbonMinimized() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ToggleRibbonMinimizeExecuted(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ToggleRibbonMinimizeCanExecute(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal void OnQatDialogCustomize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnAfterCustomizeQatDialog(global::Quire.DevComponents.WpfRibbon.QatDialogEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnBeforeCustomizeQatDialog(global::Quire.DevComponents.WpfRibbon.QatDialogEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void ChangeQatPlacement() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private string GetQatLayoutDescription() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -418,15 +258,7 @@ public partial class Ribbon : global::System.Windows.Controls.Primitives.Selecto
     [global::Quire.Mirror.MirrorStub]
     internal bool CanAddToQat(object element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnAfterAddToQat(global::Quire.DevComponents.WpfRibbon.QatOperationAddEventArgs qe) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnBeforeAddToQat(global::Quire.DevComponents.WpfRibbon.QatOperationAddEventArgs qe) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void RemoveFromQat(object element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnAfterRemoveFromQat(global::Quire.DevComponents.WpfRibbon.QatOperationEventArgs oe) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnBeforeRemoveFromQat(global::Quire.DevComponents.WpfRibbon.QatOperationEventArgs oe) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool CanRemoveFromQat(object element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -460,8 +292,6 @@ public partial class Ribbon : global::System.Windows.Controls.Primitives.Selecto
     [global::Quire.Mirror.MirrorStub]
     public void ChangeColorScheme(global::Quire.DevComponents.WpfRibbon.eRibbonVisualStyle baseColorTable, global::System.Windows.Media.Color baseColor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.ResourceDictionary CreateColorScheme(global::Quire.DevComponents.WpfRibbon.eRibbonVisualStyle baseColorTable, global::System.Windows.Media.Color baseColor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void MergeDictionary(global::System.Windows.ResourceDictionary rd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetColorScheme(global::Quire.DevComponents.WpfRibbon.eRibbonVisualStyle colorTable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -474,11 +304,7 @@ public partial class Ribbon : global::System.Windows.Controls.Primitives.Selecto
     [global::Quire.Mirror.MirrorStub]
     private static global::System.Windows.ResourceDictionary CreateColorScheme(global::System.Windows.ResourceDictionary rd, global::System.Windows.Media.Color baseColor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.DevComponents.WpfRibbon.ColorFactory GetColorFactory(global::System.Windows.Media.Color baseColor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static void OnButtonDropDownCheckedClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnButtonDropDownUnCheckedClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SyncChecked(global::Quire.DevComponents.WpfRibbon.ButtonDropDown button) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -492,23 +318,9 @@ public partial class Ribbon : global::System.Windows.Controls.Primitives.Selecto
     [global::Quire.Mirror.MirrorStub]
     private static void OnPopupIsSelectedChanged(object sender, global::System.Windows.RoutedPropertyChangedEventArgs<bool> e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void OnSelectedChanged(object sender, global::System.Windows.RoutedPropertyChangedEventArgs<bool> e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnButtonDropDownPreviewClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnMouseButtonDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected virtual void InternalMouseButtonDown(global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void OnPreviewMouseButtonDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void InternalPreviewMouseButtonDown(global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnMouseButtonUp(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void InternalMouseButtonUp(global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnLostMouseCapture(object sender, global::System.Windows.Input.MouseEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void PopupHandlerInternalMenuModeChanged(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -14,47 +14,11 @@ public partial class ApplicationMenu : global::Quire.DevComponents.WpfRibbon.But
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Windows.DependencyPropertyKey MruItemsPropertyKey;
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty MruItemsProperty;
-    [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Windows.DependencyPropertyKey AppItemsPropertyKey;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty AppItemsProperty;
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Windows.DependencyPropertyKey HasMruItemsPropertyKey;
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty HasMruItemsProperty;
-    [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Windows.DependencyPropertyKey HasAppItemsPropertyKey;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty HasAppItemsProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty MruItemTemplateProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty AppItemTemplateProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty MruItemTemplateSelectorProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty AppItemTemplateSelectorProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty DoubleClickCloseProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.ObjectModel.ObservableCollection<object> MruItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.ObjectModel.ObservableCollection<object> AppItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasAppItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasMruItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.DataTemplate MruItemTemplate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.DataTemplate AppItemTemplate { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Controls.DataTemplateSelector MruItemTemplateSelector { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Controls.DataTemplateSelector AppItemTemplateSelector { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool DoubleClickClose { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public ApplicationMenu() { }
     [global::Quire.Mirror.MirrorStub]
@@ -75,8 +39,6 @@ public partial class ApplicationMenu : global::Quire.DevComponents.WpfRibbon.But
     private global::Quire.DevComponents.WpfRibbon.ButtonDropDown GetOpenButton() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnItemsChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => base.OnItemsChanged(e);
-    [global::Quire.Mirror.MirrorStub]
-    protected override void ClearChildMouseHighlight() => base.ClearChildMouseHighlight();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnKeyDown(global::System.Windows.Input.KeyEventArgs e) => base.OnKeyDown(e);
     [global::Quire.Mirror.MirrorStub]

@@ -17,6 +17,4 @@ internal partial class ButtonPopupKeyRenderer : global::Quire.DevComponents.WpfR
     protected virtual void ProcessPanel(global::System.Windows.Controls.Panel panel, global::System.Windows.Media.DrawingContext dc, global::Quire.DevComponents.WpfRibbon.KeyTipRenderInfo info, global::System.Windows.Controls.Primitives.Popup popup, global::System.Windows.Size popupSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected virtual void ProcessUIElement(global::System.Windows.UIElement e, global::System.Windows.Media.DrawingContext dc, global::Quire.DevComponents.WpfRibbon.KeyTipRenderInfo info, global::System.Windows.Controls.Primitives.Popup popup, global::System.Windows.Size popupSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public ButtonPopupKeyRenderer() { }
 }

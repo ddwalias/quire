@@ -12,20 +12,6 @@ namespace Quire.DevComponents.WpfRibbon;
 public partial class RibbonTabBorder : global::System.Windows.Controls.Decorator
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty BackgroundProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty BorderBrushProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty BorderInnerBrushProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty BorderOuterBrushProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty PaddingProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty TabStateProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ColorClassProperty;
-    [global::Quire.Mirror.MirrorStub]
     private int m_CornerSize;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Media.StreamGeometry m_SelectedBackgroundGeometry;
@@ -42,8 +28,6 @@ public partial class RibbonTabBorder : global::System.Windows.Controls.Decorator
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Media.StreamGeometry m_BorderOuterGeometry;
     [global::Quire.Mirror.MirrorStub]
-    private bool m_Animation;
-    [global::Quire.Mirror.MirrorStub]
     private const double FadeDuration = 0.2d;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfRibbon.RibbonTabBorder.RenderOverlayBrushes m_RenderBrushes;
@@ -56,23 +40,7 @@ public partial class RibbonTabBorder : global::System.Windows.Controls.Decorator
     [global::Quire.Mirror.MirrorStub]
     private object m_ResourceAccessLock;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Thickness Padding { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush Background { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush BorderBrush { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush BorderInnerBrush { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush BorderOuterBrush { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string ColorClass { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfRibbon.eRibbonTabRenderingState TabState { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private bool AnimationEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal bool Animation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
     [global::Quire.Mirror.MirrorStub]
@@ -88,8 +56,6 @@ public partial class RibbonTabBorder : global::System.Windows.Controls.Decorator
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Media.HitTestResult HitTestCore(global::System.Windows.Media.PointHitTestParameters hitTestParameters) => base.HitTestCore(hitTestParameters);
     [global::Quire.Mirror.MirrorStub]
-    private static bool IsThicknessValid(object value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private static void OnTabStateChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateOverlay(global::Quire.DevComponents.WpfRibbon.eRibbonTabRenderingState oldState, global::Quire.DevComponents.WpfRibbon.eRibbonTabRenderingState newState) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -97,8 +63,6 @@ public partial class RibbonTabBorder : global::System.Windows.Controls.Decorator
     private void UpdateVisualState() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private string GetStateKey(global::Quire.DevComponents.WpfRibbon.eRibbonTabRenderingState renderingState) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnTabClassChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfRibbon.RibbonTabBorder.RenderOverlayBrushes GetRenderOverlayBrushes() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -121,7 +85,5 @@ public partial class RibbonTabBorder : global::System.Windows.Controls.Decorator
         public global::System.Windows.Media.Brush BorderOuterBrush;
         [global::Quire.Mirror.MirrorStub]
         internal void BeginAnimation(global::System.Windows.Media.Animation.DoubleAnimation animation1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public RenderOverlayBrushes() { }
     }
 }

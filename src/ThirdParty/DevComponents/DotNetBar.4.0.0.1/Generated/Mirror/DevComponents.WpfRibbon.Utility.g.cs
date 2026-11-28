@@ -17,6 +17,4 @@ internal partial class Utility
     public static int IndexOfName(global::System.Collections.IList items, string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.FrameworkElement FindByName(global::System.Collections.IEnumerable collection, string name) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public Utility() { }
 }

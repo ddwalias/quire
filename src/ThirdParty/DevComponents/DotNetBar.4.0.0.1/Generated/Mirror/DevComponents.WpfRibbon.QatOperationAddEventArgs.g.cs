@@ -13,10 +13,4 @@ public partial class QatOperationAddEventArgs : global::Quire.DevComponents.WpfR
 {
     [global::Quire.Mirror.MirrorStub]
     public object ItemCopy;
-    [global::Quire.Mirror.MirrorStub]
-    public QatOperationAddEventArgs(object item) : base(default(object)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public QatOperationAddEventArgs(object item, global::System.Windows.RoutedEvent e) : base(default(object)) { }
-    [global::Quire.Mirror.MirrorStub]
-    public QatOperationAddEventArgs(object item, global::System.Windows.RoutedEvent e, object originalSource) : base(default(object)) { }
 }

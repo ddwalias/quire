@@ -47,7 +47,7 @@ sealed partial class Emitter
     private void WriteSource(string top, List<(string[] Path, string[] Kinds, List<string> Lines, object Report)> list, Names names)
     {
         var type = TopType(top);
-        string projectDir = Path.Combine(repo, "src", project);
+        string projectDir = ProjectLayout.ProjectDir(repo, project);
         string? file = Target(top);
         var declaration = Declaration(top);
         var usings = names.Usings.Append("Quire.Mirror").Distinct().Order(Usings).ToList();
@@ -141,7 +141,7 @@ sealed partial class Emitter
     {
         if (_targets.TryGetValue(top, out var cached)) return cached;
         var type = TopType(top);
-        string projectDir = Path.Combine(repo, "src", project);
+        string projectDir = ProjectLayout.ProjectDir(repo, project);
         var declaration = Declaration(top);
         return _targets[top] = Directory.GetFiles(projectDir, "*.cs", SearchOption.AllDirectories)
             .Where(f => !Regex.IsMatch(Path.GetRelativePath(projectDir, f).Replace('\\', '/'), @"^(Generated|bin|obj)/"))

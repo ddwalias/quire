@@ -12,11 +12,7 @@ namespace Quire.DevComponents.WpfRibbon;
 public partial class GalleryWrapPanel : global::System.Windows.Controls.WrapPanel
 {
     [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Controls.UIElementCollection CreateUIElementCollection(global::System.Windows.FrameworkElement logicalParent) => base.CreateUIElementCollection(logicalParent);
-    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
-    [global::Quire.Mirror.MirrorStub]
-    public GalleryWrapPanel() { }
 }

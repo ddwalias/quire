@@ -13,6 +13,4 @@ public partial class CollapsedRibbonBarControl : global::Quire.DevComponents.Wpf
 {
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.DevComponents.WpfRibbon.CollapsedRibbonBarButton CreateButton() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public CollapsedRibbonBarControl() { }
 }

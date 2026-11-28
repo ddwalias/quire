@@ -11,6 +11,4 @@ namespace Quire.DevComponents.WpfRibbon;
 [global::Quire.Mirror.MirrorOf("DevComponents.WpfRibbon.ContextGroupCollection, DevComponents.WpfRibbon")]
 public partial class ContextGroupCollection : global::System.Collections.ObjectModel.ObservableCollection<global::Quire.DevComponents.WpfRibbon.ContextGroup>
 {
-    [global::Quire.Mirror.MirrorStub]
-    public ContextGroupCollection() { }
 }

@@ -12,6 +12,8 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT / 'tools' / 'validation'))
+from layout import project_dir, project_file  # noqa: E402
 DEFAULT_INSTALL = (r'C:\Program Files\PTC\Mathcad Prime 12.0.1.0' if os.name == 'nt'
                    else '/mnt/c/Program Files/PTC/Mathcad Prime 12.0.1.0')
 CACHE = ROOT / '.mirror-cache'
@@ -40,7 +42,7 @@ def run(command, log, **kwargs):
 
 
 def paths(project):
-    return [f'src/{project}']
+    return [project_dir(ROOT, project).relative_to(ROOT).as_posix()]
 
 
 def restore(project):
@@ -93,7 +95,7 @@ def accept(args, work, log):
         if code:
             raise Failure(f'building {tool} failed; see {log}')
     # The stub build MemberGen reads (statuses and PDB lines of the committed generated files).
-    code, _ = run([args.dotnet, 'build', f'src/{args.project}', *flags, '-o', work / 'pristine'], log)
+    code, _ = run([args.dotnet, 'build', project_file(ROOT, args.project, '.csproj').relative_to(ROOT).as_posix(), *flags, '-o', work / 'pristine'], log)
     if code:
         raise Failure(f'building {args.project} failed; see {log}')
     skip, reasons = {}, {}
@@ -108,18 +110,32 @@ def accept(args, work, log):
         if code:
             raise Failure(f'MemberGen emit failed; see {log}')
         report = json.loads((work / 'report.json').read_text())
+        # The emitter does not write explicit-interface-implementation declarations; leave those stubs.
+        explicit = {m['id']: 'explicit interface implementation' for m in report['members'] if '::global::' in m['id']}
+        if explicit:
+            skip.update(explicit)
+            reasons.update(explicit)
+            continue
         lines = owners(report)
         print(f'round {round}: {len(report["members"])} members emitted', flush=True)
         if not report['members']:
             break
         rejected = {}
         release = work / f'release{round}'
-        code, out = run([args.dotnet, 'build', f'src/{args.project}', *flags, '--no-incremental', '-o', release], log)
+        code, out = run([args.dotnet, 'build', project_file(ROOT, args.project, '.csproj').relative_to(ROOT).as_posix(), *flags, '--no-incremental', '-o', release], log)
         for e in ERROR.finditer(out):
             path = repo_relpath(e['path'])
             owner = lines.get((path, int(e['line'])))
             if owner is None:
-                raise Failure(f'build error outside the emitted members: {e[0]}')
+                # A declaration the emitted members left incomplete (an abstract override, say): leave the type's stubs.
+                stem = Path(path).name.removesuffix('.g.cs')
+                siblings = [m['id'] for m in report['members'] if m['id'].split('::')[0].split('.', 1)[-1] == stem
+                            or m['id'].split('::')[0].endswith('.' + stem)]
+                if not siblings:
+                    raise Failure(f'build error outside the emitted members: {e[0]}')
+                for sibling in siblings:
+                    rejected.setdefault(sibling, f"type incomplete: {e['code']} {e['message'][:100]}")
+                continue
             rejected.setdefault(owner, f"compile: {e['code']} {e['message'][:120]}")
         if code and not rejected:
             raise Failure(f'build failed without attributable errors; see {log}')
@@ -158,7 +174,7 @@ def main():
     parser.add_argument('--include-tier-a', action='store_true',
                         help='also generate owned Tier A/A2 members')
     args = parser.parse_args()
-    if not (ROOT / 'src' / args.project / f'{args.project}.csproj').is_file():
+    if not project_file(ROOT, args.project, '.csproj').is_file():
         sys.exit(f'{args.project}: no production project')
     if subprocess.run(['git', 'status', '--porcelain', '--', *paths(args.project)], cwd=ROOT, capture_output=True,
                       text=True, check=True).stdout.strip():

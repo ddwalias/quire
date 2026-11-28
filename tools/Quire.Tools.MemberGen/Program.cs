@@ -33,7 +33,7 @@ string repo = One("--repo"), install = One("--install");
 var projects = options.GetValueOrDefault("--project") ?? [.. Directory.GetFiles(Path.Combine(repo, "docs/mirror/manifest"), "*.txt")
     .Select(f => Path.GetFileNameWithoutExtension(f)).Order()];
 // Release only; referenced projects' copies come along in its output.
-string Build(string project) => options.ContainsKey("--assemblies") ? Path.Combine(One("--assemblies"), project + ".dll") : Directory.GetFiles(Path.Combine(repo, "src", project, "bin", "Release"), project + ".dll", SearchOption.AllDirectories)
+string Build(string project) => options.ContainsKey("--assemblies") ? Path.Combine(One("--assemblies"), project + ".dll") : Directory.GetFiles(Path.Combine(ProjectLayout.ProjectDir(repo, project), "bin", "Release"), project + ".dll", SearchOption.AllDirectories)
     .OrderByDescending(File.GetLastWriteTimeUtc).FirstOrDefault() ?? throw new FileNotFoundException($"no Release build of {project}");
 var builds = projects.ToDictionary(p => p, Build);
 foreach (var build in builds.Values)
@@ -71,7 +71,7 @@ string target = projects.Single();
 var skip = options.ContainsKey("--skip") ? File.ReadAllLines(One("--skip")).Where(l => l.Length > 0).ToHashSet() : [];
 // D18 assigns these whole assemblies, superseding their historical tier deferrals.
 // Other projects retain the existing Tier B default and optional A/A2 scope.
-bool assignedAssembly = target is "Quire.Core" or "Quire.Mpl.Emit" or "Quire.Utils" or "Quire.Engine.Utl";
+bool assignedAssembly = target is "Quire.Core" or "Quire.Mpl.Emit" or "Quire.Utils" or "Quire.Engine.Utl" or "Quire.DevComponents.WpfDock" or "Quire.DevComponents.WpfRibbon";
 string tiers = Path.Combine(repo, "docs", "mirror", "tiers");
 if (!assignedAssembly && !File.Exists(Path.Combine(tiers, "tier-b.txt")))
 {

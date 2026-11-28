@@ -12,41 +12,17 @@ namespace Quire.DevComponents.WpfRibbon;
 public partial class ContextGroup : global::System.Windows.Controls.ContentControl
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.ObjectModel.ObservableCollection<global::Quire.DevComponents.WpfRibbon.RibbonTab> m_LinkedTabs;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty StockColorProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsSimpleContentProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.DependencyPropertyKey IsSimpleContentPropertyKey;
-    [global::Quire.Mirror.MirrorStub]
     private const string LabelContentName = "PART_LabelContent";
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.Label m_ContentLabel;
     [global::Quire.Mirror.MirrorStub]
     private bool m_IsGlassEnabled;
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Visibility TabsVisibility { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.ObjectModel.ObservableCollection<global::Quire.DevComponents.WpfRibbon.RibbonTab> LinkedTabs { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     internal bool IsOneTabVisible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfRibbon.eContextGroupColor StockColor { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsSimpleContent { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.Label ContentLabel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal bool IsGlassEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public ContextGroup() { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void OnApplyTemplate() => base.OnApplyTemplate();
-    [global::Quire.Mirror.MirrorStub]
     private static void OnStockColorChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnStockColorChanged(global::Quire.DevComponents.WpfRibbon.eContextGroupColor c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ApplyNewStockColor(global::Quire.DevComponents.WpfRibbon.eContextGroupColor c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

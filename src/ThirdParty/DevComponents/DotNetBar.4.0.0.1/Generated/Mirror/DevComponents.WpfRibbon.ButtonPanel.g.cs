@@ -12,12 +12,6 @@ namespace Quire.DevComponents.WpfRibbon;
 public partial class ButtonPanel : global::System.Windows.Controls.Panel
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty OrientationProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty FixedWidthProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty FixedHeightProperty;
-    [global::Quire.Mirror.MirrorStub]
     private bool m_AutoLayoutEnabled;
     [global::Quire.Mirror.MirrorStub]
     private const double HeightClosenessFactor = 1.33d;
@@ -28,25 +22,9 @@ public partial class ButtonPanel : global::System.Windows.Controls.Panel
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Size m_RealCalculatedSize;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.List<global::Quire.DevComponents.WpfRibbon.Gallery> m_Galleries;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfRibbon.eButtonPanelOrientation Orientation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double FixedWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double FixedHeight { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private bool IsSecondMeasurePass { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    private bool IsDesignMode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private bool HasGallery { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual global::Quire.DevComponents.WpfRibbon.ButtonPanel Copy(bool deepCopy) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Size MeasureDefault(global::System.Windows.Size availableSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Size MeasureDefault(global::System.Windows.Size availableSize, bool childrenMeasure) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

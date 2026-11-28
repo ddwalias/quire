@@ -22,35 +22,13 @@ public partial class ButtonDropDownCommand : global::System.Windows.Input.Routed
     [global::Quire.Mirror.MirrorStub]
     private string m_ImageSmallSourceString;
     [global::Quire.Mirror.MirrorStub]
-    private bool m_SyncHeader;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_SyncImageSource;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_SyncImageSmallSource;
-    [global::Quire.Mirror.MirrorStub]
     public string Header { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.ImageSource ImageSource { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.ImageSource ImageSmallSource { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool SyncHeader { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool SyncImageSource { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool SyncImageSmallSource { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public ButtonDropDownCommand() { }
-    [global::Quire.Mirror.MirrorStub]
-    public ButtonDropDownCommand(string header, string name, global::System.Type ownerType) { }
-    [global::Quire.Mirror.MirrorStub]
-    public ButtonDropDownCommand(string header, string name, global::System.Type ownerType, global::System.Windows.Input.InputGestureCollection inputGestures) { }
-    [global::Quire.Mirror.MirrorStub]
-    public ButtonDropDownCommand(string header, string name, string image, global::System.Type ownerType) { }
-    [global::Quire.Mirror.MirrorStub]
-    public ButtonDropDownCommand(string header, string name, string image, global::System.Type ownerType, global::System.Windows.Input.InputGestureCollection inputGestures) { }
-    [global::Quire.Mirror.MirrorStub]
-    public ButtonDropDownCommand(string header, string name, string image, string imageSmall, global::System.Type ownerType) { }
     [global::Quire.Mirror.MirrorStub]
     public ButtonDropDownCommand(string header, string name, string image, string imageSmall, global::System.Type ownerType, global::System.Windows.Input.InputGestureCollection inputGestures) { }
     [global::Quire.Mirror.MirrorStub]

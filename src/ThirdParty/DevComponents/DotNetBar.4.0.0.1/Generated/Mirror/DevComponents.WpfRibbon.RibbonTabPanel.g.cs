@@ -20,17 +20,7 @@ public partial class RibbonTabPanel : global::System.Windows.Controls.Panel
     [global::Quire.Mirror.MirrorStub]
     private double m_TabsSize;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.Primitives.RepeatButton m_ScrollLeft;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.Primitives.RepeatButton m_ScrollRight;
-    [global::Quire.Mirror.MirrorStub]
     private double m_AvailableWidth;
-    [global::Quire.Mirror.MirrorStub]
-    private int m_HorizontalOffset;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_RaiseTabsScrolledEvent;
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsScrollUsed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected override int VisualChildrenCount { get => base.VisualChildrenCount; }
     [global::Quire.Mirror.MirrorStub]
@@ -52,13 +42,9 @@ public partial class RibbonTabPanel : global::System.Windows.Controls.Panel
     [global::Quire.Mirror.MirrorStub]
     private void ScrollLeft_Click(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void SetScrollOffset(int offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void UpdateScrollButtonVisibility() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Media.Visual GetVisualChild(int index) => base.GetVisualChild(index);
-    [global::Quire.Mirror.MirrorStub]
-    private void DestroyScrollButtons() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void RemoveButton(global::System.Windows.Controls.Primitives.RepeatButton b) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -71,6 +57,4 @@ public partial class RibbonTabPanel : global::System.Windows.Controls.Panel
     private static bool IsPanelAlignmentValid(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
-    [global::Quire.Mirror.MirrorStub]
-    public RibbonTabPanel() { }
 }

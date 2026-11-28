@@ -12,10 +12,6 @@ namespace Quire.DevComponents.WpfRibbon;
 internal partial class ColorBlendFactory : global::Quire.DevComponents.WpfRibbon.ColorFactory
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Color m_BlendColor;
-    [global::Quire.Mirror.MirrorStub]
-    public ColorBlendFactory(global::System.Windows.Media.Color blendColor) { }
-    [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Media.Color GetColor(int rgb) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public override global::System.Windows.Media.Color GetColor(global::System.Windows.Media.Color c) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

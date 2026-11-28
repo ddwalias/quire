@@ -17,6 +17,4 @@ public partial class CollapsedRibbonBarPanel : global::System.Windows.Controls.P
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Controls.UIElementCollection CreateUIElementCollection(global::System.Windows.FrameworkElement logicalParent) => base.CreateUIElementCollection(logicalParent);
-    [global::Quire.Mirror.MirrorStub]
-    public CollapsedRibbonBarPanel() { }
 }

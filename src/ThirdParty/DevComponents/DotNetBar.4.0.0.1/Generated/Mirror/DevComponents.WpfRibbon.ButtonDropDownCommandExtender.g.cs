@@ -20,14 +20,6 @@ public partial class ButtonDropDownCommandExtender : global::Quire.DevComponents
     [global::Quire.Mirror.MirrorStub]
     private bool m_IsChecked;
     [global::Quire.Mirror.MirrorStub]
-    private bool m_SyncIsChecked;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_SyncHeader;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_SyncImageSource;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_SyncImageSmallSource;
-    [global::Quire.Mirror.MirrorStub]
     public string Header { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Media.ImageSource ImageSource { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -36,19 +28,7 @@ public partial class ButtonDropDownCommandExtender : global::Quire.DevComponents
     [global::Quire.Mirror.MirrorStub]
     public bool IsChecked { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool SyncIsChecked { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool SyncHeader { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool SyncImageSource { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool SyncImageSmallSource { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public ButtonDropDownCommandExtender() { }
-    [global::Quire.Mirror.MirrorStub]
-    public ButtonDropDownCommandExtender(string header) { }
-    [global::Quire.Mirror.MirrorStub]
-    public ButtonDropDownCommandExtender(string header, string image) { }
     [global::Quire.Mirror.MirrorStub]
     public ButtonDropDownCommandExtender(string header, string image, string imageSmall) { }
 }

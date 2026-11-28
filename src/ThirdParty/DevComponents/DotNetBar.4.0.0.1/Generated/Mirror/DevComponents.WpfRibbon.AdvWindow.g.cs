@@ -20,27 +20,13 @@ public partial class AdvWindow : global::System.Windows.Window
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Input.RoutedCommand RestoreWindow;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.Border _WindowBorder;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.Primitives.ResizeGrip _ResizeGrip;
-    [global::Quire.Mirror.MirrorStub]
     private bool _SourceInitialized;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _SizingWindow;
     [global::Quire.Mirror.MirrorStub]
     private const string PartWindowBorder = "PART_WindowBorder";
     [global::Quire.Mirror.MirrorStub]
     private const string PartWindowResizeGrip = "WindowResizeGrip";
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty EnableSystemCaptionMenuProperty;
-    [global::Quire.Mirror.MirrorStub]
     private bool m_CursorIsSet;
-    [global::Quire.Mirror.MirrorStub]
-    public bool EnableSystemCaptionMenu { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public AdvWindow() { }
-    [global::Quire.Mirror.MirrorStub]
-    public override void OnApplyTemplate() => base.OnApplyTemplate();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnMouseLeftButtonDown(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnMouseLeftButtonDown(e);
     [global::Quire.Mirror.MirrorStub]
@@ -54,27 +40,9 @@ public partial class AdvWindow : global::System.Windows.Window
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfRibbon.WinApi.SizingCommand GetSizingCommandFromPoint(global::System.Windows.Point p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Thickness GetResizeBorderThickness() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.CornerRadius GetResizeCornerRadius() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void StartResize(global::Quire.DevComponents.WpfRibbon.WinApi.SizingCommand cmd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnInitialized(global::System.EventArgs e) => base.OnInitialized(e);
-    [global::Quire.Mirror.MirrorStub]
-    private void ExecuteCloseWindow(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CanExecuteCloseWindow(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ExecuteMinimizeWindow(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CanExecuteMinimizeWindow(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ExecuteMaximizeWindow(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void CanExecuteMaximizeWindow(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void ExecuteRestoreWindow(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void CanExecuteRestoreWindow(object sender, global::System.Windows.Input.CanExecuteRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -91,10 +59,6 @@ public partial class AdvWindow : global::System.Windows.Window
     private nint WmGetMinMaxInfo(nint hwnd, int msg, nint wParam, nint lParam, ref bool handled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private nint WmSizing(nint hwnd, int msg, nint wParam, nint lParam, ref bool handled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private nint WmEnterSizeMove(nint hwnd, int msg, nint wParam, nint lParam, ref bool handled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private nint WmExitSizeMove(nint hwnd, int msg, nint wParam, nint lParam, ref bool handled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private nint WmSize(nint hwnd, int msg, nint wParam, nint lParam, ref bool handled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

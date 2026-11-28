@@ -13,6 +13,4 @@ public partial class QatOverflowPanel : global::System.Windows.Controls.StackPan
 {
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Controls.UIElementCollection CreateUIElementCollection(global::System.Windows.FrameworkElement logicalParent) => base.CreateUIElementCollection(logicalParent);
-    [global::Quire.Mirror.MirrorStub]
-    public QatOverflowPanel() { }
 }

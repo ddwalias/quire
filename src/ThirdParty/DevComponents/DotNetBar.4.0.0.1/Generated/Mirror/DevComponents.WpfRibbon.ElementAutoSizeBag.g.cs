@@ -11,16 +11,4 @@ namespace Quire.DevComponents.WpfRibbon;
 [global::Quire.Mirror.MirrorOf("DevComponents.WpfRibbon.ElementAutoSizeBag, DevComponents.WpfRibbon")]
 internal partial class ElementAutoSizeBag
 {
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.UIElement Element;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_SettingsRecorded;
-    [global::Quire.Mirror.MirrorStub]
-    protected bool SettingsRecorded { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void RecordSetting(global::System.Windows.UIElement item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public virtual void RestoreSettings() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public ElementAutoSizeBag() { }
 }

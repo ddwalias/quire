@@ -12,12 +12,6 @@ namespace Quire.DevComponents.WpfRibbon;
 public partial class GroupPanel : global::Quire.DevComponents.WpfRibbon.ButtonPanel
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty BorderBrushProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty LightBorderBrushProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty CornerRadiusProperty;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Media.StreamGeometry m_BackgroundGeometry;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Media.StreamGeometry m_BorderGeometry;
@@ -27,14 +21,6 @@ public partial class GroupPanel : global::Quire.DevComponents.WpfRibbon.ButtonPa
     private global::System.Windows.Media.Pen m_DividerPen;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Media.Pen m_DividerPenLight;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush BorderBrush { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush LightBorderBrush { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.CornerRadius CornerRadius { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public override global::Quire.DevComponents.WpfRibbon.ButtonPanel Copy(bool deepCopy) => base.Copy(deepCopy);
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
     [global::Quire.Mirror.MirrorStub]
@@ -53,6 +39,4 @@ public partial class GroupPanel : global::Quire.DevComponents.WpfRibbon.ButtonPa
     private void OnLightBorderBrushChanged(global::System.Windows.Media.Brush oldBrush, global::System.Windows.Media.Brush newBrush) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnVisualChildrenChanged(global::System.Windows.DependencyObject visualAdded, global::System.Windows.DependencyObject visualRemoved) => base.OnVisualChildrenChanged(visualAdded, visualRemoved);
-    [global::Quire.Mirror.MirrorStub]
-    public GroupPanel() { }
 }

@@ -221,7 +221,7 @@ sealed partial class Emitter(string repo, World world, Artifact quire, string pr
         var lines = Lines();
         var byType = stubs.ToLookup(s => s.Type.FullName);
         var result = new Dictionary<Stub, Site>();
-        foreach (string file in Directory.GetFiles(Path.Combine(repo, "src", project, "Generated", "Mirror"), "*.g.cs"))
+        foreach (string file in Directory.GetFiles(Path.Combine(ProjectLayout.ProjectDir(repo, project), "Generated", "Mirror"), "*.g.cs"))
         {
             var text = File.ReadAllText(file).Split('\n');
             var path = new List<(string Name, string Kind, int Depth)>();

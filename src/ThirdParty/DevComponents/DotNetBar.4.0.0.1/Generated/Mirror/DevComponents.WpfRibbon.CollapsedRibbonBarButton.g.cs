@@ -16,11 +16,5 @@ public partial class CollapsedRibbonBarButton : global::Quire.DevComponents.WpfR
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.DevComponents.WpfRibbon.RibbonBar AttachedRibbonBar { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    protected override bool HasVisibleItems { get => base.HasVisibleItems; }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.DevComponents.WpfRibbon.CollapsedRibbonBarPanel CollapsedRibbonBarPanel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     protected override void HandleMouseDown(global::System.Windows.Input.MouseButtonEventArgs e) => base.HandleMouseDown(e);
-    [global::Quire.Mirror.MirrorStub]
-    public CollapsedRibbonBarButton() { }
 }

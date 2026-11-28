@@ -14,21 +14,7 @@ public partial class Gallery : global::Quire.DevComponents.WpfRibbon.ButtonDropD
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.Input.RoutedCommand DropDownGalleryCommand;
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsCollapsibleProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsResizeEnabledProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty SuggestedContainerWidthProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsCollapsedProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty MenuItemsProperty;
-    [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Windows.DependencyPropertyKey MenuItemsPropertyKey;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty MenuItemsVisibilityProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.DependencyPropertyKey MenuItemsVisibilityPropertyKey;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty CategoryProperty;
     [global::Quire.Mirror.MirrorStub]
@@ -44,10 +30,6 @@ public partial class Gallery : global::Quire.DevComponents.WpfRibbon.ButtonDropD
     [global::Quire.Mirror.MirrorStub]
     private const string PartPopupScrollViewer = "PopupScrollViewer";
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfRibbon.GalleryScrollViewer m_Panel;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.Panel m_ItemsPanel;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Controls.Panel m_MenuItemsPanel;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Controls.Panel m_PopupGalleryPanel;
@@ -62,27 +44,7 @@ public partial class Gallery : global::Quire.DevComponents.WpfRibbon.ButtonDropD
     [global::Quire.Mirror.MirrorStub]
     private double m_OldHeight;
     [global::Quire.Mirror.MirrorStub]
-    private bool _ImmediateLivePreview;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.ObjectModel.ObservableCollection<global::System.Windows.UIElement> MenuItems { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsCollapsible { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsResizeEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsCollapsed { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Visibility MenuItemsVisibility { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public double SuggestedContainerWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.Panel InternalItemsPanel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfRibbon.GalleryScrollViewer GalleryScrollViewer { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     internal double PanelWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal bool ImmediateLivePreview { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public Gallery() { }
     [global::Quire.Mirror.MirrorStub]
@@ -93,8 +55,6 @@ public partial class Gallery : global::Quire.DevComponents.WpfRibbon.ButtonDropD
     private void ResizeThumbDragStarted(object sender, global::System.Windows.Controls.Primitives.DragStartedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ResizeThumbDragDelta(object sender, global::System.Windows.Controls.Primitives.DragDeltaEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void MenuItemsCollectionChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateMenuItems() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -123,8 +83,4 @@ public partial class Gallery : global::Quire.DevComponents.WpfRibbon.ButtonDropD
     private static void OnIsCollapsedChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OnIsCollapsedChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnCategoryChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnMouseLeave(global::System.Windows.Input.MouseEventArgs e) => base.OnMouseLeave(e);
 }

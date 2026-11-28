@@ -12,25 +12,15 @@ namespace Quire.DevComponents.WpfRibbon;
 internal partial class ParentPopupControlImpl
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.FrameworkElement m_Parent;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfRibbon.ButtonDropDown m_CurrentSelection;
     [global::Quire.Mirror.MirrorStub]
     private bool m_IsPopupMode;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.UIElement Parent { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.DevComponents.WpfRibbon.ButtonDropDown CurrentSelection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsPopupMode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private bool IsKeyboardFocusWithin { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool HasCapture { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    internal event global::System.EventHandler InternalMenuModeChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public ParentPopupControlImpl(global::System.Windows.FrameworkElement parent) { }
     [global::Quire.Mirror.MirrorStub]
     public static void OnButtonDropDownPreviewClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

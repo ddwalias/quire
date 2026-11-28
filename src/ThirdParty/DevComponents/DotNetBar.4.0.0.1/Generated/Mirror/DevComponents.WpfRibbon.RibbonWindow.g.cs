@@ -12,14 +12,6 @@ namespace Quire.DevComponents.WpfRibbon;
 public partial class RibbonWindow : global::System.Windows.Window
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty EnableGlassProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsUsingGlassProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.DependencyPropertyKey IsUsingGlassPropertyKey;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_IsGlassEnabled;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfRibbon.Ribbon m_RibbonControl;
     [global::Quire.Mirror.MirrorStub]
     private bool m_SourceInitialized;
@@ -50,12 +42,6 @@ public partial class RibbonWindow : global::System.Windows.Window
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.DevComponents.WpfRibbon.Ribbon RibbonControl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool EnableGlass { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsUsingGlass { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public RibbonWindow() { }
-    [global::Quire.Mirror.MirrorStub]
     public override void OnApplyTemplate() => base.OnApplyTemplate();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnPreviewMouseMove(global::System.Windows.Input.MouseEventArgs e) => base.OnPreviewMouseMove(e);
@@ -63,10 +49,6 @@ public partial class RibbonWindow : global::System.Windows.Window
     protected override void OnPreviewMouseLeftButtonDown(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnPreviewMouseLeftButtonDown(e);
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfRibbon.WinApi.SizingCommand GetSizingCommandFromPoint(global::System.Windows.Point p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Thickness GetResizeBorderThickness() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.CornerRadius GetResizeCornerRadius() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void StartResize(global::Quire.DevComponents.WpfRibbon.WinApi.SizingCommand cmd) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -84,21 +66,13 @@ public partial class RibbonWindow : global::System.Windows.Window
     [global::Quire.Mirror.MirrorStub]
     protected virtual global::System.Windows.Rect GetGlassClientRectangle(global::System.Windows.Rect r) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private nint WmDwmCompositionChanged(nint hwnd, int msg, nint wParam, nint lParam, ref bool handled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private nint WmGetMinMaxInfo(nint hwnd, int msg, nint wParam, nint lParam, ref bool handled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private nint WmSizing(nint hwnd, int msg, nint wParam, nint lParam, ref bool handled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private nint WmEnterSizeMove(nint hwnd, int msg, nint wParam, nint lParam, ref bool handled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private nint WmExitSizeMove(nint hwnd, int msg, nint wParam, nint lParam, ref bool handled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private nint WmSize(nint hwnd, int msg, nint wParam, nint lParam, ref bool handled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private nint WmNcHitTest(nint hwnd, int msg, nint wParam, nint lParam, ref bool handled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool GetGlassEnabled() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnStateChanged(global::System.EventArgs e) => base.OnStateChanged(e);
     [global::Quire.Mirror.MirrorStub]
@@ -106,11 +80,5 @@ public partial class RibbonWindow : global::System.Windows.Window
     [global::Quire.Mirror.MirrorStub]
     private static void EnableGlassChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void OnEnableGlassChanged(bool oldValue, bool newValue) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private int GetSystemCaptionHeight() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size arrangeBounds) => base.ArrangeOverride(arrangeBounds);
 }

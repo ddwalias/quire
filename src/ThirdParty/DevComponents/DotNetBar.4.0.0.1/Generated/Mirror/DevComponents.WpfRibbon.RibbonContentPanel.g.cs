@@ -14,25 +14,11 @@ public partial class RibbonContentPanel : global::System.Windows.Controls.Panel
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty ContentPartProperty;
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty WindowBorderThicknessProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty IsGlassEnabledProperty;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty IsVisibleAutoChangedProperty;
     [global::Quire.Mirror.MirrorStub]
     private int QatTabSpacing;
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfRibbon.RibbonBackgroundChrome m_BackChrome;
-    [global::Quire.Mirror.MirrorStub]
     private const int MinSystemItemsSize = 120;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.DevComponents.WpfRibbon.RibbonBackgroundChrome BackgroundChrome { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Thickness WindowBorderThickness { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsGlassEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnInitialized(global::System.EventArgs e) => base.OnInitialized(e);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
     [global::Quire.Mirror.MirrorStub]

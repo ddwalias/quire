@@ -11,10 +11,4 @@ namespace Quire.DevComponents.WpfRibbon;
 [global::Quire.Mirror.MirrorOf("DevComponents.WpfRibbon.QatDialogEventArgs, DevComponents.WpfRibbon")]
 public partial class QatDialogEventArgs : global::System.Windows.RoutedEventArgs
 {
-    [global::Quire.Mirror.MirrorStub]
-    public QatDialogEventArgs() { }
-    [global::Quire.Mirror.MirrorStub]
-    public QatDialogEventArgs(global::System.Windows.RoutedEvent e) { }
-    [global::Quire.Mirror.MirrorStub]
-    public QatDialogEventArgs(global::System.Windows.RoutedEvent e, object source) { }
 }

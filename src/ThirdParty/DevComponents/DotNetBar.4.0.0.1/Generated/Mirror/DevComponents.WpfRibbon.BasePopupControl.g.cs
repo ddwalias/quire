@@ -12,37 +12,13 @@ namespace Quire.DevComponents.WpfRibbon;
 public partial class BasePopupControl : global::System.Windows.Controls.ItemsControl, global::Quire.DevComponents.WpfRibbon.IPopupParentControl
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfRibbon.ParentPopupControlImpl m_PopupHandler;
-    [global::Quire.Mirror.MirrorStub]
     internal static readonly global::System.Windows.RoutedEvent IsSelectedChangedEvent;
     [global::Quire.Mirror.MirrorStub]
     bool global::Quire.DevComponents.WpfRibbon.IPopupParentControl.IsPopupMode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.DevComponents.WpfRibbon.ButtonDropDown CurrentSelection { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public BasePopupControl() { }
     [global::Quire.Mirror.MirrorStub]
-    private void PopupHandlerMenuModeChanged(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.DependencyObject GetContainerForItemOverride() => base.GetContainerForItemOverride();
-    [global::Quire.Mirror.MirrorStub]
     private static void OnIsSelectedChanged(object sender, global::System.Windows.RoutedPropertyChangedEventArgs<bool> e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnSelectedChanged(object sender, global::System.Windows.RoutedPropertyChangedEventArgs<bool> e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnButtonDropDownPreviewClick(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnMouseButtonDown(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void InternalMouseButtonDown(global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnMouseButtonUp(object sender, global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void InternalMouseButtonUp(global::System.Windows.Input.MouseButtonEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnLostMouseCapture(object sender, global::System.Windows.Input.MouseEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected internal virtual void OnInternalMenuModeChanged(global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     bool global::Quire.DevComponents.WpfRibbon.IPopupParentControl.QueryMouseCapturePopupClose(global::System.Windows.DependencyObject sourceObject) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

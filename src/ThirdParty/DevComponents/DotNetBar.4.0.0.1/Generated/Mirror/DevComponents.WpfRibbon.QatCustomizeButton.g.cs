@@ -12,8 +12,6 @@ namespace Quire.DevComponents.WpfRibbon;
 public partial class QatCustomizeButton : global::Quire.DevComponents.WpfRibbon.ButtonDropDown
 {
     [global::Quire.Mirror.MirrorStub]
-    public QatCustomizeButton() { }
-    [global::Quire.Mirror.MirrorStub]
     public override void OnApplyTemplate() => base.OnApplyTemplate();
     [global::Quire.Mirror.MirrorStub]
     private void QatChangePlacement(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
