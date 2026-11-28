@@ -710,6 +710,40 @@ public partial class MathNode
         }
     }
 
+    public bool IsEquivalentTo(MathNode other)
+    {
+        if (other == null)
+        {
+            return false;
+        }
+        if (this == other)
+        {
+            return true;
+        }
+        if (DescriptorName != other.DescriptorName || ChildCount != other.ChildCount || Children.Count != other.Children.Count)
+        {
+            return false;
+        }
+        if (NodeInfo == null)
+        {
+            if (other.NodeInfo != null)
+            {
+                return false;
+            }
+        }
+        else if (!NodeInfo.IsEquivalentTo(other.NodeInfo))
+        {
+            return false;
+        }
+        for (int index = 0; index < Children.Count; index++)
+        {
+            if (!Children[index].IsEquivalentTo(other.Children[index]))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
     public MathNode AdjacentSubexpression(Direction dir)
     {
         if (dir == Direction.Left)
@@ -900,6 +934,42 @@ public partial class MathNode
         return true;
     }
 
+    public bool AreAllNonPrimalChildrenEmpty()
+    {
+        for (int index = 0; index < ChildCount; index++)
+        {
+            int childIndex = index;
+            MathNodeDescriptor childDescriptor = Descriptor;
+            childIndex = a(childIndex, ref childDescriptor);
+            if ((childDescriptor.PrimalChildPosition.HasValue ? (childIndex != childDescriptor.PrimalChildPosition) : childDescriptor.IsContainerSlot(childIndex)) && !this[index].IsPlaceholder)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public MathNode PrimalChild()
+    {
+        if (PrimalChildPosition.HasValue)
+        {
+            return this[PrimalChildPosition.Value];
+        }
+        Fixity? fixity = null;
+        if (Fixity == Fixity.Special)
+        {
+            fixity = global::Quire.Native.PtcEquationEditor.aw.a(this);
+            if (fixity == Fixity.Prefix)
+            {
+                return this[ChildCount - 1];
+            }
+            if (fixity == Fixity.Suffix)
+            {
+                return this[0];
+            }
+        }
+        return null;
+    }
     public MathNode NodeFromPath(IList<int> path)
     {
         return DescendentFromPath(path);
@@ -1186,6 +1256,24 @@ public partial class MathNode
     [MirrorVerified("Release IL")]
     internal MathNode(MathNodeDescriptor mathNodeDescriptor, params MathNode[] mathNodes) : this(mathNodeDescriptor, null, mathNodes) { }
 
+    public bool IsPrimalChild(int index)
+    {
+        if (IsPairNary)
+        {
+            MathNodeDescriptor descriptor = d__;
+            return a(index, ref descriptor) == descriptor.PrimalChildPosition;
+        }
+        return index == PrimalChildPosition;
+    }
+
+    public int GetBranchIndexInAncestor(MathNode ancestor)
+    {
+        if (ancestor != null && IsDescendentOf(ancestor))
+        {
+            return PathFromAncestor(ancestor)[0];
+        }
+        return -1;
+    }
     [MirrorVerified("Release IL")]
     public int GetMatrixCellIndex(MathNode matrixAncestor) => GetBranchIndexInAncestor(matrixAncestor);
 
