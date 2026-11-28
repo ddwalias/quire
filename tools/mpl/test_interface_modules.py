@@ -18,7 +18,10 @@ AUDIT_OUT = CACHE / "method-audit"
 MODULES = ["EfiAffine", "EfiFourier", "EfiSpecial", "EfiFinance", "EfiBessel",
            "EfiSixsigma", "EfiData", "EfiIO", "EfiWavelets", "EfiSignal", "EfiImage", "EfiStatistics", "McdEfi",
            "Mpl"]
-PROJECTS = {"Mpl": "Quire.MplModule"}
+PROJECTS = {"Mpl": "Quire.Mpl.Modules"}
+TYPE_NAMESPACES = {"Mpl": "Quire.Mpl"}
+MPL_TYPE_NAMES = {"Mpl.values": "Quire.Mpl.values", "Mpl.True": "Quire.Mpl.True",
+                  "Mpl.:": "Quire.Mpl._colon", "Mpl.Str": "Quire.Mpl.Str", "Mpl.Range": "Quire.Mpl.Range"}
 ATTRIBUTE = re.compile(
     r"\.custom instance void \[[^]]+\]([^\s]+)::\.ctor\(string\) = \(\s*((?:[0-9a-fA-F]{2}\s*)+)\)", re.S)
 
@@ -50,7 +53,7 @@ def attributes(block: str) -> list[tuple[str, bytes]]:
 
 
 def method_names(block: str) -> list[str]:
-    return re.findall(r"\}\s*// end of method [^:]+::([^\s]+)", block)
+    return re.findall(r"\}\s*// end of method .*::([^\s]+)", block)
 
 
 def class_names(il: str) -> list[str]:
@@ -72,7 +75,7 @@ class InterfaceModuleTests(unittest.TestCase):
             source = SOURCES / f"{module}.mpl"
             project = PROJECTS.get(module, f"Quire.{module}")
             run("dotnet", str(compiler), "--interface", str(source), str(OUTPUT / f"{project}.dll"),
-                str(INSTALL), project)
+                str(INSTALL), project, TYPE_NAMESPACES.get(module, project))
         run("dotnet", "build", "tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj",
             "-c", "Release", "-o", str(AUDIT_OUT), "-v", "quiet")
 
@@ -88,7 +91,7 @@ class InterfaceModuleTests(unittest.TestCase):
             original_il = run("ilspycmd", "-il", str(original_path))
             candidate_il = run("ilspycmd", "-il", str(candidate_path))
             original_type = f"{module}.values"
-            candidate_type = f"{project}.values"
+            candidate_type = f"{TYPE_NAMESPACES.get(module, project)}.values"
             original_block = class_block(original_il, original_type)
             candidate_block = class_block(candidate_il, candidate_type)
 
@@ -114,14 +117,23 @@ class InterfaceModuleTests(unittest.TestCase):
             self.assertFalse(re.search(r"^\s*\.field\b", original_block, re.M))
             self.assertFalse(re.search(r"^\s*\.field\b", candidate_block, re.M))
 
-            expected_candidate_types = [name.replace(original_type, candidate_type)
-                                        for name in class_names(original_il)]
+            if module == "Mpl":
+                expected_candidate_types = [MPL_TYPE_NAMES[name] for name in class_names(original_il)[1:]]
+                expected_candidate_types.insert(0, "<Module>")
+            else:
+                expected_candidate_types = [name.replace(original_type, candidate_type)
+                                            for name in class_names(original_il)]
             self.assertEqual(class_names(candidate_il), expected_candidate_types, module + " type order")
 
-            audit = run("dotnet", str(auditor), "--repo", str(ROOT), "--assemblies", str(OUTPUT),
-                        "--install", str(INSTALL), "--project", project, "--diff", candidate_type)
-            exact_lines = [line for line in audit.splitlines() if line.endswith(": exact")]
-            self.assertEqual(len(exact_lines), 3, module + " MethodAudit must find three exact methods\n" + audit)
+            original_types = class_names(original_il)[1:]
+            candidate_types = [MPL_TYPE_NAMES[name] for name in original_types] if module == "Mpl" else [candidate_type]
+            for original_name, candidate_name in zip(original_types, candidate_types):
+                original_block = class_block(original_il, original_name)
+                audit = run("dotnet", str(auditor), "--repo", str(ROOT), "--assemblies", str(OUTPUT),
+                            "--install", str(INSTALL), "--project", project, "--diff", candidate_name)
+                exact_lines = [line for line in audit.splitlines() if line.endswith(": exact")]
+                self.assertEqual(len(exact_lines), len(method_names(original_block)),
+                                 module + " " + original_name + " MethodAudit exact bodies\n" + audit)
 
 
 if __name__ == "__main__":

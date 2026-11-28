@@ -3,12 +3,14 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Text.RegularExpressions;
 using MplAssemblyBuilder = System.Reflection.Emit.Quire.Mpl.AssemblyBuilder;
+using MplModuleBuilder = System.Reflection.Emit.Quire.Mpl.ModuleBuilder;
 using MplILGenerator = System.Reflection.Emit.Quire.Mpl.ILGenerator;
+using MplFieldBuilder = System.Reflection.Emit.Quire.Mpl.FieldBuilder;
 
-if (args.Length == 5 && args[0] == "--interface")
+if (args.Length is 5 or 6 && args[0] == "--interface")
 {
     CompileInterfaceModule(Path.GetFullPath(args[1]), Path.GetFullPath(args[2]),
-        Path.GetFullPath(args[3]), args[4]);
+        Path.GetFullPath(args[3]), args[4], args.Length == 6 ? args[5] : args[4]);
     return 0;
 }
 
@@ -46,7 +48,8 @@ switch (program.Module)
 }
 return 0;
 
-static void CompileInterfaceModule(string sourcePath, string outputPath, string install, string project)
+static void CompileInterfaceModule(string sourcePath, string outputPath, string install, string project,
+    string typeNamespace)
 {
     if (!project.StartsWith("Quire.", StringComparison.Ordinal))
         throw new ArgumentException("Interface output project names start with Quire.", nameof(project));
@@ -61,7 +64,7 @@ static void CompileInterfaceModule(string sourcePath, string outputPath, string 
     interfaceText = interfaceText[..^1];
     var moduleName = ParseInterfaceModuleName(interfaceText);
     var originalType = moduleName + ".values";
-    var outputType = project + ".values";
+    var outputType = typeNamespace + ".values";
 
     var runtime = Assembly.LoadFrom(Path.Combine(install, "mplrun.dll"));
     var moduleTextCtor = runtime.GetType("Mpl.Run.ModuleTextAttribute", throwOnError: true)!
@@ -88,8 +91,163 @@ static void CompileInterfaceModule(string sourcePath, string outputPath, string 
 
     // TypeBuilder appends the object constructor from CreateType after Update and .cctor, matching Mpl order.
     values.CreateType();
+    foreach (var constructor in ParseDataConstructors(interfaceText))
+        DefineDataConstructorType(module, typeNamespace, moduleName, constructor, install);
     Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
     assembly.Save(outputPath);
+}
+
+static IReadOnlyList<MplDataConstructor> ParseDataConstructors(string interfaceText)
+{
+    var constructors = new List<MplDataConstructor>();
+    foreach (var line in interfaceText.Split('\n').Select(line => line.Trim()))
+    {
+        var declaration = Regex.Match(line, @"\Adata\s+([A-Za-z_][A-Za-z0-9_]*)\s*(?:[a-z][A-Za-z0-9_ ]*)?=\s*(.+);\z",
+            RegexOptions.CultureInvariant);
+        if (!declaration.Success) continue;
+        foreach (var variant in declaration.Groups[2].Value.Split('|').Select(part => part.Trim()))
+        {
+            var (name, argumentText) = ReadConstructor(variant);
+            if (declaration.Groups[1].Value == "Bool" && name == "True" && argumentText.Length == 0)
+                constructors.Add(new MplDataConstructor("True", name, [], Singleton: true, UnitAware: false));
+            else if (declaration.Groups[1].Value == "List" && name == ":")
+                constructors.Add(new MplDataConstructor("_colon", name, [typeof(object), typeof(object)],
+                    Singleton: false, UnitAware: false));
+            else if (declaration.Groups[1].Value == "Value" && name == "Str"
+                && argumentText.StartsWith("Mpl.String", StringComparison.Ordinal))
+                constructors.Add(new MplDataConstructor("Str", name, [typeof(object)],
+                    Singleton: false, UnitAware: false));
+            else if (declaration.Groups[1].Value == "Range" && name == "Range")
+            {
+                var arguments = ParseTypeArguments(argumentText);
+                constructors.Add(new MplDataConstructor("Range", name,
+                    arguments.Select(MapMplType).ToArray(), Singleton: false,
+                    UnitAware: arguments.Any(argument => argument.StartsWith("Mpl.F8", StringComparison.Ordinal))));
+            }
+        }
+    }
+    return constructors;
+}
+
+static (string Name, string Arguments) ReadConstructor(string text)
+{
+    if (text.StartsWith('('))
+    {
+        var end = text.IndexOf(')');
+        if (end < 0) throw new InvalidDataException($"Malformed Mpl data constructor: {text}");
+        return (text[1..end], text[(end + 1)..].Trim());
+    }
+    var space = text.IndexOf(' ');
+    return space < 0 ? (text.TrimEnd(';'), "") : (text[..space], text[(space + 1)..].Trim());
+}
+
+static IReadOnlyList<string> ParseTypeArguments(string text)
+{
+    var result = new List<string>();
+    for (var position = 0; position < text.Length;)
+    {
+        while (position < text.Length && char.IsWhiteSpace(text[position])) position++;
+        if (position == text.Length) break;
+        var start = position;
+        if (text[position] == '(')
+        {
+            var depth = 0;
+            do
+            {
+                if (text[position] == '(') depth++;
+                else if (text[position] == ')') depth--;
+                position++;
+            } while (position < text.Length && depth > 0);
+            if (depth != 0) throw new InvalidDataException($"Unbalanced Mpl type: {text}");
+            result.Add(text[(start + 1)..(position - 1)].Trim());
+        }
+        else
+        {
+            while (position < text.Length && !char.IsWhiteSpace(text[position])) position++;
+            result.Add(text[start..position]);
+        }
+    }
+    return result;
+}
+
+static Type MapMplType(string type) => type.StartsWith("Mpl.F8", StringComparison.Ordinal) ? typeof(double)
+    : type == "Mpl.I4" ? typeof(int) : typeof(object);
+
+static void DefineDataConstructorType(MplModuleBuilder module, string typeNamespace, string moduleName,
+    MplDataConstructor constructor, string install)
+{
+    var fullName = typeNamespace + "." + constructor.TypeName;
+    var type = module.DefineType(fullName, TypeAttributes.Public | TypeAttributes.Class);
+    AddMirrorOf(type, "Mpl." + constructor.TypeName.Replace("_colon", ":", StringComparison.Ordinal) + ", " + moduleName);
+    var fields = constructor.ArgumentTypes.Select((fieldType, index) => type.DefineField(
+        "Field" + (index + 1), fieldType, FieldAttributes.Public)).ToArray();
+    MplFieldBuilder? singleton = null;
+    if (constructor.Singleton)
+        singleton = type.DefineField("singleton", type, FieldAttributes.Public | FieldAttributes.Static);
+    var instanceConstructor = type.DefineConstructor(MethodAttributes.Public | MethodAttributes.HideBySig
+        | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName, CallingConventions.Standard,
+        constructor.ArgumentTypes.ToArray());
+    var constructorIl = instanceConstructor.GetILGenerator();
+    constructorIl.Emit(OpCodes.Ldarg_0);
+    constructorIl.Emit(OpCodes.Call, typeof(object).GetConstructor(Type.EmptyTypes)!);
+    for (var index = 0; index < fields.Length; index++)
+    {
+        constructorIl.Emit(OpCodes.Ldarg_0);
+        switch (index + 1)
+        {
+            case 1: constructorIl.Emit(OpCodes.Ldarg_1); break;
+            case 2: constructorIl.Emit(OpCodes.Ldarg_2); break;
+            case 3: constructorIl.Emit(OpCodes.Ldarg_3); break;
+            default: constructorIl.Emit(OpCodes.Ldarg_S, (byte)(index + 1)); break;
+        }
+        constructorIl.Emit(OpCodes.Stfld, fields[index]);
+    }
+    constructorIl.Emit(OpCodes.Ret);
+
+    var toString = type.DefineMethod("ToString", MethodAttributes.Public | MethodAttributes.Virtual,
+        typeof(string), Type.EmptyTypes);
+    var displayIl = toString.GetILGenerator();
+    if (fields.Length == 0)
+    {
+        displayIl.Emit(OpCodes.Ldstr, constructor.DisplayName);
+    }
+    else
+    {
+        displayIl.Emit(OpCodes.Ldstr, "(" + constructor.DisplayName + " ");
+        var runtime = Assembly.LoadFrom(Path.Combine(install, "mplrun.dll"));
+        var dynamicType = runtime.GetType("Mpl.Run.DynamicType", throwOnError: true)!;
+        var concat3 = dynamicType.GetMethod("MplConcat3", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static,
+            binder: null, [typeof(object), typeof(object), typeof(object)], modifiers: null)
+            ?? throw new MissingMethodException(dynamicType.FullName, "MplConcat3");
+        var concat2 = typeof(string).GetMethod("Concat", BindingFlags.Public | BindingFlags.Static,
+            binder: null, [typeof(object), typeof(object)], modifiers: null)
+            ?? throw new MissingMethodException(typeof(string).FullName, "Concat(object, object)");
+        for (var index = 0; index < fields.Length; index++)
+        {
+            displayIl.Emit(OpCodes.Ldarg_0);
+            displayIl.Emit(OpCodes.Ldfld, fields[index]);
+            if (constructor.UnitAware && fields[index].FieldType.IsValueType)
+            {
+                displayIl.Emit(OpCodes.Box, fields[index].FieldType);
+                displayIl.Emit(OpCodes.Ldstr, "$");
+                displayIl.Emit(OpCodes.Call, concat2);
+            }
+            displayIl.Emit(OpCodes.Ldstr, index == fields.Length - 1 ? ")" : " ");
+            displayIl.Emit(OpCodes.Call, concat3);
+        }
+    }
+    displayIl.Emit(OpCodes.Ret);
+
+    if (constructor.Singleton)
+    {
+        var initializer = type.DefineConstructor(MethodAttributes.Public | MethodAttributes.Static,
+            CallingConventions.Standard, Type.EmptyTypes);
+        var initializerIl = initializer.GetILGenerator();
+        initializerIl.Emit(OpCodes.Newobj, instanceConstructor);
+        initializerIl.Emit(OpCodes.Stsfld, singleton!);
+        initializerIl.Emit(OpCodes.Ret);
+    }
+    type.CreateType();
 }
 
 static void CompileThinModule(string sourcePath, string outputPath, string install, string project)
@@ -956,6 +1114,8 @@ static void EmitInteger(int value, System.Reflection.Emit.Quire.Mpl.ILGenerator 
 }
 
 internal sealed record MplModule(string Module, Dictionary<string, string> Functions);
+internal sealed record MplDataConstructor(string TypeName, string DisplayName, IReadOnlyList<Type> ArgumentTypes,
+    bool Singleton, bool UnitAware);
 
 internal abstract record MplExpr;
 internal sealed record MplVariable(string Name) : MplExpr;
