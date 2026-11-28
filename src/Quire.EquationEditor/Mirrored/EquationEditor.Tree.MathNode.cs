@@ -571,6 +571,54 @@ public partial class MathNode
 
     public int[] ProhibitedAutoLabelIdDescendants => d__.ProhibitedAutoLabelIdDescendants;
 
+    public int GetFirstChildIndexOfRow(int row)
+    {
+        for (int index = 0; index < ChildrenRows.Length; index++)
+        {
+            if (ChildrenRows[index] == row)
+            {
+                return index;
+            }
+        }
+        return -1;
+    }
+
+    public int GetFirstChildIndexOfFollowingRow(int row, Direction direction)
+    {
+        int rowStep = direction == Direction.Up ? -1 : 1;
+        while (row >= ChildrenRows[0] && row <= ChildrenRows[ChildCount - 1])
+        {
+            int childIndex = GetFirstChildIndexOfRow(row);
+            if (childIndex >= 0)
+            {
+                return childIndex;
+            }
+            row += rowStep;
+        }
+        return -1;
+    }
+
+    [System.Runtime.CompilerServices.SkipLocalsInit]
+    public bool PairNaryNodeCoincideWithMiddleSubOperator(string descriptorName)
+    {
+        if (!IsPairNary)
+        {
+            return false;
+        }
+        if (descriptorName != MiddleElementDescriptorName && descriptorName != AlternateMiddleElementDescriptorName)
+        {
+            return false;
+        }
+        if (ChildCount <= FirstElementDescriptor.ChildCount + LastElementDescriptor.ChildCount)
+        {
+            return true;
+        }
+        if (!IsAlternateFormPairNary)
+        {
+            return descriptorName == MiddleElementDescriptorName;
+        }
+        return descriptorName == AlternateMiddleElementDescriptorName;
+    }
     public int RowCount
     {
         get
