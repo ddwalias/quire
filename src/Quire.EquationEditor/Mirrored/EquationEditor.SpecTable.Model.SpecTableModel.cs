@@ -220,6 +220,9 @@ public partial class SpecTableModel
         return wrapper;
     }
 
+    public global::System.Collections.Generic.IEnumerable<SpecTableCalculatableWrapper> GetWrappedColumns()
+        => new n_(-2) { d = this };
+
     private CompoundCommand f()
     {
         CompoundCommand command = new();
