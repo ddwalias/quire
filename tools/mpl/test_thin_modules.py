@@ -15,7 +15,7 @@ OUTPUT = ROOT / "tools/mpl/output"
 CACHE = ROOT / ".mirror-cache/mpl-thin-emitter"
 COMPILER_OUT = CACHE / "compiler"
 AUDIT_OUT = CACHE / "method-audit"
-MODULES = ["EfiFitting", "MplUnitSystemSI", "EfiDebug", "EfiPlot", "McdUnitSystemNone", "McdStaticUnitSystemNone", "McdStaticUnitSystemMKS", "McdUnitSystemMKS", "McdUnitSystemUS", "MplConstants", "MplPrimitives"]
+MODULES = ["EfiFitting", "MplUnitSystemSI", "EfiDebug", "EfiPlot", "McdUnitSystemNone", "McdStaticUnitSystemNone", "McdStaticUnitSystemMKS", "McdStaticUnitSystemUS", "McdUnitSystemMKS", "McdUnitSystemUS", "MplConstants", "MplPrimitives"]
 ATTRIBUTE = re.compile(
     r"\.custom instance void \[[^]]+\]([^\s]+)::\.ctor\(string\) = \(\s*((?:[0-9a-fA-F]{2}\s*)+)\)", re.S)
 
@@ -63,7 +63,7 @@ class ThinModuleTests(unittest.TestCase):
         compiler = COMPILER_OUT / "Quire.Mpl.Compiler.dll"
         for module in MODULES:
             project = f"Quire.{module}"
-            mode = "--mpl" if module in ("EfiFitting", "MplUnitSystemSI", "EfiDebug", "EfiPlot", "McdUnitSystemNone", "McdStaticUnitSystemNone", "McdStaticUnitSystemMKS") else "--thin"
+            mode = "--mpl" if module in ("EfiFitting", "MplUnitSystemSI", "EfiDebug", "EfiPlot", "McdUnitSystemNone", "McdStaticUnitSystemNone", "McdStaticUnitSystemMKS", "McdStaticUnitSystemUS") else "--thin"
             run("dotnet", str(compiler), mode, str(SOURCES / f"{module}.mpl"),
                 str(OUTPUT / f"{project}.dll"), str(INSTALL), project)
         run("dotnet", "build", "tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj",
