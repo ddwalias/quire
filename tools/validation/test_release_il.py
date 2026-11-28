@@ -177,9 +177,17 @@ class ReleaseIlAcceptanceTests(unittest.TestCase):
         self.assertTrue(compare(inventory(removed), inventory(renamed))['passed'])
         self.assertFalse(compare(inventory(removed), inventory(dict(renamed, shape_matches=False)))['passed'])
         self.assertFalse(compare(inventory(removed), inventory())['passed'])
-        # A method with a body that gained a same-original sibling in its type still owes its own exact row.
-        body = dict(removed, declaration_only=None, exact_match=True)
-        self.assertFalse(compare(inventory(body), inventory(dict(renamed, declaration_only=None, exact_match=True)))['passed'])
+
+    def test_method_with_a_body_keeps_its_original_when_its_signature_renames_an_embedded_type(self):
+        original = {'assembly': 'engutils-mgd', 'sha256': 'hash', 'token': 9}
+        removed = dict(method('SetValue', original=original), id='P::T::SetValue(Quire.IValue)', signature='SetValue(Quire.IValue)')
+        renamed = dict(removed, id='P::T::SetValue(Mathcad.IValue)', signature='SetValue(Mathcad.IValue)')
+        self.assertTrue(compare(inventory(removed), inventory(renamed))['passed'])
+        self.assertFalse(compare(inventory(removed), inventory(dict(renamed, exact_match=False)))['passed'])
+        self.assertFalse(compare(inventory(removed), inventory(dict(renamed, declaration_only=True, exact_match=None)))['passed'])
+        # A sibling that shares the original leaves it unclear which row replaced the removed one.
+        sibling = dict(renamed, id='P::T::SetValue(Other)', signature='SetValue(Other)')
+        self.assertFalse(compare(inventory(removed), inventory(renamed, sibling))['passed'])
 
     def test_renumbered_generated_members_without_counterpart_may_be_removed(self):
         stale = method('MoveNext', exact=False)

@@ -365,7 +365,7 @@ def compare(before, after, types=(), methods=(), everything=False):
     verified_originals = {}
     for row in new.values():
         if verified(row) and (token := original_token(row)) is not None:
-            verified_originals.setdefault(token, set()).add((row.get('project'), row['type'], row.get('declaration_only') is True))
+            verified_originals.setdefault(token, []).append(row)
     for key in old.keys() - new.keys():
         # Moved to another project (popped above): its new row was checked there.
         if place(old[key]) not in moved:
@@ -392,9 +392,14 @@ def compare(before, after, types=(), methods=(), everything=False):
         # once wrote by hand, so its type and signature name the interop type, but it pairs with the very same Mathcad
         # method and is verified. The obligation moved with the original. A declaration has no body to regress, so one that
         # only renamed a type in its own signature (Quire.IValue -> Mathcad.IValue) is the same member in the same type.
-        declaration = removed.get('declaration_only') is True
-        if any((project, type_) != (removed.get('project'), removed['type']) or (declaration and bodyless)
-               for project, type_, bodyless in verified_originals.get(original_token(removed), ())):
+        here = (removed.get('project'), removed['type'])
+        rows = verified_originals.get(original_token(removed), [])
+        if any((row.get('project'), row['type']) != here for row in rows):
+            continue
+        # In its own type, the member whose signature only renamed a type: the one verified row with its Mathcad member,
+        # exact when the removed row was (a declaration has no body to regress).
+        if len(rows) == 1 and (rows[0].get('exact_match') is True
+                               or removed.get('exact_match') is not True and removed.get('declaration_only') is True):
             continue
         failures.append({'method': key, 'reason': 'method removed'})
     # A Mathcad member without a Quire member is unfinished, like a stub: only a completeness audit fails on it.
