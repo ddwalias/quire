@@ -37,8 +37,10 @@
 - Moved the complete `n_` iterator shell and its interface-member placeholders into the hand-written partial in Mathcad member order, then removed the generated nested declaration manually.
 - Release IL comparison is deferred until the MethodAudit hotfix reaches `origin/main`.
 
-## Batch 6 — core fields, events, and static initialization
+## Batch 6 — core fields and static initialization
 
-- Added the mapped SpecTableModel data fields and field-like events, including the `RequestRemove` default delegate, and implemented the static placeholder descriptor assertion; removed the generated field and event stubs.
-- Release IL comparison is pending against the hotfixed base; Release project build and lint pass.
+- Added the mapped SpecTableModel data fields and static placeholder descriptor assertion; removed their generated stubs.
+- The nine field-like events remain parked as generated stubs until MirrorGen's event-backing change lands.
+- The hotfixed lane gate confirmed that `MirrorName` on event backing fields is rejected by MethodAudit; its log is `.mirror-cache/gate-il-1f3c35e78fbd/run/build.log`.
+- Release IL comparison is pending after parking events; Release project build and lint pass.
 - Remaining: other SpecTableModel members and nested/closure types.

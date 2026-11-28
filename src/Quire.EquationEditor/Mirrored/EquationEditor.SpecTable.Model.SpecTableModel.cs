@@ -21,33 +21,6 @@ public partial class SpecTableModel
     [MirrorName("c")]
     private readonly Dictionary<ISpecTableColumn, SpecTableCalculatableWrapper> c__ = new();
 
-    [field: MirrorName("d")]
-    public event global::Quire.Delegate1<IEquationModel> CellAdded;
-
-    [field: MirrorName("e")]
-    public event global::Quire.Delegate0 TableChanged;
-
-    [field: MirrorName("f")]
-    public event global::Quire.Delegate1<ISpecTableColumn> ColumnAdded;
-
-    [field: MirrorName("g")]
-    public event global::Quire.Delegate1<ISpecTableColumn> ColumnRemoved;
-
-    [field: MirrorName("h")]
-    public event global::Quire.Delegate0 RequestRemove = () => { };
-
-    [field: MirrorName("i")]
-    public event global::System.Action RequestClearSelection;
-
-    [field: MirrorName("j")]
-    public event global::System.Action<int, int> RequestAddSelection;
-
-    [field: MirrorName("k")]
-    public event global::System.Action RequestUpdateCellsVisibility;
-
-    [field: MirrorName("l")]
-    public event global::System.Action<bool> RestrictedReadonlyChanged;
-
     private bool m;
 
     private static readonly string n;
@@ -289,9 +262,9 @@ public partial class SpecTableModel
         {
             column.SetRestrictedReadonly(m);
         }
-        if (RestrictedReadonlyChanged != null)
+        if (l != null)
         {
-            RestrictedReadonlyChanged(m);
+            l(m);
         }
     }
 
