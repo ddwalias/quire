@@ -14,6 +14,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows;
 using System;
@@ -182,19 +183,19 @@ public partial class VisualDataCollection
                 {
                     Size labelSize = visualData.GetLabelSize();
                     bool flag = false;
-                    int num2 = 0;
-                    while (!flag && num2 < visualData.PointsData.Length)
+                    int pointIndex = 0;
+                    while (!flag && pointIndex < visualData.PointsData.Length)
                     {
-                        Point val = visualData.PointsData[num2];
-                        Point val2 = new Point(HorizontalValueToScreen.ValueToScreen(val.X), VerticalValueToScreen.ValueToScreen(val.Y));
-                        Rect val3 = new Rect(val2.X - labelSize.Width / 2.0, val2.Y, labelSize.Width, labelSize.Height);
-                        if (bounds.Contains(val3) && !list.Exists((Predicate<Rect>)((Rect)(object)val3).IntersectsWith))
+                        Point dataPoint = visualData.PointsData[pointIndex];
+                        Point screenPoint = new Point(HorizontalValueToScreen.ValueToScreen(dataPoint.X), VerticalValueToScreen.ValueToScreen(dataPoint.Y));
+                        Rect labelBounds = new Rect(screenPoint.X - labelSize.Width / 2.0, screenPoint.Y, labelSize.Width, labelSize.Height);
+                        if (bounds.Contains(labelBounds) && !list.Exists(labelBounds.IntersectsWith))
                         {
-                            visualData.LabelPosition = val3.TopLeft;
-                            list.Add(val3);
+                            visualData.LabelPosition = labelBounds.TopLeft;
+                            list.Add(labelBounds);
                             flag = true;
                         }
-                        num2++;
+                        pointIndex++;
                     }
                     if (!flag)
                     {
