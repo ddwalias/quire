@@ -15,7 +15,7 @@ OUTPUT = ROOT / "tools/mpl/output"
 CACHE = ROOT / ".mirror-cache/mpl-thin-emitter"
 COMPILER_OUT = CACHE / "compiler"
 AUDIT_OUT = CACHE / "method-audit"
-MODULES = ["EfiFitting", "MplUnitSystemSI", "EfiDebug", "EfiPlot", "McdUnitSystemNone", "McdStaticUnitSystemNone", "McdStaticUnitSystemMKS", "McdStaticUnitSystemUS", "McdStaticUnitSystemCGS", "McdStaticUnitSystemSI", "McdUnitSystemMKS", "McdUnitSystemUS", "McdUnitSystemCGS", "MplConstants", "MplPrimitives"]
+MODULES = ["EfiFitting", "MplUnitSystemSI", "EfiDebug", "EfiPlot", "McdUnitSystemNone", "McdStaticUnitSystemNone", "McdStaticUnitSystemMKS", "McdStaticUnitSystemUS", "McdStaticUnitSystemCGS", "McdStaticUnitSystemSI", "McdUnitSystemMKS", "McdUnitSystemUS", "McdUnitSystemCGS", "McdUnitSystemSI", "MplConstants", "MplPrimitives"]
 ATTRIBUTE = re.compile(
     r"\.custom instance void \[[^]]+\]([^\s]+)::\.ctor\(string\) = \(\s*((?:[0-9a-fA-F]{2}\s*)+)\)", re.S)
 
@@ -47,8 +47,10 @@ def custom_attributes(block: str) -> list[tuple[str, bytes]]:
 
 
 def member_names(block: str, kind: str) -> list[str]:
-    pattern = r"\}\s*// end of method [^:]+::([^\s]+)" if kind == "method" else r"^\s*\.field\s+.*?\s+(\w+)\s*$"
-    return re.findall(pattern, block, re.M)
+    if kind == "method":
+        return re.findall(r"\}\s*// end of method [^:]+::([^\s]+)", block)
+    fields = re.findall(r"^\s*\.field\s+.*?\s+('(?:\\.|[^'])*'|[^\s]+)\s*$", block, re.M)
+    return [field[1:-1] if field.startswith("'") and field.endswith("'") else field for field in fields]
 
 
 class ThinModuleTests(unittest.TestCase):
@@ -63,7 +65,7 @@ class ThinModuleTests(unittest.TestCase):
         compiler = COMPILER_OUT / "Quire.Mpl.Compiler.dll"
         for module in MODULES:
             project = f"Quire.{module}"
-            mode = "--mpl" if module in ("EfiFitting", "MplUnitSystemSI", "EfiDebug", "EfiPlot", "McdUnitSystemNone", "McdStaticUnitSystemNone", "McdStaticUnitSystemMKS", "McdStaticUnitSystemUS", "McdStaticUnitSystemCGS", "McdStaticUnitSystemSI", "McdUnitSystemCGS") else "--thin"
+            mode = "--mpl" if module in ("EfiFitting", "MplUnitSystemSI", "EfiDebug", "EfiPlot", "McdUnitSystemNone", "McdStaticUnitSystemNone", "McdStaticUnitSystemMKS", "McdStaticUnitSystemUS", "McdStaticUnitSystemCGS", "McdStaticUnitSystemSI", "McdUnitSystemCGS", "McdUnitSystemSI") else "--thin"
             run("dotnet", str(compiler), mode, str(SOURCES / f"{module}.mpl"),
                 str(OUTPUT / f"{project}.dll"), str(INSTALL), project)
         run("dotnet", "build", "tools/Quire.Tools.MethodAudit/Quire.Tools.MethodAudit.csproj",
@@ -89,7 +91,7 @@ class ThinModuleTests(unittest.TestCase):
             self.assertEqual([name for name, _ in candidate_attrs],
                              ["Mpl.Run.ModuleTextAttribute", "Mpl.Run.ModuleInterfaceAttribute",
                               "Quire.Mirror.MirrorOfAttribute"], module + " candidate attribute order")
-            expected_fields = (member_names(original_block, "field") if module in ("MplUnitSystemSI", "EfiPlot", "McdUnitSystemNone", "McdStaticUnitSystemNone", "McdStaticUnitSystemCGS", "McdStaticUnitSystemSI", "McdUnitSystemCGS")
+            expected_fields = (member_names(original_block, "field") if module in ("MplUnitSystemSI", "EfiPlot", "McdUnitSystemNone", "McdStaticUnitSystemNone", "McdStaticUnitSystemCGS", "McdStaticUnitSystemSI", "McdUnitSystemCGS", "McdUnitSystemSI")
                                else ["gamma", "pi", "e"] if module == "MplConstants"
                                else [] if module in ("MplPrimitives", "EfiFitting", "EfiDebug") else ["system"])
             self.assertEqual(member_names(original_block, "field"), expected_fields, module + " field order")

@@ -409,12 +409,41 @@ static void CompileMplModule(string sourcePath, string outputPath, string instal
     }
     foreach (var typeName in new[] { "Mcd.DimVal", "Mcd.MatVal", "Mcd.NumVal", "Mpl.Run.Function", "Mpl.Run.DelegateFunction", "Mpl.Run.Cons", "Mpl.Run.VecBuilder" })
         MplCompilerContext.ImportedTypes.TryAdd(typeName, "mplrun");
+    MplCompilerContext.TypeMapImportedTypes.Clear();
+    var sourceDirectory = new DirectoryInfo(Path.GetDirectoryName(sourcePath)!);
+    var repoTypeMap = FindRepoTypeMap(sourceDirectory);
+    if (repoTypeMap is not null)
+    {
+        foreach (var row in File.ReadLines(repoTypeMap).Skip(1))
+        {
+            var columns = row.Split(',');
+            if (columns.Length < 2) continue;
+            var assemblyName = Path.GetFileNameWithoutExtension(columns[0].Trim());
+            var importedType = columns[1].Trim();
+            if (assemblyName.Length > 0 && importedType.Contains('.', StringComparison.Ordinal)
+                && File.Exists(Path.Combine(install, assemblyName + ".dll")))
+                MplCompilerContext.TypeMapImportedTypes.TryAdd(importedType, assemblyName);
+        }
+    }
     var functions = new List<(string Name, string[] Args, string Body)>();
     var globals = new List<(string Name, string? TypeName, bool Static, string Expression)>();
-    foreach (var raw in parts[1].Split('\n'))
+    var declaredFields = new List<string>();
+    MplExpr? updateBody = null;
+    var implementationLines = parts[1].Split('\n');
+    for (var lineIndex = 0; lineIndex < implementationLines.Length; lineIndex++)
     {
-        var line = raw.Trim();
+        var line = implementationLines[lineIndex].Trim();
         if (line.Length == 0 || line.StartsWith("--", StringComparison.Ordinal)) continue;
+        if (line.StartsWith("field ", StringComparison.Ordinal))
+        {
+            var fieldName = line[6..].Trim();
+            if (fieldName.Length == 0 || fieldName.Any(char.IsWhiteSpace))
+                throw new InvalidDataException($"Malformed Mpl field declaration: {line}");
+            if (declaredFields.Contains(fieldName, StringComparer.Ordinal))
+                throw new InvalidDataException($"Duplicate Mpl field declaration: {fieldName}");
+            declaredFields.Add(fieldName);
+            continue;
+        }
         if (line.Contains(" :: ", StringComparison.Ordinal) && !line.Contains(" = ", StringComparison.Ordinal))
         {
             var split = line.IndexOf(" :: ", StringComparison.Ordinal);
@@ -426,6 +455,28 @@ static void CompileMplModule(string sourcePath, string outputPath, string instal
         var separator = line.IndexOf(" = ", StringComparison.Ordinal);
         if (separator < 1) throw new InvalidDataException($"Unsupported Mpl definition: {line}");
         var declaration = line[..separator].Trim();
+        if (declaration == "update")
+        {
+            if (updateBody is not null) throw new InvalidDataException("Mpl source has more than one update body.");
+            var expression = new StringBuilder(line[(separator + 3)..]);
+            while (lineIndex + 1 < implementationLines.Length)
+            {
+                var next = implementationLines[lineIndex + 1].Trim();
+                if (next.Length == 0 || next.StartsWith("--", StringComparison.Ordinal))
+                {
+                    lineIndex++;
+                    continue;
+                }
+                if (next.StartsWith("field ", StringComparison.Ordinal)
+                    || next.StartsWith("static ", StringComparison.Ordinal)
+                    || (next.Contains(" :: ", StringComparison.Ordinal) && !next.Contains(" = ", StringComparison.Ordinal)))
+                    break;
+                expression.Append('\n').Append(next);
+                lineIndex++;
+            }
+            updateBody = MplExpressionParser.Parse(expression.ToString());
+            continue;
+        }
         var isStatic = declaration.StartsWith("static ", StringComparison.Ordinal);
         if (isStatic) declaration = declaration[7..].TrimStart();
         var typeSeparator = declaration.IndexOf(" : ", StringComparison.Ordinal);
@@ -462,19 +513,37 @@ static void CompileMplModule(string sourcePath, string outputPath, string instal
     SetStringAttribute(values, moduleInterfaceCtor, interfaceText);
     AddMirrorOf(values, moduleName + ".values, " + moduleName);
 
-    var fields = globals.ToDictionary(global => global.Name,
-        global => values.DefineField(global.Name, MapGlobalFieldType(global.TypeName, install),
-            FieldAttributes.Public | FieldAttributes.Static),
-        StringComparer.Ordinal);
+    var fieldNames = declaredFields.Concat(globals.Select(global => global.Name))
+        .Distinct(StringComparer.Ordinal).ToArray();
+    var fields = fieldNames.ToDictionary(name => name,
+        name =>
+        {
+            var declaration = globals.FirstOrDefault(global => global.Name == name);
+            var fieldType = declaration.Name is not null
+                ? MapGlobalFieldType(declaration.TypeName, install) : typeof(object);
+            return values.DefineField(name, fieldType, FieldAttributes.Public | FieldAttributes.Static);
+        }, StringComparer.Ordinal);
     MplCompilerContext.Fields.Clear();
     foreach (var (name, field) in fields) MplCompilerContext.Fields.Add(name, field);
 
     var update = values.DefineMethod("Update", MethodAttributes.Public | MethodAttributes.Static,
         typeof(void), Type.EmptyTypes);
+    var methods = new Dictionary<string, System.Reflection.Emit.Quire.Mpl.MethodBuilder>(StringComparer.Ordinal);
+    foreach (var function in functions)
+    {
+        var signature = signatures[function.Name];
+        methods.Add(function.Name, values.DefineMethod(function.Name, MethodAttributes.Public | MethodAttributes.Static,
+            signature[^1], signature[..^1]));
+    }
     var updateIl = update.GetILGenerator();
     var noLocals = new Dictionary<string, System.Reflection.Emit.Quire.Mpl.LocalBuilder>(StringComparer.Ordinal);
-    var noAliases = new Dictionary<string, Type>(StringComparer.Ordinal);
-    foreach (var global in globals.Where(global => !global.Static))
+    var noAliases = new Dictionary<string, Type>(StringComparer.Ordinal)
+    {
+        ["ObjectArray"] = typeof(object[]),
+    };
+    if (updateBody is not null)
+        EmitUpdateStatements(updateBody, updateIl, noLocals, methods, noAliases, install);
+    else foreach (var global in globals.Where(global => !global.Static))
     {
         var expression = MplExpressionParser.Parse(global.Expression);
         EmitValue(expression, updateIl, noLocals, [],
@@ -484,14 +553,6 @@ static void CompileMplModule(string sourcePath, string outputPath, string instal
         updateIl.Emit(OpCodes.Stsfld, fields[global.Name]);
     }
     updateIl.Emit(OpCodes.Ret);
-    var methods = new Dictionary<string, System.Reflection.Emit.Quire.Mpl.MethodBuilder>(StringComparer.Ordinal);
-    foreach (var function in functions)
-    {
-        var signature = signatures[function.Name];
-        var method = values.DefineMethod(function.Name, MethodAttributes.Public | MethodAttributes.Static,
-            signature[^1], signature[..^1]);
-        methods.Add(function.Name, method);
-    }
     foreach (var function in functions)
     {
         var signature = signatures[function.Name];
@@ -520,6 +581,16 @@ static void CompileMplModule(string sourcePath, string outputPath, string instal
     values.CreateType();
     Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
     assembly.Save(outputPath);
+}
+
+static string? FindRepoTypeMap(DirectoryInfo? directory)
+{
+    for (; directory is not null; directory = directory.Parent)
+    {
+        var candidate = Path.Combine(directory.FullName, "docs", "mirror", "type-map.csv");
+        if (File.Exists(candidate)) return candidate;
+    }
+    return null;
 }
 
 static Type MapGlobalFieldType(string? sourceType, string install) => sourceType switch
@@ -1258,6 +1329,15 @@ static void EmitStatement(MplExpr expression,
     Dictionary<string, System.Reflection.Emit.Quire.Mpl.MethodBuilder> methods,
     IReadOnlyDictionary<string, Type> typeAliases, string install)
 {
+    if (expression is MplSetField setField)
+    {
+        if (!MplCompilerContext.Fields.TryGetValue(setField.Name, out var field))
+            throw new MissingFieldException("Mpl module values", setField.Name);
+        EmitValue(setField.Value, il, locals, arguments, methods, typeAliases, install);
+        BoxValueIfNeeded(setField.Value, il, locals, typeAliases);
+        il.Emit(OpCodes.Stsfld, field);
+        return;
+    }
     if (expression is MplSetIndex set)
     {
         EmitValue(set.Table, il, locals, arguments, methods, typeAliases, install);
@@ -1276,6 +1356,33 @@ static void EmitStatement(MplExpr expression,
         return;
     }
     throw new NotSupportedException($"Statement lowering is not implemented for {expression}.");
+}
+
+static void EmitUpdateStatements(MplExpr expression,
+    System.Reflection.Emit.Quire.Mpl.ILGenerator il,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.LocalBuilder> locals,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.MethodBuilder> methods,
+    IReadOnlyDictionary<string, Type> typeAliases, string install)
+{
+    if (expression is MplLet let)
+    {
+        EmitValue(let.Value, il, locals, [], methods, typeAliases, install);
+        var localType = let.TypeName is not null && typeAliases.TryGetValue(let.TypeName, out var declaredType)
+            ? declaredType : typeof(object);
+        var local = il.DeclareLocal(localType);
+        locals.Add(let.Name, local);
+        il.Emit(OpCodes.Stloc, local);
+        EmitUpdateStatements(let.Body, il, locals, methods, typeAliases, install);
+        locals.Remove(let.Name);
+        return;
+    }
+    if (expression is MplSequence sequence)
+    {
+        foreach (var item in sequence.Expressions)
+            EmitUpdateStatements(item, il, locals, methods, typeAliases, install);
+        return;
+    }
+    EmitStatement(expression, il, locals, [], methods, typeAliases, install);
 }
 
 static Type CallReturnType(MplCall call,
@@ -1412,7 +1519,14 @@ static void EmitImportedArguments(MethodInfo method, IReadOnlyList<MplExpr> call
     if (callArguments.Count != method.GetParameters().Length + offset)
         throw new InvalidDataException($"{method.DeclaringType?.FullName}.{method.Name} expects "
             + $"{method.GetParameters().Length + offset} source arguments, received {callArguments.Count}.");
-    foreach (var argument in callArguments) EmitValue(argument, il, locals, arguments, methods, typeAliases, install);
+    for (var index = 0; index < callArguments.Count; index++)
+    {
+        var argument = callArguments[index];
+        EmitValue(argument, il, locals, arguments, methods, typeAliases, install);
+        var parameterIndex = index - offset;
+        if (parameterIndex >= 0 && method.GetParameters()[parameterIndex].ParameterType == typeof(object))
+            BoxValueIfNeeded(argument, il, locals, typeAliases);
+    }
 }
 
 static Type InferCallArgumentType(MplExpr expression,
@@ -1502,6 +1616,10 @@ static int CallArgumentsScore(MethodInfo method, IReadOnlyList<Type> argumentTyp
 static Type[] ResolveImportedTypes(string typeName, string install)
 {
     var known = MplCompilerContext.ImportedTypes.ToArray();
+    if (typeName.Contains('.', StringComparison.Ordinal)
+        && !known.Any(pair => pair.Key == typeName)
+        && MplCompilerContext.TypeMapImportedTypes.TryGetValue(typeName, out var mappedAssembly))
+        known = known.Append(new KeyValuePair<string, string>(typeName, mappedAssembly)).ToArray();
     var fullTypeNames = typeName.Contains('.', StringComparison.Ordinal)
         ? known.Select(pair => (FullName: typeName, pair.Value)).Distinct().ToArray()
         : known.Select(pair => (FullName: pair.Key[..(pair.Key.LastIndexOf('.') + 1)] + typeName, pair.Value))
@@ -1763,6 +1881,7 @@ internal sealed record MplIfNull(string Value, MplExpr WhenNull, MplExpr WhenNon
 internal sealed record MplIfTruthy(MplExpr Condition, MplExpr WhenTrue, MplExpr WhenFalse) : MplExpr;
 internal sealed record MplCall(MplExpr Function, IReadOnlyList<MplExpr> Arguments) : MplExpr;
 internal sealed record MplSetIndex(MplExpr Table, MplExpr Key, MplExpr Value) : MplExpr;
+internal sealed record MplSetField(string Name, MplExpr Value) : MplExpr;
 internal sealed record MplSequence(IReadOnlyList<MplExpr> Expressions) : MplExpr;
 internal sealed record MplString(string Value) : MplExpr;
 internal sealed record MplInteger(int Value) : MplExpr;
@@ -1787,12 +1906,14 @@ internal static class MplExpressionParser
     private sealed class Parser
     {
         private readonly string[] _tokens;
+        private readonly string _source;
         private int _position;
 
         public Parser(string source)
         {
+            _source = source;
             _tokens = Regex.Matches(source,
-                    """==|!=|:=|->|\?\?|\*\.|/\.|[\p{L}_$][\p{L}\p{N}\p{S}_.$'#·']*|[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?|"[^"]*"|\[|\]|\(|\)|,|;|\||:|=""")
+                    """==|!=|:=|->|\?\?|\*\.|/\.|[\p{L}_$][\p{L}\p{N}\p{S}\p{C}_.$'#·']*|[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?|"[^"]*"|\[|\]|\(|\)|,|;|\||:|=""")
                 .Select(match => match.Value).ToArray();
         }
 
@@ -1928,8 +2049,9 @@ internal static class MplExpressionParser
             }
             if (Take(":="))
             {
-                if (function is not MplIndex index) throw new InvalidDataException("Assignment target must be an indexed map.");
-                return new MplSetIndex(index.Table, index.Key, ParseAtom());
+                if (function is MplIndex index) return new MplSetIndex(index.Table, index.Key, ParseBinary());
+                if (function is MplVariable variable) return new MplSetField(variable.Name, ParseBinary());
+                throw new InvalidDataException("Assignment target must be a field or indexed map.");
             }
             var arguments = new List<MplExpr>();
             while (_position < _tokens.Length && _tokens[_position] is not ("in" or "of" or "then" or "else" or "==" or "!=" or "*." or "/."
@@ -2015,9 +2137,10 @@ internal static class MplExpressionParser
 
         private string ReadIdentifier()
         {
-            if (_position >= _tokens.Length || !Regex.IsMatch(_tokens[_position], @"\A[\p{L}_$][\p{L}\p{N}\p{S}_.$'#·']*\z"))
+            if (_position >= _tokens.Length || !Regex.IsMatch(_tokens[_position], @"\A[\p{L}_$][\p{L}\p{N}\p{S}\p{C}_.$'#·']*\z"))
                 throw new InvalidDataException($"Expected an identifier in Mpl expression at token {_position}: "
-                    + (_position < _tokens.Length ? _tokens[_position] : "<end>"));
+                    + (_position < _tokens.Length ? _tokens[_position] : "<end>") + "; tokens: "
+                    + string.Join(" | ", _tokens) + "; source: " + _source);
             return _tokens[_position++];
         }
 
@@ -2041,6 +2164,8 @@ internal static class MplCompilerContext
     public static Dictionary<string, ConstructorInfo> Constructors { get; } = new(StringComparer.Ordinal);
     public static Dictionary<string, System.Reflection.Emit.Quire.Mpl.FieldBuilder> Fields { get; } = new(StringComparer.Ordinal);
     public static Dictionary<string, string> ImportedTypes { get; set; } =
+        new Dictionary<string, string>(StringComparer.Ordinal);
+    public static Dictionary<string, string> TypeMapImportedTypes { get; } =
         new Dictionary<string, string>(StringComparer.Ordinal);
     public static Dictionary<string, Type[]> ImportedFunctionSignatures { get; } = new(StringComparer.Ordinal);
     public static IReadOnlyDictionary<string, Type> SourceTypeHints { get; set; } =
