@@ -7,6 +7,7 @@ using Quire.Core;
 using Quire.EquationEditor.Tree.Parsing;
 using Quire.EquationEditor.Tree.Transform;
 using Quire.Mirror;
+using Quire.Native.PtcEquationEditor;
 using Quire.Undo;
 
 namespace Quire.EquationEditor.Tree;
@@ -749,6 +750,77 @@ public partial class MathNode
 
     public bool IsBinOctHexModeOn => d__.BinOctHexModeOn;
 
+    public string LeftNeighborSExp
+    {
+        get
+        {
+            if (!IsInfix)
+            {
+                return null;
+            }
+            MathNode[] neighbors = LeftNeighbors;
+            MathNode firstNeighbor = neighbors[0];
+            MathNode lastNeighbor = neighbors[^1];
+            MathNode containerRoot = firstNeighbor.ContainerRoot;
+            s first = new s(firstNeighbor, containerRoot);
+            s last = new s(lastNeighbor, containerRoot);
+            MathNode containerClone = containerRoot.Clone();
+            new RootMathNode(containerClone);
+            aw analysis = new aw();
+            LinkedList<MathNodeAnalysisHandle> handles = analysis.b(containerClone);
+            LinkedList<MathNodeAnalysisHandle> neighborsToTransform = analysis.a(handles, first.b(containerClone), last.b(containerClone));
+            return a4.b_.a(neighborsToTransform).SExpression;
+        }
+    }
+
+    public MathNode[] LeftNeighbors
+    {
+        get
+        {
+            if (!IsEffectiveInfix)
+            {
+                return null;
+            }
+            MathNode firstNeighbor = Children[ChildCount - 1].LeftAdjacentSubexpression(true) ?? Children[0];
+            aw analysis = new aw();
+            LinkedList<MathNodeAnalysisHandle> handles = analysis.b(firstNeighbor.ContainerRoot);
+            MathNode firstNode = null;
+            MathNode lastNode = null;
+            LinkedListNode<MathNodeAnalysisHandle> current = handles.First;
+            do
+            {
+                MathNode node = current.Value.Node;
+                if (node == this)
+                {
+                    break;
+                }
+                if (firstNode == null && node.IsDescendentOf(firstNeighbor))
+                {
+                    firstNode = node;
+                }
+                lastNode = node;
+                current = current.Next;
+            }
+            while (current != null);
+            if (firstNode == null)
+            {
+                firstNode = firstNeighbor;
+            }
+            if (lastNode == null)
+            {
+                lastNode = firstNeighbor;
+            }
+            LinkedList<MathNodeAnalysisHandle> selectedHandles = analysis.a(handles, firstNode, lastNode);
+            MathNode[] neighbors = new MathNode[selectedHandles.Count];
+            LinkedListNode<MathNodeAnalysisHandle> selected = selectedHandles.First;
+            for (int index = 0; index < selectedHandles.Count; index++)
+            {
+                neighbors[index] = selected.Value.Node;
+                selected = selected.Next;
+            }
+            return neighbors;
+        }
+    }
     public MathNodeDescriptor FirstElementDescriptor => DefaultDescriptorTable.Default[FirstElementDescriptorName];
 
     public MathNodeDescriptor MiddleElementDescriptor => DefaultDescriptorTable.Default[MiddleElementDescriptorName];
