@@ -839,9 +839,16 @@ public global::Quire.Wpf.INotifyCollectionRangeChanged<global::Quire.Controls.Co
 
 public global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> ActiveOrSelectedItems => ActiveSection.ActiveOrSelectedItems;
 
-public bool CanDeleteVerticalSpace(Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+public bool CanDeleteVerticalSpace(Direction direction)
+    => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-public void DeleteActiveItem() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+public void DeleteActiveItem()
+    {
+        IWhiteboardItem activeItem = ActiveItem;
+        WorksheetCommand command = new RemoveActiveItemCommand(this);
+        command.Execute();
+        HandlePageWideSizableDeletion(new IWhiteboardItem[1] { activeItem });
+    }
 
 public void CreateTextRegionFromEquationControl(IEquationControl sender)
     => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -1201,7 +1208,8 @@ public bool IsAutoCalcOn
 
 public bool IsCalculating => _model.IsCalculating;
 
-public global::Quire.Calculation.Core.ICalculatable GetLastVisibleCalculatable() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+public global::Quire.Calculation.Core.ICalculatable GetLastVisibleCalculatable()
+    => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 public ICalculatable GetCalculatableFromVisibleWhiteBoardItem(IWhiteboardItem item, IWorksheetControl wc)
     {
@@ -1342,7 +1350,8 @@ public bool IsSolveBlockLabelVisible
         }
     }
 
-public void AddItemAtLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+public void AddItemAtLocation(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location)
+    => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 public IEquationControl CreateNewEquation(string sExpression)
     {
@@ -1717,7 +1726,8 @@ public IWorksheetPageBreak CreatePageBreakControl()
 
 private bool CanMoveInDirection(Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-private void DirectionalMoveHandler(global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private void DirectionalMoveHandler(global::Quire.Direction direction)
+    => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private void DirectionalMoveHandler(global::Quire.Direction direction, global::System.Windows.Vector offset) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -1783,13 +1793,66 @@ public bool HandleKeyDown(System.Windows.Input.KeyEventArgs args)
         return equationControl != null;
     }
 
-private static global::Quire.Controls.SymbolDescriptor SearchSymbolDescriptorsForKeygesture(global::System.Windows.Input.KeyEventArgs e, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.SymbolDescriptor> symbols) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private static global::Quire.Controls.SymbolDescriptor SearchSymbolDescriptorsForKeygesture(global::System.Windows.Input.KeyEventArgs e, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.SymbolDescriptor> symbols)
+    {
+        return symbols.FirstOrDefault((SymbolDescriptor descriptor) => descriptor.Keybinding != null && descriptor.Keybinding.Matches(e));
+    }
 
-public void HandleDelete() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+public void HandleDelete()
+    {
+        if (DeleteSelectedItems())
+        {
+            return;
+        }
+        if (!CanDeleteVerticalSpace(Direction.Down))
+        {
+            return;
+        }
+        WorksheetCommand command = new RemoveSpaceCommand(this, 1, Direction.Down);
+        command.Execute();
+    }
 
-public void HandleBackspace() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+public void HandleBackspace()
+    {
+        if (DeleteSelectedItems())
+        {
+            return;
+        }
+        if (!CanDeleteVerticalSpace(Direction.Up))
+        {
+            return;
+        }
+        WorksheetCommand command = new RemoveSpaceCommand(this, 1, Direction.Up);
+        command.Execute();
+    }
 
-public void HandleEnter() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+public void HandleEnter()
+    {
+        if (ActiveOrSelectedItems.Count() == 0)
+        {
+            WorksheetCommand command = new InsertSpaceCommand(this, 1, pushInsertionPoint: true);
+            command.Execute();
+            return;
+        }
+        IWhiteboardItem firstItem;
+        double left;
+        double bottom;
+        Point itemLocation;
+        Size itemSize;
+        firstItem = ActiveOrSelectedItems.First();
+        itemLocation = GetWorksheetSectionItemLocation(firstItem);
+        left = itemLocation.X;
+        itemSize = ItemManager.GetRenderSize(firstItem);
+        // Release IL keeps the size height on the stack while storing the second point in local 3.
+        bottom = itemSize.Height + (itemLocation = GetWorksheetSectionItemLocation(firstItem)).Y + firstItem.VerticalAlignmentOffset;
+        foreach (IWhiteboardItem selectedItem in ActiveOrSelectedItems)
+        {
+            Point selectedItemLocation = GetWorksheetSectionItemLocation(selectedItem);
+            left = Math.Min(left, selectedItemLocation.X);
+            bottom = Math.Max(bottom, selectedItemLocation.Y + ItemManager.GetRenderSize(selectedItem).Height + selectedItem.VerticalAlignmentOffset);
+        }
+        InsertionPoint = new Point(left, bottom + PageLayout.GridCellSize.Height);
+    }
 
 public void HandleTab(FocusNavigationDirection direction)
     {
@@ -2139,7 +2202,17 @@ public void ToggleShowGrid()
         }
     }
 
-public void ToggleIsSolveBlockLabelVisible() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+public void ToggleIsSolveBlockLabelVisible()
+    {
+        Action toggleIsSolveBlockLabelVisible = () => IsSolveBlockLabelVisible = !IsSolveBlockLabelVisible;
+        DelegateFunction0<bool> doMethod = () =>
+        {
+            toggleIsSolveBlockLabelVisible();
+            return true;
+        };
+        Delegate0 undoMethod = () => toggleIsSolveBlockLabelVisible();
+        CommandBuffer.Execute(new UndoableCommand("Toggle IsSolveBlockLabelVisible visibility", doMethod, undoMethod));
+    }
 
 private bool CanToggleIsSolveBlockLabelVisible()
     {
@@ -2178,7 +2251,30 @@ private void ToggleShowMajorGridlines()
         }
     }
 
-public void ToggleHideFromCalculationContext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+public void ToggleHideFromCalculationContext()
+    {
+        IEnumerable<ICalculationHideableChild> hideableItems = from hideable in SelectedItems.OfType<ICalculationHideableChild>()
+            where !hideable.HideFromCalculationContext
+            select hideable;
+        using (new CommandScope("Changing HideFromCalculationContext"))
+        {
+            try
+            {
+                if (hideableItems.FirstOrDefault() != null)
+                {
+                    hideableItems.Each((ICalculationHideableChild hideable) => hideable.HideFromCalculationContext = true);
+                }
+                else
+                {
+                    SelectedItems.OfType<ICalculationHideableChild>().Each((ICalculationHideableChild hideable) => hideable.HideFromCalculationContext = false);
+                }
+            }
+            catch (InvalidOperationException)
+            {
+            }
+        }
+        UpdateCalculationButtonStatus();
+    }
 
 public void HandleStopRunningCalculations()
     {
@@ -2322,7 +2418,12 @@ public void GoToPreviousError()
         }
     }
 
-public void HandleRemoveAnnotations() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+public void HandleRemoveAnnotations()
+    {
+        WorksheetCommand command = new RemoveAnnotationCommand(this);
+        command.Execute();
+        FireChanged();
+    }
 
 public void InsertFileName(string fileName)
     {
@@ -2346,7 +2447,8 @@ public int GetItemWorksheetPageIndex(IWhiteboardItem item)
         return _pageManager.GetPageIndex(item);
     }
 
-public bool FindOnce(string text, bool startFromCaret, LogicalDirection direction, FindOptions options, List<Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+public bool FindOnce(string text, bool startFromCaret, LogicalDirection direction, FindOptions options, List<Pair<int, int>> subscriptPositions)
+    => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 public Point GetDescendantInsertionPoint()
     {
@@ -2467,7 +2569,18 @@ private bool CanCreateInputControlOfType<T>(InputControlTypes? inputControlTypes
         return CanCreateControlOfType<T>();
     }
 
-private bool CanCreateControlOfType<T>(global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainer containerControl = default) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private bool CanCreateControlOfType<T>(global::Quire.Controls.Core.Whiteboard.IWhiteboardItemContainer containerControl = default)
+    {
+        if (containerControl == null)
+        {
+            containerControl = GetAddableContainerControl();
+        }
+        if (containerControl == null || ForbidsCreatingControls(containerControl))
+        {
+            return false;
+        }
+        return CanCreateControlOfType(containerControl.GetType(), typeof(T));
+    }
 
 private bool ForbidsCreatingControls(IWhiteboardItemContainer containerControl)
     {
@@ -2503,7 +2616,14 @@ private IWhiteboardItemContainer GetAddableContainerControl(bool isExcludeWorksh
         return whiteboardItemContainer;
     }
 
-private static bool CanCreateControlOfType(global::System.Type containerType, global::System.Type controlType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private static bool CanCreateControlOfType(global::System.Type containerType, global::System.Type controlType)
+    {
+        if (typeof(IRichTextWithEmbeddedItem).IsAssignableFrom(containerType))
+        {
+            return typeof(IWhiteboardItemInText).IsAssignableFrom(controlType);
+        }
+        return !_whiteboardExclusionMap.Any((KeyValuePair<Type, IEnumerable<Type>> pair) => pair.Key.IsAssignableFrom(containerType) && pair.Value.Any((Type type) => type.IsAssignableFrom(controlType)));
+    }
 
 private static bool CanCreateInputControl(Type containerType, IWhiteboardItem control)
     {
@@ -2632,7 +2752,10 @@ private IPlotControl<XyzEquation> Create3DPlotControl(XyzEquation xyzEquation)
         return Create3DPlotControl();
     }
 
-private bool OverlapsVerticallyWithRegionOfType<T>(global::System.Windows.Point point) where T : global::Quire.Controls.Core.IWhiteboardItem => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private bool OverlapsVerticallyWithRegionOfType<T>(global::System.Windows.Point point) where T : global::Quire.Controls.Core.IWhiteboardItem
+    {
+        throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
 
 private Rect GetItemRect(IWhiteboardItem item)
     {
@@ -2690,7 +2813,34 @@ private void CutSelection()
         }
     }
 
-private bool CanPaste() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private bool CanPaste()
+    {
+        bool canPaste;
+        using (MathFormatForPaste.SetDefault())
+        {
+            if (ActiveSection.ActiveDescendant is IRichTextWithEmbeddedItem richTextWithEmbeddedItem)
+            {
+                canPaste = _pasteHandler.ClipboardContainsSingleEmbeddableItemForText && richTextWithEmbeddedItem.CanAddItems;
+            }
+            else
+            {
+                IWhiteboardControl whiteboardControl = ActiveSection.ActiveDescendant as IWhiteboardControl;
+                if (!ActiveOrSelectedItems.IsNullOrEmpty() && whiteboardControl == null)
+                {
+                    canPaste = false;
+                }
+                else if (!_pasteHandler.ClipboardContainsRecognizedFormat)
+                {
+                    canPaste = false;
+                }
+                else
+                {
+                    canPaste = whiteboardControl?.CanAddItems ?? true;
+                }
+            }
+        }
+        return canPaste;
+    }
 
 private void Paste() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -2725,7 +2875,18 @@ private void EvaluateItem(IWhiteboardItem item)
         _model.CommitItem(item);
     }
 
-private void Evaluate() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private void Evaluate()
+    {
+        IEnumerable<IWhiteboardItem> itemsToEvaluate = ActiveOrSelectedItems;
+        if (itemsToEvaluate.IsNullOrEmpty())
+        {
+            itemsToEvaluate = WorksheetItems;
+        }
+        WpfUtils.DoWork(() =>
+        {
+            itemsToEvaluate.Each(EvaluateItem);
+        });
+    }
 
 private void AddItemAtInsertionPointAndActivate(IWhiteboardItem item, string name)
     {
@@ -2762,7 +2923,10 @@ private void HandlePageWideSizableDeletion(global::System.Collections.Generic.IE
 
 private global::Quire.Core.TextFormat _contentTextFormat;
 
-private void UpdateItemPositionsAfterPageWideSizableRemoved(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> companionItems) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private void UpdateItemPositionsAfterPageWideSizableRemoved(global::Quire.Controls.Core.IWhiteboardItem item, global::System.Windows.Point location, global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> companionItems)
+    {
+        throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
 
 private void SetInsertionPointOnAppropriatePage(Point insertionPoint)
     {
@@ -2775,7 +2939,8 @@ private void SetInsertionPointOnAppropriatePage(Point insertionPoint)
         ClearSelection();
     }
 
-private void DeleteItemIfNeeded(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private void DeleteItemIfNeeded(global::Quire.Controls.Core.IWhiteboardItem item)
+    => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private void UpdateWorksheetGridSize()
     {
@@ -3003,11 +3168,34 @@ private void HandleCollapsedStateChanged(ICollapsibleAreaControl item)
         UpdateNonprintableSpaceIndicatorWhenAreaHeightChanged(item);
     }
 
-private void NavigateOutsideMovingAreaDownIfNeeded(global::Quire.Controls.Core.ICollapsibleAreaControl area, global::Quire.Direction direction, bool moveDown) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private void NavigateOutsideMovingAreaDownIfNeeded(global::Quire.Controls.Core.ICollapsibleAreaControl area, global::Quire.Direction direction, bool moveDown)
+    {
+        DebugTools.DevAssert(!moveDown || direction == Direction.Up, null);
+        Point itemWorksheetLocation = ItemManager.GetItemWorksheetLocation(area);
+        Point nextIntersection = _worksheetGrid.GetNextIntersectionIgnoringRestrictedAreas(new Point(_worksheetGrid.GridCellSize.Width, itemWorksheetLocation.Y), direction);
+        if ((direction == Direction.Up & moveDown) && !IsValidInsertionPoint(nextIntersection))
+        {
+            InsertSpaceCommand command = new InsertSpaceCommand(this, 1, pushInsertionPoint: false, new InsertSpaceCommand.CreationInfo
+            {
+                ReferencePoint = itemWorksheetLocation,
+                IgnoreIfEncounteredPageBreakBeforeItem = false,
+                IncludeReferenceLine = true
+            });
+            command.Execute();
+            nextIntersection = itemWorksheetLocation;
+            DebugTools.DevAssert(IsValidInsertionPoint(nextIntersection), null);
+        }
+        InsertionPoint = nextIntersection;
+    }
 
-private void ActivateAndNavigateIntoArea(global::Quire.Controls.Core.ICollapsibleAreaControl item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private void ActivateAndNavigateIntoArea(global::Quire.Controls.Core.ICollapsibleAreaControl item)
+    {
+        ActiveSection.ActiveItem = item;
+        ItemManager.ExecuteInBackground(() => item.InsertionPoint = item.DefaultInsertionPoint);
+    }
 
-private void UpdateNonprintableSpaceIndicatorWhenAreaHeightChanged(global::Quire.Controls.Core.ICollapsibleAreaControl area) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private void UpdateNonprintableSpaceIndicatorWhenAreaHeightChanged(global::Quire.Controls.Core.ICollapsibleAreaControl area)
+    => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private void AddSizeChangedHandlerToItemMap(IWhiteboardItem item, WhiteboardItemSizeChangedEventHandler eventHandler)
     {
@@ -3722,7 +3910,8 @@ private bool CanAddToDictionary()
 
 private void HandleAddToDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-private void HandleCreateStyleFrom() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private void HandleCreateStyleFrom()
+    => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private bool CanCreateStyleFrom()
     {
@@ -3744,7 +3933,13 @@ private bool CanCreateStyleFrom()
         return false;
     }
 
-public void RefreshDictionary() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+public void RefreshDictionary()
+    {
+        WorksheetContent.WhiteboardItems.Concat(Header.WhiteboardItems).Concat(Footer.WhiteboardItems).Concat(FirstPageHeader.WhiteboardItems)
+            .Concat(FirstPageFooter.WhiteboardItems)
+            .GetRegionsOfType<ISpellCheckRegion>()
+            .Each((ISpellCheckRegion region) => region.RefreshDictionary());
+    }
 
 internal bool AddWordToDictionary(string word)
     {
@@ -3774,13 +3969,29 @@ private void FireDictionaryUpdated()
         DictionaryUpdated?.Invoke();
     }
 
-private bool CanInsertOperator(object operatorName) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private bool CanInsertOperator(object operatorName)
+    {
+        IWhiteboardItemContainer addableContainerControl = GetAddableContainerControl();
+        if (addableContainerControl == null)
+        {
+            return false;
+        }
+        if (!CanCreateControlOfType<IEquationControl>(addableContainerControl))
+        {
+            return false;
+        }
+        Type containerType = addableContainerControl.GetType();
+        return !_operatorExclusionMap.Any((KeyValuePair<Type, IEnumerable<string>> pair) => pair.Key.IsAssignableFrom(containerType) && pair.Value.Contains(operatorName));
+    }
 
-private void MoveByPage(Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private void MoveByPage(Direction direction)
+    => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-private bool CanSeparateOverlappedItems(global::Quire.Dimension dimension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private bool CanSeparateOverlappedItems(global::Quire.Dimension dimension)
+    => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-private void SeparateOverlappedItems(global::Quire.Dimension dimension) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private void SeparateOverlappedItems(global::Quire.Dimension dimension)
+    => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private void SetupHeaderFooter()
     {
@@ -3821,11 +4032,27 @@ private void SetupHeaderFooter()
         FirstPageFooter.PropertyChanged += HandleFooterPropertyChanged;
     }
 
-private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> ItemsInRelativeBounds(global::System.Windows.Rect bounds, object boundsRelativeTo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> ItemsInRelativeBounds(global::System.Windows.Rect bounds, object boundsRelativeTo)
+    {
+        List<IWhiteboardItem> itemsInBounds = new List<IWhiteboardItem>();
+        ActiveSection.WhiteboardItems.Each((IWhiteboardItem item) =>
+        {
+            Rect itemBounds = new Rect(ItemManager.GetDesiredSize(item));
+            Rect transformedBounds = VisualHelper.TransformBounds(item, boundsRelativeTo, itemBounds);
+            if (bounds.IntersectsWith(transformedBounds))
+            {
+                itemsInBounds.Add(item);
+            }
+        });
+        return itemsInBounds;
+    }
 
 private global::Quire.Controls.Core.IWhiteboardItem FindNextItemForTabNavigation(global::System.Windows.Input.FocusNavigationDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GetTabNavigatableItems(bool includingActiveItem = false) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private global::System.Collections.Generic.IEnumerable<global::Quire.Controls.Core.IWhiteboardItem> GetTabNavigatableItems(bool includingActiveItem = false)
+    {
+        throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
 
 private void ActivateSection(global::Quire.Controls.Worksheet.IWorksheetSection section, global::Quire.Controls.Worksheet.IWorksheetPage page, global::System.Nullable<global::System.Windows.Point> position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -3839,7 +4066,31 @@ private void MakeContentActive()
         }
     }
 
-public void SelectItemsInBounds(IWorksheetControl worksheet, Point start, Point end) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+public void SelectItemsInBounds(IWorksheetControl worksheet, Point start, Point end)
+    {
+        IEnumerable<IWhiteboardItem> itemsInBounds = ItemsInRelativeBounds(new Rect(start, end), worksheet);
+        if (itemsInBounds.Any())
+        {
+            ClearSelection();
+            try
+            {
+                SelectItems(itemsInBounds);
+            }
+            catch (InvalidOperationException exception)
+            {
+                DebugTools.FailAssertion(exception.StackTrace, Array.Empty<object>());
+            }
+            return;
+        }
+        IWorksheetPageSection section = VisualHelper.FindPageSectionContainingPoint(end, worksheet);
+        if (!(section is IWorksheetPageBody))
+        {
+            return;
+        }
+        Point translatedPoint = VisualHelper.TranslatePoint(end, worksheet, section);
+        IWorksheetPage page = VisualHelper.FindWorksheetPageAncestor(section);
+        InsertionPoint = new Point(translatedPoint.X, translatedPoint.Y + PageLayout.PageBodyHeight * Pages.IndexOf(page));
+    }
 
 private void HandleDragSelection(global::System.Windows.UIElement originalSource, global::System.Windows.Point position) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -3918,7 +4169,54 @@ private bool OverlapsRightMargin(IWhiteboardItem item)
 
 private void ChildTriggeredResizeHandler(global::Quire.Controls.Core.Whiteboard.IWhiteboardControl whiteboard, global::System.Windows.Size oldSize, global::System.Windows.Size newSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-private void UpdateGridRestrictedAreaForItem(global::Quire.Controls.Core.IWhiteboardItem item) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private void UpdateGridRestrictedAreaForItem(global::Quire.Controls.Core.IWhiteboardItem item)
+    {
+        if (!WorksheetItems.Contains(item))
+        {
+            return;
+        }
+        if (!_gridRestrictionTypes.Any((Type type) => type.IsAssignableFrom(item.GetType())))
+        {
+            return;
+        }
+        ICollapsibleAreaControl area;
+        double top;
+        double bottom;
+        Pair<double, double> verticalBounds;
+        Point itemLocation;
+        area = item as ICollapsibleAreaControl;
+        if (area != null && !area.IsCollapsed && ItemManager.GetCanActivate(area))
+        {
+            RemoveGridRestrictedAreaForItem(area);
+            return;
+        }
+        itemLocation = WorksheetContent.GetItemLocation(item);
+        top = itemLocation.Y + item.VerticalAlignmentOffset;
+        bottom = top + ItemManager.GetRenderSize(item).Height;
+        verticalBounds = new Pair<double, double>(top, bottom);
+        if (area == null || area.IsCollapsed)
+        {
+            if (_worksheetGrid.RestrictedAreas.ContainsKey(item))
+            {
+                _worksheetGrid.RestrictedAreas[item] = verticalBounds;
+            }
+            else
+            {
+                _worksheetGrid.RestrictedAreas.Add(item, verticalBounds);
+            }
+        }
+        if (area != null && !ItemManager.GetCanActivate(area))
+        {
+            if (_worksheetGrid.ProtectedAreas.ContainsKey(item))
+            {
+                _worksheetGrid.ProtectedAreas[item] = verticalBounds;
+            }
+            else
+            {
+                _worksheetGrid.ProtectedAreas.Add(item, verticalBounds);
+            }
+        }
+    }
 
 private void RemoveGridRestrictedAreaForItem(IWhiteboardItem item)
     {
@@ -3933,7 +4231,8 @@ private void HandlePageWideSizableSizeChanged(IWhiteboardItem item, Size oldSize
         HandlePageWideSizableHeightChanged(item, oldSize, newSize);
     }
 
-private void HandleHeaderFooterNavigation(Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private void HandleHeaderFooterNavigation(Direction direction)
+    => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private void HandleHeaderFooterPageUp()
     {
@@ -4038,7 +4337,8 @@ private static bool IsPageWideSizablePredicate(IWhiteboardItem item)
         return item is IPageWideSizable;
     }
 
-private void UpdateCalculationButtonStatus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private void UpdateCalculationButtonStatus()
+    => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private bool ErrorCanTraceBackward()
     {
@@ -4058,7 +4358,10 @@ private bool ErrorCanTraceForward()
         return false;
     }
 
-private bool RemoveAnnotationsCanExecute() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private bool RemoveAnnotationsCanExecute()
+    {
+        throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
 
 public void ImportData(string fileName)
     {
@@ -4093,7 +4396,8 @@ public IDictionary<IdLabels, ExtendedFont> GetDefaultLabeledIdFormat()
         return VisualHelper.GetDefaultLabeledIdFormat();
     }
 
-private IEnumerable<IFindRestrictor> GetSearchableRegions(IWhiteboardItem fromElement, IWhiteboardItem toElement) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private IEnumerable<IFindRestrictor> GetSearchableRegions(IWhiteboardItem fromElement, IWhiteboardItem toElement)
+    => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
 private bool CanToggleIORegions<T>() where T : IIORegion
     {
@@ -4203,7 +4507,10 @@ private void HandleBookmarkTag()
         }
     }
 
-private bool CanRemoveBookmarkTag() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+private bool CanRemoveBookmarkTag()
+    {
+        throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
 
 private void HandleRemoveBookmarkTag()
     {
@@ -4219,7 +4526,27 @@ private void HandleRemoveBookmarkTag()
         }
     }
 
-public void RequestNavigateHandler(IWorksheetControl worksheetControl, global::System.Windows.Navigation.RequestNavigateEventArgs eventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+public void RequestNavigateHandler(IWorksheetControl worksheetControl, global::System.Windows.Navigation.RequestNavigateEventArgs eventArgs)
+    {
+        if (DebugTools.AssertNotNull(eventArgs, null).Failed || DebugTools.AssertNotNull(eventArgs.Uri, null).Failed || DebugTools.AssertNotNull(eventArgs.OriginalSource, null).Failed)
+        {
+            return;
+        }
+        string uri = eventArgs.Uri.ToString();
+        if (uri.Length > 1)
+        {
+            string valueTag = uri.Substring(1);
+            IWhiteboardItem item = worksheetControl.TraverseWhiteboardItemsForBookmarkTag(WorksheetItems, valueTag);
+            if (item != null)
+            {
+                VisualHelper.BringIntoView(item);
+                if (eventArgs.OriginalSource is Hyperlink hyperlink)
+                {
+                    HyperlinkProperties.SetLinkVisited(hyperlink, value: true);
+                }
+            }
+        }
+    }
 
 [global::Quire.Mirror.MirrorOf("Ptc.Controls.Worksheet.WorksheetViewModel+WorksheetCommand, Ptc.Controls.Worksheet")]
     internal abstract partial class WorksheetCommand : global::Quire.Undo.IUndoableCommand
