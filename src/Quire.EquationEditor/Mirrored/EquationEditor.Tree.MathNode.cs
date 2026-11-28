@@ -303,6 +303,14 @@ public partial class MathNode
         }
     }
 
+    [MirrorVerified("Release IL")]
+    public void SetConstantRlIdDownTheTree(int rlId)
+    {
+        e_ closure = new e_();
+        closure.a_ = rlId;
+        RootNode.f().Each(closure.a);
+    }
+
     public MathNode SplitNode(int index)
     {
         int remainingCount = ChildCount - index;
@@ -1647,8 +1655,14 @@ public partial class MathNode
 
     partial class e_
     {
+        [MirrorName("a")]
+        public int a_;
+
         [MirrorVerified("Release IL")]
         public e_() { }
+
+        [MirrorVerified("Release IL")]
+        internal void a(MathNode node) => node.b(a_);
     }
 
     partial class f_
