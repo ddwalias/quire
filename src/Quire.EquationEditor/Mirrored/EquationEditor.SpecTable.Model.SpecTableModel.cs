@@ -241,6 +241,115 @@ public partial class SpecTableModel
     public void HandleClearActiveCell(global::Quire.EquationEditor.IEquationModel equationModel)
         => equationModel?.ClearContent();
 
+    public void HandleNavigateToLastCell()
+    {
+        global::Quire.Discrete2DCoordinate coordinate = default;
+        coordinate.First = d() - 1;
+        coordinate.Second = b__.Count - 1;
+        a(coordinate, global::Quire.Direction.Right);
+    }
+
+    private global::Quire.EquationEditor.IEquationModel a(
+        global::Quire.Discrete2DCoordinate coordinate,
+        global::Quire.Direction direction)
+    {
+        global::Quire.EquationEditor.IEquationModel equationModel = e(coordinate.First, coordinate.Second);
+        if (equationModel == null)
+        {
+            return null;
+        }
+
+        equationModel.MoveToRegionExtreme(direction);
+        f(equationModel);
+        return equationModel;
+    }
+
+    private global::Quire.EquationEditor.IEquationModel e(int rowIndex, int columnIndex)
+    {
+        if (columnIndex >= b__.Count || columnIndex < 0)
+        {
+            return null;
+        }
+
+        return GetColumn(columnIndex).GetCell(rowIndex);
+    }
+
+    private global::Quire.Discrete2DCoordinate b(
+        global::Quire.Discrete2DCoordinate coordinate,
+        global::Quire.Direction direction)
+    {
+        global::Quire.Discrete2DCoordinate result = coordinate;
+        switch (direction)
+        {
+            case global::Quire.Direction.Right:
+                result.Second++;
+                break;
+            case global::Quire.Direction.Up:
+                result.First--;
+                break;
+            case global::Quire.Direction.Left:
+                result.Second--;
+                break;
+            case global::Quire.Direction.Down:
+                result.First++;
+                break;
+        }
+
+        if (result.Second < 0)
+        {
+            result.Second = b__.Count - 1;
+            result.First--;
+        }
+        else if (result.Second >= b__.Count)
+        {
+            result.Second = 0;
+            result.First++;
+        }
+
+        return result;
+    }
+
+    private global::Quire.EquationEditor.IEquationModel a(
+        global::Quire.Direction direction,
+        global::Quire.Discrete2DCoordinate coordinate)
+    {
+        global::Quire.Direction reverseDirection = global::Quire.Direction.Left;
+        if (direction == global::Quire.Direction.Left)
+        {
+            reverseDirection = global::Quire.Direction.Right;
+        }
+
+        return a(b(coordinate, direction), reverseDirection);
+    }
+
+    private global::Quire.Discrete2DCoordinate b(global::Quire.EquationEditor.IEquationModel equationModel)
+    {
+        global::Quire.Discrete2DCoordinate coordinate = default;
+        foreach (ISpecTableColumn column in b__)
+        {
+            coordinate.First = 0;
+            foreach (global::Quire.EquationEditor.IEquationModel cell in column)
+            {
+                if (cell == equationModel)
+                {
+                    return coordinate;
+                }
+
+                coordinate.First++;
+            }
+
+            coordinate.Second++;
+        }
+
+        throw new global::System.ArgumentException("Cell not found", "cell");
+    }
+
+    public void HandleOnTraverseBackward(global::Quire.EquationEditor.IEquationModel equationModel)
+    {
+        global::Quire.Discrete2DCoordinate coordinate = b(equationModel);
+        a(global::Quire.Direction.Left, coordinate).MoveToRegionStart();
+    }
+
     private CompoundCommand f()
     {
         CompoundCommand command = new();
