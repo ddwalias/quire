@@ -66,8 +66,6 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.Calculation.Core.IDataExchangeModel a3;
     [global::Quire.Mirror.MirrorStub]
-    private bool a8;
-    [global::Quire.Mirror.MirrorStub]
     private bool a9;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Collections.Generic.List<global::System.ValueTuple<global::Quire.EquationEditor.RedefinitionWarning, global::Quire.EquationEditor.Tree.MathNode>> bd;
@@ -102,8 +100,6 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.IEnumerable<string> VisualHistory { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool ProhibitComboBox { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public bool ProhibitInputControl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private bool IsSimpleComboBoxDefinition { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -115,10 +111,6 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     private global::Quire.EquationEditor.Tree.MathNode GetLastScopedNode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private static global::Quire.IClipboard ClipBoard { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.NumberFormat ResultNumberFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Controls.Core.MatrixFormat ResultMatrixFormat { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsExpressionValueModified { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -148,8 +140,6 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.EquationEditor.Tree.MathNode a(global::Quire.EquationEditor.Tree.MathNode A_0, global::Quire.Native.PtcEquationEditor.aq A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool SetEquationSExpression(string sExpr, bool isUserOperation = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void a(global::System.Xml.XmlNode A_0, global::Quire.EquationEditor.Tree.Transform.WorksheetXmlTransformArgs A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void SetDataExchangeModel(global::Quire.EquationEditor.IMathNodeToVisualNodeMap nodeMap) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -163,8 +153,6 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     public bool IsSuitableForInputTagging() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ScopeIdentifier(string idSexpr) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void ScopeResult() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ScopeNode(global::Quire.EquationEditor.Tree.MathNode nodeToScope, global::Quire.Direction direction = (global::Quire.Direction)(0)) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

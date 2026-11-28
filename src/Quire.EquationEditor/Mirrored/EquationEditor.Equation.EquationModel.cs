@@ -1,5 +1,6 @@
 #nullable disable
 using System;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using Quire.Calculation.Core;
 using Quire.Controls.Core;
@@ -1019,6 +1020,68 @@ public partial class EquationModel
                 PropertyChangedEventArgs<EngineError> args = new PropertyChangedEventArgs<EngineError>("CalculationError", previous, value);
                 am(args);
             }
+        }
+    }
+
+    private bool a8;
+
+    [MirrorVerified("Release IL")]
+    public bool ProhibitComboBox
+    {
+        get => a8;
+        set
+        {
+            if (value)
+            {
+                if (DebugTools.DevAssert(!EquationRoot.ContainsOrIsComboBox, null).Failed)
+                {
+                    return;
+                }
+            }
+
+            a8 = value;
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    [MirrorBlocked("IL keeps ab/ac on the eval stack across two delegate creations (dup, ldftn b, ldftn a), no closure local; Roslyn cannot emit")]
+    public NumberFormat ResultNumberFormat
+    {
+        get => k__.DisplayNumberFormat.Clone();
+        set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
+
+    [MirrorVerified("Release IL")]
+    [MirrorBlocked("IL keeps ab/ac on the eval stack across two delegate creations (dup, ldftn b, ldftn a), no closure local; Roslyn cannot emit")]
+    public MatrixFormat ResultMatrixFormat
+    {
+        get => k__.ResultMatrixFormat.Clone();
+        set => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    }
+
+    [MirrorVerified("Release IL")]
+    public bool SetEquationSExpression(string sExpr, bool isUserOperation = true)
+    {
+        if (isUserOperation)
+        {
+            DebugTools.DevAssert(!IsRestrictedReadOnly, null);
+        }
+
+        if (sExpr == Root.SExpression)
+        {
+            return true;
+        }
+
+        return a(sExpr, false);
+    }
+
+    [MirrorVerified("Release IL")]
+    [SkipLocalsInit] // Mathcad has .initlocals False
+    public void ScopeResult()
+    {
+        if (DebugTools.DevAssert(EvaluationRoot != null && EvaluationRoot.DescriptorName == "EVALUATION", null).Passed)
+        {
+            ScopeNode(EvaluationRoot[1]);
         }
     }
 }
