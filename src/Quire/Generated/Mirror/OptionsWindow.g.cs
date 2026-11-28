@@ -11,40 +11,6 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.OptionsWindow, MathcadPrime")]
 public partial class OptionsWindow : global::System.Windows.Window, global::Quire.Controls.Core.IHelpContext, global::System.Windows.Markup.IComponentConnector
 {
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::Quire.SpiritMainWindow _spiritMainWindow;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::Quire.OptionsWindow options;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.TabControl dialogTabControl;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.CheckBox RemoteHelpCheckBox;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.CheckBox OptOutQualityAgentCheckBox;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.CheckBox CustomMyTemplatesLocationCheckBox;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.TextBox CustomMyTemplatesLocationTextBox;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.CheckBox CustomSharedTemplatesLocationCheckBox;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.TextBox CustomSharedTemplatesLocationTextBox;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.CheckBox CustomPathToDefaultTemplateForNewDocumentCheckBox;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.TextBox CustomPathToDefaultTemplateForNewDocumentTextBox;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.CheckBox DisableScriptableControls;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.CheckBox ScriptingRunWorksheetOpenCheckBox;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.CheckBox ScriptingRunWorksheetRecalculateCheckBox;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.CheckBox CustomPathToPythonDirCheckBox;
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.Controls.TextBox CustomPythonDirLocationTextBox;
-    [global::Quire.Mirror.MirrorStub]
-    private bool _contentLoaded;
 
     [global::Quire.Mirror.MirrorOf("Spirit.OptionsWindow+DialogTabIndex, MathcadPrime")]
     public enum DialogTabIndex

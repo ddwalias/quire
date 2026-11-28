@@ -11,42 +11,6 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.Addon, MathcadPrime")]
 public partial class Addon
 {
-    [global::Quire.Mirror.MirrorStub]
-    private const string FnInitializeAddOnForPrime = "initializeAddOnForPrime";
-    [global::Quire.Mirror.MirrorStub]
-    private const string FnCleanup = "cleanup";
-    [global::Quire.Mirror.MirrorStub]
-    private const string FnOnIdleTime = "onIdleTime";
-    [global::Quire.Mirror.MirrorStub]
-    private const string FnDocumentOpened = "documentOpened";
-    [global::Quire.Mirror.MirrorStub]
-    private const string FnDocumentClosing = "documentClosing";
-    [global::Quire.Mirror.MirrorStub]
-    private const string FnDocumentSaving = "documentSaving";
-    [global::Quire.Mirror.MirrorStub]
-    private const string FnDocumentSaved = "documentSaved";
-    [global::Quire.Mirror.MirrorStub]
-    private const string FnGetResolvedFileNameAlloc = "getResolvedFileNameAlloc";
-    [global::Quire.Mirror.MirrorStub]
-    private const string FnGetDefaultDirectoryForPrime = "getDefaultDirectoryForPrime";
-    [global::Quire.Mirror.MirrorStub]
-    private const string FnOpenFromWindchill = "getQuirePlacesLocation";
-    [global::Quire.Mirror.MirrorStub]
-    private const string FnEnablePtcPlaces = "enableQuirePlaces";
-    [global::Quire.Mirror.MirrorStub]
-    private const string FnSaveToPtcServerForPrime = "saveToQuireServerForPrime";
-    [global::Quire.Mirror.MirrorStub]
-    private const string FnOnCommand = "onCommand";
-    [global::Quire.Mirror.MirrorStub]
-    private const string FnOnUpdateUIForPrime = "onUpdateUIForPrime";
-    [global::Quire.Mirror.MirrorStub]
-    private const string FnIsAddOnActive = "isAddOnActive";
-    [global::Quire.Mirror.MirrorStub]
-    public string CallAddonToOpenFromWindchill() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void CallAddonToEnablePtcPlaces(bool enable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool CallAddonSaveToPtcServer(string currentDocumentPath, string newDocumentPath) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Spirit.Addon+Initialize, MathcadPrime")]
     private delegate void Initialize(global::Quire.Automation.IMathcadPrimeApplication ptr);

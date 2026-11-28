@@ -13,11 +13,29 @@ namespace Quire;
 
 public partial class OptionsWindow
 {
+    private readonly SpiritMainWindow _spiritMainWindow;
+
     public static readonly RoutedUICommand BrowseForTemplatesFolder = new RoutedUICommand();
     public static readonly RoutedUICommand ChooseNewDefaultTemplate = new RoutedUICommand();
     public static readonly RoutedUICommand InsertPythonDirPath = new RoutedUICommand();
 
+    internal OptionsWindow options;
+    internal TabControl dialogTabControl;
     internal global::Quire.License.LicenseOptionsPage LicenseOptionsPage;
+    internal CheckBox RemoteHelpCheckBox;
+    internal CheckBox OptOutQualityAgentCheckBox;
+    internal CheckBox CustomMyTemplatesLocationCheckBox;
+    internal TextBox CustomMyTemplatesLocationTextBox;
+    internal CheckBox CustomSharedTemplatesLocationCheckBox;
+    internal TextBox CustomSharedTemplatesLocationTextBox;
+    internal CheckBox CustomPathToDefaultTemplateForNewDocumentCheckBox;
+    internal TextBox CustomPathToDefaultTemplateForNewDocumentTextBox;
+    internal CheckBox DisableScriptableControls;
+    internal CheckBox ScriptingRunWorksheetOpenCheckBox;
+    internal CheckBox ScriptingRunWorksheetRecalculateCheckBox;
+    internal CheckBox CustomPathToPythonDirCheckBox;
+    internal TextBox CustomPythonDirLocationTextBox;
+    private bool _contentLoaded;
 
     public OptionsWindow(SpiritMainWindow spiritMainWindow)
     {

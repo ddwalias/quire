@@ -11,38 +11,4 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.MathcadPrimeComServerManager, MathcadPrime")]
 internal partial class MathcadPrimeComServerManager
 {
-    [global::Quire.Mirror.MirrorStub]
-    private bool _isRuntimeKeyExist;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly object _syncRoot;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.MathcadPrimeComServerManager _instance;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.App _primeApp;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.SpiritMainWindow _primeWindow;
-    [global::Quire.Mirror.MirrorStub]
-    private static uint _cookie;
-    [global::Quire.Mirror.MirrorStub]
-    private static bool _isRegistered;
-    [global::Quire.Mirror.MirrorStub]
-    private static bool _isComServerReady;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly global::System.Collections.Generic.IDictionary<string, string> _listOfControlledWorksheets;
-    [global::Quire.Mirror.MirrorStub]
-    private void GenerateRuntimeKey() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal bool ValidateEngNotebookLicKey(string receivedLicKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private MathcadPrimeComServerManager() { }
-    [global::Quire.Mirror.MirrorStub]
-    public void ClosePrimeWindow() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public object InvokeDelegate(global::System.Delegate methodDelegate, global::System.Windows.Threading.DispatcherPriority priority = (global::System.Windows.Threading.DispatcherPriority)(9)) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnApplicationExit(object sender, global::System.Windows.ExitEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void RegisterMathcadPrimeComServer(bool isApplicationObsolete, bool isEmbeddingEngNote, bool isEmbeddingEngNotePlus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void UnRegisterMathcadPrimeComServer() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

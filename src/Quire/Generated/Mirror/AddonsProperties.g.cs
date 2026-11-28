@@ -11,42 +11,6 @@ namespace Quire;
 [global::Quire.Mirror.MirrorOf("Spirit.AddonsProperties, MathcadPrime")]
 internal static partial class AddonsProperties
 {
-    [global::Quire.Mirror.MirrorStub]
-    public const string CmdNameOpenFromWc = "OpenFromWC";
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly string cmdTextOpenFromWC;
-    [global::Quire.Mirror.MirrorStub]
-    public const string IdWwgmAddon = "WWGM";
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly string[][] _addonRegKeyProperties;
-    [global::Quire.Mirror.MirrorStub]
-    private const string HKeyCurrentUser = "HKEY_CURRENT_USER";
-    [global::Quire.Mirror.MirrorStub]
-    private const string HKeyLocalMachine = "HKEY_LOCAL_MACHINE";
-    [global::Quire.Mirror.MirrorStub]
-    private const string LoadAddOnsOnDemandRegKeyValue = "LoadAddonsOnDemand";
-    [global::Quire.Mirror.MirrorStub]
-    private const string EndOfRegKey = "_Addon_Path";
-    [global::Quire.Mirror.MirrorStub]
-    private const string AddonRegKey = "Software\\Quire\\Quire\\Quire 1.0\\Addons";
-    [global::Quire.Mirror.MirrorStub]
-    private const string PtcPlacesStatusRegKeyValue = "Quire Places";
-    [global::Quire.Mirror.MirrorStub]
-    private const int PtcPlacesEnable = 1;
-    [global::Quire.Mirror.MirrorStub]
-    private const int PtcPlacesDisable = 0;
-    [global::Quire.Mirror.MirrorStub]
-    private static string ReadOpenFromWcCmdText() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool GetPtcPlacesConnectionStatus() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static void SetPtcPlacesConnectionStatus(bool enable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Microsoft.Win32.RegistryKey OpenAddonsRegKey(bool writable = true) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Microsoft.Win32.RegistryKey CreateAddonsRegKey() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Microsoft.Win32.RegistryKey OpenRegKeyByBaseKey(string baseKey) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Spirit.AddonsProperties+AddonMenuItemCommandId, MathcadPrime")]
     public enum AddonMenuItemCommandId

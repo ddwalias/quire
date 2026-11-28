@@ -4,6 +4,49 @@ namespace Quire.License;
 
 public partial class LicenseOptionsPage
 {
+    internal global::Quire.License.LicenseOptionsPage _this;
+    internal global::System.Windows.Controls.Grid licenseInfoAndStatus;
+    internal global::System.Windows.Controls.Grid leftColumnOfLicenseInfo;
+    internal global::System.Windows.Controls.TextBlock licenseStatusLabel;
+    internal global::System.Windows.Controls.Grid licenseStatus;
+    internal global::System.Windows.Controls.TextBox licenseStatusTextBox;
+    internal global::System.Windows.Controls.Button infoButtonForInvalidLicense;
+    internal global::System.Windows.Controls.Primitives.Popup LicenseErrorInfoPopup;
+    internal global::System.Windows.Controls.TextBlock licenseTypeLabel;
+    internal global::System.Windows.Controls.TextBox licenseTypeTextBox;
+    internal global::System.Windows.Controls.TextBlock licenseIssueDateLabel;
+    internal global::System.Windows.Controls.TextBox licenseIssueDateTextBox;
+    internal global::System.Windows.Controls.TextBlock licenseExpirationDateLabel;
+    internal global::System.Windows.Controls.TextBox licenseExpirationDateTextBox;
+    internal global::System.Windows.Controls.Grid rightColumnOfLicenseInfo;
+    internal global::System.Windows.Controls.TextBlock serviceContractLabel;
+    internal global::System.Windows.Controls.TextBox serviceContractBox;
+    internal global::System.Windows.Controls.TextBlock customerNumberLabel;
+    internal global::System.Windows.Controls.TextBox customerNumberBox;
+    internal global::System.Windows.Controls.TextBlock saledOrderLabel;
+    internal global::System.Windows.Controls.TextBox salesOrderBox;
+    internal global::System.Windows.Controls.Grid leftOfbottomRowForLicenseInfo;
+    internal global::System.Windows.Controls.TextBlock licenseHostIdLabel;
+    internal global::System.Windows.Controls.TextBox licenseHostIdTextBox;
+    internal global::System.Windows.Controls.Grid rightOfbottomRowForLicenseInfo;
+    internal global::System.Windows.Controls.TextBlock productCodeLabel;
+    internal global::System.Windows.Controls.TextBox productCodeBox;
+    internal global::System.Windows.Controls.TextBox licenseStatusMessageTextBox;
+    internal global::System.Windows.Controls.Grid licenseConfiguration;
+    internal global::System.Windows.Controls.DockPanel configuration;
+    internal global::System.Windows.Controls.TextBox licenseBorrowedUntilDateLabel;
+    internal global::System.Windows.Controls.RadioButton serverRadioButton;
+    internal global::System.Windows.Controls.TextBox serverAddressTextBox;
+    internal global::System.Windows.Controls.TextBox serverPortTextBox;
+    internal global::System.Windows.Controls.RadioButton sourceListLicensePathRadioButton;
+    internal global::System.Windows.Controls.TextBox extendedLicensePathTextBox;
+    internal global::System.Windows.Controls.RadioButton filePathRadioButton;
+    internal global::System.Windows.Controls.TextBox filePathTextBox;
+    private global::System.Windows.Controls.Button _applyButton;
+    internal global::System.Windows.Controls.Grid licenseAcquisition;
+    internal global::System.Windows.Controls.Button getLicenseButton;
+    private bool _contentLoaded;
+
     static LicenseOptionsPage()
     {
         LicenseURITypeProperty = global::System.Windows.DependencyProperty.Register(

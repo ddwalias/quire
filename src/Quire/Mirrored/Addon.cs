@@ -6,6 +6,22 @@ public partial class Addon
 {
     private nint _hModule = nint.Zero;
 
+    private const string FnInitializeAddOnForPrime = "initializeAddOnForPrime";
+    private const string FnCleanup = "cleanup";
+    private const string FnOnIdleTime = "onIdleTime";
+    private const string FnDocumentOpened = "documentOpened";
+    private const string FnDocumentClosing = "documentClosing";
+    private const string FnDocumentSaving = "documentSaving";
+    private const string FnDocumentSaved = "documentSaved";
+    private const string FnGetResolvedFileNameAlloc = "getResolvedFileNameAlloc";
+    private const string FnGetDefaultDirectoryForPrime = "getDefaultDirectoryForPrime";
+    private const string FnOpenFromWindchill = "getPTCPlacesLocation";
+    private const string FnEnablePtcPlaces = "enablePTCPlaces";
+    private const string FnSaveToPtcServerForPrime = "saveToPTCServerForPrime";
+    private const string FnOnCommand = "onCommand";
+    private const string FnOnUpdateUIForPrime = "onUpdateUIForPrime";
+    private const string FnIsAddOnActive = "isAddOnActive";
+
     public void UnloadAddon()
     {
         if (_hModule != nint.Zero)
@@ -300,5 +316,68 @@ public partial class Addon
         }
 
         return isActive;
+    }
+
+    public string CallAddonToOpenFromWindchill()
+    {
+        string location = null;
+        try
+        {
+            nint functionAddress = GetAddressOfFunction(FnOpenFromWindchill);
+            if (functionAddress != nint.Zero)
+            {
+                OpenFromWindchill openFromWindchill = Marshal.GetDelegateForFunctionPointer(functionAddress, typeof(OpenFromWindchill)) as OpenFromWindchill;
+                if (openFromWindchill != null)
+                {
+                    location = Marshal.PtrToStringAuto(openFromWindchill.Invoke());
+                }
+            }
+        }
+        catch
+        {
+        }
+
+        return location;
+    }
+
+    public void CallAddonToEnablePtcPlaces(bool enable)
+    {
+        try
+        {
+            nint functionAddress = GetAddressOfFunction(FnEnablePtcPlaces);
+            if (functionAddress != nint.Zero)
+            {
+                EnablePtcPlaces enablePtcPlaces = Marshal.GetDelegateForFunctionPointer(functionAddress, typeof(EnablePtcPlaces)) as EnablePtcPlaces;
+                if (enablePtcPlaces != null)
+                {
+                    enablePtcPlaces.Invoke(enable);
+                }
+            }
+        }
+        catch
+        {
+        }
+    }
+
+    public bool CallAddonSaveToPtcServer(string currentDocumentPath, string newDocumentPath)
+    {
+        bool isSaved = false;
+        try
+        {
+            nint functionAddress = GetAddressOfFunction(FnSaveToPtcServerForPrime);
+            if (functionAddress != nint.Zero)
+            {
+                SaveToPtcServer saveToPtcServer = Marshal.GetDelegateForFunctionPointer(functionAddress, typeof(SaveToPtcServer)) as SaveToPtcServer;
+                if (saveToPtcServer != null)
+                {
+                    isSaved = saveToPtcServer.Invoke(currentDocumentPath, newDocumentPath) != 0;
+                }
+            }
+        }
+        catch
+        {
+        }
+
+        return isSaved;
     }
 }
