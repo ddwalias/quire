@@ -28,12 +28,18 @@ internal partial class l : global::Quire.EquationEditor.Equation.EquationModel.b
     [MirrorVerified("Release IL")]
     protected override MathNode g() => ag().Current;
 
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorBlocked("unfinished: base call stub, ordinal placeholder")]
-    public override void h() => base.h();
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorBlocked("unfinished: base call stub, ordinal placeholder")]
-    public override void i() => base.i();
+    [MirrorVerified("Release IL")]
+    public override void h()
+    {
+        c(NavigatorState.Empty);
+        base.h();
+    }
+    [MirrorVerified("Release IL")]
+    public override void i()
+    {
+        c(NavigatorState.Empty);
+        base.i();
+    }
     public override bool j(global::Quire.Direction A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public override void k(global::Quire.Direction A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -53,14 +59,31 @@ internal partial class l : global::Quire.EquationEditor.Equation.EquationModel.b
     private void a(global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_0, global::Quire.Direction A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void a(global::Quire.Direction A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public override void q(global::Quire.Direction A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public override void r(global::Quire.Direction A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [MirrorVerified("Release IL")]
+    public override void r(Direction direction)
+    {
+        if (ag().Current.CarriesValue)
+        {
+            b(bq.c(direction, ag().Current).f());
+        }
+    }
     [MirrorVerified("Release IL")]
     public override void s() { }
 
-    public override void t() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [MirrorVerified("Release IL")]
+    public override void t()
+    {
+        if (av() != this)
+        {
+            throw new InvalidOperationException("Logic Error: Model is not in NormalMode and we're notifying that we are in a new NavigatorState");
+        }
+        b();
+    }
     private bool a(string A_0, global::System.Nullable<global::Quire.EquationEditor.Tree.Parsing.Fixity> A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public override bool u(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public override bool v(global::Quire.DelegateFunction0<global::Quire.EquationEditor.Tree.MathNode> A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [MirrorVerified("Release IL")]
+    public override bool u(string text) => a(text, null);
+    [MirrorVerified("Release IL")]
+    public override bool v(DelegateFunction0<MathNode> mathNodeFactory) => a(mathNodeFactory, null);
     public override bool w(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public virtual bool a(global::Quire.DelegateFunction0<global::Quire.EquationEditor.Tree.MathNode> A_0, global::System.Nullable<global::Quire.EquationEditor.Tree.Parsing.Fixity> A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private static void a(global::Quire.EquationEditor.Tree.Navigation.NavigatorState A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
