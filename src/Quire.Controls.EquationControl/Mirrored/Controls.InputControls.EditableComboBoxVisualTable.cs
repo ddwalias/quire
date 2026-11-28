@@ -11,7 +11,8 @@ using System.ComponentModel;
 
 namespace Quire.Controls.InputControls;
 
-public partial class EditableComboBoxVisualTable
+[global::Quire.Mirror.MirrorOf("Ptc.Controls.InputControls.EditableComboBoxVisualTable, Ptc.Controls.EquationControl")]
+public partial class EditableComboBoxVisualTable : global::Quire.Controls.Core.VisualTableContents, global::Quire.EquationEditor.View.IEditableComboBoxVisualTable, global::Quire.Wpf.ICanBlockUndoRedo, global::System.Windows.Markup.IComponentConnector
 {
     public const double MinMouseMovementDistanceToCreateCellsSelection = 4d;
 
@@ -315,4 +316,6 @@ public partial class EditableComboBoxVisualTable
     private bool IsVisualDataEqualsViewModelTableData() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public void InitializeComponent() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+    void global::System.Windows.Markup.IComponentConnector.Connect(int connectionId, object target) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }
