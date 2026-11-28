@@ -34,10 +34,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
     [global::Quire.Mirror.MirrorStub]
     private void f(int A_0, int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void RemoveColumn(global::Quire.EquationEditor.IEquationModel cell) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RemoveRow(global::Quire.EquationEditor.IEquationModel cell) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void AddColumn(global::Quire.EquationEditor.IEquationModel cell, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void AddRow(global::Quire.EquationEditor.IEquationModel cell, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -57,10 +53,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
     public void HandleNavigateToLastCell() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void a(global::Quire.Direction A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleOnDelete(global::Quire.EquationEditor.IEquationModel equationModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void HandleClearActiveCell(global::Quire.EquationEditor.IEquationModel equationModel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void HandleRemoveOrClearSelection(global::Quire.EquationEditor.IEquationModel equationModel, int cellIndexA, int cellIndexB, global::Quire.Direction direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

@@ -221,7 +221,25 @@ public partial class SpecTableModel
     }
 
     public global::System.Collections.Generic.IEnumerable<SpecTableCalculatableWrapper> GetWrappedColumns()
-        => new n_(-2) { d = this };
+        => new n_(-2) { d_ = this };
+
+    public void RemoveColumn(global::Quire.EquationEditor.IEquationModel cell)
+    {
+        global::Quire.Discrete2DCoordinate coordinate = b(cell);
+        h(coordinate.First, coordinate.Second);
+    }
+
+    public void RemoveRow(global::Quire.EquationEditor.IEquationModel cell)
+    {
+        global::Quire.Discrete2DCoordinate coordinate = b(cell);
+        i(coordinate.First, coordinate.Second);
+    }
+
+    public void HandleOnDelete(global::Quire.EquationEditor.IEquationModel equationModel)
+        => equationModel?.Delete(global::Quire.Direction.Right);
+
+    public void HandleClearActiveCell(global::Quire.EquationEditor.IEquationModel equationModel)
+        => equationModel?.ClearContent();
 
     private CompoundCommand f()
     {
@@ -493,6 +511,7 @@ public partial class SpecTableModel
 
     private bool a(ISpecTableColumn column) => column.InCustomInitialization == o;
 
+
     [MirrorOf("Ptc.EquationEditor.SpecTable.Model.SpecTableModel+n, Ptc.EquationEditor")]
     private sealed partial class n_ :
         global::System.Collections.Generic.IEnumerable<SpecTableCalculatableWrapper>,
@@ -510,7 +529,8 @@ public partial class SpecTableModel
         [MirrorName("c")]
         private int c_;
 
-        public SpecTableModel d;
+        [MirrorName("d")]
+        public SpecTableModel d_;
 
         [MirrorName("e")]
         private global::System.Collections.Generic.List<ISpecTableColumn>.Enumerator e_;
@@ -521,19 +541,16 @@ public partial class SpecTableModel
             c_ = global::System.Environment.CurrentManagedThreadId;
         }
 
-        void global::System.IDisposable.Dispose() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
-        bool global::System.Collections.IEnumerator.MoveNext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
-        private void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
-        void global::System.Collections.IEnumerator.Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-
-        global::System.Collections.Generic.IEnumerator<SpecTableCalculatableWrapper>
-            global::System.Collections.Generic.IEnumerable<SpecTableCalculatableWrapper>.GetEnumerator()
+        void global::System.IDisposable.Dispose()
             => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
-        global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator()
+        bool global::System.Collections.IEnumerator.MoveNext()
+            => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+        private void a()
+            => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+        void global::System.Collections.IEnumerator.Reset()
             => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
         SpecTableCalculatableWrapper
@@ -541,6 +558,13 @@ public partial class SpecTableModel
             => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
         object global::System.Collections.IEnumerator.Current
+            => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+        global::System.Collections.Generic.IEnumerator<SpecTableCalculatableWrapper>
+            global::System.Collections.Generic.IEnumerable<SpecTableCalculatableWrapper>.GetEnumerator()
+            => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+        global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator()
             => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }
