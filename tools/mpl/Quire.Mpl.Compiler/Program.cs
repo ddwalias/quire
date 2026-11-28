@@ -281,6 +281,11 @@ static void CompileThinModule(string sourcePath, string outputPath, string insta
 
     var globalBindings = bindings.Where(binding => binding.Args.Length == 0).ToArray();
     var functions = bindings.Where(binding => binding.Args.Length > 0).ToArray();
+    if (moduleName == "MplPrimitives")
+    {
+        CompilePrimitiveModule(interfaceText, functions, outputPath, install, project);
+        return;
+    }
     var runtime = Assembly.LoadFrom(Path.Combine(install, "mplrun.dll"));
     var moduleTextCtor = runtime.GetType("Mpl.Run.ModuleTextAttribute", throwOnError: true)!
         .GetConstructor([typeof(string)]) ?? throw new MissingMethodException("ModuleTextAttribute..ctor(string)");
@@ -353,6 +358,74 @@ static void CompileThinModule(string sourcePath, string outputPath, string insta
     assembly.Save(outputPath);
 }
 
+static void CompilePrimitiveModule(string interfaceText,
+    IReadOnlyList<(string Name, string[] Args, string Expression)> functions,
+    string outputPath, string install, string project)
+{
+    var signatures = new Dictionary<string, Type[]>(StringComparer.Ordinal);
+    foreach (var line in interfaceText.Split('\n').Select(line => line.Trim()))
+    {
+        var split = line.IndexOf(" :: ", StringComparison.Ordinal);
+        if (split < 0) continue;
+        var name = line[..split].Trim().Trim('(', ')');
+        var body = line[(split + 4)..];
+        var foreign = body.IndexOf(" @ ", StringComparison.Ordinal);
+        if (foreign >= 0) body = body[..foreign];
+        var pieces = body.TrimEnd(';').Split("->", StringSplitOptions.TrimEntries);
+        signatures[name] = pieces.Select(MapPrimitiveMplType).ToArray();
+    }
+
+    var runtime = Assembly.LoadFrom(Path.Combine(install, "mplrun.dll"));
+    var moduleTextCtor = runtime.GetType("Mpl.Run.ModuleTextAttribute", throwOnError: true)!
+        .GetConstructor([typeof(string)]) ?? throw new MissingMethodException("ModuleTextAttribute..ctor(string)");
+    var moduleInterfaceCtor = runtime.GetType("Mpl.Run.ModuleInterfaceAttribute", throwOnError: true)!
+        .GetConstructor([typeof(string)]) ?? throw new MissingMethodException("ModuleInterfaceAttribute..ctor(string)");
+    var assembly = CreateAssembly(project);
+    var module = assembly.DefineDynamicModule(Path.GetFileName(outputPath));
+    var values = module.DefineType(project + ".values", TypeAttributes.Public | TypeAttributes.Class);
+    SetStringAttribute(values, moduleTextCtor, "");
+    SetStringAttribute(values, moduleInterfaceCtor, interfaceText);
+    AddMirrorOf(values, "MplPrimitives.values, MplPrimitives");
+
+    var update = values.DefineMethod("Update", MethodAttributes.Public | MethodAttributes.Static,
+        typeof(void), Type.EmptyTypes);
+    update.GetILGenerator().Emit(OpCodes.Ret);
+    foreach (var function in functions)
+    {
+        if (!signatures.TryGetValue(function.Name, out var types) || types.Length != function.Args.Length + 1)
+            throw new InvalidDataException($"No matching Mpl signature for {function.Name}.");
+        var parameters = types[..^1];
+        var method = values.DefineMethod(function.Name, MethodAttributes.Public | MethodAttributes.Static,
+            types[^1], parameters);
+        var aliases = new Dictionary<string, Type>(StringComparer.Ordinal);
+        for (var index = 0; index < function.Args.Length; index++) aliases.Add(function.Args[index], parameters[index]);
+        var expression = MplExpressionParser.Parse(function.Expression);
+        EmitReturningExpression(expression, method.GetILGenerator(),
+            new Dictionary<string, System.Reflection.Emit.Quire.Mpl.LocalBuilder>(StringComparer.Ordinal),
+            function.Args, new Dictionary<string, System.Reflection.Emit.Quire.Mpl.MethodBuilder>(StringComparer.Ordinal),
+            aliases, install, function.Name);
+    }
+    var initializer = values.DefineConstructor(MethodAttributes.Public | MethodAttributes.Static,
+        CallingConventions.Standard, Type.EmptyTypes);
+    var initializerIl = initializer.GetILGenerator();
+    initializerIl.Emit(OpCodes.Call, update);
+    initializerIl.Emit(OpCodes.Ret);
+    values.CreateType();
+    Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+    assembly.Save(outputPath);
+}
+
+static Type MapPrimitiveMplType(string sourceType)
+{
+    var typeName = Regex.Match(sourceType, @"\A[A-Za-z_][A-Za-z0-9_.]*", RegexOptions.CultureInvariant).Value;
+    return typeName switch
+    {
+        "Mpl.I4" => typeof(int),
+        "Mpl.F8" => typeof(double),
+        _ => typeof(object),
+    };
+}
+
 static void EmitExternalStaticField(MplILGenerator il, string qualifiedName, string install)
 {
     var field = ResolveExternalField(qualifiedName, install);
@@ -421,14 +494,31 @@ static string ParseInterfaceModuleName(string interfaceText)
         throw new InvalidDataException("Expected a brace-bodied Mpl module interface.");
     var declarations = interfaceText.Split('\n').Skip(2).SkipLast(1)
         .Select(line => line.Trim()).Where(line => line.Length > 0).ToList();
-    if (declarations.Any(line => !line.StartsWith("import ", StringComparison.Ordinal)
-        && !line.StartsWith("data ", StringComparison.Ordinal)
-        && !Regex.IsMatch(line, @"\Ainfix(?:l|r)?\s+[0-9]+\s+.+;\z", RegexOptions.CultureInvariant)
-        && !line.StartsWith("|", StringComparison.Ordinal)
-        && !line.Contains(" :: ", StringComparison.Ordinal)))
-        throw new InvalidDataException("Interface-only sources support imports, data declarations, and signatures only.");
+    var inlineBodyDepth = 0;
+    foreach (var line in declarations)
+    {
+        if (inlineBodyDepth > 0)
+        {
+            inlineBodyDepth += line.Count(character => character == '(') - line.Count(character => character == ')');
+            continue;
+        }
+        var bodyMarker = line.IndexOf(" = ", StringComparison.Ordinal);
+        if (line.Contains(" :: ", StringComparison.Ordinal) && bodyMarker >= 0)
+        {
+            inlineBodyDepth = line[(bodyMarker + 3)..].Count(character => character == '(')
+                - line[(bodyMarker + 3)..].Count(character => character == ')');
+            continue;
+        }
+        if (!line.StartsWith("import ", StringComparison.Ordinal)
+            && !line.StartsWith("data ", StringComparison.Ordinal)
+            && !Regex.IsMatch(line, @"\A(?:infix(?:l|r)?|inline)\s+[0-9]+\s+.+;\z", RegexOptions.CultureInvariant)
+            && !line.StartsWith("|", StringComparison.Ordinal)
+            && !line.Contains(" :: ", StringComparison.Ordinal))
+            throw new InvalidDataException("Interface-only sources support imports, data declarations, and signatures only.");
+    }
     if (declarations.Any(line => line.Contains(" = ", StringComparison.Ordinal)
-        && !line.StartsWith("data ", StringComparison.Ordinal)))
+        && !line.StartsWith("data ", StringComparison.Ordinal)
+        && !line.Contains(" :: ", StringComparison.Ordinal)))
         throw new InvalidDataException("Interface-only modules cannot contain value definitions.");
     return match.Groups[1].Value;
 }
@@ -716,6 +806,55 @@ static void EmitReturningExpression(MplExpr expression,
             il.MarkLabel(emptyLabel);
             il.Emit(OpCodes.Pop);
             EmitReturningExpression(pattern.WhenEmpty, il, locals, arguments, methods, typeAliases, install, methodName);
+            return;
+        }
+        case MplCaseZero pattern:
+        {
+            var other = il.DefineLabel();
+            EmitValue(pattern.Value, il, locals, arguments, methods, typeAliases, install);
+            il.Emit(OpCodes.Dup);
+            if (ExpressionType(pattern.Value, locals, typeAliases) == typeof(double))
+            {
+                il.Emit(OpCodes.Ldc_R8, 0.0);
+                il.Emit(OpCodes.Bne_Un, other);
+            }
+            else
+                il.Emit(OpCodes.Brtrue, other);
+            il.Emit(OpCodes.Pop);
+            EmitTailValue(pattern.WhenZero, il, locals, arguments, methods, typeAliases, install, methodName);
+            il.MarkLabel(other);
+            il.Emit(OpCodes.Pop);
+            EmitTailValue(pattern.WhenOther, il, locals, arguments, methods, typeAliases, install, methodName);
+            return;
+        }
+        case MplCaseNull pattern:
+        {
+            var other = il.DefineLabel();
+            EmitValue(pattern.Value, il, locals, arguments, methods, typeAliases, install);
+            il.Emit(OpCodes.Dup);
+            il.Emit(OpCodes.Brtrue, other);
+            il.Emit(OpCodes.Pop);
+            EmitTailValue(pattern.WhenNull, il, locals, arguments, methods, typeAliases, install, methodName);
+            il.MarkLabel(other);
+            il.Emit(OpCodes.Pop);
+            EmitTailValue(pattern.WhenOther, il, locals, arguments, methods, typeAliases, install, methodName);
+            return;
+        }
+        case MplCaseNonNull pattern:
+        {
+            var isNull = il.DefineLabel();
+            var value = il.DeclareLocal(typeof(object));
+            EmitValue(pattern.Value, il, locals, arguments, methods, typeAliases, install);
+            il.Emit(OpCodes.Dup);
+            il.Emit(OpCodes.Brfalse, isNull);
+            il.Emit(OpCodes.Stloc, value);
+            locals.Add(pattern.BoundName, value);
+            il.Emit(OpCodes.Ldloc, value);
+            il.Emit(OpCodes.Ret);
+            locals.Remove(pattern.BoundName);
+            il.MarkLabel(isNull);
+            il.Emit(OpCodes.Pop);
+            EmitTailValue(pattern.WhenNull, il, locals, arguments, methods, typeAliases, install, methodName);
             return;
         }
         case MplForList loop:
@@ -1020,6 +1159,9 @@ static void EmitValue(MplExpr expression,
                 default: il.Emit(OpCodes.Ldc_I4, integer.Value); break;
             }
             return;
+        case MplReal real:
+            il.Emit(OpCodes.Ldc_R8, real.Value);
+            return;
         case MplField field:
             EmitValue(field.Receiver, il, locals, arguments, methods, typeAliases, install);
             il.Emit(OpCodes.Ldfld, ResolveField(field.Receiver, field.Name, locals, arguments, typeAliases, install));
@@ -1071,6 +1213,7 @@ static Type ExpressionType(MplExpr expression,
         MplVariable variable when locals.TryGetValue(variable.Name, out var local) => local.LocalType,
         MplVariable variable when typeAliases.TryGetValue(variable.Name, out var type) => type,
         MplInteger => typeof(int),
+        MplReal => typeof(double),
         MplString => typeof(string),
         MplArray => typeof(object[]),
         MplNew creation when typeAliases.TryGetValue(creation.TypeName, out var constructedType) => constructedType,
@@ -1133,6 +1276,7 @@ internal sealed record MplSetIndex(MplExpr Table, MplExpr Key, MplExpr Value) : 
 internal sealed record MplSequence(IReadOnlyList<MplExpr> Expressions) : MplExpr;
 internal sealed record MplString(string Value) : MplExpr;
 internal sealed record MplInteger(int Value) : MplExpr;
+internal sealed record MplReal(double Value) : MplExpr;
 internal sealed record MplArray(IReadOnlyList<MplExpr> Items) : MplExpr;
 internal sealed record MplField(MplExpr Receiver, string Name) : MplExpr;
 internal sealed record MplCaseCons(MplExpr Value, string Name, MplExpr WhenCons, MplExpr WhenEmpty) : MplExpr;
@@ -1140,6 +1284,9 @@ internal sealed record MplTail(MplExpr Expression) : MplExpr;
 internal sealed record MplNew(string TypeName, IReadOnlyList<MplExpr> Arguments) : MplExpr;
 internal sealed record MplForList(string ElementName, MplExpr Collection, string CollectionName,
     MplExpr Capacity, string ResultName, MplExpr Action) : MplExpr;
+internal sealed record MplCaseZero(MplExpr Value, MplExpr WhenZero, MplExpr WhenOther) : MplExpr;
+internal sealed record MplCaseNull(MplExpr Value, MplExpr WhenNull, MplExpr WhenOther) : MplExpr;
+internal sealed record MplCaseNonNull(MplExpr Value, string BoundName, MplExpr WhenNonNull, MplExpr WhenNull) : MplExpr;
 
 internal static class MplExpressionParser
 {
@@ -1151,7 +1298,7 @@ internal static class MplExpressionParser
         private int _position;
 
         public Parser(string source) => _tokens = Regex.Matches(source,
-                """==|:=|->|[A-Za-z_$][A-Za-z0-9_.$]*|[0-9]+|"[^"]*"|\[|\]|\(|\)|,|;|\||:|=""")
+                """==|!=|:=|->|\?\?|[A-Za-z_$][A-Za-z0-9_.$]*|[0-9]+(?:\.[0-9]+)?|"[^"]*"|\[|\]|\(|\)|,|;|\||:|=""")
             .Select(match => match.Value).ToArray();
 
         public MplExpr Parse()
@@ -1166,16 +1313,51 @@ internal static class MplExpressionParser
             if (Take("tail")) return new MplTail(ParseExpression());
             if (Take("case"))
             {
-                var value = ReadIdentifier();
+                var value = ParseApplication();
                 Expect("of");
-                Expect("Cons");
-                var name = ReadIdentifier();
-                Expect("->");
-                var whenCons = ParseExpression();
-                Expect("|");
-                Expect("null");
-                Expect("->");
-                return new MplCaseCons(new MplVariable(value), name, whenCons, ParseExpression());
+                if (Take("null"))
+                {
+                    Expect("->");
+                    var whenNull = ParseExpression();
+                    Expect("|");
+                    Expect("_");
+                    Expect("->");
+                    return new MplCaseNull(value, whenNull, ParseExpression());
+                }
+                if (Take("Really"))
+                {
+                    var boundName = ReadIdentifier();
+                    Expect("->");
+                    var whenNonNull = ParseExpression();
+                    if (whenNonNull is not MplVariable { Name: var resultName }
+                        || resultName != boundName)
+                        throw new InvalidDataException("Mpl Really cases currently return their bound value.");
+                    Expect("|");
+                    Expect("Null");
+                    Expect("->");
+                    return new MplCaseNonNull(value, boundName, whenNonNull, ParseExpression());
+                }
+                var pattern = ParseAtom();
+                if (pattern is MplInteger { Value: 0 } or MplReal { Value: 0.0 })
+                {
+                    Expect("->");
+                    var whenZero = ParseExpression();
+                    Expect("|");
+                    Expect("_");
+                    Expect("->");
+                    return new MplCaseZero(value, whenZero, ParseExpression());
+                }
+                if (pattern is MplVariable { Name: "Cons" })
+                {
+                    var name = ReadIdentifier();
+                    Expect("->");
+                    var whenCons = ParseExpression();
+                    Expect("|");
+                    Expect("null");
+                    Expect("->");
+                    return new MplCaseCons(value, name, whenCons, ParseExpression());
+                }
+                throw new InvalidDataException("Unsupported Mpl case pattern.");
             }
             if (Take("let"))
             {
@@ -1230,7 +1412,7 @@ internal static class MplExpressionParser
                 return new MplSetIndex(index.Table, index.Key, ParseAtom());
             }
             var arguments = new List<MplExpr>();
-            while (_position < _tokens.Length && _tokens[_position] is not ("in" or "then" or "else" or "=="
+            while (_position < _tokens.Length && _tokens[_position] is not ("in" or "of" or "then" or "else" or "==" or "!="
                 or "using" or "into" or "do" or ")" or "]" or "," or ";" or "|"))
                 arguments.Add(ParseAtom());
             return arguments.Count == 0 ? function : new MplCall(function, arguments);
@@ -1270,6 +1452,12 @@ internal static class MplExpressionParser
             {
                 _position++;
                 return new MplInteger(integer);
+            }
+            if (_position < _tokens.Length && double.TryParse(_tokens[_position], NumberStyles.Float,
+                CultureInfo.InvariantCulture, out var real))
+            {
+                _position++;
+                return new MplReal(real);
             }
             var name = ReadIdentifier();
             MplExpr variable = name.Contains('.', StringComparison.Ordinal) && char.IsLower(name[0])

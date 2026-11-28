@@ -15,7 +15,7 @@ OUTPUT = ROOT / "tools/mpl/output"
 CACHE = ROOT / ".mirror-cache/mpl-thin-emitter"
 COMPILER_OUT = CACHE / "compiler"
 AUDIT_OUT = CACHE / "method-audit"
-MODULES = ["McdUnitSystemMKS", "McdUnitSystemUS", "MplConstants"]
+MODULES = ["McdUnitSystemMKS", "McdUnitSystemUS", "MplConstants", "MplPrimitives"]
 ATTRIBUTE = re.compile(
     r"\.custom instance void \[[^]]+\]([^\s]+)::\.ctor\(string\) = \(\s*((?:[0-9a-fA-F]{2}\s*)+)\)", re.S)
 
@@ -88,7 +88,8 @@ class ThinModuleTests(unittest.TestCase):
             self.assertEqual([name for name, _ in candidate_attrs],
                              ["Mpl.Run.ModuleTextAttribute", "Mpl.Run.ModuleInterfaceAttribute",
                               "Quire.Mirror.MirrorOfAttribute"], module + " candidate attribute order")
-            expected_fields = ["gamma", "pi", "e"] if module == "MplConstants" else ["system"]
+            expected_fields = (["gamma", "pi", "e"] if module == "MplConstants"
+                               else [] if module == "MplPrimitives" else ["system"])
             self.assertEqual(member_names(original_block, "field"), expected_fields, module + " field order")
             self.assertEqual(member_names(candidate_block, "field"), expected_fields,
                              module + " candidate field order")
