@@ -377,16 +377,9 @@ public partial class SpecTableControl : global::System.Windows.Controls.ContentC
             return searchableRegions;
         }
     }
-    private global::System.Collections.Generic.IEnumerator<global::Quire.Controls.Core.IFindRestrictor> GetISearchableEnumerator(global::Quire.Controls.EquationControl from, global::System.Windows.Documents.LogicalDirection direction)
-    {
-        var searchableRegions = SearchableRegions;
-        if (direction == global::System.Windows.Documents.LogicalDirection.Backward)
-        {
-            searchableRegions.Reverse();
-        }
-        int count = from != null ? searchableRegions.FindIndex(item => item.SearchableRegion == from) : 0;
-        return searchableRegions.Skip(count).GetEnumerator();
-    }
+    [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorBlocked("unfinished: branch polarity mismatch with Mathcad Release IL")]
+    private global::System.Collections.Generic.IEnumerator<global::Quire.Controls.Core.IFindRestrictor> GetISearchableEnumerator(global::Quire.Controls.EquationControl from, global::System.Windows.Documents.LogicalDirection direction) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public bool FindOncePrivate(string text, bool startFromCaret, global::System.Windows.Documents.LogicalDirection direction, global::Quire.Controls.Core.FindOptions options, global::System.Collections.Generic.List<global::Quire.Pair<int, int>> subscriptPositions) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public object PersistentData { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     public override void EndInit() => base.EndInit();
@@ -458,27 +451,30 @@ public partial class SpecTableControl : global::System.Windows.Controls.ContentC
         get => CalcIsDisabled;
         set
         {
-            if (CalcIsDisabled == value)
+            switch ((CalcIsDisabled == value) == false)
             {
-                return;
+                case true:
+                    break;
+                default:
+                    return;
             }
-            CompoundCommand command = new CompoundCommand();
+            CompoundCommand cmd = new CompoundCommand();
             DelegateFunction0<bool> doMethod = () =>
             {
                 CalcIsDisabled = value;
                 FirePropertyChanged("HideFromCalculationContext");
-                using (new CommandScope(command))
+                using (new CommandScope(cmd))
                 {
                     foreach (global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn column in Model.Columns)
                     {
-                        ((ICalculationHideableChild)Model.GetColumnWrapper(column)).HideFromCalculationContext = value;
+                        ((ICalculationHideableChild)(object)Model.GetColumnWrapper(column)).HideFromCalculationContext = value;
                     }
                 }
                 return true;
             };
             Delegate0 undoMethod = () =>
             {
-                command.Undo();
+                cmd.Undo();
                 CalcIsDisabled = !value;
                 FirePropertyChanged("HideFromCalculationContext");
             };
@@ -549,10 +545,11 @@ public partial class SpecTableControl : global::System.Windows.Controls.ContentC
         };
         Delegate0 redoMethod = () =>
         {
-            if (!DebugTools.AssertNotNull(redoMemento, null).Failed)
+            if (DebugTools.AssertNotNull(redoMemento, null).Failed)
             {
-                ToggleInput(setTag, redoMemento, toggleInputTag);
+                return;
             }
+            ToggleInput(setTag, redoMemento, toggleInputTag);
         };
         return new UndoableCommand("SpecTablePreSetInput", doMethod, undoMethod, redoMethod);
     }
