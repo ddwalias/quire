@@ -2550,22 +2550,31 @@ public partial class EquationControl
                 string userData = parameter.UserData;
                 if (userData == "decrease")
                 {
+                    // Mathcad branches directly to the decrement block for this value.
                     goto DecreaseNumberFormatValue;
                 }
                 if (!(userData == "increase"))
                 {
+                    // Mathcad sends every unsupported value to the assertion block.
                     goto UnsupportedNumberFormatAdjustment;
                 }
+                // Mathcad keeps increment as a distinct branch target.
                 goto IncreaseNumberFormatValue;
 
+            // Mathcad shares the property write after both adjustment blocks.
             DecreaseNumberFormatValue:
                 value = isDecimalPlaces ? global::Quire.Controls.Core.NumberFormat.CoerceDecimalPlaces(value, -1) : value - 1;
+                // Both adjusted values flow through the same command call.
                 goto ApplyNumberFormatAdjustment;
+            // Mathcad keeps increment as a distinct branch target.
             IncreaseNumberFormatValue:
                 value = isDecimalPlaces ? global::Quire.Controls.Core.NumberFormat.CoerceDecimalPlaces(value, 1) : value + 1;
+                // Both adjusted values flow through the same command call.
                 goto ApplyNumberFormatAdjustment;
+            // Unsupported values assert, then fall through to the shared command call.
             UnsupportedNumberFormatAdjustment:
                 global::Quire.DebugTools.FailAssertion("Unsupported value");
+            // Mathcad shares this write for supported and unsupported adjustments.
             ApplyNumberFormatAdjustment:
                 DisplayNumberFormat.SetPropertyValueWithCommand(parameter, value);
             }
