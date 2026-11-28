@@ -42,3 +42,181 @@
 - Parked after Batch 18 compile probes: `HandleMoveTab`, `CanExecuteMoveTabCommand`, `CloseDocument`, and `RemoveTabAndDocument` require unmapped `MainDockWindowGroup`/`DockWindow` members; `OpenWorksheetInputOutputWindow` requires unmapped `InputOutputDesignationWindow` and `DockingManager` members. `EnsureLicenseManagerInstance` requires the unmapped `PtcLicensePlpf.LicenseImpl` type. The remaining closure and iterator members need the whole-type Mathcad-order layout before implementation.
 - Batch 16: implemented `UnhandledDispatcherExceptionHandler` and `UnhandledExceptionHandler`; the latter uses an early return for the `_handlingException` guard to match Mathcad branch polarity.
 - Batch 16 Release IL: `python tools/validation/release_il.py --base main --project Quire` — PASS, 2,121 checked, 0 failures; report `.mirror-cache/release-il-5516d0949860/release-il.json`. Cumulative exact implementation count: 166 across batches 1–16.
+
+
+## Closure ordinal follow-up tables
+
+Reference: `Spirit.SpiritMainWindow.members.tsv` from MathcadPrime 12.0.1.0; each range is exclusive of the previous calibrated anchor and inclusive of the failing parent. Quire entries below are the corresponding declarations in `SpiritMainWindow.Ordered.cs`.
+
+### `HandleLaunchConverter` (232 vs 233)
+
+| Mathcad token | Kind | Mathcad member | Quire member |
+|---|---|---|---|
+| `0x060004f2` | method | `UpdateInputsEngNote` | `UpdateInputsEngNote` |
+| `0x060004f3` | method | `UpdateInputs` | `UpdateInputs` |
+| `0x060004f4` | method | `SetContextDataEngNote` | `SetContextDataEngNote` |
+| `0x060004f5` | method | `HandleOpenFuncitonBrowser` | `HandleOpenFuncitonBrowser` |
+| `0x06000597` | local function | `<HandleOpenFuncitonBrowser>g__SetDockControlSizeBeforeDocking|230_0` | exact local function with mapped argument type |
+| `0x060004f6` | method | `SetForegroundWindow` | `SetForegroundWindow` |
+| `0x060004f7` | method | `HandleLaunchConverter` | `HandleLaunchConverter` |
+
+The only missing row was the local function (+1); the hand-written parent now emits it with the mapped `BeforeDockedRoutedEventArgs` type and an exact local function body, while the closure parent remains a placeholder.
+
+### `GetFilterForCloseTabsEnum` (236 vs 237) and `HandleShowSaveAsError` (257 vs 258)
+
+| Mathcad token | Kind | Mathcad member | Quire member |
+|---|---|---|---|
+| `0x060004f8` | method | `CanLaunchConverter` | `CanLaunchConverter` |
+| `0x060004f9` | method | `HandleCloseEngineeringDocument` | `HandleCloseEngineeringDocument` |
+| `0x060004fa` | method | `HandleCloseTabs` | `HandleCloseTabs` |
+| `0x060004fb` | method | `GetFilterForCloseTabsEnum` | `GetFilterForCloseTabsEnum` |
+
+| Mathcad token | Kind | Mathcad member | Quire member |
+|---|---|---|---|
+| `0x060004fc` | method | `HandleMoveTab` | `HandleMoveTab` |
+| `0x060004fd` | property accessor | `get_MainDockWindowGroup` | `get_MainDockWindowGroup` |
+| `0x060004fe` | method | `CanExecuteMoveTabCommand` | `CanExecuteMoveTabCommand` |
+| `0x060004ff` | method | `HandleCloseEngineeringDocument` | `HandleCloseEngineeringDocument` |
+| `0x06000500` | method | `LaunchImportExcel` | `LaunchImportExcel` |
+| `0x06000501` | property accessor | `get_WorksheetInputOutputWindow` | `get_WorksheetInputOutputWindow` |
+| `0x06000502` | property accessor | `set_WorksheetInputOutputWindow` | `set_WorksheetInputOutputWindow` |
+| `0x06000503` | method | `HandleOpenInputOutputDesignationWindow` | `HandleOpenInputOutputDesignationWindow` |
+| `0x06000504` | method | `OpenWorksheetInputOutputWindow` | `OpenWorksheetInputOutputWindow` |
+| `0x06000505` | method | `HandleDockWindowClosedEvent` | `HandleDockWindowClosedEvent` |
+| `0x06000506` | method | `AddHandlersForWorksheetInputOutputWindowEvents` | `AddHandlersForWorksheetInputOutputWindowEvents` |
+| `0x06000507` | method | `SetBindingForWorksheetInputOutputWindowProperties` | `SetBindingForWorksheetInputOutputWindowProperties` |
+| `0x06000508` | method | `InsertReadExcel` | `InsertReadExcel` |
+| `0x06000509` | method | `DisplayHelp` | `DisplayHelp` |
+| `0x0600050a` | method | `ToolTipOpened` | `ToolTipOpened` |
+| `0x0600050b` | method | `HandleTooltipIsVisibleChanged` | `HandleTooltipIsVisibleChanged` |
+| `0x0600050c` | method | `HandleShowPropertyGrid` | `HandleShowPropertyGrid` |
+| `0x0600050d` | method | `HandleShowSaveAsError` | `HandleShowSaveAsError` |
+
+Every method row in these two ranges is present in the same order in the partial; the +1 remains inherited from the `HandleOpenFuncitonBrowser` local-function row until the closure parents are re-enabled.
+
+### `OnDictionaryUpdated` (378 vs 382)
+
+The preceding calibrated closure parent is `ShouldPromptForFileNameOnSave` (`b__268_0`). The full MethodDef range is listed member by member below; direct methods and accessors are all present by name and order in the partial, so they do not explain the additional +4.
+
+| Mathcad token | Kind | Mathcad member | Quire member |
+|---|---|---|---|
+| `0x06000518` | method | `SaveDocumentAsPdf_ForApiOnly` | `SaveDocumentAsPdf_ForApiOnly` |
+| `0x06000519` | method | `SaveAndPushEngNote` | `SaveAndPushEngNote` |
+| `0x0600051a` | method | `SaveDocument` | `SaveDocument` |
+| `0x0600051b` | method | `HandleSaveDocumentWithInputsOutputsStates` | `HandleSaveDocumentWithInputsOutputsStates` |
+| `0x0600051c` | method | `HandleSaveDocumentWithoutInputsOutputsStates` | `HandleSaveDocumentWithoutInputsOutputsStates` |
+| `0x0600051d` | method | `SaveDocumentWithoutInputsOutputsStates` | `SaveDocumentWithoutInputsOutputsStates` |
+| `0x0600051e` | method | `AskForSaveDefaultFileName` | `AskForSaveDefaultFileName` |
+| `0x0600051f` | method | `GetFileSaveOpenFilters` | `GetFileSaveOpenFilters` |
+| `0x06000520` | method | `GetFileSaveOpenFilters` | `GetFileSaveOpenFilters` |
+| `0x06000521` | method | `GetFilterIdxForExtensionOrDefault` | `GetFilterIdxForExtensionOrDefault` |
+| `0x06000522` | method | `AskForSaveFileName` | `AskForSaveFileName` |
+| `0x06000523` | method | `ReviseFileExtension` | `ReviseFileExtension` |
+| `0x06000524` | method | `ExtractCaseInsensitiveDuplicates` | `ExtractCaseInsensitiveDuplicates` |
+| `0x06000525` | method | `GenerateInputOutputStatesOnSave` | `GenerateInputOutputStatesOnSave` |
+| `0x06000526` | method | `TrySaveFile` | `TrySaveFile` |
+| `0x06000527` | method | `OnCWDChanged` | `OnCWDChanged` |
+| `0x06000528` | method | `OnZoomChanged` | `OnZoomChanged` |
+| `0x06000529` | method | `OnDocumentModified` | `OnDocumentModified` |
+| `0x0600052a` | method | `IsReadonly` | `IsReadonly` |
+| `0x0600052b` | method | `HandleOpenDocument` | `HandleOpenDocument` |
+| `0x0600052c` | method | `HandleNewDocumentFromExisting` | `HandleNewDocumentFromExisting` |
+| `0x0600052d` | method | `HandleClonningAndOpenningWorksheetInNewDocument` | `HandleClonningAndOpenningWorksheetInNewDocument` |
+| `0x0600052e` | method | `GetTemplateFileName` | `GetTemplateFileName` |
+| `0x0600052f` | method | `HandleOpenTemplateDocument` | `HandleOpenTemplateDocument` |
+| `0x06000530` | method | `IsDirectoryOneOfDefaultTemplateLocations` | `IsDirectoryOneOfDefaultTemplateLocations` |
+| `0x06000531` | method | `LaunchOpenFileDialogAndGetFileNameForTemplates` | `LaunchOpenFileDialogAndGetFileNameForTemplates` |
+| `0x06000532` | method | `SetAndDisplayWarning` | `SetAndDisplayWarning` |
+| `0x06000533` | method | `CloneWorksheetAndOpenInDocument` | `CloneWorksheetAndOpenInDocument` |
+| `0x06000534` | method | `LaunchOpenFileDialogAndGetFileName` | `LaunchOpenFileDialogAndGetFileName` |
+| `0x06000535` | method | `OnDrop` | `OnDrop` |
+| `0x06000536` | method | `OpenFile` | `OpenFile` |
+| `0x06000537` | method | `ScrollToTagInDoc` | `ScrollToTagInDoc` |
+| `0x06000538` | method | `TryOpenFileInDocument` | `TryOpenFileInDocument` |
+| `0x06000539` | method | `HandleOpenFileFailure` | `HandleOpenFileFailure` |
+| `0x0600053a` | method | `HandleSaveFileFailure` | `HandleSaveFileFailure` |
+| `0x0600053b` | method | `DisplayCriticalWarningWithLogFile` | `DisplayCriticalWarningWithLogFile` |
+| `0x0600053c` | method | `OpenFileInDocument` | `OpenFileInDocument` |
+| `0x0600053d` | method | `ResetUntitledIndex` | `ResetUntitledIndex` |
+| `0x0600053e` | property accessor | `get_UseDocumentTabs` | `get_UseDocumentTabs` |
+| `0x0600053f` | property accessor | `set_UseDocumentTabs` | `set_UseDocumentTabs` |
+| `0x06000540` | method | `UpdateCurrentShowWarningsFilter` | `UpdateCurrentShowWarningsFilter` |
+| `0x06000541` | property accessor | `get_CurrentShowWarningsFilter` | `get_CurrentShowWarningsFilter` |
+| `0x06000542` | property accessor | `set_CurrentShowWarningsFilter` | `set_CurrentShowWarningsFilter` |
+| `0x06000543` | property accessor | `get_IsShowWarningsEnabled` | `get_IsShowWarningsEnabled` |
+| `0x06000544` | property accessor | `set_IsShowWarningsEnabled` | `set_IsShowWarningsEnabled` |
+| `0x06000545` | property accessor | `get_DisplayWarningsFilter` | `get_DisplayWarningsFilter` |
+| `0x06000546` | property accessor | `set_DisplayWarningsFilter` | `set_DisplayWarningsFilter` |
+| `0x06000547` | method | `NewDocument` | `NewDocument` |
+| `0x06000548` | method | `CanGetDefaultBuiltInTemplateIfPossible` | `CanGetDefaultBuiltInTemplateIfPossible` |
+| `0x06000549` | method | `CanGetDefaultBuildInTemplateFromDefaultLocationIfPossible` | `CanGetDefaultBuildInTemplateFromDefaultLocationIfPossible` |
+| `0x0600054a` | method | `DoesTemplateFileExists` | `DoesTemplateFileExists` |
+| `0x0600054b` | method | `CanUseTemplateForNewDocument` | `CanUseTemplateForNewDocument` |
+| `0x0600054c` | method | `ChooseDefaultTemplateIfAnyForNewDocument` | `ChooseDefaultTemplateIfAnyForNewDocument` |
+| `0x0600054d` | method | `NewDocument` | `NewDocument` |
+| `0x0600054e` | method | `ReplaceActiveTabWithDocument` | `ReplaceActiveTabWithDocument` |
+| `0x0600054f` | method | `ActiveTabChanged` | `ActiveTabChanged` |
+| `0x06000550` | method | `GetIndexOfTabForDocument` | `GetIndexOfTabForDocument` |
+| `0x06000551` | method | `GetTabForDocument` | `GetTabForDocument` |
+| `0x06000552` | method | `GetDocumentForTab` | `GetDocumentForTab` |
+| `0x06000553` | method | `GetApplicationFullWindowTitle` | `GetApplicationFullWindowTitle` |
+| `0x06000554` | method | `CreateNewTabWithDocument` | `CreateNewTabWithDocument` |
+| `0x06000555` | method | `LaunchCustomMarginsDialog` | `LaunchCustomMarginsDialog` |
+| `0x06000556` | method | `LaunchSystemUnitDialog` | `LaunchSystemUnitDialog` |
+| `0x06000557` | method | `HandleWorksheetControlDebuggerModeChange` | `HandleWorksheetControlDebuggerModeChange` |
+| `0x06000558` | method | `SetTabHeaderBindingForNewDocument` | `SetTabHeaderBindingForNewDocument` |
+| `0x06000559` | method | `GetUntitledHeader` | `GetUntitledHeader` |
+| `0x0600055a` | method | `InitializeDocument` | `InitializeDocument` |
+| `0x0600055b` | method | `OnDocumentLoaded` | `OnDocumentLoaded` |
+| `0x0600055c` | method | `HandleDocumentPropertyChanged` | `HandleDocumentPropertyChanged` |
+| `0x0600055d` | method | `HandleDocumentInputsOutputsSelected` | `HandleDocumentInputsOutputsSelected` |
+| `0x0600055e` | method | `OnDocumentTabIconChanged` | `OnDocumentTabIconChanged` |
+| `0x0600055f` | method | `UnhookFromDocument` | `UnhookFromDocument` |
+| `0x06000560` | method | `OnDocumentFilePathChanged` | `OnDocumentFilePathChanged` |
+| `0x06000561` | method | `ExitApplication` | `ExitApplication` |
+| `0x06000562` | method | `DisplayAboutDialog` | `DisplayAboutDialog` |
+| `0x06000563` | method | `DisplayOptionsDialog` | `DisplayOptionsDialog` |
+| `0x06000564` | method | `UpdateTemplateLocationsIfNeeded` | `UpdateTemplateLocationsIfNeeded` |
+| `0x06000565` | method | `DisplayHyperlink` | `DisplayHyperlink` |
+| `0x06000566` | method | `OpenUrl` | `OpenUrl` |
+| `0x06000567` | method | `ShowFailedToOpenUrlMessage` | `ShowFailedToOpenUrlMessage` |
+| `0x06000568` | method | `DisplayFreemiumAboutBox` | `DisplayFreemiumAboutBox` |
+| `0x06000569` | method | `AskCancelPrintInProgressDialog` | `AskCancelPrintInProgressDialog` |
+| `0x0600056a` | method | `HandleToggleMultithreadingCalculationOption` | `HandleToggleMultithreadingCalculationOption` |
+| `0x0600056b` | method | `UpdateWarningsDisplayFilterHandler` | `UpdateWarningsDisplayFilterHandler` |
+| `0x0600056c` | method | `ToggleShowWarningsHandler` | `ToggleShowWarningsHandler` |
+| `0x0600056d` | method | `OnCreateAutomationPeer` | `OnCreateAutomationPeer` |
+| `0x0600056e` | method | `OnClosing` | `OnClosing` |
+| `0x0600056f` | method | `SaveWindowState` | `SaveWindowState` |
+| `0x06000570` | method | `AskToSaveDocument` | `AskToSaveDocument` |
+| `0x06000571` | property accessor | `get_FindProperties` | `get_FindProperties` |
+| `0x06000572` | method | `HandleFindNext` | `HandleFindNext` |
+| `0x06000573` | method | `HandleFindNext` | `HandleFindNext` |
+| `0x06000574` | method | `HandleFindPrev` | `HandleFindPrev` |
+| `0x06000575` | method | `FindIsNotAllowedInFreemiumMode` | `FindIsNotAllowedInFreemiumMode` |
+| `0x06000576` | method | `CanFind` | `CanFind` |
+| `0x06000577` | method | `HandleReplaceAndFindNext` | `HandleReplaceAndFindNext` |
+| `0x06000578` | method | `ReplaceIsNotAllowedInFreemiumMode` | `ReplaceIsNotAllowedInFreemiumMode` |
+| `0x06000579` | method | `CanReplaceAndFindNext` | `CanReplaceAndFindNext` |
+| `0x0600057a` | method | `Find` | `Find` |
+| `0x0600057b` | method | `HandleGoToFind` | `HandleGoToFind` |
+| `0x0600057c` | method | `HandleGoToPage` | `HandleGoToPage` |
+| `0x0600057d` | method | `OnDictionaryUpdated` | `OnDictionaryUpdated` |
+
+| Candidate member kind | Mathcad member | Quire declaration | Weight |
+|---|---|---|---:|
+| auto-property backing field | `<IsFeLinesInstance>k__BackingField` | explicit placeholder accessors; no backing field | +1 field |
+| auto-property backing field | `<OpenFileExceptionHandler>k__BackingField` | explicit placeholder accessors; no backing field | +1 field |
+| auto-property backing field | `<SaveFileExceptionHandler>k__BackingField` | explicit placeholder accessors; no backing field | +1 field |
+| field | `_mainDockWindowGroup` | no field; `MainDockWindowGroup` is an interface-typed placeholder property | +1 field |
+
+These four field rows sum to +4, but three are declared before `HandleLaunchConverter`; their placement does not fit the failing interval by itself. The remaining ordinal attribution is unresolved until the candidate member-order inventory is compared with the compiled Release type.
+
+### `BindCommands` cached delegate field and lambdas
+
+| Mathcad order | Member | Source of cached field or lambda | Quire finding |
+|---:|---|---|---|
+| 0 | `<>O::<0>__SpiritOptionPropertyChanged` | constructor method-group conversion | constructor is still a generated placeholder |
+| 1 | `<>O::<1>__OnRibbonControlBeforeAddToQat` | constructor method-group conversion | constructor is still a generated placeholder |
+| 2 | `<>O::<2>__HandleShowPropertyGrid` | `BindCommands` method-group conversion | prior implemented candidate emitted cached field `<0>`; current method is a placeholder |
+| 0–4 | `<BindCommands>b__220_0` through `b__220_4` | five instance lambdas in prior candidate's `BindCommands` source order | matched Mathcad order; these do not create the static `<>O` cache fields |

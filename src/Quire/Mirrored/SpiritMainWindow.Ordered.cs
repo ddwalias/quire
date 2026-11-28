@@ -1396,7 +1396,25 @@ public partial class SpiritMainWindow
         _helpManager.EngNbLocalHelpEnvironmentVariableName = global::Quire.Controls.Help.EngNoteContextData.HelpEnvVarName;
 
     }
-    private void HandleOpenFuncitonBrowser(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    [global::Quire.Mirror.MirrorStub]
+    private void HandleOpenFuncitonBrowser(object sender, global::System.Windows.Input.ExecutedRoutedEventArgs e)
+    {
+        SetDockControlSizeBeforeDocking(null, null);
+
+        static void SetDockControlSizeBeforeDocking(
+            object _,
+            global::Quire.DevComponents.WpfDock.BeforeDockedRoutedEventArgs args)
+        {
+            if (args?.DockControl is global::Quire.DevComponents.WpfDock.DockWindowGroup element)
+            {
+                global::Quire.DevComponents.WpfDock.DockSite.SetDockSize(element, 260.0);
+            }
+            else
+            {
+                global::Quire.DebugTools.FailAssertion(args?.DockControl?.GetType().Name ?? "");
+            }
+        }
+    }
     [global::System.Runtime.InteropServices.DllImport("user32.dll")]
 
     private static extern bool SetForegroundWindow(nint hWnd);
