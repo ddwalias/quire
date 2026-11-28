@@ -384,7 +384,7 @@ static void CompileMplModule(string sourcePath, string outputPath, string instal
 
     var signatures = ParseMplSignatures(interfaceText);
     MplCompilerContext.ImportedTypes = Regex.Matches(interfaceText,
-            """@ "\[([^]]+)\]([A-Za-z_][A-Za-z0-9_.]*)::""")
+            """@ "(?:virtual)?\[([^]]+)\]([A-Za-z_][A-Za-z0-9_.]*)::""")
         .Select(match => (TypeName: match.Groups[2].Value, AssemblyName: match.Groups[1].Value))
         .Distinct().ToDictionary(pair => pair.TypeName, pair => pair.AssemblyName, StringComparer.Ordinal);
     var functions = new List<(string Name, string[] Args, string Body)>();
@@ -447,6 +447,10 @@ static void CompileMplModule(string sourcePath, string outputPath, string instal
         var signature = signatures[function.Name];
         var method = values.DefineMethod(function.Name, MethodAttributes.Public | MethodAttributes.Static,
             signature[^1], signature[..^1]);
+        MplCompilerContext.SourceTypeHints = function.Args.Select((name, index) =>
+                (name, Type: MapMplExpressionHint(
+                    SplitMplArrowType(GetMplSignatureText(interfaceText, function.Name))[index], install)))
+            .ToDictionary(pair => pair.name, pair => pair.Type, StringComparer.Ordinal);
         var il = method.GetILGenerator();
         EmitReturningExpression(MplExpressionParser.Parse(function.Body), il,
             new Dictionary<string, System.Reflection.Emit.Quire.Mpl.LocalBuilder>(StringComparer.Ordinal),
@@ -461,6 +465,32 @@ static void CompileMplModule(string sourcePath, string outputPath, string instal
     Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
     assembly.Save(outputPath);
 }
+
+static string GetMplSignatureText(string interfaceText, string name)
+{
+    foreach (var line in interfaceText.Split('\n'))
+    {
+        var trimmed = line.Trim();
+        if (!trimmed.StartsWith(name + " :: ", StringComparison.Ordinal)) continue;
+        var signature = trimmed[(name.Length + 4)..];
+        var foreign = signature.IndexOf(" @ ", StringComparison.Ordinal);
+        if (foreign >= 0) signature = signature[..foreign];
+        return signature.TrimEnd(';').Trim();
+    }
+    throw new InvalidDataException($"No ModuleInterface signature for {name}.");
+}
+
+static Type MapMplExpressionHint(string sourceType, string install)
+{
+    if (sourceType.Contains("McdRun.Dyn", StringComparison.Ordinal))
+        return ResolveImportedType("Mcd.DimVal", install);
+    if (sourceType.Contains("Mpl.Matrix", StringComparison.Ordinal))
+        return ResolveImportedType("Mcd.MatVal", install);
+    return MapPrimitiveMplType(sourceType);
+}
+
+static Type ResolveImportedType(string typeName, string install) => ResolveImportedTypes(typeName, install)
+    .Distinct().SingleOrDefault() ?? throw new TypeLoadException($"Imported type {typeName} did not match an @-mapped import.");
 
 static Dictionary<string, Type[]> ParseMplSignatures(string interfaceText)
 {
@@ -934,6 +964,9 @@ static void EmitReturningExpression(MplExpr expression,
             }
             return;
         }
+        case MplFoldVector fold:
+            EmitFoldVectorAndReturn(fold, il, locals, arguments, methods, typeAliases, install);
+            return;
         case MplSequence sequence:
             foreach (var item in sequence.Expressions.Take(sequence.Expressions.Count - 1))
                 EmitStatement(item, il, locals, arguments, methods, typeAliases, install);
@@ -1012,6 +1045,65 @@ static void EmitReturningExpression(MplExpr expression,
             EmitTailValue(expression, il, locals, arguments, methods, typeAliases, install, methodName);
             return;
     }
+}
+
+static void EmitFoldVectorAndReturn(MplFoldVector fold,
+    System.Reflection.Emit.Quire.Mpl.ILGenerator il,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.LocalBuilder> locals, string[] arguments,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.MethodBuilder> methods,
+    IReadOnlyDictionary<string, Type> typeAliases, string install)
+{
+    var asFunction = ResolveImportedMethod("DimVal", "asFunctionN", 3, install);
+    EmitValue(fold.Function, il, locals, arguments, methods, typeAliases, install);
+    il.Emit(OpCodes.Ldc_I4_2);
+    il.Emit(OpCodes.Ldc_I4_1);
+    il.Emit(asFunction.IsVirtual ? OpCodes.Callvirt : OpCodes.Call, asFunction);
+    var function = il.DeclareLocal(typeof(object));
+    il.Emit(OpCodes.Stloc, function);
+
+    var getSize = ResolveImportedMethod("DimVal", "get_Isize", 1, install);
+    EmitValue(fold.Vector, il, locals, arguments, methods, typeAliases, install);
+    il.Emit(getSize.IsVirtual ? OpCodes.Callvirt : OpCodes.Call, getSize);
+    var size = il.DeclareLocal(typeof(int));
+    il.Emit(OpCodes.Stloc, size);
+    var accumulator = il.DeclareLocal(typeof(object));
+    var index = il.DeclareLocal(typeof(int));
+    var currentFunction = il.DeclareLocal(typeof(object));
+
+    var loop = il.DefineLabel();
+    var end = il.DefineLabel();
+    var initialize = il.DefineLabel();
+    il.Emit(OpCodes.Br, initialize);
+    il.MarkLabel(loop);
+    il.Emit(OpCodes.Ldloc, index);
+    il.Emit(OpCodes.Ldloc, size);
+    il.Emit(OpCodes.Clt);
+    il.Emit(OpCodes.Brfalse, end);
+    il.Emit(OpCodes.Ldloc, function);
+    il.Emit(OpCodes.Stloc, currentFunction);
+    il.Emit(OpCodes.Ldloc, currentFunction);
+    il.Emit(OpCodes.Ldloc, accumulator);
+    EmitValue(fold.Vector, il, locals, arguments, methods, typeAliases, install);
+    il.Emit(OpCodes.Ldloc, index);
+    var iteratorGet = ResolveImportedMethod("DimVal", "iterator_get", 2, install);
+    il.Emit(iteratorGet.IsVirtual ? OpCodes.Callvirt : OpCodes.Call, iteratorGet);
+    var call = ResolveImportedMethod("Mpl.Run.Function", "Call_2", 3, install);
+    il.Emit(OpCodes.Callvirt, call);
+    il.Emit(OpCodes.Ldloc, index);
+    il.Emit(OpCodes.Ldc_I4_1);
+    il.Emit(OpCodes.Add);
+    il.Emit(OpCodes.Stloc, index);
+    il.Emit(OpCodes.Stloc, accumulator);
+    il.Emit(OpCodes.Br, loop);
+    il.MarkLabel(end);
+    il.Emit(OpCodes.Ldloc, accumulator);
+    il.Emit(OpCodes.Ret);
+    il.MarkLabel(initialize);
+    EmitValue(fold.Seed, il, locals, arguments, methods, typeAliases, install);
+    il.Emit(OpCodes.Ldc_I4_0);
+    il.Emit(OpCodes.Stloc, index);
+    il.Emit(OpCodes.Stloc, accumulator);
+    il.Emit(OpCodes.Br, loop);
 }
 
 static void EmitForList(MplForList loop,
@@ -1175,9 +1267,9 @@ static void EmitCall(MplCall call,
         il.Emit(OpCodes.Call, method);
         return;
     }
-    foreach (var argument in call.Arguments) EmitValue(argument, il, locals, arguments, methods, typeAliases, install);
     if (function.Name == "Just")
     {
+        foreach (var argument in call.Arguments) EmitValue(argument, il, locals, arguments, methods, typeAliases, install);
         var prelude = Assembly.LoadFrom(Path.Combine(install, "MplPrelude.dll"));
         var justCtor = prelude.GetType("MplPrelude.Just", throwOnError: true)!
             .GetConstructor([typeof(object)]) ?? throw new MissingMethodException("MplPrelude.Just..ctor(object)");
@@ -1186,12 +1278,14 @@ static void EmitCall(MplCall call,
     }
     if (methods.TryGetValue(function.Name, out var localMethod))
     {
+        foreach (var argument in call.Arguments) EmitValue(argument, il, locals, arguments, methods, typeAliases, install);
         if (tail) il.Emit(OpCodes.Tailcall);
         il.Emit(OpCodes.Call, localMethod);
         return;
     }
     if (function.Name == "length")
     {
+        foreach (var argument in call.Arguments) EmitValue(argument, il, locals, arguments, methods, typeAliases, install);
         var prelude = Assembly.LoadFrom(Path.Combine(install, "MplPrelude.dll"));
         var values = prelude.GetType("MplPrelude.values", throwOnError: true)!;
         var length = values.GetMethod("length", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static,
@@ -1205,6 +1299,7 @@ static void EmitCall(MplCall call,
     }
     if (function.Name == "AppException.Raise")
     {
+        foreach (var argument in call.Arguments) EmitValue(argument, il, locals, arguments, methods, typeAliases, install);
         var runtime = Assembly.LoadFrom(Path.Combine(install, "mplrun.dll"));
         var appException = runtime.GetType("Mpl.Run.AppException", throwOnError: true)!;
         var raise = appException.GetMethod("Raise", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static,
@@ -1220,7 +1315,8 @@ static void EmitCall(MplCall call,
         var memberName = function.Name[(dot + 1)..];
         MethodInfo external;
         if (!File.Exists(Path.Combine(install, assemblyName + ".dll")))
-            external = ResolveImportedMethod(assemblyName, memberName, call.Arguments.Count, install);
+            external = ResolveImportedMethod(assemblyName, memberName, call.Arguments.Count, install,
+                call.Arguments.Select(argument => InferCallArgumentType(argument, locals, typeAliases, install)).ToArray());
         else
         {
             var assembly = Assembly.LoadFrom(Path.Combine(install, assemblyName + ".dll"));
@@ -1231,11 +1327,40 @@ static void EmitCall(MplCall call,
                     && candidate.GetParameters().Select(parameter => parameter.ParameterType)
                         .SequenceEqual(call.Arguments.Select(argument => ExpressionType(argument, locals, typeAliases))));
         }
+        EmitImportedArguments(external, call.Arguments, il, locals, arguments, methods, typeAliases, install);
         if (tail) il.Emit(OpCodes.Tailcall);
-        il.Emit(OpCodes.Call, external);
+        il.Emit(external.IsStatic || !external.IsVirtual ? OpCodes.Call : OpCodes.Callvirt, external);
         return;
     }
+    foreach (var argument in call.Arguments) EmitValue(argument, il, locals, arguments, methods, typeAliases, install);
     throw new NotSupportedException($"Call target {function.Name} has not been lowered.");
+}
+
+static void EmitImportedArguments(MethodInfo method, IReadOnlyList<MplExpr> callArguments,
+    System.Reflection.Emit.Quire.Mpl.ILGenerator il,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.LocalBuilder> locals, string[] arguments,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.MethodBuilder> methods,
+    IReadOnlyDictionary<string, Type> typeAliases, string install)
+{
+    var offset = method.IsStatic ? 0 : 1;
+    if (callArguments.Count != method.GetParameters().Length + offset)
+        throw new InvalidDataException($"{method.DeclaringType?.FullName}.{method.Name} expects "
+            + $"{method.GetParameters().Length + offset} source arguments, received {callArguments.Count}.");
+    foreach (var argument in callArguments) EmitValue(argument, il, locals, arguments, methods, typeAliases, install);
+}
+
+static Type InferCallArgumentType(MplExpr expression,
+    Dictionary<string, System.Reflection.Emit.Quire.Mpl.LocalBuilder> locals,
+    IReadOnlyDictionary<string, Type> typeAliases, string install)
+{
+    if (expression is MplCall { Function: MplVariable function } call && function.Name.Contains('.', StringComparison.Ordinal))
+    {
+        var dot = function.Name.LastIndexOf('.');
+        var method = ResolveImportedMethod(function.Name[..dot], function.Name[(dot + 1)..], call.Arguments.Count,
+            install, call.Arguments.Select(argument => InferCallArgumentType(argument, locals, typeAliases, install)).ToArray());
+        return method.ReturnType;
+    }
+    return ExpressionType(expression, locals, typeAliases);
 }
 
 static void BoxValueIfNeeded(MplExpr expression,
@@ -1247,28 +1372,66 @@ static void BoxValueIfNeeded(MplExpr expression,
     if (type.IsValueType) il.Emit(OpCodes.Box, type);
 }
 
-static MethodInfo ResolveImportedMethod(string typeName, string methodName, int parameterCount, string install)
+static MethodInfo ResolveImportedMethod(string typeName, string methodName, int parameterCount, string install,
+    IReadOnlyList<Type>? argumentTypes = null)
 {
-    var fullTypeNames = typeName.Contains('.', StringComparison.Ordinal)
-        ? [typeName]
-        : MplCompilerContext.ImportedTypes.Keys
-            .Where(fullName => fullName.EndsWith("." + typeName, StringComparison.Ordinal)).ToArray();
+    var types = ResolveImportedTypes(typeName, install);
     var methods = new List<MethodInfo>();
-    foreach (var fullTypeName in fullTypeNames)
-    {
-        if (!MplCompilerContext.ImportedTypes.TryGetValue(fullTypeName, out var assemblyName)) continue;
-        var assembly = Assembly.LoadFrom(Path.Combine(install, assemblyName + ".dll"));
-        var type = assembly.GetType(fullTypeName, throwOnError: true)!;
-        methods.AddRange(type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+    foreach (var type in types)
+        methods.AddRange(type.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.Instance)
             .Where(candidate => candidate.Name == methodName
-                && candidate.GetParameters().Length == parameterCount));
+                && candidate.GetParameters().Length + (candidate.IsStatic ? 0 : 1) == parameterCount));
+    if (argumentTypes is not null && methods.Count > 1)
+    {
+        var scored = methods.Select(method => (Method: method, Score: CallArgumentsScore(method, argumentTypes)))
+            .Where(candidate => candidate.Score >= 0).ToArray();
+        var maxScore = scored.Select(candidate => candidate.Score).DefaultIfEmpty(-1).Max();
+        methods = scored.Where(candidate => candidate.Score == maxScore).Select(candidate => candidate.Method).ToList();
     }
-    return methods.Count switch
+    var result = methods.Count switch
     {
         1 => methods[0],
         0 => throw new MissingMethodException($"Imported method {typeName}.{methodName}/{parameterCount} did not match an @-mapped import."),
         _ => throw new AmbiguousMatchException($"Imported method {typeName}.{methodName}/{parameterCount} matched {methods.Count} methods."),
     };
+    return result.IsGenericMethodDefinition
+        ? result.MakeGenericMethod(Enumerable.Repeat(typeof(object), result.GetGenericArguments().Length).ToArray())
+        : result;
+}
+
+static int CallArgumentsScore(MethodInfo method, IReadOnlyList<Type> argumentTypes)
+{
+    if (argumentTypes.Count != method.GetParameters().Length + (method.IsStatic ? 0 : 1)) return -1;
+    var score = 0;
+    var offset = method.IsStatic ? 0 : 1;
+    for (var index = 0; index < argumentTypes.Count; index++)
+    {
+        var expected = index == 0 && !method.IsStatic ? method.DeclaringType! : method.GetParameters()[index - offset].ParameterType;
+        var actual = argumentTypes[index];
+        if (actual == expected) { score += 4; continue; }
+        if (expected == typeof(object)) continue;
+        if (expected.IsAssignableFrom(actual)) { score += 2; continue; }
+        if (actual == typeof(object) && !expected.IsValueType) continue;
+        return -1;
+    }
+    return score;
+}
+
+static Type[] ResolveImportedTypes(string typeName, string install)
+{
+    var known = MplCompilerContext.ImportedTypes.ToArray();
+    var fullTypeNames = typeName.Contains('.', StringComparison.Ordinal)
+        ? known.Select(pair => (FullName: typeName, pair.Value)).Distinct().ToArray()
+        : known.Select(pair => (FullName: pair.Key[..(pair.Key.LastIndexOf('.') + 1)] + typeName, pair.Value))
+            .Distinct().ToArray();
+    var types = new List<Type>();
+    foreach (var (fullName, assemblyName) in fullTypeNames)
+    {
+        var assembly = Assembly.LoadFrom(Path.Combine(install, assemblyName + ".dll"));
+        var type = assembly.GetType(fullName, throwOnError: false);
+        if (type is not null) types.Add(type);
+    }
+    return types.Distinct().ToArray();
 }
 
 static void EmitNullBoolean(string name,
@@ -1420,6 +1583,7 @@ static Type ExpressionType(MplExpr expression,
     {
         MplVariable variable when locals.TryGetValue(variable.Name, out var local) => local.LocalType,
         MplVariable variable when typeAliases.TryGetValue(variable.Name, out var type) => type,
+        MplVariable variable when MplCompilerContext.SourceTypeHints.TryGetValue(variable.Name, out var hint) => hint,
         MplInteger => typeof(int),
         MplReal => typeof(double),
         MplString => typeof(string),
@@ -1495,6 +1659,7 @@ internal sealed record MplForList(string ElementName, MplExpr Collection, string
 internal sealed record MplCaseZero(MplExpr Value, MplExpr WhenZero, MplExpr WhenOther) : MplExpr;
 internal sealed record MplCaseNull(MplExpr Value, MplExpr WhenNull, MplExpr WhenOther) : MplExpr;
 internal sealed record MplCaseNonNull(MplExpr Value, string BoundName, MplExpr WhenNonNull, MplExpr WhenNull) : MplExpr;
+internal sealed record MplFoldVector(MplExpr Function, MplExpr Seed, MplExpr Vector) : MplExpr;
 
 internal static class MplExpressionParser
 {
@@ -1518,6 +1683,8 @@ internal static class MplExpressionParser
 
         private MplExpr ParseExpression()
         {
+            if (Take("foldr"))
+                return new MplFoldVector(ParseAtom(), ParseAtom(), ParseAtom());
             if (Take("tail")) return new MplTail(ParseExpression());
             if (Take("case"))
             {
@@ -1724,6 +1891,8 @@ internal static class MplCompilerContext
     public static Dictionary<string, System.Reflection.Emit.Quire.Mpl.FieldBuilder> Fields { get; } = new(StringComparer.Ordinal);
     public static IReadOnlyDictionary<string, string> ImportedTypes { get; set; } =
         new Dictionary<string, string>(StringComparer.Ordinal);
+    public static IReadOnlyDictionary<string, Type> SourceTypeHints { get; set; } =
+        new Dictionary<string, Type>(StringComparer.Ordinal);
 }
 
 internal static class MplSubsetParser
