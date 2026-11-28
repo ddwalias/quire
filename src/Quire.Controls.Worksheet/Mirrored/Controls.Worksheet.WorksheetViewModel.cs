@@ -1837,14 +1837,9 @@ public void HandleEnter()
         IWhiteboardItem firstItem;
         double left;
         double bottom;
-        Point itemLocation;
-        Size itemSize;
         firstItem = ActiveOrSelectedItems.First();
-        itemLocation = GetWorksheetSectionItemLocation(firstItem);
-        left = itemLocation.X;
-        itemSize = ItemManager.GetRenderSize(firstItem);
-        // Release IL keeps the size height on the stack while storing the second point in local 3.
-        bottom = itemSize.Height + (itemLocation = GetWorksheetSectionItemLocation(firstItem)).Y + firstItem.VerticalAlignmentOffset;
+        left = GetWorksheetSectionItemLocation(firstItem).X;
+        bottom = ItemManager.GetRenderSize(firstItem).Height + GetWorksheetSectionItemLocation(firstItem).Y + firstItem.VerticalAlignmentOffset;
         foreach (IWhiteboardItem selectedItem in ActiveOrSelectedItems)
         {
             Point selectedItemLocation = GetWorksheetSectionItemLocation(selectedItem);
