@@ -159,19 +159,9 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.MathNode this[int index] { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
         [global::Quire.Mirror.MirrorStub]
-        public a_(global::Quire.EquationEditor.Tree.MathNode A_0, params global::Quire.EquationEditor.Tree.MathNode[] A_1) { }
-        [global::Quire.Mirror.MirrorStub]
-        internal void a(global::Quire.EquationEditor.Tree.MathNode A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public void InsertRange(int index, global::Quire.EquationEditor.Tree.MathNode[] newNodes) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        public void RemoveRange(int index, int count) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
         global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.Tree.MathNode> global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.MathNode>.GetEnumerator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
         [global::Quire.Mirror.MirrorStub]
         internal void a(global::Quire.EquationEditor.Tree.MathNode A_0, int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void a(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
         [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.MathNode+a+a, Ptc.EquationEditor")]
         private sealed partial class a__
@@ -298,10 +288,6 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
         public global::Quire.EquationEditor.Tree.MathNode b_;
         [global::Quire.Mirror.MirrorStub]
         public global::Quire.EquationEditor.Tree.MathNode c;
-        [global::Quire.Mirror.MirrorStub]
-        internal bool b() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        internal void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.MathNode+g, Ptc.EquationEditor")]

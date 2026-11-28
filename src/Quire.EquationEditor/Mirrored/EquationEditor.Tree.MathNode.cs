@@ -6,6 +6,7 @@ using Quire.Core;
 using Quire.EquationEditor.Tree.Parsing;
 using Quire.EquationEditor.Tree.Transform;
 using Quire.Mirror;
+using Quire.Undo;
 
 namespace Quire.EquationEditor.Tree;
 
@@ -183,6 +184,25 @@ public partial class MathNode
 
     public int NodeInfoValueLength => NodeInfoExtensions.ValueLength(NodeInfo, ValueType);
 
+    private void a(MathNode parent)
+    {
+        f_ command = new f_
+        {
+            a_ = this,
+            b_ = parent,
+            c = a__
+        };
+        DelegateFunction0<bool> apply = new DelegateFunction0<bool>(command.b);
+        Delegate0 undo = new Delegate0(command.a);
+        if (CommandScope.CanUndoTreeOperations)
+        {
+            CommandBuffer.Execute("Set node parent", apply, undo);
+        }
+        else
+        {
+            apply();
+        }
+    }
     public int RLID
     {
         get => i__;
@@ -1203,5 +1223,86 @@ public partial class MathNode
         public MathNode[] ToArray() => a___.ToArray();
 
         public System.Collections.IEnumerator GetEnumerator() => a___.GetEnumerator();
+    }
+}
+
+public partial class MathNode
+{
+    private sealed partial class a_
+    {
+        public a_(MathNode parent, params MathNode[] children)
+        {
+            b = parent;
+            a___ = new List<MathNode>(new MathNode[children.Length]);
+            for (int index = 0; index < children.Length; index++)
+            {
+                a(children[index], index);
+            }
+        }
+
+        internal void a(MathNode parent)
+        {
+            b = parent;
+            foreach (MathNode child in a___)
+            {
+                if (child != null)
+                {
+                    child.a(b);
+                }
+            }
+        }
+
+        public void InsertRange(int index, MathNode[] newNodes)
+        {
+            if (index >= a___.Count)
+            {
+                a___.AddRange(new MathNode[index - a___.Count + newNodes.Length]);
+            }
+            else
+            {
+                a___.InsertRange(index, new MathNode[newNodes.Length]);
+            }
+            for (int itemIndex = 0; itemIndex < newNodes.Length; itemIndex++)
+            {
+                a(newNodes[itemIndex], index + itemIndex);
+            }
+        }
+
+        public void RemoveRange(int index, int count)
+        {
+            for (int itemIndex = index; itemIndex < index + count; itemIndex++)
+            {
+                a(null, itemIndex);
+            }
+            a___.RemoveRange(index, count);
+        }
+
+        [System.Runtime.CompilerServices.SkipLocalsInit]
+        private void a(int index)
+        {
+            if (b == null || b.Descriptor == null || !b.IsNary)
+            {
+                return;
+            }
+            if (index < a___.Count)
+            {
+                return;
+            }
+            a___.AddRange(new MathNode[index - a___.Count + 1]);
+        }
+    }
+}
+
+public partial class MathNode
+{
+    private sealed partial class f_
+    {
+        internal bool b()
+        {
+            a_.a__ = b_;
+            return true;
+        }
+
+        internal void a() => a_.a__ = c;
     }
 }
