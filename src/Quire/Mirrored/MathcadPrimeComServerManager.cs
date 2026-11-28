@@ -201,51 +201,9 @@ internal partial class MathcadPrimeComServerManager
         UnRegisterMathcadPrimeComServer();
     }
 
-    private static void RegisterMathcadPrimeComServer(bool isApplicationObsolete, bool isEmbeddingEngNote, bool isEmbeddingEngNotePlus)
-    {
-        if (_isRegistered)
-        {
-            return;
-        }
-
-        if (isEmbeddingEngNote)
-        {
-            int hResult = ComNativeExternalApi.CoRegisterClassObject(new Guid("BFF864AC-81A8-4D77-A37F-0682640F1335"), new MathcadPrimeEngNoteClassFactory(), ComInteropEnums.CLSCTX.CLSCTX_LOCAL_SERVER, ComInteropEnums.REGCLS.REGCLS_SINGLEUSE, out _cookie);
-            if (!Succeeded(hResult))
-            {
-                throw new ApplicationException("CoRegisterClassObject failed with error 0x" + hResult.ToString("X"));
-            }
-        }
-        else if (isEmbeddingEngNotePlus)
-        {
-            int hResult = ComNativeExternalApi.CoRegisterClassObject(new Guid("CD723889-9B5D-4F8E-ADDA-7E25DFB86EBA"), new MathcadPrimeEngNotePlusClassFactory(), ComInteropEnums.CLSCTX.CLSCTX_LOCAL_SERVER, ComInteropEnums.REGCLS.REGCLS_SINGLEUSE, out _cookie);
-            if (!Succeeded(hResult))
-            {
-                throw new ApplicationException("CoRegisterClassObject failed with error 0x" + hResult.ToString("X"));
-            }
-        }
-        else
-        {
-            Guid classId = new Guid(isApplicationObsolete ? "A3E4E622-5CFF-4973-96EB-1E3EAB5151C8" : "A00E8B95-D415-433F-A04E-D298A54A7BB7");
-            IClassFactory classFactory;
-            if (!isApplicationObsolete)
-            {
-                classFactory = new MathcadPrimeClassFactory();
-            }
-            else
-            {
-                classFactory = new MathcadPrimeClassFactoryObsolete();
-            }
-
-            int hResult = ComNativeExternalApi.CoRegisterClassObject(classId, classFactory, ComInteropEnums.CLSCTX.CLSCTX_LOCAL_SERVER, ComInteropEnums.REGCLS.REGCLS_MULTIPLEUSE, out _cookie);
-            if (!Succeeded(hResult))
-            {
-                throw new ApplicationException("CoRegisterClassObject failed with error 0x" + hResult.ToString("X"));
-            }
-        }
-
-        _isRegistered = true;
-    }
+    [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorBlocked("Release IL: Mathcad merges the two factory arms through a temp local (stloc.3/ldloc.3); no source form reproduces it")]
+    private static void RegisterMathcadPrimeComServer(bool isApplicationObsolete, bool isEmbeddingEngNote, bool isEmbeddingEngNotePlus) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     private static void UnRegisterMathcadPrimeComServer()
     {

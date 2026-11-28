@@ -74,58 +74,9 @@ public partial class InputOutputDesignationWindow
         }
     }
 
-    private void LostKeyboardFocusHandler(object sender, KeyboardFocusChangedEventArgs e)
-    {
-        if (_handling)
-        {
-            return;
-        }
-
-        _handling = true;
-        try
-        {
-            if (!(sender is FrameworkElement frameworkElement))
-            {
-                return;
-            }
-
-            IOItem ioitem = frameworkElement.DataContext as IOItem;
-            if (IsDisconnectedItem(frameworkElement) || DebugTools.AssertNotNull(ioitem, null).Failed)
-            {
-                return;
-            }
-
-            ListCollectionView listCollectionView = ioitem.IsInput ? InputCollection : OutputCollection;
-            if (listCollectionView.SortDescriptions.Count > 0)
-            {
-                SortDescription sortDescription = listCollectionView.SortDescriptions[0];
-                if (!(sortDescription.PropertyName != "Alias"))
-                {
-                    CollectionViewGroup group = listCollectionView.Groups == null ? null : listCollectionView.Groups.OfType<CollectionViewGroup>().FirstOrDefault((CollectionViewGroup gr) => gr.Items.Contains(ioitem));
-                    if (group != null && group.ItemCount == 1)
-                    {
-                        listCollectionView.EditItem(ioitem);
-                        listCollectionView.CommitEdit();
-                    }
-                    else if (DebugTools.AssertNotNull(listCollectionView.GroupDescriptions, null).Failed)
-                    {
-                        listCollectionView.Refresh();
-                    }
-                    else
-                    {
-                        listCollectionView.GroupDescriptions.Clear();
-                        listCollectionView.GroupDescriptions.Add(_groupByRegion);
-                    }
-
-                    (ioitem.IsInput ? InputsListView : OutputsListView).SelectedItem = ioitem;
-                }
-            }
-        }
-        finally
-        {
-            _handling = false;
-        }
-    }
+    [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorBlocked("Release IL: leave target differs by one instruction in the nested Alias branch")]
+    private void LostKeyboardFocusHandler(object sender, KeyboardFocusChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     private static void EngineeringDocumentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {

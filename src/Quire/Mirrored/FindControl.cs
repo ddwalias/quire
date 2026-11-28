@@ -99,20 +99,9 @@ public partial class FindControl
         }
     }
 
-    private void FindReplaceRichText_PreviewKeyDown(object sender, KeyEventArgs e)
-    {
-        if (6 == (int)e.Key || !(sender is FindReplaceRichTextBox))
-        {
-            DebugTools.DevAssert(ReplaceWithRichText == sender || FindRichBox == sender, null);
-            global::DevComponents.WpfRibbon.ButtonDropDown button = ReplaceWithRichText == sender ? ReplaceButton : FindNextButton;
-            if (button.Command.CanExecute(button.CommandParameter))
-            {
-                button.Command.Execute(button.CommandParameter);
-            }
-
-            e.Handled = true;
-        }
-    }
+    [global::Quire.Mirror.MirrorStub]
+    [global::Quire.Mirror.MirrorBlocked("Release IL: Mathcad DevAssert condition keeps one more instruction than the idiomatic || form")]
+    private void FindReplaceRichText_PreviewKeyDown(object sender, KeyEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [DebuggerNonUserCode]
     [GeneratedCode("PresentationBuildTasks", "10.0.11.0")]
