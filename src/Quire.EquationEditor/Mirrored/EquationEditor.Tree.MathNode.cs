@@ -970,6 +970,121 @@ public partial class MathNode
         }
         return null;
     }
+    public MathNode LeftAdjacentSubexpression(bool considerAssociativity)
+    {
+        if (!Parent.IsEffectiveInfix)
+        {
+            return null;
+        }
+        int firstChildIndex = 0;
+        int lastChildIndex = Parent.ChildCount - 1;
+        if (IndexInParent != firstChildIndex && IndexInParent != lastChildIndex)
+        {
+            return null;
+        }
+        if (Parent.IsContainerSlot(firstChildIndex) || Parent.IsContainerSlot(lastChildIndex))
+        {
+            return null;
+        }
+        MathNode firstChild = Parent[firstChildIndex];
+        if (this == firstChild)
+        {
+            MathNode samePrecedenceAncestor = null;
+            MathNode parent = Parent;
+            int precedence = Parent.Precedence;
+            while (parent != null && parent.Precedence == precedence)
+            {
+                if (parent.IsInContainerSlot)
+                {
+                    break;
+                }
+                if (parent.IndexInParent == parent.Parent.ChildCount - 1 && parent.Parent.Precedence == precedence)
+                {
+                    samePrecedenceAncestor = parent.Parent;
+                    break;
+                }
+                parent = parent.Parent;
+            }
+            if (samePrecedenceAncestor == null || samePrecedenceAncestor.IsContainerSlot(0))
+            {
+                return null;
+            }
+            return samePrecedenceAncestor[0];
+        }
+        if (!firstChild.IsEffectiveInfix)
+        {
+            return firstChild;
+        }
+        if (firstChild.IsContainerSlot(firstChild.ChildCount - 1) || firstChild.Precedence > Parent.Precedence)
+        {
+            return firstChild;
+        }
+        MathNode candidate = firstChild;
+        if (considerAssociativity)
+        {
+            while (candidate.Precedence == Parent.Precedence && candidate.Associativity == Associativity.Left)
+            {
+                candidate = candidate[0];
+            }
+        }
+        if (candidate.IsEffectiveInfix && candidate.Precedence <= Parent.Precedence)
+        {
+            return candidate[candidate.ChildCount - 1];
+        }
+        return firstChild;
+    }
+
+    public MathNode RightAdjacentSubexpression(bool considerAssociativity)
+    {
+        if (!Parent.IsEffectiveInfix)
+        {
+            return null;
+        }
+        int firstChildIndex = 0;
+        int lastChildIndex = Parent.ChildCount - 1;
+        if (IndexInParent != firstChildIndex && IndexInParent != lastChildIndex)
+        {
+            return null;
+        }
+        if (Parent.IsContainerSlot(firstChildIndex) || Parent.IsContainerSlot(lastChildIndex))
+        {
+            return null;
+        }
+        if (this == Parent[firstChildIndex])
+        {
+            if (IsEffectiveInfix && Precedence < Parent.Precedence && !IsContainerSlot(ChildCount - 1))
+            {
+                return null;
+            }
+            MathNode lastChild = Parent[lastChildIndex];
+            if (!considerAssociativity && lastChild.Precedence == Parent.Precedence && lastChild.Associativity == Associativity.Right)
+            {
+                lastChild = lastChild[0];
+            }
+            return lastChild;
+        }
+        MathNode samePrecedenceAncestor = null;
+        MathNode parent = Parent;
+        int precedence = Parent.Precedence;
+        while (parent != null && parent.Precedence == precedence)
+        {
+            if (parent.IsInContainerSlot)
+            {
+                break;
+            }
+            if (parent.IndexInParent == 0 && parent.Parent.Precedence == precedence)
+            {
+                samePrecedenceAncestor = parent.Parent;
+                break;
+            }
+            parent = parent.Parent;
+        }
+        if (samePrecedenceAncestor == null || samePrecedenceAncestor.IsContainerSlot(samePrecedenceAncestor.ChildCount - 1))
+        {
+            return null;
+        }
+        return samePrecedenceAncestor[samePrecedenceAncestor.ChildCount - 1];
+    }
     public MathNode NodeFromPath(IList<int> path)
     {
         return DescendentFromPath(path);
