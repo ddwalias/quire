@@ -11,92 +11,9 @@ namespace Quire.EquationEditor.Tree.Transform;
 [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Transform.InfixMonomialToSExpressionTransform, Ptc.EquationEditor")]
 public partial class InfixMonomialToSExpressionTransform
 {
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("a")]
-    private const char a__ = '\u0028';
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("b")]
-    private const char b_ = '\u0029';
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("c")]
-    private const char c_ = '\u002D';
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("d")]
-    internal static readonly char[] d_;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("e")]
-    internal static readonly char[] e_;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("f")]
-    internal static readonly char[] f_;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("g")]
-    internal const string g_ = "([\\(\\)\\*/\\^])";
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("h")]
-    private const string h_ = "(@NEG {0})";
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("i")]
-    private readonly string i_;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("j")]
-    private readonly global::System.Collections.Generic.Stack<string> j_;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("k")]
-    private readonly global::System.Collections.Generic.Stack<string> k_;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.EquationEditor.Tree.Transform.InfixMonomialToSExpressionTransform l;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::Quire.EquationEditor.Tree.Transform.InfixMonomialToSExpressionTransform m;
-    [global::Quire.Mirror.MirrorStub]
-    private static global::System.Text.RegularExpressions.Regex n;
-    [global::Quire.Mirror.MirrorStub]
-    private readonly bool o;
-    [global::Quire.Mirror.MirrorStub]
-    private InfixMonomialToSExpressionTransform(bool A_0) { }
-    [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.EquationEditor.Tree.Transform.InfixMonomialToSExpressionTransform GetInstance(bool forceLabelFormat) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public string Transform(string expression) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool a(string A_0, out string A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private string k(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal string[] j(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static int i(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool h(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool g(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool f(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool e(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool d(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static bool c(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal bool b(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private bool a(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.Transform.InfixMonomialToSExpressionTransform+a, Ptc.EquationEditor")]
     private sealed partial class a_
     {
-        [global::Quire.Mirror.MirrorStub]
-        [global::Quire.Mirror.MirrorName("a")]
-        public static readonly global::Quire.EquationEditor.Tree.Transform.InfixMonomialToSExpressionTransform.a_ a__;
-        [global::Quire.Mirror.MirrorStub]
-        [global::Quire.Mirror.MirrorName("b")]
-        public static global::System.Func<string, bool> b_;
-        [global::Quire.Mirror.MirrorStub]
-        public static global::System.Func<string, string> c;
-        [global::Quire.Mirror.MirrorStub]
-        internal bool b(string A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }

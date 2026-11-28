@@ -12,22 +12,6 @@ namespace Quire.EquationEditor.Tree;
 public partial class MathNodeDescriptorTable : global::System.Collections.Generic.Dictionary<string, global::Quire.EquationEditor.Tree.MathNodeDescriptor>
 {
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IList<global::Quire.EquationEditor.Tree.FunctionOperatorDescriptor> FunctionOperatorsList;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IDictionary<string, global::Quire.Controls.Core.IdLabels> IDLabelMapDictionary;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.IMathNodeDescriptor> ValueDescriptors { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.Tree.IMathNodeDescriptor> FormattedStringValueDescriptors { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public void Add(global::Quire.EquationEditor.Tree.MathNodeDescriptor descriptor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.MathNodeDescriptor FindMatchingValueDescriptor(string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.MathNodeDescriptor FindMatchingValueDescriptor(global::Quire.EquationEditor.Tree.FormattedString value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool IsMatchingDescriptor(global::Quire.EquationEditor.Tree.IMathNodeDescriptor descriptor, string value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.FunctionOperatorDescriptor GetFunctionOperatorDescriptor(string name, int argumentCount) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.Tree.MathNodeDescriptorTable+a, Ptc.EquationEditor")]
