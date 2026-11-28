@@ -416,6 +416,21 @@ public partial class SpecTableModel
         a(global::Quire.Direction.Left, coordinate).MoveToRegionStart();
     }
 
+    public MathNode CreateMatrixFromTableCells(global::Quire.DiscreteRect selected)
+    {
+        MathNode[] cells = new MathNode[(selected.Height + 1) * (selected.Width + 1)];
+        int cellIndex = 0;
+        for (int rowIndex = selected.Top; rowIndex <= selected.Bottom; rowIndex++)
+        {
+            for (int columnIndex = selected.Left; columnIndex <= selected.Right; columnIndex++)
+            {
+                cells[cellIndex++] = e(rowIndex, columnIndex).Root.Children[0].Clone();
+            }
+        }
+
+        return global::Quire.Native.PtcEquationEditor.r.a_.a(selected.Height + 1, selected.Width + 1, cells);
+    }
+
     private CompoundCommand f()
     {
         CompoundCommand command = new();

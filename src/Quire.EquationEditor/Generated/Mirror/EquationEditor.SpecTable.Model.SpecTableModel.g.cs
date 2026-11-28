@@ -57,8 +57,6 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
     private void b(int A_0, int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void a(int A_0, int A_1) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.MathNode CreateMatrixFromTableCells(global::Quire.DiscreteRect selected) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.SpecTable.Model.SpecTableModel+a, Ptc.EquationEditor")]
     internal partial class a_ : global::Quire.Undo.IUndoableCommand
