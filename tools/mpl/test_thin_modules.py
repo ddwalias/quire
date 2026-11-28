@@ -15,7 +15,7 @@ OUTPUT = ROOT / "tools/mpl/output"
 CACHE = ROOT / ".mirror-cache/mpl-thin-emitter"
 COMPILER_OUT = CACHE / "compiler"
 AUDIT_OUT = CACHE / "method-audit"
-MODULES = ["McdUnitSystemMKS", "McdUnitSystemUS"]
+MODULES = ["McdUnitSystemMKS", "McdUnitSystemUS", "MplConstants"]
 ATTRIBUTE = re.compile(
     r"\.custom instance void \[[^]]+\]([^\s]+)::\.ctor\(string\) = \(\s*((?:[0-9a-fA-F]{2}\s*)+)\)", re.S)
 
@@ -88,8 +88,10 @@ class ThinModuleTests(unittest.TestCase):
             self.assertEqual([name for name, _ in candidate_attrs],
                              ["Mpl.Run.ModuleTextAttribute", "Mpl.Run.ModuleInterfaceAttribute",
                               "Quire.Mirror.MirrorOfAttribute"], module + " candidate attribute order")
-            self.assertEqual(member_names(original_block, "field"), ["system"], module + " field order")
-            self.assertEqual(member_names(candidate_block, "field"), ["system"], module + " candidate field order")
+            expected_fields = ["gamma", "pi", "e"] if module == "MplConstants" else ["system"]
+            self.assertEqual(member_names(original_block, "field"), expected_fields, module + " field order")
+            self.assertEqual(member_names(candidate_block, "field"), expected_fields,
+                             module + " candidate field order")
             expected_methods = member_names(original_block, "method")
             self.assertEqual(member_names(candidate_block, "method"), expected_methods, module + " method order")
             audit = run("dotnet", str(auditor), "--repo", str(ROOT), "--assemblies", str(OUTPUT),

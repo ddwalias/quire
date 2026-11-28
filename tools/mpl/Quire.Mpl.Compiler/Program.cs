@@ -2,6 +2,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Globalization;
 using MplAssemblyBuilder = System.Reflection.Emit.Quire.Mpl.AssemblyBuilder;
 using MplModuleBuilder = System.Reflection.Emit.Quire.Mpl.ModuleBuilder;
 using MplILGenerator = System.Reflection.Emit.Quire.Mpl.ILGenerator;
@@ -280,9 +281,6 @@ static void CompileThinModule(string sourcePath, string outputPath, string insta
 
     var globalBindings = bindings.Where(binding => binding.Args.Length == 0).ToArray();
     var functions = bindings.Where(binding => binding.Args.Length > 0).ToArray();
-    if (functions.Length == 0)
-        throw new InvalidDataException("The thin compiler subset needs at least one value function.");
-
     var runtime = Assembly.LoadFrom(Path.Combine(install, "mplrun.dll"));
     var moduleTextCtor = runtime.GetType("Mpl.Run.ModuleTextAttribute", throwOnError: true)!
         .GetConstructor([typeof(string)]) ?? throw new MissingMethodException("ModuleTextAttribute..ctor(string)");
@@ -303,7 +301,13 @@ static void CompileThinModule(string sourcePath, string outputPath, string insta
     var updateIl = update.GetILGenerator();
     foreach (var binding in globalBindings)
     {
-        EmitExternalStaticField(updateIl, binding.Expression, install);
+        if (double.TryParse(binding.Expression, NumberStyles.Float, CultureInfo.InvariantCulture, out var real))
+        {
+            updateIl.Emit(OpCodes.Ldc_R8, real);
+            updateIl.Emit(OpCodes.Box, typeof(double));
+        }
+        else
+            EmitExternalStaticField(updateIl, binding.Expression, install);
         updateIl.Emit(OpCodes.Stsfld, fields[binding.Name]);
     }
     updateIl.Emit(OpCodes.Ret);
