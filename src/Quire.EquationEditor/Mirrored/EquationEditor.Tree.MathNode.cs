@@ -1629,6 +1629,34 @@ public partial class MathNode
     {
         partial class a__
         {
+            [System.Runtime.CompilerServices.SkipLocalsInit]
+            internal bool b()
+            {
+                if (a_ == b_)
+                {
+                    return true;
+                }
+                if (a_ != null)
+                {
+                    a_.a__ = null;
+                    c.a___[d] = null;
+                }
+                if (b_ != null)
+                {
+                    if (b_.a__ != null)
+                    {
+                        b_.a__.b__.a___[e] = null;
+                    }
+                    b_.a__ = null;
+                    c.a___[d] = b_;
+                    b_.a__ = c.b;
+                }
+                return true;
+            }
+
+            [MirrorStub]
+            [MirrorBlocked("IL calls a(int) on the captured a_ field; Roslyn emits callvirt")]
+            internal void a() => throw MirrorStub.NotImplemented();
             [MirrorVerified("Release IL")]
             public a__() { }
         }
@@ -1718,6 +1746,269 @@ public partial class MathNode
 
 public partial class MathNode
 {
+    public void AutoLabelIdDescendants(Quire.Controls.Core.IdLabels idLabel)
+    {
+        if (InfoType == typeof(IdentifierNodeInfo))
+        {
+            IdentifierNodeInfo identifierNodeInfo = NodeInfo as IdentifierNodeInfo;
+            if (!identifierNodeInfo.IdLabel.HasValue)
+            {
+                identifierNodeInfo.IdLabel = idLabel;
+            }
+            return;
+        }
+        for (int childIndex = 0; childIndex < Children.Count; childIndex++)
+        {
+            if (Array.IndexOf(ProhibitedAutoLabelIdDescendants, childIndex) >= 0)
+            {
+                Children[childIndex].ForceUnlabeledIdDescendantsToHaveLabelNone();
+            }
+            else
+            {
+                Children[childIndex].AutoLabelIdDescendants(idLabel);
+            }
+        }
+    }
+
+    public void AllowIdDescendantsLabelNoneBasedOnContext()
+    {
+        for (int childIndex = 0; childIndex < Children.Count; childIndex++)
+        {
+            if (!Descriptor.IsNonLabeledIdDescendantAllowed(childIndex))
+            {
+                Children[childIndex].ForceUnlabeledIdDescendantsToHaveLabelNone();
+            }
+            else
+            {
+                Children[childIndex].AllowIdDescendantsLabelNoneBasedOnContext();
+            }
+        }
+    }
+
+    public void ForceUnlabeledIdDescendantsToHaveLabelNone()
+    {
+        if (NodeInfo is IdentifierNodeInfo { IdLabel: null } identifierNodeInfo)
+        {
+            identifierNodeInfo.IdLabel = Quire.Controls.Core.IdLabels.None;
+        }
+        foreach (MathNode child in Children)
+        {
+            child.ForceUnlabeledIdDescendantsToHaveLabelNone();
+        }
+    }
+
+    public Panacea MediateParentRestriction(string parentName, int indexInParent)
+    {
+        MathNodeDescriptor descriptor = Parent.Descriptor;
+        indexInParent = Parent.a(indexInParent, ref descriptor);
+        return d__.MediateParentRestriction(descriptor.DescriptorName, indexInParent);
+    }
+
+    public void InsertChildren(int index, params MathNode[] newNodes)
+    {
+        Children.InsertRange(index, newNodes);
+    }
+
+    public void RemoveChildren(int index, int count)
+    {
+        Children.RemoveRange(index, count);
+    }
+
+    public void UpdateChildren(int index, int count, params MathNode[] newNodes)
+    {
+        RemoveChildren(index, count);
+        InsertChildren(index, newNodes);
+    }
+
+    public void MergeNode(MathNode anotherNode)
+    {
+        InsertChildren(ChildCount, anotherNode.Children.ToArray());
+    }
+
+    private void a(string label)
+    {
+        if (label == null || (!Quire.Native.PtcEquationEditor.e.b.IsMatch(label) && label != string.Empty))
+        {
+            throw new MathNodeInvalidLabelException("Labels must conform to the Euclid I mean Spirit identifier rules", "value");
+        }
+    }
+
+    private bool b(out Panacea panacea, int indexInParent)
+    {
+        panacea = null;
+        if (d() && a(out panacea, indexInParent) && d(out panacea) && b(out panacea) && c(out panacea))
+        {
+            return c();
+        }
+        return false;
+    }
+
+    private bool d()
+    {
+        if (!CarriesValue || ValidValueRegex == null)
+        {
+            return true;
+        }
+        if (ValidValueRegex.IsMatch(NodeInfoValueAsString))
+        {
+            return true;
+        }
+        if (ValueFixer != null)
+        {
+            StringValueNodeInfo stringValueNodeInfo = (StringValueNodeInfo)NodeInfo;
+            string cleanedValue = ValueFixer.CleanValue(stringValueNodeInfo.Value);
+            if (ValidValueRegex.IsMatch(cleanedValue))
+            {
+                stringValueNodeInfo.Value = cleanedValue;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private bool d(out Panacea panacea)
+    {
+        panacea = null;
+        List<string> childNames = new List<string>();
+        foreach (MathNode child in Children)
+        {
+            if (child == null)
+            {
+                return false;
+            }
+            childNames.Add(child.DescriptorName);
+        }
+        panacea = MitigateChildPatternProhibition(childNames);
+        if (panacea != null)
+        {
+            return false;
+        }
+        for (int childIndex = 0; childIndex < childNames.Count; childIndex++)
+        {
+            if (!IsChildAllowed(childNames[childIndex], childIndex))
+            {
+                panacea = MediateChildInsertionDispute(childNames[childIndex], childIndex);
+                return false;
+            }
+        }
+        return a(out panacea);
+    }
+
+    private bool a(out Panacea panacea, int indexInParent)
+    {
+        panacea = null;
+        if (Parent == null)
+        {
+            return true;
+        }
+        if (!IsParentAllowed(Parent.DescriptorName, indexInParent))
+        {
+            panacea = MediateParentRestriction(Parent.DescriptorName, indexInParent);
+            return false;
+        }
+        return true;
+    }
+
+    private bool c()
+    {
+        if (!Descriptor.RestrictsDescendants && !Descriptor.ProhibitsDescendants)
+        {
+            return true;
+        }
+        for (int childIndex = 0; childIndex < Children.Count; childIndex++)
+        {
+            if (!Children[childIndex].a(childIndex, Descriptor))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private bool c(out Panacea panacea)
+    {
+        panacea = null;
+        if (!Descriptor.RestrictsAncestors)
+        {
+            return true;
+        }
+        IList<Pair<string, int>> ancestors = new List<Pair<string, int>>();
+        int indexInParent = IndexInParent;
+        MathNode parent = Parent;
+        while (!parent.IsRoot)
+        {
+            ancestors.Add(new Pair<string, int>(parent.DescriptorName, indexInParent));
+            indexInParent = parent.IndexInParent;
+            parent = parent.Parent;
+        }
+        if (!Descriptor.IsAncestorTreeAllowed(ancestors))
+        {
+            panacea = MediateAncestorRestriction(ancestors);
+            return false;
+        }
+        return true;
+    }
+
+    private bool a(int childIndex, MathNodeDescriptor descriptor)
+    {
+        if (!descriptor.IsDescendentAllowed(Descriptor.DescriptorName, childIndex))
+        {
+            return false;
+        }
+        foreach (MathNode child in Children)
+        {
+            if (!child.a(childIndex, descriptor))
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public MathNodeDescriptor Descriptor
+    {
+        get => d__;
+        set
+        {
+            b_ applyClosure = new b_();
+            applyClosure.a_ = this;
+            applyClosure.b = value;
+            DelegateFunction0<bool> apply = new DelegateFunction0<bool>(applyClosure.a);
+            if (CommandScope.CanUndoTreeOperations)
+            {
+                c_ undoClosure = new c_();
+                undoClosure.c = applyClosure;
+                undoClosure.a_ = d__;
+                undoClosure.b = h__;
+                Delegate0 undo = new Delegate0(undoClosure.a);
+                CommandBuffer.Execute("Set node descriptor", apply, undo);
+            }
+            else
+            {
+                apply();
+            }
+        }
+    }
+
+    public MathNode Clone()
+    {
+        MathNode[] children = new MathNode[Children.Count];
+        for (int index = 0; index < children.Length; index++)
+        {
+            children[index] = Children[index].Clone();
+        }
+        return new MathNode(Descriptor, children)
+        {
+            Label = Label,
+            NodeInfo = (INodeInfo)(NodeInfo == null ? null : NodeInfo.Clone()),
+            Algorithm = Algorithm,
+            AlgorithmOptions = AlgorithmOptions.Clone(),
+            IsAlternateFormPairNary = IsAlternateFormPairNary
+        };
+    }
+
+    object ICloneable.Clone() => Clone();
+
     private sealed partial class f_
     {
         internal bool b()
@@ -1727,5 +2018,27 @@ public partial class MathNode
         }
 
         internal void a() => a_.a__ = c;
+    }
+}
+
+public partial class MathNode
+{
+    partial class b_
+    {
+        [MirrorStub]
+        [MirrorBlocked("IL calls NodeInfo on the captured outer MathNode field; Roslyn emits callvirt")]
+        internal bool a() => throw MirrorStub.NotImplemented();
+    }
+
+    partial class c_
+    {
+        [MirrorStub]
+        [MirrorBlocked("IL calls NodeInfo on the captured outer MathNode field; Roslyn emits callvirt")]
+        internal void a() => throw MirrorStub.NotImplemented();
+    }
+
+    partial class d_
+    {
+        internal bool a(MathNode node) => node.DescriptorName == a_;
     }
 }
