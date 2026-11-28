@@ -6,6 +6,14 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Xml;
+using Quire.Mirror;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Controls;
+using System.Xml;
 
 namespace Quire.DevComponents.WpfDock;
 
@@ -521,4 +529,7 @@ internal partial class DockSiteLayoutSerializer
     {
         return XmlConvert.ToString(rect.X) + "," + XmlConvert.ToString(rect.Y) + "," + XmlConvert.ToString(rect.Width) + "," + XmlConvert.ToString(rect.Height);
     }
+
+    [MirrorVerified("Release IL")]
+    public DockSiteLayoutSerializer() { }
 }

@@ -17,6 +17,4 @@ internal partial class DockSiteLayoutSerializer : global::Quire.DevComponents.Wp
     private global::System.Collections.Generic.List<global::Quire.DevComponents.WpfDock.DockWindow> m_DockWindows;
     [global::Quire.Mirror.MirrorStub]
     private bool m_IgnoreLoadLayoutElementNotFoundErrors;
-    [global::Quire.Mirror.MirrorStub]
-    public DockSiteLayoutSerializer() { }
 }

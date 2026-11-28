@@ -14,33 +14,11 @@ public partial class SplitPanel : global::System.Windows.FrameworkElement
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty RelativeSizeProperty;
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty OrientationProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty BackgroundProperty;
-    [global::Quire.Mirror.MirrorStub]
     internal const double MinDockWindowSize = 20d;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.Dictionary<global::System.Windows.UIElement, global::Quire.DevComponents.WpfDock.DockSplitter> m_Splitters;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.List<global::Quire.DevComponents.WpfDock.DockSplitter> m_SplittersIndexed;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfDock.SplitPanelChildrenCollection m_Children;
     [global::Quire.Mirror.MirrorStub]
-    private string m_Id;
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual bool IsDocument { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Controls.Orientation Orientation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<global::Quire.DevComponents.WpfDock.DockSplitter> Splitters { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override int VisualChildrenCount { get => base.VisualChildrenCount; }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfDock.SplitPanelChildrenCollection Children { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     protected internal global::Quire.DevComponents.WpfDock.SplitPanelChildrenCollection InternalChildren { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush Background { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private bool CanResizeSplitPanel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -48,23 +26,9 @@ public partial class SplitPanel : global::System.Windows.FrameworkElement
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Collections.IEnumerator LogicalChildren { get => base.LogicalChildren; }
     [global::Quire.Mirror.MirrorStub]
-    public string Id { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.EventHandler SplittersUpdating;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.EventHandler SplittersRecreated;
-    [global::Quire.Mirror.MirrorStub]
     public SplitPanel() { }
     [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
-    [global::Quire.Mirror.MirrorStub]
     private double GetTotalRelativeSize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private int GetSplitterHeight() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private double GetSplitterWidth() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size finalSize) => base.ArrangeOverride(finalSize);
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Size MeasureArrange(global::System.Windows.Size finalSize, bool isArrange) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -86,15 +50,11 @@ public partial class SplitPanel : global::System.Windows.FrameworkElement
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Media.Visual GetVisualChild(int index) => base.GetVisualChild(index);
     [global::Quire.Mirror.MirrorStub]
-    protected virtual global::Quire.DevComponents.WpfDock.SplitPanelChildrenCollection CreateUIElementCollection() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal void OnChildrenClear() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void ChildrenChanged(object sender, global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void UpdateIsDocument() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfDock.DockSite GetDockSite() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
     [global::Quire.Mirror.MirrorStub]

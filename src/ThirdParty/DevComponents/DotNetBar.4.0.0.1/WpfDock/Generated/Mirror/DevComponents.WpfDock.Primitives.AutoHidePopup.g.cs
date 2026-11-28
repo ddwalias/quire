@@ -12,17 +12,7 @@ namespace Quire.DevComponents.WpfDock.Primitives;
 internal partial class AutoHidePopup : global::System.Windows.Controls.Canvas
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfDock.DockWindow m_DockWindow;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfDock.DockWindow DockWindow { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public AutoHidePopup() { }
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnIsKeyboardFocusWithinChanged(global::System.Windows.DependencyPropertyChangedEventArgs e) => base.OnIsKeyboardFocusWithinChanged(e);
-    [global::Quire.Mirror.MirrorStub]
-    private void OptionsContextMenuClosed(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void AutoHideCloseAnimationCompleted(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void CleanupPopup() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

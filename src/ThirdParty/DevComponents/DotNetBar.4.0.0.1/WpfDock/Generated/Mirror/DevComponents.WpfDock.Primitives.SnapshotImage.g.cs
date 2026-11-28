@@ -12,8 +12,6 @@ namespace Quire.DevComponents.WpfDock.Primitives;
 internal partial class SnapshotImage : global::System.Windows.Controls.Image
 {
     [global::Quire.Mirror.MirrorStub]
-    public SnapshotImage() { }
-    [global::Quire.Mirror.MirrorStub]
     public void TakeSnapshot(global::System.Windows.UIElement elem) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RemoveOnAnimationCompleted(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

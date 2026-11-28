@@ -15,6 +15,4 @@ internal partial class DragWindow : global::Quire.DevComponents.WpfDock.Primitiv
     internal global::System.Windows.Point DisplayOffset;
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Size FloatingSize;
-    [global::Quire.Mirror.MirrorStub]
-    public DragWindow() { }
 }

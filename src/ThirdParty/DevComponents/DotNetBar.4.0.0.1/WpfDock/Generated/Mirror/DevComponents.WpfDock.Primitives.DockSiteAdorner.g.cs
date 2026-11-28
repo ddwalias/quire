@@ -28,10 +28,6 @@ internal partial class DockSiteAdorner : global::System.Windows.Documents.Adorne
     [global::Quire.Mirror.MirrorStub]
     private double m_EdgeOffset;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.UIElement _RealAdornedElement;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.UIElement RealAdornedElement { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.UIElement DockHintBottom { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.UIElement DockHintTop { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
@@ -46,8 +42,6 @@ internal partial class DockSiteAdorner : global::System.Windows.Documents.Adorne
     [global::Quire.Mirror.MirrorStub]
     public global::System.Windows.Controls.UIElementCollection Children { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    protected override int VisualChildrenCount { get => base.VisualChildrenCount; }
-    [global::Quire.Mirror.MirrorStub]
     public DockSiteAdorner(global::System.Windows.UIElement adornedElement) : base(default(global::System.Windows.UIElement)) { }
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
@@ -57,8 +51,6 @@ internal partial class DockSiteAdorner : global::System.Windows.Documents.Adorne
     private global::System.Windows.Rect PrepareRect(global::System.Windows.Rect rect) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SetDockHint(global::System.Windows.UIElement value, ref global::System.Windows.UIElement dockHintVariable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Media.Visual GetVisualChild(int index) => base.GetVisualChild(index);
     [global::Quire.Mirror.MirrorStub]
     internal void AnimationCompleteCleanup(object sender, global::System.EventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

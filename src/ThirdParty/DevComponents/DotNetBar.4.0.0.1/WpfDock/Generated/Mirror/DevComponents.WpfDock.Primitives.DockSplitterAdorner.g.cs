@@ -12,15 +12,9 @@ namespace Quire.DevComponents.WpfDock.Primitives;
 internal partial class DockSplitterAdorner : global::System.Windows.Documents.Adorner
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Media.Brush m_PreviewBrush;
-    [global::Quire.Mirror.MirrorStub]
     private double m_Offset;
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush PreviewBrush { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public double Offset { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public DockSplitterAdorner(global::Quire.DevComponents.WpfDock.DockSplitter adornedElement) : base(default(global::System.Windows.UIElement)) { }
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
     [global::Quire.Mirror.MirrorStub]

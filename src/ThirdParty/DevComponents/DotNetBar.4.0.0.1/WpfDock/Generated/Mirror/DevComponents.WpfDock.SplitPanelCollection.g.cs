@@ -12,11 +12,5 @@ namespace Quire.DevComponents.WpfDock;
 public partial class SplitPanelCollection : global::System.Collections.ObjectModel.ObservableCollection<global::Quire.DevComponents.WpfDock.SplitPanel>
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfDock.DockSite m_Parent;
-    [global::Quire.Mirror.MirrorStub]
-    public SplitPanelCollection() { }
-    [global::Quire.Mirror.MirrorStub]
-    public SplitPanelCollection(global::Quire.DevComponents.WpfDock.DockSite parent) { }
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnCollectionChanged(global::System.Collections.Specialized.NotifyCollectionChangedEventArgs e) => base.OnCollectionChanged(e);
 }

@@ -11,10 +11,4 @@ namespace Quire.DevComponents.WpfDock;
 [global::Quire.Mirror.MirrorOf("DevComponents.WpfDock.SplitPanelChildrenCollection, DevComponents.WpfDock")]
 public partial class SplitPanelChildrenCollection : global::System.Collections.ObjectModel.ObservableCollection<global::System.Windows.UIElement>
 {
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfDock.SplitPanel m_Parent;
-    [global::Quire.Mirror.MirrorStub]
-    public SplitPanelChildrenCollection(global::Quire.DevComponents.WpfDock.SplitPanel parent) { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void ClearItems() => base.ClearItems();
 }

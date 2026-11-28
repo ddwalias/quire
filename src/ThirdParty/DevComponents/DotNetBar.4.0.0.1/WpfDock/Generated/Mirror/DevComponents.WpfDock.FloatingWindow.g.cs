@@ -12,8 +12,6 @@ namespace Quire.DevComponents.WpfDock;
 public partial class FloatingWindow : global::System.Windows.Window
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfDock.DockSite m_DockSite;
-    [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Point m_MouseDownPoint;
     [global::Quire.Mirror.MirrorStub]
     private bool m_WindowMove;
@@ -22,11 +20,7 @@ public partial class FloatingWindow : global::System.Windows.Window
     [global::Quire.Mirror.MirrorStub]
     private bool _CanClose;
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfDock.DockSite DockSite { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     internal bool CanClose { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public FloatingWindow() { }
     [global::Quire.Mirror.MirrorStub]
     protected override void OnSourceInitialized(global::System.EventArgs e) => base.OnSourceInitialized(e);
     [global::Quire.Mirror.MirrorStub]

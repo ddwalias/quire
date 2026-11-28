@@ -16,10 +16,6 @@ internal partial class LayoutHelpers
     [global::Quire.Mirror.MirrorStub]
     public static global::System.Windows.Size AddVertical(global::System.Windows.Size size1, global::System.Windows.Size size2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static bool IsZero(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static bool IsClose(double val1, double val2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public static bool GreaterThan(double value1, double value2) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static bool IsZero(global::System.Windows.Size size) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -47,8 +43,6 @@ internal partial class LayoutHelpers
     public static global::System.Windows.Rect GetBounds(global::System.Windows.UIElement elem, global::System.Windows.UIElement referenceParent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal static void NormalizeMeasureBounds(ref global::System.Windows.Size arrangeBounds) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public LayoutHelpers() { }
 
     [global::Quire.Mirror.MirrorOf("DevComponents.WpfDock.LayoutHelpers+RadiusDescription, DevComponents.WpfDock")]
     public partial struct RadiusDescription

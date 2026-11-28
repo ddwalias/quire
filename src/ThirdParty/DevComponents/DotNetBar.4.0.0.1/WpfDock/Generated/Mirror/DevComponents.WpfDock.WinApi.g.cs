@@ -30,17 +30,7 @@ internal partial class WinApi
     [global::Quire.Mirror.MirrorStub]
     public static bool DeleteMenu(nint hMenu, uint uPosition, uint uFlags) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public static int LOWORD(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int HIWORD(int n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int LOWORD(nint n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public static int HIWORD(nint n) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal static void ValidateLicenseKey(string p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public WinApi() { }
 
     [global::Quire.Mirror.MirrorOf("DevComponents.WpfDock.WinApi+WindowLongValues, DevComponents.WpfDock")]
     public enum WindowLongValues

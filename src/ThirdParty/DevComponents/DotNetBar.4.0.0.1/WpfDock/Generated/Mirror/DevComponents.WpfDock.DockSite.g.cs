@@ -22,12 +22,6 @@ public partial class DockSite : global::System.Windows.Controls.ContentControl
     [global::Quire.Mirror.MirrorStub]
     private static readonly global::System.Windows.DependencyPropertyKey SplitPanelsPropertyKey;
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty SplitPanelsProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.DependencyPropertyKey ActiveDockWindowPropertyKey;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty ActiveDockWindowProperty;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent DockChangedEvent;
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent BeforeDockingStartsEvent;
@@ -36,17 +30,7 @@ public partial class DockSite : global::System.Windows.Controls.ContentControl
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent AfterDockedEvent;
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty LicenseKeyProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty DockHintOverlayProperty;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.RoutedEvent IsDocumentChangedEvent;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Controls.UIElementCollection m_Children;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.Rect m_DocumentRect;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m_IsDockingInProgress;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfDock.DragWindow m_DragWindow;
     [global::Quire.Mirror.MirrorStub]
@@ -74,47 +58,17 @@ public partial class DockSite : global::System.Windows.Controls.ContentControl
     [global::Quire.Mirror.MirrorStub]
     private const int FadeInDockDuration = 350;
     [global::Quire.Mirror.MirrorStub]
-    private global::System.Collections.Generic.List<global::Quire.DevComponents.WpfDock.FloatingWindow> m_FloatingWindows;
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfDock.DockLocalization m_SystemText;
-    [global::Quire.Mirror.MirrorStub]
     private bool m_Animation;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfDock.Primitives.DockSelectorAdorner m_DockSelectorAdorner;
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfDock.IDockOperations _DockOperations;
     [global::Quire.Mirror.MirrorStub]
-    private bool _IgnoreLoadLayoutElementNotFoundErrors;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfDock.DockHintWindow _DockHintWindow;
-    [global::Quire.Mirror.MirrorStub]
-    public bool DockHintOverlay { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public bool IgnoreLoadLayoutElementNotFoundErrors { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfDock.DockLocalization SystemText { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfDock.SplitPanelCollection SplitPanels { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override int VisualChildrenCount { get => base.VisualChildrenCount; }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Rect DocumentRect { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     private double DpiMultiplier { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public bool IsDockingInProgress { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     private bool AnimationEnabled { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    private bool IsDesignMode { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public string Layout { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfDock.DockWindow ActiveDockWindow { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Collections.IEnumerator LogicalChildren { get => base.LogicalChildren; }
-    [global::Quire.Mirror.MirrorStub]
-    public string LicenseKey { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.DevComponents.WpfDock.IDockOperations DockOperations { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
@@ -137,8 +91,6 @@ public partial class DockSite : global::System.Windows.Controls.ContentControl
     private void DockSiteUnloaded(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnInitialized(global::System.EventArgs e) => base.OnInitialized(e);
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size constraint) => base.MeasureOverride(constraint);
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size ArrangeOverride(global::System.Windows.Size arrangeBounds) => base.ArrangeOverride(arrangeBounds);
     [global::Quire.Mirror.MirrorStub]
@@ -166,15 +118,7 @@ public partial class DockSite : global::System.Windows.Controls.ContentControl
     [global::Quire.Mirror.MirrorStub]
     public static void SetSaveLayout(global::System.Windows.UIElement element, bool saveLayout) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    internal void AddSplitPanel(global::Quire.DevComponents.WpfDock.SplitPanel p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void RemoveSplitPanel(global::Quire.DevComponents.WpfDock.SplitPanel p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override global::System.Windows.Media.Visual GetVisualChild(int index) => base.GetVisualChild(index);
-    [global::Quire.Mirror.MirrorStub]
     protected override void OnContentChanged(object oldContent, object newContent) => base.OnContentChanged(oldContent, newContent);
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnBeforeDockingStarts(global::Quire.DevComponents.WpfDock.DockRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void CreateNewDockHintAdorner(global::System.Windows.Documents.AdornerLayer adornerLayer, global::System.Windows.UIElement adornedElement, global::Quire.DevComponents.WpfDock.DockWindowGroup dockWindowGroup) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -183,8 +127,6 @@ public partial class DockSite : global::System.Windows.Controls.ContentControl
     internal bool StartDockWindowDrag(global::Quire.DevComponents.WpfDock.DockWindowGroup dockWindowGroup, bool dragSelectedTabOnly, global::Quire.DevComponents.WpfDock.eEventActionSource actionSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void DragWindowKeyDown(object sender, global::System.Windows.Input.KeyEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.UIElement GetDockHint(global::Quire.DevComponents.WpfDock.eDockHintSide dh) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnMouseMove(global::System.Windows.Input.MouseEventArgs e) => base.OnMouseMove(e);
     [global::Quire.Mirror.MirrorStub]
@@ -210,13 +152,9 @@ public partial class DockSite : global::System.Windows.Controls.ContentControl
     [global::Quire.Mirror.MirrorStub]
     private void CreateDockSelectorAdorner() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private void DockWindowSelectorLostMouseCapture(object sender, global::System.Windows.Input.MouseEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public void CancelWindowDocking() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnLostMouseCapture(global::System.Windows.Input.MouseEventArgs e) => base.OnLostMouseCapture(e);
-    [global::Quire.Mirror.MirrorStub]
-    private void SaveCurrentDockInfo(global::Quire.DevComponents.WpfDock.DockWindowGroup source) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void SaveCurrentDockInfo(global::Quire.DevComponents.WpfDock.DockWindowGroup source, global::Quire.DevComponents.WpfDock.DockWindowGroup target, bool saveAsTab) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -230,21 +168,9 @@ public partial class DockSite : global::System.Windows.Controls.ContentControl
     [global::Quire.Mirror.MirrorStub]
     private void EndDockWindowDrag(bool cancel) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnAfterDocked(global::Quire.DevComponents.WpfDock.DockRoutedEventArgs dockRoutedEventArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected virtual void OnBeforeDocked(global::Quire.DevComponents.WpfDock.BeforeDockedRoutedEventArgs dockEndsArgs) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void SelectDifferentTab(global::Quire.DevComponents.WpfDock.DockWindowGroup dg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool FloatWindow(global::Quire.DevComponents.WpfDock.DockWindow dw) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public bool FloatWindow(global::Quire.DevComponents.WpfDock.DockWindow dw, global::Quire.DevComponents.WpfDock.eEventActionSource eventSource, bool raiseDockEvents) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool FloatWindow(global::Quire.DevComponents.WpfDock.DockWindowGroup dg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public bool FloatWindow(global::Quire.DevComponents.WpfDock.DockWindowGroup dg, global::System.Windows.Rect floatingRect, global::Quire.DevComponents.WpfDock.eEventActionSource eventSource, bool raiseDockEvents) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void FloatingWindowClosed(global::Quire.DevComponents.WpfDock.FloatingWindow floatingWindow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool CanConvertDockInfoToDockSide(global::Quire.DevComponents.WpfDock.eDockInfo di) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -254,15 +180,9 @@ public partial class DockSite : global::System.Windows.Controls.ContentControl
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfDock.DockSite.DockPositionInfo GetDockPosition(global::System.Windows.Point mousePos) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfDock.SplitPanel CreateSplitPanel(global::Quire.DevComponents.WpfDock.DockWindowGroup group) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.DevComponents.WpfDock.SplitPanel CreateSplitPanel(global::Quire.DevComponents.WpfDock.DockWindowGroup group, double size) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfDock.SplitPanel CreateSplitPanel(global::Quire.DevComponents.WpfDock.SplitPanel group) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfDock.SplitPanel CreateSplitPanel(global::Quire.DevComponents.WpfDock.SplitPanel sp, double size) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void RestoreLastDockPosition(global::Quire.DevComponents.WpfDock.DockWindowGroup dg) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void RestoreLastDockPosition(global::Quire.DevComponents.WpfDock.DockWindowGroup dg, bool focusSelectedDockWindow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -276,31 +196,11 @@ public partial class DockSite : global::System.Windows.Controls.ContentControl
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.UIElement GetDockElementFromId(global::Quire.DevComponents.WpfDock.SplitPanel panel, string id) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public bool DockWindow(global::Quire.DevComponents.WpfDock.DockWindowGroup group, global::Quire.DevComponents.WpfDock.eDockSide dockSide, bool fullSize) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     public bool DockWindow(global::Quire.DevComponents.WpfDock.DockWindowGroup group, global::Quire.DevComponents.WpfDock.eDockSide dockSide, bool fullSize, global::Quire.DevComponents.WpfDock.eEventActionSource actionSource, bool raiseEvents) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool DockWindow(global::Quire.DevComponents.WpfDock.DockWindow dw, global::Quire.DevComponents.WpfDock.eDockSide dockSide) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool DockWindow(global::Quire.DevComponents.WpfDock.DockWindow dw, global::Quire.DevComponents.WpfDock.eDockSide dockSide, global::Quire.DevComponents.WpfDock.eEventActionSource actionSource, bool raiseEvents) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool DockWindow(global::Quire.DevComponents.WpfDock.DockWindow dw, global::Quire.DevComponents.WpfDock.DockWindowGroup referenceGroup, global::Quire.DevComponents.WpfDock.eDockSide dockSide) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool DockWindow(global::Quire.DevComponents.WpfDock.DockWindow dw, global::Quire.DevComponents.WpfDock.DockWindowGroup referenceGroup, global::Quire.DevComponents.WpfDock.eDockSide dockSide, global::Quire.DevComponents.WpfDock.eEventActionSource actionSource, bool raiseEvents) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public bool DockWindow(global::Quire.DevComponents.WpfDock.DockWindow dw, global::Quire.DevComponents.WpfDock.eDockSide dockSide, bool fullSize, global::Quire.DevComponents.WpfDock.eEventActionSource actionSource, bool raiseEvents) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool DockWindow(global::Quire.DevComponents.WpfDock.DockWindowGroup group, global::Quire.DevComponents.WpfDock.eDockSide dockSide) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool DockWindow(global::Quire.DevComponents.WpfDock.DockWindowGroup group, global::Quire.DevComponents.WpfDock.eDockSide dockSide, global::Quire.DevComponents.WpfDock.eEventActionSource actionSource, bool raiseEvents) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool DockWindow(global::Quire.DevComponents.WpfDock.DockWindowGroup group, global::Quire.DevComponents.WpfDock.DockWindowGroup referenceGroup, global::Quire.DevComponents.WpfDock.eDockSide dockSide) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool DockWindow(global::Quire.DevComponents.WpfDock.DockWindowGroup group, global::Quire.DevComponents.WpfDock.DockWindowGroup referenceGroup, global::Quire.DevComponents.WpfDock.eDockSide dockSide, global::Quire.DevComponents.WpfDock.eEventActionSource actionSource, bool raiseEvents) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool DockWindow(global::Quire.DevComponents.WpfDock.DockWindowGroup group, global::Quire.DevComponents.WpfDock.SplitPanel sp, global::Quire.DevComponents.WpfDock.eDockSide dockSide) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public bool DockWindow(global::Quire.DevComponents.WpfDock.DockWindowGroup group, global::Quire.DevComponents.WpfDock.SplitPanel sp, global::Quire.DevComponents.WpfDock.eDockSide dockSide, global::Quire.DevComponents.WpfDock.eEventActionSource actionSource, bool raiseEvents) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private bool DockWindowInternal(global::Quire.DevComponents.WpfDock.DockWindowGroup group, global::System.Windows.UIElement referenceElem, global::Quire.DevComponents.WpfDock.eDockSide dockSide, global::Quire.DevComponents.WpfDock.eEventActionSource actionSource, bool raiseEvents) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -310,11 +210,7 @@ public partial class DockSite : global::System.Windows.Controls.ContentControl
     [global::Quire.Mirror.MirrorStub]
     private void UpdateIsDocument(global::Quire.DevComponents.WpfDock.DockWindowGroup group, bool isDocument) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void UpdateIsDocument(global::Quire.DevComponents.WpfDock.DockWindowGroup group) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private bool IsDockedAsDocument(global::Quire.DevComponents.WpfDock.DockWindowGroup group) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void Detach(global::Quire.DevComponents.WpfDock.DockWindowGroup group) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void Detach(global::Quire.DevComponents.WpfDock.DockWindowGroup group, bool pruneRedundantPanels) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -329,8 +225,6 @@ public partial class DockSite : global::System.Windows.Controls.ContentControl
     private global::Quire.DevComponents.WpfDock.AutoHidePanel GetAutoHidePanel(global::System.Windows.Controls.Dock d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfDock.AutoHidePanel CreateAutoHidePanel(global::System.Windows.Controls.Dock d) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void SetAutoHide(global::Quire.DevComponents.WpfDock.DockWindow dw, bool autoHide, global::Quire.DevComponents.WpfDock.eEventActionSource actionSource) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal void SetAutoHide(global::Quire.DevComponents.WpfDock.DockWindow dw, bool autoHide, global::Quire.DevComponents.WpfDock.eEventActionSource actionSource, bool enableAnimation) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -378,15 +272,9 @@ public partial class DockSite : global::System.Windows.Controls.ContentControl
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.List<global::Quire.DevComponents.WpfDock.DockWindow> GetDockWindows() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public global::System.Collections.Generic.List<global::Quire.DevComponents.WpfDock.FloatingWindow> GetFloatingWindows() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void GetDockWindows(global::System.Collections.Generic.List<global::Quire.DevComponents.WpfDock.DockWindow> list, global::Quire.DevComponents.WpfDock.AutoHidePanel parent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void GetDockWindows(global::System.Collections.Generic.List<global::Quire.DevComponents.WpfDock.DockWindow> list, global::Quire.DevComponents.WpfDock.SplitPanel parent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void GetDockWindows(global::System.Collections.Generic.List<global::Quire.DevComponents.WpfDock.DockWindow> list, global::Quire.DevComponents.WpfDock.IDockWindowGroup parent) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal void OpenAutoHidePopup(global::Quire.DevComponents.WpfDock.DockWindow dw) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfDock.Primitives.AutoHideAdorner GetAutoHideAdorner() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -402,12 +290,6 @@ public partial class DockSite : global::System.Windows.Controls.ContentControl
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfDock.IDockSiteLayoutSerializer GetDockSiteLayoutSerializer() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void DockWindowActivated(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnDockWindowActivated(global::Quire.DevComponents.WpfDock.DockWindow dockWindow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void DockWindowDeactivated(object sender, global::System.Windows.RoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void OnDockWindowDeactivated(global::Quire.DevComponents.WpfDock.DockWindow dockWindow) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public void ChangeColorScheme(global::Quire.DevComponents.WpfDock.eDockVisualStyle colorTable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
@@ -421,12 +303,6 @@ public partial class DockSite : global::System.Windows.Controls.ContentControl
     private global::System.Windows.ResourceDictionary GetColorTable(global::Quire.DevComponents.WpfDock.eDockVisualStyle colorTable) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.ResourceDictionary CreateColorScheme(global::System.Windows.ResourceDictionary rd, global::System.Windows.Media.Color baseColor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfDock.ColorFactory GetColorFactory(global::System.Windows.Media.Color baseColor) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnLicenseKeyChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private void OnLicenseKeyChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnRender(global::System.Windows.Media.DrawingContext dc) => base.OnRender(dc);
 

@@ -13,10 +13,4 @@ public partial class CancelSourceRoutedEventArgs : global::Quire.DevComponents.W
 {
     [global::Quire.Mirror.MirrorStub]
     public bool Cancel;
-    [global::Quire.Mirror.MirrorStub]
-    public CancelSourceRoutedEventArgs() { }
-    [global::Quire.Mirror.MirrorStub]
-    public CancelSourceRoutedEventArgs(global::System.Windows.RoutedEvent e) { }
-    [global::Quire.Mirror.MirrorStub]
-    public CancelSourceRoutedEventArgs(global::System.Windows.RoutedEvent e, object source) { }
 }

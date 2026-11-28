@@ -11,8 +11,4 @@ namespace Quire.DevComponents.WpfDock.Primitives;
 [global::Quire.Mirror.MirrorOf("DevComponents.WpfDock.Primitives.EmptyWindow, DevComponents.WpfDock")]
 internal partial class EmptyWindow : global::System.Windows.Window
 {
-    [global::Quire.Mirror.MirrorStub]
-    public EmptyWindow() { }
-    [global::Quire.Mirror.MirrorStub]
-    protected override void OnSourceInitialized(global::System.EventArgs e) => base.OnSourceInitialized(e);
 }

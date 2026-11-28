@@ -11,12 +11,4 @@ namespace Quire.DevComponents.WpfDock;
 [global::Quire.Mirror.MirrorOf("DevComponents.WpfDock.DockRoutedEventArgs, DevComponents.WpfDock")]
 public partial class DockRoutedEventArgs : global::Quire.DevComponents.WpfDock.CancelSourceRoutedEventArgs
 {
-    [global::Quire.Mirror.MirrorStub]
-    public readonly object DockControl;
-    [global::Quire.Mirror.MirrorStub]
-    public DockRoutedEventArgs(global::System.Windows.RoutedEvent e) { }
-    [global::Quire.Mirror.MirrorStub]
-    public DockRoutedEventArgs(global::System.Windows.RoutedEvent e, object source) { }
-    [global::Quire.Mirror.MirrorStub]
-    public DockRoutedEventArgs(global::System.Windows.RoutedEvent e, object source, object dockControl, global::Quire.DevComponents.WpfDock.eEventActionSource actionSource) { }
 }

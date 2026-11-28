@@ -12,17 +12,9 @@ namespace Quire.DevComponents.WpfDock;
 public partial class AutoHidePanel : global::System.Windows.Controls.ItemsControl
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty TabOrientationProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly global::System.Windows.DependencyPropertyKey TabOrientationPropertyKey;
-    [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty IsBeginGroupProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Controls.Orientation TabOrientation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public static bool GetIsBeginGroup(global::System.Windows.UIElement element) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     public static void SetIsBeginGroup(global::System.Windows.UIElement element, bool doc) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public AutoHidePanel() { }
 }

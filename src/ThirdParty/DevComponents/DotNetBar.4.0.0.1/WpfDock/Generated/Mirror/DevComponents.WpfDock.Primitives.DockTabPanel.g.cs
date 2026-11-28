@@ -14,12 +14,6 @@ public partial class DockTabPanel : global::System.Windows.Controls.Panel
     [global::Quire.Mirror.MirrorStub]
     public static readonly global::System.Windows.DependencyProperty PanelAlignmentProperty;
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty BorderInnerBrushProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty BackgroundInnerProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty BorderBrushProperty;
-    [global::Quire.Mirror.MirrorStub]
     private double m_TabsSize;
     [global::Quire.Mirror.MirrorStub]
     private double m_AvailableWidth;
@@ -29,12 +23,6 @@ public partial class DockTabPanel : global::System.Windows.Controls.Panel
     private global::System.Windows.Media.Pen m_BorderPen;
     [global::Quire.Mirror.MirrorStub]
     private global::System.Windows.Media.Pen m_BorderInnerPen;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush BorderInnerBrush { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush BorderBrush { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Media.Brush BackgroundInner { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected override global::System.Windows.Size MeasureOverride(global::System.Windows.Size availableSize) => base.MeasureOverride(availableSize);
     [global::Quire.Mirror.MirrorStub]
@@ -54,11 +42,7 @@ public partial class DockTabPanel : global::System.Windows.Controls.Panel
     [global::Quire.Mirror.MirrorStub]
     private static bool IsPanelAlignmentValid(object o) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    private static void OnBorderBrushChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private void OnBorderBrushChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    private static void OnBorderInnerBrushChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void OnBorderInnerBrushChanged() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]

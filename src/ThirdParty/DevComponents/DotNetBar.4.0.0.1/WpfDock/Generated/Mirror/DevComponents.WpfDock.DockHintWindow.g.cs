@@ -13,8 +13,4 @@ internal partial class DockHintWindow : global::Quire.DevComponents.WpfDock.Prim
 {
     [global::Quire.Mirror.MirrorStub]
     internal global::System.Windows.Documents.AdornerLayer GetAdornerLayer() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    internal global::System.Windows.UIElement GetElementToAdorn() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public DockHintWindow() { }
 }

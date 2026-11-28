@@ -12,15 +12,5 @@ namespace Quire.XamlGeneratedNamespace;
 public sealed partial class GeneratedInternalTypeHelper : global::System.Windows.Markup.InternalTypeHelper
 {
     [global::Quire.Mirror.MirrorStub]
-    protected override object CreateInstance(global::System.Type type, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override object GetPropertyValue(global::System.Reflection.PropertyInfo propertyInfo, object target, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void SetPropertyValue(global::System.Reflection.PropertyInfo propertyInfo, object target, object value, global::System.Globalization.CultureInfo culture) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     protected override global::System.Delegate CreateDelegate(global::System.Type delegateType, object target, string handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    protected override void AddEventHandler(global::System.Reflection.EventInfo eventInfo, object target, global::System.Delegate handler) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public GeneratedInternalTypeHelper() { }
 }

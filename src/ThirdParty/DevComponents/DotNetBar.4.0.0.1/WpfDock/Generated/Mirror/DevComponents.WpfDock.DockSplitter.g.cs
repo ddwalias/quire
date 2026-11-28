@@ -12,12 +12,6 @@ namespace Quire.DevComponents.WpfDock;
 public partial class DockSplitter : global::System.Windows.Controls.Control
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty OrientationProperty;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.UIElement m_LeftControl;
-    [global::Quire.Mirror.MirrorStub]
-    private global::System.Windows.UIElement m_RightControl;
-    [global::Quire.Mirror.MirrorStub]
     private global::Quire.DevComponents.WpfDock.Primitives.DockSplitterAdorner m_PreviewAdorner;
     [global::Quire.Mirror.MirrorStub]
     private bool m_SplitterPreview;
@@ -25,12 +19,6 @@ public partial class DockSplitter : global::System.Windows.Controls.Control
     private int m_MinResizeOffset;
     [global::Quire.Mirror.MirrorStub]
     private int m_MaxResizeOffset;
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Controls.Orientation Orientation { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.UIElement LeftControl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.UIElement RightControl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     protected override void OnMouseDown(global::System.Windows.Input.MouseButtonEventArgs e) => base.OnMouseDown(e);
     [global::Quire.Mirror.MirrorStub]
@@ -45,6 +33,4 @@ public partial class DockSplitter : global::System.Windows.Controls.Control
     private void ApplyResize() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     protected override void OnLostMouseCapture(global::System.Windows.Input.MouseEventArgs e) => base.OnLostMouseCapture(e);
-    [global::Quire.Mirror.MirrorStub]
-    public DockSplitter() { }
 }

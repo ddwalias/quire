@@ -12,17 +12,5 @@ namespace Quire.DevComponents.WpfDock;
 public partial class DockHint : global::System.Windows.Controls.Control
 {
     [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty DockHintSideProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public static readonly global::System.Windows.DependencyProperty PartHitTestSizeProperty;
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.DevComponents.WpfDock.eDockHintSide DockHintSide { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::System.Windows.Size PartHitTestSize { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public DockHint() { }
-    [global::Quire.Mirror.MirrorStub]
-    internal DockHint(global::Quire.DevComponents.WpfDock.eDockHintSide dh) { }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.DevComponents.WpfDock.eDockHintHitTest HitTest(global::System.Windows.Point p) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 }

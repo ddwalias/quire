@@ -12,10 +12,6 @@ namespace Quire.DevComponents.WpfDock;
 public partial class DockSiteDesignExtension
 {
     [global::Quire.Mirror.MirrorStub]
-    private global::Quire.DevComponents.WpfDock.DockSite _DockSite;
-    [global::Quire.Mirror.MirrorStub]
-    public DockSiteDesignExtension(global::Quire.DevComponents.WpfDock.DockSite dockSite) { }
-    [global::Quire.Mirror.MirrorStub]
     public void StartWindowDrag(global::Quire.DevComponents.WpfDock.DockWindowGroup dockWindowGroup, bool dragSelectedTabOnly, global::Quire.DevComponents.WpfDock.eEventActionSource actionSource, global::Quire.DevComponents.WpfDock.IDockOperations dockOperations) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private void DockSiteAfterDocked(object sender, global::Quire.DevComponents.WpfDock.DockRoutedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
