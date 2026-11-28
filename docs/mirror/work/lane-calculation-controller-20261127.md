@@ -6,6 +6,7 @@
 - Release IL: PASS, 225 checked, 0 failures (last gate before commit).
 - Blocked by modopt IsLong on `IEngine` handle calls (one-line note each): `HandleCalculateNow` (CalculateNow), `HandleUnitSystemUpdated` (Update), `HandleCalculatableMoved` (MoveAfter), `HandleCalculatableRemoved` (Remove), `HandleCalculatableAdded` (AddRegionA), `AddCalculatableChild` (AddChild).
 - Blocked by D7 embedded NoPIA `Mathcad.IValue`: `DataExchangeHandler.SetValue`, `DataExchangeHandler.GetValue`.
+- Resolved 2026-11-28 (D22): the Mathcad COM interop types are now embedded the way the original does it (`67c125450`, proofs `3c73959c2`; see lane-nopia-20261128.md). `DataExchangeHandler.SetValue` and `GetValue` match Release IL.
 - Parked, closure/method ordinal (logic matches, ordinal differs): `Dispose` (lambda `<Dispose>b__12_0` vs ours 21), `HandleEngineBusy` (display class 36 vs ours 27).
 - Parked, IL shape: `DumpGetHandleToCalculatableMap` (foreach loop body two instructions longer than Mathcad), `HandleWaitForCalculationIdle` (first mismatch in the `!_evaluatingEnabled` branch store order after two passes).
 - Not yet attempted: `HandleEngineNodeCallback` lives in the Mirrored file owned by another lane.

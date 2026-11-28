@@ -24,3 +24,4 @@
    - In Quire, `Quire.Calculation` references `Quire.Automation.Native` (`[automationmgd]Mathcad.IValue`).
    - Any method capturing `IValue` in a closure emits a DisplayClass field with `[automationmgd]Mathcad.IValue`, failing comparison against `[ptc.calculation]Mathcad.IValue`.
    - Blocks: `DataExchangeHandler.SetValue` and `GetValue` (parked as unmarked placeholder stubs to preserve method ordinals 11 and 12).
+   - Resolved 2026-11-28 (D22): the Mathcad COM interop types are now embedded the way the original does it (`67c125450`, proofs `3c73959c2`; see lane-nopia-20261128.md). `DataExchangeHandler.SetValue` and `GetValue` match Release IL.

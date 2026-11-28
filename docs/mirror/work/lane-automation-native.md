@@ -12,6 +12,7 @@
 - Stubs removed: `Generated/Mirror/Automation.SymbolicValue.g.cs` (11 stubs removed).
 - Release IL report: `python tools/validation/release_il.py --base main --project Quire.Automation.Native` — PASS, 320 checked (was 309 on base, +11 exact), 0 failures. Landed on main: `09db4b3a1` (receipt: `gate-il-182001f500b0.json`).
 - Remaining: 58 stubs and 4 unpaired members left in `componentsmgd.dll` (`VSDataValue`, `McxComponent`, `VSValueFactory`), concretely blocked on cross-assembly interop mapping (`[interop.mathcad]` vs `[automationmgd]` for `Mathcad.IMatrixValue`).
+- Resolved 2026-11-28 (D22): the Mathcad COM interop types are now embedded the way the original does it (`67c125450`, proofs `3c73959c2`; see lane-nopia-20261128.md). `Quire.Componentsmgd` no longer aliases the interop assembly, and `VSValueFactory`/`VSDataValue.GetElement`/`SetElement` match Release IL.
 
 ## Batch 8 — MatrixValueProxy and MatrixValueData
 

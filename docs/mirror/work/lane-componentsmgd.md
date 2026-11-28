@@ -6,6 +6,7 @@
 - Exact members: `McxComponent.ThreadsPerDocument`, `Origin`, `CWD`, `Executive`, `LastError`, and `ShouldScale`; the `PROGIDS`/`MultiThreaded` initialization also pairs exactly.
 - Release IL: `python tools/validation/release_il.py --base main --project Quire.Componentsmgd` PASS; 90 checked, 0 failures (`.mirror-cache/release-il-1f7f755e2e5d/release-il.json`).
 - Remaining: 19 stubs (10 `McxComponent`, 8 `VSDataValue`, 1 `VSValueFactory`). The 9 `VSDataValue`/`VSValueFactory` methods use `Mathcad.IMatrixValue` across the `interop.mathcad` boundary noted below; the 10 `McxComponent` methods remain to triage.
+- Resolved 2026-11-28 (D22): the Mathcad COM interop types are now embedded the way the original does it (`67c125450`, proofs `3c73959c2`; see lane-nopia-20261128.md). `VSDataValue.GetElement` and `SetElement` are exact; the other `VSDataValue`/`McxComponent.FixInputs` stubs are no longer blocked on the `IMatrixValue` mapping and are plain stubs to implement.
 
 - Owner: Componentsmgd lane; branch `feature/componentsmgd-agy`.
 - Target: `src/Quire.Componentsmgd` (C# net10.0-windows, original assembly `componentsmgd.dll`).
