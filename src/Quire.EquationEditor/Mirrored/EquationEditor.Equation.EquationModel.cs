@@ -949,4 +949,10 @@ public partial class EquationModel
         NavigatorState state = new NavigatorState(node, position);
         NavigatorState = state;
     }
+
+    [MirrorVerified("Release IL")]
+    public void OnTraverseForward(ref bool handled) => handled = a(Direction.Right);
+
+    [MirrorVerified("Release IL")]
+    public void OnTraverseBackward(ref bool handled) => handled = a(Direction.Left);
 }

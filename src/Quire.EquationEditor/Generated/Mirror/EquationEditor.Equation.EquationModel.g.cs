@@ -341,10 +341,6 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     [global::Quire.Mirror.MirrorStub]
     public void OnCanTraverseBackward(ref bool canTraverse) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
-    public void OnTraverseForward(ref bool handled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
-    public void OnTraverseBackward(ref bool handled) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     private bool a(global::Quire.Direction A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     private global::Quire.DelegateFunction0<bool> a(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
