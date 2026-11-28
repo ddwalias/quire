@@ -2540,6 +2540,7 @@ private bool CanDeleteActiveOrSelectedItems()
         return !ActiveOrSelectedItems.IsNullOrEmpty();
     }
 
+    [global::Quire.Mirror.MirrorStub, global::Quire.Mirror.MirrorBlocked("Release IL branch shape differs at the first PageLayoutMode guard; source forms probed")]
 private bool CanTogglePageLayout(object param)
     => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -2934,6 +2935,7 @@ private void SetInsertionPointOnAppropriatePage(Point insertionPoint)
         ClearSelection();
     }
 
+    [global::Quire.Mirror.MirrorStub, global::Quire.Mirror.MirrorBlocked("Mathcad emits callvirt for WorksheetCommand.Execute on a nonvirtual instance")]
 private void DeleteItemIfNeeded(global::Quire.Controls.Core.IWhiteboardItem item)
     => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -3190,7 +3192,13 @@ private void ActivateAndNavigateIntoArea(global::Quire.Controls.Core.ICollapsibl
     }
 
 private void UpdateNonprintableSpaceIndicatorWhenAreaHeightChanged(global::Quire.Controls.Core.ICollapsibleAreaControl area)
-    => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    {
+        if (area.WhiteboardItems.Any(child => area.GetItemLocation(child).X.IsGreaterThan(PageLayout.PageBodyWidth))
+            || area.InsertionPoint.X.IsGreaterThan(PageLayout.PageBodyWidth))
+        {
+            UpdateNonprintableSpaceIndicator(ItemManager.GetContainingPage(area) ?? ActivePage);
+        }
+    }
 
 private void AddSizeChangedHandlerToItemMap(IWhiteboardItem item, WhiteboardItemSizeChangedEventHandler eventHandler)
     {
@@ -3982,9 +3990,11 @@ private bool CanInsertOperator(object operatorName)
 private void MoveByPage(Direction direction)
     => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
+    [global::Quire.Mirror.MirrorStub, global::Quire.Mirror.MirrorBlocked("Modern Roslyn static Where delegate changes the branch shape at #18")]
 private bool CanSeparateOverlappedItems(global::Quire.Dimension dimension)
     => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
+    [global::Quire.Mirror.MirrorStub, global::Quire.Mirror.MirrorBlocked("Modern Roslyn static Where delegate changes the branch shape at #8")]
 private void SeparateOverlappedItems(global::Quire.Dimension dimension)
     => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
@@ -4332,6 +4342,7 @@ private static bool IsPageWideSizablePredicate(IWhiteboardItem item)
         return item is IPageWideSizable;
     }
 
+    [global::Quire.Mirror.MirrorStub, global::Quire.Mirror.MirrorBlocked("Release IL local slot differs at #17 after the active child pattern match")]
 private void UpdateCalculationButtonStatus()
     => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
