@@ -80,8 +80,6 @@ public partial class MathNode : global::Quire.EquationEditor.Tree.IMathNodeDescr
     [global::Quire.Mirror.MirrorStub]
     public override string ToString() => base.ToString();
     [global::Quire.Mirror.MirrorStub]
-    public static global::Quire.EquationEditor.Tree.INodeInfo CreateNodeInfo(global::System.Type infoType, object initialInfo) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Native.PtcEquationEditor.av e() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
     internal global::Quire.Native.PtcEquationEditor.av a(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();

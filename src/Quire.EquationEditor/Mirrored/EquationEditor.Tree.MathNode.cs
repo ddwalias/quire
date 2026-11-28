@@ -1,4 +1,5 @@
 using System;
+using System.Reflection;
 
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -924,6 +925,31 @@ public partial class MathNode
         return PathFromAncestor(EquationRootNode);
     }
 
+    public static INodeInfo CreateNodeInfo(Type infoType, object initialInfo)
+    {
+        if (infoType == null)
+        {
+            return null;
+        }
+        object[] parameters = new object[1];
+        parameters[0] = initialInfo;
+        if (initialInfo != null)
+        {
+            Type[] parameterTypes = new Type[1];
+            parameterTypes[0] = initialInfo.GetType();
+            ConstructorInfo constructor = infoType.GetConstructor(parameterTypes);
+            if (constructor == null && infoType.IsInstanceOfType(initialInfo))
+            {
+                parameterTypes[0] = infoType;
+                constructor = infoType.GetConstructor(parameterTypes);
+            }
+            if (constructor != null)
+            {
+                return constructor.Invoke(parameters) as INodeInfo;
+            }
+        }
+        return infoType.GetConstructor(Type.EmptyTypes).Invoke(null) as INodeInfo;
+    }
     public bool IsInSameFamily(MathNode longLostCousin)
     {
         if (longLostCousin == null)
