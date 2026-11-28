@@ -1554,7 +1554,17 @@ public partial class PlotControl
 			_primaryResultAxis.UpdateAxisOriginPositions();
 		}
 	}
-    public global::Quire.PersistentDataObjects.plotEquation[] PrimaryYAxisEquationDataObjects { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public global::Quire.PersistentDataObjects.plotEquation[] PrimaryYAxisEquationDataObjects
+    {
+        get => GetPlotEquationDataObjects(PrimaryResultAxis);
+        set
+        {
+            AddEquations(PrimaryResultAxis, value.Length);
+            SetPlotEquationDataObjects(PrimaryResultAxis, value);
+            AddEquations(RangeAxis, _xEquationsToAdd.Length - 1);
+            SetPlotEquationDataObjects(RangeAxis, _xEquationsToAdd);
+        }
+    }
     private static global::Quire.PersistentDataObjects.plotEquation[] GetPlotEquationDataObjects(global::Quire.Controls.Plots.Presenter.IPlotAxisView axisView) {
 		plotEquation[] array = new plotEquation[axisView.EquationCount];
 		for (int num = 0; num < axisView.EquationCount; num++)
@@ -1575,8 +1585,26 @@ public partial class PlotControl
 			axisView.AddEquation(string.Empty);
 		}
 	}
-    private static global::Quire.PersistentDataObjects.textType[] GetPlotLegendItemsDataObjects(global::Quire.Controls.Plots.PlotLegend plotLegend) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void SetPlotLegendItemsDataObjects(global::Quire.Controls.Plots.PlotLegend plotLegend, global::Quire.PersistentDataObjects.textType[] legendlabelitems) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+    private static global::Quire.PersistentDataObjects.textType[] GetPlotLegendItemsDataObjects(global::Quire.Controls.Plots.PlotLegend plotLegend)
+    {
+        global::Quire.PersistentDataObjects.textType[] dataObjects = new global::Quire.PersistentDataObjects.textType[plotLegend.PlotLegendItemsCount];
+        global::Quire.Controls.Plots.Presenter.IPlotLegendItem[] items = plotLegend.PlotLegendListEnumerable.ToArray();
+        for (int index = 0; index < plotLegend.PlotLegendItemsCount; index++)
+        {
+            dataObjects[index] = items[index].GetDataObject(null);
+        }
+        return dataObjects;
+    }
+
+    private void SetPlotLegendItemsDataObjects(global::Quire.Controls.Plots.PlotLegend plotLegend, global::Quire.PersistentDataObjects.textType[] legendlabelitems)
+    {
+        global::Quire.Controls.Plots.Presenter.IPlotLegendItem[] items = plotLegend.PlotLegendListEnumerable.ToArray();
+        DebugTools.DevAssert(items.Length == legendlabelitems.Length, "The number of children of PlotLegend does not match the value.");
+        for (int index = 0; index < legendlabelitems.Length; index++)
+        {
+            items[index].SetDataObject(null, legendlabelitems[index]);
+        }
+    }
     public virtual void SetGraphSizeForXamlSerialization() {
 	}
     public override void EndInit() {
@@ -1594,14 +1622,104 @@ public partial class PlotControl
 			InCustomInitialization = false;
 		}
 	}
-    public global::Quire.PersistentDataObjects.plotEquation[] XAxisEquationDataObjects { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    public global::Quire.PersistentDataObjects.plotBaseTypeLegend PlotLegendDataObject { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    public global::Quire.PersistentDataObjects.plotTitleType PlotTitleDataObject { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    public global::Quire.PersistentDataObjects.plotTitleType PlotXAxisTitleForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    public global::Quire.PersistentDataObjects.plotTitleType PlotYAxisTitleForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    public global::Quire.Controls.Plots.PlotAxis PlotXAxisForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    public global::Quire.Controls.Plots.PlotAxis PlotYAxisForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    public global::System.Windows.Size PlotGraphSizeForXamlSerialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
+    public global::Quire.PersistentDataObjects.plotEquation[] XAxisEquationDataObjects
+    {
+        get => GetPlotEquationDataObjects(RangeAxis);
+        set
+        {
+            RangeAxis.AddEquation(string.Empty);
+            _xEquationsToAdd = value;
+        }
+    }
+
+    public global::Quire.PersistentDataObjects.plotBaseTypeLegend PlotLegendDataObject
+    {
+        get
+        {
+            if (_plotLegend == null)
+            {
+                return null;
+            }
+            global::Quire.PersistentDataObjects.plotBaseTypeLegend legendData = (global::Quire.PersistentDataObjects.plotBaseTypeLegend)_model.PlotLegendModel.GetRegionPersistentData(null);
+            legendData.legendlabelitems = GetPlotLegendItemsDataObjects(_plotLegend);
+            return legendData;
+        }
+        set
+        {
+            _model.PlotLegendModel.SetRegionPersistentData(null, value);
+            if (_plotLegend != null && !double.IsNaN(_model.PlotLegendModel.LegendWidth))
+            {
+                ((global::Quire.Controls.Plots.Presenter.IPlotLegend)_plotLegend).LegendWidth = _model.PlotLegendModel.LegendWidth;
+            }
+            if (value != null)
+            {
+                SetPlotLegendItemsDataObjects(_plotLegend, value.legendlabelitems);
+            }
+        }
+    }
+
+    public global::Quire.PersistentDataObjects.plotTitleType PlotTitleDataObject
+    {
+        get
+        {
+            if (_plotTitleModel.IsDirty)
+            {
+                return (global::Quire.PersistentDataObjects.plotTitleType)_plotTitleModel.GetRegionPersistentData(null);
+            }
+            return null;
+        }
+        set => _plotTitleModel.SetRegionPersistentData(null, value);
+    }
+
+    public global::Quire.PersistentDataObjects.plotTitleType PlotXAxisTitleForXamlSerialization
+    {
+        get
+        {
+            global::Quire.Controls.Plots.IPlotTitleModel axisTitleModel = _model.rangeAxis.AxisTitleModel;
+            if (axisTitleModel != null && axisTitleModel.IsDirty)
+            {
+                return (global::Quire.PersistentDataObjects.plotTitleType)_model.rangeAxis.AxisTitleModel.GetRegionPersistentData(null);
+            }
+            return null;
+        }
+        set => _model.rangeAxis.AxisTitleModel?.SetRegionPersistentData(null, value);
+    }
+
+    public global::Quire.PersistentDataObjects.plotTitleType PlotYAxisTitleForXamlSerialization
+    {
+        get
+        {
+            global::Quire.Controls.Plots.IPlotTitleModel axisTitleModel = _model.PrimaryResultAxis.AxisTitleModel;
+            if (axisTitleModel != null && axisTitleModel.IsDirty)
+            {
+                return (global::Quire.PersistentDataObjects.plotTitleType)_model.PrimaryResultAxis.AxisTitleModel.GetRegionPersistentData(null);
+            }
+            return null;
+        }
+        set => _model.PrimaryResultAxis.AxisTitleModel?.SetRegionPersistentData(null, value);
+    }
+
+    public global::Quire.Controls.Plots.PlotAxis PlotXAxisForXamlSerialization
+    {
+        get => PlotGraphAxis.GetPlotAxis(RangeAxis);
+        set => PlotGraphAxis.SetPlotAxis(RangeAxis, value);
+    }
+
+    public global::Quire.Controls.Plots.PlotAxis PlotYAxisForXamlSerialization
+    {
+        get => PlotGraphAxis.GetPlotAxis(PrimaryResultAxis);
+        set => PlotGraphAxis.SetPlotAxis(PrimaryResultAxis, value);
+    }
+
+    public global::System.Windows.Size PlotGraphSizeForXamlSerialization
+    {
+        get => _model.GraphSize;
+        set
+        {
+            _model.GraphSize = value;
+            SetGraphSizeForXamlSerialization();
+        }
+    }
     public global::Quire.Calculation.Core.EngineResult[] EngineResults { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     internal double GraphMinWidth { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     private bool IsNumberOfPointsAvailable { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
