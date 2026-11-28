@@ -56,9 +56,6 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     [global::Quire.Mirror.MirrorName("y")]
     private int y__;
     [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("z")]
-    private global::Quire.Calculation.Core.EngineError z__;
-    [global::Quire.Mirror.MirrorStub]
     [global::Quire.Mirror.MirrorName("ab")]
     private global::Quire.EquationEditor.Tree.MathNode ab__;
     [global::Quire.Mirror.MirrorStub]
@@ -85,15 +82,11 @@ public partial class EquationModel : global::Quire.EquationEditor.IEquationModel
     [global::Quire.Mirror.MirrorStub]
     public string CurrentSExpression { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
-    public global::Quire.EquationEditor.Tree.MathNode EquationRoot { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
     public global::Quire.EquationEditor.Tree.MathNode EvaluationRoot { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool IsScriptableControl { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::Quire.Calculation.Core.IDataExchangeModel DataExchangeModel { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public global::Quire.Calculation.Core.EngineError CalculationError { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public global::System.Collections.Generic.List<global::System.ValueTuple<global::Quire.EquationEditor.RedefinitionWarning, global::Quire.EquationEditor.Tree.MathNode>> Warnings { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); internal set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]

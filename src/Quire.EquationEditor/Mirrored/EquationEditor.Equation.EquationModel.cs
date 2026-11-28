@@ -10,11 +10,14 @@ using Quire.Wpf;
 using System.Windows;
 using Quire.EquationEditor.Tree.Transform;
 using Quire.Native.PtcEquationEditor;
+using Quire.Undo;
 
 namespace Quire.EquationEditor.Equation;
 
 public partial class EquationModel
 {
+    [MirrorName("z")]
+    private EngineError z__;
     private volatile CalculatingStatus aw;
     private bool a6;
     private bool bb;
@@ -955,4 +958,67 @@ public partial class EquationModel
 
     [MirrorVerified("Release IL")]
     public void OnTraverseBackward(ref bool handled) => handled = a(Direction.Left);
+
+    [MirrorVerified("Release IL")]
+    public MathNode EquationRoot
+    {
+        get => s__[0];
+        set
+        {
+            h_ closure = new h_();
+            closure.a_ = this;
+            closure.b = value;
+            if (closure.b == null)
+            {
+                throw new ArgumentNullException("value");
+            }
+
+            if (closure.b == s__.Children[0])
+            {
+                return;
+            }
+
+            if (CommandScope.CanUndoTreeOperations)
+            {
+                i_ command = new i_();
+                command.b = closure;
+                command.a_ = s__[0];
+                CommandBuffer.Execute("Set Root Node", new DelegateFunction0<bool>(command.b.a), new Delegate0(command.a));
+            }
+            else
+            {
+                s__[0] = closure.b;
+            }
+
+            NavigatorState state = bq.c(Direction.Left, EquationRoot).f();
+            FireExpressionValueChanged(state, true);
+            q = state;
+            HookupDescendantsMatrixFormatChanged();
+            if (s__[0].Descriptor is MathNodeDescriptorPiggyback && at != null)
+            {
+                at(this);
+            }
+        }
+    }
+
+    [MirrorVerified("Release IL")]
+    public EngineError CalculationError
+    {
+        get => z__;
+        set
+        {
+            if (z__ == value)
+            {
+                return;
+            }
+
+            EngineError previous = z__;
+            z__ = value;
+            if (am != null)
+            {
+                PropertyChangedEventArgs<EngineError> args = new PropertyChangedEventArgs<EngineError>("CalculationError", previous, value);
+                am(args);
+            }
+        }
+    }
 }
