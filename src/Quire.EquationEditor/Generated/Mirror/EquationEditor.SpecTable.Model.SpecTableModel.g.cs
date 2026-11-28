@@ -12,42 +12,9 @@ namespace Quire.EquationEditor.SpecTable.Model;
 public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISpecTableModel, global::Quire.Controls.Core.ISupportCustomInitialization
 {
     [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("a")]
-    internal const int a__ = 3;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("b")]
-    private readonly global::System.Collections.Generic.List<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn> b__;
-    [global::Quire.Mirror.MirrorStub]
-    [global::Quire.Mirror.MirrorName("c")]
-    private readonly global::System.Collections.Generic.Dictionary<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn, global::Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper> c__;
-    [global::Quire.Mirror.MirrorStub]
-    private bool m;
-    [global::Quire.Mirror.MirrorStub]
-    private static readonly string n;
-    [global::Quire.Mirror.MirrorStub]
-    private bool o;
-    [global::Quire.Mirror.MirrorStub]
     public bool IsRestrictedReadOnly { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); private set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     [global::Quire.Mirror.MirrorStub]
     public bool InCustomInitialization { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); set => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Delegate1<global::Quire.EquationEditor.IEquationModel> CellAdded;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Delegate0 TableChanged;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Delegate1<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn> ColumnAdded;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Delegate1<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn> ColumnRemoved;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::Quire.Delegate0 RequestRemove;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action RequestClearSelection;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<int, int> RequestAddSelection;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action RequestUpdateCellsVisibility;
-    [global::Quire.Mirror.MirrorStub]
-    public event global::System.Action<bool> RestrictedReadonlyChanged;
     [global::Quire.Mirror.MirrorStub]
     public static global::Quire.EquationEditor.SpecTable.Model.SpecTableModel DefinitionsListToSpecTableModel(global::System.Collections.Generic.List<global::Quire.EquationEditor.Tree.MathNode> definitionsMathNodesList) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     [global::Quire.Mirror.MirrorStub]
@@ -478,40 +445,4 @@ public partial class SpecTableModel : global::Quire.EquationEditor.SpecTable.ISp
         internal void a(global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 
-    [global::Quire.Mirror.MirrorOf("Ptc.EquationEditor.SpecTable.Model.SpecTableModel+n, Ptc.EquationEditor")]
-    private sealed partial class n_ : global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper>, global::System.Collections.IEnumerable, global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper>, global::System.Collections.IEnumerator, global::System.IDisposable
-    {
-        [global::Quire.Mirror.MirrorStub]
-        [global::Quire.Mirror.MirrorName("a")]
-        private int a_;
-        [global::Quire.Mirror.MirrorStub]
-        [global::Quire.Mirror.MirrorName("b")]
-        private global::Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper b_;
-        [global::Quire.Mirror.MirrorStub]
-        [global::Quire.Mirror.MirrorName("c")]
-        private int c_;
-        [global::Quire.Mirror.MirrorStub]
-        public global::Quire.EquationEditor.SpecTable.Model.SpecTableModel d;
-        [global::Quire.Mirror.MirrorStub]
-        [global::Quire.Mirror.MirrorName("e")]
-        private global::System.Collections.Generic.List<global::Quire.EquationEditor.SpecTable.Model.ISpecTableColumn>.Enumerator e_;
-        [global::Quire.Mirror.MirrorStub]
-        public n_(int A_0) { }
-        [global::Quire.Mirror.MirrorStub]
-        void global::System.IDisposable.Dispose() { }
-        [global::Quire.Mirror.MirrorStub]
-        bool global::System.Collections.IEnumerator.MoveNext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        private void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        void global::System.Collections.IEnumerator.Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper> global::System.Collections.Generic.IEnumerable<global::Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper>.GetEnumerator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-        [global::Quire.Mirror.MirrorStub]
-        global::Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper global::System.Collections.Generic.IEnumerator<global::Quire.EquationEditor.SpecTable.Model.SpecTableCalculatableWrapper>.Current { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-        [global::Quire.Mirror.MirrorStub]
-        object global::System.Collections.IEnumerator.Current { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
-    }
 }

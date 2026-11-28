@@ -1,4 +1,5 @@
 #nullable disable
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
 using Quire.Calculation.Core;
@@ -11,6 +12,48 @@ namespace Quire.EquationEditor.SpecTable.Model;
 
 public partial class SpecTableModel
 {
+    [MirrorName("a")]
+    internal const int a__ = 3;
+
+    [MirrorName("b")]
+    private readonly List<ISpecTableColumn> b__ = new();
+
+    [MirrorName("c")]
+    private readonly Dictionary<ISpecTableColumn, SpecTableCalculatableWrapper> c__ = new();
+
+    [field: MirrorName("d")]
+    public event global::Quire.Delegate1<IEquationModel> CellAdded;
+
+    [field: MirrorName("e")]
+    public event global::Quire.Delegate0 TableChanged;
+
+    [field: MirrorName("f")]
+    public event global::Quire.Delegate1<ISpecTableColumn> ColumnAdded;
+
+    [field: MirrorName("g")]
+    public event global::Quire.Delegate1<ISpecTableColumn> ColumnRemoved;
+
+    [field: MirrorName("h")]
+    public event global::Quire.Delegate0 RequestRemove = () => { };
+
+    [field: MirrorName("i")]
+    public event global::System.Action RequestClearSelection;
+
+    [field: MirrorName("j")]
+    public event global::System.Action<int, int> RequestAddSelection;
+
+    [field: MirrorName("k")]
+    public event global::System.Action RequestUpdateCellsVisibility;
+
+    [field: MirrorName("l")]
+    public event global::System.Action<bool> RestrictedReadonlyChanged;
+
+    private bool m;
+
+    private static readonly string n;
+
+    private bool o;
+
     public global::System.Collections.Generic.List<ISpecTableColumn> Columns => b__;
 
     public int ColumnCount => b__.Count;
@@ -22,6 +65,14 @@ public partial class SpecTableModel
     public string SExpression => "(@TABLE " + string.Join(" ", Columns.Select(SpecTableColumn.GetSExpression)) + ")";
 
     public bool IsEmpty => b__.All(column => column.IsEmpty);
+
+    static SpecTableModel()
+    {
+        n = "@PLACEHOLDER";
+        DebugTools.DevAssert(
+            n == global::Quire.EquationEditor.Tree.DefaultDescriptorTable.Default["PLACEHOLDER"].OperatorSExpName,
+            null);
+    }
 
     public bool IsExtraDataCellOrEmptyScale(IEquationModel cell)
     {
@@ -287,5 +338,52 @@ public partial class SpecTableModel
     {
         [MirrorVerified("Release IL")]
         public m_() { }
+    }
+
+    [MirrorOf("Ptc.EquationEditor.SpecTable.Model.SpecTableModel+n, Ptc.EquationEditor")]
+    private sealed partial class n_ :
+        global::System.Collections.Generic.IEnumerable<SpecTableCalculatableWrapper>,
+        global::System.Collections.IEnumerable,
+        global::System.Collections.Generic.IEnumerator<SpecTableCalculatableWrapper>,
+        global::System.Collections.IEnumerator,
+        global::System.IDisposable
+    {
+        [MirrorName("a")]
+        private int a_;
+
+        [MirrorName("b")]
+        private SpecTableCalculatableWrapper b_;
+
+        [MirrorName("c")]
+        private int c_;
+
+        public SpecTableModel d;
+
+        [MirrorName("e")]
+        private global::System.Collections.Generic.List<ISpecTableColumn>.Enumerator e_;
+
+        public n_(int A_0) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+        void global::System.IDisposable.Dispose() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+        bool global::System.Collections.IEnumerator.MoveNext() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+        private void a() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+        void global::System.Collections.IEnumerator.Reset() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+        global::System.Collections.Generic.IEnumerator<SpecTableCalculatableWrapper>
+            global::System.Collections.Generic.IEnumerable<SpecTableCalculatableWrapper>.GetEnumerator()
+            => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+        global::System.Collections.IEnumerator global::System.Collections.IEnumerable.GetEnumerator()
+            => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+        SpecTableCalculatableWrapper
+            global::System.Collections.Generic.IEnumerator<SpecTableCalculatableWrapper>.Current
+            => throw global::Quire.Mirror.MirrorStub.NotImplemented();
+
+        object global::System.Collections.IEnumerator.Current
+            => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     }
 }

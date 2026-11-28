@@ -31,3 +31,14 @@
 - Added `GetColumnsRegionPersistentData`, `SetColumnsRegionPersistentData`, `RestoreMemento`, `SubstituteAndCommitInputValue`, and `Commit`; removed their generated stubs.
 - Release IL comparison is deferred per coordinator instruction until the MethodAudit hotfix reaches `origin/main`; lint passes.
 - Remaining: other SpecTableModel members and nested/closure types.
+
+## Layout — iterator placeholder
+
+- Moved the complete `n_` iterator shell and its interface-member placeholders into the hand-written partial in Mathcad member order, then removed the generated nested declaration manually.
+- Release IL comparison is deferred until the MethodAudit hotfix reaches `origin/main`.
+
+## Batch 6 — core fields, events, and static initialization
+
+- Added the mapped SpecTableModel data fields and field-like events, including the `RequestRemove` default delegate, and implemented the static placeholder descriptor assertion; removed the generated field and event stubs.
+- Release IL comparison is pending against the hotfixed base; Release project build and lint pass.
+- Remaining: other SpecTableModel members and nested/closure types.
