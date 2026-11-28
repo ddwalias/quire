@@ -955,13 +955,7 @@ public partial class PlotControl
 		return (bool)((DependencyObject)uiElement).GetValue(ShowCalloutsProperty);
 	}
     public static void SetShowCallouts(global::System.Windows.UIElement uiElement, bool value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void SetTraceColor(global::System.Windows.Media.Color color) {
-		if (SelectedTraces.Count > 0)
-		{
-			new TraceColorCommand(SelectedTraces, color).Execute();
-			TraceColor = GetSelectedTracesCommonColor();
-		}
-	}
+    public void SetTraceColor(global::System.Windows.Media.Color color) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
 
     public override PlotType PlotType
     {
@@ -1270,16 +1264,9 @@ public partial class PlotControl
     internal Quire.Controls.Plots.ViewModel.PlotViewModel ViewModel => _viewModel;
     public void SetTraceLineStyle(global::Quire.Controls.Plots.Presenter.LineStyle lineStyle) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     public void SetTraceSymbol(global::Quire.Controls.Plots.Presenter.TraceSymbol symbol) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    private void SetSelectedTracesLineWeight(double value) {
-		new TraceWeightCommand(SelectedTraces, value).Execute();
-		TraceLineWeight = GetSelectedTracesLineWeight();
-	}
+    private void SetSelectedTracesLineWeight(double value) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private global::System.Nullable<double> GetSelectedTracesLineWeight() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public void SetTraceType(global::Quire.Calculation.Core.Trace2DResults.TraceType traceType) {
-		new TraceTypeCommand(SelectedTraces, traceType).Execute();
-		SelectedTraceType = GetSelectedTracesType();
-		TraceSymbol = GetSelectedTracesSymbol();
-	}
+    public void SetTraceType(global::Quire.Calculation.Core.Trace2DResults.TraceType traceType) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void TraceErrorChanged(global::Quire.Controls.Plots.Presenter.IPlotTrace trace) {
 		ShowHideErrorFrame();
 		ShowHideErrorMessage();
@@ -1376,21 +1363,7 @@ public partial class PlotControl
     protected override string ErrorMessage { get => throw global::Quire.Mirror.MirrorStub.NotImplemented(); }
     private static void SelectedTracesChanged(global::System.Windows.DependencyObject d, global::System.Windows.DependencyPropertyChangedEventArgs e) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     protected override bool ShouldSerializeProperty(global::System.Windows.DependencyProperty dp) => throw global::Quire.Mirror.MirrorStub.NotImplemented();
-    public global::Quire.Controls.Plots.Presenter.IPlotTrace AddTrace() {
-		//IL_003d: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0047: Expected Obj, but got Unknown
-		//IL_0054: Unknown result type (might be due to invalid IL or missing references)
-		//IL_005e: Expected Obj, but got Unknown
-		//IL_006b: Unknown result type (might be due to invalid IL or missing references)
-		//IL_0075: Expected Obj, but got Unknown
-		PlotTrace plotTrace = Graph.AddTrace();
-		plotTrace.ErrorChanged += TraceErrorChanged;
-		plotTrace.CalculatingStatusChangedEvent += HandleTraceCalculatingStatusChanged;
-		DependencyPropertyChangeManager.AddPropertyChangedHandler(PlotTrace.XMinGapProperty, (DependencyObject)(object)plotTrace, XMinGapPropertyChanged);
-		DependencyPropertyChangeManager.AddPropertyChangedHandler(PlotTrace.YMinGapProperty, (DependencyObject)(object)plotTrace, YMinGapPropertyChanged);
-		DependencyPropertyChangeManager.AddPropertyChangedHandler(PlotTrace.HasEquationErrorProperty, (DependencyObject)(object)plotTrace, HasEquationErrorPropertyChanged);
-		return plotTrace;
-	}
+    public global::Quire.Controls.Plots.Presenter.IPlotTrace AddTrace() => throw global::Quire.Mirror.MirrorStub.NotImplemented();
     private void HasEquationErrorPropertyChanged(object sender, global::System.Windows.DependencyPropertyChangedEventArgs dependencyPropertyChangedEventArgs) {
 		ShowHidePseudoErrorFrame(_resultEquations.Visibility);
 	}
