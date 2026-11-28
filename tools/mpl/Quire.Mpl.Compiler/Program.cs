@@ -407,7 +407,7 @@ static void CompileMplModule(string sourcePath, string outputPath, string instal
         if (File.Exists(Path.Combine(install, moduleAssembly + ".dll")))
             MplCompilerContext.ImportedTypes.TryAdd(importedModule + ".values", moduleAssembly);
     }
-    foreach (var typeName in new[] { "Mcd.DimVal", "Mcd.MatVal", "Mpl.Run.Function", "Mpl.Run.DelegateFunction" })
+    foreach (var typeName in new[] { "Mcd.DimVal", "Mcd.MatVal", "Mcd.NumVal", "Mpl.Run.Function", "Mpl.Run.DelegateFunction", "Mpl.Run.Cons" })
         MplCompilerContext.ImportedTypes.TryAdd(typeName, "mplrun");
     var functions = new List<(string Name, string[] Args, string Body)>();
     var globals = new List<(string Name, string? TypeName, bool Static, string Expression)>();
@@ -652,12 +652,19 @@ static void EmitExternalStaticField(MplILGenerator il, string qualifiedName, str
 
 static FieldInfo ResolveExternalField(string qualifiedName, string install)
 {
-    var parts = qualifiedName.Split('.', 2);
-    if (parts.Length != 2) throw new InvalidDataException($"Expected module.field: {qualifiedName}");
-    var assembly = Assembly.LoadFrom(Path.Combine(install, parts[0] + ".dll"));
-    var type = assembly.GetType(parts[0] + ".values", throwOnError: true)!;
-    return type.GetField(parts[1], BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
-        ?? throw new MissingFieldException(type.FullName, parts[1]);
+    var split = qualifiedName.LastIndexOf('.');
+    if (split < 1) throw new InvalidDataException($"Expected module.field: {qualifiedName}");
+    var typeName = qualifiedName[..split];
+    var fieldName = qualifiedName[(split + 1)..];
+    var types = ResolveImportedTypes(typeName, install);
+    if (types.Length == 0)
+    {
+        var assembly = Assembly.LoadFrom(Path.Combine(install, typeName + ".dll"));
+        types = [assembly.GetType(typeName + ".values", throwOnError: true)!];
+    }
+    var type = types.Single();
+    return type.GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+        ?? throw new MissingFieldException(type.FullName, fieldName);
 }
 
 static MethodInfo ResolveExternalMethod(string qualifiedName, int parameterCount, string install)
@@ -1577,7 +1584,7 @@ static void EmitValue(MplExpr expression,
         case MplNew creation:
         {
             var type = typeAliases.TryGetValue(creation.TypeName, out var aliasedType)
-                ? aliasedType : throw new InvalidDataException($"Unknown constructor type {creation.TypeName}.");
+                ? aliasedType : ResolveImportedType(creation.TypeName, install);
             var argumentTypes = creation.Arguments.Select(argument => ExpressionType(argument, locals, typeAliases)).ToArray();
             foreach (var argument in creation.Arguments)
                 EmitValue(argument, il, locals, arguments, methods, typeAliases, install);
@@ -1655,6 +1662,7 @@ static void EmitValue(MplExpr expression,
                 il.Emit(OpCodes.Dup);
                 EmitInteger(i, il);
                 EmitValue(array.Items[i], il, locals, arguments, methods, typeAliases, install);
+                BoxValueIfNeeded(array.Items[i], il, locals, typeAliases);
                 il.Emit(OpCodes.Stelem_Ref);
             }
             return;
@@ -1773,7 +1781,7 @@ internal static class MplExpressionParser
         private int _position;
 
         public Parser(string source) => _tokens = Regex.Matches(source,
-                """==|!=|:=|->|\?\?|\*\.|/\.|[A-Za-z_$][A-Za-z0-9_.$]*|[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?|"[^"]*"|\[|\]|\(|\)|,|;|\||:|=""")
+                """==|!=|:=|->|\?\?|\*\.|/\.|[A-Za-z_$][A-Za-z0-9_.$']*|[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+)?|"[^"]*"|\[|\]|\(|\)|,|;|\||:|=""")
             .Select(match => match.Value).ToArray();
 
         public MplExpr Parse()
@@ -1968,7 +1976,7 @@ internal static class MplExpressionParser
 
         private string ReadIdentifier()
         {
-            if (_position >= _tokens.Length || !Regex.IsMatch(_tokens[_position], @"\A[A-Za-z_$][A-Za-z0-9_.$]*\z"))
+            if (_position >= _tokens.Length || !Regex.IsMatch(_tokens[_position], @"\A[A-Za-z_$][A-Za-z0-9_.$']*\z"))
                 throw new InvalidDataException($"Expected an identifier in Mpl expression at token {_position}: "
                     + (_position < _tokens.Length ? _tokens[_position] : "<end>"));
             return _tokens[_position++];
